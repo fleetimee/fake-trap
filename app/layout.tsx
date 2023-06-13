@@ -1,5 +1,6 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import Head from "next/head"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -45,7 +46,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <SiteHeader />
               <div className="flex-1">{children}</div>
             </div>
-            <TailwindIndicator />
           </ThemeProvider>
         </body>
       </html>
