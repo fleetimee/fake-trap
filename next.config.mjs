@@ -4,6 +4,10 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    dangerouslyAllowSVG: true,
+    domains: ["placehold.co", "placeholdit.imgix.net", "res.cloudinary.com"],
+  },
 }
 
 export default nextConfig

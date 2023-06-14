@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { DashboardHeader } from "@/components/header"
+import { KnowledgeItemList } from "@/components/knowledge-item-list"
 import { DashboardShell } from "@/components/shell"
 
 export default async function DashboardPage() {
@@ -20,19 +21,10 @@ export default async function DashboardPage() {
         heading="Welcome back, Jane"
         description={data.count.toString()}
       />
-      <div className="flex flex-wrap">
-        {data.data.map((item) => {
-          return (
-            <Card key={item.id_knowledge} className="mx-auto w-1/3">
-              <CardContent>
-                <CardHeader>
-                  <CardTitle>{item.knowledge_title}</CardTitle>
-                </CardHeader>
-                <CardDescription>{item.description}</CardDescription>
-              </CardContent>
-            </Card>
-          )
-        })}
+      <div className="divide-y divide-border rounded-md border">
+        {data.data.map((item) => (
+          <KnowledgeItemList key={item.id_knowledge} item={item} />
+        ))}
       </div>
     </DashboardShell>
   )
