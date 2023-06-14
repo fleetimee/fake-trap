@@ -26,9 +26,8 @@ export default function IndexPage() {
           Documentation
         </Link>
         <Link
-          target="_blank"
           rel="noreferrer"
-          href={siteConfig.links.github}
+          href="/login"
           className={buttonVariants({ variant: "outline" })}
         >
           GitHub
