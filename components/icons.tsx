@@ -1,4 +1,5 @@
 import {
+  Album,
   AlertTriangle,
   ArrowRight,
   Check,
@@ -32,6 +33,7 @@ export const Icons = {
   logo: Command,
   close: X,
   spinner: Loader2,
+  knowledge: Album,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   trash: Trash,

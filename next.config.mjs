@@ -6,7 +6,12 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
-    domains: ["placehold.co", "placeholdit.imgix.net", "res.cloudinary.com"],
+    domains: [
+      "placehold.co",
+      "placeholdit.imgix.net",
+      "res.cloudinary.com",
+      "pbs.twimg.com",
+    ],
   },
 }
 
