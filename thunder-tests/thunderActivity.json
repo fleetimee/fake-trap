@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "8939de31-1f35-4135-8d50-b8cccf5e6700",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://www.thunderclient.com/welcome",
+    "url": "https://www.thunderclient.com/welcome",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-02-12T17:13:57.125Z",
+    "modified": "2023-02-12T17:13:57.125Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "e11cc0ea-0540-48b9-8e7e-392480c619e5",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:8080/asdad",
+    "url": "localhost:8080/asdad",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-02-12T17:14:10.969Z",
+    "modified": "2023-02-12T17:14:25.844Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "\tif user.ID == 0 { return c.Status(400).JSON(fiber.Map{ \"message\": \"User does not exist\", }) }"
+    },
+    "tests": []
+  }
+]

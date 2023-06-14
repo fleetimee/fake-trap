@@ -3,6 +3,7 @@
 import { dashboardConfig } from "@/config/dashboard"
 import { MainNav } from "@/components/main-nav"
 import { DashboardNav } from "@/components/nav"
+import { SiteFooter } from "@/components/site-footer"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -24,6 +25,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {children}
         </main>
       </div>
+      <SiteFooter className="border-t" />
     </div>
   )
 }
