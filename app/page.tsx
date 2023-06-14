@@ -1,9 +1,34 @@
 import Link from "next/link"
+import Logger from "js-logger"
 
+import { Message } from "@/types/hello"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 
-export default function IndexPage() {
+async function getHello(): Promise<Message> {
+  const res = await fetch("http://localhost:1337", {
+    method: "GET",
+    next: {
+      revalidate: 1,
+      tags: ["hello", "world"],
+    },
+    cache: "no-cache",
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+
+  const data = await res.json()
+
+  return data
+}
+
+export default async function IndexPage() {
+  const data = await getHello()
+
+  Logger.debug(data)
+
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="flex max-w-[980px] flex-col items-start gap-2">
@@ -12,8 +37,7 @@ export default function IndexPage() {
           built with Radix UI and Tailwind CSS.
         </h1>
         <p className="max-w-[700px] text-lg text-muted-foreground">
-          Accessible and customizable components that you can copy and paste
-          into your apps. Free. Open Source. And Next.js 13 Ready.
+          {data.message}
         </p>
       </div>
       <div className="flex gap-4">
