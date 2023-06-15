@@ -1,8 +1,8 @@
-export interface NewestCourse {
-  data: Data
+export type NewestCourse = {
+  data: NewestCourseData
 }
 
-export interface Data {
+export type NewestCourseData = {
   id_course: number
   id_knowledge: number
   course_name: string

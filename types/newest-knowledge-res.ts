@@ -1,13 +1,12 @@
-export interface NewestKnowledge {
+export type NewestKnowledge = {
   data: NewestKnowledgeData
 }
 
-export interface NewestKnowledgeData {
-  id_course: number
+export type NewestKnowledgeData = {
   id_knowledge: number
-  course_name: string
-  course_desc: string
+  knowledge_title: string
+  description: string
+  status: number
   image: string
-  date_start: Date
-  date_end: Date
+  id_category: number
 }

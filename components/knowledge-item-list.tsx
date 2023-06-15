@@ -9,7 +9,7 @@ export function KnowledgeItemList(props: { item: KnowledgeData }) {
 
   return (
     <div className="flex items-center p-4">
-      <div className="flex  justify-center">
+      <div className="flex justify-center">
         <Image
           src={knowledgeItem.image}
           sizes="100px"

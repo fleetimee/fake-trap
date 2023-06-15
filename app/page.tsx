@@ -8,10 +8,6 @@ import { buttonVariants } from "@/components/ui/button"
 async function getHello(): Promise<Message> {
   const res = await fetch("http://localhost:1337", {
     method: "GET",
-    next: {
-      revalidate: 1,
-      tags: ["hello", "world"],
-    },
     cache: "no-cache",
   })
 
