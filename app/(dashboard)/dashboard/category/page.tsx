@@ -1,9 +1,13 @@
+import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
 export default function CategoryPage() {
   return (
     <DashboardShell>
-      <h1>Category Page</h1>
+      <DashboardHeader
+        heading="Kategori"
+        description="Kategori Pengetahuan yang tersedia"
+      />
     </DashboardShell>
   )
 }

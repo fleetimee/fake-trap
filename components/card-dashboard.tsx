@@ -31,14 +31,14 @@ export default function CardDashboard({ title, name, image, icon }: CardProps) {
 
   return (
     <Card className="space-y-2 shadow-md">
-      <CardHeader className="grid grid-cols-2 gap-14 text-2xl md:gap-2">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardTitle className="text-base">{title}</CardTitle>
-          <CardDescription className="text-2xl">{name}</CardDescription>
+          <CardTitle className="text-sm font-medium">{title}</CardTitle>
+          <div className="text-2xl font-bold">{name}</div>
         </div>
-        <div className="hidden px-12 md:grid lg:grid lg:px-44">
+        <div>
           <CardTitle className="text-base">
-            <Icon className="h-10 w-10" />
+            <Icon className="h-4 w-4 text-muted-foreground" />
           </CardTitle>
         </div>
       </CardHeader>
