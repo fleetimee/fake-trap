@@ -17,7 +17,7 @@ export function KnowledgeItemList(props: { item: KnowledgeData }) {
           width={100}
           height={100}
           alt="Picture of the author"
-          className="rounded-md grayscale hover:filter-none"
+          className="rounded-md grayscale  hover:animate-pulse hover:filter-none"
         />
       </div>
       <div className="grid gap-2 px-8">
