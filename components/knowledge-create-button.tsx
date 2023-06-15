@@ -3,9 +3,8 @@
 import React from "react"
 
 import { cn } from "@/lib/utils"
-
-import { Icons } from "./icons"
-import { ButtonProps, buttonVariants } from "./ui/button"
+import { ButtonProps, buttonVariants } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 
 interface KnowledgeCreateButton extends ButtonProps {}
 
