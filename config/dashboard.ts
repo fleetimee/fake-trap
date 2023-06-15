@@ -16,7 +16,17 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: "Dashboard",
       href: "/dashboard",
-      icon: "media",
+      icon: "dashboard",
+    },
+    {
+      title: "Kategori",
+      href: "/dashboard/category",
+      icon: "category",
+    },
+    {
+      title: "Quiz",
+      href: "/dashboard/quiz",
+      icon: "quiz",
     },
     {
       title: "Pengetahuan",
@@ -26,7 +36,7 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: "Kursus",
       href: "/dashboard/course",
-      icon: "billing",
+      icon: "course",
     },
     {
       title: "Settings",

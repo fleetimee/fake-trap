@@ -38,7 +38,7 @@ export default function NewCourseCard({
           alt={`Pic ${courseDescription}`}
           width={500}
           height={500}
-          className="rounded-md grayscale hover:grayscale-0"
+          className="rounded-md object-contain grayscale hover:grayscale-0"
         />
       </CardContent>
     </Card>

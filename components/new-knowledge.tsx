@@ -36,9 +36,10 @@ export default function NewKnowledgeCard({
         <Image
           src={knowledgeImage}
           alt={`Pic ${knowledgeName}`}
+          sizes="500px"
           width={500}
           height={500}
-          className="rounded-md grayscale hover:grayscale-0"
+          className="rounded-md object-contain grayscale hover:grayscale-0"
         />
       </CardContent>
     </Card>
