@@ -1,6 +1,9 @@
 import type { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
+/**
+ * Configuration options for NextAuth authentication.
+ */
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
