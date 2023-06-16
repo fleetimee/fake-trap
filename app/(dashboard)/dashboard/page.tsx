@@ -1,3 +1,4 @@
+import { getCategory } from "@/lib/fetcher/category/category-fetcher"
 import { getCourse, getNewestCourse } from "@/lib/fetcher/course/course-fetcher"
 import {
   getKnowledge,
@@ -17,17 +18,25 @@ export default async function DashboardPage() {
   const userList = getUser()
   const knowledgeList = getKnowledge(6)
   const courseList = getCourse(6)
+  const categoryList = getCategory(6)
   const newestKnowledge = getNewestKnowledge()
   const newestCourse = getNewestCourse()
 
-  const [newKnowledgeResp, newCourseResp, userResp, knowledgeResp, courseResp] =
-    await Promise.all([
-      newestKnowledge,
-      newestCourse,
-      userList,
-      knowledgeList,
-      courseList,
-    ])
+  const [
+    newKnowledgeResp,
+    newCourseResp,
+    userResp,
+    knowledgeResp,
+    courseResp,
+    categoryResp,
+  ] = await Promise.all([
+    newestKnowledge,
+    newestCourse,
+    userList,
+    knowledgeList,
+    courseList,
+    categoryList,
+  ])
 
   return (
     <DashboardShell>
@@ -55,10 +64,10 @@ export default async function DashboardPage() {
           description="Kursus yang dibuat"
         />
         <CardDashboardIndicator
-          title="Quiz"
-          icon="gitHub"
-          content={400}
-          description="User yang terdaftar"
+          title="Kategory"
+          icon="category"
+          content={categoryResp.count}
+          description="Kategori yang tersedia"
         />
       </div>
       <div className="flex flex-col items-center justify-between gap-6 md:grid lg:grid-cols-2">

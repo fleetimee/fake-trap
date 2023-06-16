@@ -1,9 +1,13 @@
+import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
 export default function CoursePage() {
   return (
     <DashboardShell>
-      <h1>Course Page</h1>
+      <DashboardHeader
+        heading="Kursus"
+        description="Kursus yang tersedia di e-learning"
+      />
     </DashboardShell>
   )
 }

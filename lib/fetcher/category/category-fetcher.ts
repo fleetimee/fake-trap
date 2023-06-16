@@ -5,7 +5,7 @@ import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
  * Enum representing the category URL endpoint.
  */
 enum CaregoryUrl {
-  category = "/secure/category",
+  category = "secure/category",
 }
 
 /**
