@@ -15,7 +15,7 @@ import {
 import { Icons } from "@/components/icons"
 
 /**
- * Definition of columns for the DataCategory table.
+ * Definition of columns for the category table.
  */
 export const columns: ColumnDef<DataCategory>[] = [
   {

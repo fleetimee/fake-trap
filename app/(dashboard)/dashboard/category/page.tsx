@@ -5,10 +5,12 @@ import { DashboardShell } from "@/components/shell"
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 
+/**
+ * Renders the Category page component.
+ * @returns {JSX.Element} The Category page component.
+ */
 export default async function CategoryPage() {
   const categoryList = await getCategory(6)
-
-  console.log(categoryList)
 
   return (
     <DashboardShell>
