@@ -17,6 +17,7 @@ async function getCategory(limit: number): Promise<CategoryResponse> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/${CaregoryUrl.category}?limit=${limit}`,
     {
+      method: "GET",
       headers: headersObj,
       cache: "no-cache",
     }

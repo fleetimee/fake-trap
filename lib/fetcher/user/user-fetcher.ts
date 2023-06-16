@@ -14,6 +14,7 @@ async function getUser(): Promise<UserResponse> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/${UserUrl.user}`,
     {
+      method: "GET",
       headers: headersObj,
       cache: "no-cache",
     }

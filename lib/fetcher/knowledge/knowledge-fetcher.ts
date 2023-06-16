@@ -21,6 +21,7 @@ async function getKnowledge(limit: number): Promise<Knowledge> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/${KnowledgeUrl.knowledge}?limit=${limit}`,
     {
+      method: "GET",
       headers: headersObj,
       cache: "no-cache",
     }
@@ -41,6 +42,7 @@ async function getNewestKnowledge(): Promise<NewestKnowledge> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/${KnowledgeUrl.newestKnowledge}`,
     {
+      method: "GET",
       headers: headersObj,
       cache: "no-cache",
     }

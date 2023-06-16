@@ -1,4 +1,5 @@
-import { Course } from "@/types/course-res"
+import { PostCourseRequest } from "@/types/course-req"
+import { Course, CourseByIdResponse } from "@/types/course-res"
 import { NewestCourse } from "@/types/newest-course-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 
@@ -16,6 +17,7 @@ async function getCourse(limit: number): Promise<Course> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.course}?limit=${limit}`,
     {
+      method: "GET",
       headers: headersObj,
       cache: "no-cache",
     }
@@ -29,13 +31,15 @@ async function getCourse(limit: number): Promise<Course> {
 }
 
 /**
- * Fetches the newest course.
- * @returns A Promise that resolves to a NewestCourse object.
+ * Fetches a course by its ID.
+ * @param id The ID of the course to fetch.
+ * @returns A Promise that resolves to a CourseByIdResponse object.
  */
-async function getNewestCourse(): Promise<NewestCourse> {
+async function getCourseById(id: string): Promise<CourseByIdResponse> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.newestCourse}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.course}/${id}`,
     {
+      method: "GET",
       headers: headersObj,
       cache: "no-cache",
     }
@@ -46,4 +50,25 @@ async function getNewestCourse(): Promise<NewestCourse> {
   return data
 }
 
-export { getCourse, getNewestCourse }
+/**
+ * Fetches the newest course.
+ * @returns A Promise that resolves to a NewestCourse object.
+ */
+async function getNewestCourse(): Promise<NewestCourse> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.newestCourse}`,
+    {
+      method: "GET",
+      headers: headersObj,
+      cache: "no-cache",
+    }
+  )
+
+  const data = await res.json()
+
+  return data
+}
+
+async function postCourse(input: PostCourseRequest) {}
+
+export { getCourse, getNewestCourse, getCourseById }
