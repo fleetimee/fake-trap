@@ -2,6 +2,7 @@ import { PostCourseRequest } from "@/types/course-req"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { NewestCourse } from "@/types/newest-course-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { toast } from "@/components/ui/use-toast"
 
 enum CourseUrl {
   course = "secure/course",
@@ -14,20 +15,25 @@ enum CourseUrl {
  * @returns A Promise that resolves to a Course object.
  */
 async function getCourse(limit: number): Promise<Course> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.course}?limit=${limit}`,
-    {
-      method: "GET",
-      headers: headersObj,
-      cache: "no-cache",
-    }
-  )
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.course}?limit=${limit}`,
+      {
+        method: "GET",
+        headers: headersObj,
+        cache: "no-cache",
+      }
+    )
 
-  const data = await res.json()
+    const data = await res.json()
 
-  await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500))
 
-  return data
+    return data
+  } catch (error) {
+    console.error(error)
+    throw Error("Failed to fetch course.")
+  }
 }
 
 /**
@@ -36,39 +42,76 @@ async function getCourse(limit: number): Promise<Course> {
  * @returns A Promise that resolves to a CourseByIdResponse object.
  */
 async function getCourseById(id: string): Promise<CourseByIdResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.course}/${id}`,
-    {
-      method: "GET",
-      headers: headersObj,
-      cache: "no-cache",
-    }
-  )
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.course}/${id}`,
+      {
+        method: "GET",
+        headers: headersObj,
+        cache: "no-cache",
+      }
+    )
 
-  const data = await res.json()
+    const data = await res.json()
 
-  return data
+    return data
+  } catch (error) {
+    console.error(error)
+    throw Error("Failed to fetch course.")
+  }
 }
-
 /**
  * Fetches the newest course.
  * @returns A Promise that resolves to a NewestCourse object.
  */
 async function getNewestCourse(): Promise<NewestCourse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.newestCourse}`,
-    {
-      method: "GET",
-      headers: headersObj,
-      cache: "no-cache",
-    }
-  )
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.newestCourse}`,
+      {
+        method: "GET",
+        headers: headersObj,
+        cache: "no-cache",
+      }
+    )
 
-  const data = await res.json()
+    const data = await res.json()
 
-  return data
+    return data
+  } catch (error) {
+    console.error(error)
+    throw new Error("Failed to fetch newest course data")
+  }
 }
 
-async function postCourse(input: PostCourseRequest) {}
+/**
+ * Posts a new course to the server.
+ * @param input The course data to be posted.
+ * @returns A Promise that resolves to void.
+ */
+async function postCourse(input: PostCourseRequest): Promise<void> {
+  try {
+    const req = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/${CourseUrl.course}`,
+      {
+        method: "POST",
+        headers: headersObj,
+        body: JSON.stringify(input),
+      }
+    )
 
-export { getCourse, getNewestCourse, getCourseById }
+    const res = await req.json()
+
+    if (res) {
+      toast({
+        title: "Success",
+        description: "Course successfully created.",
+      })
+    }
+  } catch (error) {
+    console.error(error)
+    throw new Error("Failed to create course")
+  }
+}
+
+export { getCourse, getNewestCourse, getCourseById, postCourse }
