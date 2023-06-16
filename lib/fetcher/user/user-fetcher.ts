@@ -11,18 +11,23 @@ enum UserUrl {
  * @returns {Promise<UserResponse>} A promise that resolves to the user data.
  */
 async function getUser(): Promise<UserResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${UserUrl.user}`,
-    {
-      method: "GET",
-      headers: headersObj,
-      cache: "no-cache",
-    }
-  )
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/${UserUrl.user}`,
+      {
+        method: "GET",
+        headers: headersObj,
+        cache: "no-cache",
+      }
+    )
 
-  const data = await res.json()
+    const data = await res.json()
 
-  return data
+    return data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
 export { getUser }

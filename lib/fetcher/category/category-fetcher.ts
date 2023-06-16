@@ -14,18 +14,23 @@ enum CaregoryUrl {
  * @returns A promise that resolves to the fetched category data.
  */
 async function getCategory(limit: number): Promise<CategoryResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${CaregoryUrl.category}?limit=${limit}`,
-    {
-      method: "GET",
-      headers: headersObj,
-      cache: "no-cache",
-    }
-  )
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/${CaregoryUrl.category}?limit=${limit}`,
+      {
+        method: "GET",
+        headers: headersObj,
+        cache: "no-cache",
+      }
+    )
 
-  const data = await res.json()
+    const data = await res.json()
 
-  return data
+    return data
+  } catch (error) {
+    console.error(error)
+    throw new Error("Failed to fetch category data")
+  }
 }
 
 export { getCategory }
