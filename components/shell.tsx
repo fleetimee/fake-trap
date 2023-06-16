@@ -1,7 +1,17 @@
 import { cn } from "@/lib/utils"
 
+/**
+ * Interface for the props of the DashboardShell component.
+ */
 interface DashboardShellProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+/**
+ * DashboardShell component that renders a grid with a gap of 8 between items.
+ * @param children - The child components to render inside the grid.
+ * @param className - The CSS class name to apply to the grid.
+ * @param props - Additional HTML attributes to apply to the grid.
+ * @returns The rendered DashboardShell component.
+ */
 export function DashboardShell({
   children,
   className,

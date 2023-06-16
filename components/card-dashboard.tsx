@@ -26,7 +26,7 @@ interface CardProps {
  * @param {string} courseImage - The URL of the course image.
  * @returns {JSX.Element} - The JSX element that displays the new course card.
  */
-export default function CardDashboard({ title, name, image, icon }: CardProps) {
+export function CardDashboard({ title, name, image, icon }: CardProps) {
   const Icon = Icons[icon || "arrowRight"]
 
   return (

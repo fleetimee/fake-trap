@@ -1,5 +1,8 @@
 export type SiteConfig = typeof siteConfig
 
+/**
+ * Configuration object for the site.
+ */
 export const siteConfig = {
   name: "BPD Elearning",
   description:

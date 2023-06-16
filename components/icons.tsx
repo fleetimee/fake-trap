@@ -31,8 +31,17 @@ import {
   type Icon as LucideIcon,
 } from "lucide-react"
 
+/**
+ * This file exports a type alias for the Lucide icon component type.
+ * The type alias is named "Icon" and it is equivalent to the LucideIcon type imported from the "lucide-react" package.
+ */
 export type Icon = LucideIcon
-
+/**
+ * This file exports an object containing all the icons used in the application.
+ * Each icon is represented by a key-value pair, where the key is the name of the icon and the value is the corresponding Lucide icon component.
+ * The Lucide icon components are imported from the "lucide-react" package.
+ * Additionally, there is a custom GitHub icon component defined using SVG.
+ */
 export const Icons = {
   logo: Command,
   close: X,

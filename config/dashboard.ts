@@ -1,6 +1,12 @@
 import { DashboardConfig } from "types"
 
+/**
+ * Configuration object for the dashboard.
+ */
 export const dashboardConfig: DashboardConfig = {
+  /**
+   * Main navigation items.
+   */
   mainNav: [
     {
       title: "Documentation",
@@ -12,6 +18,9 @@ export const dashboardConfig: DashboardConfig = {
       disabled: true,
     },
   ],
+  /**
+   * Sidebar navigation items.
+   */
   sidebarNav: [
     {
       title: "Dashboard",

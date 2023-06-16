@@ -6,8 +6,18 @@ import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
+/**
+ * Interface for the KnowledgeCreateButton component.
+ */
 interface KnowledgeCreateButton extends ButtonProps {}
 
+/**
+ * Renders a button for creating knowledge.
+ * @param className - The class name for the button.
+ * @param variant - The variant of the button.
+ * @param props - The props for the button.
+ * @returns A React button component.
+ */
 export function KnowledgeCreateButton({
   className,
   variant,

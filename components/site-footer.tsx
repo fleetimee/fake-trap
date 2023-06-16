@@ -5,6 +5,11 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { ModeToggle } from "@/components/mode-toggle"
 
+/**
+ * Renders the site footer component.
+ * @param className - The CSS class name to apply to the footer element.
+ * @returns A React component that displays the site footer.
+ */
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
     <footer className={cn(className)}>

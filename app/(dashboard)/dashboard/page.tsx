@@ -1,24 +1,33 @@
-import Image from "next/image"
-import { Activity, CreditCard, DollarSign, Users } from "lucide-react"
-
-import { getNewestCourse } from "@/lib/fetcher/course/course-fetcher"
-import { getNewestKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import CardDashboard from "@/components/card-dashboard"
+import { getCourse, getNewestCourse } from "@/lib/fetcher/course/course-fetcher"
+import {
+  getKnowledge,
+  getNewestKnowledge,
+} from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { getUser } from "@/lib/fetcher/user/user-fetcher"
+import { CardDashboard } from "@/components/card-dashboard"
 import { CardDashboardIndicator } from "@/components/card-dashboard-indicator"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
+/**
+ * Dashboard page component that displays user, knowledge, course, and quiz information.
+ * @returns {JSX.Element} The dashboard page component.
+ */
 export default async function DashboardPage() {
+  const userList = getUser()
+  const knowledgeList = getKnowledge(6)
+  const courseList = getCourse(6)
   const newestKnowledge = getNewestKnowledge()
   const newestCourse = getNewestCourse()
 
-  const [newKnowledge, newCourse] = await Promise.all([
-    newestKnowledge,
-    newestCourse,
-  ])
-
-  console.log(newCourse)
+  const [newKnowledgeResp, newCourseResp, userResp, knowledgeResp, courseResp] =
+    await Promise.all([
+      newestKnowledge,
+      newestCourse,
+      userList,
+      knowledgeList,
+      courseList,
+    ])
 
   return (
     <DashboardShell>
@@ -29,26 +38,26 @@ export default async function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CardDashboardIndicator
           title="User"
-          icon="gitHub"
-          content="100"
+          icon="user"
+          content={userResp.count}
           description="User yang terdaftar"
         />
         <CardDashboardIndicator
-          title="User"
-          icon="gitHub"
-          content="100"
-          description="User yang terdaftar"
+          title="Pengetahuan"
+          icon="knowledge"
+          content={knowledgeResp.count}
+          description="Pengetahuan yang tersedia"
         />
         <CardDashboardIndicator
-          title="User"
-          icon="gitHub"
-          content="100"
-          description="User yang terdaftar"
+          title="Kursus"
+          icon="course"
+          content={courseResp.count}
+          description="Kursus yang dibuat"
         />
         <CardDashboardIndicator
-          title="User"
+          title="Quiz"
           icon="gitHub"
-          content="100"
+          content={400}
           description="User yang terdaftar"
         />
       </div>
@@ -57,16 +66,16 @@ export default async function DashboardPage() {
           <CardDashboard
             icon="knowledge"
             title="Pengetahuan Baru"
-            name={newKnowledge.data.knowledge_title}
-            image={newKnowledge.data.image}
+            name={newKnowledgeResp.data.knowledge_title}
+            image={newKnowledgeResp.data.image}
           />
         </div>
         <div className="h-full">
           <CardDashboard
             icon="course"
             title="Kursus Baru"
-            name={newCourse.data.course_name}
-            image={newCourse.data.image}
+            name={newCourseResp.data.course_name}
+            image={newCourseResp.data.image}
           />
         </div>
       </div>

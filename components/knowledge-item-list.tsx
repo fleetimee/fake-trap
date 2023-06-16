@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { KnowledgeData } from "@/types/knowledge"
+import { KnowledgeData } from "@/types/knowledge-res"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export function KnowledgeItemList(props: { item: KnowledgeData }) {

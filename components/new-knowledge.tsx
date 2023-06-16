@@ -8,22 +8,24 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+/**
+ * Defines the props for the NewKnowledgeCard component.
+ */
 interface NewKnowledgeProps {
+  /** The name of the new knowledge. */
   knowledgeName: string
-  knowledgeDescription: string
+  /** The image of the new knowledge. */
   knowledgeImage: string
 }
 
 /**
  * Displays a card with information about a new knowledge.
  * @param knowledgeName - The name of the new knowledge.
- * @param knowledgeDescription - The description of the new knowledge.
  * @param knowledgeImage - The image of the new knowledge.
  * @returns A card component with the new knowledge information.
  */
 export default function NewKnowledgeCard({
   knowledgeName,
-  knowledgeDescription,
   knowledgeImage,
 }: NewKnowledgeProps) {
   return (

@@ -6,11 +6,22 @@ import { cn } from "@/lib/utils"
 import { useLockBody } from "@/hooks/use-lock-body"
 import { Icons } from "@/components/icons"
 
+/**
+ * Represents the props for the MobileNav component.
+ * @interface
+ * @property {MainNavItem[]} items - An array of MainNavItem objects representing the navigation items.
+ * @property {React.ReactNode} [children] - Optional React node(s) to be rendered inside the mobile navigation component.
+ */
 interface MobileNavProps {
   items: MainNavItem[]
   children?: React.ReactNode
 }
-
+/**
+ * Renders a mobile navigation component with a list of items and optional children.
+ * @param items - An array of MainNavItem objects representing the navigation items.
+ * @param children - Optional React node(s) to be rendered inside the mobile navigation component.
+ * @returns A React component representing the mobile navigation.
+ */
 export function MobileNav({ items, children }: MobileNavProps) {
   useLockBody()
 

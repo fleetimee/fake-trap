@@ -13,10 +13,21 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { UserAvatar } from "@/components/user-avatar"
 
+/**
+ * Props for the UserAccountNav component.
+ */
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * The user object containing the user's name, image, and email.
+   */
   user: Pick<User, "name" | "image" | "email">
 }
 
+/**
+ * Renders a dropdown menu containing user account information and links to various pages.
+ * @param user The user object containing the user's name, image, and email.
+ * @returns A React component that displays the user account dropdown menu.
+ */
 export default function UserAccountNav({ user }: UserAccountNavProps) {
   const imageUrl = "https://avatars.githubusercontent.com/u/45744788?v=4"
 

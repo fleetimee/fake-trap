@@ -1,3 +1,7 @@
+/**
+ * A component that displays the current Tailwind breakpoint in development mode.
+ * Returns null in production mode.
+ */
 export function TailwindIndicator() {
   if (process.env.NODE_ENV === "production") return null
 

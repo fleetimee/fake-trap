@@ -4,7 +4,7 @@ import { Icons } from "@/components/icons"
 interface CardDashboardIndicatorProps {
   title: string
   icon: keyof typeof Icons
-  content: string
+  content: number
   description: string
 }
 
