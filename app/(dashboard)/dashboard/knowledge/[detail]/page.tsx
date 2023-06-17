@@ -1,4 +1,18 @@
-import { DashboardHeader } from "@/components/header"
+import Image from "next/image"
+
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardShell } from "@/components/shell"
 
 export default function DetailKnowledge({
@@ -8,17 +22,85 @@ export default function DetailKnowledge({
 }) {
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={params.detail}
-        description="This is a test page"
-      />
-      <div className="flex h-screen flex-col gap-4  px-2 md:flex-row">
-        <div className="flex basis-3/4 items-start justify-normal rounded-lg border-2 border-black  p-8 dark:border-white">
-          <div className="flex flex-col">
-            <h1>Lets go</h1>
-            <h2>B</h2>
+      <div className="flex h-auto flex-col gap-4 px-2 md:flex-row">
+        <Card className="flex basis-3/4 items-start justify-normal">
+          <div className="flex flex-col gap-4 p-4">
+            <Image
+              src="https://pbs.twimg.com/media/FyzcwvqaYAEqDjq?format=jpg&name=small"
+              alt="nigger"
+              className="aspect-video rounded-lg object-cover sepia hover:sepia-0"
+              width={1280}
+              height={720}
+            />
+            <Tabs defaultValue="description">
+              <TabsList className="grid w-1/2 grid-cols-2">
+                <TabsTrigger value="description">Deskripsi</TabsTrigger>
+                <TabsTrigger value="users">Users</TabsTrigger>
+              </TabsList>
+              <TabsContent value="description">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Deskripsi</CardTitle>
+                    <CardDescription>Lorem ipsum</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <ScrollArea className="h-[300px] w-full">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Fermentum posuere urna nec tincidunt
+                        praesent semper. Eu volutpat odio facilisis mauris sit.
+                        Eget lorem dolor sed viverra. Diam maecenas ultricies mi
+                        eget mauris pharetra et. Fermentum iaculis eu non diam.
+                        Nibh sed pulvinar proin gravida hendrerit lectus. Vitae
+                        congue eu consequat ac felis donec et odio pellentesque.
+                        Nisl vel pretium lectus quam id leo in vitae. Faucibus
+                        interdum posuere lorem ipsum dolor sit. Quis imperdiet
+                        massa tincidunt nunc pulvinar sapien et ligula
+                        ullamcorper. Eget Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Fermentum
+                        posuere urna nec tincidunt praesent semper. Eu volutpat
+                        odio facilisis mauris sit. Eget lorem dolor sed viverra.
+                        Diam maecenas ultricies mi eget mauris pharetra et.
+                        Fermentum iaculis eu non diam. Nibh sed pulvinar proin
+                        gravida hendrerit lectus. Vitae congue eu consequat ac
+                        felis donec et odio pellentesque. Nisl vel pretium
+                        lectus quam id leo in vitae. Faucibus interdum posuere
+                        lorem ipsum dolor sit. Quis imperdiet massa tincidunt
+                        nunc pulvinar sapien et ligula ullamcorper. Eget
+                      </p>
+                    </ScrollArea>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="users">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Password</CardTitle>
+                    <CardDescription>
+                      Change your password here. After saving, youll be logged
+                      out.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="space-y-1">
+                      <Label htmlFor="current">Current password</Label>
+                      <Input id="current" type="password" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="new">New password</Label>
+                      <Input id="new" type="password" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Save password</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+            </Tabs>
           </div>
-        </div>
+        </Card>
         <div className="basis-1/4 bg-red-400">Tes</div>
       </div>
     </DashboardShell>
