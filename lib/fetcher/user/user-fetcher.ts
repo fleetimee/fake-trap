@@ -1,4 +1,5 @@
 import { UserResponse } from "@/types/user-res"
+import { toast } from "@/components/ui/use-toast"
 
 import { headersObj } from "../knowledge/knowledge-fetcher"
 
@@ -12,7 +13,7 @@ enum UserUrl {
  */
 async function getUser(): Promise<UserResponse> {
   try {
-    const res = await fetch(
+    const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${UserUrl.user}`,
       {
         method: "GET",
@@ -21,7 +22,7 @@ async function getUser(): Promise<UserResponse> {
       }
     )
 
-    const data = await res.json()
+    const data: UserResponse = await response.json()
 
     return data
   } catch (error) {
