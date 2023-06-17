@@ -47,7 +47,7 @@ export function CardDashboard({ title, name, image, icon }: CardProps) {
           alt={`Pic ${name}`}
           width={500}
           height={500}
-          className="rounded-md object-contain grayscale transition-all  hover:scale-105 hover:grayscale-0"
+          className="rounded-md object-contain grayscale transition-all hover:scale-105 hover:grayscale-0"
         />
       </CardContent>
       <CardFooter className="text-center">
