@@ -1,5 +1,11 @@
 import Image from "next/image"
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -13,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Icons } from "@/components/icons"
 import { DashboardShell } from "@/components/shell"
 
 export default function DetailKnowledge({
@@ -24,7 +31,11 @@ export default function DetailKnowledge({
     <DashboardShell>
       <div className="flex h-auto flex-col gap-4 px-2 md:flex-row">
         <Card className="flex basis-3/4 items-start justify-normal">
-          <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-col gap-8 p-4">
+            <div className="flex flex-row items-center justify-between">
+              <h2 className="grow break-all">{params.detail}</h2>
+              <Icons.billing className="h-14 w-14 flex-none  pl-5" />
+            </div>
             <Image
               src="https://pbs.twimg.com/media/FyzcwvqaYAEqDjq?format=jpg&name=small"
               alt="nigger"
@@ -32,7 +43,7 @@ export default function DetailKnowledge({
               width={1280}
               height={720}
             />
-            <Tabs defaultValue="description">
+            <Tabs defaultValue="description" className="hidden md:block">
               <TabsList className="grid w-1/2 grid-cols-2">
                 <TabsTrigger value="description">Deskripsi</TabsTrigger>
                 <TabsTrigger value="users">Users</TabsTrigger>
@@ -101,7 +112,33 @@ export default function DetailKnowledge({
             </Tabs>
           </div>
         </Card>
-        <div className="basis-1/4 bg-red-400">Tes</div>
+        <Card className="sticky flex h-[750px] basis-1/4 flex-col items-center justify-start">
+          <Tabs defaultValue="account" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="account">Account</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account">
+              <Accordion type="single" collapsible className="px-4">
+                <ScrollArea className="h-[650px]  w-full">
+                  {Array.from({ length: 20 }, (_, index) => (
+                    <AccordionItem
+                      key={index}
+                      value={`item-${index}`}
+                      className="text-sm"
+                    >
+                      <AccordionTrigger className="text-sm">
+                        Pengetahuan {index + 1}
+                      </AccordionTrigger>
+                      <AccordionContent className="py-4">
+                        Yes. It adheres to the WAI-ARIA design pattern.
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </ScrollArea>
+              </Accordion>
+            </TabsContent>
+          </Tabs>
+        </Card>
       </div>
     </DashboardShell>
   )
