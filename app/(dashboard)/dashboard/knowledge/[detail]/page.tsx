@@ -31,10 +31,12 @@ export default function DetailKnowledge({
     <DashboardShell>
       <div className="flex h-auto flex-col gap-4 px-2 md:flex-row">
         <Card className="flex basis-3/4 items-start justify-normal">
-          <div className="flex flex-col gap-8 p-4">
+          <div className="flex flex-col gap-6 p-4">
             <div className="flex flex-row items-center justify-between">
-              <h2 className="grow break-all">{params.detail}</h2>
-              <Icons.billing className="h-14 w-14 flex-none  pl-5" />
+              <p className="grow break-all font-heading text-3xl">
+                {params.detail}
+              </p>
+              <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
             </div>
             <Image
               src="https://pbs.twimg.com/media/FyzcwvqaYAEqDjq?format=jpg&name=small"
@@ -115,20 +117,20 @@ export default function DetailKnowledge({
         <Card className="sticky flex h-[750px] basis-1/4 flex-col items-center justify-start">
           <Tabs defaultValue="account" className="w-full">
             <TabsList className="flex w-full">
-              <TabsTrigger value="account" className="w-full">
-                Account
+              <TabsTrigger value="account" className="w-full font-semibold">
+                📑 Pengetahuan
               </TabsTrigger>
             </TabsList>
             <TabsContent value="account">
-              <Accordion type="single" collapsible className="px-4">
-                <ScrollArea className="h-[650px]  w-full">
+              <ScrollArea className="h-[650px]  w-full">
+                <Accordion type="single" collapsible className="px-4">
                   {Array.from({ length: 20 }, (_, index) => (
                     <AccordionItem
                       key={index}
                       value={`item-${index}`}
                       className="text-sm"
                     >
-                      <AccordionTrigger className="text-sm">
+                      <AccordionTrigger className="font-heading text-base font-bold">
                         Pengetahuan {index + 1}
                       </AccordionTrigger>
                       <AccordionContent className="py-4">
@@ -136,8 +138,8 @@ export default function DetailKnowledge({
                       </AccordionContent>
                     </AccordionItem>
                   ))}
-                </ScrollArea>
-              </Accordion>
+                </Accordion>
+              </ScrollArea>
             </TabsContent>
           </Tabs>
         </Card>
