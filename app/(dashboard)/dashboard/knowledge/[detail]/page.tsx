@@ -114,8 +114,10 @@ export default function DetailKnowledge({
         </Card>
         <Card className="sticky flex h-[750px] basis-1/4 flex-col items-center justify-start">
           <Tabs defaultValue="account" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="account">Account</TabsTrigger>
+            <TabsList className="flex w-full">
+              <TabsTrigger value="account" className="w-full">
+                Account
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="account">
               <Accordion type="single" collapsible className="px-4">
