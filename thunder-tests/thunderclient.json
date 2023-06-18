@@ -250,11 +250,11 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "50aea16c-04f6-4e1d-9833-1036cc165a5b",
     "name": "Get Knowledge by Id",
-    "url": "{{baseUrl}}/secure/knowledge/1",
+    "url": "{{baseUrl}}/secure/knowledge/2",
     "method": "GET",
     "sortNum": 85000,
     "created": "2023-02-13T04:40:21.629Z",
-    "modified": "2023-02-17T13:17:49.521Z",
+    "modified": "2023-06-18T21:50:36.172Z",
     "headers": [],
     "params": [],
     "tests": []

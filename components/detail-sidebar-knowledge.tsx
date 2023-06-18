@@ -26,22 +26,26 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
         </TabsList>
         <TabsContent value="account">
           <ScrollArea className="h-[650px]  w-full">
-            <Accordion type="single" collapsible className="px-4">
-              {dataKnowledge.data.section.map((section, index) => (
-                <AccordionItem
-                  key={section.id_section}
-                  value={`item-${index}`}
-                  className="text-sm"
-                >
-                  <AccordionTrigger className="font-heading text-base font-bold">
-                    {section.section_title}
-                  </AccordionTrigger>
-                  <AccordionContent className="py-4">
-                    Yes. It adheres to the WAI-ARIA design pattern.
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            {dataKnowledge.data.section ? (
+              <Accordion type="single" collapsible className="px-4">
+                {dataKnowledge.data.section.map((section, index) => (
+                  <AccordionItem
+                    key={section.id_section}
+                    value={`item-`}
+                    className="text-sm"
+                  >
+                    <AccordionTrigger className="font-heading text-base font-bold">
+                      {section.section_title}
+                    </AccordionTrigger>
+                    <AccordionContent className="py-4">
+                      Yes. It adheres to the WAI-ARIA design pattern.
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            ) : (
+              <p className="text-center text-sm">Tidak ada pengetahuan</p>
+            )}
           </ScrollArea>
         </TabsContent>
       </Tabs>
