@@ -21,7 +21,7 @@ export function KnowledgeItemList(props: { item: KnowledgeData }) {
       </div>
       <div className="grid gap-2 px-8">
         <Link
-          href={`/editor/${knowledgeItem.id_knowledge}`}
+          href={`/dashboard/knowledge/${knowledgeItem.id_knowledge}`}
           className="font-semibold hover:underline"
         >
           {knowledgeItem.knowledge_title}
