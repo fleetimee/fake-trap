@@ -14,7 +14,7 @@ export default async function DetailKnowledge({
     <DashboardShell>
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <DetailContent data={detailKnowledgeData.data} />
-        <DetailSidebarKnowledge />
+        <DetailSidebarKnowledge data={detailKnowledgeData.data} />
       </div>
     </DashboardShell>
   )

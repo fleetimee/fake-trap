@@ -1,5 +1,6 @@
 import React from "react"
 
+import { KnowledgeByIdResponse } from "@/types/knowledge-res"
 import {
   Accordion,
   AccordionContent,
@@ -14,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
  * Renders a card with a tabbed interface containing knowledge-related content.
  * @returns JSX.Element
  */
-export function DetailSidebarKnowledge() {
+export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="account" className="w-full">
@@ -26,25 +27,20 @@ export function DetailSidebarKnowledge() {
         <TabsContent value="account">
           <ScrollArea className="h-[650px]  w-full">
             <Accordion type="single" collapsible className="px-4">
-              {Array.from(
-                {
-                  length: 5,
-                },
-                (_, index) => (
-                  <AccordionItem
-                    key={index}
-                    value={`item-${index}`}
-                    className="text-sm"
-                  >
-                    <AccordionTrigger className="font-heading text-base font-bold">
-                      Pengetahuan {index + 1}
-                    </AccordionTrigger>
-                    <AccordionContent className="py-4">
-                      Yes. It adheres to the WAI-ARIA design pattern.
-                    </AccordionContent>
-                  </AccordionItem>
-                )
-              )}
+              {dataKnowledge.data.section.map((section, index) => (
+                <AccordionItem
+                  key={section.id_section}
+                  value={`item-${index}`}
+                  className="text-sm"
+                >
+                  <AccordionTrigger className="font-heading text-base font-bold">
+                    {section.section_title}
+                  </AccordionTrigger>
+                  <AccordionContent className="py-4">
+                    Yes. It adheres to the WAI-ARIA design pattern.
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
             </Accordion>
           </ScrollArea>
         </TabsContent>
