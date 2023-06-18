@@ -17,7 +17,7 @@ export interface KnowledgeData {
   description: string
   status: number
   image: string
-  on: KnowledgeSection[]
+  section: KnowledgeSection[]
   course?: KnowledgeCourse[]
   id_category: number
 }
