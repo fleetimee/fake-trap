@@ -4,6 +4,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  publicRuntimeConfig: {
+    basePath: "",
+  },
   images: {
     dangerouslyAllowSVG: true,
     domains: [
@@ -12,6 +15,14 @@ const nextConfig = {
       "res.cloudinary.com",
       "pbs.twimg.com",
     ],
+  },
+  webpack: (config, options) => {
+    // Important: return the modified config
+    config.module.rules.push({
+      test: /\.node/,
+      use: "raw-loader",
+    })
+    return config
   },
 }
 
