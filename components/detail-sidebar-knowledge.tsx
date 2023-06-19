@@ -11,6 +11,8 @@ import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import { Button } from "./ui/button"
+
 /**
  * Renders a card with a tabbed interface containing knowledge-related content.
  * @returns JSX.Element
@@ -26,20 +28,35 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
         </TabsList>
         <TabsContent value="account">
           <ScrollArea className="h-[650px]  w-full">
-            {dataKnowledge.data.section ? (
+            {dataKnowledge?.data?.section ? (
               <Accordion type="single" collapsible className="px-4">
-                {dataKnowledge.data.section.map((section, index) => (
+                {dataKnowledge.data.section.map((section) => (
                   <AccordionItem
                     key={section.id_section}
-                    value={`item-`}
+                    value={section.id_section.toString()}
                     className="text-sm"
                   >
                     <AccordionTrigger className="font-heading text-base font-bold">
                       {section.section_title}
                     </AccordionTrigger>
-                    <AccordionContent className="py-4">
-                      Yes. It adheres to the WAI-ARIA design pattern.
-                    </AccordionContent>
+                    {section.content ? (
+                      section.content.map((content) => (
+                        <AccordionContent
+                          key={content.id_content}
+                          className="py-4"
+                        >
+                          {content.content_title ? (
+                            <Button className="flex h-auto items-center justify-center rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
+                              {content.content_title}
+                            </Button>
+                          ) : null}
+                        </AccordionContent>
+                      ))
+                    ) : (
+                      <AccordionContent className="py-4">
+                        Tidak ada konten
+                      </AccordionContent>
+                    )}
                   </AccordionItem>
                 ))}
               </Accordion>

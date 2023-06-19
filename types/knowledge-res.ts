@@ -71,4 +71,14 @@ export type KnowledgeByIdCourseData = {
 export type KnowledgeByIdSectionData = {
   id_section: number
   section_title: string
+  content: KnowledgeByIdSectionContentData[]
+}
+
+export type KnowledgeByIdSectionContentData = {
+  id_content: number
+  content_title: string
+  content_type: number
+  image: string
+  link: string
+  id_section: number
 }
