@@ -21,6 +21,7 @@ interface KnowledgeCreateButton extends ButtonProps {}
 export function KnowledgeCreateButton({
   className,
   variant,
+  name,
   ...props
 }: KnowledgeCreateButton) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -44,7 +45,7 @@ export function KnowledgeCreateButton({
       ) : (
         <Icons.add className="mr-2 h-4 w-4" />
       )}
-      Pengetahuan
+      {name}
     </button>
   )
 }

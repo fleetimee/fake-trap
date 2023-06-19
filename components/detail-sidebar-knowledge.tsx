@@ -7,11 +7,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { EmptyContent } from "@/components/detail-sidebar-empty-content"
 
-import { Button } from "./ui/button"
+import { KnowledgeCreateButton } from "./knowledge-create-button"
 
 /**
  * Renders a card with a tabbed interface containing knowledge-related content.
@@ -54,7 +56,19 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                       ))
                     ) : (
                       <AccordionContent className="py-4">
-                        Tidak ada konten
+                        <EmptyContent className="h-[50px]">
+                          <EmptyContent.Icon name="empty" />
+                          <EmptyContent.Title>
+                            Tidak ada konten
+                          </EmptyContent.Title>
+                          <EmptyContent.Description>
+                            Konten tidak tersedia
+                          </EmptyContent.Description>
+                          <KnowledgeCreateButton
+                            variant="outline"
+                            name="Tambah"
+                          />
+                        </EmptyContent>
                       </AccordionContent>
                     )}
                   </AccordionItem>

@@ -15,7 +15,10 @@ export default async function KnowledgePage() {
         heading="Pengetahuan"
         description="Pengetahuan yang tersedia di e-learning"
       >
-        <KnowledgeCreateButton className=" transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110" />
+        <KnowledgeCreateButton
+          className=" transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110"
+          name="Tambah"
+        />
       </DashboardHeader>
       <div className="divide-y divide-border rounded-md border">
         {data.data.map((item) => (
