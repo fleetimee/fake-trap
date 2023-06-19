@@ -12,6 +12,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Icons } from "@/components/icons"
 
+import { YoutubePlayer } from "./youtube-player"
+
 /**
  * Props for the DetailContent component.
  * @interface DetailContentProps
@@ -29,22 +31,23 @@ export function DetailContent(dataContentKnowledge: KnowledgeByIdResponse) {
   console.log(dataContentKnowledge)
 
   return (
-    <Card className="flex basis-3/4 items-start justify-normal">
-      <div className="flex flex-col gap-6 p-4">
+    <Card className="flex w-full basis-3/4 items-start justify-normal">
+      <div className="flex w-full flex-col gap-6 p-4">
         <div className="flex flex-row items-center justify-between">
           <p className="grow break-all font-heading text-3xl">
             {dataContentKnowledge.data.knowledge_title}
           </p>
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
-        <Image
+        {/* <Image
           src={dataContentKnowledge.data.image}
           alt={dataContentKnowledge.data.knowledge_title}
           className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
           width={1280}
           height={720}
-        />
-        <Tabs defaultValue="description" className="hidden md:block">
+        /> */}
+        <YoutubePlayer videoId="fqQ1Xum8uNI" />
+        <Tabs defaultValue="description" className="hidden  w-full md:block">
           <TabsList className="flex w-1/2">
             <TabsTrigger value="description" className="w-full">
               Deskripsi
