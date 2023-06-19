@@ -12,7 +12,7 @@ import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
-import { KnowledgeCreateButton } from "@/components/knowledge-create-button"
+import { CreateButton } from "@/components/knowledge-create-button"
 
 /**
  * Renders a card with a tabbed interface containing knowledge-related content.
@@ -28,10 +28,10 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
           </TabsTrigger>
         </TabsList>
         <div className="flex w-full justify-end py-4 pr-4">
-          <KnowledgeCreateButton name="Section" />
+          <CreateButton name="Section" />
         </div>
         <TabsContent value="account">
-          <ScrollArea className="h-[650px]  w-full">
+          <ScrollArea className="h-[600px]  w-full">
             {dataKnowledge?.data?.section ? (
               <Accordion type="single" collapsible className="px-4">
                 {dataKnowledge.data.section.map((section) => (
@@ -47,10 +47,10 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                       section.content.map((content) => (
                         <AccordionContent
                           key={content.id_content}
-                          className="py-4"
+                          className="py-1"
                         >
                           {content.content_title ? (
-                            <Button className="flex h-auto w-full items-center justify-center rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
+                            <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
                               {content.content_title}
                             </Button>
                           ) : null}
@@ -66,10 +66,7 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                           <EmptyContent.Description>
                             Konten tidak tersedia
                           </EmptyContent.Description>
-                          <KnowledgeCreateButton
-                            variant="outline"
-                            name="Tambah"
-                          />
+                          <CreateButton variant="outline" name="Tambah" />
                         </EmptyContent>
                       </AccordionContent>
                     )}
@@ -83,7 +80,7 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                 <EmptyContent.Description>
                   Section tidak tersedia
                 </EmptyContent.Description>
-                <KnowledgeCreateButton variant="outline" name="Tambah" />
+                <CreateButton variant="outline" name="Tambah" />
               </EmptyContent>
             )}
           </ScrollArea>

@@ -9,7 +9,7 @@ import { Icons } from "@/components/icons"
 /**
  * Interface for the KnowledgeCreateButton component.
  */
-interface KnowledgeCreateButtonProps extends ButtonProps {}
+interface CreateButtonProps extends ButtonProps {}
 
 /**
  * Renders a button for creating knowledge.
@@ -18,12 +18,12 @@ interface KnowledgeCreateButtonProps extends ButtonProps {}
  * @param props - The props for the button.
  * @returns A React button component.
  */
-export function KnowledgeCreateButton({
+export function CreateButton({
   className,
   variant,
   name,
   ...props
-}: KnowledgeCreateButtonProps) {
+}: CreateButtonProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   function onClick() {}
