@@ -8,8 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-import { Icons } from "./icons"
+import { Icons } from "@/components/icons"
 
 interface CardProps {
   title: string

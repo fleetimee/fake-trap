@@ -1,5 +1,5 @@
-import { Content } from "./content-res"
-import { Quiz } from "./quiz-res"
+import { Content } from "@/types/content-res"
+import { Quiz } from "@/types/quiz-res"
 
 /**
  * Represents a section of a course, including its ID and title.

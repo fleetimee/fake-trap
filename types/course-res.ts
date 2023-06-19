@@ -1,5 +1,5 @@
-import { Section } from "./section-res"
-import { UserData } from "./user-res"
+import { Section } from "@/types/section-res"
+import { UserData } from "@/types/user-res"
 
 /**
  * Represents a response containing a list of courses, including the total count, data, page number, and total number of pages.

@@ -11,8 +11,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Icons } from "@/components/icons"
-
-import { YoutubePlayer } from "./youtube-player"
+import { YoutubePlayer } from "@/components/youtube-player"
 
 /**
  * Props for the DetailContent component.

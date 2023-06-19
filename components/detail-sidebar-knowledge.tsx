@@ -12,8 +12,7 @@ import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
-
-import { KnowledgeCreateButton } from "./knowledge-create-button"
+import { KnowledgeCreateButton } from "@/components/knowledge-create-button"
 
 /**
  * Renders a card with a tabbed interface containing knowledge-related content.

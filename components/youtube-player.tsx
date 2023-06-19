@@ -2,7 +2,7 @@
 
 import Youtube, { YouTubeProps } from "react-youtube"
 
-import { Card } from "./ui/card"
+import { Card } from "@/components/ui/card"
 
 export function YoutubePlayer({ videoId }: YouTubeProps) {
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
