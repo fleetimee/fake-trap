@@ -46,7 +46,7 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                           className="py-4"
                         >
                           {content.content_title ? (
-                            <Button className="flex h-auto items-center justify-center rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
+                            <Button className="flex h-auto w-full items-center justify-center rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
                               {content.content_title}
                             </Button>
                           ) : null}
