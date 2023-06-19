@@ -10,10 +10,16 @@ import {
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CreateButton } from "@/components/create-button"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
-import { CreateButton } from "@/components/knowledge-create-button"
 
 import { CreateSectionButton } from "./create-section-button"
 
@@ -56,9 +62,9 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
             📑 Pengetahuan
           </TabsTrigger>
         </TabsList>
-        <CreateSectionButton />
+        {dataKnowledge.data.section ? <CreateSectionButton /> : null}
         <TabsContent value="account">
-          <ScrollArea className="h-[600px]  w-full">
+          <ScrollArea className="h-[600px] w-full">
             {dataKnowledge?.data?.section ? (
               <Accordion type="single" collapsible className="px-4">
                 {dataKnowledge.data.section.map((section) => (
@@ -72,30 +78,50 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                     </AccordionTrigger>
                     {section.content ? (
                       section.content.map((content) => (
-                        <AccordionContent
-                          key={content.id_content}
-                          className="py-1"
-                        >
-                          {content.content_title ? (
-                            <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
-                              {content.content_title}
-                            </Button>
-                          ) : null}
-                        </AccordionContent>
+                        <ContextMenu>
+                          <ContextMenuTrigger>
+                            <AccordionContent
+                              key={content.id_content}
+                              className="py-1"
+                            >
+                              {content.content_title ? (
+                                <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
+                                  {content.content_title}
+                                </Button>
+                              ) : null}
+                            </AccordionContent>
+                          </ContextMenuTrigger>
+                          <ContextMenuContent>
+                            <ContextMenuItem>Profile</ContextMenuItem>
+                            <ContextMenuItem>Billing</ContextMenuItem>
+                            <ContextMenuItem>Team</ContextMenuItem>
+                            <ContextMenuItem>Subscription</ContextMenuItem>
+                          </ContextMenuContent>
+                        </ContextMenu>
                       ))
                     ) : (
-                      <AccordionContent className="py-4">
-                        <EmptyContent className="h-[50px]">
-                          <EmptyContent.Icon name="empty" />
-                          <EmptyContent.Title>
-                            Tidak ada konten
-                          </EmptyContent.Title>
-                          <EmptyContent.Description>
-                            Konten tidak tersedia
-                          </EmptyContent.Description>
-                          <CreateButton variant="outline" name="Tambah" />
-                        </EmptyContent>
-                      </AccordionContent>
+                      <ContextMenu>
+                        <ContextMenuTrigger>
+                          <AccordionContent className="py-4">
+                            <EmptyContent className="h-[50px]">
+                              <EmptyContent.Icon name="empty" />
+                              <EmptyContent.Title>
+                                Tidak ada konten
+                              </EmptyContent.Title>
+                              <EmptyContent.Description>
+                                Konten tidak tersedia
+                              </EmptyContent.Description>
+                              <CreateButton variant="outline" name="Tambah" />
+                            </EmptyContent>
+                          </AccordionContent>
+                        </ContextMenuTrigger>
+                        <ContextMenuContent>
+                          <ContextMenuItem>Profile</ContextMenuItem>
+                          <ContextMenuItem>Billing</ContextMenuItem>
+                          <ContextMenuItem>Team</ContextMenuItem>
+                          <ContextMenuItem>Subscription</ContextMenuItem>
+                        </ContextMenuContent>
+                      </ContextMenu>
                     )}
                   </AccordionItem>
                 ))}

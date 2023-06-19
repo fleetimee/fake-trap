@@ -36,8 +36,8 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
       <DropdownMenuTrigger>
         <UserAvatar
           user={{
-            name: user.name || "User",
-            image: user.image || imageUrl,
+            name: user.name ?? "User",
+            image: user.image ?? imageUrl,
           }}
           className="h-8 w-8"
         />

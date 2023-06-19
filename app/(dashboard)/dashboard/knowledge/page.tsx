@@ -1,6 +1,6 @@
 import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { CreateButton } from "@/components/create-button"
 import { DashboardHeader } from "@/components/header"
-import { CreateButton } from "@/components/knowledge-create-button"
 import { KnowledgeItemList } from "@/components/knowledge-item-list"
 import { DashboardShell } from "@/components/shell"
 
