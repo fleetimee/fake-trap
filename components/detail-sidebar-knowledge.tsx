@@ -77,7 +77,14 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                 ))}
               </Accordion>
             ) : (
-              <p className="text-center text-sm">Tidak ada pengetahuan</p>
+              <EmptyContent className="h-[625px] items-center justify-center">
+                <EmptyContent.Icon name="empty" />
+                <EmptyContent.Title>Tidak ada section</EmptyContent.Title>
+                <EmptyContent.Description>
+                  Section tidak tersedia
+                </EmptyContent.Description>
+                <KnowledgeCreateButton variant="outline" name="Tambah" />
+              </EmptyContent>
             )}
           </ScrollArea>
         </TabsContent>
