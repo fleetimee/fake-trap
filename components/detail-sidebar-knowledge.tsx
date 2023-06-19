@@ -27,6 +27,9 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
             📑 Pengetahuan
           </TabsTrigger>
         </TabsList>
+        <div className="flex w-full justify-end py-4 pr-4">
+          <KnowledgeCreateButton name="Section" />
+        </div>
         <TabsContent value="account">
           <ScrollArea className="h-[650px]  w-full">
             {dataKnowledge?.data?.section ? (
