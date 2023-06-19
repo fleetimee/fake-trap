@@ -1,4 +1,5 @@
 import React from "react"
+import * as z from "zod"
 
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
 import {
@@ -14,11 +15,39 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
 import { CreateButton } from "@/components/knowledge-create-button"
 
+import { CreateSectionButton } from "./create-section-button"
+
+/**
+ * Defines a schema for the form data used to create a new section in the knowledge sidebar.
+ */
+const formSchema = z.object({
+  section_title: z.string().min(2).max(18),
+})
+
 /**
  * Renders a card with a tabbed interface containing knowledge-related content.
  * @returns JSX.Element
  */
 export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
+  /**
+   * Initializes a form using the `useForm` hook from `react-hook-form` library.
+   * The form uses the `zodResolver` from `@hookform/resolvers/zod` to validate the form data.
+   * @returns An object containing the form instance.
+   */
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  //   defaultValues: {
+  //     section_title: "",
+  //   },
+  // })
+
+  // // 2. Define a submit handler.
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values)
+  // }
+
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="account" className="w-full">
@@ -27,9 +56,7 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
             📑 Pengetahuan
           </TabsTrigger>
         </TabsList>
-        <div className="flex w-full justify-end py-4 pr-4">
-          <CreateButton name="Section" />
-        </div>
+        <CreateSectionButton />
         <TabsContent value="account">
           <ScrollArea className="h-[600px]  w-full">
             {dataKnowledge?.data?.section ? (
