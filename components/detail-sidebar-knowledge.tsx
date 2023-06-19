@@ -24,13 +24,6 @@ import { EmptyContent } from "@/components/detail-sidebar-empty-content"
 import { CreateSectionButton } from "./create-section-button"
 
 /**
- * Defines a schema for the form data used to create a new section in the knowledge sidebar.
- */
-const formSchema = z.object({
-  section_title: z.string().min(2).max(18),
-})
-
-/**
  * Renders a card with a tabbed interface containing knowledge-related content.
  * @returns JSX.Element
  */
