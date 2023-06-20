@@ -3,25 +3,17 @@ import React from "react"
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CreateSectionButton } from "@/components/create-section-button"
 import { EmptyContentInitial } from "@/components/empty-knowledge-content-initial"
 import { EmptyKnowledgeSectionInitial } from "@/components/empty-knowledge-section-initial"
 
-import { SectionKnowledge } from "./section-knowledge"
+import { SectionKnowledgeContent } from "./section-knowledge"
 
 /**
  * Renders the sidebar for the knowledge detail page.
@@ -58,7 +50,7 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                     </AccordionTrigger>
                     {section.content ? (
                       section.content.map((content) => (
-                        <SectionKnowledge content={content} />
+                        <SectionKnowledgeContent content={content} />
                       ))
                     ) : (
                       <EmptyContentInitial />

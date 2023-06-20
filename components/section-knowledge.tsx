@@ -28,7 +28,7 @@ enum ContentType {
   Files = 2,
 }
 
-export function SectionKnowledge({
+export function SectionKnowledgeContent({
   content: content,
 }: {
   content: KnowledgeByIdSectionContentData
