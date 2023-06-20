@@ -36,8 +36,10 @@ export function SectionKnowledge({
   const [isAddSheetOpen, setIsAddSheetOpen] = React.useState<boolean>(false)
   const [isEditSheetOpen, setIsEditSheetOpen] = React.useState<boolean>(false)
 
+  const [open, setOpen] = React.useState<boolean>(false)
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <ContextMenu key={content.id_content}>
         <ContextMenuTrigger>
           <AccordionContent key={content.id_content} className="py-1">
@@ -91,7 +93,11 @@ export function SectionKnowledge({
         </ContextMenuContent>
       </ContextMenu>
       {isAddSheetOpen ? (
-        <CreateKnowledgeContentButton />
+        <CreateKnowledgeContentButton
+          id_section={content.id_section}
+          open={open}
+          setOpen={setOpen}
+        />
       ) : (
         <SheetContent size="sm">
           <SheetHeader>

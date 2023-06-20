@@ -67,44 +67,52 @@ export function CreateSectionButton({
   })
 
   /**
-   * Handles the form submission for creating a new section in the knowledge sidebar.
-   * @param values An object containing the form data.
-   * @returns A Promise that resolves to void.
+   * Submits the form data to create a new section in the knowledge sidebar.
+   * @param values The form data to be submitted.
+   * @returns A Promise that resolves when the section is successfully created.
    */
   async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
+    // Sets the loading state to true.
     setIsLoading(true)
 
-    console.log(values)
+    try {
+      // Sends a POST request to create a new section.
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section`,
+        {
+          method: "POST",
+          headers: headersObj,
+          body: JSON.stringify(values),
+        }
+      )
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section`,
-      {
-        method: "POST",
-        headers: headersObj,
-        body: JSON.stringify(values),
+      console.log(response)
+
+      // If the response is successful, displays a success toast and refreshes the page.
+      if (response.ok) {
+        toast({
+          title: "Section berhasil dibuat",
+          description: "Section anda berhasil dibuat.",
+          duration: 5000,
+        })
+
+        router.refresh()
+        form.reset()
+        setOpen(false)
+      } else {
+        // If the response is not successful, throws an error.
+        throw new Error("Section gagal dibuat")
       }
-    )
-
-    console.log(response)
-
-    if (response.ok) {
-      toast({
-        title: "Section berhasil dibuat",
-        description: "Section anda berhasil dibuat.",
-        duration: 5000,
-      })
-
-      router.refresh()
-      form.reset()
-      setIsLoading(false)
-      setOpen(false)
-    } else {
+    } catch (error) {
+      // If there is an error, displays an error toast.
       toast({
         title: "Section gagal dibuat",
         description: "Section anda gagal dibuat.",
         duration: 5000,
         variant: "destructive",
       })
+    } finally {
+      // Sets the loading state to false.
       setIsLoading(false)
     }
   }
