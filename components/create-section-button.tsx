@@ -123,7 +123,7 @@ export function CreateSectionButton({
         <SheetTrigger asChild>
           <CreateButton name="Section" />
         </SheetTrigger>
-        <SheetContent position="right" size="sm">
+        <SheetContent position="right" size="content">
           <SheetHeader>
             <SheetTitle>Tambah Section</SheetTitle>
             <SheetDescription>
@@ -140,7 +140,7 @@ export function CreateSectionButton({
                 name="section_title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Judul section</FormLabel>
+                    <FormLabel>Judul Section</FormLabel>
                     <FormControl>
                       <Input placeholder="Pendahuluan" {...field} />
                     </FormControl>
