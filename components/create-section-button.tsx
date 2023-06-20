@@ -87,9 +87,6 @@ export function CreateSectionButton({
 
     console.log(response)
 
-    setIsLoading(false)
-    setOpen(false)
-
     if (response.ok) {
       toast({
         title: "Section berhasil dibuat",
@@ -99,6 +96,16 @@ export function CreateSectionButton({
 
       router.refresh()
       form.reset()
+      setIsLoading(false)
+      setOpen(false)
+    } else {
+      toast({
+        title: "Section gagal dibuat",
+        description: "Section anda gagal dibuat.",
+        duration: 5000,
+        variant: "destructive",
+      })
+      setIsLoading(false)
     }
   }
 
