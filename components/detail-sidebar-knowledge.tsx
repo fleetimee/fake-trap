@@ -7,17 +7,26 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CreateButton } from "@/components/create-button"
 import { CreateSectionButton } from "@/components/create-section-button"
-import { EmptyContent } from "@/components/detail-sidebar-empty-content"
-import { SectionKnowledge } from "@/components/section-knowledge"
+import { EmptyContentInitial } from "@/components/empty-knowledge-content-initial"
+import { EmptyKnowledgeSectionInitial } from "@/components/empty-knowledge-section-initial"
+
+import { SectionKnowledge } from "./section-knowledge"
 
 /**
- * Renders a card with a tabbed interface containing knowledge-related content.
- * @returns JSX.Element
+ * Renders the sidebar for the knowledge detail page.
+ * @param dataKnowledge The knowledge data to display.
+ * @returns A React component representing the sidebar for the knowledge detail page.
  */
 export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
   return (
@@ -29,7 +38,10 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
           </TabsTrigger>
         </TabsList>
         {dataKnowledge.data.section ? (
-          <CreateSectionButton id_knowledge={dataKnowledge.data.id_knowledge} />
+          <CreateSectionButton
+            id_knowledge={dataKnowledge.data.id_knowledge}
+            name="Section"
+          />
         ) : null}
         <TabsContent value="account">
           <ScrollArea className="h-[600px] w-full">
@@ -49,31 +61,15 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                         <SectionKnowledge content={content} />
                       ))
                     ) : (
-                      <AccordionContent className="py-4">
-                        <EmptyContent className="h-[50px]">
-                          <EmptyContent.Icon name="empty" />
-                          <EmptyContent.Title>
-                            Tidak ada konten
-                          </EmptyContent.Title>
-                          <EmptyContent.Description>
-                            Konten tidak tersedia
-                          </EmptyContent.Description>
-                          <CreateButton variant="outline" name="Tambah" />
-                        </EmptyContent>
-                      </AccordionContent>
+                      <EmptyContentInitial />
                     )}
                   </AccordionItem>
                 ))}
               </Accordion>
             ) : (
-              <EmptyContent className="h-[625px] items-center justify-center">
-                <EmptyContent.Icon name="empty" />
-                <EmptyContent.Title>Tidak ada section</EmptyContent.Title>
-                <EmptyContent.Description>
-                  Section tidak tersedia
-                </EmptyContent.Description>
-                <CreateButton variant="outline" name="Tambah" />
-              </EmptyContent>
+              <EmptyKnowledgeSectionInitial
+                id_knowledge={dataKnowledge.data.id_knowledge}
+              />
             )}
           </ScrollArea>
         </TabsContent>

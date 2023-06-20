@@ -44,8 +44,10 @@ const formSchema = z.object({
 
 export function CreateSectionButton({
   id_knowledge,
+  name,
 }: {
   id_knowledge: number
+  name: string
 }) {
   const router = useRouter()
 
@@ -121,7 +123,7 @@ export function CreateSectionButton({
     <div className="ml-auto flex w-full justify-end py-4 pr-4">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <CreateButton name="Section" />
+          <CreateButton name={name} />
         </SheetTrigger>
         <SheetContent position="right" size="content">
           <SheetHeader>
