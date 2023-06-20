@@ -3,43 +3,57 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, set, useForm } from "react-hook-form"
+import { Check, ChevronsUpDown } from "lucide-react"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
-import { AccordionContent } from "@/components/ui/accordion"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuSeparator,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu"
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command"
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-
-import { CreateButton } from "./create-button"
-import { Icons } from "./icons"
-import {
+  Form,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form"
-import { Input } from "./ui/input"
-import { toast } from "./ui/use-toast"
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
+
+enum ContentType {
+  Video = 1,
+  Files = 2,
+  Link = 3,
+  Text = 4,
+}
+
+const contentTypes = [
+  { value: 1, label: "Video" },
+  { value: 2, label: "File" },
+  { value: 3, label: "Link" },
+  { value: 4, label: "Text" },
+] as const
 
 /**
  * Defines the schema for the knowledge content form.
@@ -135,13 +149,124 @@ export function CreateKnowledgeContentButton({
 
   // Render the sheet content.
   return (
-    <SheetContent size="sm">
+    <SheetContent size="content">
       <SheetHeader>
         <SheetTitle>Tambah Konten</SheetTitle>
         <SheetDescription>
           Tambah konten baru ke dalam bagian ini.
         </SheetDescription>
       </SheetHeader>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col space-y-8 py-8"
+        >
+          <FormField
+            control={form.control}
+            name="content_title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Judul Konten</FormLabel>
+                <FormControl>
+                  <Input placeholder="Sejarah Javascript" {...field} />
+                </FormControl>
+                <FormDescription>Judul konten anda.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="content_type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tipe Konten</FormLabel>
+                <FormControl>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? contentTypes.find(
+                                (content) => content.value === field.value
+                              )?.label
+                            : "Select language"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Tipe konten..." />
+                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandGroup>
+                          {contentTypes.map((language) => (
+                            <CommandItem
+                              value={language.value.toString()}
+                              key={language.value}
+                              onSelect={(value) => {
+                                form.setValue("content_type", parseInt(value))
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  language.value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </FormControl>
+                <FormDescription>Pilih tipe konten anda.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {form.watch("content_type") === 1 ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>URL Youtube</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>Link video Youtube.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : null}
+
+          <Button type="submit" className="self-end">
+            {isLoading ? (
+              <Icons.spinner className="h-5 w-5 animate-spin" />
+            ) : (
+              "Tambah"
+            )}
+          </Button>
+        </form>
+      </Form>
     </SheetContent>
   )
 }
