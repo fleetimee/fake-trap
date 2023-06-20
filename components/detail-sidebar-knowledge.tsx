@@ -33,7 +33,7 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
         ) : null}
         <TabsContent value="account">
           <ScrollArea className="h-[600px] w-full">
-            {dataKnowledge?.data?.section ? (
+            {dataKnowledge.data.section ? (
               <Accordion type="single" collapsible className="px-4">
                 {dataKnowledge.data.section.map((section) => (
                   <AccordionItem

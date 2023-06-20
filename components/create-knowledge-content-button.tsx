@@ -256,6 +256,24 @@ export function CreateKnowledgeContentButton({
                 </FormItem>
               )}
             />
+          ) : form.watch("content_type") === 2 ? (
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>URL Gambar</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://pbs.twimg.com/media/FzDiHrSWIAAQYx9?format=jpg&name=small"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>Link gambar.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           ) : null}
 
           <Button type="submit" className="self-end">
