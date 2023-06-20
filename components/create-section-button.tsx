@@ -20,18 +20,15 @@ import {
 import { Input } from "@/components/ui/input"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { toast } from "@/components/ui/use-toast"
 import { CreateButton } from "@/components/create-button"
-
-import { Icons } from "./icons"
-import { toast } from "./ui/use-toast"
+import { Icons } from "@/components/icons"
 
 /**
  * Defines a schema for the form data used to create a new section in the knowledge sidebar.
@@ -54,6 +51,8 @@ export function CreateSectionButton({
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
+  const [open, setOpen] = React.useState<boolean>(false)
+
   /**
    * Initializes a form using the `useForm` hook from `react-hook-form` library.
    * The form uses the `zodResolver` from `@hookform/resolvers/zod` to validate the form data.
@@ -67,10 +66,12 @@ export function CreateSectionButton({
     },
   })
 
-  console.log(form)
-
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  /**
+   * Handles the form submission for creating a new section in the knowledge sidebar.
+   * @param values An object containing the form data.
+   * @returns A Promise that resolves to void.
+   */
+  async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
     setIsLoading(true)
 
     console.log(values)
@@ -87,20 +88,23 @@ export function CreateSectionButton({
     console.log(response)
 
     setIsLoading(false)
+    setOpen(false)
 
     if (response.ok) {
       toast({
         title: "Section berhasil dibuat",
         description: "Section anda berhasil dibuat.",
+        duration: 5000,
       })
 
       router.refresh()
+      form.reset()
     }
   }
 
   return (
     <div className="ml-auto flex w-full justify-end py-4 pr-4">
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <CreateButton name="Section" />
         </SheetTrigger>
@@ -132,14 +136,11 @@ export function CreateSectionButton({
               />
 
               <Button type="submit" className="self-end">
-                {
-                  // If the form is submitting, show a spinner.
-                  isLoading ? (
-                    <Icons.spinner className="h-5 w-5 animate-spin" />
-                  ) : (
-                    "Tambah"
-                  )
-                }
+                {isLoading ? (
+                  <Icons.spinner className="h-5 w-5 animate-spin" />
+                ) : (
+                  "Tambah"
+                )}
               </Button>
             </form>
           </Form>
