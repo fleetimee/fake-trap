@@ -26,8 +26,6 @@ export function CreateButton({
 }: CreateButtonProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  function onClick() {}
-
   return (
     <Button
       className={cn(

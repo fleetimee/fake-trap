@@ -1,12 +1,15 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
+import AsyncSelect from "react-select/async"
 import { z } from "zod"
 
+import { CategoryResponse, DataCategory } from "@/types/category-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -58,7 +61,7 @@ const formSchema = z.object({
   knowledge_title: z.string().min(2).max(40).nonempty(),
   description: z.string().min(2).max(4000).nonempty(),
   status: z.number().int(),
-  image: z.string().url().optional(),
+  image: z.string().optional(),
   id_category: z.number().int(),
 })
 /**
@@ -69,17 +72,22 @@ const formSchema = z.object({
  * Renders a button to create a new knowledge item and handles form submission.
  * Uses react-hook-form and zod for form validation.
  */
-export function CreateKnowledgeButton() {
+export function CreateKnowledgeButton({
+  categoryResponse,
+}: {
+  categoryResponse: CategoryResponse
+}) {
   const router = useRouter()
 
   const [isLoading, setIsloading] = React.useState<boolean>(false)
+
+  const [open, setOpen] = React.useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       knowledge_title: "",
       description: "",
-      status: 1,
       image: "",
     },
   })
@@ -113,6 +121,7 @@ export function CreateKnowledgeButton() {
 
         router.refresh()
         form.reset()
+        setOpen(false)
       } else {
         throw new Error("Gagal membuat pengetahuan")
       }
@@ -129,7 +138,7 @@ export function CreateKnowledgeButton() {
   }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <CreateButton
           className=" transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110"
@@ -265,6 +274,80 @@ export function CreateKnowledgeButton() {
                   </FormControl>
                   <FormDescription>
                     Status pengetahuan yang ingin dibuat.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="id_category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Kategori</FormLabel>
+                  <FormControl>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? categoryResponse.data.find(
+                                  (category) =>
+                                    category.id_category === field.value
+                                )?.category_name
+                              : "Pilih kategori"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput placeholder="Jenis Kategori" />
+                          <CommandEmpty>Kategori tidak ditemukan</CommandEmpty>
+                          <CommandGroup>
+                            {categoryResponse.data.map((category) => (
+                              <CommandItem
+                                value={category.id_category.toString()}
+                                key={category.id_category}
+                                onSelect={(value) => {
+                                  form.clearErrors("id_category")
+                                  form.setValue("id_category", parseInt(value))
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    category.id_category === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {category.category_name}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </FormControl>
+                  <FormDescription>
+                    Kategori pengetahuan yang ingin dibuat. jika belum ada
+                    silahkan tambahkan{" "}
+                    <Link
+                      href="/dashboard/category"
+                      rel="noreferrer"
+                      className="font-medium underline underline-offset-8"
+                    >
+                      disini
+                    </Link>
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
