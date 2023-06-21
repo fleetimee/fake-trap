@@ -3,7 +3,7 @@
 import React from "react"
 
 import { cn } from "@/lib/utils"
-import { ButtonProps, buttonVariants } from "@/components/ui/button"
+import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
 /**
@@ -29,7 +29,7 @@ export function CreateButton({
   function onClick() {}
 
   return (
-    <button
+    <Button
       className={cn(
         buttonVariants({ variant }),
         {
@@ -46,6 +46,6 @@ export function CreateButton({
         <Icons.add className="mr-2 h-4 w-4" />
       )}
       {name}
-    </button>
+    </Button>
   )
 }
