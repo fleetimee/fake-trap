@@ -20,7 +20,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { CreateKnowledgeContentSheet } from "@/components/create-knowledge-content-sheet"
+import { CreateKnowledgeContentSheet } from "@/components/create-section-content-sheet"
 
 enum ContentType {
   Video = 1,
