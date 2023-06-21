@@ -47,7 +47,7 @@ import { toast } from "@/components/ui/use-toast"
 import { CreateButton } from "@/components/create-button"
 import { Icons } from "@/components/icons"
 
-const statusTypes = [
+export const statusTypes = [
   { value: 1, label: "Public" },
   { value: 2, label: "Private" },
 ]

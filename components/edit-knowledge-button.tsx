@@ -109,9 +109,17 @@ export function EditKnowledgeButton(props: { item: KnowledgeData }) {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <Button variant="outline" className="mr-2">
-        Edit
-      </Button>
+      <SheetTrigger>
+        <Button variant="outline" className="mr-2">
+          Edit
+        </Button>
+      </SheetTrigger>
+      <SheetContent position="right" size="content">
+        <SheetHeader>
+          <SheetTitle>Ubah Pengetahuan</SheetTitle>
+          <SheetDescription>Ubah pengetahuan yang sudah ada.</SheetDescription>
+        </SheetHeader>
+      </SheetContent>
     </Sheet>
   )
 }
