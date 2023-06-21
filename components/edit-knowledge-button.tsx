@@ -9,6 +9,32 @@ import { z } from "zod"
 import { KnowledgeData } from "@/types/knowledge-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Textarea } from "@/components/ui/textarea"
+import { Icons } from "@/components/icons"
 
 import { toast } from "./ui/use-toast"
 
@@ -82,8 +108,10 @@ export function EditKnowledgeButton(props: { item: KnowledgeData }) {
   }
 
   return (
-    <Button variant="outline" className="mr-2">
-      Edit
-    </Button>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <Button variant="outline" className="mr-2">
+        Edit
+      </Button>
+    </Sheet>
   )
 }

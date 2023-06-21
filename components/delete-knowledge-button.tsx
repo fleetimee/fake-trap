@@ -77,7 +77,7 @@ export function DeleteKnowledgeButton(props: { item: KnowledgeData }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant="destructive">Delete</Button>
+        <Button variant="destructive">Hapus</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
