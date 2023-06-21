@@ -9,15 +9,13 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "@/components/ui/use-toast"
-
-import { Icons } from "./icons"
+import { Icons } from "@/components/icons"
 
 /**
  * A button component that triggers a dialog to confirm the deletion of a knowledge item.

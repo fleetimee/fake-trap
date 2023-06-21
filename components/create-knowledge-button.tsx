@@ -237,7 +237,7 @@ export function CreateKnowledgeButton({
                               ? statusTypes.find(
                                   (content) => content.value === field.value
                                 )?.label
-                              : "Select language"}
+                              : "Pilih Status"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -303,7 +303,7 @@ export function CreateKnowledgeButton({
                                   (category) =>
                                     category.id_category === field.value
                                 )?.category_name
-                              : "Pilih kategori"}
+                              : "Pilih Kategori"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
