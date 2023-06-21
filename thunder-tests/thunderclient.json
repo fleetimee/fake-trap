@@ -402,11 +402,11 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "e69929a2-f89a-4f6f-9915-430c5757871c",
     "name": "Get Content By Id",
-    "url": "{{baseUrl}}/secure/content/7",
+    "url": "{{baseUrl}}/secure/content/16",
     "method": "GET",
     "sortNum": 210000,
     "created": "2023-02-14T04:23:27.382Z",
-    "modified": "2023-06-20T00:56:43.567Z",
+    "modified": "2023-06-21T01:54:10.556Z",
     "headers": [],
     "params": [],
     "tests": []
