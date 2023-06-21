@@ -23,7 +23,7 @@ export function KnowledgeItemList(props: {
             width={120}
             height={120}
             alt="Picture of the author"
-            className="rounded-md grayscale hover:animate-pulse hover:filter-none"
+            className="aspect-video rounded-md object-cover grayscale hover:animate-pulse hover:filter-none"
           />
         </div>
         <div className="px-4">
