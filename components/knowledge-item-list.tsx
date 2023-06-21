@@ -1,12 +1,16 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { CategoryResponse } from "@/types/category-res"
 import { KnowledgeData } from "@/types/knowledge-res"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DeleteKnowledgeButton } from "@/components/delete-knowledge-button"
 import { EditKnowledgeButton } from "@/components/edit-knowledge-button"
 
-export function KnowledgeItemList(props: { item: KnowledgeData }) {
+export function KnowledgeItemList(props: {
+  item: KnowledgeData
+  category: CategoryResponse
+}) {
   const knowledgeItem = props.item
 
   return (
@@ -38,7 +42,7 @@ export function KnowledgeItemList(props: { item: KnowledgeData }) {
       </div>
       <div className="flex flex-row-reverse px-2">
         <DeleteKnowledgeButton item={knowledgeItem} />
-        <EditKnowledgeButton item={knowledgeItem} />
+        <EditKnowledgeButton item={knowledgeItem} category={props.category} />
       </div>
     </div>
   )

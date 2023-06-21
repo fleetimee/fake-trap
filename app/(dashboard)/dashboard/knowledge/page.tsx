@@ -21,7 +21,11 @@ export default async function KnowledgePage() {
       </DashboardHeader>
       <div className="divide-y divide-border rounded-md border">
         {knowledgeResp.data.map((item) => (
-          <KnowledgeItemList key={item.id_knowledge} item={item} />
+          <KnowledgeItemList
+            key={item.id_knowledge}
+            item={item}
+            category={categoryResp}
+          />
         ))}
       </div>
     </DashboardShell>
