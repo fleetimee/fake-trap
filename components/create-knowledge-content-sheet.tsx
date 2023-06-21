@@ -59,10 +59,10 @@ const contentTypes = [
  * Defines the schema for the knowledge content form.
  */
 const formSchema = z.object({
-  content_title: z.string().min(2).max(18).nonempty(),
+  content_title: z.string().min(2).max(40).nonempty(),
   content_type: z.number().int(),
-  image: z.string().url().optional(),
-  link: z.string().url().optional(),
+  image: z.string().optional(),
+  link: z.string().optional(),
   id_section: z.number().int(),
 })
 
@@ -104,6 +104,8 @@ export function CreateKnowledgeContentSheet({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Set loading state to true.
     setIsloading(true)
+
+    console.log("clicked")
 
     try {
       // Send a POST request to create a new knowledge content.
@@ -175,7 +177,6 @@ export function CreateKnowledgeContentSheet({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="content_type"
@@ -237,7 +238,6 @@ export function CreateKnowledgeContentSheet({
               </FormItem>
             )}
           />
-
           {form.watch("content_type") === 1 ? (
             <FormField
               control={form.control}
