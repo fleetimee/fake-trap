@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
-import AsyncSelect from "react-select/async"
 import { z } from "zod"
 
-import { CategoryResponse, DataCategory } from "@/types/category-res"
+import { CategoryResponse } from "@/types/category-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -64,10 +63,7 @@ const formSchema = z.object({
   image: z.string().optional(),
   id_category: z.number().int(),
 })
-/**
- * Renders a button to create a new knowledge item and handles form submission.
- * Uses react-hook-form and zod for form validation.
- */
+
 /**
  * Renders a button to create a new knowledge item and handles form submission.
  * Uses react-hook-form and zod for form validation.

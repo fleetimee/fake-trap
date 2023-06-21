@@ -38,7 +38,7 @@ export function KnowledgeItemList(props: { item: KnowledgeData }) {
       </div>
       <div className="flex flex-row-reverse px-2">
         <DeleteKnowledgeButton item={knowledgeItem} />
-        <EditKnowledgeButton />
+        <EditKnowledgeButton item={knowledgeItem} />
       </div>
     </div>
   )
