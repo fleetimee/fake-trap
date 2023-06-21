@@ -14,8 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CreateSectionButton } from "@/components/create-section-button"
 import { EmptyContentInitial } from "@/components/empty-knowledge-content-initial"
 import { EmptyKnowledgeSectionInitial } from "@/components/empty-knowledge-section-initial"
-
-import { SectionKnowledgeContent } from "./section-knowledge"
+import { SectionKnowledgeContent } from "@/components/section-knowledge"
 
 /**
  * Renders the sidebar for the knowledge detail page.

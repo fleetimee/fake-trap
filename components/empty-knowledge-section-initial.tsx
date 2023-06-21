@@ -2,10 +2,8 @@
 
 import React from "react"
 
-import { CreateButton } from "@/components/create-button"
+import { CreateSectionButton } from "@/components/create-section-button"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
-
-import { CreateSectionButton } from "./create-section-button"
 
 export function EmptyKnowledgeSectionInitial({
   id_knowledge,

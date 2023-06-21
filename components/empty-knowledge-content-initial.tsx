@@ -11,9 +11,8 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
+import { CreateKnowledgeContentSheet } from "@/components/create-knowledge-content-sheet"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
-
-import { CreateKnowledgeContentSheet } from "./create-knowledge-content-sheet"
 
 export function EmptyContentInitial({ id_section }: { id_section: number }) {
   const [open, setOpen] = React.useState<boolean>(false)
