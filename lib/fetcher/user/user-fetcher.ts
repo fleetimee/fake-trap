@@ -1,5 +1,4 @@
 import { UserResponse } from "@/types/user-res"
-import { toast } from "@/components/ui/use-toast"
 
 import { headersObj } from "../knowledge/knowledge-fetcher"
 
