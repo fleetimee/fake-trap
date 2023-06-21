@@ -29,6 +29,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Popover,
   PopoverContent,
@@ -43,11 +44,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
+import { toast } from "@/components/ui/use-toast"
+import { statusTypes } from "@/components/create-knowledge-button"
 import { Icons } from "@/components/icons"
-
-import { statusTypes } from "./create-knowledge-button"
-import { Input } from "./ui/input"
-import { toast } from "./ui/use-toast"
 
 /**
  * Defines a zod schema for the form data used in the CreateKnowledgeButton component.
@@ -82,6 +81,13 @@ export function EditKnowledgeButton(props: {
     },
   })
 
+  /**
+   * Handles the form submission for editing a knowledge item.
+   * Sends a PUT request to the server with the updated knowledge data.
+   * Displays a success or error toast message based on the response.
+   * Resets the form and closes the sheet on success.
+   * @param values The form data values to be submitted.
+   */
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
