@@ -21,7 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-import { CreateKnowledgeContentButton } from "./create-knowledge-content-button"
+import { CreateKnowledgeContentSheet } from "./create-knowledge-content-sheet"
 
 enum ContentType {
   Video = 1,
@@ -93,7 +93,7 @@ export function SectionKnowledgeContent({
         </ContextMenuContent>
       </ContextMenu>
       {isAddSheetOpen ? (
-        <CreateKnowledgeContentButton
+        <CreateKnowledgeContentSheet
           id_section={content.id_section}
           open={open}
           setOpen={setOpen}

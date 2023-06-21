@@ -71,7 +71,7 @@ const formSchema = z.object({
  *
  * @returns A React component that displays a button to create knowledge content.
  */
-export function CreateKnowledgeContentButton({
+export function CreateKnowledgeContentSheet({
   id_section,
   open,
   setOpen,
