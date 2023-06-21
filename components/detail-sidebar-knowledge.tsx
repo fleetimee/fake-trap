@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
@@ -20,7 +22,9 @@ import { SectionKnowledgeContent } from "./section-knowledge"
  * @param dataKnowledge The knowledge data to display.
  * @returns A React component representing the sidebar for the knowledge detail page.
  */
-export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
+export default function DetailSidebarKnowledge(
+  dataKnowledge: KnowledgeByIdResponse
+) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="account" className="w-full">
@@ -38,7 +42,12 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
         <TabsContent value="account">
           <ScrollArea className="h-[600px] w-full">
             {dataKnowledge.data.section ? (
-              <Accordion type="single" collapsible className="px-4">
+              <Accordion
+                type="single"
+                collapsible
+                className="px-4"
+                key={dataKnowledge.data.knowledge_title}
+              >
                 {dataKnowledge.data.section.map((section) => (
                   <AccordionItem
                     key={section.id_section}
@@ -53,7 +62,7 @@ export function DetailSidebarKnowledge(dataKnowledge: KnowledgeByIdResponse) {
                         <SectionKnowledgeContent content={content} />
                       ))
                     ) : (
-                      <EmptyContentInitial />
+                      <EmptyContentInitial id_section={section.id_section} />
                     )}
                   </AccordionItem>
                 ))}

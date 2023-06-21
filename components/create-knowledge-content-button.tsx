@@ -206,7 +206,7 @@ export function CreateKnowledgeContentButton({
                     <PopoverContent className="w-[200px] p-0">
                       <Command>
                         <CommandInput placeholder="Tipe konten..." />
-                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
                         <CommandGroup>
                           {contentTypes.map((language) => (
                             <CommandItem

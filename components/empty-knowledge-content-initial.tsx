@@ -7,32 +7,46 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
-import { CreateButton } from "@/components/create-button"
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
 
-export function EmptyContentInitial({}) {
+import { CreateKnowledgeContentButton } from "./create-knowledge-content-button"
+
+export function EmptyContentInitial({ id_section }: { id_section: number }) {
+  const [open, setOpen] = React.useState<boolean>(false)
+
   return (
-    <ContextMenu>
-      <ContextMenuTrigger>
-        <AccordionContent className="py-4">
-          <EmptyContent className="h-[50px]">
-            <EmptyContent.Icon name="empty" />
-            <EmptyContent.Title>Tidak ada konten</EmptyContent.Title>
-            <EmptyContent.Description>
-              Konten tidak tersedia
-            </EmptyContent.Description>
-            <CreateButton variant="outline" name="Tambah" />
-          </EmptyContent>
-        </AccordionContent>
-      </ContextMenuTrigger>
-      <ContextMenuContent>
-        <ContextMenuItem>Profile</ContextMenuItem>
-        <ContextMenuItem>Billing</ContextMenuItem>
-        <ContextMenuItem>Team</ContextMenuItem>
-        <ContextMenuItem>Subscription</ContextMenuItem>
-      </ContextMenuContent>
-    </ContextMenu>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <ContextMenu>
+        <ContextMenuTrigger>
+          <AccordionContent className="py-4">
+            <EmptyContent className="h-[50px]">
+              <EmptyContent.Icon name="empty" />
+              <EmptyContent.Title>Tidak ada konten</EmptyContent.Title>
+              <EmptyContent.Description>
+                Klik kanan untuk menambah konten
+              </EmptyContent.Description>
+            </EmptyContent>
+          </AccordionContent>
+        </ContextMenuTrigger>
+        <ContextMenuContent>
+          <ContextMenuItem inset disabled>
+            ID Section: {id_section}
+          </ContextMenuItem>
+          <ContextMenuSeparator />
+          <SheetTrigger>
+            <ContextMenuItem inset>Tambah Konten</ContextMenuItem>
+          </SheetTrigger>
+        </ContextMenuContent>
+      </ContextMenu>
+      <CreateKnowledgeContentButton
+        id_section={id_section}
+        open={open}
+        setOpen={setOpen}
+      />
+    </Sheet>
   )
 }
