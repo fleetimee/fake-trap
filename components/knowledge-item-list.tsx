@@ -3,34 +3,42 @@ import Link from "next/link"
 
 import { KnowledgeData } from "@/types/knowledge-res"
 import { Skeleton } from "@/components/ui/skeleton"
+import { DeleteKnowledgeButton } from "@/components/delete-knowledge-button"
+import { EditKnowledgeButton } from "@/components/edit-knowledge-button"
 
 export function KnowledgeItemList(props: { item: KnowledgeData }) {
   const knowledgeItem = props.item
 
   return (
-    <div className="flex items-center p-4">
-      <div className="flex justify-center">
-        <Image
-          src={knowledgeItem.image}
-          sizes="100px"
-          width={100}
-          height={100}
-          alt="Picture of the author"
-          className="rounded-md grayscale  hover:animate-pulse hover:filter-none"
-        />
-      </div>
-      <div className="grid gap-2 px-8">
-        <Link
-          href={`/dashboard/knowledge/${knowledgeItem.id_knowledge}`}
-          className="font-semibold hover:underline"
-        >
-          {knowledgeItem.knowledge_title}
-        </Link>
+    <div className="flex items-center justify-between p-4">
+      <div className="flex">
         <div>
-          <p className="text-sm text-muted-foreground">
-            {knowledgeItem.description}
-          </p>
+          <Image
+            src={knowledgeItem.image}
+            sizes="100px"
+            width={120}
+            height={120}
+            alt="Picture of the author"
+            className="rounded-md grayscale hover:animate-pulse hover:filter-none"
+          />
         </div>
+        <div className="px-4">
+          <Link
+            href={`/dashboard/knowledge/${knowledgeItem.id_knowledge}`}
+            className="font-semibold hover:underline"
+          >
+            {knowledgeItem.knowledge_title}
+          </Link>
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {knowledgeItem.description}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-row-reverse px-2">
+        <DeleteKnowledgeButton />
+        <EditKnowledgeButton />
       </div>
     </div>
   )
