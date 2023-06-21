@@ -1,5 +1,5 @@
 import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
-import { CreateButton } from "@/components/create-button"
+import { CreateKnowledgeButton } from "@/components/create-knowledge-button"
 import { DashboardHeader } from "@/components/header"
 import { KnowledgeItemList } from "@/components/knowledge-item-list"
 import { DashboardShell } from "@/components/shell"
@@ -15,10 +15,7 @@ export default async function KnowledgePage() {
         heading="Pengetahuan"
         description="Pengetahuan yang tersedia di e-learning"
       >
-        <CreateButton
-          className=" transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110"
-          name="Tambah"
-        />
+        <CreateKnowledgeButton />
       </DashboardHeader>
       <div className="divide-y divide-border rounded-md border">
         {data.data.map((item) => (
