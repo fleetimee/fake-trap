@@ -21,8 +21,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { CreateSectionContentSheet } from "@/components/create-section-content-sheet"
+import { EditSectionContentSheet } from "@/components/edit-section-content-sheet"
 
-import { EditSectionContentSheet } from "./edit-section-content-sheet"
+import { DeleteSectionContentSheet } from "./delete-section-content-sheet"
 
 enum ContentType {
   Video = 1,
@@ -36,6 +37,8 @@ export function SectionKnowledgeContent({
 }) {
   const [isAddSheetOpen, setIsAddSheetOpen] = React.useState<boolean>(false)
   const [isEditSheetOpen, setIsEditSheetOpen] = React.useState<boolean>(false)
+  const [isDeleteSheetOpen, setIsDeleteSheetOpen] =
+    React.useState<boolean>(false)
 
   const [open, setOpen] = React.useState<boolean>(false)
 
@@ -70,7 +73,7 @@ export function SectionKnowledgeContent({
             onClick={() => {
               setIsAddSheetOpen(true)
               setIsEditSheetOpen(false)
-              console.log(isAddSheetOpen)
+              setIsDeleteSheetOpen(false)
             }}
           >
             <ContextMenuItem inset>Tambah Konten</ContextMenuItem>
@@ -82,15 +85,26 @@ export function SectionKnowledgeContent({
             onClick={() => {
               setIsAddSheetOpen(false)
               setIsEditSheetOpen(true)
-              console.log(isAddSheetOpen)
+              setIsDeleteSheetOpen(false)
             }}
           >
             <ContextMenuItem inset>Edit Konten</ContextMenuItem>
           </SheetTrigger>
           <ContextMenuSeparator />
-          <ContextMenuItem inset className="text-red-500">
-            Hapus Konten
-          </ContextMenuItem>
+          <SheetTrigger
+            className="w-full"
+            asChild
+            id="delete"
+            onClick={() => {
+              setIsDeleteSheetOpen(true)
+              setIsAddSheetOpen(false)
+              setIsEditSheetOpen(false)
+            }}
+          >
+            <ContextMenuItem inset className="text-red-500">
+              Hapus Konten
+            </ContextMenuItem>
+          </SheetTrigger>
         </ContextMenuContent>
       </ContextMenu>
       {isAddSheetOpen ? (
@@ -99,8 +113,14 @@ export function SectionKnowledgeContent({
           open={open}
           setOpen={setOpen}
         />
-      ) : (
+      ) : isEditSheetOpen ? (
         <EditSectionContentSheet item={content} open={open} setOpen={setOpen} />
+      ) : (
+        <DeleteSectionContentSheet
+          item={content}
+          open={open}
+          setOpen={setOpen}
+        />
       )}
     </Sheet>
   )

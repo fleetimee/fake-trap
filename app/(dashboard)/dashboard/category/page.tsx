@@ -1,9 +1,8 @@
 import { getCategory } from "@/lib/fetcher/category/category-fetcher"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
-
-import { columns } from "./columns"
-import { DataTable } from "./data-table"
+import { columns } from "@/app/(dashboard)/dashboard/category/columns"
+import { DataTable } from "@/app/(dashboard)/dashboard/category/data-table"
 
 /**
  * Renders the Category page component.

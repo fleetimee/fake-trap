@@ -61,10 +61,12 @@ const formSchema = z.object({
 })
 
 /**
- * EditSectionContentSheet component is responsible for rendering a form to edit a knowledge content.
- * @param {Object} props - The props object containing the item to be edited.
- * @param {KnowledgeByIdSectionContentData} props.item - The knowledge content to be edited.
- * @returns {JSX.Element} - The JSX element representing the form to edit the knowledge content.
+ * This component renders a form for editing content. It includes fields for the content title, type, and either a link or image depending on the selected type. When the form is submitted, it calls the onSubmit function with the form data. If the submission is successful, the form is reset and the setOpen function is called with false. If the submission fails, a toast notification is displayed.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.setOpen - A function to set the open state of the parent component.
+ *
+ * @returns {JSX.Element} - The rendered component.
  */
 export function EditSectionContentSheet(props: {
   item: KnowledgeByIdSectionContentData
@@ -111,6 +113,7 @@ export function EditSectionContentSheet(props: {
         })
 
         router.refresh()
+
         form.reset()
         props.setOpen(false)
       } else {
