@@ -47,7 +47,6 @@ export function DeleteKnowledgeButton(props: { item: KnowledgeData }) {
         toast({
           title: "Berhasil menghapus pengetahuan",
           description: "Pengetahuan berhasil dihapus",
-          duration: 5000,
           variant: "default",
         })
 
@@ -57,7 +56,6 @@ export function DeleteKnowledgeButton(props: { item: KnowledgeData }) {
         toast({
           title: "Gagal menghapus pengetahuan",
           description: "Pengetahuan gagal dihapus",
-          duration: 5000,
           variant: "destructive",
         })
       }
@@ -66,7 +64,6 @@ export function DeleteKnowledgeButton(props: { item: KnowledgeData }) {
       toast({
         title: "Gagal menghapus pengetahuan",
         description: "Pengetahuan gagal dihapus",
-        duration: 5000,
         variant: "destructive",
       })
     } finally {

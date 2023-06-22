@@ -112,7 +112,6 @@ export function CreateKnowledgeButton({
         toast({
           title: "Pengetahuan berhasil dibuat",
           description: "Pengetahuan berhasil dibuat",
-          duration: 5000,
         })
 
         router.refresh()
@@ -125,7 +124,6 @@ export function CreateKnowledgeButton({
       toast({
         title: "Gagal membuat pengetahuan",
         description: "Gagal membuat pengetahuan",
-        duration: 5000,
         variant: "destructive",
       })
     } finally {

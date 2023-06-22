@@ -64,7 +64,7 @@ const formSchema = z.object({
  *
  * @returns A React component that displays a button to create knowledge content.
  */
-export function CreateKnowledgeContentSheet({
+export function CreateSectionContentSheet({
   id_section,
   open,
   setOpen,
@@ -116,7 +116,6 @@ export function CreateKnowledgeContentSheet({
         toast({
           title: "Konten berhasil dibuat",
           description: "Konten berhasil dibuat",
-          duration: 5000,
         })
 
         router.refresh()
@@ -131,7 +130,6 @@ export function CreateKnowledgeContentSheet({
       toast({
         title: "Gagal membuat konten",
         description: "Gagal membuat konten",
-        duration: 5000,
         variant: "destructive",
       })
     } finally {

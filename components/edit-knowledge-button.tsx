@@ -107,7 +107,6 @@ export function EditKnowledgeButton(props: {
         toast({
           title: "Pengetahuan berhasil diubah",
           description: "Pengetahuan berhasil diubah",
-          duration: 5000,
         })
 
         router.refresh()
@@ -117,7 +116,6 @@ export function EditKnowledgeButton(props: {
         toast({
           title: "Pengetahuan gagal diubah",
           description: "Pengetahuan gagal diubah",
-          duration: 5000,
         })
       }
     } catch (error) {
