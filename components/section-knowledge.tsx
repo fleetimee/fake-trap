@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/sheet"
 import { CreateSectionContentSheet } from "@/components/create-section-content-sheet"
 
+import { EditSectionContentSheet } from "./edit-section-content-sheet"
+
 enum ContentType {
   Video = 1,
   Files = 2,
@@ -98,15 +100,7 @@ export function SectionKnowledgeContent({
           setOpen={setOpen}
         />
       ) : (
-        <SheetContent size="sm">
-          <SheetHeader>
-            <SheetTitle>Nigga</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
+        <EditSectionContentSheet item={content} open={open} setOpen={setOpen} />
       )}
     </Sheet>
   )
