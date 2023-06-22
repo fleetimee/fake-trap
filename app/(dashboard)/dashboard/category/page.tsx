@@ -4,6 +4,11 @@ import { DashboardShell } from "@/components/shell"
 import { columns } from "@/app/(dashboard)/dashboard/category/columns"
 import { DataTable } from "@/app/(dashboard)/dashboard/category/data-table"
 
+export const metadata = {
+  title: "Kategori",
+  description: "Kategori Pengetahuan yang tersedia",
+}
+
 /**
  * Renders the Category page component.
  * @returns {JSX.Element} The Category page component.

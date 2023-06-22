@@ -5,6 +5,11 @@ import { DashboardHeader } from "@/components/header"
 import { KnowledgeItemList } from "@/components/knowledge-item-list"
 import { DashboardShell } from "@/components/shell"
 
+export const metadata = {
+  title: "Pengetahuan",
+  description: "Pengetahuan yang tersedia di e-learning",
+}
+
 export default async function KnowledgePage() {
   const data = getKnowledge(1000)
   const dataCategory = getCategory(1000)

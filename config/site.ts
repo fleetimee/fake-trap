@@ -5,6 +5,7 @@ export type SiteConfig = typeof siteConfig
  */
 export const siteConfig = {
   name: "BPD Elearning",
+  url: "http://localhost:3000",
   description:
     "Beautifully designed components built with Radix UI and Tailwind CSS.",
   mainNav: [

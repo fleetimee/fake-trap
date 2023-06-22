@@ -1,7 +1,26 @@
-import { getKnowledgeByid } from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { Metadata } from "next"
+
+import {
+  getKnowledgeByid,
+  headersObj,
+} from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { DetailContent } from "@/components/detail-content"
 import DetailSidebarKnowledge from "@/components/detail-sidebar-knowledge"
 import { DashboardShell } from "@/components/shell"
+
+type Props = {
+  params: {
+    detail: string
+  }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const detailKnowledgeData = await getKnowledgeByid(parseInt(params.detail))
+
+  return {
+    title: detailKnowledgeData.data.knowledge_title,
+  }
+}
 
 export default async function DetailKnowledge({
   params,

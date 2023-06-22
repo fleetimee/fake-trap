@@ -10,6 +10,10 @@ import { CardDashboardIndicator } from "@/components/card-dashboard-indicator"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
+export const metadata = {
+  title: "Dashboard",
+}
+
 /**
  * Dashboard page component that displays user, knowledge, course, and quiz information.
  * @returns {JSX.Element} The dashboard page component.
