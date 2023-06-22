@@ -128,7 +128,7 @@ export function EditKnowledgeButton(props: {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
-        <Button variant="outline" className="mr-2">
+        <Button variant="secondary" className="mr-2">
           Edit
         </Button>
       </SheetTrigger>

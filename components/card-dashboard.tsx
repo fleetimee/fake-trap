@@ -28,7 +28,7 @@ export function CardDashboard({ title, name, image, icon }: CardProps) {
   const Icon = Icons[icon || "arrowRight"]
 
   return (
-    <Card className="space-y-2 shadow-md">
+    <Card className="space-y-2 shadow-md hover:bg-accent hover:text-accent-foreground">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
           <CardTitle className="text-sm font-medium">{title}</CardTitle>

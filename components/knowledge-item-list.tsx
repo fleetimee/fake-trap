@@ -14,7 +14,7 @@ export function KnowledgeItemList(props: {
   const knowledgeItem = props.item
 
   return (
-    <div className="flex items-center justify-between p-4">
+    <div className="flex items-center justify-between p-4 hover:bg-accent hover:text-accent-foreground">
       <div className="flex">
         <div className="flex-none">
           <Image
