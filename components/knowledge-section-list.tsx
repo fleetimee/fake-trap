@@ -19,8 +19,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { EditSectionSheet } from "@/components/edit-section-sheet"
 
-import { EditSectionSheet } from "./edit-section-sheet"
+import { DeleteSectionSheet } from "./delete-section-sheet"
 
 export function KnowledgeSectionList(props: {
   item: KnowledgeByIdSectionData
@@ -77,12 +78,7 @@ export function KnowledgeSectionList(props: {
       {isEditSectionOpen ? (
         <EditSectionSheet item={props.item} open={open} setOpen={setOpen} />
       ) : (
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Delete Section</SheetTitle>
-            <SheetDescription>Delete Section</SheetDescription>
-          </SheetHeader>
-        </SheetContent>
+        <DeleteSectionSheet item={props.item} open={open} setOpen={setOpen} />
       )}
     </Sheet>
   )

@@ -1,8 +1,11 @@
+"use client"
+
 import React from "react"
 import { useRouter } from "next/navigation"
 
-import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
+import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { Button } from "@/components/ui/button"
 import {
   SheetContent,
   SheetDescription,
@@ -11,12 +14,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
 
-import { Icons } from "./icons"
-import { Button } from "./ui/button"
-
-export function DeleteSectionContentSheet(props: {
-  item: KnowledgeByIdSectionContentData
+export function DeleteSectionSheet(props: {
+  item: KnowledgeByIdSectionData
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
@@ -29,7 +30,7 @@ export function DeleteSectionContentSheet(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${props.item.id_content}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${props.item.id_section}`,
         {
           method: "DELETE",
           headers: headersObj,
@@ -40,16 +41,17 @@ export function DeleteSectionContentSheet(props: {
 
       if (response.ok) {
         toast({
-          title: "Berhasil menghapus konten",
-          description: "Konten berhasil dihapus",
+          title: "Berhasil menghapus section",
+          description: "Section berhasil dihapus",
         })
 
         router.refresh()
         props.setOpen(false)
       } else {
         toast({
-          title: "Gagal menghapus konten",
-          description: "Konten gagal dihapus",
+          title: "Gagal menghapus section",
+          description: `Section gagal dihapus`,
+          variant: "destructive",
         })
       }
     } catch (error) {
@@ -62,10 +64,9 @@ export function DeleteSectionContentSheet(props: {
   return (
     <SheetContent>
       <SheetHeader>
-        <SheetTitle>Hapus Konten</SheetTitle>
+        <SheetTitle>Hapus Section</SheetTitle>
         <SheetDescription>
-          Aksi ini tidak dapat dibatalkan. Konten akan dihapus permanen. Apakah
-          anda yakin ?
+          Apakah anda yakin ingin menghapus section ini?
         </SheetDescription>
       </SheetHeader>
       <SheetFooter className="py-8">
