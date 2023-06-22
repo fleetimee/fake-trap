@@ -16,14 +16,14 @@ export function KnowledgeItemList(props: {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="flex">
-        <div>
+        <div className="flex-none">
           <Image
             src={knowledgeItem.image}
             sizes="100px"
             width={120}
             height={120}
             alt="Picture of the author"
-            className="aspect-video rounded-md object-cover grayscale hover:animate-pulse hover:filter-none"
+            className="aspect-video resize-none rounded-md object-cover grayscale hover:animate-pulse hover:filter-none"
           />
         </div>
         <div className="px-4">
