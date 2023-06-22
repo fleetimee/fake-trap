@@ -20,6 +20,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
+import { EditSectionSheet } from "./edit-section-sheet"
+
 export function KnowledgeSectionList(props: {
   item: KnowledgeByIdSectionData
 }) {
@@ -28,8 +30,10 @@ export function KnowledgeSectionList(props: {
   const [isDeleteSectionOpen, setIsDeleteSectionOpen] =
     React.useState<boolean>(false)
 
+  const [open, setOpen] = React.useState<boolean>(false)
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <ContextMenu>
         <ContextMenuTrigger>
           <AccordionTrigger className="font-heading text-base font-bold">
@@ -71,12 +75,7 @@ export function KnowledgeSectionList(props: {
         </ContextMenuContent>
       </ContextMenu>
       {isEditSectionOpen ? (
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Edit Section</SheetTitle>
-            <SheetDescription>Edit Section</SheetDescription>
-          </SheetHeader>
-        </SheetContent>
+        <EditSectionSheet item={props.item} open={open} setOpen={setOpen} />
       ) : (
         <SheetContent>
           <SheetHeader>
