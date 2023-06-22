@@ -11,7 +11,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { CreateKnowledgeContentSheet } from "@/components/create-knowledge-content-sheet"
+import { CreateSectionContentSheet } from "@/components/create-section-content-sheet"
 import { EmptyContent } from "@/components/detail-sidebar-empty-content"
 
 export function EmptyContentInitial({ id_section }: { id_section: number }) {
@@ -41,7 +41,7 @@ export function EmptyContentInitial({ id_section }: { id_section: number }) {
           </SheetTrigger>
         </ContextMenuContent>
       </ContextMenu>
-      <CreateKnowledgeContentSheet
+      <CreateSectionContentSheet
         id_section={id_section}
         open={open}
         setOpen={setOpen}

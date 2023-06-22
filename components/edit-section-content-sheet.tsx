@@ -7,6 +7,7 @@ import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -41,13 +42,6 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-enum ContentType {
-  Video = 1,
-  Files = 2,
-  Link = 3,
-  Text = 4,
-}
-
 const contentTypes = [
   { value: 1, label: "Video" },
   { value: 2, label: "File" },
@@ -67,52 +61,44 @@ const formSchema = z.object({
 })
 
 /**
- * Renders a button to create knowledge content.
+ * This component renders a form for editing content. It includes fields for the content title, type, and either a link or image depending on the selected type. When the form is submitted, it calls the onSubmit function with the form data. If the submission is successful, the form is reset and the setOpen function is called with false. If the submission fails, a toast notification is displayed.
  *
- * @returns A React component that displays a button to create knowledge content.
+ * @param {Object} props - The component props.
+ * @param {boolean} props.setOpen - A function to set the open state of the parent component.
+ *
+ * @returns {JSX.Element} - The rendered component.
  */
-export function CreateKnowledgeContentSheet({
-  id_section,
-  open,
-  setOpen,
-}: {
-  id_section: number
+export function EditSectionContentSheet(props: {
+  item: KnowledgeByIdSectionContentData
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const router = useRouter()
-  const [isLoading, setIsloading] = React.useState<boolean>(false)
 
-  // Define the form using react-hook-form and zod.
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+
+  /**
+   * Initializes the form with default values and validation schema.
+   */
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content_title: "",
-      content_type: 1,
-      image: "",
-      link: "",
-      id_section: id_section,
+      content_title: props.item.content_title,
+      content_type: props.item.content_type,
+      image: props.item.image,
+      link: props.item.link,
+      id_section: props.item.id_section,
     },
   })
 
-  /**
-   * Submits the form data to create a new knowledge content.
-   *
-   * @param values The form data to be submitted.
-   * @returns A Promise that resolves to the response of the POST request.
-   */
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Set loading state to true.
-    setIsloading(true)
-
-    console.log("clicked")
+    setIsLoading(true)
 
     try {
-      // Send a POST request to create a new knowledge content.
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${props.item.id_content}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: headersObj,
           body: JSON.stringify(values),
         }
@@ -120,43 +106,34 @@ export function CreateKnowledgeContentSheet({
 
       console.log(response)
 
-      // If the response is OK, display a success toast and reset the form.
       if (response.ok) {
         toast({
-          title: "Konten berhasil dibuat",
-          description: "Konten berhasil dibuat",
-          duration: 5000,
+          title: "Berhasil mengubah konten",
+          description: "Konten berhasil diubah",
         })
 
         router.refresh()
+
         form.reset()
-        setOpen(false)
+        props.setOpen(false)
       } else {
-        // If the response is not OK, throw an error.
-        throw new Error("Gagal membuat konten")
+        toast({
+          title: "Gagal mengubah konten",
+          description: "Konten gagal diubah",
+        })
       }
     } catch (error) {
-      // If there is an error, display an error toast.
-      toast({
-        title: "Gagal membuat konten",
-        description: "Gagal membuat konten",
-        duration: 5000,
-        variant: "destructive",
-      })
+      console.error(error)
     } finally {
-      // Set loading state to false.
-      setIsloading(false)
+      setIsLoading(false)
     }
   }
 
-  // Render the sheet content.
   return (
     <SheetContent size="content">
       <SheetHeader>
-        <SheetTitle>Tambah Konten</SheetTitle>
-        <SheetDescription>
-          Tambah konten baru ke dalam bagian ini.
-        </SheetDescription>
+        <SheetTitle>Edit Konten</SheetTitle>
+        <SheetDescription>Ubah konten yang ingin kamu ubah.</SheetDescription>
       </SheetHeader>
       <Form {...form}>
         <form
@@ -214,6 +191,7 @@ export function CreateKnowledgeContentSheet({
                               value={language.value.toString()}
                               key={language.value}
                               onSelect={(value) => {
+                                form.clearErrors("content_type")
                                 form.setValue("content_type", parseInt(value))
                               }}
                             >
@@ -238,6 +216,7 @@ export function CreateKnowledgeContentSheet({
               </FormItem>
             )}
           />
+
           {form.watch("content_type") === 1 ? (
             <FormField
               control={form.control}

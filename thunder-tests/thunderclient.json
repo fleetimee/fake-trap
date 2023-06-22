@@ -122,12 +122,12 @@
     "method": "GET",
     "sortNum": 50000,
     "created": "2023-02-12T20:14:35.048Z",
-    "modified": "2023-02-12T20:15:25.584Z",
+    "modified": "2023-06-21T09:10:13.376Z",
     "headers": [],
     "params": [],
     "auth": {
       "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzYyMzY1MDQsImlkIjoiZmxlYSIsIm9yaWdfaWF0IjoxNjc2MjMyOTA0fQ.GTSrn_2xDDE8KXdrlp8XZ87WMRg8oqY8dHpeds9uBwg"
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVheEBnbWFpbC5jb20iLCJleHAiOjE2ODczOTg1MzQsImlkIjoiMjk3YTZlNTAtOTI5ZC00YWVmLWJhNmYtNzZmMzQxMjcyZWUzIiwib3JpZ19pYXQiOjE2ODczMTIxMzQsInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IkFkbWluIiwicm9sZV9kZXNjcmlwdGlvbiI6IkdyYW50IHVzZXIgYWxsIHJlc291cmNlcyJ9XSwidXNlcm5hbWUiOiJvY3RhdmlhIn0.CqMuo1rsMzPiklYYgg-6blNyl6rwc0TnM-S2wOvbgfk"
     },
     "tests": []
   },

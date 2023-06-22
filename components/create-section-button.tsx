@@ -95,7 +95,6 @@ export function CreateSectionButton({
         toast({
           title: "Section berhasil dibuat",
           description: "Section anda berhasil dibuat.",
-          duration: 5000,
         })
 
         router.refresh()
@@ -110,7 +109,6 @@ export function CreateSectionButton({
       toast({
         title: "Section gagal dibuat",
         description: "Section anda gagal dibuat.",
-        duration: 5000,
         variant: "destructive",
       })
     } finally {
