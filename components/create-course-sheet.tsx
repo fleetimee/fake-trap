@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -6,6 +8,15 @@ import { z } from "zod"
 
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 
+import { CreateButton } from "./create-button"
+import { Button } from "./ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTrigger,
+} from "./ui/sheet"
 import { toast } from "./ui/use-toast"
 
 const formSchema = z.object({
@@ -55,7 +66,38 @@ export function CreateCourseButton() {
           title: "Kursus berhasil dibuat",
           description: "Kursus berhasil dibuat",
         })
+
+        router.refresh()
+        form.reset()
+        setOpen(false)
+      } else {
+        toast({
+          title: "Kursus gagal dibuat",
+          description: "Kursus gagal dibuat",
+          variant: "destructive",
+        })
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger>
+        <CreateButton
+          className=" transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110"
+          name="Tambah"
+        />
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>Tambah Kursus</SheetHeader>
+        <SheetDescription>
+          Tambah kursus baru dengan pengetahuan yang telah dibuat
+        </SheetDescription>
+      </SheetContent>
+    </Sheet>
+  )
 }
