@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { CreateButton } from "@/components/create-button"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
@@ -28,7 +29,12 @@ export default async function CoursePage() {
       <DashboardHeader
         heading="Kursus"
         description="Kursus yang tersedia di e-learning"
-      />
+      >
+        <CreateButton
+          className=" transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110"
+          name="Tambah"
+        />
+      </DashboardHeader>
       <div className="grid grid-cols-1 grid-rows-3 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {dataCourse.data.map((item) => (
           <Card
