@@ -373,7 +373,7 @@ export function EditCourseButton(props: {
               {isLoading ? (
                 <Icons.spinner className="h-5 w-5 animate-spin" />
               ) : (
-                "Tambah"
+                "Ubah"
               )}
             </Button>
           </form>

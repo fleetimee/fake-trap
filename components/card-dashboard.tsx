@@ -40,13 +40,13 @@ export function CardDashboard({ title, name, image, icon }: CardProps) {
           </CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="grid">
+      <CardContent className="flex flex-col">
         <Image
           src={image}
           alt={`Pic ${name}`}
           width={500}
           height={500}
-          className="rounded-md object-contain grayscale transition-all hover:scale-105 hover:grayscale-0"
+          className="aspect-video flex-none rounded-md object-cover grayscale transition-all hover:scale-105 hover:grayscale-0"
         />
       </CardContent>
       <CardFooter className="text-center">

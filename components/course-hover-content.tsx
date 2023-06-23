@@ -19,7 +19,7 @@ export function CourseHoverContent(props: { data: CourseData }) {
   return (
     <HoverCardContent className="w-80">
       <div className="flex justify-between space-x-4">
-        <Avatar className="w-1/6">
+        <Avatar className="aspect-auto w-1/6 object-cover">
           <AvatarImage src={props.data.image} />
           <AvatarFallback>VC</AvatarFallback>
         </Avatar>

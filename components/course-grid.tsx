@@ -47,7 +47,7 @@ export function CourseGrid(props: {
               alt="Picture of the author"
               width={1200}
               height={1200}
-              className="aspect-video flex-none rounded-lg object-cover"
+              className="aspect-video flex-none rounded-lg object-cover grayscale transition-all hover:scale-105 hover:grayscale-0 "
             />
             <section className="flex flex-col justify-center pt-6">
               <div className="flex flex-row items-end justify-end">

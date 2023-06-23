@@ -1092,5 +1092,24 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "048a3866-0538-48cf-b530-f4d22bbb657d",
+    "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
+    "containerId": "9c30f79e-5289-4426-811a-3c09f288898d",
+    "name": "Post Course Copy",
+    "url": "{{baseUrl}}/secure/course/7",
+    "method": "PUT",
+    "sortNum": 410000,
+    "created": "2023-06-23T09:37:33.651Z",
+    "modified": "2023-06-23T09:38:23.453Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"id_knowledge\": 1,\n  \"course_name\": \"Advanced JavaScript Techniques\",\n  \"course_desc\": \"asdadad\",\n  \"image\": \"https://pbs.twimg.com/media/FzPIoFiX0AAgdns?format=jpg&name=medium\",\n  \"date_start\": \"2023-02-20T04:57:21.146Z\",\n  \"date_end\": \"2023-02-20T04:57:21.146+07:00\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]
