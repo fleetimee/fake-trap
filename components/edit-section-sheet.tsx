@@ -67,8 +67,6 @@ export function EditSectionSheet(props: {
         }
       )
 
-      console.log(response)
-
       if (response.ok) {
         toast({
           title: "Section berhasil diubah",

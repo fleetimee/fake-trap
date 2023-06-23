@@ -41,7 +41,6 @@ export function DeleteKnowledgeButton(props: { item: KnowledgeData }) {
           headers: headersObj,
         }
       )
-      console.log(response)
 
       if (response.ok) {
         toast({

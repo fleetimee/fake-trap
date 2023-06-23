@@ -109,8 +109,6 @@ export function CreateSectionContentSheet({
         }
       )
 
-      console.log(response)
-
       // If the response is OK, display a success toast and reset the form.
       if (response.ok) {
         toast({

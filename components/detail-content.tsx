@@ -27,8 +27,6 @@ interface DetailContentProps {
  * @returns {JSX.Element} - A JSX.Element representing the detail content component.
  */
 export function DetailContent(dataContentKnowledge: KnowledgeByIdResponse) {
-  console.log(dataContentKnowledge)
-
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">

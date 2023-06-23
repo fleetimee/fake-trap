@@ -104,8 +104,6 @@ export function EditSectionContentSheet(props: {
         }
       )
 
-      console.log(response)
-
       if (response.ok) {
         toast({
           title: "Berhasil mengubah konten",

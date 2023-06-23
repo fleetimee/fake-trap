@@ -1,6 +1,9 @@
+import { get } from "http"
 import Image from "next/image"
 
+import { Knowledge } from "@/types/knowledge-res"
 import { getCourse } from "@/lib/fetcher/course/course-fetcher"
+import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -21,9 +24,13 @@ export const metadata = {
 }
 
 export default async function CoursePage() {
-  const dataCourse = await getCourse(1000)
+  const dataCourse = getCourse(1000)
+  const dataKnowledge = getKnowledge(1000)
 
-  console.log(dataCourse)
+  const [courseResp, knowledgeResp] = await Promise.all([
+    dataCourse,
+    dataKnowledge,
+  ])
 
   return (
     <DashboardShell>
@@ -31,10 +38,10 @@ export default async function CoursePage() {
         heading="Kursus"
         description="Kursus yang tersedia di e-learning"
       >
-        <CreateCourseButton />
+        <CreateCourseButton data={knowledgeResp} />
       </DashboardHeader>
       <div className="grid grid-cols-1 grid-rows-3 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {dataCourse.data.map((item) => (
+        {courseResp.data.map((item) => (
           <Card
             className="flex flex-col items-start justify-center hover:bg-accent hover:text-accent-foreground"
             key={item.id_course}

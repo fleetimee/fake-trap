@@ -88,8 +88,6 @@ export function CreateSectionButton({
         }
       )
 
-      console.log(response)
-
       // If the response is successful, displays a success toast and refreshes the page.
       if (response.ok) {
         toast({

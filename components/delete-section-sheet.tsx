@@ -37,8 +37,6 @@ export function DeleteSectionSheet(props: {
         }
       )
 
-      console.log(response)
-
       if (response.ok) {
         toast({
           title: "Berhasil menghapus section",

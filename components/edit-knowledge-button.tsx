@@ -101,8 +101,6 @@ export function EditKnowledgeButton(props: {
         }
       )
 
-      console.log(response)
-
       if (response.ok) {
         toast({
           title: "Pengetahuan berhasil diubah",
