@@ -185,6 +185,24 @@ export function CreateCourseButton(props: { data: Knowledge }) {
 
             <FormField
               control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Image URL (Opsional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://pbs.twimg.com/media/FzRzbF0X0AMlifl?format=jpg&name=small"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>Sisipkan url image.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="date_start"
               render={({ field }) => (
                 <FormItem>
