@@ -94,7 +94,7 @@ export function CreateCourseButton(props: { data: Knowledge }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/courses`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course`,
         {
           method: "POST",
           headers: headersObj,
@@ -353,6 +353,14 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                 </FormItem>
               )}
             />
+
+            <Button type="submit" className="self-end">
+              {isLoading ? (
+                <Icons.spinner className="h-5 w-5 animate-spin" />
+              ) : (
+                "Tambah"
+              )}
+            </Button>
           </form>
         </Form>
       </SheetContent>
