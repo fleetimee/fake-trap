@@ -79,6 +79,10 @@ export function CreateKnowledgeButton({
 
   const [open, setOpen] = React.useState<boolean>(false)
 
+  /**
+   * Initializes the form using the useForm hook from react-hook-form.
+   * The form is initialized with default values and a resolver for validation.
+   */
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
