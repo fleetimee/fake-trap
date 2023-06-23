@@ -106,8 +106,6 @@ export function CreateKnowledgeButton({
         }
       )
 
-      console.log(response)
-
       if (response.ok) {
         toast({
           title: "Pengetahuan berhasil dibuat",
