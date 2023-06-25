@@ -25,8 +25,8 @@ import {
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
 
-import { Icons } from "./icons"
-import { Button } from "./ui/button"
+import { Icons } from "../../icons"
+import { Button } from "../../ui/button"
 
 /**
  * Defines a schema for the form data used to create a new section in the knowledge sidebar.

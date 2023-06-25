@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card"
 import { CourseHoverContent } from "@/components/app/course/course-hover-content"
 
-import { DeleteCourseButton } from "../../delete-course-sheet"
+import { DeleteCourseButton } from "./delete-course-sheet"
 import { EditCourseButton } from "./edit-course-sheet"
 
 export function CourseGrid(props: {

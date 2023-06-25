@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
 
-import { Icons } from "./icons"
-import { Button } from "./ui/button"
+import { Icons } from "../../icons"
+import { Button } from "../../ui/button"
 
 export function DeleteSectionContentSheet(props: {
   item: KnowledgeByIdSectionContentData

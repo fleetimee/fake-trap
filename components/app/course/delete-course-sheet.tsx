@@ -6,15 +6,15 @@ import { CourseData } from "@/types/course-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
 
-import { Icons } from "./icons"
+import { Icons } from "../../icons"
 import {
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog"
-import { toast } from "./ui/use-toast"
+} from "../../ui/dialog"
+import { toast } from "../../ui/use-toast"
 
 export function DeleteCourseButton(props: { item: CourseData }) {
   const router = useRouter()

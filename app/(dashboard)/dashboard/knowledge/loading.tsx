@@ -1,5 +1,5 @@
+import { KnowledgeItemList } from "@/components/app/knowledge/knowledge-item-list"
 import { DashboardHeader } from "@/components/header"
-import { KnowledgeItemList } from "@/components/knowledge-item-list"
 import { DashboardShell } from "@/components/shell"
 
 export default function KnowledgeLoading() {

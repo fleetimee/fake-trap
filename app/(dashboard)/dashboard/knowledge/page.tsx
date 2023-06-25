@@ -1,8 +1,8 @@
 import { getCategory } from "@/lib/fetcher/category/category-fetcher"
 import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
-import { CreateKnowledgeButton } from "@/components/create-knowledge-button"
+import { CreateKnowledgeButton } from "@/components/app/knowledge/create-knowledge-button"
+import { KnowledgeItemList } from "@/components/app/knowledge/knowledge-item-list"
 import { DashboardHeader } from "@/components/header"
-import { KnowledgeItemList } from "@/components/knowledge-item-list"
 import { DashboardShell } from "@/components/shell"
 
 export const metadata = {

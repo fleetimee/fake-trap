@@ -45,7 +45,7 @@ import {
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { statusTypes } from "@/components/create-knowledge-button"
+import { statusTypes } from "@/components/app/knowledge/create-knowledge-button"
 import { Icons } from "@/components/icons"
 
 /**
