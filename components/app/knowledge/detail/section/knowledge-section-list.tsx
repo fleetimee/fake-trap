@@ -19,7 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { EditSectionSheet } from "@/components/app/knowledge/edit-section-sheet"
+import { EditSectionSheet } from "@/components/app/knowledge/detail/section/edit-section-sheet"
 
 import { DeleteSectionSheet } from "./delete-section-sheet"
 
