@@ -4,8 +4,8 @@ import {
   getKnowledgeByid,
   headersObj,
 } from "@/lib/fetcher/knowledge/knowledge-fetcher"
-import { DetailContent } from "@/components/detail-content"
-import DetailSidebarKnowledge from "@/components/detail-sidebar-knowledge"
+import { DetailContent } from "@/components/app/knowledge/detail-content"
+import DetailSidebarKnowledge from "@/components/app/knowledge/detail-sidebar-knowledge"
 import { DashboardShell } from "@/components/shell"
 
 type Props = {
