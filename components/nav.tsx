@@ -18,7 +18,7 @@ interface DashboardNavProps {
 }
 
 export function DashboardNav({ items }: DashboardNavProps) {
-  const [activeLink, setActiveLink] = useState<string>("")
+  const [activeLink, setActiveLink] = useState<string>("/dashboard")
 
   const handleLinkClick = (href: string | undefined) => {
     if (href) {

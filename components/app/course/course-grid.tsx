@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 
 import { CourseData } from "@/types/course-res"
 import { Knowledge } from "@/types/knowledge-res"
@@ -38,9 +39,14 @@ export function CourseGrid(props: {
           )}
 
           <CardHeader className="h-22 w-full flex-none">
-            <p className="line-clamp-2 font-heading text-lg lg:text-xl">
-              {props.data.course_name}
-            </p>
+            <Link
+              href={`/dashboard/course/${props.data.id_course}`}
+              className="font-semibold hover:underline"
+            >
+              <p className="line-clamp-2 font-heading text-lg lg:text-xl">
+                {props.data.course_name}
+              </p>
+            </Link>
           </CardHeader>
           <CardContent className="flex flex-col">
             <Image
