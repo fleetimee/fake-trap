@@ -5,8 +5,8 @@ import {
   getNewestKnowledge,
 } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { getUser } from "@/lib/fetcher/user/user-fetcher"
-import { CardDashboard } from "@/components/card-dashboard"
-import { CardDashboardIndicator } from "@/components/card-dashboard-indicator"
+import { CardDashboard } from "@/components/app/dashboard/card-dashboard"
+import { CardDashboardIndicator } from "@/components/app/dashboard/card-dashboard-indicator"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
