@@ -7,11 +7,11 @@ import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { EmptyContentInitial } from "@/components/app/knowledge/(empty)/empty-knowledge-content-initial"
-import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/(empty)/empty-knowledge-section-initial"
-import { CreateSectionButton } from "@/components/app/knowledge/create-section-button"
-import { KnowledgeSectionContent } from "@/components/app/knowledge/knowledge-section-content"
-import { KnowledgeSectionList } from "@/components/app/knowledge/knowledge-section-list"
+import { EmptyContentInitial } from "@/components/app/knowledge/detail/content/empty-knowledge-content-initial"
+import { KnowledgeSectionContent } from "@/components/app/knowledge/detail/content/knowledge-section-content"
+import { CreateSectionButton } from "@/components/app/knowledge/detail/section/create-section-button"
+import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/detail/section/empty-knowledge-section-initial"
+import { KnowledgeSectionList } from "@/components/app/knowledge/detail/section/knowledge-section-list"
 
 /**
  * Renders the sidebar for the knowledge detail page.
