@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card"
 import { CourseHoverContent } from "@/components/course-hover-content"
 
+import { DeleteCourseButton } from "./delete-course-sheet"
 import { EditCourseButton } from "./edit-course-sheet"
 
 export function CourseGrid(props: {
@@ -55,7 +56,7 @@ export function CourseGrid(props: {
                   data={props.data}
                   dataKnowledge={props.dataKnowledge}
                 />
-                <Button variant="destructive">Delete</Button>
+                <DeleteCourseButton item={props.data} />
               </div>
             </section>
           </CardContent>
