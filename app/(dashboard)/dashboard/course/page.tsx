@@ -1,7 +1,7 @@
 import { getCourse } from "@/lib/fetcher/course/course-fetcher"
 import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
-import { CourseGrid } from "@/components/course-grid"
-import { CreateCourseButton } from "@/components/create-course-sheet"
+import { CourseGrid } from "@/components/app/course/course-grid"
+import { CreateCourseButton } from "@/components/app/course/create-course-sheet"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
