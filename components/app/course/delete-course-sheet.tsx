@@ -27,7 +27,7 @@ export function DeleteCourseButton(props: { item: CourseData }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${props.item.id_course}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${props.item.id_course}`,
         {
           method: "DELETE",
           headers: headersObj,
