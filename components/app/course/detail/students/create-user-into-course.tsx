@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
