@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
 import {
   Card,
@@ -14,19 +12,13 @@ import { Icons } from "@/components/icons"
 import { YoutubePlayer } from "@/components/youtube-player"
 
 /**
- * Props for the DetailContent component.
- * @interface DetailContentProps
- * @property {string} title - The title of the detail content.
- */
-interface DetailContentProps {
-  title: string
-}
-/**
  * Renders a detail content component with a title and a video.
  * @param {DetailContentProps} props - The props object containing the title.
  * @returns {JSX.Element} - A JSX.Element representing the detail content component.
  */
-export function DetailContent(dataContentKnowledge: KnowledgeByIdResponse) {
+export function KnowledgeDetailContent(
+  dataContentKnowledge: KnowledgeByIdResponse
+) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
