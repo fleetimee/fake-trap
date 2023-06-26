@@ -1,21 +1,12 @@
 "use client"
 
 import { CourseData } from "@/types/course-res"
+import { convertDatetoString } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { HoverCardContent } from "@/components/ui/hover-card"
 import { Icons } from "@/components/icons"
 
 export function CourseHoverContent(props: { data: CourseData }) {
-  function convertDatetoString(date: string): string {
-    const dateObj = new Date(date)
-    return dateObj.toLocaleDateString("id-ID", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
-  }
-
   return (
     <HoverCardContent className="w-80">
       <div className="flex justify-between space-x-4">
