@@ -13,6 +13,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
+import { CourseByIdResponse } from "@/types/course-res"
+import { UserResponse } from "@/types/user-res"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -24,6 +26,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { CreateStudentsIntoCourseButton } from "./students/create-user-into-course"
+
 interface UserDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -32,7 +36,12 @@ interface UserDataTableProps<TData, TValue> {
 export function UserDataTable<TData, TValue>({
   columns,
   data,
-}: UserDataTableProps<TData, TValue>) {
+  userList,
+  courseData,
+}: UserDataTableProps<TData, TValue> & {
+  userList: UserResponse
+  courseData: CourseByIdResponse
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -55,7 +64,7 @@ export function UserDataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center px-1 py-4">
+      <div className="flex items-center justify-between px-1 py-4">
         <Input
           placeholder="Cari username..."
           value={
@@ -65,6 +74,10 @@ export function UserDataTable<TData, TValue>({
             table.getColumn("username")?.setFilterValue(event.target.value)
           }
           className="w-1/5"
+        />
+        <CreateStudentsIntoCourseButton
+          user={userList}
+          id_course={courseData.data?.id_course}
         />
       </div>
       <div className="rounded-md border">

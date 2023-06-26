@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 
 import { getCourseById } from "@/lib/fetcher/course/course-fetcher"
+import { getUser } from "@/lib/fetcher/user/user-fetcher"
 import { convertDatetoString } from "@/lib/utils"
 import {
   Card,
@@ -35,12 +36,18 @@ export default async function DetailCourse({
 }: {
   params: { detail: string }
 }) {
-  const detailCourseData = await getCourseById(params.detail)
+  const detailCourseData = getCourseById(params.detail)
+  const userList = getUser()
+
+  const [courseDataResp, userDataResp] = await Promise.all([
+    detailCourseData,
+    userList,
+  ])
 
   return (
     <DashboardShell>
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
-        <CourseDetailContent data={detailCourseData} />
+        <CourseDetailContent data={courseDataResp} user={userDataResp} />
       </div>
     </DashboardShell>
   )

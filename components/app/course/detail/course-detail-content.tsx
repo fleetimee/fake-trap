@@ -1,4 +1,5 @@
 import { CourseByIdResponse } from "@/types/course-res"
+import { UserResponse } from "@/types/user-res"
 import { convertDatetoString } from "@/lib/utils"
 import {
   Card,
@@ -15,7 +16,10 @@ import { YoutubePlayer } from "@/components/youtube-player"
 import { columnUserCourse } from "./user-columns"
 import { UserDataTable } from "./user-data-table"
 
-export function CourseDetailContent(props: { data: CourseByIdResponse }) {
+export function CourseDetailContent(props: {
+  data: CourseByIdResponse
+  user: UserResponse
+}) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
@@ -98,6 +102,8 @@ export function CourseDetailContent(props: { data: CourseByIdResponse }) {
                     <UserDataTable
                       columns={columnUserCourse}
                       data={props.data.data.users ? props.data.data.users : []}
+                      userList={props.user}
+                      courseData={props.data}
                     />
                   </div>
                 </ScrollArea>
