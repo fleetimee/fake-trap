@@ -2,20 +2,8 @@ import { Metadata } from "next"
 
 import { getCourseById } from "@/lib/fetcher/course/course-fetcher"
 import { getUser } from "@/lib/fetcher/user/user-fetcher"
-import { convertDatetoString } from "@/lib/utils"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CourseDetailContent } from "@/components/app/course/detail/course-detail-content"
-import { Icons } from "@/components/icons"
 import { DashboardShell } from "@/components/shell"
-import { YoutubePlayer } from "@/components/youtube-player"
 
 type Props = {
   params: {
