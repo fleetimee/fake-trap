@@ -47,8 +47,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { CreateButton } from "@/components/create-button"
-
-import { Icons } from "../../icons"
+import { Icons } from "@/components/icons"
 
 /**
  * Defines the form schema for creating a new course.

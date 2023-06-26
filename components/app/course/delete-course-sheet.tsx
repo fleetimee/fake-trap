@@ -5,16 +5,15 @@ import { Dialog } from "@radix-ui/react-dialog"
 import { CourseData } from "@/types/course-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
-
-import { Icons } from "../../icons"
 import {
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../ui/dialog"
-import { toast } from "../../ui/use-toast"
+} from "@/components/ui/dialog"
+import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
 
 export function DeleteCourseButton(props: { item: CourseData }) {
   const router = useRouter()
