@@ -14,9 +14,8 @@ import {
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { CreateSectionContentSheet } from "@/components/app/knowledge/detail/content/create-section-content-sheet"
+import { DeleteSectionContentSheet } from "@/components/app/knowledge/detail/content/delete-section-content-sheet"
 import { EditSectionContentSheet } from "@/components/app/knowledge/detail/content/edit-section-content-sheet"
-
-import { DeleteSectionContentSheet } from "./delete-section-content-sheet"
 
 enum ContentType {
   Video = 1,

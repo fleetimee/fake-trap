@@ -8,6 +8,7 @@ import { z } from "zod"
 
 import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -24,9 +25,7 @@ import {
   SheetHeader,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-
-import { Icons } from "../../../../icons"
-import { Button } from "../../../../ui/button"
+import { Icons } from "@/components/icons"
 
 /**
  * Defines a schema for the form data used to create a new section in the knowledge sidebar.

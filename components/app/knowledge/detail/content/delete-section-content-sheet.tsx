@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 
 import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
 import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { Button } from "@/components/ui/button"
 import {
   SheetContent,
   SheetDescription,
@@ -11,9 +12,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-
-import { Icons } from "../../../../icons"
-import { Button } from "../../../../ui/button"
+import { Icons } from "@/components/icons"
 
 export function DeleteSectionContentSheet(props: {
   item: KnowledgeByIdSectionContentData
