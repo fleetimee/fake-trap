@@ -19,9 +19,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { DeleteSectionSheet } from "@/components/app/knowledge/detail/section/delete-section-sheet"
 import { EditSectionSheet } from "@/components/app/knowledge/detail/section/edit-section-sheet"
-
-import { DeleteSectionSheet } from "./delete-section-sheet"
 
 export function KnowledgeSectionList(props: {
   item: KnowledgeByIdSectionData

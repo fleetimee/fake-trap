@@ -811,11 +811,11 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "9c30f79e-5289-4426-811a-3c09f288898d",
     "name": "Get Course By ID",
-    "url": "{{baseUrl}}/secure/course/1",
+    "url": "{{baseUrl}}/secure/course/8",
     "method": "GET",
     "sortNum": 420000,
     "created": "2023-02-27T04:26:22.930Z",
-    "modified": "2023-03-06T01:11:50.717Z",
+    "modified": "2023-06-26T03:16:12.664Z",
     "headers": [],
     "params": [],
     "tests": []
