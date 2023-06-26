@@ -2,7 +2,7 @@ import { Metadata } from "next"
 
 import { getKnowledgeByid } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import DetailSidebarKnowledge from "@/components/app/knowledge/detail-sidebar-knowledge"
-import { DetailContent } from "@/components/app/knowledge/detail/knowledge-detail-content"
+import { KnowledgeDetailContent } from "@/components/app/knowledge/detail/knowledge-detail-content"
 import { DashboardShell } from "@/components/shell"
 
 type Props = {
@@ -29,7 +29,7 @@ export default async function DetailKnowledge({
   return (
     <DashboardShell>
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
-        <DetailContent data={detailKnowledgeData.data} />
+        <KnowledgeDetailContent data={detailKnowledgeData.data} />
         <DetailSidebarKnowledge data={detailKnowledgeData.data} />
       </div>
     </DashboardShell>
