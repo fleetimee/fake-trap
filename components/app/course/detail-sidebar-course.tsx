@@ -1,18 +1,14 @@
 "use client"
 
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
+import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CourseKnowledgeSectionContent } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-content"
+import { CourseKnowledgeSectionList } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-list"
 
-import { EmptyContent } from "../knowledge/detail-sidebar-empty-content"
+import { EmptyKnowledgeCourse } from "./detail/course-knowledge/empty-course-knowledge-content"
 
 export function DetailSidebarCourse(props: {
   dataKnowledge: KnowledgeByIdResponse
@@ -29,7 +25,7 @@ export function DetailSidebarCourse(props: {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="knowledge">
-          <ScrollArea className="h-[600px] w-full">
+          <ScrollArea className="h-[660px] w-full">
             {props.dataKnowledge.data.section ? (
               <Accordion
                 type="single"
@@ -43,34 +39,13 @@ export function DetailSidebarCourse(props: {
                     value={section.id_section.toString()}
                     className="text-sm"
                   >
-                    <AccordionTrigger className="font-heading text-base font-bold">
-                      {section.section_title}
-                    </AccordionTrigger>
+                    <CourseKnowledgeSectionList section={section} />
                     {section.content ? (
                       section.content?.map((content) => (
-                        <AccordionContent
-                          key={content.id_content}
-                          className="py-1"
-                        >
-                          {content.content_title ? (
-                            <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
-                              {content.content_title}
-                            </Button>
-                          ) : null}
-                        </AccordionContent>
+                        <CourseKnowledgeSectionContent content={content} />
                       ))
                     ) : (
-                      <AccordionContent className="py-4">
-                        <EmptyContent className="h-[50px]">
-                          <EmptyContent.Icon name="empty" />
-                          <EmptyContent.Title>
-                            Tidak ada konten
-                          </EmptyContent.Title>
-                          <EmptyContent.Description>
-                            Klik kanan untuk menambah konten
-                          </EmptyContent.Description>
-                        </EmptyContent>
-                      </AccordionContent>
+                      <EmptyKnowledgeCourse />
                     )}
                   </AccordionItem>
                 ))}
