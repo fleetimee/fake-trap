@@ -1,20 +1,23 @@
 "use client"
 
+import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 import { UserData } from "@/types/user-res"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+
+import { DeleteStudentsOutOfCourseButton } from "./students/delete-user-from-course"
 
 export const columnUserCourse: ColumnDef<UserData>[] = [
   {
@@ -65,11 +68,10 @@ export const columnUserCourse: ColumnDef<UserData>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => {
                 navigator.clipboard.writeText(user.uuid)
-
                 toast({
                   title: "Copied!",
                   description: "User ID berhasil dicopy!",
@@ -81,13 +83,7 @@ export const columnUserCourse: ColumnDef<UserData>[] = [
               </span>
               Copy user ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-500">
-              <span className="mr-2">
-                <Icons.trash className="h-4 w-4" />
-              </span>{" "}
-              Hapus user
-            </DropdownMenuItem>
+            <DeleteStudentsOutOfCourseButton uuid={user.uuid} />
           </DropdownMenuContent>
         </DropdownMenu>
       )

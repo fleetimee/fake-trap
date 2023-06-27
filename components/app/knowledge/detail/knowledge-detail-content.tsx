@@ -36,12 +36,17 @@ export function KnowledgeDetailContent(
           height={720}
         /> */}
         <YoutubePlayer videoId="fqQ1Xum8uNI" />
-        <Tabs defaultValue="description" className="hidden  w-full md:block">
-          <TabsList className="flex w-1/2">
-            <TabsTrigger value="description" className="w-full">
-              Deskripsi
-            </TabsTrigger>
-          </TabsList>
+        <Tabs defaultValue="description" className="relative mr-auto w-full">
+          <div className="flex items-center justify-between pb-3">
+            <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
+              <TabsTrigger
+                value="description"
+                className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              >
+                Deskripsi
+              </TabsTrigger>
+            </TabsList>
+          </div>
           <TabsContent value="description">
             <Card>
               <CardHeader>
