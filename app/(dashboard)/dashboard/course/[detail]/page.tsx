@@ -5,8 +5,8 @@ import { getCourseById } from "@/lib/fetcher/course/course-fetcher"
 import { getKnowledgeByid } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { getUser } from "@/lib/fetcher/user/user-fetcher"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { DetailSidebarCourse } from "@/components/app/course/detail-sidebar-course"
 import { CourseDetailContent } from "@/components/app/course/detail/course-detail-content"
-import DetailSidebarKnowledge from "@/components/app/knowledge/detail-sidebar-knowledge"
 import { DashboardShell } from "@/components/shell"
 
 type Props = {
@@ -58,7 +58,7 @@ export default async function DetailCourse({
       </div>
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <CourseDetailContent data={courseDataResp} user={userDataResp} />
-        <DetailSidebarKnowledge data={courseKnowledgeResp.data} />
+        <DetailSidebarCourse dataKnowledge={courseKnowledgeResp} />
       </div>
     </DashboardShell>
   )

@@ -6,14 +6,13 @@ import Link from "next/link"
 import { CourseData } from "@/types/course-res"
 import { Knowledge } from "@/types/knowledge-res"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card"
 import { CourseHoverContent } from "@/components/app/course/course-hover-content"
 import { DeleteCourseButton } from "@/components/app/course/delete-course-sheet"
 import { EditCourseButton } from "@/components/app/course/edit-course-sheet"
 
-export function CourseGrid(props: {
+export default function CourseGrid(props: {
   data: CourseData
   dataKnowledge: Knowledge
 }) {

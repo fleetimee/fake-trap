@@ -11,14 +11,7 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { DeleteSectionSheet } from "@/components/app/knowledge/detail/section/delete-section-sheet"
 import { EditSectionSheet } from "@/components/app/knowledge/detail/section/edit-section-sheet"
 
