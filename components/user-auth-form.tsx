@@ -93,6 +93,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                   setIsLoading(false)
 
                   router.push("/")
+
+                  toast({
+                    title: "Berhasil",
+                    description: "Anda berhasil masuk",
+                  })
                 }
               })
             }

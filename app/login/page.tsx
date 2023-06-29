@@ -1,6 +1,9 @@
-import Link from "next/link"
-import { Command } from "lucide-react"
+"use client"
 
+import { Command } from "lucide-react"
+import { getServerSession } from "next-auth/next"
+
+import { authOptions } from "@/lib/auth"
 import { UserAuthForm } from "@/components/user-auth-form"
 
 export const metadata = {
@@ -8,7 +11,9 @@ export const metadata = {
   description: "Masuk ke akun e-learning",
 }
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  // redirect to home if user is authenticated
+
   return (
     <div className="container relative h-[800px] flex-col items-center justify-center md:grid lg:h-full lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-screen flex-col bg-muted p-10 text-white dark:border-r lg:flex">
