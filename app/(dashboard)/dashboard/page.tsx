@@ -1,3 +1,5 @@
+import { useSession } from "next-auth/react"
+
 import { getCategory } from "@/lib/fetcher/category/category-fetcher"
 import { getCourse, getNewestCourse } from "@/lib/fetcher/course/course-fetcher"
 import {

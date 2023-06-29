@@ -21,14 +21,12 @@ export function jwtDecode(token: string) {
   return jwt.verify(token, `${process.env.NEXTAUTH_SECRET}`)
 }
 
-export function extractToken(token: string) {
-  const tokenParts = token.split(".")
+export function extractToken(token: string | undefined): UserExtracted {
+  const tokenParts = token?.split(".")
 
-  const encodedPayload = tokenParts[1]
+  const encodedPayload = tokenParts?.[1]
 
-  const rawPayload = atob(encodedPayload)
-
-  localStorage.setItem("userExtracted", rawPayload)
+  const rawPayload = atob(encodedPayload!)
 
   return JSON.parse(rawPayload)
 }
@@ -48,7 +46,7 @@ export interface Role {
   role_description: string
 }
 
-export function parseUserExtracted(): UserExtracted {
+export function parseUserExtracted(token: any): UserExtracted {
   const userExtracted = localStorage.getItem("userExtracted")
 
   return JSON.parse(userExtracted!)

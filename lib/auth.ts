@@ -44,8 +44,6 @@ export const authOptions: NextAuthOptions = {
           console.log(response)
 
           if (user && response.ok) {
-            extractToken(user.token)
-
             // Any object returned will be saved in `user` property of the JWT
             return user
           } else {
@@ -62,9 +60,14 @@ export const authOptions: NextAuthOptions = {
       return { ...token, ...user }
     },
     async session({ session, token, user }) {
-      // decode session.user token
+      // decode token
 
       session.user = token as any
+
+      const userExtracted = extractToken(session.user.token)
+
+      session.expires = userExtracted as any
+
       return session
     },
   },

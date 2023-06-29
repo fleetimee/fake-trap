@@ -1,3 +1,5 @@
+import { useSession } from "next-auth/react"
+
 import { KnowledgeRequest } from "@/types/knowledge-req"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { NewestKnowledge } from "@/types/newest-knowledge-res"

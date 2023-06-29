@@ -3,6 +3,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -49,6 +50,8 @@ export function CreateSectionButton({
   id_knowledge: number
   name: string
 }) {
+  const { data: session } = useSession()
+
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -83,7 +86,10 @@ export function CreateSectionButton({
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section`,
         {
           method: "POST",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user.token}`,
+          },
           body: JSON.stringify(values),
         }
       )

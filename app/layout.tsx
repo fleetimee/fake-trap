@@ -55,15 +55,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative flex min-h-screen flex-col">
-            <div className="flex-1">
-              <NextAuthProvider>{children}</NextAuthProvider>
+        <NextAuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="relative flex min-h-screen flex-col">
+              <div className="flex-1">{children}</div>
+              <Toaster />
+              <TailwindIndicator />
             </div>
-            <Toaster />
-            <TailwindIndicator />
-          </div>
-        </ThemeProvider>
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

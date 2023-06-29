@@ -36,14 +36,12 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
 
   const { data: session } = useSession()
 
-  const userExtracted = parseUserExtracted()
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
           user={{
-            name: userExtracted.username,
+            name: session?.expires.username,
             image: user.image ?? imageUrl,
           }}
           className="h-8 w-8"
@@ -52,12 +50,12 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {userExtracted.username && (
-              <p className="font-medium">{userExtracted.username}</p>
+            {session?.expires.username && (
+              <p className="font-medium">{session?.expires.username}</p>
             )}
-            {userExtracted.email && (
+            {session?.expires.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {userExtracted.email}
+                {session?.expires.email}
               </p>
             )}
           </div>
