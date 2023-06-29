@@ -1,5 +1,6 @@
 "use client"
 
+import { CourseByIdResponse } from "@/types/course-res"
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
@@ -7,11 +8,13 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CourseKnowledgeSectionContent } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-content"
 import { CourseKnowledgeSectionList } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-list"
+import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-knowledge/empty-course-knowledge-content"
 
-import { EmptyKnowledgeCourse } from "./detail/course-knowledge/empty-course-knowledge-content"
+import { EmptyContent } from "../knowledge/detail-sidebar-empty-content"
 
 export function DetailSidebarCourse(props: {
   dataKnowledge: KnowledgeByIdResponse
+  dataCourse: CourseByIdResponse
 }) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -51,11 +54,26 @@ export function DetailSidebarCourse(props: {
                 ))}
               </Accordion>
             ) : (
-              <p>Empty</p>
+              <EmptyContent className="h-[625px] items-center justify-center">
+                <EmptyContent.Icon name="empty" />
+                <EmptyContent.Title>Tidak ada section</EmptyContent.Title>
+                <EmptyContent.Description>
+                  Section tidak tersedia
+                </EmptyContent.Description>
+                {/* <CreateButton variant="outline" name="Tambah" /> */}
+              </EmptyContent>
             )}
           </ScrollArea>
         </TabsContent>
-        <TabsContent value="course">Change your password here.</TabsContent>
+        <TabsContent value="course">
+          <ScrollArea className="h-[660px] w-full">
+            {props.dataCourse.data.section ? (
+              <Accordion type="single"></Accordion>
+            ) : (
+              <p>Tidak Tersedia</p>
+            )}
+          </ScrollArea>
+        </TabsContent>
       </Tabs>
     </Card>
   )

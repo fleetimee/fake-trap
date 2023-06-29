@@ -2,8 +2,11 @@
 
 import Link from "next/link"
 import { User } from "next-auth"
-import { signOut } from "next-auth/react"
+import { getToken } from "next-auth/jwt"
+import { signOut, useSession } from "next-auth/react"
 
+import handler from "@/lib/helper"
+import { extractToken, jwtDecode, parseUserExtracted } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,12 +34,16 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 export default function UserAccountNav({ user }: UserAccountNavProps) {
   const imageUrl = "https://avatars.githubusercontent.com/u/45744788?v=4"
 
+  const { data: session } = useSession()
+
+  const userExtracted = parseUserExtracted()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
           user={{
-            name: user.name ?? "User",
+            name: userExtracted.username,
             image: user.image ?? imageUrl,
           }}
           className="h-8 w-8"
@@ -45,10 +52,12 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user.name && <p className="font-medium">{user.name}</p>}
-            {user.email && (
+            {userExtracted.username && (
+              <p className="font-medium">{userExtracted.username}</p>
+            )}
+            {userExtracted.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user.email}
+                {userExtracted.email}
               </p>
             )}
           </div>
@@ -70,6 +79,18 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
             event.preventDefault()
             signOut({
               callbackUrl: `${window.location.origin}/login`,
+            }).then(() => {
+              localStorage.clear()
+              sessionStorage.clear()
+
+              document.cookie.split(";").forEach((c) => {
+                document.cookie = c
+                  .replace(/^ +/, "")
+                  .replace(
+                    /=.*/,
+                    `=;expires=${new Date().toUTCString()};path=/`
+                  )
+              })
             })
           }}
         >

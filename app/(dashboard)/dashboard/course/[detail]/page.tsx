@@ -58,7 +58,10 @@ export default async function DetailCourse({
       </div>
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <CourseDetailContent data={courseDataResp} user={userDataResp} />
-        <DetailSidebarCourse dataKnowledge={courseKnowledgeResp} />
+        <DetailSidebarCourse
+          dataKnowledge={courseKnowledgeResp}
+          dataCourse={courseDataResp}
+        />
       </div>
     </DashboardShell>
   )
