@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Logger from "js-logger"
+import { useSession } from "next-auth/react"
 
 import { Message } from "@/types/hello"
 import { siteConfig } from "@/config/site"
@@ -35,6 +36,8 @@ export default async function IndexPage() {
         <p className="max-w-[700px] text-lg text-muted-foreground">
           {data.message}
         </p>
+
+        <pre className="text-sm text-muted-foreground"></pre>
       </div>
       <div className="flex gap-4">
         <Link
