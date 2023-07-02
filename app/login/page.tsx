@@ -1,9 +1,7 @@
 "use client"
 
 import { Command } from "lucide-react"
-import { getServerSession } from "next-auth/next"
 
-import { authOptions } from "@/lib/auth"
 import { UserAuthForm } from "@/components/user-auth-form"
 
 export const metadata = {
