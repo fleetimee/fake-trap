@@ -5,6 +5,7 @@ import { SyntheticEvent, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { set } from "date-fns"
 import { signIn, signOut, useSession } from "next-auth/react"
+import { z } from "zod"
 
 import { cn, extractToken } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -13,6 +14,27 @@ import { Label } from "@/components/ui/label"
 import { Icons } from "@/components/icons"
 
 import { toast } from "./ui/use-toast"
+
+const formSchema = z.object({
+  username: z
+    .string({
+      required_error: "Username harus diisi",
+    })
+    .min(3, {
+      message: "Username minimal 3 karakter",
+    })
+    .max(20, {}),
+  password: z
+    .string({
+      required_error: "Password harus diisi",
+    })
+    .min(8, {
+      message: "Password minimal 8 karakter",
+    })
+    .max(20, {
+      message: "Password maksimal 20 karakter",
+    }),
+})
 
 /**
  * Props for the UserAuthForm component.
@@ -48,7 +70,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Label htmlFor="username">Username</Label>
             <Input
               id="username"
-              placeholder="octavia"
               type="text"
               autoCapitalize="none"
               disabled={isLoading}
@@ -79,8 +100,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 callbackUrl: "/",
                 redirect: false,
               }).then((res) => {
-                console.log(res)
-
                 if (res?.error === "Login failed") {
                   setIsLoading(false)
 

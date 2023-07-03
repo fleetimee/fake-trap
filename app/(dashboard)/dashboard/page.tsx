@@ -7,6 +7,7 @@ import {
   getNewestKnowledge,
 } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { getUser } from "@/lib/fetcher/user/user-fetcher"
+import { getCurrentUser } from "@/lib/session"
 import { CardDashboard } from "@/components/app/dashboard/card-dashboard"
 import { CardDashboardIndicator } from "@/components/app/dashboard/card-dashboard-indicator"
 import { DashboardHeader } from "@/components/header"
@@ -21,6 +22,10 @@ export const metadata = {
  * @returns {JSX.Element} The dashboard page component.
  */
 export default async function DashboardPage() {
+  const user = await getCurrentUser()
+
+  console.log(user)
+
   const userList = getUser()
   const knowledgeList = getKnowledge(6)
   const courseList = getCourse(6)
