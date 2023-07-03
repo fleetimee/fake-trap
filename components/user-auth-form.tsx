@@ -1,40 +1,15 @@
 "use client"
 
-// import * as React from "react"
 import { SyntheticEvent, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { set } from "date-fns"
-import { signIn, signOut, useSession } from "next-auth/react"
-import { z } from "zod"
+import { signIn } from "next-auth/react"
 
-import { cn, extractToken } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-
-import { toast } from "./ui/use-toast"
-
-const formSchema = z.object({
-  username: z
-    .string({
-      required_error: "Username harus diisi",
-    })
-    .min(3, {
-      message: "Username minimal 3 karakter",
-    })
-    .max(20, {}),
-  password: z
-    .string({
-      required_error: "Password harus diisi",
-    })
-    .min(8, {
-      message: "Password minimal 8 karakter",
-    })
-    .max(20, {
-      message: "Password maksimal 20 karakter",
-    }),
-})
 
 /**
  * Props for the UserAuthForm component.

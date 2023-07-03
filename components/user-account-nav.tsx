@@ -2,11 +2,8 @@
 
 import Link from "next/link"
 import { User } from "next-auth"
-import { getToken } from "next-auth/jwt"
 import { signOut, useSession } from "next-auth/react"
 
-import handler from "@/lib/helper"
-import { extractToken, jwtDecode, parseUserExtracted } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,7 +31,7 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 export default function UserAccountNav({ user }: UserAccountNavProps) {
   const imageUrl = "https://avatars.githubusercontent.com/u/45744788?v=4"
 
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
   return (
     <DropdownMenu>
@@ -63,9 +60,6 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/dashboard">Dashboard</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/dashboard/billing">Billing</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/dashboard/settings">Settings</Link>
