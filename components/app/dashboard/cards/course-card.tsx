@@ -1,5 +1,4 @@
 import { Course } from "@/types/course-res"
-import { getCurrentUser } from "@/lib/session"
 
 import { CardDashboardIndicator } from "../card-dashboard-indicator"
 
@@ -25,9 +24,7 @@ async function getCourse(token: string | undefined): Promise<Course> {
   }
 }
 
-export async function DashboardCourseCardCount(props: {
-  token: string | undefined
-}) {
+export async function DashboardCourseCardCount(props: { token: string }) {
   const courseResp = await getCourse(props.token)
 
   return (

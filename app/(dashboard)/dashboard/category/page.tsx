@@ -1,4 +1,8 @@
-import { getCategory } from "@/lib/fetcher/category/category-fetcher"
+import { redirect } from "next/navigation"
+
+import { authOptions } from "@/lib/auth"
+import { getAllCategoriesData } from "@/lib/datasource"
+import { getCurrentUser } from "@/lib/session"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { columns } from "@/app/(dashboard)/dashboard/category/columns"
@@ -14,7 +18,15 @@ export const metadata = {
  * @returns {JSX.Element} The Category page component.
  */
 export default async function CategoryPage() {
-  const categoryList = await getCategory(6)
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
+  const categoryList = await getAllCategoriesData({
+    token: user?.token,
+  })
 
   return (
     <DashboardShell>

@@ -1,5 +1,4 @@
 import { Knowledge } from "@/types/knowledge-res"
-import { getCurrentUser } from "@/lib/session"
 
 import { CardDashboardIndicator } from "../card-dashboard-indicator"
 
