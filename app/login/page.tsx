@@ -1,5 +1,4 @@
-"use client"
-
+import { Suspense } from "react"
 import { Command } from "lucide-react"
 
 import { UserAuthForm } from "@/components/user-auth-form"
@@ -10,8 +9,6 @@ export const metadata = {
 }
 
 export default async function LoginPage() {
-  // redirect to home if user is authenticated
-
   return (
     <div className="container relative h-[800px] flex-col items-center justify-center md:grid lg:h-full lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-screen flex-col bg-muted p-10 text-white dark:border-r lg:flex">
@@ -47,7 +44,9 @@ export default async function LoginPage() {
               Masukkan username dan password anda untuk mengakses E Learning BPD
             </p>
           </div>
-          <UserAuthForm />
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserAuthForm />
+          </Suspense>
         </div>
       </div>
     </div>

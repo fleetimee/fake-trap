@@ -2,7 +2,7 @@
 
 // import * as React from "react"
 import { SyntheticEvent, useRef, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { set } from "date-fns"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { z } from "zod"
@@ -52,6 +52,8 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
 
+  const searchParams = useSearchParams()
+
   const router = useRouter()
 
   const userName = useRef("")
@@ -97,7 +99,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               signIn("credentials", {
                 username: userName.current,
                 password: password.current,
-                callbackUrl: "/",
+                callbackUrl: searchParams.get("from") || "/",
                 redirect: false,
               }).then((res) => {
                 if (res?.error === "Login failed") {
@@ -111,7 +113,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 } else {
                   setIsLoading(false)
 
-                  router.push("/")
+                  router.push(searchParams.get("from") || "/")
 
                   toast({
                     title: "Berhasil",
