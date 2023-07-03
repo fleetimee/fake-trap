@@ -1,11 +1,5 @@
 "use client"
 
-/**
- * Renders a navigation component for the dashboard with the provided items.
- * @param {DashboardNavProps} items - An array of SidebarNavItem objects containing the navigation items to be displayed.
- * @returns {JSX.Element} - A JSX element representing the navigation component.
- */
-import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -17,15 +11,12 @@ interface DashboardNavProps {
   items: SidebarNavItem[]
 }
 
+/**
+ * Renders a navigation component for the dashboard with the provided items.
+ * @param {DashboardNavProps} items - An array of SidebarNavItem objects containing the navigation items to be displayed.
+ * @returns {JSX.Element} - A JSX element representing the navigation component.
+ */
 export function DashboardNav({ items }: DashboardNavProps) {
-  const [activeLink, setActiveLink] = useState<string>("/dashboard")
-
-  const handleLinkClick = (href: string | undefined) => {
-    if (href) {
-      setActiveLink(href)
-    }
-  }
-
   const path = usePathname()
 
   if (!items?.length) {
@@ -42,10 +33,9 @@ export function DashboardNav({ items }: DashboardNavProps) {
               <span
                 className={cn(
                   "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-                  item.href === activeLink ? "bg-accent" : "transparent",
+                  path === item.href ? "bg-accent" : "transparent",
                   item.disabled && "cursor-not-allowed opacity-80"
                 )}
-                onClick={() => handleLinkClick(item.href)}
               >
                 <Icon className="mr-2 h-4 w-4" />
                 <span>{item.title}</span>
