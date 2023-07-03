@@ -1,8 +1,5 @@
 import type { NextAuthOptions } from "next-auth"
-import { getToken } from "next-auth/jwt"
 import Credentials from "next-auth/providers/credentials"
-
-import { toast } from "@/components/ui/use-toast"
 
 import { extractToken } from "./utils"
 

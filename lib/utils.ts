@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
 import jwt from "jsonwebtoken"
-import { getToken } from "next-auth/jwt"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {

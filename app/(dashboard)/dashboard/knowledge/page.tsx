@@ -1,5 +1,11 @@
-import { getCategory } from "@/lib/fetcher/category/category-fetcher"
-import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
+import { redirect } from "next/navigation"
+
+import { authOptions } from "@/lib/auth"
+import {
+  getAllCategoriesData,
+  getPaginatedKnowledgeData,
+} from "@/lib/datasource"
+import { getCurrentUser } from "@/lib/session"
 import { CreateKnowledgeButton } from "@/components/app/knowledge/create-knowledge-button"
 import { KnowledgeItemList } from "@/components/app/knowledge/knowledge-item-list"
 import { DashboardHeader } from "@/components/header"
@@ -11,10 +17,29 @@ export const metadata = {
 }
 
 export default async function KnowledgePage() {
-  const data = getKnowledge(1000)
-  const dataCategory = getCategory(1000)
+  const user = await getCurrentUser()
 
-  const [knowledgeResp, categoryResp] = await Promise.all([data, dataCategory])
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
+  const KNOWLEDGE_PAGE_LIMIT = 1000
+  const KNOWLEDGE_PAGE_SIZE = 1
+
+  const dataKnowledge = getPaginatedKnowledgeData({
+    limit: KNOWLEDGE_PAGE_LIMIT,
+    page: KNOWLEDGE_PAGE_SIZE,
+    token: user?.token,
+  })
+
+  const dataCategory = getAllCategoriesData({
+    token: user?.token,
+  })
+
+  const [knowledgeResp, categoryResp] = await Promise.all([
+    dataKnowledge,
+    dataCategory,
+  ])
 
   return (
     <DashboardShell>
