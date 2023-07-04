@@ -3,6 +3,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -42,6 +43,8 @@ export function EditSectionSheet(props: {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+  const { data: session } = useSession()
+
   const router = useRouter()
 
   const [isLoading, setIsloading] = React.useState<boolean>(false)
@@ -60,7 +63,10 @@ export function EditSectionSheet(props: {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${props.item.id_section}`,
         {
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user.token}`,
+          },
           method: "PUT",
           body: JSON.stringify(values),
         }

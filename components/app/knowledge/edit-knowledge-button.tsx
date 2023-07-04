@@ -82,13 +82,6 @@ export function EditKnowledgeButton(props: {
     },
   })
 
-  /**
-   * Handles the form submission for editing a knowledge item.
-   * Sends a PUT request to the server with the updated knowledge data.
-   * Displays a success or error toast message based on the response.
-   * Resets the form and closes the sheet on success.
-   * @param values The form data values to be submitted.
-   */
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 

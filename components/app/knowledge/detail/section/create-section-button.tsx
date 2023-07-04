@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
 import {
   Form,

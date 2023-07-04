@@ -4,6 +4,7 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
+import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -73,6 +74,8 @@ export function CreateSectionContentSheet({
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+  const { data: session } = useSession()
+
   const router = useRouter()
   const [isLoading, setIsloading] = React.useState<boolean>(false)
 
@@ -104,7 +107,10 @@ export function CreateSectionContentSheet({
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content`,
         {
           method: "POST",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user.token}`,
+          },
           body: JSON.stringify(values),
         }
       )
