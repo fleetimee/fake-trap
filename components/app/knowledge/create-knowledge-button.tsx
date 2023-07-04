@@ -70,8 +70,10 @@ const formSchema = z.object({
  */
 export function CreateKnowledgeButton({
   categoryResponse,
+  token,
 }: {
   categoryResponse: CategoryResponse
+  token: string | undefined
 }) {
   const router = useRouter()
 
@@ -105,7 +107,10 @@ export function CreateKnowledgeButton({
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge`,
         {
           method: "POST",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify(values),
         }
       )

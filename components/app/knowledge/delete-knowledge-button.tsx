@@ -17,19 +17,15 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-/**
- * A button component that triggers a dialog to confirm the deletion of a knowledge item.
- * @param props.item - The knowledge item to be deleted.
- */
-export function DeleteKnowledgeButton(props: { item: KnowledgeData }) {
+export function DeleteKnowledgeButton(props: {
+  item: KnowledgeData
+  token: string | undefined
+}) {
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [open, setOpen] = React.useState<boolean>(false)
 
-  /**
-   * Deletes the knowledge item from the server.
-   */
   async function deleteKnowledge() {
     setIsLoading(true)
 
@@ -38,7 +34,10 @@ export function DeleteKnowledgeButton(props: { item: KnowledgeData }) {
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${props.item.id_knowledge}`,
         {
           method: "DELETE",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${props.token}`,
+          },
         }
       )
 

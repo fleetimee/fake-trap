@@ -10,6 +10,7 @@ import { EditKnowledgeButton } from "@/components/app/knowledge/edit-knowledge-b
 export function KnowledgeItemList(props: {
   item: KnowledgeData
   category: CategoryResponse
+  token: string | undefined
 }) {
   const knowledgeItem = props.item
 
@@ -41,8 +42,12 @@ export function KnowledgeItemList(props: {
         </div>
       </div>
       <div className="flex flex-row-reverse px-2">
-        <DeleteKnowledgeButton item={knowledgeItem} />
-        <EditKnowledgeButton item={knowledgeItem} category={props.category} />
+        <DeleteKnowledgeButton item={knowledgeItem} token={props.token} />
+        <EditKnowledgeButton
+          item={knowledgeItem}
+          category={props.category}
+          token={props.token}
+        />
       </div>
     </div>
   )

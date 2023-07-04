@@ -63,6 +63,7 @@ const formSchema = z.object({
 export function EditKnowledgeButton(props: {
   item: KnowledgeData
   category: CategoryResponse
+  token: string | undefined
 }) {
   const router = useRouter()
 
@@ -96,7 +97,10 @@ export function EditKnowledgeButton(props: {
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${props.item.id_knowledge}`,
         {
           method: "PUT",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${props.token}`,
+          },
           body: JSON.stringify(values),
         }
       )

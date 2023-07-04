@@ -60,6 +60,7 @@ export default async function DetailCourse({
     id: courseDataResp.data.id_knowledge,
     token: user?.token,
   })
+
   return (
     <DashboardShell>
       <div className="flex flex-row gap-4 px-2">

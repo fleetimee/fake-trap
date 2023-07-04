@@ -47,7 +47,10 @@ export default async function KnowledgePage() {
         heading="Pengetahuan"
         description="Pengetahuan yang tersedia di e-learning"
       >
-        <CreateKnowledgeButton categoryResponse={categoryResp} />
+        <CreateKnowledgeButton
+          categoryResponse={categoryResp}
+          token={user?.token}
+        />
       </DashboardHeader>
       <div className="divide-y divide-border rounded-md border">
         {knowledgeResp.data.map((item) => (
@@ -55,6 +58,7 @@ export default async function KnowledgePage() {
             key={item.id_knowledge}
             item={item}
             category={categoryResp}
+            token={user?.token}
           />
         ))}
       </div>
