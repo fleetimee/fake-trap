@@ -10,7 +10,6 @@ import { z } from "zod"
 
 import { CategoryResponse } from "@/types/category-res"
 import { KnowledgeData } from "@/types/knowledge-res"
-import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {

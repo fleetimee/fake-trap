@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { UserResponse } from "@/types/user-res"
-import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {

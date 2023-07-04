@@ -4,7 +4,6 @@ import React from "react"
 import { useRouter } from "next/navigation"
 
 import { KnowledgeData } from "@/types/knowledge-res"
-import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,

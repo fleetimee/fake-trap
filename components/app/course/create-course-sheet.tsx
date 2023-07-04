@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { Check, ChevronsUpDown } from "lucide-react"
+import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Knowledge } from "@/types/knowledge-res"
-import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -62,6 +62,8 @@ const formSchema = z.object({
 })
 
 export function CreateCourseButton(props: { data: Knowledge }) {
+  const { data: session } = useSession()
+
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -96,7 +98,10 @@ export function CreateCourseButton(props: { data: Knowledge }) {
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course`,
         {
           method: "POST",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user.token}`,
+          },
           body: JSON.stringify(values),
         }
       )

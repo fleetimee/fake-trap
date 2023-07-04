@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 
 import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
-import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
 import {
   SheetContent,

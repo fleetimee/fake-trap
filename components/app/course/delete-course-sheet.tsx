@@ -1,9 +1,9 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { Dialog } from "@radix-ui/react-dialog"
+import { useSession } from "next-auth/react"
 
 import { CourseData } from "@/types/course-res"
-import { headersObj } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { Button } from "@/components/ui/button"
 import {
   DialogContent,
@@ -16,6 +16,8 @@ import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
 export function DeleteCourseButton(props: { item: CourseData }) {
+  const { data: session } = useSession()
+
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
@@ -29,7 +31,10 @@ export function DeleteCourseButton(props: { item: CourseData }) {
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${props.item.id_course}`,
         {
           method: "DELETE",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user?.token}`,
+          },
         }
       )
 
