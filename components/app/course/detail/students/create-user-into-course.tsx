@@ -4,6 +4,7 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
+import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -57,6 +58,8 @@ export function CreateStudentsIntoCourseButton(props: {
   user: UserResponse
   id_course: number
 }) {
+  const { data: session } = useSession()
+
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -78,7 +81,10 @@ export function CreateStudentsIntoCourseButton(props: {
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${props.id_course}/users`,
         {
           method: "PUT",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user.token}`,
+          },
           body: JSON.stringify(values),
         }
       )

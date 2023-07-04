@@ -3,6 +3,7 @@
 import React from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -22,6 +23,8 @@ const formSchema = z.object({
 })
 
 export function DeleteStudentsOutOfCourseButton(props: { uuid: string }) {
+  const { data: session } = useSession()
+
   const router = useRouter()
   const pathname = usePathname()
 
@@ -48,7 +51,10 @@ export function DeleteStudentsOutOfCourseButton(props: { uuid: string }) {
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${parts[3]}/users`,
         {
           method: "PATCH",
-          headers: headersObj,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user.token}`,
+          },
           body: JSON.stringify(values),
         }
       )
