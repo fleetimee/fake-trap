@@ -13,11 +13,6 @@ import { CreateSectionButton } from "@/components/app/knowledge/detail/section/c
 import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/detail/section/empty-knowledge-section-initial"
 import { KnowledgeSectionList } from "@/components/app/knowledge/detail/section/knowledge-section-list"
 
-/**
- * Renders the sidebar for the knowledge detail page.
- * @param dataKnowledge The knowledge data to display.
- * @returns A React component representing the sidebar for the knowledge detail page.
- */
 export default function DetailSidebarKnowledge(
   dataKnowledge: KnowledgeByIdResponse
 ) {

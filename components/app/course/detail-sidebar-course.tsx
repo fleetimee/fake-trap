@@ -2,7 +2,13 @@
 
 import { CourseByIdResponse } from "@/types/course-res"
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
-import { Accordion, AccordionItem } from "@/components/ui/accordion"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -11,6 +17,7 @@ import { CourseKnowledgeSectionList } from "@/components/app/course/detail/cours
 import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-knowledge/empty-course-knowledge-content"
 
 import { EmptyContent } from "../knowledge/detail-sidebar-empty-content"
+import { CreateCourseSectionButton } from "./detail/section/course-create-section-button"
 
 export function DetailSidebarCourse(props: {
   dataKnowledge: KnowledgeByIdResponse
@@ -27,6 +34,7 @@ export function DetailSidebarCourse(props: {
             Kursus
           </TabsTrigger>
         </TabsList>
+
         <TabsContent value="knowledge">
           <ScrollArea className="h-[660px] w-full">
             {props.dataKnowledge.data.section ? (
@@ -34,7 +42,7 @@ export function DetailSidebarCourse(props: {
                 type="single"
                 collapsible
                 className="px-4"
-                key={props.dataKnowledge.data.knowledge_title}
+                key={props.dataKnowledge.data.id_knowledge}
               >
                 {props.dataKnowledge.data.section.map((section) => (
                   <AccordionItem
@@ -66,9 +74,54 @@ export function DetailSidebarCourse(props: {
           </ScrollArea>
         </TabsContent>
         <TabsContent value="course">
+          <CreateCourseSectionButton
+            id_course={props.dataCourse.data.id_course}
+          />
           <ScrollArea className="h-[660px] w-full">
             {props.dataCourse.data.section ? (
-              <Accordion type="single"></Accordion>
+              <Accordion
+                type="single"
+                className="px-4"
+                collapsible
+                key={props.dataCourse.data.id_course}
+              >
+                {props.dataCourse.data.section.map((section) => (
+                  <AccordionItem
+                    key={section.id_section}
+                    value={section.id_section.toString()}
+                    className="text-sm"
+                  >
+                    <AccordionTrigger className="font-heading text-base font-bold">
+                      {section.section_title}
+                    </AccordionTrigger>
+
+                    {section.quiz &&
+                      section.quiz?.map((q) => (
+                        <AccordionContent key={q.id_quiz} className="py-1">
+                          <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
+                            {q.quiz_title}
+                          </Button>
+                        </AccordionContent>
+                      ))}
+
+                    {section.content &&
+                      section.content?.map((c) => (
+                        <AccordionContent key={c.id_content} className="py-1">
+                          <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
+                            {c.content_title}
+                          </Button>
+                        </AccordionContent>
+                      ))}
+
+                    {(!section.content || section.content?.length === 0) &&
+                      (!section.quiz || section.quiz?.length === 0) && (
+                        <AccordionContent>
+                          <p>Tidak Tersedia</p>
+                        </AccordionContent>
+                      )}
+                  </AccordionItem>
+                ))}
+              </Accordion>
             ) : (
               <p>Tidak Tersedia</p>
             )}

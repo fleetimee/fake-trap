@@ -5,5 +5,4 @@ const secret = process.env.NEXTAUTH_SECRET
 
 export default async function handler(req: NextApiRequest) {
   const token = await getToken({ req })
-  console.log("JSON Web Token", token)
 }

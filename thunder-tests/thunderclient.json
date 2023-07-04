@@ -301,12 +301,12 @@
     "method": "POST",
     "sortNum": 140000,
     "created": "2023-02-13T06:44:21.425Z",
-    "modified": "2023-02-25T00:11:32.363Z",
+    "modified": "2023-07-04T08:13:31.887Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"section_title\": \"Getting Started\",\n  \"knowledge\": [\n    {\n      \"id_knowledge\": 1\n    }\n  ]\n}",
+      "raw": "{\n  \"section_title\": \"Getting Started\",\n  \"course\": [\n    {\n      \"id_course\": 2\n    }\n  ]\n}",
       "form": []
     },
     "tests": []
@@ -811,11 +811,11 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "9c30f79e-5289-4426-811a-3c09f288898d",
     "name": "Get Course By ID",
-    "url": "{{baseUrl}}/secure/course/5",
+    "url": "{{baseUrl}}/secure/course/2",
     "method": "GET",
     "sortNum": 420000,
     "created": "2023-02-27T04:26:22.930Z",
-    "modified": "2023-06-27T03:12:35.770Z",
+    "modified": "2023-07-04T04:21:51.461Z",
     "headers": [],
     "params": [],
     "tests": []

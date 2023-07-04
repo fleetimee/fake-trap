@@ -3,9 +3,10 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { set } from "date-fns"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,21 +32,14 @@ import { CreateButton } from "@/components/create-button"
 import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
-  section_title: z.string().min(2).max(18).nonempty(),
-  knowledge: z.array(
+  section: z.array(
     z.object({
-      id_knowledge: z.number().int(),
+      section_title: z.string().min(2).max(18).nonempty(),
     })
   ),
 })
 
-export function CreateSectionButton({
-  id_knowledge,
-  name,
-}: {
-  id_knowledge: number
-  name: string
-}) {
+export function CreateCourseSectionButton(props: { id_course: number }) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -57,8 +51,7 @@ export function CreateSectionButton({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      section_title: "",
-      knowledge: [{ id_knowledge: id_knowledge }],
+      section: [{ section_title: "" }],
     },
   })
 
@@ -67,9 +60,9 @@ export function CreateSectionButton({
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${props.id_course}/section`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user.token}`,
@@ -80,21 +73,24 @@ export function CreateSectionButton({
 
       if (response.ok) {
         toast({
-          title: "Section berhasil dibuat",
-          description: "Section anda berhasil dibuat.",
+          title: "Berhasil",
+          description: "Section berhasil ditambahkan",
         })
 
         router.refresh()
         form.reset()
         setOpen(false)
       } else {
-        throw new Error("Section gagal dibuat")
+        toast({
+          title: "Gagal",
+          description: "Section gagal ditambahkan",
+        })
       }
     } catch (error) {
+      console.log(error)
       toast({
-        title: "Section gagal dibuat",
-        description: "Section anda gagal dibuat.",
-        variant: "destructive",
+        title: "Gagal",
+        description: "Section gagal ditambahkan",
       })
     } finally {
       setIsLoading(false)
@@ -105,15 +101,16 @@ export function CreateSectionButton({
     <div className="ml-auto flex w-full justify-end py-4 pr-4">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <CreateButton name={name} />
+          <CreateButton name="Section" />
         </SheetTrigger>
         <SheetContent position="right" size="content">
           <SheetHeader>
             <SheetTitle>Tambah Section</SheetTitle>
             <SheetDescription>
-              Tambah section baru untuk pengetahuan ini.
+              Tambah section baru untuk kursus ini.
             </SheetDescription>
           </SheetHeader>
+
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -121,7 +118,7 @@ export function CreateSectionButton({
             >
               <FormField
                 control={form.control}
-                name="section_title"
+                name={"section.0.section_title"}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Judul Section</FormLabel>
