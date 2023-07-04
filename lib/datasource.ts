@@ -1,5 +1,5 @@
 import { CategoryResponse } from "@/types/category-res"
-import { Course } from "@/types/course-res"
+import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 
 async function getPaginatedKnowledgeData(props: {
@@ -102,9 +102,57 @@ async function getPaginatedCourseData(props: {
   }
 }
 
+async function getCourseDataById(props: {
+  id: string
+  token: string | undefined
+}): Promise<CourseByIdResponse> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${props.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch course data")
+  }
+}
+
+async function getAllUsersData(props: { token: string | undefined }) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch users data")
+  }
+}
+
 export {
   getPaginatedKnowledgeData,
   getAllCategoriesData,
   getKnowledgeDataById,
   getPaginatedCourseData,
+  getCourseDataById,
+  getAllUsersData,
 }

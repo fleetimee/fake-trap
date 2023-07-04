@@ -1,9 +1,14 @@
 import { Metadata } from "next"
+import { redirect } from "next/navigation"
 import { RocketIcon } from "@radix-ui/react-icons"
 
-import { getCourseById } from "@/lib/fetcher/course/course-fetcher"
-import { getKnowledgeByid } from "@/lib/fetcher/knowledge/knowledge-fetcher"
-import { getUser } from "@/lib/fetcher/user/user-fetcher"
+import { authOptions } from "@/lib/auth"
+import {
+  getAllUsersData,
+  getCourseDataById,
+  getKnowledgeDataById,
+} from "@/lib/datasource"
+import { getCurrentUser } from "@/lib/session"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { DetailSidebarCourse } from "@/components/app/course/detail-sidebar-course"
 import { CourseDetailContent } from "@/components/app/course/detail/course-detail-content"
@@ -16,7 +21,12 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const detailCourseData = await getCourseById(params.detail)
+  const user = await getCurrentUser()
+
+  const detailCourseData = await getCourseDataById({
+    id: params.detail,
+    token: user?.token,
+  })
 
   return {
     title: detailCourseData.data.course_name,
@@ -28,20 +38,28 @@ export default async function DetailCourse({
 }: {
   params: { detail: string }
 }) {
-  const detailCourseData = getCourseById(params.detail)
-  const userList = getUser()
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
+  const detailCourseData = getCourseDataById({
+    id: params.detail,
+    token: user?.token,
+  })
+
+  const userList = getAllUsersData({ token: user?.token })
 
   const [courseDataResp, userDataResp] = await Promise.all([
     detailCourseData,
     userList,
   ])
 
-  const courseKnowledgeResp = await getKnowledgeByid(
-    courseDataResp.data.id_knowledge
-  )
-
-  console.log(courseKnowledgeResp)
-
+  const courseKnowledgeResp = await getKnowledgeDataById({
+    id: courseDataResp.data.id_knowledge,
+    token: user?.token,
+  })
   return (
     <DashboardShell>
       <div className="flex flex-row gap-4 px-2">

@@ -1,7 +1,10 @@
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getPaginatedCourseData } from "@/lib/datasource"
+import {
+  getPaginatedCourseData,
+  getPaginatedKnowledgeData,
+} from "@/lib/datasource"
 import { getCourse } from "@/lib/fetcher/course/course-fetcher"
 import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
@@ -25,12 +28,19 @@ export default async function CoursePage() {
   const COURSE_PAGE_LIMIT = 1000
   const COURSE_PAGE_SIZE = 1
 
+  const KNOWLEDGE_PAGE_LIMIT = 1000
+  const KNOWLEDGE_PAGE_SIZE = 1
+
   const dataCourse = getPaginatedCourseData({
     limit: COURSE_PAGE_LIMIT,
     page: COURSE_PAGE_SIZE,
     token: user?.token,
   })
-  const dataKnowledge = getKnowledge(1000)
+  const dataKnowledge = getPaginatedKnowledgeData({
+    limit: KNOWLEDGE_PAGE_LIMIT,
+    page: KNOWLEDGE_PAGE_SIZE,
+    token: user?.token,
+  })
 
   const [courseResp, knowledgeResp] = await Promise.all([
     dataCourse,
