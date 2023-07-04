@@ -42,8 +42,6 @@ export function DeleteStudentsOutOfCourseButton(props: { uuid: string }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    console.log(pathname)
-
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${parts[3]}/users`,

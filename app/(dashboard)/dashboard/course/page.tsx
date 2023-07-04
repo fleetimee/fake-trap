@@ -5,8 +5,6 @@ import {
   getPaginatedCourseData,
   getPaginatedKnowledgeData,
 } from "@/lib/datasource"
-import { getCourse } from "@/lib/fetcher/course/course-fetcher"
-import { getKnowledge } from "@/lib/fetcher/knowledge/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import CourseGrid from "@/components/app/course/course-grid"
 import { CreateCourseButton } from "@/components/app/course/create-course-sheet"
