@@ -34,6 +34,9 @@ export function CourseSectionList(props: { item: Section }) {
           <ContextMenuItem inset disabled>
             ID Section: {props.item.id_section}
           </ContextMenuItem>
+          <ContextMenuItem inset disabled>
+            {props.item.section_title}
+          </ContextMenuItem>
           <ContextMenuSeparator />
           <ContextMenuItem inset disabled>
             Edit Section

@@ -17,6 +17,7 @@ import { CourseKnowledgeSectionList } from "@/components/app/course/detail/cours
 import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-knowledge/empty-course-knowledge-content"
 
 import { EmptyContent } from "../knowledge/detail-sidebar-empty-content"
+import { CourseSectionContent } from "./detail/content/course-section-content"
 import { EmptyCourseContentInitial } from "./detail/content/empty-course-content-initial"
 import { CreateCourseSectionButton } from "./detail/section/course-create-section-button"
 import { CourseSectionList } from "./detail/section/course-section-list"
@@ -80,7 +81,7 @@ export function DetailSidebarCourse(props: {
           <CreateCourseSectionButton
             id_course={props.dataCourse.data.id_course}
           />
-          <ScrollArea className="h-[660px] w-full">
+          <ScrollArea className="h-[600px] w-full">
             {props.dataCourse.data.section ? (
               <Accordion
                 type="single"
@@ -105,15 +106,23 @@ export function DetailSidebarCourse(props: {
                         </AccordionContent>
                       ))}
 
+                    {/* 
+                      Ini adalah content section yang ada 
+                      di dalam course berisikan context menu untuk menambahkan
+                      content baru, mengedit, dan menghapus content serta juga bisa menambahkan quiz
+                    */}
                     {section.content &&
-                      section.content?.map((c) => (
-                        <AccordionContent key={c.id_content} className="py-1">
-                          <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
-                            {c.content_title}
-                          </Button>
-                        </AccordionContent>
+                      section.content.map((content) => (
+                        <CourseSectionContent
+                          content={content}
+                          quizData={props.dataQuiz}
+                        />
                       ))}
 
+                    {/* 
+                      Ini merupakan placeholder jika section tidak memiliki content
+                      dan quiz
+                    */}
                     {(!section.content || section.content?.length === 0) &&
                       (!section.quiz || section.quiz?.length === 0) && (
                         <EmptyCourseContentInitial
