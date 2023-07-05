@@ -20,6 +20,7 @@ export function KnowledgeSectionList(props: {
 }) {
   const [isEditSectionOpen, setIsEditSectionOpen] =
     React.useState<boolean>(false)
+
   const [isDeleteSectionOpen, setIsDeleteSectionOpen] =
     React.useState<boolean>(false)
 
