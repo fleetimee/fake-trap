@@ -2,6 +2,7 @@
 
 import React from "react"
 
+import { QuizRes } from "@/types/quiz-res"
 import { AccordionContent } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -15,7 +16,10 @@ import { EmptyContent } from "@/components/app/knowledge/detail-sidebar-empty-co
 import { AddCourseContentSheet } from "./create-course-section-content-sheet"
 import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
 
-export function EmptyCourseContentInitial(props: { id_section: number }) {
+export function EmptyCourseContentInitial(props: {
+  id_section: number
+  quizData: QuizRes
+}) {
   const [isAddContentOpen, setIsAddContentOpen] = React.useState<boolean>(false)
 
   const [isAddQuizOpen, setIsAddQuizOpen] = React.useState<boolean>(false)
@@ -67,11 +71,16 @@ export function EmptyCourseContentInitial(props: { id_section: number }) {
       {isAddContentOpen ? (
         <AddCourseContentSheet
           id_section={props.id_section}
-          open={isAddContentOpen}
+          open={open}
           setOpen={setOpen}
         />
       ) : (
-        <AddCourseQuizSheet />
+        <AddCourseQuizSheet
+          id_section={props.id_section}
+          quizData={props.quizData}
+          open={open}
+          setOpen={setOpen}
+        />
       )}
     </Sheet>
   )
