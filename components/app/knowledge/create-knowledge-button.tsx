@@ -51,10 +51,6 @@ export const statusTypes = [
   { value: 2, label: "Private" },
 ]
 
-/**
- * Defines a zod schema for the form data used in the CreateKnowledgeButton component.
- * The schema defines the shape and validation rules for the form data.
- */
 const formSchema = z.object({
   knowledge_title: z.string().min(2).max(40).nonempty(),
   description: z.string().min(2).max(4000).nonempty(),
@@ -63,10 +59,6 @@ const formSchema = z.object({
   id_category: z.number().int(),
 })
 
-/**
- * Renders a button to create a new knowledge item and handles form submission.
- * Uses react-hook-form and zod for form validation.
- */
 export function CreateKnowledgeButton({
   categoryResponse,
   token,
@@ -80,10 +72,6 @@ export function CreateKnowledgeButton({
 
   const [open, setOpen] = React.useState<boolean>(false)
 
-  /**
-   * Initializes the form using the useForm hook from react-hook-form.
-   * The form is initialized with default values and a resolver for validation.
-   */
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -93,11 +81,6 @@ export function CreateKnowledgeButton({
     },
   })
 
-  /**
-   * Handles form submission by sending a POST request to create a new knowledge item.
-   * Shows a success toast if the request is successful, or an error toast if it fails.
-   * @param values - The form data values.
-   */
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsloading(true)
 
