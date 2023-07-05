@@ -48,9 +48,6 @@ const contentTypes = [
   { value: 4, label: "Text" },
 ] as const
 
-/**
- * Defines the schema for the knowledge content form.
- */
 const formSchema = z.object({
   content_title: z.string().min(2).max(40).nonempty(),
   content_type: z.number().int(),
@@ -59,11 +56,6 @@ const formSchema = z.object({
   id_section: z.number().int(),
 })
 
-/**
- * Renders a button to create knowledge content.
- *
- * @returns A React component that displays a button to create knowledge content.
- */
 export function CreateSectionContentSheet({
   id_section,
   open,
@@ -90,18 +82,10 @@ export function CreateSectionContentSheet({
     },
   })
 
-  /**
-   * Submits the form data to create a new knowledge content.
-   *
-   * @param values The form data to be submitted.
-   * @returns A Promise that resolves to the response of the POST request.
-   */
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Set loading state to true.
     setIsloading(true)
 
     try {
-      // Send a POST request to create a new knowledge content.
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content`,
         {
@@ -114,7 +98,6 @@ export function CreateSectionContentSheet({
         }
       )
 
-      // If the response is OK, display a success toast and reset the form.
       if (response.ok) {
         toast({
           title: "Konten berhasil dibuat",
@@ -125,23 +108,19 @@ export function CreateSectionContentSheet({
         form.reset()
         setOpen(false)
       } else {
-        // If the response is not OK, throw an error.
         throw new Error("Gagal membuat konten")
       }
     } catch (error) {
-      // If there is an error, display an error toast.
       toast({
         title: "Gagal membuat konten",
         description: "Gagal membuat konten",
         variant: "destructive",
       })
     } finally {
-      // Set loading state to false.
       setIsloading(false)
     }
   }
 
-  // Render the sheet content.
   return (
     <SheetContent size="content">
       <SheetHeader>
