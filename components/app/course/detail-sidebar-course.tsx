@@ -18,6 +18,7 @@ import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-know
 
 import { EmptyContent } from "../knowledge/detail-sidebar-empty-content"
 import { CourseSectionContent } from "./detail/content/course-section-content"
+import { CourseSectionQuiz } from "./detail/content/course-section-quiz"
 import { EmptyCourseContentInitial } from "./detail/content/empty-course-content-initial"
 import { CreateCourseSectionButton } from "./detail/section/course-create-section-button"
 import { CourseSectionList } from "./detail/section/course-section-list"
@@ -98,13 +99,7 @@ export function DetailSidebarCourse(props: {
                     <CourseSectionList item={section} />
 
                     {section.quiz &&
-                      section.quiz?.map((q) => (
-                        <AccordionContent key={q.id_quiz} className="py-1">
-                          <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
-                            {q.quiz_title}
-                          </Button>
-                        </AccordionContent>
-                      ))}
+                      section.quiz?.map((q) => <CourseSectionQuiz quiz={q} />)}
 
                     {/* 
                       Ini adalah content section yang ada 
