@@ -114,7 +114,9 @@ export function DetailSidebarCourse(props: {
 
                     {(!section.content || section.content?.length === 0) &&
                       (!section.quiz || section.quiz?.length === 0) && (
-                        <EmptyCourseContentInitial />
+                        <EmptyCourseContentInitial
+                          id_section={section.id_section}
+                        />
                       )}
                   </AccordionItem>
                 ))}
