@@ -7,7 +7,7 @@ import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { EmptyContentInitial } from "@/components/app/knowledge/detail/content/empty-knowledge-content-initial"
+import { EmptyKnowledgeContentInitial } from "@/components/app/knowledge/detail/content/empty-knowledge-content-initial"
 import { KnowledgeSectionContent } from "@/components/app/knowledge/detail/content/knowledge-section-content"
 import { CreateSectionButton } from "@/components/app/knowledge/detail/section/create-section-button"
 import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/detail/section/empty-knowledge-section-initial"
@@ -51,7 +51,9 @@ export default function DetailSidebarKnowledge(
                         <KnowledgeSectionContent content={content} />
                       ))
                     ) : (
-                      <EmptyContentInitial id_section={section.id_section} />
+                      <EmptyKnowledgeContentInitial
+                        id_section={section.id_section}
+                      />
                     )}
                   </AccordionItem>
                 ))}

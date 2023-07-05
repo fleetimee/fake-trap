@@ -6,7 +6,6 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -17,7 +16,9 @@ import { CourseKnowledgeSectionList } from "@/components/app/course/detail/cours
 import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-knowledge/empty-course-knowledge-content"
 
 import { EmptyContent } from "../knowledge/detail-sidebar-empty-content"
+import { EmptyCourseContentInitial } from "./detail/content/empty-course-content-initial"
 import { CreateCourseSectionButton } from "./detail/section/course-create-section-button"
+import { CourseSectionList } from "./detail/section/course-section-list"
 
 export function DetailSidebarCourse(props: {
   dataKnowledge: KnowledgeByIdResponse
@@ -91,9 +92,7 @@ export function DetailSidebarCourse(props: {
                     value={section.id_section.toString()}
                     className="text-sm"
                   >
-                    <AccordionTrigger className="font-heading text-base font-bold">
-                      {section.section_title}
-                    </AccordionTrigger>
+                    <CourseSectionList item={section} />
 
                     {section.quiz &&
                       section.quiz?.map((q) => (
@@ -115,9 +114,7 @@ export function DetailSidebarCourse(props: {
 
                     {(!section.content || section.content?.length === 0) &&
                       (!section.quiz || section.quiz?.length === 0) && (
-                        <AccordionContent>
-                          <p>Tidak Tersedia</p>
-                        </AccordionContent>
+                        <EmptyCourseContentInitial />
                       )}
                   </AccordionItem>
                 ))}
