@@ -4,6 +4,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 
 import { authOptions } from "@/lib/auth"
 import {
+  getAllQuizDataWithNullSection,
   getAllUsersData,
   getCourseDataById,
   getKnowledgeDataById,
@@ -51,9 +52,12 @@ export default async function DetailCourse({
 
   const userList = getAllUsersData({ token: user?.token })
 
-  const [courseDataResp, userDataResp] = await Promise.all([
+  const quizList = getAllQuizDataWithNullSection({ token: user?.token })
+
+  const [courseDataResp, userDataResp, quizResp] = await Promise.all([
     detailCourseData,
     userList,
+    quizList,
   ])
 
   const courseKnowledgeResp = await getKnowledgeDataById({
@@ -80,6 +84,7 @@ export default async function DetailCourse({
         <DetailSidebarCourse
           dataKnowledge={courseKnowledgeResp}
           dataCourse={courseDataResp}
+          dataQuiz={quizResp}
         />
       </div>
     </DashboardShell>
