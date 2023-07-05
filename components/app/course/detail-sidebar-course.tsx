@@ -2,6 +2,7 @@
 
 import { CourseByIdResponse } from "@/types/course-res"
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
+import { QuizRes } from "@/types/quiz-res"
 import {
   Accordion,
   AccordionContent,
@@ -23,6 +24,7 @@ import { CourseSectionList } from "./detail/section/course-section-list"
 export function DetailSidebarCourse(props: {
   dataKnowledge: KnowledgeByIdResponse
   dataCourse: CourseByIdResponse
+  dataQuiz: QuizRes
 }) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -116,6 +118,7 @@ export function DetailSidebarCourse(props: {
                       (!section.quiz || section.quiz?.length === 0) && (
                         <EmptyCourseContentInitial
                           id_section={section.id_section}
+                          quizData={props.dataQuiz}
                         />
                       )}
                   </AccordionItem>
