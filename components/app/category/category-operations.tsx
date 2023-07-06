@@ -182,7 +182,7 @@ export function CategoryOperations(props: { kategori: DataCategory }) {
             onSelect={() => setOpenEditCategorySheet(true)}
           >
             <span className="mr-2">
-              <Icons.pizza className="h-4 w-4" />
+              <Icons.edit className="h-4 w-4" />
             </span>
             Edit Kategori
           </DropdownMenuItem>
@@ -202,10 +202,10 @@ export function CategoryOperations(props: { kategori: DataCategory }) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this post?
+              Apakah anda yakin ingin menghapus kategori ini?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone.
+              Kategori yang dihapus tidak dapat dikembalikan
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -227,7 +227,7 @@ export function CategoryOperations(props: { kategori: DataCategory }) {
                   setIsDeleteLoading(false)
                 }
               }}
-              className="bg-red-600 focus:ring-red-600"
+              className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
             >
               {isDeleteLoading ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -243,9 +243,6 @@ export function CategoryOperations(props: { kategori: DataCategory }) {
         open={openEditCategorySheet}
         onOpenChange={setOpenEditCategorySheet}
       >
-        {/* <SheetTrigger>
-          <DropdownMenuItem className="w-full">Edit Kategori</DropdownMenuItem>
-        </SheetTrigger> */}
         <SheetContent size="content">
           <SheetHeader>
             <SheetTitle>Tambah Kategori</SheetTitle>
