@@ -67,7 +67,6 @@ export function CourseSectionContent(props: {
             id="add-content"
             onClick={() => {
               setIsAddContentOpen(true)
-
               setIsAddQuizOpen(false)
               setIsEditContentOpen(false)
               setIsDeleteContentOpen(false)
@@ -82,7 +81,6 @@ export function CourseSectionContent(props: {
             id="add-quiz"
             onClick={() => {
               setIsAddQuizOpen(true)
-
               setIsAddContentOpen(false)
               setIsEditContentOpen(false)
               setIsDeleteContentOpen(false)

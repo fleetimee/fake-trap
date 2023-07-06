@@ -11,5 +11,5 @@ export type QuizData = {
   quiz_desc: string
   quiz_type: number
   created_at: Date
-  id_section: null
+  id_section: number
 }

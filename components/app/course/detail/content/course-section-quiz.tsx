@@ -3,10 +3,22 @@ import React from "react"
 import { QuizData, QuizRes } from "@/types/quiz-res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
-import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
-import { Sheet } from "@/components/ui/sheet"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 
-export function CourseSectionQuiz(props: { quiz: QuizData }) {
+import { AddCourseContentSheet } from "./create-course-section-content-sheet"
+import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
+
+export function CourseSectionQuiz(props: {
+  quiz: QuizData
+  quizData: QuizRes
+}) {
   const [isAddContentOpen, setIsAddContentOpen] = React.useState<boolean>(false)
 
   const [isAddQuizOpen, setIsAddQuizOpen] = React.useState<boolean>(false)
@@ -29,7 +41,78 @@ export function CourseSectionQuiz(props: { quiz: QuizData }) {
             </Button>
           </AccordionContent>
         </ContextMenuTrigger>
+        <ContextMenuContent>
+          <ContextMenuItem inset disabled>
+            #Kuis
+          </ContextMenuItem>
+
+          <ContextMenuItem inset disabled>
+            ID Kuis: {props.quiz.id_quiz}
+          </ContextMenuItem>
+
+          <ContextMenuItem inset disabled>
+            {`Tipe Kuis: ${props.quiz.quiz_type}`}
+          </ContextMenuItem>
+
+          <ContextMenuItem inset disabled>
+            {props.quiz.quiz_title}
+          </ContextMenuItem>
+
+          <ContextMenuSeparator />
+
+          <SheetTrigger
+            className="w-full"
+            asChild
+            id="add-content"
+            onClick={() => {
+              setIsAddContentOpen(true)
+              setIsAddQuizOpen(false)
+              setIsEditContentOpen(false)
+              setIsDeleteContentOpen(false)
+            }}
+          >
+            <ContextMenuItem inset>Tambah Konten</ContextMenuItem>
+          </SheetTrigger>
+
+          <SheetTrigger
+            className="w-full"
+            asChild
+            id="add-quiz"
+            onClick={() => {
+              setIsAddContentOpen(false)
+              setIsAddQuizOpen(true)
+              setIsEditContentOpen(false)
+              setIsDeleteContentOpen(false)
+            }}
+          >
+            <ContextMenuItem inset>Tambah Kuis</ContextMenuItem>
+          </SheetTrigger>
+
+          <ContextMenuSeparator />
+
+          <ContextMenuItem inset disabled>
+            Edit Konten
+          </ContextMenuItem>
+
+          <ContextMenuItem inset disabled className="text-red-500">
+            Hapus Konten
+          </ContextMenuItem>
+        </ContextMenuContent>
       </ContextMenu>
+      {isAddContentOpen ? (
+        <AddCourseContentSheet
+          id_section={props.quiz.id_section}
+          open={open}
+          setOpen={setOpen}
+        />
+      ) : (
+        <AddCourseQuizSheet
+          id_section={props.quiz.id_section}
+          open={open}
+          setOpen={setOpen}
+          quizData={props.quizData}
+        />
+      )}
     </Sheet>
   )
 }
