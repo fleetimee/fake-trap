@@ -14,9 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Icons } from "@/components/icons"
 
-/**
- * Definition of columns for the category table.
- */
 export const columns: ColumnDef<DataCategory>[] = [
   {
     accessorKey: "id_category",
