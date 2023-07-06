@@ -4,17 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataCategory } from "@/types/category-res"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { toast } from "@/components/ui/use-toast"
 import { CategoryOperations } from "@/components/app/category/category-operations"
-import { EditCategorySheet } from "@/components/app/category/edit-category-sheet"
 import { Icons } from "@/components/icons"
 
 export const columns: ColumnDef<DataCategory>[] = [

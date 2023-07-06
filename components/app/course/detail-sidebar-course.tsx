@@ -99,7 +99,9 @@ export function DetailSidebarCourse(props: {
                     <CourseSectionList item={section} />
 
                     {section.quiz &&
-                      section.quiz?.map((q) => <CourseSectionQuiz quiz={q} />)}
+                      section.quiz?.map((q) => (
+                        <CourseSectionQuiz quiz={q} quizData={props.dataQuiz} />
+                      ))}
 
                     {/* 
                       Ini adalah content section yang ada 
