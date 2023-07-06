@@ -29,6 +29,7 @@ export const columns: ColumnDef<DataCategory>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="-ml-3 "
         >
           Nama Kategori
           <Icons.arrowUpDown className="ml-2 h-4 w-4" />

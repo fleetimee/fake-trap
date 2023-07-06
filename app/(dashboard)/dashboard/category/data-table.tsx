@@ -31,27 +31,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-/**
- * Props for the DataTable component.
- * @template TData The type of data for each row in the table.
- * @template TValue The type of value for each column in the table.
- */
 interface DataTableProps<TData, TValue> {
-  /** An array of column definitions for the table. */
   columns: ColumnDef<TData, TValue>[]
-  /** An array of data objects to display in the table. */
   data: TData[]
 }
 
-/**
- * A table component that displays data and allows filtering, sorting, and column visibility toggling.
- * @template TData The type of data for each row in the table.
- * @template TValue The type of value for each column in the table.
- * @param {DataTableProps<TData, TValue>} props The props for the DataTable component.
- * @param {ColumnDef<TData, TValue>[]} props.columns An array of column definitions for the table.
- * @param {TData[]} props.data An array of data objects to display in the table.
- * @returns {JSX.Element} The DataTable component.
- */
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -85,7 +69,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div>
+    <div className="px-2">
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter kategori..."
@@ -125,9 +109,7 @@ export function DataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline" className="ml-2">
-            Export
-          </Button>
+          <Button className="ml-2">Tambah</Button>
         </div>
       </div>
       <div className="rounded-md border">

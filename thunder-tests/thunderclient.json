@@ -680,16 +680,16 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "9d3895b2-415a-44bb-b72c-8351d2a8b6ad",
     "name": "Update Category By Id",
-    "url": "{{baseUrl}}/secure/category/4",
+    "url": "{{baseUrl}}/secure/category/5",
     "method": "PUT",
     "sortNum": 370000,
     "created": "2023-02-17T00:54:52.884Z",
-    "modified": "2023-06-06T07:10:41.880Z",
+    "modified": "2023-07-06T02:04:38.556Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"category_name\": \"Hehe\"\n}",
+      "raw": "{\n  \"category_name\": \"Hee\"\n}",
       "form": []
     },
     "tests": []
