@@ -12,6 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { toast } from "@/components/ui/use-toast"
+import { CategoryOperations } from "@/components/app/category/category-operations"
+import { EditCategorySheet } from "@/components/app/category/edit-category-sheet"
 import { Icons } from "@/components/icons"
 
 export const columns: ColumnDef<DataCategory>[] = [
@@ -38,29 +41,9 @@ export const columns: ColumnDef<DataCategory>[] = [
     header: "Aksi",
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original
+      const kategori = row.original
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <Icons.moreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-            // onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+      return <CategoryOperations kategori={kategori} />
     },
   },
 ]
