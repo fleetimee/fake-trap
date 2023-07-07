@@ -124,8 +124,7 @@ export function CreateStudentsIntoCourseButton(props: {
         <SheetHeader>
           <SheetTitle>Tambah Murid</SheetTitle>
           <SheetDescription>
-            Pilih murid yang ingin ditambahkan ke kursus ini.{" "}
-            <span className="text-red-500">*</span>
+            Pilih murid yang ingin ditambahkan ke kursus ini.
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>
@@ -138,7 +137,10 @@ export function CreateStudentsIntoCourseButton(props: {
               name="users"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Murid yang ingin ditambahkan</FormLabel>
+                  <FormLabel>
+                    Murid yang ingin ditambahkan{" "}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>

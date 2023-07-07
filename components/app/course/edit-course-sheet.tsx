@@ -53,12 +53,34 @@ import { Icons } from "@/components/icons"
  * Defines the validation schema for the form data used to edit a course
  */
 const formSchema = z.object({
-  course_name: z.string().min(2).max(36).nonempty(),
-  course_desc: z.string().min(2).max(1000).nonempty(),
-  date_start: z.date(),
-  date_end: z.date(),
+  course_name: z
+    .string({
+      required_error: "Nama kursus harus diisi.",
+    })
+    .max(36, {
+      message: "Nama kursus tidak boleh lebih dari 36 karakter.",
+    })
+    .nonempty({
+      message: "Nama kursus harus diisi.",
+    }),
+  course_desc: z
+    .string({
+      required_error: "Deskripsi kursus harus diisi.",
+    })
+    .max(1000)
+    .nonempty({
+      message: "Deskripsi kursus harus diisi.",
+    }),
+  date_start: z.date({
+    required_error: "Tanggal mulai kursus harus diisi.",
+  }),
+  date_end: z.date({
+    required_error: "Tanggal berakhir kursus harus diisi.",
+  }),
   image: z.string().optional(),
-  id_knowledge: z.number(),
+  id_knowledge: z.number({
+    required_error: "Pengetahuan harus dipilih.",
+  }),
 })
 
 export function EditCourseButton(props: {
@@ -152,7 +174,9 @@ export function EditCourseButton(props: {
               name="course_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Judul Kursus</FormLabel>
+                  <FormLabel>
+                    Judul Kursus <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Advanced React" {...field} />
                   </FormControl>
@@ -169,7 +193,9 @@ export function EditCourseButton(props: {
               name="course_desc"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Deskripsi Kursus</FormLabel>
+                  <FormLabel>
+                    Deskripsi Kursus <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Berikan sedikit deskripsi tentang kursus yang ingin dibuat"
@@ -190,7 +216,7 @@ export function EditCourseButton(props: {
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL (Opsional)</FormLabel>
+                  <FormLabel>Image URL</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="https://pbs.twimg.com/media/FzRzbF0X0AMlifl?format=jpg&name=small"
@@ -208,8 +234,9 @@ export function EditCourseButton(props: {
               name="date_start"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tanggal Mulai</FormLabel>
-
+                  <FormLabel>
+                    Tanggal Mulai <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -257,7 +284,9 @@ export function EditCourseButton(props: {
               name="date_end"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tanggal Selesai</FormLabel>
+                  <FormLabel>
+                    Tanggal Selesai <span className="text-red-500">*</span>
+                  </FormLabel>
 
                   <Popover>
                     <PopoverTrigger asChild>
@@ -306,7 +335,9 @@ export function EditCourseButton(props: {
               name="id_knowledge"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Pengetahuan Terkait</FormLabel>
+                  <FormLabel>
+                    Pengetahuan Terkait <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -324,14 +355,14 @@ export function EditCourseButton(props: {
                                   (knowledge) =>
                                     knowledge.id_knowledge === field.value
                                 )?.knowledge_title
-                              : "Pilih Kategori"}
+                              : "Pilih Pengetahuan"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
                         <Command>
-                          <CommandInput placeholder="Jenis Kategori" />
+                          <CommandInput placeholder="Pengetahuan" />
                           <CommandEmpty>Kategori tidak ditemukan</CommandEmpty>
                           <CommandGroup>
                             {props.dataKnowledge.data.map((knowledge) => (
