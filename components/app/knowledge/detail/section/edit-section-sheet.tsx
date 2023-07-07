@@ -31,7 +31,16 @@ import { Icons } from "@/components/icons"
  * Defines a schema for the form data used to create a new section in the knowledge sidebar.
  */
 const formSchema = z.object({
-  section_title: z.string().min(2).max(18).nonempty(),
+  section_title: z
+    .string({
+      required_error: "Judul section harus diisi",
+    })
+    .max(18, {
+      message: "Judul section tidak boleh lebih dari 18 karakter",
+    })
+    .nonempty({
+      message: "Judul section tidak boleh kosong",
+    }),
 })
 
 /**
@@ -112,7 +121,9 @@ export function EditSectionSheet(props: {
             name="section_title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Judul Section</FormLabel>
+                <FormLabel>
+                  Judul Section <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Pendahuluan" {...field} />
                 </FormControl>

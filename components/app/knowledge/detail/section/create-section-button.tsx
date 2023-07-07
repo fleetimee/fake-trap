@@ -31,7 +31,14 @@ import { CreateButton } from "@/components/create-button"
 import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
-  section_title: z.string().min(2).max(18).nonempty(),
+  section_title: z
+    .string({
+      required_error: "Judul section harus diisi",
+    })
+    .max(18, {
+      message: "Judul section tidak boleh lebih dari 18 karakter",
+    })
+    .nonempty({ message: "Judul section tidak boleh kosong" }),
   knowledge: z.array(
     z.object({
       id_knowledge: z.number().int(),
@@ -124,7 +131,9 @@ export function CreateSectionButton({
                 name="section_title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Judul Section</FormLabel>
+                    <FormLabel>
+                      Judul Section <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Pendahuluan" {...field} />
                     </FormControl>

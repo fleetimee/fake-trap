@@ -42,11 +42,17 @@ import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
-  quiz: z.array(
-    z.object({
-      id_quiz: z.number().int(),
-    })
-  ),
+  quiz: z
+    .array(
+      z.object({
+        id_quiz: z
+          .number({
+            required_error: "Pilih setidaknya satu quiz.",
+          })
+          .int(),
+      })
+    )
+    .nonempty({ message: "Pilih setidaknya satu quiz." }),
 })
 
 export function AddCourseQuizSheet(props: {
@@ -129,7 +135,9 @@ export function AddCourseQuizSheet(props: {
               name={"quiz.0.id_quiz"}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Pilih Quiz</FormLabel>
+                  <FormLabel>
+                    Pilih Quiz <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>

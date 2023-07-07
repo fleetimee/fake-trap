@@ -52,11 +52,39 @@ export const statusTypes = [
 ]
 
 const formSchema = z.object({
-  knowledge_title: z.string().min(2).max(40).nonempty(),
-  description: z.string().min(2).max(4000).nonempty(),
-  status: z.number().int(),
+  knowledge_title: z
+    .string({
+      required_error: "Judul pengetahuan harus diisi",
+    })
+    .max(40, {
+      message: "Judul pengetahuan maksimal 40 karakter",
+    })
+    .nonempty({
+      message: "Judul pengetahuan harus diisi",
+    }),
+  description: z
+    .string({
+      required_error: "Deskripsi pengetahuan harus diisi",
+    })
+    .max(4000)
+    .nonempty({
+      message: "Deskripsi pengetahuan harus diisi",
+    }),
+  status: z
+    .number({
+      required_error: "Status pengetahuan harus diisi",
+    })
+    .int({
+      message: "Status pengetahuan harus diisi",
+    }),
   image: z.string().optional(),
-  id_category: z.number().int(),
+  id_category: z
+    .number({
+      required_error: "Kategori pengetahuan harus diisi",
+    })
+    .int({
+      message: "Kategori pengetahuan harus diisi",
+    }),
 })
 
 export function CreateKnowledgeButton({
@@ -145,7 +173,9 @@ export function CreateKnowledgeButton({
               name="knowledge_title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Judul Pengetahuan</FormLabel>
+                  <FormLabel>
+                    Judul Pengetahuan <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Pendahuluan" {...field} />
                   </FormControl>
@@ -162,7 +192,9 @@ export function CreateKnowledgeButton({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Deskripsi</FormLabel>
+                  <FormLabel>
+                    Deskripsi <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Berikan sedikit deskripsi tentang pengetahuan yang ingin dibuat"
@@ -203,7 +235,9 @@ export function CreateKnowledgeButton({
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>
+                    Status <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -268,7 +302,9 @@ export function CreateKnowledgeButton({
               name="id_category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Kategori</FormLabel>
+                  <FormLabel>
+                    Kategori <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>

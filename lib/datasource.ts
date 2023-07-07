@@ -150,6 +150,30 @@ async function getAllUsersData(props: { token: string | undefined }) {
   }
 }
 
+async function getAllQuizData(props: {
+  token: string | undefined
+}): Promise<QuizRes> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch quiz data")
+  }
+}
+
 async function getAllQuizDataWithNullSection(props: {
   token: string | undefined
 }): Promise<QuizRes> {
@@ -182,4 +206,5 @@ export {
   getCourseDataById,
   getAllUsersData,
   getAllQuizDataWithNullSection,
+  getAllQuizData,
 }

@@ -24,14 +24,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { CreateCategorySheet } from "@/components/app/category/create-category-sheet"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function QuizDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -64,21 +63,22 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="px-2">
+    <div className="flex flex-col gap-1 px-2">
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter kategori..."
+          placeholder="Cari Quiz"
           value={
-            (table.getColumn("category_name")?.getFilterValue() as string) ?? ""
+            (table.getColumn("quiz_title")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("category_name")?.setFilterValue(event.target.value)
+            table.getColumn("quiz_title")?.setFilterValue(event.target.value)
           }
           className="max-w-xs"
         />
 
-        <CreateCategorySheet />
+        <Button className="ml-2">Tambah</Button>
       </div>
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -86,7 +86,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="font-bold">
+                    <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

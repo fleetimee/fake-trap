@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useRouter } from "next/navigation"
+import { LinkPreview } from "@dhaiwat10/react-link-preview"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
@@ -49,8 +50,21 @@ const contentTypes = [
 ] as const
 
 const formSchema = z.object({
-  content_title: z.string().min(2).max(40).nonempty(),
-  content_type: z.number().int(),
+  content_title: z
+    .string({
+      required_error: "Judul konten harus diisi",
+    })
+    .max(40, {
+      message: "Judul konten tidak boleh lebih dari 40 karakter",
+    })
+    .nonempty({ message: "Judul konten tidak boleh kosong" }),
+  content_type: z
+    .number({
+      required_error: "Tipe konten harus diisi",
+    })
+    .int({
+      message: "Tipe konten harus berupa angka",
+    }),
   image: z.string().optional(),
   link: z.string().optional(),
   id_section: z.number().int(),
@@ -139,7 +153,9 @@ export function CreateSectionContentSheet({
             name="content_title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Judul Konten</FormLabel>
+                <FormLabel>
+                  Judul Konten <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Sejarah Javascript" {...field} />
                 </FormControl>
@@ -153,7 +169,9 @@ export function CreateSectionContentSheet({
             name="content_type"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tipe Konten</FormLabel>
+                <FormLabel>
+                  Tipe Konten <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Popover>
                     <PopoverTrigger asChild>
