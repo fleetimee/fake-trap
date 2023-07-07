@@ -118,85 +118,92 @@ export function AddCourseQuizSheet(props: {
           Tambah quiz baru ke dalam bagian ini
         </SheetDescription>
       </SheetHeader>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col space-y-8 py-8"
-        >
-          <FormField
-            control={form.control}
-            name={"quiz.0.id_quiz"}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Pilih Quiz</FormLabel>
-                <FormControl>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-full justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? props.quizData.data.find(
-                                (quiz) => quiz.id_quiz === field.value
-                              )?.quiz_title
-                            : "Pilih quiz..."}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput placeholder="Tipe konten..." />
-                        <CommandEmpty>Kuis tidak ditemukan</CommandEmpty>
-                        <CommandGroup>
-                          {props.quizData.data.map((quiz) => (
-                            <CommandItem
-                              value={quiz.id_quiz.toString()}
-                              key={quiz.id_quiz}
-                              onSelect={(value) => {
-                                form.clearErrors("quiz.0.id_quiz")
-                                form.setValue("quiz.0.id_quiz", parseInt(value))
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  quiz.id_quiz === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {quiz.quiz_title}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                </FormControl>
-                <FormDescription>
-                  Pilih quiz yang ingin ditambahkan
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      {props.quizData.data && props.quizData.data.length > 0 ? (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col space-y-8 py-8"
+          >
+            <FormField
+              control={form.control}
+              name={"quiz.0.id_quiz"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Pilih Quiz</FormLabel>
+                  <FormControl>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? props.quizData.data.find(
+                                  (quiz) => quiz.id_quiz === field.value
+                                )?.quiz_title
+                              : "Pilih quiz..."}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput placeholder="Tipe konten..." />
+                          <CommandEmpty>Kuis tidak ditemukan</CommandEmpty>
+                          <CommandGroup>
+                            {props.quizData.data.map((quiz) => (
+                              <CommandItem
+                                value={quiz.id_quiz.toString()}
+                                key={quiz.id_quiz}
+                                onSelect={(value) => {
+                                  form.clearErrors("quiz.0.id_quiz")
+                                  form.setValue(
+                                    "quiz.0.id_quiz",
+                                    parseInt(value)
+                                  )
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    quiz.id_quiz === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {quiz.quiz_title}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </FormControl>
+                  <FormDescription>
+                    Pilih quiz yang ingin ditambahkan
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit" className="self-end">
-            {isLoading ? (
-              <Icons.spinner className="h-5 w-5 animate-spin" />
-            ) : (
-              "Tambah"
-            )}
-          </Button>
-        </form>
-      </Form>
+            <Button type="submit" className="self-end">
+              {isLoading ? (
+                <Icons.spinner className="h-5 w-5 animate-spin" />
+              ) : (
+                "Tambah"
+              )}
+            </Button>
+          </form>
+        </Form>
+      ) : (
+        <p>Tidak ada quiz yang tersedia. Silahkan buat quiz terlebih dahulu.</p>
+      )}
     </SheetContent>
   )
 }
