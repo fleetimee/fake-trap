@@ -209,7 +209,7 @@ export function CategoryOperations(props: { kategori: DataCategory }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Tidak</AlertDialogCancel>
             <AlertDialogAction
               onClick={async (event) => {
                 event.preventDefault()
@@ -234,7 +234,7 @@ export function CategoryOperations(props: { kategori: DataCategory }) {
               ) : (
                 <Icons.trash className="mr-2 h-4 w-4" />
               )}
-              <span>Delete</span>
+              <span>Hapus</span>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
