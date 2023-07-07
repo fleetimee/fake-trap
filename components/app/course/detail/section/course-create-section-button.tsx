@@ -32,11 +32,22 @@ import { CreateButton } from "@/components/create-button"
 import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
-  section: z.array(
-    z.object({
-      section_title: z.string().min(2).max(18).nonempty(),
-    })
-  ),
+  section: z
+    .array(
+      z.object({
+        section_title: z
+          .string({
+            required_error: "Judul Section tidak boleh kosong",
+          })
+          .max(18)
+          .nonempty({
+            message: "Judul Section tidak boleh kosong",
+          }),
+      })
+    )
+    .nonempty({
+      message: "Judul Section tidak boleh kosong",
+    }),
 })
 
 export function CreateCourseSectionButton(props: { id_course: number }) {
@@ -121,7 +132,9 @@ export function CreateCourseSectionButton(props: { id_course: number }) {
                 name={"section.0.section_title"}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Judul Section</FormLabel>
+                    <FormLabel>
+                      Judul Section <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Pendahuluan" {...field} />
                     </FormControl>

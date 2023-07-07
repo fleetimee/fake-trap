@@ -49,8 +49,21 @@ const contentTypes = [
 ] as const
 
 const formSchema = z.object({
-  content_title: z.string().min(2).max(40).nonempty(),
-  content_type: z.number().int(),
+  content_title: z
+    .string({
+      required_error: "Judul konten harus diisi",
+    })
+    .max(40, {
+      message: "Judul konten tidak boleh lebih dari 40 karakter",
+    })
+    .nonempty({
+      message: "Judul konten harus diisi",
+    }),
+  content_type: z
+    .number({
+      required_error: "Tipe konten harus diisi",
+    })
+    .int(),
   image: z.string().optional(),
   link: z.string().optional(),
   id_section: z.number().int(),
@@ -135,7 +148,9 @@ export function AddCourseContentSheet(props: {
             name="content_title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Judul Konten</FormLabel>
+                <FormLabel>
+                  Judul Konten <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Sejarah Javascript" {...field} />
                 </FormControl>
@@ -149,7 +164,9 @@ export function AddCourseContentSheet(props: {
             name="content_type"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tipe Konten</FormLabel>
+                <FormLabel>
+                  Tipe Konten <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -166,7 +183,7 @@ export function AddCourseContentSheet(props: {
                             ? contentTypes.find(
                                 (content) => content.value === field.value
                               )?.label
-                            : "Select language"}
+                            : "Pilih Tipe Konten"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
