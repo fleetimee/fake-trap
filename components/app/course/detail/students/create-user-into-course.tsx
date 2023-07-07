@@ -25,6 +25,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
 import {
   Popover,
@@ -46,11 +47,13 @@ import { Icons } from "@/components/icons"
  * Defines a schema for the form data that includes an array of users, each with a UUID string.
  */
 const formSchema = z.object({
-  users: z.array(
-    z.object({
-      uuid: z.string().nonempty(),
-    })
-  ),
+  users: z
+    .array(
+      z.object({
+        uuid: z.string().nonempty(),
+      })
+    )
+    .nonempty({ message: "Pilih setidaknya satu murid." }),
 })
 
 export function CreateStudentsIntoCourseButton(props: {
@@ -96,6 +99,7 @@ export function CreateStudentsIntoCourseButton(props: {
 
         router.refresh()
         setOpen(false)
+        form.reset()
       } else {
         toast({
           title: "Error",
@@ -120,7 +124,8 @@ export function CreateStudentsIntoCourseButton(props: {
         <SheetHeader>
           <SheetTitle>Tambah Murid</SheetTitle>
           <SheetDescription>
-            Pilih murid yang ingin ditambahkan ke kursus ini.
+            Pilih murid yang ingin ditambahkan ke kursus ini.{" "}
+            <span className="text-red-500">*</span>
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>
@@ -160,7 +165,7 @@ export function CreateStudentsIntoCourseButton(props: {
                       <PopoverContent className="w-auto p-0">
                         <Command>
                           <CommandInput placeholder="Jenis Kategori" />
-                          <CommandEmpty>Kategori tidak ditemukan</CommandEmpty>
+                          <CommandEmpty>User tidak ditemukan</CommandEmpty>
                           <CommandGroup>
                             {props.user.data.map((user) => (
                               <CommandItem
@@ -194,6 +199,7 @@ export function CreateStudentsIntoCourseButton(props: {
                   <FormDescription>
                     User yang ingin ditambahkan ke kursus ini.
                   </FormDescription>
+                  <FormMessage />
                 </FormItem>
               )}
             />
