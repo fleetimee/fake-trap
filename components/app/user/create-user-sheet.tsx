@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -19,7 +20,7 @@ import {
 import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
-  name: z.string({
+  username: z.string({
     required_error: "Nama harus diisi",
   }),
   email: z.string({
@@ -46,7 +47,7 @@ export function CreateUserSheet() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      username: "",
       email: "",
       password: "",
     },
@@ -105,6 +106,20 @@ export function CreateUserSheet() {
           <SheetTitle>Tambah User</SheetTitle>
           <SheetDescription>Tambah user baru mu disini</SheetDescription>
         </SheetHeader>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel></FormLabel>
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
       </SheetContent>
     </Sheet>
   )
