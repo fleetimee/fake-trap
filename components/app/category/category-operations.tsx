@@ -127,7 +127,6 @@ export function CategoryOperations(props: { kategori: DataCategory }) {
 
         router.refresh()
         form.reset()
-
         setOpenEditCategorySheet(false)
       } else {
         toast({
