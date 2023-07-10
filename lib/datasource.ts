@@ -2,6 +2,7 @@ import { CategoryResponse } from "@/types/category-res"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { QuizRes } from "@/types/quiz-res"
+import { UserResponse } from "@/types/user-res"
 
 async function getPaginatedKnowledgeData(props: {
   limit: number
@@ -128,7 +129,9 @@ async function getCourseDataById(props: {
   }
 }
 
-async function getAllUsersData(props: { token: string | undefined }) {
+async function getAllUsersData(props: {
+  token: string | undefined
+}): Promise<UserResponse> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users`,
