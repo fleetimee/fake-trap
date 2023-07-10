@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { QuizData } from "@/types/quiz-res"
 import { convertDatetoString } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
+import { QuizOperations } from "@/components/app/quiz/quiz-operations"
 
 export const columns: ColumnDef<QuizData>[] = [
   {
@@ -41,6 +42,19 @@ export const columns: ColumnDef<QuizData>[] = [
   {
     accessorKey: "quiz_type",
     header: "Tipe",
+    cell: ({ row }) => {
+      const quiz = row.original
+
+      return (
+        <>
+          {quiz.quiz_type === 1
+            ? "Quiz"
+            : quiz.quiz_type === 2
+            ? "Exam"
+            : "Assignment"}
+        </>
+      )
+    },
   },
   {
     accessorKey: "created_at",
@@ -51,8 +65,14 @@ export const columns: ColumnDef<QuizData>[] = [
       return <>{convertDatetoString(row.original.created_at.toString())}</>
     },
   },
+
   {
     id: "actions",
-    header: "Ready?",
+    header: "Aksi",
+    cell: ({ row }) => {
+      const quiz = row.original
+
+      return <QuizOperations quiz={quiz} />
+    },
   },
 ]
