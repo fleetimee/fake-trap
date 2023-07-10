@@ -97,13 +97,13 @@ export function UserDataTableUser<TData, TValue>({
         {/* <CreateQuizSheet /> */}
       </div>
 
-      <div className="max-w-[67rem] overflow-x-auto rounded-md border">
+      <div className="rounded-md border">
         <Table
-          {...{
-            style: {
-              width: table.getCenterTotalSize(),
-            },
-          }}
+        // {...{
+        //   style: {
+        //     width: table.getCenterTotalSize(),
+        //   },
+        // }}
         >
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
