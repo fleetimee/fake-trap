@@ -20,6 +20,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -167,6 +168,9 @@ export function CreateQuizSheet() {
                   <FormControl>
                     <Input {...field} placeholder="Judul Kuis" />
                   </FormControl>
+                  <FormDescription>
+                    Masukkan judul kuis yang akan dibuat
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -187,6 +191,9 @@ export function CreateQuizSheet() {
                       {...field}
                     />
                   </FormControl>
+                  <FormDescription>
+                    Masukkan deskripsi singkat tentang kuis yang akan dibuat
+                  </FormDescription>
 
                   <FormMessage />
                 </FormItem>
@@ -253,6 +260,9 @@ export function CreateQuizSheet() {
                       </PopoverContent>
                     </Popover>
                   </FormControl>
+                  <FormDescription>
+                    Pilih tipe kuis yang akan dibuat
+                  </FormDescription>
                 </FormItem>
               )}
             />
