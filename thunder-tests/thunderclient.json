@@ -901,16 +901,17 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "c683a9fb-aa0f-4223-b909-62b00c41db74",
     "name": "Get Quiz",
-    "url": "{{baseUrl}}/secure/quiz?isNullSection=true",
+    "url": "{{baseUrl}}/secure/quiz",
     "method": "GET",
     "sortNum": 470000,
     "created": "2023-03-02T04:50:51.710Z",
-    "modified": "2023-07-05T03:37:16.305Z",
+    "modified": "2023-07-10T03:40:24.370Z",
     "headers": [],
     "params": [
       {
         "name": "isNullSection",
         "value": "true",
+        "isDisabled": true,
         "isPath": false
       },
       {
