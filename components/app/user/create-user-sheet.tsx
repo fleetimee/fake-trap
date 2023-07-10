@@ -7,6 +7,15 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { Button } from "@/components/ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
@@ -85,4 +94,18 @@ export function CreateUserSheet() {
       setIsLoading(false)
     }
   }
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger>
+        <Button className="ml-2">Tambah</Button>
+      </SheetTrigger>
+      <SheetContent size="content">
+        <SheetHeader>
+          <SheetTitle>Tambah User</SheetTitle>
+          <SheetDescription>Tambah user baru mu disini</SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
+  )
 }
