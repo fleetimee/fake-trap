@@ -8,7 +8,16 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Sheet,
   SheetContent,
@@ -114,7 +123,27 @@ export function CreateUserSheet() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel></FormLabel>
+                  <FormLabel>Username</FormLabel>
+
+                  <FormControl>
+                    <Input {...field} placeholder="1337h4cker5" />
+                  </FormControl>
+
+                  <FormDescription>
+                    Username yang akan digunakan untuk login
+                  </FormDescription>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
                 </FormItem>
               )}
             />
