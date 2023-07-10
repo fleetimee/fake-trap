@@ -25,8 +25,6 @@ export default async function QuizPage() {
     token: user?.token,
   })
 
-  console.log(quizList)
-
   return (
     <DashboardShell>
       <DashboardHeader
