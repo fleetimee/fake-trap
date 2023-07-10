@@ -28,6 +28,11 @@ export const dashboardConfig: DashboardConfig = {
       icon: "dashboard",
     },
     {
+      title: "User",
+      href: "/dashboard/user",
+      icon: "user",
+    },
+    {
       title: "Kategori",
       href: "/dashboard/category",
       icon: "category",
