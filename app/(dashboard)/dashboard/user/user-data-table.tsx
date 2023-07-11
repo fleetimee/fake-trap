@@ -37,6 +37,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { CreateUserSheet } from "@/components/app/user/create-user-sheet"
 
 interface DataTablePros<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -94,7 +95,7 @@ export function UserDataTableUser<TData, TValue>({
           className="max-w-xs"
         />
 
-        {/* <CreateQuizSheet /> */}
+        <CreateUserSheet />
       </div>
 
       <div className="rounded-md border">

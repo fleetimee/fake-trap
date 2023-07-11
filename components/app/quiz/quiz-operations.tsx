@@ -129,8 +129,14 @@ export function QuizOperations(props: { quiz: QuizData }) {
 
   const router = useRouter()
 
-  const [openEditCategorySheet, setOpenEditCategorySheet] =
+  const [openEditQuizSheet, setOpenEditQuizSheet] =
     React.useState<boolean>(false)
+
+  const [openDeleteQuiz, setOpenDeleteQuiz] = React.useState<boolean>(false)
+
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
+
+  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false)
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -165,7 +171,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
         })
 
         setIsEditLoading(false)
-        setOpenEditCategorySheet(false)
+        setOpenEditQuizSheet(false)
         router.refresh()
       } else {
         toast({
@@ -188,12 +194,6 @@ export function QuizOperations(props: { quiz: QuizData }) {
     }
   }
 
-  const [openDeleteQuiz, setOpenDeleteQuiz] = React.useState<boolean>(false)
-
-  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
-
-  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false)
-
   return (
     <>
       <DropdownMenu>
@@ -209,10 +209,10 @@ export function QuizOperations(props: { quiz: QuizData }) {
           <DropdownMenuItem
             className="flex cursor-pointer items-center
             "
-            onSelect={() => setOpenEditCategorySheet(true)}
+            onSelect={() => setOpenEditQuizSheet(true)}
           >
             <span className="mr-2">
-              <Icons.copy className="h-4 w-4" />
+              <Icons.edit className="h-4 w-4" />
             </span>
             Edit Quiz
           </DropdownMenuItem>
@@ -269,10 +269,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <Sheet
-        open={openEditCategorySheet}
-        onOpenChange={setOpenEditCategorySheet}
-      >
+      <Sheet open={openEditQuizSheet} onOpenChange={setOpenEditQuizSheet}>
         <SheetContent size="content">
           <SheetHeader>
             <SheetTitle>Tambah Kuis</SheetTitle>
