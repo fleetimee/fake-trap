@@ -6,6 +6,8 @@ import { UserData } from "@/types/user-res"
 import { convertDatetoString } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { UserOperations } from "@/components/app/course/detail/students/user-operations"
+import { UserOperationsAdmin } from "@/components/app/user/user-operations"
 import { Icons } from "@/components/icons"
 
 export const columns: ColumnDef<UserData>[] = [
@@ -50,15 +52,6 @@ export const columns: ColumnDef<UserData>[] = [
     },
   },
   {
-    accessorKey: "updated_at",
-    header: "Updated At",
-    cell: ({ row }) => {
-      const user = row.original
-
-      return <>{convertDatetoString(user.updated_at.toString())}</>
-    },
-  },
-  {
     accessorKey: "last_login",
     header: "Last Login",
     cell: ({ row }) => {
@@ -78,12 +71,7 @@ export const columns: ColumnDef<UserData>[] = [
     cell: ({ row }) => {
       const user = row.original
 
-      return (
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <Icons.moreHorizontal className="h-4 w-4" />
-        </Button>
-      )
+      return <UserOperationsAdmin user={user} />
     },
   },
 ]
