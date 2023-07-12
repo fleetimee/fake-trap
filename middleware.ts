@@ -11,6 +11,9 @@ export default withAuth(
     const isAuth = !!token
     const isAuthPage = req.nextUrl.pathname.startsWith("/login")
 
+    const isDashboardPage = req.nextUrl.pathname.startsWith("/dashboard")
+    const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
+
     if (isAuthPage) {
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
@@ -43,6 +46,44 @@ export default withAuth(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       )
     }
+
+    if (isDashboardPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const adminRole = "Admin"
+        const userRole = "User"
+
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(new URL("/member-area", req.url))
+        }
+      }
+
+    if (isMemberAreaPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const adminRole = "Admin"
+        const userRole = "User"
+
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return NextResponse.redirect(new URL("/dashboard", req.url))
+        } else {
+          return null
+        }
+      }
 
     // const requiredRole = "Admin"
     // const userRoles = extractToken.role
