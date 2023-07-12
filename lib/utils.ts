@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import jwt from "jsonwebtoken"
+import { JWT } from "next-auth/jwt"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -21,6 +22,16 @@ export function jwtDecode(token: string) {
 }
 
 export function extractToken(token: string | undefined): UserExtracted {
+  const tokenParts = token?.split(".")
+
+  const encodedPayload = tokenParts?.[1]
+
+  const rawPayload = atob(encodedPayload!)
+
+  return JSON.parse(rawPayload)
+}
+
+export function extractTokenMiddleware(token: any): UserExtracted {
   const tokenParts = token?.split(".")
 
   const encodedPayload = tokenParts?.[1]
