@@ -1,9 +1,9 @@
 "use client"
 
 import { dashboardConfig } from "@/config/dashboard"
+import { SiteFooter } from "@/components/layouts/site-footer"
 import { MainNav } from "@/components/main-nav"
 import { DashboardNav } from "@/components/nav"
-import { SiteFooter } from "@/components/site-footer"
 import UserAccountNav from "@/components/user-account-nav"
 
 interface DashboardLayoutProps {

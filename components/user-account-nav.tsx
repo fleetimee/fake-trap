@@ -1,9 +1,11 @@
 "use client"
 
 import Link from "next/link"
+import { AvatarFallback } from "@radix-ui/react-avatar"
 import { User } from "next-auth"
 import { signOut, useSession } from "next-auth/react"
 
+import { UserExtracted } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +14,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { UserAvatar } from "@/components/user-avatar"
+
+import { Avatar } from "./ui/avatar"
+import { buttonVariants } from "./ui/button"
 
 /**
  * Props for the UserAccountNav component.
@@ -28,25 +33,25 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
  * @param user The user object containing the user's name, image, and email.
  * @returns A React component that displays the user account dropdown menu.
  */
-export default function UserAccountNav({ user }: UserAccountNavProps) {
+export default function UserAccountNav(props: { user: UserExtracted }) {
   const imageUrl = "https://avatars.githubusercontent.com/u/45744788?v=4"
 
-  const { data: session, status } = useSession()
+  // const { data: session, status } = useSession()
 
-  return (
+  // const initiall = `${session?.expires.username[0]}${session?.expires.username[1]}`
+
+  const initiall = `${props.user.username[0]}${props.user.username[1]}`
+
+  return props.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <UserAvatar
-          user={{
-            name: session?.expires.username,
-            image: user.image ?? imageUrl,
-          }}
-          className="h-8 w-8"
-        />
+        <Avatar className="h-8 w-8">
+          <AvatarFallback>{initiall}</AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
-          <div className="flex flex-col space-y-1 leading-none">
+          {/* <div className="flex flex-col space-y-1 leading-none">
             {session?.expires.username && (
               <p className="font-medium">{session?.expires.username}</p>
             )}
@@ -55,7 +60,7 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
                 {session?.expires.email}
               </p>
             )}
-          </div>
+          </div> */}
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
@@ -90,5 +95,16 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  ) : (
+    <Link href="/signin">
+      <div
+        className={buttonVariants({
+          size: "sm",
+        })}
+      >
+        Sign In
+        <span className="sr-only">Sign In</span>
+      </div>
+    </Link>
   )
 }
