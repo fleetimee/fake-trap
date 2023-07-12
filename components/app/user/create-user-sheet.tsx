@@ -29,6 +29,10 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
+interface ErrorResponseProps {
+  error: string
+}
+
 const formSchema = z.object({
   username: z
     .string({
@@ -104,9 +108,11 @@ export function CreateUserSheet() {
         form.reset()
         setOpen(false)
       } else {
+        const errorResponse: ErrorResponseProps = await response.json()
+
         toast({
           title: "Gagal",
-          description: "User gagal dibuat",
+          description: `${errorResponse.error}`,
           variant: "destructive",
         })
       }
@@ -142,7 +148,9 @@ export function CreateUserSheet() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>
+                    Username <span className="text-red-500">*</span>
+                  </FormLabel>
 
                   <FormControl>
                     <Input {...field} placeholder="1337h4cker5" />
@@ -162,7 +170,9 @@ export function CreateUserSheet() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>
+                    Email <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -181,7 +191,9 @@ export function CreateUserSheet() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>
+                    Password <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="********" type="password" />
                   </FormControl>

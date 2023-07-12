@@ -258,6 +258,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
                   setIsDeleteLoading(false)
                 }
               }}
+              className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
             >
               {isDeleteLoading ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -272,10 +273,8 @@ export function QuizOperations(props: { quiz: QuizData }) {
       <Sheet open={openEditQuizSheet} onOpenChange={setOpenEditQuizSheet}>
         <SheetContent size="content">
           <SheetHeader>
-            <SheetTitle>Tambah Kuis</SheetTitle>
-            <SheetDescription>
-              Buat kuis baru untuk di assign ke dalam kursus
-            </SheetDescription>
+            <SheetTitle>Edit Kuis</SheetTitle>
+            <SheetDescription>Edit kuis yang sudah dibuat</SheetDescription>
           </SheetHeader>
           <Form {...form}>
             <form

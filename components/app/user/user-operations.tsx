@@ -25,13 +25,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Sheet } from "@/components/ui/sheet"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
+interface ErrorResponseProps {
+  error: string
+}
+
 async function deleteUser(uuid: string, token: string | undefined) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/user/${uuid}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`,
     {
       method: "DELETE",
       headers: {
@@ -113,7 +133,50 @@ export function UserOperationsAdmin(props: { user: UserData }) {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {}
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsEditLoading(true)
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${props.user.uuid}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user.token}`,
+          },
+          body: JSON.stringify(values),
+        }
+      )
+
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "User berhasil diubah",
+        })
+
+        router.refresh()
+        form.reset()
+        setOpenEditUserSheet(false)
+      } else {
+        const errorResponse: ErrorResponseProps = await response.json()
+
+        toast({
+          title: "Gagal",
+          description: errorResponse.error,
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      toast({
+        title: "Gagal",
+        description: "User gagal diubah",
+        variant: "destructive",
+      })
+    } finally {
+      setIsEditLoading(false)
+    }
+  }
 
   return (
     <>
@@ -167,12 +230,125 @@ export function UserOperationsAdmin(props: { user: UserData }) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Tidak</AlertDialogCancel>
-            <AlertDialogAction>Hapus</AlertDialogAction>
+            <AlertDialogAction
+              onClick={async (event) => {
+                event.preventDefault()
+                setIsDeleteLoading(true)
+
+                const deleted = await deleteUser(
+                  props.user.uuid,
+                  session?.user.token
+                )
+
+                if (deleted) {
+                  setIsDeleteLoading(false)
+                  setOpenDeleteUserSheet(false)
+                  router.refresh()
+                } else {
+                  setIsDeleteLoading(false)
+                }
+              }}
+              className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
+            >
+              {isDeleteLoading ? (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Icons.trash className="mr-2 h-4 w-4" />
+              )}
+              Hapus
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      <Sheet open={openEditUserSheet}></Sheet>
+      <Sheet open={openEditUserSheet} onOpenChange={setOpenEditUserSheet}>
+        <SheetContent size="content">
+          <SheetHeader>
+            <SheetTitle>Ubah User</SheetTitle>
+            <SheetDescription>Ubah data user</SheetDescription>
+          </SheetHeader>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col space-y-8 py-8"
+            >
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Username <span className="text-red-500">*</span>
+                    </FormLabel>
+
+                    <FormControl>
+                      <Input {...field} placeholder="1337h4cker5" />
+                    </FormControl>
+
+                    <FormDescription>
+                      Username yang akan digunakan untuk login
+                    </FormDescription>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Email <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="hello@bpd.co.id"
+                        type="email"
+                      />
+                    </FormControl>
+                    <FormDescription>Email yang akan digunakan</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Password <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="********"
+                        type="password"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Password yang akan digunakan untuk login
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button type="submit" className="self-end">
+                {isEditLoading ? (
+                  <Icons.spinner className="h-5 w-5 animate-spin" />
+                ) : (
+                  "Tambah"
+                )}
+              </Button>
+            </form>
+          </Form>
+        </SheetContent>
+      </Sheet>
     </>
   )
 }
