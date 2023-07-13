@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   console.log(detailCategoryData)
 
   return {
-    title: detailCategoryData.category_name,
+    title: `Kategori - ${detailCategoryData.data.category_name}`,
   }
 }
 
@@ -26,9 +26,11 @@ export default async function DetailIntroCategory({ params }: Props) {
     id: parseInt(params.detail),
   })
 
+  console.log(detailCategoryData)
+
   return (
     <Shell>
-      <p>tes</p>
+      <p>{detailCategoryData.data.category_name}</p>
     </Shell>
   )
 }

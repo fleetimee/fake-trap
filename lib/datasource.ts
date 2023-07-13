@@ -1,4 +1,9 @@
-import { CategoryResponse, DataCategory } from "@/types/category-res"
+import {
+  CategoryByID,
+  CategoryByIDData,
+  CategoryResponse,
+  DataCategory,
+} from "@/types/category-res"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { QuizRes } from "@/types/quiz-res"
@@ -127,7 +132,7 @@ async function getPublicCategoriesData(props: {
 
 async function getPublicCategoriesDataById(props: {
   id: number
-}): Promise<DataCategory> {
+}): Promise<CategoryByID> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/${props.id}`,

@@ -26,3 +26,13 @@ export type DataCategory = {
   /** The knowledge associated with the category. */
   knowledge?: Knowledge[]
 }
+
+export type CategoryByID = {
+  data: CategoryByIDData
+}
+
+export type CategoryByIDData = {
+  id_category: number
+  category_name: string
+  knowledge: Knowledge[]
+}
