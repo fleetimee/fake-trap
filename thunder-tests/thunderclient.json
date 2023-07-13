@@ -1113,5 +1113,17 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "74de908e-a7a1-4c27-a451-09a7c4403e95",
+    "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
+    "containerId": "9d3895b2-415a-44bb-b72c-8351d2a8b6ad",
+    "name": "Get Public Category",
+    "url": "",
+    "method": "GET",
+    "sortNum": 580000,
+    "created": "2023-07-13T02:17:57.759Z",
+    "modified": "2023-07-13T02:17:57.759Z",
+    "headers": []
   }
 ]
