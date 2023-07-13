@@ -30,5 +30,50 @@
       "bearer": "\tif user.ID == 0 { return c.Status(400).JSON(fiber.Map{ \"message\": \"User does not exist\", }) }"
     },
     "tests": []
+  },
+  {
+    "_id": "bbb8571e-bb1f-4c0c-981a-dc5e89627307",
+    "colId": "history",
+    "containerId": "",
+    "name": "{{baseUrl}}/public/category?limit=6",
+    "url": "{{baseUrl}}/public/category?limit=6",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-07-13T02:18:18.373Z",
+    "modified": "2023-07-13T02:18:18.373Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "limit",
+        "value": "6",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "34374d3e-44ac-4c81-ba5a-975d4ec19925",
+    "colId": "history",
+    "containerId": "",
+    "name": "{{baseUrl}}/public/category?limit=4",
+    "url": "{{baseUrl}}/public/category?limit=4&page=1",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-07-13T02:18:28.254Z",
+    "modified": "2023-07-13T02:29:14.218Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "limit",
+        "value": "4",
+        "isPath": false
+      },
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "tests": []
   }
 ]

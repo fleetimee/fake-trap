@@ -1,33 +1,22 @@
-"use client"
-
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AlertDialogDescription } from "@radix-ui/react-alert-dialog"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { QuizData } from "@/types/quiz-res"
-import { cn } from "@/lib/utils"
+import { UserData } from "@/types/user-res"
+import { AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,56 +36,22 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-const quizTypes = [
-  { value: 1, label: "Quiz" },
-  { value: 2, label: "Exam" },
-  { value: 3, label: "Assignment" },
-]
+interface ErrorResponseProps {
+  error: string
+}
 
-const formSchema = z.object({
-  quiz_title: z
-    .string({
-      required_error: "Judul kuis harus diisi",
-    })
-    .nonempty()
-    .max(36, {
-      message: "Judul kuis maksimal 36 karakter",
-    })
-    .nonempty({
-      message: "Judul kuis harus diisi",
-    }),
-  quiz_desc: z
-    .string({
-      required_error: "Deskripsi kuis harus diisi",
-    })
-    .nonempty()
-    .max(1000)
-    .nonempty({
-      message: "Deskripsi kuis harus diisi",
-    }),
-  quiz_type: z.number({
-    required_error: "Tipe kuis harus dipilih",
-  }),
-})
-
-async function deleteQuiz(id: number, token: string | undefined) {
+async function deleteUser(uuid: string, token: string | undefined) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${id}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`,
     {
       method: "DELETE",
       headers: {
@@ -109,14 +64,14 @@ async function deleteQuiz(id: number, token: string | undefined) {
   if (response.ok) {
     toast({
       title: "Success",
-      description: "Berhasil menghapus quiz",
+      description: "User berhasil dihapus",
     })
 
     return true
   } else {
     toast({
-      title: "Error",
-      description: "Gagal menghapus quiz",
+      title: "Gagal",
+      description: "User gagal dihapus",
       variant: "destructive",
     })
 
@@ -124,26 +79,57 @@ async function deleteQuiz(id: number, token: string | undefined) {
   }
 }
 
-export function QuizOperations(props: { quiz: QuizData }) {
+const formSchema = z.object({
+  username: z
+    .string({
+      required_error: "Nama harus diisi",
+    })
+    .nonempty({
+      message: "Nama harus diisi",
+    }),
+  email: z
+    .string({
+      required_error: "Email harus diisi",
+    })
+    .nonempty({
+      message: "Email harus diisi",
+    })
+    .email({
+      message: "Email tidak valid",
+    }),
+  password: z
+    .string({
+      required_error: "Password harus diisi",
+    })
+    .min(8, {
+      message: "Password minimal 8 karakter",
+    })
+    .nonempty({
+      message: "Password harus diisi",
+    }),
+})
+
+export function UserOperationsAdmin(props: { user: UserData }) {
   const { data: session } = useSession()
 
   const router = useRouter()
 
-  const [openEditQuizSheet, setOpenEditQuizSheet] =
+  const [openEditUserSheet, setOpenEditUserSheet] =
     React.useState<boolean>(false)
 
-  const [openDeleteQuiz, setOpenDeleteQuiz] = React.useState<boolean>(false)
-
-  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
+  const [openDeleteUserSheet, setOpenDeleteUserSheet] =
+    React.useState<boolean>(false)
 
   const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false)
+
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      quiz_title: props.quiz.quiz_title,
-      quiz_desc: props.quiz.quiz_desc,
-      quiz_type: props.quiz.quiz_type,
+      username: props.user.username,
+      email: props.user.email,
+      password: "",
     },
   })
 
@@ -152,8 +138,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${props.quiz.id_quiz}`,
-
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${props.user.uuid}`,
         {
           method: "PUT",
           headers: {
@@ -167,26 +152,25 @@ export function QuizOperations(props: { quiz: QuizData }) {
       if (response.ok) {
         toast({
           title: "Success",
-          description: "Berhasil mengubah quiz",
+          description: "User berhasil diubah",
         })
 
-        setIsEditLoading(false)
-        setOpenEditQuizSheet(false)
         router.refresh()
+        form.reset()
+        setOpenEditUserSheet(false)
       } else {
+        const errorResponse: ErrorResponseProps = await response.json()
+
         toast({
-          title: "Error",
-          description: "Gagal mengubah quiz",
+          title: "Gagal",
+          description: errorResponse.error,
           variant: "destructive",
         })
-
-        setIsEditLoading(false)
       }
     } catch (error) {
-      console.error(error)
       toast({
-        title: "Error",
-        description: "Gagal mengubah quiz",
+        title: "Gagal",
+        description: "User gagal diubah",
         variant: "destructive",
       })
     } finally {
@@ -197,7 +181,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
             <Icons.moreHorizontal className="h-4 w-4" />
@@ -205,38 +189,44 @@ export function QuizOperations(props: { quiz: QuizData }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuItem
             className="flex cursor-pointer items-center
             "
-            onSelect={() => setOpenEditQuizSheet(true)}
+            onSelect={() => setOpenEditUserSheet(true)}
           >
             <span className="mr-2">
               <Icons.edit className="h-4 w-4" />
             </span>
-            Edit Quiz
+            Edit User
           </DropdownMenuItem>
 
           <DropdownMenuItem
             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
-            onSelect={() => setOpenDeleteQuiz(true)}
+            onSelect={() => setOpenDeleteUserSheet(true)}
           >
             <span className="mr-2">
               <Icons.trash className="h-4 w-4" />
             </span>
-            Hapus Quiz
+            Hapus User
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <AlertDialog open={openDeleteQuiz} onOpenChange={setOpenDeleteQuiz}>
+
+      <AlertDialog
+        open={openDeleteUserSheet}
+        onOpenChange={setOpenDeleteUserSheet}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Apakah anda yakin ingin menghapus quiz ini?
+              Apakah anda yakin ingin menghapus user ini?
             </AlertDialogTitle>
-            <AlertDialogDescription>
-              Quiz yang sudah dihapus tidak dapat dikembalikan
-            </AlertDialogDescription>
+            <AlertDescription>
+              User yang dihapus tidak dapat dikembalikan.
+            </AlertDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Tidak</AlertDialogCancel>
@@ -245,14 +235,14 @@ export function QuizOperations(props: { quiz: QuizData }) {
                 event.preventDefault()
                 setIsDeleteLoading(true)
 
-                const deleted = await deleteQuiz(
-                  props.quiz.id_quiz,
+                const deleted = await deleteUser(
+                  props.user.uuid,
                   session?.user.token
                 )
 
                 if (deleted) {
                   setIsDeleteLoading(false)
-                  setOpenDeleteQuiz(false)
+                  setOpenDeleteUserSheet(false)
                   router.refresh()
                 } else {
                   setIsDeleteLoading(false)
@@ -270,11 +260,12 @@ export function QuizOperations(props: { quiz: QuizData }) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <Sheet open={openEditQuizSheet} onOpenChange={setOpenEditQuizSheet}>
+
+      <Sheet open={openEditUserSheet} onOpenChange={setOpenEditUserSheet}>
         <SheetContent size="content">
           <SheetHeader>
-            <SheetTitle>Edit Kuis</SheetTitle>
-            <SheetDescription>Edit kuis yang sudah dibuat</SheetDescription>
+            <SheetTitle>Ubah User</SheetTitle>
+            <SheetDescription>Ubah data user</SheetDescription>
           </SheetHeader>
           <Form {...form}>
             <form
@@ -283,19 +274,21 @@ export function QuizOperations(props: { quiz: QuizData }) {
             >
               <FormField
                 control={form.control}
-                name="quiz_title"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Judul Kuis <span className="text-red-500">*</span>
+                      Username <span className="text-red-500">*</span>
                     </FormLabel>
 
                     <FormControl>
-                      <Input {...field} placeholder="Judul Kuis" />
+                      <Input {...field} placeholder="1337h4cker5" />
                     </FormControl>
+
                     <FormDescription>
-                      Masukkan judul kuis yang akan dibuat
+                      Username yang akan digunakan untuk login
                     </FormDescription>
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -303,91 +296,44 @@ export function QuizOperations(props: { quiz: QuizData }) {
 
               <FormField
                 control={form.control}
-                name="quiz_desc"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Deskripsi <span className="text-red-500">*</span>
+                      Email <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Textarea
-                        placeholder="Berikan deskripsi singkat tentang kuis"
-                        className="h-32 resize-none"
+                      <Input
                         {...field}
+                        placeholder="hello@bpd.co.id"
+                        type="email"
+                      />
+                    </FormControl>
+                    <FormDescription>Email yang akan digunakan</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Password <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="********"
+                        type="password"
                       />
                     </FormControl>
                     <FormDescription>
-                      Masukkan deskripsi singkat tentang kuis yang akan dibuat
+                      Password yang akan digunakan untuk login
                     </FormDescription>
-
                     <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="quiz_type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Tipe Kuis <span className="text-red-500">*</span>
-                    </FormLabel>
-
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value
-                                ? quizTypes.find(
-                                    (quiz) => quiz.value === field.value
-                                  )?.label
-                                : "Pilih tipe kuis"}
-                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
-                          <Command>
-                            <CommandInput placeholder="Tipe konten..." />
-                            <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
-                            <CommandGroup>
-                              {quizTypes.map((quiz) => (
-                                <CommandItem
-                                  value={quiz.value.toString()}
-                                  key={quiz.value}
-                                  onSelect={(value) => {
-                                    form.clearErrors("quiz_type")
-                                    form.setValue("quiz_type", parseInt(value))
-                                  }}
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      quiz.value === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {quiz.label}
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormDescription>
-                      Pilih tipe kuis yang akan dibuat
-                    </FormDescription>
                   </FormItem>
                 )}
               />

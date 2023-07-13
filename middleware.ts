@@ -2,15 +2,35 @@ import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 import { withAuth } from "next-auth/middleware"
 
+import { extractTokenMiddleware } from "./lib/utils"
+
 export default withAuth(
   async function middleware(req) {
     const token = await getToken({ req })
+
     const isAuth = !!token
     const isAuthPage = req.nextUrl.pathname.startsWith("/login")
 
+    const isDashboardPage = req.nextUrl.pathname.startsWith("/dashboard")
+    const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
+
     if (isAuthPage) {
       if (isAuth) {
-        return NextResponse.redirect(new URL("/dashboard", req.url))
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const adminRole = "Admin"
+        const userRole = "User"
+
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return NextResponse.redirect(new URL("/dashboard", req.url))
+        } else {
+          return NextResponse.redirect(new URL("/member-area", req.url))
+        }
       }
 
       return null
@@ -26,6 +46,58 @@ export default withAuth(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       )
     }
+
+    if (isDashboardPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const adminRole = "Admin"
+        const userRole = "User"
+
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(new URL("/member-area", req.url))
+        }
+      }
+
+    if (isMemberAreaPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const adminRole = "Admin"
+        const userRole = "User"
+
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return NextResponse.redirect(new URL("/dashboard", req.url))
+        } else {
+          return null
+        }
+      }
+
+    // const requiredRole = "Admin"
+    // const userRoles = extractToken.role
+    // if (
+    //   !userRoles ||
+    //   !userRoles.some((role) => role.role_name === requiredRole)
+    // ) {
+    //   // Check if the user has the role "user"
+    //   if (userRoles && userRoles.some((role) => role.role_name === "User")) {
+    //     return NextResponse.redirect(new URL("/member-area", req.url))
+    //   }
+
+    //   return new Response("Unauthorized", { status: 401 })
+    // }
   },
   {
     callbacks: {
@@ -39,4 +111,6 @@ export default withAuth(
   }
 )
 
-export const config = { matcher: ["/dashboard/:path*", "/login"] }
+export const config = {
+  matcher: ["/dashboard/:path*", "/login", "/member-area/:path*"],
+}

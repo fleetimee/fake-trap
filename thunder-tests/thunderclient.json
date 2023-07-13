@@ -84,12 +84,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-02-12T03:38:12.373Z",
-    "modified": "2023-05-31T23:33:31.548Z",
+    "modified": "2023-07-12T03:24:11.243Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"octavia\",\n  \"password\": \"123456\"\n}",
+      "raw": "{\n  \"username\": \"8973f8e6-4cc0-4b08-9e18-ea0bac3a8cea\",\n  \"password\": \"123456\"\n}",
       "form": []
     },
     "tests": []
@@ -487,11 +487,11 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "293e99c1-f515-4875-8a5d-55b16ad4b1c5",
     "name": "Get user by id",
-    "url": "{{baseUrl}}/secure/users/8973f8e6-4cc0-4b08-9e18-ea0bac3a8cea",
+    "url": "{{baseUrl}}/secure/users/c28418e9-795a-4b53-8e6d-de18ed4fe74c",
     "method": "GET",
     "sortNum": 25000,
     "created": "2023-02-15T09:53:25.837Z",
-    "modified": "2023-06-12T08:10:15.680Z",
+    "modified": "2023-07-12T06:34:35.268Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -651,12 +651,12 @@
     "method": "PATCH",
     "sortNum": 360000,
     "created": "2023-02-16T04:58:36.440Z",
-    "modified": "2023-03-07T08:34:11.529Z",
+    "modified": "2023-07-12T06:34:27.893Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"users\": [\n    {\n      \"uuid\": \"d5203b44-9267-4949-8394-bbd0c8ec0101\"\n    }\n  ]\n}",
+      "raw": "{\n  \"users\": [\n    {\n      \"uuid\": \"c28418e9-795a-4b53-8e6d-de18ed4fe74c\"\n    }\n  ]\n}",
       "form": []
     },
     "tests": []
@@ -1113,5 +1113,17 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "74de908e-a7a1-4c27-a451-09a7c4403e95",
+    "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
+    "containerId": "9d3895b2-415a-44bb-b72c-8351d2a8b6ad",
+    "name": "Get Public Category",
+    "url": "",
+    "method": "GET",
+    "sortNum": 580000,
+    "created": "2023-07-13T02:17:57.759Z",
+    "modified": "2023-07-13T02:17:57.759Z",
+    "headers": []
   }
 ]

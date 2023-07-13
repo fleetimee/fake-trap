@@ -54,6 +54,29 @@ async function getKnowledgeDataById(props: {
   }
 }
 
+async function getPublicKnowledgeData(props: {
+  limit: number
+  page: number
+}): Promise<Knowledge> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge?limit=${props.limit}&page=${props.page}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch knowledge data")
+  }
+}
+
 async function getAllCategoriesData(props: {
   token: string | undefined
 }): Promise<CategoryResponse> {
@@ -65,6 +88,30 @@ async function getAllCategoriesData(props: {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch categories data")
+  }
+}
+
+async function getPublicCategoriesData(props: {
+  limit: number
+  page: number
+}): Promise<CategoryResponse> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/?limit=${props.limit}&page=${props.page}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     )
@@ -203,7 +250,9 @@ async function getAllQuizDataWithNullSection(props: {
 
 export {
   getPaginatedKnowledgeData,
+  getPublicKnowledgeData,
   getAllCategoriesData,
+  getPublicCategoriesData,
   getKnowledgeDataById,
   getPaginatedCourseData,
   getCourseDataById,

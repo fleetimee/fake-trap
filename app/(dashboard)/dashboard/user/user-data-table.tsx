@@ -37,6 +37,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { CreateUserSheet } from "@/components/app/user/create-user-sheet"
 
 interface DataTablePros<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -84,21 +85,27 @@ export function UserDataTableUser<TData, TValue>({
     <div className="flex flex-col gap-1 px-2">
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Cari Quiz"
+          placeholder="Cari Username"
           value={
-            (table.getColumn("quiz_title")?.getFilterValue() as string) ?? ""
+            (table.getColumn("username")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("quiz_title")?.setFilterValue(event.target.value)
+            table.getColumn("username")?.setFilterValue(event.target.value)
           }
           className="max-w-xs"
         />
 
-        {/* <CreateQuizSheet /> */}
+        <CreateUserSheet />
       </div>
 
       <div className="rounded-md border">
-        <Table>
+        <Table
+        // {...{
+        //   style: {
+        //     width: table.getCenterTotalSize(),
+        //   },
+        // }}
+        >
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
