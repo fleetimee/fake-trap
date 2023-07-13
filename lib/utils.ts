@@ -1,6 +1,4 @@
 import { clsx, type ClassValue } from "clsx"
-import jwt from "jsonwebtoken"
-import { JWT } from "next-auth/jwt"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -15,10 +13,6 @@ export function convertDatetoString(date: string): string {
     month: "long",
     day: "numeric",
   })
-}
-
-export function jwtDecode(token: string) {
-  return jwt.verify(token, `${process.env.NEXTAUTH_SECRET}`)
 }
 
 export function extractToken(token: string | undefined): UserExtracted {

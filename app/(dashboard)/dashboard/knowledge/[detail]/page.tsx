@@ -22,6 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     token: user?.token,
   })
 
+  console.log(detailKnowledgeData)
+
   return {
     title: detailKnowledgeData.data.knowledge_title,
   }
@@ -42,6 +44,8 @@ export default async function DetailKnowledge({
     id: parseInt(params.detail),
     token: user.token,
   })
+
+  console.log(detailKnowledgeData)
 
   return (
     <DashboardShell>

@@ -1,4 +1,4 @@
-import { CategoryResponse } from "@/types/category-res"
+import { CategoryResponse, DataCategory } from "@/types/category-res"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { QuizRes } from "@/types/quiz-res"
@@ -110,6 +110,28 @@ async function getPublicCategoriesData(props: {
       `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/?limit=${props.limit}&page=${props.page}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch categories data")
+  }
+}
+
+async function getPublicCategoriesDataById(props: {
+  id: number
+}): Promise<DataCategory> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/${props.id}`,
+      {
         headers: {
           "Content-Type": "application/json",
         },
@@ -253,6 +275,7 @@ export {
   getPublicKnowledgeData,
   getAllCategoriesData,
   getPublicCategoriesData,
+  getPublicCategoriesDataById,
   getKnowledgeDataById,
   getPaginatedCourseData,
   getCourseDataById,
