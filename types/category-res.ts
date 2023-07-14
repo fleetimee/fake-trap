@@ -1,4 +1,4 @@
-import { Knowledge } from "@/types/knowledge-res"
+import { Knowledge, KnowledgeData } from "@/types/knowledge-res"
 
 /**
  * Represents the response data for a category request, including the total count of categories,
@@ -34,5 +34,5 @@ export type CategoryByID = {
 export type CategoryByIDData = {
   id_category: number
   category_name: string
-  knowledge: Knowledge[]
+  knowledge: KnowledgeData[]
 }
