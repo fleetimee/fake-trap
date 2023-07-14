@@ -2,9 +2,9 @@
 
 import { Metadata } from "next"
 import Link from "next/link"
+import { RocketIcon } from "@radix-ui/react-icons"
 
 import {
-  getPublicCategoriesData,
   getPublicCategoriesDataById,
   getPublicKnowledgeDataById,
 } from "@/lib/datasource"
@@ -15,6 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -26,10 +27,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { EmptyContent } from "@/components/app/knowledge/detail-sidebar-empty-content"
-import { EmptyKnowledgeContentInitial } from "@/components/app/knowledge/detail/content/empty-knowledge-content-initial"
-import { KnowledgeSectionContent } from "@/components/app/knowledge/detail/content/knowledge-section-content"
-import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/detail/section/empty-knowledge-section-initial"
-import { KnowledgeSectionList } from "@/components/app/knowledge/detail/section/knowledge-section-list"
 import { Icons } from "@/components/icons"
 import { Shell } from "@/components/shell/lobby-shell"
 import { YoutubePlayer } from "@/components/youtube-player"
@@ -67,6 +64,18 @@ export default async function IntroDetailKnowledge({
 
   return (
     <Shell>
+      <div className="flex flex-row gap-4 px-2">
+        <Alert className="basis-full">
+          <RocketIcon className="h-4 w-4" />
+          <AlertTitle>Informasi!</AlertTitle>
+          <AlertDescription>
+            Kursus ini berdasarkan pada pengetahuan{" "}
+            {/* <span className="font-bold">
+              {courseKnowledgeResp.data.knowledge_title}
+            </span> */}
+          </AlertDescription>
+        </Alert>
+      </div>
       <div className="flex items-center space-x-1 px-2 text-sm capitalize text-muted-foreground">
         <div className="truncate">Pengetahuan</div>
         <Icons.chevronRight className="h-4 w-4" aria-hidden="true" />
