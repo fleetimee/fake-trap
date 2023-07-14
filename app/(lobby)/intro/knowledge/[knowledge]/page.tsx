@@ -70,7 +70,7 @@ export default async function IntroDetailKnowledge({
       <div className="flex items-center space-x-1 px-2 text-sm capitalize text-muted-foreground">
         <div className="truncate">Pengetahuan</div>
         <Icons.chevronRight className="h-4 w-4" aria-hidden="true" />
-        <Link href={`/intro/category/${detailCategoryResp.data.id_category}`}>
+        <Link href={`/intro/categories/${detailCategoryResp.data.id_category}`}>
           <div className={cn("text-foreground")}>
             {detailCategoryResp.data.category_name}
           </div>
