@@ -1,6 +1,7 @@
 "use client"
 
 import { Metadata } from "next"
+import Link from "next/link"
 
 import {
   getPublicCategoriesData,
@@ -69,9 +70,11 @@ export default async function IntroDetailKnowledge({
       <div className="flex items-center space-x-1 px-2 text-sm capitalize text-muted-foreground">
         <div className="truncate">Pengetahuan</div>
         <Icons.chevronRight className="h-4 w-4" aria-hidden="true" />
-        <div className={cn("text-foreground")}>
-          {detailCategoryResp.data.category_name}
-        </div>
+        <Link href={`/intro/category/${detailCategoryResp.data.id_category}`}>
+          <div className={cn("text-foreground")}>
+            {detailCategoryResp.data.category_name}
+          </div>
+        </Link>
         <Icons.chevronRight className="h-4 w-4" aria-hidden="true" />
         <div className="text-foreground">
           {toSentenceCase(detailKnowledgeDataResp.data.knowledge_title)}
