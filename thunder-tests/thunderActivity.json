@@ -56,16 +56,16 @@
     "colId": "history",
     "containerId": "",
     "name": "{{baseUrl}}/public/category?limit=4",
-    "url": "{{baseUrl}}/public/category?limit=4&page=1",
+    "url": "{{baseUrl}}/public/category?limit=1000&page=1",
     "method": "GET",
     "sortNum": 0,
     "created": "2023-07-13T02:18:28.254Z",
-    "modified": "2023-07-13T02:29:14.218Z",
+    "modified": "2023-07-14T02:46:44.903Z",
     "headers": [],
     "params": [
       {
         "name": "limit",
-        "value": "4",
+        "value": "1000",
         "isPath": false
       },
       {

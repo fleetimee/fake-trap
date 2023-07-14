@@ -52,7 +52,7 @@ export type Icon = LucideIcon
  */
 export const Icons = {
   logo: Command,
-  placeholder: Twitter,
+  placeholder: Image,
   close: X,
   spinner: Loader2,
   empty: Cat,

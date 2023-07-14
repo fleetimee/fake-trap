@@ -8,6 +8,7 @@ import {
 } from "@/lib/datasource"
 import { cn } from "@/lib/utils"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { PublicKnowledgeCard } from "@/components/public-knowledge-card"
 import { Shell } from "@/components/shell/lobby-shell"
@@ -33,6 +34,11 @@ export default async function IntroductionPage() {
     publicCategory,
     publicKnowledge,
   ])
+
+  const publicCategoryAll = await getPublicCategoriesData({
+    limit: 1000,
+    page: PUBLIC_CATEGORY_PAGE_SIZE,
+  })
 
   return (
     <Shell as="div" className="gap-16">
@@ -97,6 +103,23 @@ export default async function IntroductionPage() {
             </Link>
           ))}
         </div>
+      </section>
+
+      <section
+        id="random-subcategories"
+        aria-labelledby="random-subcategories-heading"
+        className="flex flex-wrap items-center justify-center gap-4 pb-4"
+      >
+        {publicCategoryAll.data.map((category) => (
+          <Link
+            key={category.id_category}
+            href={`/intro/categories/${category.id_category}`}
+          >
+            <Badge variant="secondary" className="rounded px-3 py-1">
+              {category.category_name}
+            </Badge>
+          </Link>
+        ))}
       </section>
 
       <section
