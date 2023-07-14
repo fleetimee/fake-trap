@@ -81,11 +81,11 @@
     "colId": "history",
     "containerId": "",
     "name": "{{baseUrl}}/public/category/2",
-    "url": "{{baseUrl}}/public/category/2",
+    "url": "{{baseUrl}}/public/knowledge/2",
     "method": "GET",
     "sortNum": 0,
     "created": "2023-07-13T08:48:25.590Z",
-    "modified": "2023-07-13T08:48:25.590Z",
+    "modified": "2023-07-14T08:12:44.952Z",
     "headers": [],
     "params": [],
     "tests": []

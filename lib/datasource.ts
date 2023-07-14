@@ -82,6 +82,29 @@ async function getPublicKnowledgeData(props: {
   }
 }
 
+async function getPublicKnowledgeDataById(props: {
+  id: number
+}): Promise<KnowledgeByIdResponse> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/${props.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch knowledge data")
+  }
+}
+
 async function getAllCategoriesData(props: {
   token: string | undefined
 }): Promise<CategoryResponse> {
@@ -278,6 +301,7 @@ async function getAllQuizDataWithNullSection(props: {
 export {
   getPaginatedKnowledgeData,
   getPublicKnowledgeData,
+  getPublicKnowledgeDataById,
   getAllCategoriesData,
   getPublicCategoriesData,
   getPublicCategoriesDataById,
