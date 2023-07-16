@@ -1,4 +1,10 @@
-import { KnowledgeByIdResponse } from "@/types/knowledge-res"
+"use client"
+
+import {
+  KnowledgeByIdResponse,
+  KnowledgeByIdSectionContentData,
+} from "@/types/knowledge-res"
+import { getYoutubeLastId } from "@/lib/utils"
 import {
   Card,
   CardContent,
@@ -16,15 +22,21 @@ import { YoutubePlayer } from "@/components/youtube-player"
  * @param {DetailContentProps} props - The props object containing the title.
  * @returns {JSX.Element} - A JSX.Element representing the detail content component.
  */
-export function KnowledgeDetailContent(
+export function KnowledgeDetailContent(props: {
   dataContentKnowledge: KnowledgeByIdResponse
-) {
+  contentData: KnowledgeByIdSectionContentData
+  setContentData: React.Dispatch<
+    React.SetStateAction<KnowledgeByIdSectionContentData>
+  >
+  activeIndex: number
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+}) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
         <div className="flex flex-row items-center justify-between">
           <p className="grow break-all font-heading text-3xl">
-            {dataContentKnowledge.data.knowledge_title}
+            {props.dataContentKnowledge.data.knowledge_title}
           </p>
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
@@ -35,7 +47,12 @@ export function KnowledgeDetailContent(
           width={1280}
           height={720}
         /> */}
-        <YoutubePlayer videoId="fqQ1Xum8uNI" />
+        <YoutubePlayer videoId={getYoutubeLastId(props.contentData.link)} />
+
+        <p className="mb-4 mt-6 line-clamp-3 overflow-x-auto rounded-lg border bg-gray-400 py-4">{`${JSON.stringify(
+          props.contentData
+        )}`}</p>
+
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">
             <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
@@ -55,7 +72,7 @@ export function KnowledgeDetailContent(
               </CardHeader>
               <CardContent className="space-y-2">
                 <ScrollArea className="h-[300px] w-full">
-                  <p>{dataContentKnowledge.data.description}</p>
+                  <p>{props.dataContentKnowledge.data.description}</p>
                 </ScrollArea>
               </CardContent>
             </Card>

@@ -2,9 +2,7 @@ import { dashboardConfig } from "@/config/dashboard"
 import { getCurrentUser } from "@/lib/session"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { MainNav } from "@/components/main-nav"
 import { DashboardNav } from "@/components/nav"
-import UserAccountNav from "@/components/user-account-nav"
 
 interface DashboardLayoutProps {
   children: React.ReactNode

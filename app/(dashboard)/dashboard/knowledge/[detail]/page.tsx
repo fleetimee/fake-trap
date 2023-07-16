@@ -6,6 +6,7 @@ import { getKnowledgeDataById } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
 import DetailSidebarKnowledge from "@/components/app/knowledge/detail-sidebar-knowledge"
 import { KnowledgeDetailContent } from "@/components/app/knowledge/detail/knowledge-detail-content"
+import { KnowledgeDetailShell } from "@/components/app/knowledge/detail/knowledge-detail-shell"
 import { DashboardShell } from "@/components/shell"
 
 type Props = {
@@ -21,8 +22,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     id: parseInt(params.detail),
     token: user?.token,
   })
-
-  console.log(detailKnowledgeData)
 
   return {
     title: detailKnowledgeData.data.knowledge_title,
@@ -45,14 +44,9 @@ export default async function DetailKnowledge({
     token: user.token,
   })
 
-  console.log(detailKnowledgeData)
-
   return (
     <DashboardShell>
-      <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
-        <KnowledgeDetailContent data={detailKnowledgeData.data} />
-        <DetailSidebarKnowledge data={detailKnowledgeData.data} />
-      </div>
+      <KnowledgeDetailShell detailKnowledgeData={detailKnowledgeData} />
     </DashboardShell>
   )
 }

@@ -2,7 +2,10 @@
 
 import React from "react"
 
-import { KnowledgeByIdResponse } from "@/types/knowledge-res"
+import {
+  KnowledgeByIdResponse,
+  KnowledgeByIdSectionContentData,
+} from "@/types/knowledge-res"
 import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -13,9 +16,15 @@ import { CreateSectionButton } from "@/components/app/knowledge/detail/section/c
 import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/detail/section/empty-knowledge-section-initial"
 import { KnowledgeSectionList } from "@/components/app/knowledge/detail/section/knowledge-section-list"
 
-export default function DetailSidebarKnowledge(
+export default function DetailSidebarKnowledge(props: {
   dataKnowledge: KnowledgeByIdResponse
-) {
+  contentData: KnowledgeByIdSectionContentData
+  setContentData: React.Dispatch<
+    React.SetStateAction<KnowledgeByIdSectionContentData>
+  >
+  activeIndex: number
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+}) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="account" className="w-full">
@@ -24,22 +33,22 @@ export default function DetailSidebarKnowledge(
             📑 Pengetahuan
           </TabsTrigger>
         </TabsList>
-        {dataKnowledge.data.section ? (
+        {props.dataKnowledge.data.section ? (
           <CreateSectionButton
-            id_knowledge={dataKnowledge.data.id_knowledge}
+            id_knowledge={props.dataKnowledge.data.id_knowledge}
             name="Section"
           />
         ) : null}
         <TabsContent value="account">
           <ScrollArea className="h-[600px] w-full">
-            {dataKnowledge.data.section ? (
+            {props.dataKnowledge.data.section ? (
               <Accordion
                 type="single"
                 collapsible
                 className="px-4"
-                key={dataKnowledge.data.knowledge_title}
+                key={props.dataKnowledge.data.knowledge_title}
               >
-                {dataKnowledge.data.section.map((section) => (
+                {props.dataKnowledge.data.section.map((section) => (
                   <AccordionItem
                     key={section.id_section}
                     value={section.id_section.toString()}
@@ -48,7 +57,14 @@ export default function DetailSidebarKnowledge(
                     <KnowledgeSectionList item={section} />
                     {section.content ? (
                       section.content.map((content) => (
-                        <KnowledgeSectionContent content={content} />
+                        <KnowledgeSectionContent
+                          content={content}
+                          activeIndex={props.activeIndex}
+                          setActiveIndex={props.setActiveIndex}
+                          contentData={props.contentData}
+                          setContentData={props.setContentData}
+                          dataKnowledge={props.dataKnowledge}
+                        />
                       ))
                     ) : (
                       <EmptyKnowledgeContentInitial
@@ -60,7 +76,7 @@ export default function DetailSidebarKnowledge(
               </Accordion>
             ) : (
               <EmptyKnowledgeSectionInitial
-                id_knowledge={dataKnowledge.data.id_knowledge}
+                id_knowledge={props.dataKnowledge.data.id_knowledge}
               />
             )}
           </ScrollArea>

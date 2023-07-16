@@ -2,7 +2,10 @@
 
 import React from "react"
 
-import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
+import {
+  KnowledgeByIdResponse,
+  KnowledgeByIdSectionContentData,
+} from "@/types/knowledge-res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,10 +25,15 @@ enum ContentType {
   Files = 2,
 }
 
-export function KnowledgeSectionContent({
-  content: content,
-}: {
+export function KnowledgeSectionContent(props: {
   content: KnowledgeByIdSectionContentData
+  dataKnowledge: KnowledgeByIdResponse
+  contentData: KnowledgeByIdSectionContentData
+  setContentData: React.Dispatch<
+    React.SetStateAction<KnowledgeByIdSectionContentData>
+  >
+  activeIndex: number
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
 }) {
   const [isAddSheetOpen, setIsAddSheetOpen] = React.useState<boolean>(false)
   const [isEditSheetOpen, setIsEditSheetOpen] = React.useState<boolean>(false)
@@ -36,26 +44,34 @@ export function KnowledgeSectionContent({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <ContextMenu key={content.id_content}>
+      <ContextMenu key={props.content.id_content}>
         <ContextMenuTrigger>
-          <AccordionContent key={content.id_content} className="py-1">
-            {content.content_title ? (
-              <Button className="flex h-[65px] w-full justify-start rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500 py-2 text-left font-heading text-white hover:from-violet-600 hover:to-fuchsia-600">
-                {content.content_title}
+          <AccordionContent key={props.content.id_content} className="py-1">
+            {props.content.content_title ? (
+              <Button
+                className="flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading active:bg-gray-800"
+                onClick={() => {
+                  props.setActiveIndex(props.content.id_content)
+                  props.setContentData(props.content)
+                }}
+              >
+                {props.content.content_title}
               </Button>
             ) : null}
           </AccordionContent>
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuItem inset disabled>
-            ID Konten: {content.id_content}
+            ID Konten: {props.content.id_content}
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
             Tipe:{" "}
-            {content.content_type == ContentType.Video ? "Video" : "Sub Judul"}
+            {props.content.content_type == ContentType.Video
+              ? "Video"
+              : "Sub Judul"}
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
-            {content.content_title}
+            {props.content.content_title}
           </ContextMenuItem>
           <ContextMenuSeparator />
           <SheetTrigger
@@ -101,15 +117,19 @@ export function KnowledgeSectionContent({
       </ContextMenu>
       {isAddSheetOpen ? (
         <CreateSectionContentSheet
-          id_section={content.id_section}
+          id_section={props.content.id_section}
           open={open}
           setOpen={setOpen}
         />
       ) : isEditSheetOpen ? (
-        <EditSectionContentSheet item={content} open={open} setOpen={setOpen} />
+        <EditSectionContentSheet
+          item={props.content}
+          open={open}
+          setOpen={setOpen}
+        />
       ) : (
         <DeleteSectionContentSheet
-          item={content}
+          item={props.content}
           open={open}
           setOpen={setOpen}
         />
