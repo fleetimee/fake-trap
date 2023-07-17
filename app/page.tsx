@@ -40,8 +40,11 @@ export default async function IndexPage() {
               Explore
             </Link>
             <Link
-              rel="noreferrer"
               href="/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              replace
+              prefetch={false}
               className={buttonVariants({ variant: "outline" })}
             >
               {user ? "Masuk Panel" : "Akses App"}
