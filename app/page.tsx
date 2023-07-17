@@ -37,7 +37,7 @@ export default async function IndexPage() {
               rel="noreferrer"
               className={buttonVariants()}
             >
-              Lihat Preview
+              Explore
             </Link>
             <Link
               rel="noreferrer"
