@@ -6,6 +6,7 @@ import {
   KnowledgeByIdResponse,
   KnowledgeByIdSectionContentData,
 } from "@/types/knowledge-res"
+import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 
 import DetailSidebarKnowledge from "../detail-sidebar-knowledge"
 import { KnowledgeDetailContent } from "./knowledge-detail-content"
@@ -32,21 +33,35 @@ export function KnowledgeDetailShell(props: {
   const [scaleDown, setScaleDown] = React.useState<number>(scaleInitial - 0.2)
 
   return (
-    <div className="flex h-auto  flex-col gap-4 px-2 lg:flex-row">
-      <KnowledgeDetailContent
-        dataContentKnowledge={props.detailKnowledgeData}
-        setContentData={setContentData}
-        contentData={contentData}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+    <div className="flex flex-col gap-4">
+      <BreadCrumbs
+        segments={[
+          {
+            href: "/dashboard/knowledge",
+            title: "Pengetahuan",
+          },
+          {
+            title: props.detailKnowledgeData.data.knowledge_title,
+            href: `/dashboard/knowledge/${props.detailKnowledgeData.data.id_knowledge}`,
+          },
+        ]}
       />
-      <DetailSidebarKnowledge
-        dataKnowledge={props.detailKnowledgeData}
-        setContentData={setContentData}
-        contentData={contentData}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
-      />
+      <div className="flex h-auto  flex-col gap-4 px-2 lg:flex-row">
+        <KnowledgeDetailContent
+          dataContentKnowledge={props.detailKnowledgeData}
+          setContentData={setContentData}
+          contentData={contentData}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
+        <DetailSidebarKnowledge
+          dataKnowledge={props.detailKnowledgeData}
+          setContentData={setContentData}
+          contentData={contentData}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
+      </div>
     </div>
   )
 }
