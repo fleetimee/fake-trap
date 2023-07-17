@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import { getPublicCategoriesDataById } from "@/lib/datasource"
 import { toTitleCase } from "@/lib/utils"
 import { HeaderIntro } from "@/components/category-header"
+import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { PublicKnowledgeCard } from "@/components/public-knowledge-card"
 import { Shell } from "@/components/shell/lobby-shell"
 
@@ -17,8 +18,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     id: parseInt(params.detail),
   })
 
-  console.log(detailCategoryData)
-
   return {
     title: `Kategori - ${detailCategoryData.data.category_name}`,
   }
@@ -29,10 +28,21 @@ export default async function DetailIntroCategory({ params }: Props) {
     id: parseInt(params.detail),
   })
 
-  console.log(detailCategoryData)
-
   return (
     <Shell>
+      <BreadCrumbs
+        segments={[
+          {
+            href: "/intro",
+            title: "Explore",
+          },
+          {
+            title: toTitleCase(detailCategoryData.data.category_name),
+            href: `/intro/categories/${detailCategoryData.data.id_category}`,
+          },
+        ]}
+      />
+
       <HeaderIntro
         title={toTitleCase(detailCategoryData.data.category_name)}
         description={`Jelajahi pengetahuan ${detailCategoryData.data.category_name} yang ada di E-learning`}
