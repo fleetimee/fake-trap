@@ -43,6 +43,7 @@ export default function PublicDetailSidebarKnowledge(props: {
                 collapsible
                 className="px-4"
                 key={props.dataKnowledge.data.knowledge_title}
+                defaultValue={props.dataKnowledge.data.section[0].id_section.toString()}
               >
                 {props.dataKnowledge.data.section.map((section) => (
                   <AccordionItem
