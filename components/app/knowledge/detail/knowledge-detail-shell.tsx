@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import { number } from "zod"
 
 import {
   KnowledgeByIdResponse,
@@ -25,6 +24,12 @@ export function KnowledgeDetailShell(props: {
     })
 
   const [activeIndex, setActiveIndex] = React.useState<number>(0)
+
+  const [scaleInitial, setScaleInitial] = React.useState<number>(1.2)
+
+  const [scaleUp, setScaleUp] = React.useState<number>(scaleInitial + 0.2)
+
+  const [scaleDown, setScaleDown] = React.useState<number>(scaleInitial - 0.2)
 
   return (
     <div className="flex h-auto  flex-col gap-4 px-2 lg:flex-row">

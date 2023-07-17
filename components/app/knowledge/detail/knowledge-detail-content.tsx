@@ -1,5 +1,8 @@
 "use client"
 
+import Image from "next/image"
+import Link from "next/link"
+
 import {
   KnowledgeByIdResponse,
   KnowledgeByIdSectionContentData,
@@ -12,10 +15,102 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Icons } from "@/components/icons"
+import { PdfViewer } from "@/components/pdf-viewer"
 import { YoutubePlayer } from "@/components/youtube-player"
+
+export function renderContent(
+  contentType: number,
+  props: {
+    dataContentKnowledge: KnowledgeByIdResponse
+    contentData: KnowledgeByIdSectionContentData
+    setContentData: React.Dispatch<
+      React.SetStateAction<KnowledgeByIdSectionContentData>
+    >
+    activeIndex: number
+    setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+  }
+) {
+  switch (contentType) {
+    case 0:
+      return (
+        <Image
+          src={props.dataContentKnowledge.data.image}
+          alt={props.dataContentKnowledge.data.knowledge_title}
+          className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
+          width={1280}
+          height={720}
+        />
+      )
+
+    case 1:
+      return (
+        <YoutubePlayer videoId={getYoutubeLastId(props.contentData.link)} />
+      )
+
+    case 2:
+      return <PdfViewer />
+
+    default:
+      return null
+  }
+}
+
+export function renderContentButton(
+  contentType: number,
+  props: {
+    dataContentKnowledge: KnowledgeByIdResponse
+    contentData: KnowledgeByIdSectionContentData
+    setContentData: React.Dispatch<
+      React.SetStateAction<KnowledgeByIdSectionContentData>
+    >
+    activeIndex: number
+    setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+  }
+) {
+  switch (contentType) {
+    case 0:
+      return null
+
+    case 1:
+      return <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
+
+    case 2:
+      return (
+        <>
+          <HoverCard>
+            <HoverCardTrigger>
+              <Link
+                href={"/sample.pdf"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icons.save className="h-14 w-14 flex-none  pl-5" />
+              </Link>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-full">
+              <div className="flex justify-between space-x-4">
+                <div className="space-y-1">
+                  <h4 className="text-sm font-semibold">Unduh / Simpan PDF</h4>
+                  <p className="text-sm">
+                    Unduh atau simpan PDF untuk dibaca nanti.
+                  </p>
+                </div>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
+          <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
+        </>
+      )
+  }
+}
 
 /**
  * Renders a detail content component with a title and a video.
@@ -38,20 +133,12 @@ export function KnowledgeDetailContent(props: {
           <p className="grow break-all font-heading text-3xl">
             {props.dataContentKnowledge.data.knowledge_title}
           </p>
-          <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
+          <div className="flex">
+            {renderContentButton(props.contentData.content_type, props)}
+          </div>
         </div>
-        {/* <Image
-          src={dataContentKnowledge.data.image}
-          alt={dataContentKnowledge.data.knowledge_title}
-          className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
-          width={1280}
-          height={720}
-        /> */}
-        <YoutubePlayer videoId={getYoutubeLastId(props.contentData.link)} />
 
-        <p className="mb-4 mt-6 line-clamp-3 overflow-x-auto rounded-lg border bg-gray-400 py-4">{`${JSON.stringify(
-          props.contentData
-        )}`}</p>
+        {renderContent(props.contentData.content_type, props)}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">

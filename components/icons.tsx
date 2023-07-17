@@ -29,6 +29,7 @@ import {
   MoreVertical,
   Pizza,
   Plus,
+  Save,
   Settings,
   SunMedium,
   Tags,
@@ -51,6 +52,7 @@ export type Icon = LucideIcon
  * Additionally, there is a custom GitHub icon component defined using SVG.
  */
 export const Icons = {
+  save: Save,
   logo: Command,
   placeholder: Image,
   close: X,

@@ -54,6 +54,7 @@ export function KnowledgeSectionContent(props: {
                   props.setActiveIndex(props.content.id_content)
                   props.setContentData(props.content)
                 }}
+                disabled={props.activeIndex == props.content.id_content}
               >
                 {props.content.content_title}
               </Button>
