@@ -13,6 +13,11 @@ import { buttonVariants } from "@/components/ui/button"
 import { PublicKnowledgeCard } from "@/components/public-knowledge-card"
 import { Shell } from "@/components/shell/lobby-shell"
 
+export const metadata = {
+  title: "Explore",
+  description: "Explore our products and services.",
+}
+
 export default async function IntroductionPage() {
   const PUBLIC_CATEGORY_LIMIT = 4
   const PUBLIC_CATEGORY_PAGE_SIZE = 1
