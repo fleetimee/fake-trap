@@ -1,4 +1,4 @@
-import IntroKnowledgeLoading from "../../knowledge/[knowledge]/loading"
+import IntroKnowledgeLoading from "../../knowledge/[detail]/loading"
 
 export default function CategoryLoading() {
   return <IntroKnowledgeLoading />
