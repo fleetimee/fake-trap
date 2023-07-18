@@ -249,17 +249,47 @@ export function CreateSectionContentSheet({
           ) : form.watch("content_type") === 2 ? (
             <FormField
               control={form.control}
-              name="image"
+              name="link"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL Gambar</FormLabel>
+                  <FormLabel>Link Pdf</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="https://pbs.twimg.com/media/FzDiHrSWIAAQYx9?format=jpg&name=small"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Link gambar.</FormDescription>
+                  <FormDescription>Link ekstensi pdf.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === 3 ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://example.com" {...field} />
+                  </FormControl>
+                  <FormDescription>Link Eksternal</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === 4 ? (
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link Gambar</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://example.com" {...field} />
+                  </FormControl>
+                  <FormDescription>Url Gambar</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

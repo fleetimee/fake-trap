@@ -8,6 +8,7 @@ import {
   KnowledgeByIdSectionContentData,
 } from "@/types/knowledge-res"
 import { getYoutubeLastId } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -58,6 +59,28 @@ export function renderContent(
     case 2:
       return <PdfViewer />
 
+    case 3:
+      return (
+        <Link
+          href={props.contentData.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col gap-4"
+        >
+          <Image
+            src={props.dataContentKnowledge.data.image}
+            alt={props.dataContentKnowledge.data.knowledge_title}
+            className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
+            width={1280}
+            height={720}
+          />
+          <Button className="w-full text-left">
+            <Icons.link className="h-4 w-4" />
+            <span className="ml-2">Buka Link</span>
+          </Button>
+        </Link>
+      )
+
     default:
       return null
   }
@@ -106,9 +129,12 @@ export function renderContentButton(
               </div>
             </HoverCardContent>
           </HoverCard>
-          <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
+          <Icons.bookmark className="h-14 w-14 flex-none pl-5" />
         </>
       )
+
+    default:
+      return null
   }
 }
 

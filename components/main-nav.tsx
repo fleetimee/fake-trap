@@ -8,23 +8,11 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { MobileNav } from "@/components/mobile-nav"
 
-/**
- * The props for the MainNav component.
- * @param {MainNavItem[]} [items] - The items to be displayed in the navigation.
- * @param {React.ReactNode} [children] - The children to be displayed in the navigation.
- */
 interface MainNavProps {
   items?: MainNavItem[]
   children?: React.ReactNode
 }
 
-/**
- * Renders the main navigation component.
- * @param {MainNavProps} props - The props for the component.
- * @param {MainNavItem[]} props.items - The items to be displayed in the navigation.
- * @param {React.ReactNode} props.children - The children to be displayed in the navigation.
- * @returns {JSX.Element} - The main navigation component.
- */
 export function MainNav({ items, children }: MainNavProps) {
   const segment = useSelectedLayoutSegment()
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
