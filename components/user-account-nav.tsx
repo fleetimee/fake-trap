@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { AvatarFallback } from "@radix-ui/react-avatar"
 import { User } from "next-auth"
-import { signOut, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 
 import { UserExtracted } from "@/lib/utils"
 import {
@@ -13,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { UserAvatar } from "@/components/user-avatar"
 
 import { Avatar } from "./ui/avatar"
 import { buttonVariants } from "./ui/button"
@@ -75,7 +74,7 @@ export default function UserAccountNav(props: { user: UserExtracted }) {
           onSelect={(event) => {
             event.preventDefault()
             signOut({
-              callbackUrl: `${window.location.origin}/login`,
+              callbackUrl: "http://localhost:3000/foo",
             }).then(() => {
               localStorage.clear()
               sessionStorage.clear()

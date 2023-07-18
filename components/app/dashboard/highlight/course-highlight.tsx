@@ -33,7 +33,7 @@ export async function DashboardCourseHighlight(props: {
 
   return (
     <CardDashboard
-      title="Kursus"
+      title="Kursus Terbaru"
       icon="course"
       name={courseResp.data.course_name}
       image={courseResp.data.image}

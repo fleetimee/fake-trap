@@ -33,7 +33,7 @@ export async function DashboardKnowledgeHighlight(props: {
 
   return (
     <CardDashboard
-      title="Pengetahuan"
+      title="Pengetahuan Terbaru"
       icon="knowledge"
       name={knowledgeResp.data.knowledge_title}
       image={knowledgeResp.data.image}

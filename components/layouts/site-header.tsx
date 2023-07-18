@@ -63,7 +63,7 @@ export function SiteHeader(props: {
                   onSelect={(event) => {
                     event.preventDefault()
                     signOut({
-                      callbackUrl: `${window.location.origin}/login`,
+                      callbackUrl: `${window.location.origin}`,
                     }).then(() => {
                       localStorage.clear()
                       sessionStorage.clear()

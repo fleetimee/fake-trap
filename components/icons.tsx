@@ -15,6 +15,7 @@ import {
   Copy,
   CreditCard,
   Edit,
+  ExternalLink,
   File,
   FileText,
   GraduationCap,
@@ -22,6 +23,7 @@ import {
   Image,
   Laptop,
   LayoutDashboard,
+  Link,
   Loader2,
   LucideProps,
   Moon,
@@ -52,6 +54,7 @@ export type Icon = LucideIcon
  * Additionally, there is a custom GitHub icon component defined using SVG.
  */
 export const Icons = {
+  link: ExternalLink,
   save: Save,
   logo: Command,
   placeholder: Image,

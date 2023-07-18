@@ -5,9 +5,11 @@ import {
   getPublicCategoriesDataById,
   getPublicKnowledgeDataById,
 } from "@/lib/datasource"
+import { getCurrentUser } from "@/lib/session"
 import { toSentenceCase, toTitleCase } from "@/lib/utils"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { PublicKnowledgeDetailShell } from "@/components/app/public-knowledge/public-knowledge-shell"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
 
@@ -28,6 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function IntroDetailKnowledge({ params }: Props) {
+  const user = await getCurrentUser()
+
   const detailKnowledgeData = getPublicKnowledgeDataById({
     id: parseInt(params.detail),
   })
@@ -58,19 +62,21 @@ export default async function IntroDetailKnowledge({ params }: Props) {
       />
 
       <div className="flex flex-row gap-4 px-2">
-        <Alert className="basis-full">
-          <RocketIcon className="h-4 w-4" />
+        <Alert
+          className="basis-full"
+          variant={user ? "default" : "destructive"}
+        >
+          <Icons.course className="h-4 w-4" />
           <AlertTitle>
             {detailKnowledgeDataResp.data.course
               ? `
               Ada ${detailKnowledgeDataResp.data.course.length} kursus yang tersedia untuk pengetahuan ini`
-              : `Tidak ada kursus yang untuk pengetahuan ini`}
+              : `Tidak ada kursus untuk pengetahuan ini`}
           </AlertTitle>
           <AlertDescription>
-            Akses kursus dengan login terlebih dahulu
-            {/* <span className="font-bold">
-              {courseKnowledgeResp.data.knowledge_title}
-            </span> */}
+            {user
+              ? `Pergi ke panel mu untuk melihat kursus ini`
+              : `Kamu harus login untuk mengakses kursus`}
           </AlertDescription>
         </Alert>
       </div>
