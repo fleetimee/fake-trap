@@ -60,7 +60,6 @@ export default async function IntroDetailKnowledge({ params }: Props) {
           },
         ]}
       />
-
       <div className="flex flex-row gap-4 px-2">
         <Alert
           className="basis-full"
@@ -80,7 +79,6 @@ export default async function IntroDetailKnowledge({ params }: Props) {
           </AlertDescription>
         </Alert>
       </div>
-
       <PublicKnowledgeDetailShell
         detailKnowledgeDataResp={detailKnowledgeDataResp}
       />
