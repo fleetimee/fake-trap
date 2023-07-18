@@ -93,13 +93,7 @@ export function SiteHeader(props: {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link
-                href="/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                replace
-                prefetch={false}
-              >
+              <Link href="/login">
                 <div
                   className={buttonVariants({
                     size: "lg",
@@ -177,14 +171,20 @@ export function SiteHeader(props: {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link href="/login">
+            <Link
+              href="/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              replace
+              prefetch={false}
+            >
               <div
                 className={buttonVariants({
                   size: "sm",
                 })}
               >
                 Sign In
-                <span className="sr-only">Sign In</span>
+                <span className="sr-only">Masuk</span>
               </div>
             </Link>
           )}
