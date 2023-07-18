@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { RocketIcon } from "@radix-ui/react-icons"
 
 import { authOptions } from "@/lib/auth"
 import {
@@ -10,9 +9,6 @@ import {
   getKnowledgeDataById,
 } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { DetailSidebarCourse } from "@/components/app/course/detail-sidebar-course"
-import { CourseDetailContent } from "@/components/app/course/detail/course-detail-content"
 import { CourseDetailShell } from "@/components/app/course/detail/course-detail-shell"
 import { DashboardShell } from "@/components/shell"
 

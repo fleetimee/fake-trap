@@ -1,14 +1,10 @@
 "use client"
 
+import { Content } from "@/types/content-res"
 import { CourseByIdResponse } from "@/types/course-res"
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { QuizRes } from "@/types/quiz-res"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-} from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
+import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -27,6 +23,10 @@ export function DetailSidebarCourse(props: {
   dataKnowledge: KnowledgeByIdResponse
   dataCourse: CourseByIdResponse
   dataQuiz: QuizRes
+  contentData: Content
+  setContentData: React.Dispatch<React.SetStateAction<Content>>
+  activeIndex: number
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
 }) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -58,7 +58,13 @@ export function DetailSidebarCourse(props: {
                     <CourseKnowledgeSectionList section={section} />
                     {section.content ? (
                       section.content?.map((content) => (
-                        <CourseKnowledgeSectionContent content={content} />
+                        <CourseKnowledgeSectionContent
+                          content={content}
+                          activeIndex={props.activeIndex}
+                          setActiveIndex={props.setActiveIndex}
+                          contentData={props.contentData}
+                          setContentData={props.setContentData}
+                        />
                       ))
                     ) : (
                       <EmptyKnowledgeCourse />

@@ -33,7 +33,7 @@ export function KnowledgeDetailShell(props: {
 
   return (
     <div className="flex flex-col gap-4 py-4">
-      <div className="flex  justify-between">
+      <div className="flex justify-between">
         <BreadCrumbs
           segments={[
             {

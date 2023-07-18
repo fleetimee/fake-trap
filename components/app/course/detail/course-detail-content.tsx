@@ -1,6 +1,12 @@
+import React from "react"
+import Image from "next/image"
+import Link from "next/link"
+
+import { Content } from "@/types/content-res"
 import { CourseByIdResponse } from "@/types/course-res"
 import { UserResponse } from "@/types/user-res"
-import { convertDatetoString } from "@/lib/utils"
+import { convertDatetoString, getYoutubeLastId } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -11,14 +17,77 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Icons } from "@/components/icons"
+import { PdfViewer } from "@/components/pdf-viewer"
 import { YoutubePlayer } from "@/components/youtube-player"
 
 import { columnUserCourse } from "./user-columns"
 import { UserDataTable } from "./user-data-table"
 
+export function renderContentCourse(
+  contentType: number,
+  props: {
+    data: CourseByIdResponse
+    user: UserResponse
+    contentData: Content
+    setContentData: React.Dispatch<React.SetStateAction<Content>>
+    activeIndex: number
+    setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+  }
+) {
+  switch (contentType) {
+    case 0:
+      return (
+        <Image
+          src={props.data.data.image}
+          alt={props.data.data.course_name}
+          className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
+          width={1280}
+          height={720}
+        />
+      )
+
+    case 1:
+      return (
+        <YoutubePlayer videoId={getYoutubeLastId(props.contentData.link)} />
+      )
+
+    case 2:
+      return <PdfViewer />
+
+    case 3:
+      return (
+        <Link
+          href={props.contentData.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col gap-4"
+        >
+          <Image
+            src={props.data.data.image}
+            alt={props.data.data.course_name}
+            className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
+            width={1280}
+            height={720}
+          />
+          <Button className="w-full text-left">
+            <Icons.link className="h-4 w-4" />
+            <span className="ml-2">Buka Link</span>
+          </Button>
+        </Link>
+      )
+
+    default:
+      return null
+  }
+}
+
 export function CourseDetailContent(props: {
   data: CourseByIdResponse
   user: UserResponse
+  contentData: Content
+  setContentData: React.Dispatch<React.SetStateAction<Content>>
+  activeIndex: number
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
 }) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
@@ -29,14 +98,9 @@ export function CourseDetailContent(props: {
           </p>
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
-        {/* <Image
-          src={dataContentKnowledge.data.image}
-          alt={dataContentKnowledge.data.knowledge_title}
-          className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
-          width={1280}
-          height={720}
-        /> */}
-        <YoutubePlayer videoId="fqQ1Xum8uNI" />
+
+        {renderContentCourse(props.contentData.content_type, props)}
+
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">
             <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
