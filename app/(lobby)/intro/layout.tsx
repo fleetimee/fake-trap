@@ -1,5 +1,4 @@
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 
@@ -14,7 +13,7 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
     <div className="relative flex min-h-screen flex-col">
       <SiteHeader user={user} />
       <main className="flex-1">{children}</main>
-      <SiteFooter />
+      <SiteFooter className="border-t" />
     </div>
   )
 }

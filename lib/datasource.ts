@@ -1,9 +1,4 @@
-import {
-  CategoryByID,
-  CategoryByIDData,
-  CategoryResponse,
-  DataCategory,
-} from "@/types/category-res"
+import { CategoryByID, CategoryResponse } from "@/types/category-res"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { QuizRes } from "@/types/quiz-res"
