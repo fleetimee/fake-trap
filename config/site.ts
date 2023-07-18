@@ -10,21 +10,8 @@ export const siteConfig = {
     "Beautifully designed components built with Radix UI and Tailwind CSS.",
   mainNav: [
     {
-      title: "Explore",
-      items: [
-        {
-          title: "Pengetahuan",
-          href: "/products",
-          description: "Semua pengetahuan yang ada di elearning",
-          items: [],
-        },
-        {
-          title: "Kategori",
-          href: "/build-a-board",
-          description: "Semua kategori yang ada di elearning",
-          items: [],
-        },
-      ],
+      title: "Home",
+      href: "/",
     },
   ],
   links: {
