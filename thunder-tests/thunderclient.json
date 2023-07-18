@@ -84,12 +84,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-02-12T03:38:12.373Z",
-    "modified": "2023-07-13T08:46:07.803Z",
+    "modified": "2023-07-18T12:35:11.691Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"octavia\",\n  \"password\": \"123456\"\n}",
+      "raw": "{\n  \"username\": \"octavia\",\n  \"password\": \"12345\"\n}",
       "form": []
     },
     "tests": []

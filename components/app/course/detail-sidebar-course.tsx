@@ -80,11 +80,11 @@ export function DetailSidebarCourse(props: {
                 <EmptyContent.Description>
                   Section tidak tersedia
                 </EmptyContent.Description>
-                {/* <CreateButton variant="outline" name="Tambah" /> */}
               </EmptyContent>
             )}
           </ScrollArea>
         </TabsContent>
+
         <TabsContent value="course">
           <CreateCourseSectionButton
             id_course={props.dataCourse.data.id_course}
@@ -96,6 +96,7 @@ export function DetailSidebarCourse(props: {
                 className="px-4"
                 collapsible
                 key={props.dataCourse.data.id_course}
+                defaultValue={props.dataCourse.data.section[0].id_section.toString()}
               >
                 {props.dataCourse.data.section.map((section) => (
                   <AccordionItem
@@ -110,11 +111,6 @@ export function DetailSidebarCourse(props: {
                         <CourseSectionQuiz quiz={q} quizData={props.dataQuiz} />
                       ))}
 
-                    {/* 
-                      Ini adalah content section yang ada 
-                      di dalam course berisikan context menu untuk menambahkan
-                      content baru, mengedit, dan menghapus content serta juga bisa menambahkan quiz
-                    */}
                     {section.content &&
                       section.content.map((content) => (
                         <CourseSectionContent
@@ -123,10 +119,6 @@ export function DetailSidebarCourse(props: {
                         />
                       ))}
 
-                    {/* 
-                      Ini merupakan placeholder jika section tidak memiliki content
-                      dan quiz
-                    */}
                     {(!section.content || section.content?.length === 0) &&
                       (!section.quiz || section.quiz?.length === 0) && (
                         <EmptyCourseContentInitial

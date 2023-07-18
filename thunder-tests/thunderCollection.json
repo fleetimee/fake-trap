@@ -100,7 +100,7 @@
     "settings": {
       "auth": {
         "type": "bearer",
-        "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVheEBnbWFpbC5jb20iLCJleHAiOjE2ODkzMjQzNjksImlkIjoiMjk3YTZlNTAtOTI5ZC00YWVmLWJhNmYtNzZmMzQxMjcyZWUzIiwib3JpZ19pYXQiOjE2ODkyMzc5NjksInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IkFkbWluIiwicm9sZV9kZXNjcmlwdGlvbiI6IkdyYW50IHVzZXIgYWxsIHJlc291cmNlcyJ9XSwidXNlcm5hbWUiOiJvY3RhdmlhIn0.GwZtN5nujvb42sMusi3aA7_IC8D1Om11qxe98mg3ICc"
+        "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNjY0BnbWFpbC5jb20iLCJleHAiOjE2ODk3NzAxMTEsImlkIjoiODk4OGM2NWMtOGUwZS00YjljLTk1NTUtOGYxNDhlMDM5OTk1Iiwib3JpZ19pYXQiOjE2ODk2ODM3MTEsInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IkFkbWluIiwicm9sZV9kZXNjcmlwdGlvbiI6IkdyYW50IGxpbWl0ZWQgcmVzb3VyY2UgdGhhdCBub3QgcHJvdGVjdGVkIn1dLCJ1c2VybmFtZSI6Im9jdGF2aWEifQ.FTl4F9RxH0-xEP-xyHlcjy0o1yEwLeJgXtaQkCDl9eU"
       }
     }
   }
