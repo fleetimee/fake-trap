@@ -39,7 +39,7 @@ export function KnowledgeDetailShell(props: {
 
   return (
     <div className="flex flex-col gap-4 py-4">
-      <div className="flex justify-between">
+      <div className="flex  justify-between">
         <BreadCrumbs
           segments={[
             {
@@ -57,7 +57,7 @@ export function KnowledgeDetailShell(props: {
           <Input
             type="text"
             placeholder="Link Public"
-            className="w-1/2"
+            className="w-full xl:w-1/2"
             defaultValue={`${process.env.NEXT_PUBLIC_BASE_URL}/intro/knowledge/${props.detailKnowledgeData.data.id_knowledge}`}
           />
 
