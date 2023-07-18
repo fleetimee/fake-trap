@@ -5,13 +5,32 @@ export type SiteConfig = typeof siteConfig
  */
 export const siteConfig = {
   name: "BPD Elearning",
-  url: "http://localhost:3000",
+  url: `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}`,
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "E-learning BPD DIY memberikan anda akses ke ribuan kursus online. Pelajari apa saja, kapan saja, di mana saja",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Explore",
+      items: [
+        {
+          title: "Panel",
+          href: "/login",
+          description: "Masuk ke Panel",
+          items: [],
+        },
+        {
+          title: "Kategori",
+          href: "/intro/#categories",
+          description: "Jelajahi kategori pengetahuan yang tersedia",
+          items: [],
+        },
+        {
+          title: "Pengetahuan",
+          href: "/intro/#featured-knowledge",
+          description: "Baca dan pahami pengetahuan yang tersedia",
+          items: [],
+        },
+      ],
     },
   ],
   links: {
