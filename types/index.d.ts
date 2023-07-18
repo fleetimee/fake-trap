@@ -1,12 +1,27 @@
 import { Icons } from "@/components/icons"
 
-export type NavItem = {
+export interface NavItem {
   title: string
-  href: string
+  href?: string
   disabled?: boolean
+  external?: boolean
+  icon?: keyof typeof Icons
+  label?: string
+  description?: string
 }
 
-export type MainNavItem = NavItem
+export interface NavItemWithChildren extends NavItem {
+  items: NavItemWithChildren[]
+}
+
+export interface NavItemWithOptionalChildren extends NavItem {
+  items?: NavItemWithChildren[]
+}
+
+export type MainNavItem = NavItemWithOptionalChildren
+
+export type SidebarNavItem = NavItemWithChildren
+
 
 export type SidebarNavItem = {
   title: string

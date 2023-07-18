@@ -1,57 +1,159 @@
+"use client"
+
+import React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { MainNavItem } from "@/types"
+import { ScrollArea } from "@radix-ui/react-scroll-area"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { useLockBody } from "@/hooks/use-lock-body"
 import { Icons } from "@/components/icons"
 
-/**
- * Represents the props for the MobileNav component.
- * @interface
- * @property {MainNavItem[]} items - An array of MainNavItem objects representing the navigation items.
- * @property {React.ReactNode} [children] - Optional React node(s) to be rendered inside the mobile navigation component.
- */
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion"
+import { Button } from "./ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+
 interface MobileNavProps {
-  items: MainNavItem[]
+  mainNavItems?: MainNavItem[]
+  sidebarNavItems: MainNavItem[]
   children?: React.ReactNode
 }
-/**
- * Renders a mobile navigation component with a list of items and optional children.
- * @param items - An array of MainNavItem objects representing the navigation items.
- * @param children - Optional React node(s) to be rendered inside the mobile navigation component.
- * @returns A React component representing the mobile navigation.
- */
-export function MobileNav({ items, children }: MobileNavProps) {
-  useLockBody()
+
+export function MobileNav({
+  mainNavItems,
+  sidebarNavItems,
+  children,
+}: MobileNavProps) {
+  const pathname = usePathname()
+  const [isOpen, setIsOpen] = React.useState(false)
 
   return (
-    <div
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+        >
+          <Icons.menu className="h-6 w-6" />
+          <span className="sr-only">Toggle Menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent position="left" size="content">
+        <div className="px-7">
+          <Link
+            aria-label="Home"
+            href="/"
+            className="flex items-center"
+            onClick={() => setIsOpen(false)}
+          >
+            <Icons.logo className="mr-2 h-4 w-4" aria-hidden="true" />
+            <span className="font-bold">{siteConfig.name}</span>
+          </Link>
+        </div>
+        <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
+          <div className="pl-1 pr-7">
+            <Accordion type="single" collapsible className="w-full">
+              {mainNavItems?.map((item, index) => (
+                <AccordionItem value={item.title} key={index}>
+                  <AccordionTrigger className="text-sm capitalize">
+                    {item.title}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex flex-col space-y-2">
+                      {item.items?.map((subItem, index) =>
+                        subItem.href ? (
+                          <MobileLink
+                            key={index}
+                            href={String(subItem.href)}
+                            pathname={pathname}
+                            setIsOpen={setIsOpen}
+                            disabled={subItem.disabled}
+                          >
+                            {subItem.title}
+                          </MobileLink>
+                        ) : (
+                          <div
+                            key={index}
+                            className="text-foreground/70 transition-colors"
+                          >
+                            {item.title}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+              <AccordionItem value="sidebar">
+                <AccordionTrigger className="text-sm">
+                  Sidebar Menu
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="flex flex-col space-y-2">
+                    {sidebarNavItems?.map((item, index) =>
+                      item.href ? (
+                        <MobileLink
+                          key={index}
+                          href={String(item.href)}
+                          pathname={pathname}
+                          setIsOpen={setIsOpen}
+                          disabled={item.disabled}
+                        >
+                          {item.title}
+                        </MobileLink>
+                      ) : (
+                        <div
+                          key={index}
+                          className="text-foreground/70 transition-colors"
+                        >
+                          {item.title}
+                        </div>
+                      )
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </ScrollArea>
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+interface MobileLinkProps {
+  children?: React.ReactNode
+  href: string
+  disabled?: boolean
+  pathname: string
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function MobileLink({
+  children,
+  href,
+  disabled,
+  pathname,
+  setIsOpen,
+}: MobileLinkProps) {
+  return (
+    <Link
+      href={href}
       className={cn(
-        "fixed inset-0 top-16 z-50 grid h-[calc(100vh-4rem)] grid-flow-row auto-rows-max overflow-auto p-6 pb-32 shadow-md animate-in slide-in-from-bottom-80 md:hidden"
+        "text-foreground/70 transition-colors hover:text-foreground",
+        pathname === href && "text-foreground",
+        disabled && "pointer-events-none opacity-60"
       )}
+      onClick={() => setIsOpen(false)}
     >
-      <div className="relative z-20 grid gap-6 rounded-md bg-popover p-4 text-popover-foreground shadow-md">
-        <Link href="/" className="flex items-center space-x-2">
-          <Icons.logo />
-          <span className="font-bold">{siteConfig.name}</span>
-        </Link>
-        <nav className="grid grid-flow-row auto-rows-max text-sm">
-          {items.map((item, index) => (
-            <Link
-              key={index}
-              href={item.disabled ? "#" : item.href}
-              className={cn(
-                "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline",
-                item.disabled && "cursor-not-allowed opacity-60"
-              )}
-            >
-              {item.title}
-            </Link>
-          ))}
-        </nav>
-        {children}
-      </div>
-    </div>
+      {children}
+    </Link>
   )
 }

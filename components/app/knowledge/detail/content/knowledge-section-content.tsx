@@ -53,6 +53,12 @@ export function KnowledgeSectionContent(props: {
                 onClick={() => {
                   props.setActiveIndex(props.content.id_content)
                   props.setContentData(props.content)
+
+                  // go to the top of the page
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "instant",
+                  })
                 }}
                 disabled={props.activeIndex == props.content.id_content}
               >
