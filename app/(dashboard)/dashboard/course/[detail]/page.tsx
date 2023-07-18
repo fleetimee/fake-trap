@@ -13,6 +13,7 @@ import { getCurrentUser } from "@/lib/session"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { DetailSidebarCourse } from "@/components/app/course/detail-sidebar-course"
 import { CourseDetailContent } from "@/components/app/course/detail/course-detail-content"
+import { CourseDetailShell } from "@/components/app/course/detail/course-detail-shell"
 import { DashboardShell } from "@/components/shell"
 
 type Props = {
@@ -67,26 +68,12 @@ export default async function DetailCourse({
 
   return (
     <DashboardShell>
-      <div className="flex flex-row gap-4 px-2">
-        <Alert className="basis-full">
-          <RocketIcon className="h-4 w-4" />
-          <AlertTitle>Informasi!</AlertTitle>
-          <AlertDescription>
-            Kursus ini berdasarkan pada pengetahuan{" "}
-            <span className="font-bold">
-              {courseKnowledgeResp.data.knowledge_title}
-            </span>
-          </AlertDescription>
-        </Alert>
-      </div>
-      <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
-        <CourseDetailContent data={courseDataResp} user={userDataResp} />
-        <DetailSidebarCourse
-          dataKnowledge={courseKnowledgeResp}
-          dataCourse={courseDataResp}
-          dataQuiz={quizResp}
-        />
-      </div>
+      <CourseDetailShell
+        courseDataResp={courseDataResp}
+        courseKnowledgeResp={courseKnowledgeResp}
+        quizResp={quizResp}
+        userDataResp={userDataResp}
+      />
     </DashboardShell>
   )
 }

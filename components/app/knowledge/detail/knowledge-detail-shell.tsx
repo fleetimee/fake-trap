@@ -31,12 +31,6 @@ export function KnowledgeDetailShell(props: {
 
   const [activeIndex, setActiveIndex] = React.useState<number>(0)
 
-  const [scaleInitial, setScaleInitial] = React.useState<number>(1.2)
-
-  const [scaleUp, setScaleUp] = React.useState<number>(scaleInitial + 0.2)
-
-  const [scaleDown, setScaleDown] = React.useState<number>(scaleInitial - 0.2)
-
   return (
     <div className="flex flex-col gap-4 py-4">
       <div className="flex  justify-between">
