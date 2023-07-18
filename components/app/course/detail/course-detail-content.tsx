@@ -30,8 +30,8 @@ export function renderContentCourse(
     user: UserResponse
     contentData: Content
     setContentData: React.Dispatch<React.SetStateAction<Content>>
-    activeIndex: number
-    setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+    activeIndex: string
+    setActiveIndex: React.Dispatch<React.SetStateAction<string>>
   }
 ) {
   switch (contentType) {
@@ -86,8 +86,8 @@ export function CourseDetailContent(props: {
   user: UserResponse
   contentData: Content
   setContentData: React.Dispatch<React.SetStateAction<Content>>
-  activeIndex: number
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+  activeIndex: string
+  setActiveIndex: React.Dispatch<React.SetStateAction<string>>
 }) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">

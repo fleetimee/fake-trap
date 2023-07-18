@@ -29,7 +29,7 @@ export function CourseDetailShell(props: {
     link: "",
   })
 
-  const [ActiveIndex, setActiveIndex] = React.useState<number>(0)
+  const [activeIndex, setActiveIndex] = React.useState<string>("")
 
   return (
     <>
@@ -65,7 +65,7 @@ export function CourseDetailShell(props: {
           user={props.userDataResp}
           setContentData={setContentData}
           contentData={contentData}
-          activeIndex={ActiveIndex}
+          activeIndex={activeIndex}
           setActiveIndex={setActiveIndex}
         />
         <DetailSidebarCourse
@@ -74,7 +74,7 @@ export function CourseDetailShell(props: {
           dataQuiz={props.quizResp}
           setContentData={setContentData}
           contentData={contentData}
-          activeIndex={ActiveIndex}
+          activeIndex={activeIndex}
           setActiveIndex={setActiveIndex}
         />
       </div>

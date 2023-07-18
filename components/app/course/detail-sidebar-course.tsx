@@ -25,8 +25,8 @@ export function DetailSidebarCourse(props: {
   dataQuiz: QuizRes
   contentData: Content
   setContentData: React.Dispatch<React.SetStateAction<Content>>
-  activeIndex: number
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+  activeIndex: string
+  setActiveIndex: React.Dispatch<React.SetStateAction<string>>
 }) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -48,6 +48,7 @@ export function DetailSidebarCourse(props: {
                 collapsible
                 className="px-4"
                 key={props.dataKnowledge.data.id_knowledge}
+                defaultValue={props.dataKnowledge.data.section[0].id_section.toString()}
               >
                 {props.dataKnowledge.data.section.map((section) => (
                   <AccordionItem
