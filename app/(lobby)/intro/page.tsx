@@ -52,8 +52,8 @@ export default async function IntroductionPage() {
         aria-labelledby="introduction-heading"
         className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-12 md:pt-10 lg:py-32"
       >
-        <h1 className="text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
-          E - Learning
+        <h1 className="font-heading text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
+          Explore
         </h1>
         <Balance className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
           Pelajari pengetahuan baru dengan mudah dan menyenangkan.
@@ -77,7 +77,7 @@ export default async function IntroductionPage() {
         className="space-y-6 py-6 md:pt-10 lg:pt-32"
       >
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <h2 className="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
+          <h2 className="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
             Kategori
           </h2>
           <Balance className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
@@ -133,7 +133,7 @@ export default async function IntroductionPage() {
         className="space-y-16"
       >
         <div className="flex items-center">
-          <h2 className="flex-1 text-2xl font-medium sm:text-3xl">
+          <h2 className="flex-1 font-heading text-2xl font-medium sm:text-3xl">
             Pengetahuan Unggulan
           </h2>
           <Link href="/products">
