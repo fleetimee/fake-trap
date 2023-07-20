@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Content } from "@/types/content-res"
-import { QuizRes } from "@/types/quiz-res"
+import { QuizData, QuizRes } from "@/types/quiz-res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +19,8 @@ import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
 export function CourseSectionContent(props: {
   content: Content
   quizData: QuizRes
+  contentQuiz: QuizData
+  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
   contentData: Content
   setContentData: React.Dispatch<React.SetStateAction<Content>>
   activeIndex: string
@@ -43,8 +45,21 @@ export function CourseSectionContent(props: {
           <AccordionContent key={props.content.id_content} className="py-1">
             <Button
               className="flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading active:bg-gray-800"
+              disabled={
+                props.activeIndex == `course-${props.content.id_content}`
+              }
               onClick={() => {
                 props.setActiveIndex(`course-${props.content.id_content}`)
+
+                props.setContentQuiz({
+                  id_quiz: 0,
+                  quiz_title: "",
+                  quiz_type: 0,
+                  id_section: 0,
+                  quiz_desc: "",
+                  created_at: new Date(),
+                })
+
                 props.setContentData(props.content)
 
                 window.scrollTo({

@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import { Content } from "@/types/content-res"
 import { CourseByIdResponse } from "@/types/course-res"
+import { QuizData } from "@/types/quiz-res"
 import { UserResponse } from "@/types/user-res"
 import { convertDatetoString, getYoutubeLastId } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -85,6 +86,8 @@ export function CourseDetailContent(props: {
   data: CourseByIdResponse
   user: UserResponse
   contentData: Content
+  contentQuiz: QuizData
+  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
   setContentData: React.Dispatch<React.SetStateAction<Content>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
@@ -99,7 +102,11 @@ export function CourseDetailContent(props: {
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
 
-        {renderContentCourse(props.contentData.content_type, props)}
+        {props.contentQuiz.id_quiz == 0 ? (
+          renderContentCourse(props.contentData.content_type, props)
+        ) : props.contentQuiz ? (
+          <p>Penis</p>
+        ) : null}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">

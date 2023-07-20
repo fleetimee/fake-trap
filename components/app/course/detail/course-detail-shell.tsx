@@ -74,6 +74,8 @@ export function CourseDetailShell(props: {
           user={props.userDataResp}
           setContentData={setContentData}
           contentData={contentData}
+          contentQuiz={contentQuiz}
+          setContentQuiz={setContentQuiz}
           activeIndex={activeIndex}
           setActiveIndex={setActiveIndex}
         />

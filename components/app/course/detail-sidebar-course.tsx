@@ -111,6 +111,8 @@ export function DetailSidebarCourse(props: {
                     {section.quiz &&
                       section.quiz?.map((q) => (
                         <CourseSectionQuiz
+                          setContentQuiz={props.setContentQuiz}
+                          quizContent={props.contentQuiz}
                           quiz={q}
                           quizData={props.dataQuiz}
                           activeIndex={props.activeIndex}
@@ -123,6 +125,8 @@ export function DetailSidebarCourse(props: {
                     {section.content &&
                       section.content.map((content) => (
                         <CourseSectionContent
+                          contentQuiz={props.contentQuiz}
+                          setContentQuiz={props.setContentQuiz}
                           content={content}
                           quizData={props.dataQuiz}
                           activeIndex={props.activeIndex}

@@ -18,6 +18,8 @@ import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
 
 export function CourseSectionQuiz(props: {
   quiz: QuizData
+  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
+  quizContent: QuizData
   quizData: QuizRes
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
@@ -46,7 +48,17 @@ export function CourseSectionQuiz(props: {
               className="flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading active:bg-gray-800"
               onClick={() => {
                 props.setActiveIndex(`course-${props.quiz.id_quiz}`)
-                props.setContentData(props.contentData)
+
+                props.setContentData({
+                  content_title: "",
+                  content_type: 0,
+                  id_content: 0,
+                  id_section: 0,
+                  image: "",
+                  link: "",
+                })
+
+                props.setContentQuiz(props.quiz)
 
                 window.scrollTo({
                   top: 0,
