@@ -19,7 +19,6 @@ export function CourseKnowledgeSectionContent(props: {
           props.setActiveIndex(`knowledge-${props.content.id_content}`)
           props.setContentData(props.content)
 
-          // go to the top of the page
           window.scrollTo({
             top: 0,
             behavior: "instant",

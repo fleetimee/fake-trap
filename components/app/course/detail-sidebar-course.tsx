@@ -3,7 +3,7 @@
 import { Content } from "@/types/content-res"
 import { CourseByIdResponse } from "@/types/course-res"
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
-import { QuizRes } from "@/types/quiz-res"
+import { QuizData, QuizRes } from "@/types/quiz-res"
 import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -24,6 +24,8 @@ export function DetailSidebarCourse(props: {
   dataCourse: CourseByIdResponse
   dataQuiz: QuizRes
   contentData: Content
+  contentQuiz: QuizData
+  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
   setContentData: React.Dispatch<React.SetStateAction<Content>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
@@ -108,7 +110,14 @@ export function DetailSidebarCourse(props: {
 
                     {section.quiz &&
                       section.quiz?.map((q) => (
-                        <CourseSectionQuiz quiz={q} quizData={props.dataQuiz} />
+                        <CourseSectionQuiz
+                          quiz={q}
+                          quizData={props.dataQuiz}
+                          activeIndex={props.activeIndex}
+                          contentData={props.contentData}
+                          setContentData={props.setContentData}
+                          setActiveIndex={props.setActiveIndex}
+                        />
                       ))}
 
                     {section.content &&
@@ -116,6 +125,10 @@ export function DetailSidebarCourse(props: {
                         <CourseSectionContent
                           content={content}
                           quizData={props.dataQuiz}
+                          activeIndex={props.activeIndex}
+                          contentData={props.contentData}
+                          setContentData={props.setContentData}
+                          setActiveIndex={props.setActiveIndex}
                         />
                       ))}
 

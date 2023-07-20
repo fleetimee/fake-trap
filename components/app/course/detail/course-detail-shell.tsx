@@ -6,7 +6,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 import { Content } from "@/types/content-res"
 import { CourseByIdResponse } from "@/types/course-res"
 import { KnowledgeByIdResponse } from "@/types/knowledge-res"
-import { QuizRes } from "@/types/quiz-res"
+import { QuizData, QuizRes } from "@/types/quiz-res"
 import { UserResponse } from "@/types/user-res"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -27,6 +27,15 @@ export function CourseDetailShell(props: {
     id_section: 0,
     image: "",
     link: "",
+  })
+
+  const [contentQuiz, setContentQuiz] = React.useState<QuizData>({
+    id_quiz: 0,
+    quiz_title: "",
+    quiz_type: 0,
+    id_section: 0,
+    quiz_desc: "",
+    created_at: new Date(),
   })
 
   const [activeIndex, setActiveIndex] = React.useState<string>("")
@@ -69,6 +78,8 @@ export function CourseDetailShell(props: {
           setActiveIndex={setActiveIndex}
         />
         <DetailSidebarCourse
+          contentQuiz={contentQuiz}
+          setContentQuiz={setContentQuiz}
           dataKnowledge={props.courseKnowledgeResp}
           dataCourse={props.courseDataResp}
           dataQuiz={props.quizResp}
