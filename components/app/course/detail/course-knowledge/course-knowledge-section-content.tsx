@@ -1,11 +1,14 @@
 import { Content } from "@/types/content-res"
 import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
+import { QuizData } from "@/types/quiz-res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 
 export function CourseKnowledgeSectionContent(props: {
   content: KnowledgeByIdSectionContentData
   contentData: Content
+  contentQuiz: QuizData
+  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
   setContentData: React.Dispatch<React.SetStateAction<Content>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
@@ -17,6 +20,16 @@ export function CourseKnowledgeSectionContent(props: {
         disabled={props.activeIndex == `knowledge-${props.content.id_content}`}
         onClick={() => {
           props.setActiveIndex(`knowledge-${props.content.id_content}`)
+
+          props.setContentQuiz({
+            id_quiz: 0,
+            quiz_title: "",
+            quiz_type: 0,
+            id_section: 0,
+            quiz_desc: "",
+            created_at: new Date(),
+          })
+
           props.setContentData(props.content)
 
           window.scrollTo({

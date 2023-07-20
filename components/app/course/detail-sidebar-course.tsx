@@ -62,6 +62,8 @@ export function DetailSidebarCourse(props: {
                     {section.content ? (
                       section.content?.map((content) => (
                         <CourseKnowledgeSectionContent
+                          contentQuiz={props.contentQuiz}
+                          setContentQuiz={props.setContentQuiz}
                           content={content}
                           activeIndex={props.activeIndex}
                           setActiveIndex={props.setActiveIndex}
