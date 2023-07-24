@@ -6,7 +6,6 @@ import { getQuizById, getUsersQuizCountById } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { DashboardShell } from "@/components/shell"
 
 type Props = {
   params: {
@@ -48,6 +47,11 @@ export default async function QuizDetailPage({ params }: Props) {
     detailQuizData,
     detailQuizUsersCount,
   ])
+
+  //   const detailSectionData = await getSectionByIdForQuiz({
+  //     id: detailQuizDataResp.data.section_id,
+  //     token: user?.token,
+  //   })
 
   const isAlreadyHaveQuiz = detailQuizDataResp.data.questions ? true : false
 
@@ -159,7 +163,7 @@ export default async function QuizDetailPage({ params }: Props) {
             </svg>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-2xl font-bold">
               {detailQuizDataResp.data.quiz_desc}
             </p>
           </CardContent>
@@ -195,7 +199,7 @@ export default async function QuizDetailPage({ params }: Props) {
         <Card className="row-span-2 h-auto">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Tujuan Quiz Ini
+              Link and Connection
             </CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -213,7 +217,10 @@ export default async function QuizDetailPage({ params }: Props) {
             </svg>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-2xl font-bold">
+              {/* {detailSectionData.data.section_title} /{" "}
+              {detailSectionData.data.course[0].course_name} */}
+
               {detailQuizDataResp.data.quiz_desc}
             </p>
           </CardContent>

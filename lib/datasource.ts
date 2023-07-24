@@ -3,6 +3,7 @@ import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { UserByQuizIDCount, UsersByQuizID } from "@/types/quiz-by-id-res"
 import { QuizData, QuizRes, UsersByQuizId } from "@/types/quiz-res"
+import { QuizSectionResp } from "@/types/quiz-section-res"
 import { UserResponse } from "@/types/user-res"
 
 async function getPaginatedKnowledgeData(props: {
@@ -369,6 +370,42 @@ async function getUsersQuizCountById(props: {
   }
 }
 
+async function getSectionByIdForQuiz(props: {
+  id: string
+  token: string | undefined
+}): Promise<QuizSectionResp> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${props.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    if (response.status === 404) {
+      return {
+        data: {
+          id_section: 0,
+          section_title: "No Section",
+          course: [],
+          content: [],
+        },
+      }
+    }
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to get section by id")
+  }
+}
+
 export {
   getPaginatedKnowledgeData,
   getPublicKnowledgeData,
@@ -385,4 +422,5 @@ export {
   getQuizById,
   getUsersQuizById,
   getUsersQuizCountById,
+  getSectionByIdForQuiz,
 }
