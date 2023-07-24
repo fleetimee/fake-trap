@@ -1,7 +1,7 @@
 import { CategoryByID, CategoryResponse } from "@/types/category-res"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
-import { UsersByQuizID } from "@/types/quiz-by-id-res"
+import { UserByQuizIDCount, UsersByQuizID } from "@/types/quiz-by-id-res"
 import { QuizData, QuizRes, UsersByQuizId } from "@/types/quiz-res"
 import { UserResponse } from "@/types/user-res"
 
@@ -344,6 +344,31 @@ async function getUsersQuizById(props: {
   }
 }
 
+async function getUsersQuizCountById(props: {
+  id: string
+  token: string | undefined
+}): Promise<UserByQuizIDCount> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${props.id}/users/count`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to get users by quiz id")
+  }
+}
+
 export {
   getPaginatedKnowledgeData,
   getPublicKnowledgeData,
@@ -359,4 +384,5 @@ export {
   getAllQuizData,
   getQuizById,
   getUsersQuizById,
+  getUsersQuizCountById,
 }
