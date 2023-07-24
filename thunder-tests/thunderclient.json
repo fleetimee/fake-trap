@@ -316,17 +316,16 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "0addfbc1-a4a5-4654-a100-9c047a05b3ab",
     "name": "Get all section",
-    "url": "{{baseUrl}}/secure/section",
+    "url": "{{baseUrl}}/secure/section?page=3",
     "method": "GET",
     "sortNum": 70000,
     "created": "2023-02-13T07:50:36.415Z",
-    "modified": "2023-02-24T08:27:40.227Z",
+    "modified": "2023-07-24T08:30:39.563Z",
     "headers": [],
     "params": [
       {
         "name": "page",
         "value": "3",
-        "isDisabled": true,
         "isPath": false
       }
     ],
@@ -337,11 +336,11 @@
     "colId": "6cb31957-9537-40c0-b21f-fd860ca81e28",
     "containerId": "0addfbc1-a4a5-4654-a100-9c047a05b3ab",
     "name": "Get section by id",
-    "url": "{{baseUrl}}/secure/section/1",
+    "url": "{{baseUrl}}/secure/section/10",
     "method": "GET",
     "sortNum": 105000,
     "created": "2023-02-13T08:56:59.098Z",
-    "modified": "2023-06-19T00:51:51.681Z",
+    "modified": "2023-07-24T08:35:16.653Z",
     "headers": [],
     "params": [],
     "tests": []
