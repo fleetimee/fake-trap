@@ -37,9 +37,5 @@ export default async function QuizDetailPage({ params }: Props) {
     token: user?.token,
   })
 
-  return (
-    <DashboardShell>
-      <p>Penis</p>
-    </DashboardShell>
-  )
+  return <p>Penis</p>
 }
