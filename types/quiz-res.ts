@@ -13,3 +13,14 @@ export type QuizData = {
   created_at: Date
   id_section: number
 }
+
+export type UsersByQuizId = {
+  data: UsersByQuizIdData[]
+}
+
+export type UsersByQuizIdData = {
+  uuid: string
+  id_quiz: number
+  quiz_title: string
+  username: string
+}

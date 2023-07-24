@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { QuizData } from "@/types/quiz-res"
@@ -34,6 +35,20 @@ export const columns: ColumnDef<QuizData>[] = [
   {
     accessorKey: "quiz_title",
     header: "Judul",
+    cell: ({ row }) => {
+      const quiz = row.original
+
+      return (
+        <>
+          <Link
+            href={`/dashboard/quiz/${quiz.id_quiz}`}
+            className="text-blue-500"
+          >
+            <span className="font-semibold">{quiz.quiz_title}</span>
+          </Link>
+        </>
+      )
+    },
   },
   {
     accessorKey: "quiz_desc",

@@ -1,7 +1,8 @@
 import { CategoryByID, CategoryResponse } from "@/types/category-res"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
-import { QuizRes } from "@/types/quiz-res"
+import { UsersByQuizID } from "@/types/quiz-by-id-res"
+import { QuizData, QuizRes, UsersByQuizId } from "@/types/quiz-res"
 import { UserResponse } from "@/types/user-res"
 
 async function getPaginatedKnowledgeData(props: {
@@ -269,6 +270,31 @@ async function getAllQuizData(props: {
   }
 }
 
+async function getQuizById(props: {
+  id: string
+  token: string | undefined
+}): Promise<UsersByQuizID> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${props.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to fetch quiz data")
+  }
+}
+
 async function getAllQuizDataWithNullSection(props: {
   token: string | undefined
 }): Promise<QuizRes> {
@@ -293,6 +319,31 @@ async function getAllQuizDataWithNullSection(props: {
   }
 }
 
+async function getUsersQuizById(props: {
+  id: string
+  token: string | undefined
+}): Promise<UsersByQuizId> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${props.id}/users`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.log(error)
+    throw new Error("Failed to get users by quiz id")
+  }
+}
+
 export {
   getPaginatedKnowledgeData,
   getPublicKnowledgeData,
@@ -306,4 +357,6 @@ export {
   getAllUsersData,
   getAllQuizDataWithNullSection,
   getAllQuizData,
+  getQuizById,
+  getUsersQuizById,
 }
