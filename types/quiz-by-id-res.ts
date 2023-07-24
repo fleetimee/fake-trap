@@ -25,3 +25,11 @@ export type UsersByQuizIDAnswer = {
   answer_text: string
   is_correct: boolean
 }
+
+export type UserByQuizIDCount = {
+  data: UserByQuizIDCountData
+}
+
+export type UserByQuizIDCountData = {
+  count: number
+}
