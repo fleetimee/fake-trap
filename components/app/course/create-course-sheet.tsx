@@ -20,6 +20,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command"
 import {
   Form,
@@ -36,6 +37,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Sheet,
   SheetContent,
@@ -152,7 +154,7 @@ export function CreateCourseButton(props: { data: Knowledge }) {
   }
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={open} onOpenChange={setOpen} modal={false}>
       <SheetTrigger>
         <CreateButton
           className="transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110"
@@ -363,34 +365,43 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
+                      <PopoverContent className="h-[200px] p-0">
                         <Command>
                           <CommandInput placeholder="Pengetahuan" />
-                          <CommandEmpty>
-                            Pengetahuan tidak ditemukan
-                          </CommandEmpty>
-                          <CommandGroup>
-                            {props.data.data.map((knowledge) => (
-                              <CommandItem
-                                value={knowledge.id_knowledge.toString()}
-                                key={knowledge.id_knowledge}
-                                onSelect={(value) => {
-                                  form.clearErrors("id_knowledge")
-                                  form.setValue("id_knowledge", parseInt(value))
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    knowledge.id_knowledge === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {knowledge.knowledge_title}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
+
+                          <CommandList>
+                            <CommandEmpty>
+                              Pengetahuan tidak ditemukan
+                            </CommandEmpty>
+
+                            <CommandGroup>
+                              <ScrollArea className="h-full">
+                                {props.data.data.map((knowledge) => (
+                                  <CommandItem
+                                    value={knowledge.id_knowledge.toString()}
+                                    key={knowledge.id_knowledge}
+                                    onSelect={(value) => {
+                                      form.clearErrors("id_knowledge")
+                                      form.setValue(
+                                        "id_knowledge",
+                                        parseInt(value)
+                                      )
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        knowledge.id_knowledge === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {knowledge.knowledge_title}
+                                  </CommandItem>
+                                ))}
+                              </ScrollArea>
+                            </CommandGroup>
+                          </CommandList>
                         </Command>
                       </PopoverContent>
                     </Popover>

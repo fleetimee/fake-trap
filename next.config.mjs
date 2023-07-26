@@ -9,11 +9,11 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
-    domains: [
-      "placehold.co",
-      "placeholdit.imgix.net",
-      "res.cloudinary.com",
-      "pbs.twimg.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
   },
   webpack: (config, options) => {
