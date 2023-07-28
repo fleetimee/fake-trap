@@ -130,10 +130,9 @@ export function EditKnowledgeButton(props: {
           title: "Pengetahuan berhasil diubah",
           description: "Pengetahuan berhasil diubah",
         })
-
+        form.reset()
         router.refresh()
         setOpen(false)
-        form.reset()
       } else {
         toast({
           title: "Pengetahuan gagal diubah",
