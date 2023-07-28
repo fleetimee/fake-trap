@@ -4,6 +4,16 @@ import { Button } from "./ui/button"
 import { Card } from "./ui/card"
 
 export function QuestionForm() {
+  type FormValue = {
+    id_quiz: number
+    question_text: string
+    answers: Array<{
+      id: number
+      answer_text: string
+      is_correct: boolean
+    }>
+  }
+
   const fieldArrayName = "questions"
 
   return (
