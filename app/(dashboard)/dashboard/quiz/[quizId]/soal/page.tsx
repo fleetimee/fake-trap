@@ -8,7 +8,7 @@ export default function HasilPage() {
         <div className="flex flex-row items-center justify-between">
           <h1 className="font-heading font-semibold">Test Layouting</h1>
 
-          <Button>Tambah Pertanyaan</Button>
+          <Button>Push Pertanyaan</Button>
         </div>
 
         <p>This should be on bottom</p>
