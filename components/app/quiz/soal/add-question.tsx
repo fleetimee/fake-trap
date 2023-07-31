@@ -1,5 +1,6 @@
 "use client"
 
+import { isContext } from "vm"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
@@ -31,6 +32,7 @@ export const formSchemaQuestion = z.object({
 })
 
 export function QuestionForm(props: {
+  idQuiz: string
   setQuizzes: React.Dispatch<
     React.SetStateAction<
       {
@@ -49,7 +51,7 @@ export function QuestionForm(props: {
   const form = useForm<z.infer<typeof formSchemaQuestion>>({
     resolver: zodResolver(formSchemaQuestion),
     defaultValues: {
-      id_quiz: 1,
+      id_quiz: parseInt(props.idQuiz),
       question_text: "",
       answers: [
         {
@@ -103,7 +105,7 @@ export function QuestionForm(props: {
     props.setQuizzes((prev) => [...prev, data])
 
     form.reset({
-      id_quiz: 1,
+      id_quiz: parseInt(props.idQuiz),
       question_text: "",
       answers: [
         {
@@ -131,6 +133,15 @@ export function QuestionForm(props: {
 
     append({ answer_text: "", is_correct: false })
   }
+
+  const answers = form.getValues("answers")
+  const hasCorrectAnswer = answers.some((answer) => answer.is_correct)
+
+  answers.forEach((answer, index) => {
+    if (answer.is_correct && !hasCorrectAnswer) {
+      form.setValue(`answers.${index}.is_correct`, true)
+    }
+  })
 
   return (
     <Card className="flex flex-col gap-8 p-5">
