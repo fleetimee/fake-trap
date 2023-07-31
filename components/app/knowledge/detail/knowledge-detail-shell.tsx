@@ -37,6 +37,10 @@ export function KnowledgeDetailShell(props: {
         <BreadCrumbs
           segments={[
             {
+              href: "/dashboard",
+              title: "Dashboard",
+            },
+            {
               href: "/dashboard/knowledge",
               title: "Pengetahuan",
             },

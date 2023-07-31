@@ -2,13 +2,16 @@
 
 import React from "react"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
+import { RocketIcon } from "@radix-ui/react-icons"
 import { z } from "zod"
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+import { Button } from "../../../ui/button"
+import { Card } from "../../../ui/card"
+import { Checkbox } from "../../../ui/checkbox"
 import { QuestionForm } from "./add-question"
 import { LottieAnimationQuiz } from "./quiz-lottie-animation"
-import { Button } from "./ui/button"
-import { Card } from "./ui/card"
-import { Checkbox } from "./ui/checkbox"
 
 export function SoalShell() {
   const [parent, enableAnimations] = useAutoAnimate()
@@ -34,6 +37,16 @@ export function SoalShell() {
 
   return (
     <>
+      <Alert className="lg:col-span-2">
+        <RocketIcon className="h-4 w-4" />
+        <AlertTitle>Guide</AlertTitle>
+        <AlertDescription>
+          Tambahkan pertanyaan dan jawaban di sebelah kiri, kemudian klik tombol{" "}
+          <span className="font-semibold">Submit Quiz</span> di sebelah kanan
+          untuk menyimpan soal untuk quiz ini.
+        </AlertDescription>
+      </Alert>
+
       <QuestionForm setQuizzes={setQuizzes} />
 
       {quizzes.length > 0 && (

@@ -45,6 +45,10 @@ export function CourseDetailShell(props: {
       <BreadCrumbs
         segments={[
           {
+            href: "/dashboard",
+            title: "Dashboard",
+          },
+          {
             href: "/dashboard/course",
             title: "Kursus",
           },

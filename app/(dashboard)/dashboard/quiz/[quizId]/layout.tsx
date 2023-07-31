@@ -3,6 +3,7 @@ import React from "react"
 import { getQuizById } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
 import { HeaderSubMenu } from "@/components/header-submenu"
+import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { QuizTab } from "@/components/pagers/quiz-tab"
 import { DashboardShell } from "@/components/shell"
 
@@ -28,6 +29,22 @@ export default async function QuizDetailLayout({
 
   return (
     <DashboardShell>
+      <BreadCrumbs
+        segments={[
+          {
+            href: "/dashboard",
+            title: "Dashboard",
+          },
+          {
+            href: "/dashboard/quiz",
+            title: "Quiz",
+          },
+          {
+            href: `/dashboard/quiz/${quizId}`,
+            title: dataDetailQuiz.data.quiz_title,
+          },
+        ]}
+      />
       <HeaderSubMenu title={dataDetailQuiz.data.quiz_title} />
       <div className="space-y-4 overflow-hidden">
         <QuizTab quizId={quizId} />

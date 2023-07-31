@@ -48,11 +48,6 @@ export default async function QuizDetailPage({ params }: Props) {
     detailQuizUsersCount,
   ])
 
-  //   const detailSectionData = await getSectionByIdForQuiz({
-  //     id: detailQuizDataResp.data.section_id,
-  //     token: user?.token,
-  //   })
-
   const isAlreadyHaveQuiz = detailQuizDataResp.data.questions ? true : false
 
   const quizUsersCount = detailQuizUsersCountResp.data.count
@@ -117,7 +112,6 @@ export default async function QuizDetailPage({ params }: Props) {
             <p className="text-xs text-muted-foreground">Peserta</p>
           </CardContent>
         </Card>
-
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Tipe Kuis</CardTitle>

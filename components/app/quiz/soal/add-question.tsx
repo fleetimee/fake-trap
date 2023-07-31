@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Button } from "./ui/button"
-import { Card } from "./ui/card"
-import { Checkbox } from "./ui/checkbox"
+import { Button } from "../../../ui/button"
+import { Card } from "../../../ui/card"
+import { Checkbox } from "../../../ui/checkbox"
 import {
   Form,
   FormControl,
@@ -15,9 +15,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form"
-import { Input } from "./ui/input"
-import { toast } from "./ui/use-toast"
+} from "../../../ui/form"
+import { Input } from "../../../ui/input"
+import { toast } from "../../../ui/use-toast"
 
 export const formSchemaQuestion = z.object({
   id_quiz: z.number(),
@@ -174,6 +174,7 @@ export function QuestionForm(props: {
                           <Input placeholder="Masukkan jawaban" {...field} />
                         </FormControl>
                         <Button
+                          type="button"
                           onClick={() => remove(index)}
                           variant="destructive"
                         >
