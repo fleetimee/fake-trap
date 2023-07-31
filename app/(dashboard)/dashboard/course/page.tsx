@@ -9,6 +9,7 @@ import { getCurrentUser } from "@/lib/session"
 import CourseGrid from "@/components/app/course/course-grid"
 import { CreateCourseButton } from "@/components/app/course/create-course-sheet"
 import { DashboardHeader } from "@/components/header"
+import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 
 export const metadata = {
@@ -47,6 +48,18 @@ export default async function CoursePage() {
 
   return (
     <DashboardShell>
+      <BreadCrumbs
+        segments={[
+          {
+            href: "/dashboard",
+            title: "Dashboard",
+          },
+          {
+            href: "/dashboard/course",
+            title: "Kursus",
+          },
+        ]}
+      />
       <DashboardHeader
         heading="Kursus"
         description="Kursus yang tersedia di e-learning"
