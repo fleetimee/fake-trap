@@ -32,14 +32,9 @@ export default async function HasilPage({ params }: Props) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const detailQuizData = getQuizById({
-    id: params.quizId,
-    token: user?.token,
-  })
-
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <SoalShell />
+      <SoalShell idQuiz={params.quizId} token={user?.token} />
     </div>
   )
 }
