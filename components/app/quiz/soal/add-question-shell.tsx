@@ -6,6 +6,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 import { z } from "zod"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { toast } from "@/components/ui/use-toast"
 
 import { Button } from "../../../ui/button"
 import { Card } from "../../../ui/card"
@@ -13,8 +14,13 @@ import { Checkbox } from "../../../ui/checkbox"
 import { QuestionForm } from "./add-question"
 import { LottieAnimationQuiz } from "./quiz-lottie-animation"
 
-export function SoalShell() {
+export function SoalShell(props: {
+  idQuiz: string
+  token: string | undefined
+}) {
   const [parent, enableAnimations] = useAutoAnimate()
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   const formSchemaQuestion = z.object({
     id_quiz: z.number(),
@@ -35,6 +41,40 @@ export function SoalShell() {
     setQuizzes((prev) => prev.filter((_, i) => i !== index))
   }
 
+  async function onSubmit(values: z.infer<typeof formSchemaQuestion>[]) {
+    setIsLoading(true)
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/question/bulk`,
+        {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+
+      if (response.ok) {
+        toast({
+          title: "Berhasil",
+          description: "Soal berhasil ditambahkan",
+        })
+
+        setQuizzes([])
+      }
+    } catch (error) {
+      toast({
+        title: "Gagal",
+        description: "Soal gagal ditambahkan",
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <>
       <Alert className="lg:col-span-2">
@@ -47,19 +87,13 @@ export function SoalShell() {
         </AlertDescription>
       </Alert>
 
-      <QuestionForm setQuizzes={setQuizzes} />
+      <QuestionForm setQuizzes={setQuizzes} idQuiz={props.idQuiz} />
 
       {quizzes.length > 0 && (
         <Card className="flex flex-col gap-8 p-5" ref={parent}>
           <div className="flex items-center justify-between">
             <h1 className="font-heading font-semibold">Hasil Soal</h1>
-            <Button
-              onClick={() => {
-                console.log(quizzes)
-              }}
-            >
-              Submit Quiz
-            </Button>
+            <Button onClick={() => onSubmit(quizzes)}>Submit Quiz</Button>
           </div>
 
           {quizzes.map((quiz, index) => (
@@ -81,7 +115,13 @@ export function SoalShell() {
                   <li key={index} className="flex items-center gap-3">
                     {/* <input type="checkbox" checked={answer.is_correct} /> */}
 
-                    <Checkbox checked={answer.is_correct} />
+                    <Checkbox
+                      checked={answer.is_correct}
+                      disabled={
+                        quiz.answers.filter((answer) => answer.is_correct)
+                          .length > 0
+                      }
+                    />
 
                     <p className="text-sm font-medium leading-none">
                       {answer.answer_text}
