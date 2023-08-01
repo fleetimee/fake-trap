@@ -43,3 +43,13 @@ export type DashboardConfig = {
   mainNav: NavItem[]
   sidebarNav: SidebarNavItem[]
 }
+
+export interface DataTableFilterableColumn<TData>
+  extends DataTableSearchableColumn<TData> {
+  options: Option[]
+}
+
+export interface DataTableSearchableColumn<TData> {
+  id: keyof TData
+  title: string
+}

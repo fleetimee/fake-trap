@@ -105,7 +105,7 @@ export function CourseDetailContent(props: {
         {props.contentQuiz.id_quiz == 0 ? (
           renderContentCourse(props.contentData.content_type, props)
         ) : props.contentQuiz ? (
-          <p>Penis</p>
+          <p>Test</p>
         ) : null}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">

@@ -86,7 +86,10 @@ export default async function IntroductionPage() {
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {publicCategoryResp.data.map((category) => (
-            <Link href={`intro/categories/${category.id_category}`}>
+            <Link
+              href={`intro/categories/${category.id_category}`}
+              key={category.id_category}
+            >
               <div className="group relative overflow-hidden rounded-md">
                 <AspectRatio ratio={4 / 5}>
                   <div className="absolute inset-0 z-10 bg-black/60 transition-colors group-hover:bg-black/70" />
