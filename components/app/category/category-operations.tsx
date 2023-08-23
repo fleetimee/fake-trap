@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { DataCategory } from "@/types/category-res"
+import { CategoryListResData } from "@/types/category/res"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -82,7 +83,7 @@ async function deleteCategory(id: number, token: string | undefined) {
   }
 }
 
-export function CategoryOperations(props: { kategori: DataCategory }) {
+export function CategoryOperations(props: { kategori: CategoryListResData }) {
   const { data: session } = useSession()
 
   const router = useRouter()

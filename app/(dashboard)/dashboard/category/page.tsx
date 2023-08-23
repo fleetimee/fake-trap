@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
+import { CategoryListRes } from "@/types/category/res"
 import { authOptions } from "@/lib/auth"
-import { getAllCategoriesData } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
@@ -13,10 +13,6 @@ export const metadata = {
   description: "Kategori Pengetahuan yang tersedia",
 }
 
-/**
- * Renders the Category page component.
- * @returns {JSX.Element} The Category page component.
- */
 export default async function CategoryPage() {
   const user = await getCurrentUser()
 
@@ -24,9 +20,18 @@ export default async function CategoryPage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const categoryList = await getAllCategoriesData({
-    token: user?.token,
-  })
+  const categoryList = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${user?.token}`,
+      },
+    }
+  )
+
+  const categoryListData: CategoryListRes = await categoryList.json()
 
   return (
     <DashboardShell>
@@ -34,7 +39,7 @@ export default async function CategoryPage() {
         heading="Kategori"
         description="Kategori Pengetahuan yang tersedia"
       />
-      <DataTable columns={columns} data={categoryList.data} />
+      <DataTable columns={columns} data={categoryListData.data} />
     </DashboardShell>
   )
 }

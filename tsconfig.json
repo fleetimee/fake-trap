@@ -6,6 +6,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "target": "ES2017",
     "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
