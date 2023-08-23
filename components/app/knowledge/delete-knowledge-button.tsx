@@ -1,9 +1,8 @@
-"use client"
-
 import React from "react"
 import { useRouter } from "next/navigation"
 
 import { KnowledgeData } from "@/types/knowledge-res"
+import { KnowledgeListResData } from "@/types/knowledge/res"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -16,10 +15,15 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-export function DeleteKnowledgeButton(props: {
-  item: KnowledgeData
+interface DeleteKnowledgeButtonProps {
+  knowledgeData: KnowledgeListResData
   token: string | undefined
-}) {
+}
+
+export function DeleteKnowledgeButton({
+  knowledgeData,
+  token,
+}: DeleteKnowledgeButtonProps) {
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -30,12 +34,12 @@ export function DeleteKnowledgeButton(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${props.item.id_knowledge}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${knowledgeData.id_knowledge}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${props.token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )
@@ -80,7 +84,7 @@ export function DeleteKnowledgeButton(props: {
         <div className="grid gap-4 py-4">
           Apakah anda ingin menghapus pengetahuan ini?
           <p className="font-heading font-semibold">
-            {props.item.knowledge_title}
+            {knowledgeData.knowledge_title}
           </p>
         </div>
         <DialogFooter>

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { CategoryResponse } from "@/types/category-res"
+import { CategoryListRes } from "@/types/category/res"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -45,6 +46,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { CreateButton } from "@/components/create-button"
 import { Icons } from "@/components/icons"
+
+interface CreateKnowledgeButtonProps {
+  categoryResponse: CategoryListRes
+  token: string | undefined
+}
 
 export const statusTypes = [
   { value: 1, label: "Public" },
@@ -90,10 +96,7 @@ const formSchema = z.object({
 export function CreateKnowledgeButton({
   categoryResponse,
   token,
-}: {
-  categoryResponse: CategoryResponse
-  token: string | undefined
-}) {
+}: CreateKnowledgeButtonProps) {
   const router = useRouter()
 
   const [isLoading, setIsloading] = React.useState<boolean>(false)

@@ -9,7 +9,9 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { CategoryResponse } from "@/types/category-res"
+import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeData } from "@/types/knowledge-res"
+import { KnowledgeListResData } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -46,6 +48,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { statusTypes } from "@/components/app/knowledge/create-knowledge-button"
 import { Icons } from "@/components/icons"
+
+interface DeleteKnowledgeButtonProps {
+  knowledgeData: KnowledgeListResData
+  categoryResponse: CategoryListRes
+  token: string | undefined
+}
 
 /**
  * Defines a zod schema for the form data used in the CreateKnowledgeButton component.
@@ -87,11 +95,11 @@ const formSchema = z.object({
     }),
 })
 
-export function EditKnowledgeButton(props: {
-  item: KnowledgeData
-  category: CategoryResponse
-  token: string | undefined
-}) {
+export function EditKnowledgeButton({
+  knowledgeData,
+  categoryResponse,
+  token,
+}: DeleteKnowledgeButtonProps) {
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -101,11 +109,11 @@ export function EditKnowledgeButton(props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      knowledge_title: props.item.knowledge_title,
-      description: props.item.description,
-      status: props.item.status,
-      image: props.item.image,
-      id_category: props.item.id_category,
+      knowledge_title: knowledgeData.knowledge_title,
+      description: knowledgeData.description,
+      status: knowledgeData.status,
+      image: knowledgeData.image,
+      id_category: knowledgeData.id_category,
     },
   })
 
@@ -114,12 +122,12 @@ export function EditKnowledgeButton(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${props.item.id_knowledge}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${knowledgeData.id_knowledge}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${props.token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(values),
         }
@@ -313,7 +321,7 @@ export function EditKnowledgeButton(props: {
                             )}
                           >
                             {field.value
-                              ? props.category.data.find(
+                              ? categoryResponse.data.find(
                                   (category) =>
                                     category.id_category === field.value
                                 )?.category_name
@@ -327,7 +335,7 @@ export function EditKnowledgeButton(props: {
                           <CommandInput placeholder="Jenis Kategori" />
                           <CommandEmpty>Kategori tidak ditemukan</CommandEmpty>
                           <CommandGroup>
-                            {props.category.data.map((category) => (
+                            {categoryResponse.data.map((category) => (
                               <CommandItem
                                 value={category.id_category.toString()}
                                 key={category.id_category}

@@ -1,25 +1,29 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { CategoryResponse } from "@/types/category-res"
-import { KnowledgeData } from "@/types/knowledge-res"
+import { CategoryListRes } from "@/types/category/res"
+import { KnowledgeListResData } from "@/types/knowledge/res"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DeleteKnowledgeButton } from "@/components/app/knowledge/delete-knowledge-button"
 import { EditKnowledgeButton } from "@/components/app/knowledge/edit-knowledge-button"
 
-export function KnowledgeItemList(props: {
-  item: KnowledgeData
-  category: CategoryResponse
+interface KnowledgeItemListProps {
+  knowledgeData: KnowledgeListResData
+  categoryResponse: CategoryListRes
   token: string | undefined
-}) {
-  const knowledgeItem = props.item
+}
 
+export function KnowledgeItemList({
+  knowledgeData,
+  categoryResponse,
+  token,
+}: KnowledgeItemListProps) {
   return (
     <div className="flex items-center justify-between p-4 hover:bg-accent hover:text-accent-foreground">
       <div className="flex">
         <div className="flex-none">
           <Image
-            src={knowledgeItem.image}
+            src={knowledgeData.image}
             sizes="100px"
             width={120}
             height={120}
@@ -29,24 +33,24 @@ export function KnowledgeItemList(props: {
         </div>
         <div className="px-4">
           <Link
-            href={`/dashboard/knowledge/${knowledgeItem.id_knowledge}`}
+            href={`/dashboard/knowledge/${knowledgeData.id_knowledge}`}
             className="font-semibold hover:underline"
           >
-            {knowledgeItem.knowledge_title}
+            {knowledgeData.knowledge_title}
           </Link>
           <div>
             <p className=" line-clamp-2 text-sm text-muted-foreground">
-              {knowledgeItem.description}
+              {knowledgeData.description}
             </p>
           </div>
         </div>
       </div>
       <div className="flex flex-row-reverse px-2">
-        <DeleteKnowledgeButton item={knowledgeItem} token={props.token} />
+        <DeleteKnowledgeButton knowledgeData={knowledgeData} token={token} />
         <EditKnowledgeButton
-          item={knowledgeItem}
-          category={props.category}
-          token={props.token}
+          categoryResponse={categoryResponse}
+          knowledgeData={knowledgeData}
+          token={token}
         />
       </div>
     </div>

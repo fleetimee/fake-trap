@@ -62,6 +62,7 @@ export function CreateCategorySheet() {
             Authorization: `Bearer ${session?.user?.token}`,
           },
           body: JSON.stringify(values),
+          cache: "no-cache",
         }
       )
 

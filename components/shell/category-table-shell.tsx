@@ -35,8 +35,49 @@ export function CategoryTableShell({
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
 
-  const columns = React.useMemo<ColumnDef<CategoryListResData>[]>(
+  const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={table.getIsAllPageRowsSelected()}
+            onCheckedChange={(value) => {
+              table.toggleAllPageRowsSelected(!!value)
+              setSelectedRowIds((prev) =>
+                prev.length === data.length
+                  ? []
+                  : data.map((row) => row.id_category)
+              )
+            }}
+            aria-label="Select all"
+            className="translate-y-[2px]"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => {
+              row.toggleSelected(!!value)
+              setSelectedRowIds((prev) =>
+                value
+                  ? [...prev, row.original.id_category]
+                  : prev.filter((id) => id !== row.original.id_category)
+              )
+            }}
+            aria-label="Select row"
+            className="translate-y-[2px]"
+          />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+      },
+      {
+        accessorKey: "id_category",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="ID" />
+        ),
+      },
       {
         accessorKey: "category_name",
         header: ({ column }) => (
@@ -73,7 +114,7 @@ export function CategoryTableShell({
         },
       },
     ],
-    [data, isPending]
+    [data]
   )
 
   return <DataTable columns={columns} data={data} pageCount={pageCount} />
