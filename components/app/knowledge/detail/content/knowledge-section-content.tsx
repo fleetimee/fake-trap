@@ -1,11 +1,6 @@
-"use client"
-
 import React from "react"
 
-import {
-  KnowledgeByIdResponse,
-  KnowledgeByIdSectionContentData,
-} from "@/types/knowledge-res"
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
@@ -25,16 +20,23 @@ enum ContentType {
   Files = 2,
 }
 
-export function KnowledgeSectionContent(props: {
-  content: KnowledgeByIdSectionContentData
-  dataKnowledge: KnowledgeByIdResponse
-  contentData: KnowledgeByIdSectionContentData
-  setContentData: React.Dispatch<
-    React.SetStateAction<KnowledgeByIdSectionContentData>
-  >
+interface KnowledgeSectionContentProps {
+  content: KnowledgeOneResContent
+  dataKnowledge: KnowledgeOneRes
+  contentData: KnowledgeOneResContent
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: number
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
-}) {
+}
+
+export function KnowledgeSectionContent({
+  content,
+  dataKnowledge,
+  contentData,
+  setContentData,
+  activeIndex,
+  setActiveIndex,
+}: KnowledgeSectionContentProps) {
   const [isAddSheetOpen, setIsAddSheetOpen] = React.useState<boolean>(false)
   const [isEditSheetOpen, setIsEditSheetOpen] = React.useState<boolean>(false)
   const [isDeleteSheetOpen, setIsDeleteSheetOpen] =
@@ -44,15 +46,15 @@ export function KnowledgeSectionContent(props: {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <ContextMenu key={props.content.id_content}>
+      <ContextMenu key={content.id_content}>
         <ContextMenuTrigger>
-          <AccordionContent key={props.content.id_content} className="py-1">
-            {props.content.content_title ? (
+          <AccordionContent key={content.id_content} className="py-1">
+            {content.content_title ? (
               <Button
                 className="flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading active:bg-gray-800"
                 onClick={() => {
-                  props.setActiveIndex(props.content.id_content)
-                  props.setContentData(props.content)
+                  setActiveIndex(content.id_content)
+                  setContentData(content)
 
                   // go to the top of the page
                   window.scrollTo({
@@ -60,25 +62,23 @@ export function KnowledgeSectionContent(props: {
                     behavior: "instant",
                   })
                 }}
-                disabled={props.activeIndex == props.content.id_content}
+                disabled={activeIndex == content.id_content}
               >
-                {props.content.content_title}
+                {content.content_title}
               </Button>
             ) : null}
           </AccordionContent>
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuItem inset disabled>
-            ID Konten: {props.content.id_content}
+            ID Konten: {content.id_content}
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
             Tipe:{" "}
-            {props.content.content_type == ContentType.Video
-              ? "Video"
-              : "Sub Judul"}
+            {content.content_type == ContentType.Video ? "Video" : "Sub Judul"}
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
-            {props.content.content_title}
+            {content.content_title}
           </ContextMenuItem>
           <ContextMenuSeparator />
           <SheetTrigger
@@ -124,19 +124,15 @@ export function KnowledgeSectionContent(props: {
       </ContextMenu>
       {isAddSheetOpen ? (
         <CreateSectionContentSheet
-          id_section={props.content.id_section}
+          id_section={content.id_section}
           open={open}
           setOpen={setOpen}
         />
       ) : isEditSheetOpen ? (
-        <EditSectionContentSheet
-          item={props.content}
-          open={open}
-          setOpen={setOpen}
-        />
+        <EditSectionContentSheet item={content} open={open} setOpen={setOpen} />
       ) : (
         <DeleteSectionContentSheet
-          item={props.content}
+          item={content}
           open={open}
           setOpen={setOpen}
         />

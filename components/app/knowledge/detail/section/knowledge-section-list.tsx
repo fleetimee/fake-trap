@@ -3,6 +3,7 @@
 import React from "react"
 
 import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
+import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -15,9 +16,11 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { DeleteSectionSheet } from "@/components/app/knowledge/detail/section/delete-section-sheet"
 import { EditSectionSheet } from "@/components/app/knowledge/detail/section/edit-section-sheet"
 
-export function KnowledgeSectionList(props: {
-  item: KnowledgeByIdSectionData
-}) {
+interface KnowledgeSectionListProps {
+  item: KnowledgeOneResSection
+}
+
+export function KnowledgeSectionList({ item }: KnowledgeSectionListProps) {
   const [isEditSectionOpen, setIsEditSectionOpen] =
     React.useState<boolean>(false)
 
@@ -31,15 +34,15 @@ export function KnowledgeSectionList(props: {
       <ContextMenu>
         <ContextMenuTrigger>
           <AccordionTrigger className="font-heading text-base font-bold">
-            {props.item.section_title}
+            {item.section_title}
           </AccordionTrigger>
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuItem inset disabled>
-            ID Section: {props.item.id_section}
+            ID Section: {item.id_section}
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
-            {props.item.section_title}
+            {item.section_title}
           </ContextMenuItem>
           <ContextMenuSeparator />
           <SheetTrigger
@@ -69,9 +72,9 @@ export function KnowledgeSectionList(props: {
         </ContextMenuContent>
       </ContextMenu>
       {isEditSectionOpen ? (
-        <EditSectionSheet item={props.item} open={open} setOpen={setOpen} />
+        <EditSectionSheet item={item} open={open} setOpen={setOpen} />
       ) : (
-        <DeleteSectionSheet item={props.item} open={open} setOpen={setOpen} />
+        <DeleteSectionSheet item={item} open={open} setOpen={setOpen} />
       )}
     </Sheet>
   )

@@ -5,11 +5,13 @@ import React from "react"
 import { EmptyContent } from "@/components/app/knowledge/detail-sidebar-empty-content"
 import { CreateSectionButton } from "@/components/app/knowledge/detail/section/create-section-button"
 
+interface EmptyKnowledgeSectionInitialProps {
+  id_knowledge: number
+}
+
 export function EmptyKnowledgeSectionInitial({
   id_knowledge,
-}: {
-  id_knowledge: number
-}) {
+}: EmptyKnowledgeSectionInitialProps) {
   return (
     <EmptyContent className="h-[625px] items-center justify-center">
       <EmptyContent.Icon name="empty" />

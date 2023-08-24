@@ -1,8 +1,5 @@
-"use client"
-
 import React from "react"
 import { useRouter } from "next/navigation"
-import { LinkPreview } from "@dhaiwat10/react-link-preview"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
@@ -70,15 +67,17 @@ const formSchema = z.object({
   id_section: z.number().int(),
 })
 
+interface CreateSectionContentSheetProps {
+  id_section: number
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 export function CreateSectionContentSheet({
   id_section,
   open,
   setOpen,
-}: {
-  id_section: number
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+}: CreateSectionContentSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()

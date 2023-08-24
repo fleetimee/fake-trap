@@ -3,10 +3,7 @@
 import React from "react"
 import Link from "next/link"
 
-import {
-  KnowledgeByIdResponse,
-  KnowledgeByIdSectionContentData,
-} from "@/types/knowledge-res"
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
@@ -16,18 +13,23 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import DetailSidebarKnowledge from "../detail-sidebar-knowledge"
 import { KnowledgeDetailContent } from "./knowledge-detail-content"
 
-export function KnowledgeDetailShell(props: {
-  detailKnowledgeData: KnowledgeByIdResponse
-}) {
-  const [contentData, setContentData] =
-    React.useState<KnowledgeByIdSectionContentData>({
-      content_title: "",
-      content_type: 0,
-      id_content: 0,
-      id_section: 0,
-      image: "",
-      link: "",
-    })
+interface KnowledgeDetailShellProps {
+  detailKnowledgeData: KnowledgeOneRes
+}
+
+export function KnowledgeDetailShell({
+  detailKnowledgeData,
+}: KnowledgeDetailShellProps) {
+  const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
+    content_title: "",
+    content_type: 0,
+    id_content: 0,
+    id_section: 0,
+    image: "",
+    link: "",
+    created_at: Date.now().toString() as unknown as Date,
+    updated_at: Date.now().toString() as unknown as Date,
+  })
 
   const [activeIndex, setActiveIndex] = React.useState<number>(0)
 
@@ -45,8 +47,8 @@ export function KnowledgeDetailShell(props: {
               title: "Pengetahuan",
             },
             {
-              title: props.detailKnowledgeData.data.knowledge_title,
-              href: `/dashboard/knowledge/${props.detailKnowledgeData.data.id_knowledge}`,
+              title: detailKnowledgeData.data.knowledge_title,
+              href: `/dashboard/knowledge/${detailKnowledgeData.data.id_knowledge}`,
             },
           ]}
         />
@@ -56,7 +58,7 @@ export function KnowledgeDetailShell(props: {
             type="text"
             placeholder="Link Public"
             className="w-full xl:w-1/2"
-            defaultValue={`${process.env.NEXT_PUBLIC_BASE_URL}/intro/knowledge/${props.detailKnowledgeData.data.id_knowledge}`}
+            defaultValue={`${process.env.NEXT_PUBLIC_BASE_URL}/intro/knowledge/${detailKnowledgeData.data.id_knowledge}`}
           />
 
           <Button
@@ -64,7 +66,7 @@ export function KnowledgeDetailShell(props: {
             className="ml-2"
             onClick={() => {
               navigator.clipboard.writeText(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/intro/knowledge/${props.detailKnowledgeData.data.id_knowledge}`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/intro/knowledge/${detailKnowledgeData.data.id_knowledge}`
               )
 
               toast({
@@ -77,7 +79,7 @@ export function KnowledgeDetailShell(props: {
           </Button>
 
           <Link
-            href={`/intro/knowledge/${props.detailKnowledgeData.data.id_knowledge}`}
+            href={`/intro/knowledge/${detailKnowledgeData.data.id_knowledge}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -89,14 +91,11 @@ export function KnowledgeDetailShell(props: {
       </div>
       <div className="flex h-auto  flex-col gap-4 px-2 lg:flex-row">
         <KnowledgeDetailContent
-          dataContentKnowledge={props.detailKnowledgeData}
-          setContentData={setContentData}
+          detailKnowledge={detailKnowledgeData}
           contentData={contentData}
-          activeIndex={activeIndex}
-          setActiveIndex={setActiveIndex}
         />
         <DetailSidebarKnowledge
-          dataKnowledge={props.detailKnowledgeData}
+          dataKnowledge={detailKnowledgeData}
           setContentData={setContentData}
           contentData={contentData}
           activeIndex={activeIndex}

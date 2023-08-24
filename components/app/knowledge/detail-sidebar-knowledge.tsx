@@ -1,11 +1,6 @@
-"use client"
-
 import React from "react"
 
-import {
-  KnowledgeByIdResponse,
-  KnowledgeByIdSectionContentData,
-} from "@/types/knowledge-res"
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -16,15 +11,21 @@ import { CreateSectionButton } from "@/components/app/knowledge/detail/section/c
 import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/detail/section/empty-knowledge-section-initial"
 import { KnowledgeSectionList } from "@/components/app/knowledge/detail/section/knowledge-section-list"
 
-export default function DetailSidebarKnowledge(props: {
-  dataKnowledge: KnowledgeByIdResponse
-  contentData: KnowledgeByIdSectionContentData
-  setContentData: React.Dispatch<
-    React.SetStateAction<KnowledgeByIdSectionContentData>
-  >
+interface DetailSidebarKnowledgeProps {
+  dataKnowledge: KnowledgeOneRes
+  contentData: KnowledgeOneResContent
   activeIndex: number
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
-}) {
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
+}
+
+export default function DetailSidebarKnowledge({
+  dataKnowledge,
+  contentData,
+  activeIndex,
+  setActiveIndex,
+  setContentData,
+}: DetailSidebarKnowledgeProps) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="account" className="w-full">
@@ -33,23 +34,23 @@ export default function DetailSidebarKnowledge(props: {
             📑 Pengetahuan
           </TabsTrigger>
         </TabsList>
-        {props.dataKnowledge.data.section ? (
+        {dataKnowledge.data.section ? (
           <CreateSectionButton
-            id_knowledge={props.dataKnowledge.data.id_knowledge}
+            id_knowledge={dataKnowledge.data.id_knowledge}
             name="Section"
           />
         ) : null}
         <TabsContent value="account">
           <ScrollArea className="h-[600px] w-full">
-            {props.dataKnowledge.data.section ? (
+            {dataKnowledge.data.section ? (
               <Accordion
                 type="single"
                 collapsible
                 className="px-4"
-                key={props.dataKnowledge.data.knowledge_title}
-                defaultValue={props.dataKnowledge.data.section[0].id_section.toString()}
+                key={dataKnowledge.data.knowledge_title}
+                defaultValue={dataKnowledge.data.section[0].id_section.toString()}
               >
-                {props.dataKnowledge.data.section.map((section) => (
+                {dataKnowledge.data.section.map((section) => (
                   <AccordionItem
                     key={section.id_section}
                     value={section.id_section.toString()}
@@ -60,11 +61,11 @@ export default function DetailSidebarKnowledge(props: {
                       section.content.map((content) => (
                         <KnowledgeSectionContent
                           content={content}
-                          activeIndex={props.activeIndex}
-                          setActiveIndex={props.setActiveIndex}
-                          contentData={props.contentData}
-                          setContentData={props.setContentData}
-                          dataKnowledge={props.dataKnowledge}
+                          activeIndex={activeIndex}
+                          setActiveIndex={setActiveIndex}
+                          contentData={contentData}
+                          setContentData={setContentData}
+                          dataKnowledge={dataKnowledge}
                         />
                       ))
                     ) : (
@@ -77,7 +78,7 @@ export default function DetailSidebarKnowledge(props: {
               </Accordion>
             ) : (
               <EmptyKnowledgeSectionInitial
-                id_knowledge={props.dataKnowledge.data.id_knowledge}
+                id_knowledge={dataKnowledge.data.id_knowledge}
               />
             )}
           </ScrollArea>

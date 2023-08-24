@@ -3,10 +3,6 @@ import { redirect } from "next/navigation"
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
-import {
-  getAllCategoriesData,
-  getPaginatedKnowledgeData,
-} from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
 import { CreateKnowledgeButton } from "@/components/app/knowledge/create-knowledge-button"
 import { KnowledgeItemList } from "@/components/app/knowledge/knowledge-item-list"

@@ -46,13 +46,15 @@ const formSchema = z.object({
   ),
 })
 
+interface CreateSectionButtonProps {
+  id_knowledge: number
+  name: string
+}
+
 export function CreateSectionButton({
   id_knowledge,
   name,
-}: {
-  id_knowledge: number
-  name: string
-}) {
+}: CreateSectionButtonProps) {
   const { data: session } = useSession()
 
   const router = useRouter()

@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -8,7 +6,7 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
+import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -60,19 +58,17 @@ const formSchema = z.object({
   id_section: z.number().int(),
 })
 
-/**
- * This component renders a form for editing content. It includes fields for the content title, type, and either a link or image depending on the selected type. When the form is submitted, it calls the onSubmit function with the form data. If the submission is successful, the form is reset and the setOpen function is called with false. If the submission fails, a toast notification is displayed.
- *
- * @param {Object} props - The component props.
- * @param {boolean} props.setOpen - A function to set the open state of the parent component.
- *
- * @returns {JSX.Element} - The rendered component.
- */
-export function EditSectionContentSheet(props: {
-  item: KnowledgeByIdSectionContentData
+interface EditSectionContentSheetProps {
+  item: KnowledgeOneResContent
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+}
+
+export function EditSectionContentSheet({
+  item,
+  open,
+  setOpen,
+}: EditSectionContentSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -85,11 +81,11 @@ export function EditSectionContentSheet(props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content_title: props.item.content_title,
-      content_type: props.item.content_type,
-      image: props.item.image,
-      link: props.item.link,
-      id_section: props.item.id_section,
+      content_title: item.content_title,
+      content_type: item.content_type,
+      image: item.image,
+      link: item.link,
+      id_section: item.id_section,
     },
   })
 
@@ -98,7 +94,7 @@ export function EditSectionContentSheet(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${props.item.id_content}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${item.id_content}`,
         {
           method: "PUT",
           headers: {
@@ -118,7 +114,7 @@ export function EditSectionContentSheet(props: {
         router.refresh()
 
         form.reset()
-        props.setOpen(false)
+        setOpen(false)
       } else {
         toast({
           title: "Gagal mengubah konten",

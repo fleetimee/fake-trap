@@ -1,12 +1,10 @@
 "use client"
 
+import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-import {
-  KnowledgeByIdResponse,
-  KnowledgeByIdSectionContentData,
-} from "@/types/knowledge-res"
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { getYoutubeLastId } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -27,24 +25,23 @@ import { Icons } from "@/components/icons"
 import { PdfViewer } from "@/components/pdf-viewer"
 import { YoutubePlayer } from "@/components/youtube-player"
 
-export function renderContent(
-  contentType: number,
-  props: {
-    dataContentKnowledge: KnowledgeByIdResponse
-    contentData: KnowledgeByIdSectionContentData
-    setContentData: React.Dispatch<
-      React.SetStateAction<KnowledgeByIdSectionContentData>
-    >
-    activeIndex: number
-    setActiveIndex: React.Dispatch<React.SetStateAction<number>>
-  }
-) {
+interface RenderContentProps {
+  detailKnowledge: KnowledgeOneRes
+  contentData: KnowledgeOneResContent
+  contentType: number
+}
+
+export function renderContent({
+  detailKnowledge,
+  contentData,
+  contentType,
+}: RenderContentProps) {
   switch (contentType) {
     case 0:
       return (
         <Image
-          src={props.dataContentKnowledge.data.image}
-          alt={props.dataContentKnowledge.data.knowledge_title}
+          src={detailKnowledge.data.image}
+          alt={detailKnowledge.data.knowledge_title}
           className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
           width={1280}
           height={720}
@@ -52,9 +49,7 @@ export function renderContent(
       )
 
     case 1:
-      return (
-        <YoutubePlayer videoId={getYoutubeLastId(props.contentData.link)} />
-      )
+      return <YoutubePlayer videoId={getYoutubeLastId(contentData.link)} />
 
     case 2:
       return <PdfViewer />
@@ -62,14 +57,14 @@ export function renderContent(
     case 3:
       return (
         <Link
-          href={props.contentData.link}
+          href={contentData.link}
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col gap-4"
         >
           <Image
-            src={props.dataContentKnowledge.data.image}
-            alt={props.dataContentKnowledge.data.knowledge_title}
+            src={detailKnowledge.data.image}
+            alt={detailKnowledge.data.knowledge_title}
             className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
             width={1280}
             height={720}
@@ -86,18 +81,17 @@ export function renderContent(
   }
 }
 
-export function renderContentButton(
-  contentType: number,
-  props: {
-    dataContentKnowledge: KnowledgeByIdResponse
-    contentData: KnowledgeByIdSectionContentData
-    setContentData: React.Dispatch<
-      React.SetStateAction<KnowledgeByIdSectionContentData>
-    >
-    activeIndex: number
-    setActiveIndex: React.Dispatch<React.SetStateAction<number>>
-  }
-) {
+interface RenderContentButtonProps {
+  // detailKnowledge: KnowledgeOneRes
+  // detailKnowledgeContent: KnowledgeOneResContent
+  contentType: number
+}
+
+export function renderContentButton({
+  // detailKnowledge,
+  // detailKnowledgeContent,
+  contentType,
+}: RenderContentButtonProps) {
   switch (contentType) {
     case 0:
       return null
@@ -138,33 +132,34 @@ export function renderContentButton(
   }
 }
 
-/**
- * Renders a detail content component with a title and a video.
- * @param {DetailContentProps} props - The props object containing the title.
- * @returns {JSX.Element} - A JSX.Element representing the detail content component.
- */
-export function KnowledgeDetailContent(props: {
-  dataContentKnowledge: KnowledgeByIdResponse
-  contentData: KnowledgeByIdSectionContentData
-  setContentData: React.Dispatch<
-    React.SetStateAction<KnowledgeByIdSectionContentData>
-  >
-  activeIndex: number
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
-}) {
+interface KnowledgeDetailContentProps {
+  detailKnowledge: KnowledgeOneRes
+  contentData: KnowledgeOneResContent
+}
+
+export function KnowledgeDetailContent({
+  detailKnowledge,
+  contentData,
+}: KnowledgeDetailContentProps) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
         <div className="flex flex-row items-center justify-between">
           <p className="grow break-all font-heading text-3xl">
-            {props.dataContentKnowledge.data.knowledge_title}
+            {detailKnowledge.data.knowledge_title}
           </p>
           <div className="flex">
-            {renderContentButton(props.contentData.content_type, props)}
+            {renderContentButton({
+              contentType: contentData.content_type,
+            })}
           </div>
         </div>
 
-        {renderContent(props.contentData.content_type, props)}
+        {renderContent({
+          detailKnowledge,
+          contentData,
+          contentType: contentData.content_type,
+        })}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">
@@ -185,7 +180,7 @@ export function KnowledgeDetailContent(props: {
               </CardHeader>
               <CardContent className="space-y-2">
                 <ScrollArea className="h-[300px] w-full">
-                  <p>{props.dataContentKnowledge.data.description}</p>
+                  <p>{detailKnowledge.data.description}</p>
                 </ScrollArea>
               </CardContent>
             </Card>

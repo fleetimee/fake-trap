@@ -14,11 +14,13 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { EmptyContent } from "@/components/app/knowledge/detail-sidebar-empty-content"
 import { CreateSectionContentSheet } from "@/components/app/knowledge/detail/content/create-section-content-sheet"
 
+interface EmptyKnowledgeContentInitialProps {
+  id_section: number
+}
+
 export function EmptyKnowledgeContentInitial({
   id_section,
-}: {
-  id_section: number
-}) {
+}: EmptyKnowledgeContentInitialProps) {
   const [open, setOpen] = React.useState<boolean>(false)
 
   return (

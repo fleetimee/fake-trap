@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -8,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
+import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -27,9 +26,6 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-/**
- * Defines a schema for the form data used to create a new section in the knowledge sidebar.
- */
 const formSchema = z.object({
   section_title: z
     .string({
@@ -43,14 +39,13 @@ const formSchema = z.object({
     }),
 })
 
-/**
- * EditSectionSheet component that renders a form to edit a section in the knowledge sidebar.
- */
-export function EditSectionSheet(props: {
-  item: KnowledgeByIdSectionData
+interface EditSectionProps {
+  item: KnowledgeOneResSection
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+}
+
+export function EditSectionSheet({ item, open, setOpen }: EditSectionProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -60,7 +55,7 @@ export function EditSectionSheet(props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      section_title: props.item.section_title,
+      section_title: item.section_title,
     },
   })
 
@@ -69,7 +64,7 @@ export function EditSectionSheet(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${props.item.id_section}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${item.id_section}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -88,7 +83,7 @@ export function EditSectionSheet(props: {
 
         router.refresh()
         form.reset()
-        props.setOpen(false)
+        setOpen(false)
       } else {
         toast({
           title: "Section gagal diubah",

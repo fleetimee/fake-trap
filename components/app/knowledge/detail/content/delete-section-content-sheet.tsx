@@ -2,7 +2,7 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 
-import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
+import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { Button } from "@/components/ui/button"
 import {
   SheetContent,
@@ -14,11 +14,17 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-export function DeleteSectionContentSheet(props: {
-  item: KnowledgeByIdSectionContentData
+interface DeleteSectionContentSheetProps {
+  item: KnowledgeOneResContent
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+}
+
+export function DeleteSectionContentSheet({
+  item,
+  open,
+  setOpen,
+}: DeleteSectionContentSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -30,7 +36,7 @@ export function DeleteSectionContentSheet(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${props.item.id_content}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${item.id_content}`,
         {
           method: "DELETE",
           headers: {
@@ -47,7 +53,7 @@ export function DeleteSectionContentSheet(props: {
         })
 
         router.refresh()
-        props.setOpen(false)
+        setOpen(false)
       } else {
         toast({
           title: "Gagal menghapus konten",

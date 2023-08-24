@@ -1,10 +1,8 @@
-"use client"
-
 import React from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 
-import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
+import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { Button } from "@/components/ui/button"
 import {
   SheetContent,
@@ -16,11 +14,17 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-export function DeleteSectionSheet(props: {
-  item: KnowledgeByIdSectionData
+interface DeleteSectionSheetProps {
+  item: KnowledgeOneResSection
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+}
+
+export function DeleteSectionSheet({
+  item,
+  open,
+  setOpen,
+}: DeleteSectionSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -32,7 +36,7 @@ export function DeleteSectionSheet(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${props.item.id_section}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${item.id_section}`,
         {
           method: "DELETE",
           headers: {
@@ -49,7 +53,7 @@ export function DeleteSectionSheet(props: {
         })
 
         router.refresh()
-        props.setOpen(false)
+        setOpen(false)
       } else {
         toast({
           title: "Gagal menghapus section",
