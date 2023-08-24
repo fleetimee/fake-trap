@@ -2,44 +2,43 @@
 
 import React from "react"
 
-import {
-  KnowledgeByIdResponse,
-  KnowledgeByIdSectionContentData,
-} from "@/types/knowledge-res"
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 
 import { PublicKnowledgeDetailContent } from "./public-knowledge-detail-content"
 import PublicDetailSidebarKnowledge from "./public-knowledge-detail-sidebar"
 
-export function PublicKnowledgeDetailShell(props: {
-  detailKnowledgeDataResp: KnowledgeByIdResponse
-}) {
-  const [contentData, setContentData] =
-    React.useState<KnowledgeByIdSectionContentData>({
-      content_title: "",
-      content_type: 0,
-      id_content: 0,
-      id_section: 0,
-      image: "",
-      link: "",
-    })
+interface PublicKnowledgeDetailShellProps {
+  detailKnowledge: KnowledgeOneRes
+}
+
+export function PublicKnowledgeDetailShell({
+  detailKnowledge,
+}: PublicKnowledgeDetailShellProps) {
+  const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
+    content_title: "",
+    content_type: 0,
+    id_content: 0,
+    id_section: 0,
+    image: "",
+    link: "",
+    created_at: Date.now().toString() as unknown as Date,
+    updated_at: Date.now().toString() as unknown as Date,
+  })
 
   const [activeIndex, setActiveIndex] = React.useState<number>(0)
 
   return (
     <div className="flex h-auto  flex-col gap-4 px-2 lg:flex-row">
       <PublicKnowledgeDetailContent
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+        dataContentKnowledge={detailKnowledge}
         contentData={contentData}
-        setContentData={setContentData}
-        dataContentKnowledge={props.detailKnowledgeDataResp}
       />
       <PublicDetailSidebarKnowledge
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
         contentData={contentData}
         setContentData={setContentData}
-        dataKnowledge={props.detailKnowledgeDataResp}
+        dataKnowledge={detailKnowledge}
       />
     </div>
   )

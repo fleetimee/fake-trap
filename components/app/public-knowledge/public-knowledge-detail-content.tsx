@@ -1,9 +1,8 @@
 "use client"
 
-import {
-  KnowledgeByIdResponse,
-  KnowledgeByIdSectionContentData,
-} from "@/types/knowledge-res"
+import React from "react"
+
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { getYoutubeLastId } from "@/lib/utils"
 import {
   Card,
@@ -14,32 +13,32 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Icons } from "@/components/icons"
-import { YoutubePlayer } from "@/components/youtube-player"
-
 import {
   renderContent,
   renderContentButton,
-} from "../knowledge/detail/knowledge-detail-content"
+} from "@/components/app/knowledge/detail"
+import { YoutubePlayer } from "@/components/youtube-player"
 
-export function PublicKnowledgeDetailContent(props: {
-  dataContentKnowledge: KnowledgeByIdResponse
-  contentData: KnowledgeByIdSectionContentData
-  setContentData: React.Dispatch<
-    React.SetStateAction<KnowledgeByIdSectionContentData>
-  >
-  activeIndex: number
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
-}) {
+interface PublicKnowledgeDetailContentProps {
+  dataContentKnowledge: KnowledgeOneRes
+  contentData: KnowledgeOneResContent
+}
+
+export function PublicKnowledgeDetailContent({
+  dataContentKnowledge,
+  contentData,
+}: PublicKnowledgeDetailContentProps) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
         <div className="flex flex-row items-center justify-between">
           <p className="grow break-all font-heading text-3xl">
-            {props.dataContentKnowledge.data.knowledge_title}
+            {dataContentKnowledge.data.knowledge_title}
           </p>
           <div className="flex">
-            {renderContentButton(props.contentData.content_type, props)}
+            {renderContentButton({
+              contentType: contentData.content_type,
+            })}
           </div>
         </div>
         {/* <Image
@@ -49,7 +48,11 @@ export function PublicKnowledgeDetailContent(props: {
               width={1280}
               height={720}
             /> */}
-        {renderContent(props.contentData.content_type, props)}
+        {renderContent({
+          detailKnowledge: dataContentKnowledge,
+          contentData,
+          contentType: contentData.content_type,
+        })}
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">
             <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
@@ -69,7 +72,7 @@ export function PublicKnowledgeDetailContent(props: {
               </CardHeader>
               <CardContent className="space-y-2">
                 <ScrollArea className="h-[300px] w-full">
-                  <p>{props.dataContentKnowledge.data.description}</p>
+                  <p>{dataContentKnowledge.data.description}</p>
                 </ScrollArea>
               </CardContent>
             </Card>

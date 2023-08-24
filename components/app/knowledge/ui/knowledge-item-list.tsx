@@ -5,7 +5,6 @@ import Link from "next/link"
 
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
-import { Skeleton } from "@/components/ui/skeleton"
 import {
   DeleteKnowledgeButton,
   EditKnowledgeButton,
@@ -56,17 +55,6 @@ export function KnowledgeItemList({
           knowledgeData={knowledgeData}
           token={token}
         />
-      </div>
-    </div>
-  )
-}
-
-KnowledgeItemList.Skeleton = function KnowledgeItemListSkeleton() {
-  return (
-    <div className="p-4">
-      <div className="space-y-3">
-        <Skeleton className="h-5 w-2/5" />
-        <Skeleton className="h-4 w-4/5" />
       </div>
     </div>
   )

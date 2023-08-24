@@ -1,10 +1,7 @@
 import { Metadata } from "next"
-import { RocketIcon } from "@radix-ui/react-icons"
 
-import {
-  getPublicCategoriesDataById,
-  getPublicKnowledgeDataById,
-} from "@/lib/datasource"
+import { CategoryOneRes } from "@/types/category/res"
+import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { getCurrentUser } from "@/lib/session"
 import { toSentenceCase, toTitleCase } from "@/lib/utils"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -13,6 +10,46 @@ import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
 
+interface GetOnePublicKnowledgeProps {
+  idKnowledge: number
+}
+
+async function getOnePublicKnowledge({
+  idKnowledge,
+}: GetOnePublicKnowledgeProps): Promise<KnowledgeOneRes> {
+  const knowledgeOnePublic = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/${idKnowledge}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    }
+  )
+  return await knowledgeOnePublic.json()
+}
+
+interface GetOnePublicCategoryProps {
+  idCategory: number
+}
+
+async function getOnePublicCategory({
+  idCategory,
+}: GetOnePublicCategoryProps): Promise<CategoryOneRes> {
+  const categoryOnePublic = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/${idCategory}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    }
+  )
+  return await categoryOnePublic.json()
+}
+
 type Props = {
   params: {
     detail: string
@@ -20,8 +57,8 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const detailKnowledgeData = await getPublicKnowledgeDataById({
-    id: parseInt(params.detail),
+  const detailKnowledgeData = await getOnePublicKnowledge({
+    idKnowledge: parseInt(params.detail),
   })
 
   return {
@@ -32,14 +69,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function IntroDetailKnowledge({ params }: Props) {
   const user = await getCurrentUser()
 
-  const detailKnowledgeData = getPublicKnowledgeDataById({
-    id: parseInt(params.detail),
+  const detailKnowledge = getOnePublicKnowledge({
+    idKnowledge: parseInt(params.detail),
   })
 
-  const [detailKnowledgeDataResp] = await Promise.all([detailKnowledgeData])
+  const [detailKnowledgeResult] = await Promise.all([detailKnowledge])
 
-  const detailCategoryResp = await getPublicCategoriesDataById({
-    id: detailKnowledgeDataResp.data.id_category,
+  const detailCategory = await getOnePublicCategory({
+    idCategory: detailKnowledgeResult.data.id_category,
   })
 
   return (
@@ -51,12 +88,12 @@ export default async function IntroDetailKnowledge({ params }: Props) {
             title: "Explore",
           },
           {
-            title: toTitleCase(detailCategoryResp.data.category_name),
-            href: `/intro/categories/${detailCategoryResp.data.id_category}`,
+            title: toTitleCase(detailCategory.data.category_name),
+            href: `/intro/categories/${detailCategory.data.id_category}`,
           },
           {
-            title: toSentenceCase(detailKnowledgeDataResp.data.knowledge_title),
-            href: `/intro/knowledge/${detailKnowledgeDataResp.data.id_knowledge}`,
+            title: toSentenceCase(detailKnowledgeResult.data.knowledge_title),
+            href: `/intro/knowledge/${detailKnowledgeResult.data.id_knowledge}`,
           },
         ]}
       />
@@ -67,9 +104,9 @@ export default async function IntroDetailKnowledge({ params }: Props) {
         >
           <Icons.course className="h-4 w-4" />
           <AlertTitle>
-            {detailKnowledgeDataResp.data.course
+            {detailKnowledgeResult.data.course
               ? `
-              Ada ${detailKnowledgeDataResp.data.course.length} kursus yang tersedia untuk pengetahuan ini`
+              Ada ${detailKnowledgeResult.data.course.length} kursus yang tersedia untuk pengetahuan ini`
               : `Tidak ada kursus untuk pengetahuan ini`}
           </AlertTitle>
           <AlertDescription>
@@ -79,9 +116,7 @@ export default async function IntroDetailKnowledge({ params }: Props) {
           </AlertDescription>
         </Alert>
       </div>
-      <PublicKnowledgeDetailShell
-        detailKnowledgeDataResp={detailKnowledgeDataResp}
-      />
+      <PublicKnowledgeDetailShell detailKnowledge={detailKnowledgeResult} />
     </Shell>
   )
 }

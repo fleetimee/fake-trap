@@ -11,6 +11,7 @@ export type KnowledgeOneResData = {
   status: number
   image: string
   section: KnowledgeOneResSection[]
+  course: KnowledgeOneResCourse[]
   id_category: number
   created_at: Date
   updated_at: Date
@@ -31,6 +32,18 @@ export type KnowledgeOneResContent = {
   image: string
   link: string
   id_section: number
+  created_at: Date
+  updated_at: Date
+}
+
+export type KnowledgeOneResCourse = {
+  id_course: number
+  id_knowledge: number
+  course_name: string
+  course_desc: string
+  image: string
+  date_start: Date
+  date_end: Date
   created_at: Date
   updated_at: Date
 }

@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
