@@ -5,11 +5,15 @@ import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { EmptyKnowledgeContentInitial } from "@/components/app/knowledge/detail/content/empty-knowledge-content-initial"
-import { KnowledgeSectionContent } from "@/components/app/knowledge/detail/content/knowledge-section-content"
-import { CreateSectionButton } from "@/components/app/knowledge/detail/section/create-section-button"
-import { EmptyKnowledgeSectionInitial } from "@/components/app/knowledge/detail/section/empty-knowledge-section-initial"
-import { KnowledgeSectionList } from "@/components/app/knowledge/detail/section/knowledge-section-list"
+import {
+  EmptyKnowledgeContentInitial,
+  KnowledgeSectionContent,
+} from "@/components/app/knowledge/detail/content/ui"
+import { CreateSectionButton } from "@/components/app/knowledge/detail/section/operations"
+import {
+  EmptyKnowledgeSectionInitial,
+  KnowledgeSectionList,
+} from "@/components/app/knowledge/detail/section/ui"
 
 interface DetailSidebarKnowledgeProps {
   dataKnowledge: KnowledgeOneRes
@@ -19,7 +23,7 @@ interface DetailSidebarKnowledgeProps {
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
 }
 
-export default function DetailSidebarKnowledge({
+export function DetailSidebarKnowledge({
   dataKnowledge,
   contentData,
   activeIndex,

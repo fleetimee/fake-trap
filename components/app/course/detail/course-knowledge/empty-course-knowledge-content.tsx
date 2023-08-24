@@ -1,5 +1,5 @@
 import { AccordionContent } from "@/components/ui/accordion"
-import { EmptyContent } from "@/components/app/knowledge/detail-sidebar-empty-content"
+import { EmptyContent } from "@/components/app/knowledge/detail/knowledge-detail-sidebar-empty"
 
 export function EmptyKnowledgeCourse() {
   return (

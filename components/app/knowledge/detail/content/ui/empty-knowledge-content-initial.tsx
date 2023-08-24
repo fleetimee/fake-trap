@@ -11,8 +11,8 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EmptyContent } from "@/components/app/knowledge/detail-sidebar-empty-content"
-import { CreateSectionContentSheet } from "@/components/app/knowledge/detail/content/create-section-content-sheet"
+import { CreateSectionContentSheet } from "@/components/app/knowledge/detail/content/operations/create-section-content-sheet"
+import { EmptyContent } from "@/components/app/knowledge/detail/knowledge-detail-sidebar-empty"
 
 interface EmptyKnowledgeContentInitialProps {
   id_section: number

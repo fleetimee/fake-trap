@@ -11,13 +11,6 @@ import { Icons } from "@/components/icons"
  */
 interface CreateButtonProps extends ButtonProps {}
 
-/**
- * Renders a button for creating knowledge.
- * @param className - The class name for the button.
- * @param variant - The variant of the button.
- * @param props - The props for the button.
- * @returns A React button component.
- */
 export function CreateButton({
   className,
   variant,

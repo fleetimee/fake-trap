@@ -6,8 +6,10 @@ import Link from "next/link"
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DeleteKnowledgeButton } from "@/components/app/knowledge/delete-knowledge-button"
-import { EditKnowledgeButton } from "@/components/app/knowledge/edit-knowledge-button"
+import {
+  DeleteKnowledgeButton,
+  EditKnowledgeButton,
+} from "@/components/app/knowledge/operations"
 
 interface KnowledgeItemListProps {
   knowledgeData: KnowledgeListResData

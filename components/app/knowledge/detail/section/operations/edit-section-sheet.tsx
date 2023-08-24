@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { Button } from "@/components/ui/button"
 import {

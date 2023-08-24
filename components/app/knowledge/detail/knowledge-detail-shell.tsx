@@ -7,11 +7,12 @@ import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
+import {
+  DetailSidebarKnowledge,
+  KnowledgeDetailContent,
+} from "@/components/app/knowledge/detail"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-
-import DetailSidebarKnowledge from "../detail-sidebar-knowledge"
-import { KnowledgeDetailContent } from "./knowledge-detail-content"
 
 interface KnowledgeDetailShellProps {
   detailKnowledgeData: KnowledgeOneRes

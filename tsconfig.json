@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
+      "@/knowledge": ["./components/app/knowledge/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "plugins": [

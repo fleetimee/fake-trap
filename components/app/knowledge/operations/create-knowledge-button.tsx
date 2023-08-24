@@ -8,10 +8,7 @@ import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { CategoryResponse } from "@/types/category-res"
 import { CategoryListRes } from "@/types/category/res"
-import { KnowledgeData } from "@/types/knowledge-res"
-import { KnowledgeListResData } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -46,19 +43,19 @@ import {
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { statusTypes } from "@/components/app/knowledge/create-knowledge-button"
+import { CreateButton } from "@/components/create-button"
 import { Icons } from "@/components/icons"
 
-interface DeleteKnowledgeButtonProps {
-  knowledgeData: KnowledgeListResData
+interface CreateKnowledgeButtonProps {
   categoryResponse: CategoryListRes
   token: string | undefined
 }
 
-/**
- * Defines a zod schema for the form data used in the CreateKnowledgeButton component.
- * The schema defines the shape and validation rules for the form data.
- */
+export const statusTypes = [
+  { value: 1, label: "Public" },
+  { value: 2, label: "Private" },
+]
+
 const formSchema = z.object({
   knowledge_title: z
     .string({
@@ -95,36 +92,33 @@ const formSchema = z.object({
     }),
 })
 
-export function EditKnowledgeButton({
-  knowledgeData,
+export function CreateKnowledgeButton({
   categoryResponse,
   token,
-}: DeleteKnowledgeButtonProps) {
+}: CreateKnowledgeButtonProps) {
   const router = useRouter()
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [isLoading, setIsloading] = React.useState<boolean>(false)
 
   const [open, setOpen] = React.useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      knowledge_title: knowledgeData.knowledge_title,
-      description: knowledgeData.description,
-      status: knowledgeData.status,
-      image: knowledgeData.image,
-      id_category: knowledgeData.id_category,
+      knowledge_title: "",
+      description: "",
+      image: "",
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
+    setIsloading(true)
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${knowledgeData.id_knowledge}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge`,
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -135,36 +129,41 @@ export function EditKnowledgeButton({
 
       if (response.ok) {
         toast({
-          title: "Pengetahuan berhasil diubah",
-          description: "Pengetahuan berhasil diubah",
+          title: "Pengetahuan berhasil dibuat",
+          description: "Pengetahuan berhasil dibuat",
         })
-        form.reset()
+
         router.refresh()
+        form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Pengetahuan gagal diubah",
-          description: "Pengetahuan gagal diubah",
-        })
+        throw new Error("Gagal membuat pengetahuan")
       }
     } catch (error) {
-      console.error(error)
+      toast({
+        title: "Gagal membuat pengetahuan",
+        description: "Gagal membuat pengetahuan",
+        variant: "destructive",
+      })
     } finally {
-      setIsLoading(false)
+      setIsloading(false)
     }
   }
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
-        <Button variant="secondary" className="mr-2">
-          Edit
-        </Button>
+        <CreateButton
+          className=" transition duration-300 delay-150 ease-in-out hover:-translate-y-1 hover:scale-110"
+          name="Tambah"
+        />
       </SheetTrigger>
       <SheetContent position="right" size="content">
         <SheetHeader>
-          <SheetTitle>Ubah Pengetahuan</SheetTitle>
-          <SheetDescription>Ubah pengetahuan yang sudah ada.</SheetDescription>
+          <SheetTitle>Tambah Pengetahuan</SheetTitle>
+          <SheetDescription>
+            Tambah pengetahuan baru untuk dipelajari oleh user.
+          </SheetDescription>
         </SheetHeader>
         <Form {...form}>
           <form
@@ -183,7 +182,7 @@ export function EditKnowledgeButton({
                     <Input placeholder="Pendahuluan" {...field} />
                   </FormControl>
                   <FormDescription>
-                    Judul pengetahuan yang ingin diubah.
+                    Judul pengetahuan yang ingin dibuat.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -206,7 +205,7 @@ export function EditKnowledgeButton({
                     />
                   </FormControl>
                   <FormDescription>
-                    Deskripsi pengetahuan yang ingin diubah
+                    Deskripsi pengetahuan yang ingin dibuat.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -226,7 +225,7 @@ export function EditKnowledgeButton({
                     />
                   </FormControl>
                   <FormDescription>
-                    Link gambar pengetahuan yang ingin diubah.
+                    Link gambar pengetahuan yang ingin dibuat.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -380,7 +379,7 @@ export function EditKnowledgeButton({
               {isLoading ? (
                 <Icons.spinner className="h-5 w-5 animate-spin" />
               ) : (
-                "Ubah"
+                "Tambah"
               )}
             </Button>
           </form>

@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
@@ -13,8 +12,10 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { DeleteSectionSheet } from "@/components/app/knowledge/detail/section/delete-section-sheet"
-import { EditSectionSheet } from "@/components/app/knowledge/detail/section/edit-section-sheet"
+import {
+  DeleteSectionSheet,
+  EditSectionSheet,
+} from "@/components/app/knowledge/detail/section/operations"
 
 interface KnowledgeSectionListProps {
   item: KnowledgeOneResSection

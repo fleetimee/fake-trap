@@ -5,7 +5,7 @@ import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getKnowledgeDataById } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
-import { KnowledgeDetailShell } from "@/components/app/knowledge/detail/knowledge-detail-shell"
+import { KnowledgeDetailShell } from "@/components/app/knowledge/detail"
 import { DashboardShell } from "@/components/shell"
 
 type DetailKnowledgeProps = {

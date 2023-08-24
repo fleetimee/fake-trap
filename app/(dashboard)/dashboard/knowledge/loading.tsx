@@ -1,4 +1,4 @@
-import { KnowledgeItemList } from "@/components/app/knowledge/knowledge-item-list"
+import { KnowledgeItemList } from "@/components/app/knowledge/ui/knowledge-item-list"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
