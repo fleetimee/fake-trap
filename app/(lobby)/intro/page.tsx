@@ -2,20 +2,62 @@ import Image from "next/image"
 import Link from "next/link"
 import Balance from "react-wrap-balancer"
 
-import {
-  getPublicCategoriesData,
-  getPublicKnowledgeData,
-} from "@/lib/datasource"
+import { CategoryListRes } from "@/types/category/res"
+import { KnowledgeListRes } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
-import { PublicKnowledgeCard } from "@/components/public-knowledge-card"
+import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { Shell } from "@/components/shell/lobby-shell"
 
 export const metadata = {
   title: "Explore",
   description: "Explore our products and services.",
+}
+
+interface GetPublicKnowledgeProps {
+  limit: number
+  page: number
+}
+
+async function getPublicKnowledge({
+  limit,
+  page,
+}: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
+  const publicKnowledge = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge?limit=${limit}&page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    }
+  )
+  return await publicKnowledge.json()
+}
+
+interface GetPublicCategoriesProps {
+  limit: number
+  page: number
+}
+
+async function getPublicCategories({
+  limit,
+  page,
+}: GetPublicCategoriesProps): Promise<CategoryListRes> {
+  const publicCategories = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    }
+  )
+  return await publicCategories.json()
 }
 
 export default async function IntroductionPage() {
@@ -25,12 +67,12 @@ export default async function IntroductionPage() {
   const PUBLIC_KNOWLEDGE_LIMIT = 8
   const PUBLIC_KNOWLEDGE_PAGE_SIZE = 1
 
-  const publicKnowledge = getPublicKnowledgeData({
+  const publicKnowledge = getPublicKnowledge({
     limit: PUBLIC_KNOWLEDGE_LIMIT,
     page: PUBLIC_KNOWLEDGE_PAGE_SIZE,
   })
 
-  const publicCategory = getPublicCategoriesData({
+  const publicCategory = getPublicCategories({
     limit: PUBLIC_CATEGORY_LIMIT,
     page: PUBLIC_CATEGORY_PAGE_SIZE,
   })
@@ -40,9 +82,9 @@ export default async function IntroductionPage() {
     publicKnowledge,
   ])
 
-  const publicCategoryAll = await getPublicCategoriesData({
-    limit: 1000,
-    page: PUBLIC_CATEGORY_PAGE_SIZE,
+  const publicCategoryAll = await getPublicCategories({
+    limit: 100,
+    page: 1,
   })
 
   return (

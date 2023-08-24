@@ -4,12 +4,12 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-import { KnowledgeData } from "@/types/knowledge-res"
+import { KnowledgeListResData } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
 
-import { Icons } from "./icons"
-import { AspectRatio } from "./ui/aspect-ratio"
-import { buttonVariants } from "./ui/button"
+import { Icons } from "../../../icons"
+import { AspectRatio } from "../../../ui/aspect-ratio"
+import { buttonVariants } from "../../../ui/button"
 import {
   Card,
   CardContent,
@@ -17,11 +17,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card"
+} from "../../../ui/card"
 
 interface PublicKnowledgeCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  knowledge: KnowledgeData
+  knowledge: KnowledgeListResData
 }
 
 export function PublicKnowledgeCard({

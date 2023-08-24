@@ -3,9 +3,8 @@
 import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
-
-import { PublicKnowledgeDetailContent } from "./public-knowledge-detail-content"
-import PublicDetailSidebarKnowledge from "./public-knowledge-detail-sidebar"
+import { PublicKnowledgeDetailContent } from "@/components/app/public-knowledge/detail/ui/public-knowledge-detail-content"
+import { PublicDetailSidebarKnowledge } from "@/components/app/public-knowledge/detail/ui/public-knowledge-detail-sidebar"
 
 interface PublicKnowledgeDetailShellProps {
   detailKnowledge: KnowledgeOneRes
@@ -36,7 +35,6 @@ export function PublicKnowledgeDetailShell({
       <PublicDetailSidebarKnowledge
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
-        contentData={contentData}
         setContentData={setContentData}
         dataKnowledge={detailKnowledge}
       />

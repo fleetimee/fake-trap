@@ -1,3 +1,5 @@
+import React from "react"
+
 import { getCurrentUser } from "@/lib/session"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"

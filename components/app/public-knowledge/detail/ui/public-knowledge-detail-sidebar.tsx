@@ -15,15 +15,13 @@ import { EmptyContent } from "@/components/app/knowledge/detail"
 
 interface PublicKnowledgeDetailContentProps {
   dataKnowledge: KnowledgeOneRes
-  contentData: KnowledgeOneResContent
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: number
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
-export default function PublicDetailSidebarKnowledge({
+export function PublicDetailSidebarKnowledge({
   dataKnowledge,
-  contentData,
   setContentData,
   activeIndex,
   setActiveIndex,

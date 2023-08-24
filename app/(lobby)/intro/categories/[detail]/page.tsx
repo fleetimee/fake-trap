@@ -1,10 +1,11 @@
 import { Metadata } from "next"
 
+import { CategoryOneRes } from "@/types/category/res"
 import { getPublicCategoriesDataById } from "@/lib/datasource"
 import { toTitleCase } from "@/lib/utils"
+import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui/public-knowledge-card"
 import { HeaderIntro } from "@/components/category-header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { PublicKnowledgeCard } from "@/components/public-knowledge-card"
 import { Shell } from "@/components/shell/lobby-shell"
 
 type Props = {
@@ -23,9 +24,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+interface GetOnePublicCategoryProps {
+  idCategory: number
+}
+
+async function getOnePublicCategory({
+  idCategory,
+}: GetOnePublicCategoryProps): Promise<CategoryOneRes> {
+  const categoryOnePublic = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/${idCategory}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    }
+  )
+  return await categoryOnePublic.json()
+}
+
 export default async function DetailIntroCategory({ params }: Props) {
-  const detailCategoryData = await getPublicCategoriesDataById({
-    id: parseInt(params.detail),
+  const detailCategoryData = await getOnePublicCategory({
+    idCategory: parseInt(params.detail),
   })
 
   return (

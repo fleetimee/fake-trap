@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8080",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 8080",
+    "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "preview": "next build && next start -p 8080",
+    "preview": "next build && next start",
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
