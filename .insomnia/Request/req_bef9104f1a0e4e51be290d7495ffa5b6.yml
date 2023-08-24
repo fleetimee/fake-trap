@@ -1,0 +1,31 @@
+_id: req_bef9104f1a0e4e51be290d7495ffa5b6
+type: Request
+parentId: fld_696cad7a63ac43c6b04bc3add867b4f5
+modified: 1692700130486
+created: 1692700130486
+url: "{{baseUrl}}/secure/users/ec835969-34f9-4b4c-b57b-8e529fdc847b"
+name: Patch User with Knowledge
+description: ""
+method: PATCH
+body:
+  mimeType: ""
+  text: |-
+    {
+      "knowledge": [
+        {
+          "id_knowledge": 1,
+          "id_category": 1
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130486
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

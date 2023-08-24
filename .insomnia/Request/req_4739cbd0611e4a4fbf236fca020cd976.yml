@@ -1,0 +1,21 @@
+_id: req_4739cbd0611e4a4fbf236fca020cd976
+type: Request
+parentId: fld_f16c6e2afaff473ab45c2781dcc9d16d
+modified: 1692700130530
+created: 1692700130530
+url: "{{baseUrl}}/secure/course/1"
+name: Delete Course
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130530
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

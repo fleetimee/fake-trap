@@ -1,0 +1,31 @@
+_id: req_082ce68356a54a07922ba4a8b4f3d16e
+type: Request
+parentId: fld_9646546bb60143e5838f8728c8be87d2
+modified: 1692700130580
+created: 1692700130580
+url: "{{baseUrl}}/secure/user-answer"
+name: Post Answer
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    {
+      "uuid": "2814637f-0f7b-479b-88a4-7ef91a54c365",
+      "id_quiz": 4,
+      "selected_answers": {
+        "1": 2,
+        "2": 3
+      }
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130580
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

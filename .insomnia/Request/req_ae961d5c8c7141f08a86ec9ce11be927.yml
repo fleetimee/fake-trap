@@ -1,0 +1,30 @@
+_id: req_ae961d5c8c7141f08a86ec9ce11be927
+type: Request
+parentId: fld_f16c6e2afaff473ab45c2781dcc9d16d
+modified: 1692700130528
+created: 1692700130528
+url: "{{baseUrl}}/secure/course/1/users"
+name: Delete Users From Course
+description: ""
+method: PATCH
+body:
+  mimeType: ""
+  text: |-
+    {
+      "users": [
+        {
+          "uuid": "e3c94139-ec2c-47ca-ac29-a7c63cb14ea6"
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130528
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

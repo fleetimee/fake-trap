@@ -1,0 +1,21 @@
+_id: req_83401f1f6f094163878cfcd9d6d98c0b
+type: Request
+parentId: fld_f16c6e2afaff473ab45c2781dcc9d16d
+modified: 1692700130521
+created: 1692700130521
+url: "{{baseUrl}}/secure/course/1"
+name: Get Course By ID
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130521
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,17 @@
+_id: env_4ed319cf7a1445a3b1fcb004da3de83b
+type: Environment
+parentId: env_213667dbc06f4613afb65cfee69d4946b3d2eb8a
+modified: 1692752933953
+created: 1692700375014
+name: Learning Management System
+data:
+  baseUrl: http://localhost:1337
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+dataPropertyOrder:
+  "&":
+    - baseUrl
+    - token
+color: null
+isPrivate: false
+metaSortKey: 1692700375015

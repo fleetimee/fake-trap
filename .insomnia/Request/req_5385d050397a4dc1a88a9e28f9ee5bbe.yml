@@ -1,0 +1,39 @@
+_id: req_5385d050397a4dc1a88a9e28f9ee5bbe
+type: Request
+parentId: fld_696cad7a63ac43c6b04bc3add867b4f5
+modified: 1692752774710
+created: 1692700130482
+url: "{{baseUrl}}/secure/users/bulk"
+name: Add User in Bulk
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    [
+      {
+        "username": "ianfgsasadadada",
+        "password": "12asdsad",
+        "email": "yefghfghda@gmail.com"
+      },
+      {
+        "username": "aianfgasdadadaasd",
+        "password": "a12asdsad",
+        "email": "afggfgfga@gmail.com"
+      }
+    ]
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  disabled: false
+  prefix: ""
+  token: ""
+metaSortKey: -1692700130482
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

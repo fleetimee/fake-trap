@@ -1,0 +1,21 @@
+_id: req_71e73ec70beb4c12816e893070d4a932
+type: Request
+parentId: fld_696cad7a63ac43c6b04bc3add867b4f5
+modified: 1692700130487
+created: 1692700130487
+url: "{{baseUrl}}/secure/users/f22cf8a8-26f3-4d13-ab22-a1bdf3bf5001"
+name: Delete User By Id
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130487
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

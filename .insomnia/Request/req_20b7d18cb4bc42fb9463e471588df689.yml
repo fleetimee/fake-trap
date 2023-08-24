@@ -1,0 +1,30 @@
+_id: req_20b7d18cb4bc42fb9463e471588df689
+type: Request
+parentId: fld_f16c6e2afaff473ab45c2781dcc9d16d
+modified: 1692700130527
+created: 1692700130527
+url: "{{baseUrl}}/secure/course/99/users"
+name: Assign Users To Course
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "users": [
+        {
+          "uuid": "8973f8e6-4cc0-4b08-9e18-ea0bac3a8cea"
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130527
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

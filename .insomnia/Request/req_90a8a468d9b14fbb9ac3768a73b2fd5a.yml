@@ -1,0 +1,30 @@
+_id: req_90a8a468d9b14fbb9ac3768a73b2fd5a
+type: Request
+parentId: fld_016e060e019248f48092af41a2e26826
+modified: 1692700130541
+created: 1692700130541
+url: "{{baseUrl}}/secure/section/101/quiz"
+name: Assign Quiz To Section
+description: ""
+method: PATCH
+body:
+  mimeType: ""
+  text: |-
+    {
+      "quiz": [
+        {
+          "id_quiz": 2
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130541
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

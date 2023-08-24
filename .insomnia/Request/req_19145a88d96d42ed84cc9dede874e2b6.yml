@@ -1,0 +1,30 @@
+_id: req_19145a88d96d42ed84cc9dede874e2b6
+type: Request
+parentId: fld_016e060e019248f48092af41a2e26826
+modified: 1692700130535
+created: 1692700130535
+url: "{{baseUrl}}/secure/section"
+name: Get all section
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: page
+    value: "3"
+    disabled: true
+  - name: limit
+    value: "1"
+    disabled: false
+  - name: page
+    value: "2"
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1692700130535
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

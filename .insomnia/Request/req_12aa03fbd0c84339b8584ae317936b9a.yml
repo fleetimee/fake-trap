@@ -1,0 +1,30 @@
+_id: req_12aa03fbd0c84339b8584ae317936b9a
+type: Request
+parentId: fld_d53b845624ec4396baf50b8ae88b8835
+modified: 1692700130559
+created: 1692700130559
+url: "{{baseUrl}}/secure/role/2"
+name: Assign User to Role
+description: ""
+method: PATCH
+body:
+  mimeType: ""
+  text: |-
+    {
+      "users": [
+        {
+          "uuid": "d5203b44-9267-4949-8394-bbd0c8ec0101"
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130559
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,30 @@
+_id: req_32389ed63c904ac1a3e8815ffadc6eba
+type: Request
+parentId: fld_d53b845624ec4396baf50b8ae88b8835
+modified: 1692700130560
+created: 1692700130560
+url: "{{baseUrl}}/secure/role/1/delete"
+name: Remove Users from Role
+description: ""
+method: PATCH
+body:
+  mimeType: ""
+  text: |-
+    {
+      "users": [
+        {
+          "uuid": "8a7a25c9-a767-4dba-a630-d408d626be60"
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130560
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

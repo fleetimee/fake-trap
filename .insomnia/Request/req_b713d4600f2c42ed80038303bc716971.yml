@@ -1,0 +1,30 @@
+_id: req_b713d4600f2c42ed80038303bc716971
+type: Request
+parentId: fld_f16c6e2afaff473ab45c2781dcc9d16d
+modified: 1692700130525
+created: 1692700130525
+url: "{{baseUrl}}/secure/course/8/section"
+name: Assign Section To Course
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "section": [
+        {
+          "section_title": "hehr"
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130525
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

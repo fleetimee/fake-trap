@@ -1,0 +1,21 @@
+_id: req_e6216a3308514c2581a4a61eb7c10c56
+type: Request
+parentId: fld_913ceedfcd1f482eb3117b7b0e7053c2
+modified: 1692700130570
+created: 1692700130570
+url: "{{baseUrl}}/secure/quiz/15/users"
+name: Get Users By Quiz Id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130570
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

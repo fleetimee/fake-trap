@@ -1,0 +1,27 @@
+_id: req_6873bdf7ccd4417f9ffbf32e24d05567
+type: Request
+parentId: fld_bf023235191d4709a74a8307afcd41fe
+modified: 1692776855751
+created: 1692700130504
+url: "{{baseUrl}}/secure/knowledge"
+name: Filter Knowledges By Status
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: status
+    value: "2"
+    disabled: false
+    id: pair_d55fb7059f5148c48e850b6675b2761a
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1692700130504
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

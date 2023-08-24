@@ -1,0 +1,21 @@
+_id: req_02e98d213c074cfa8e58810029b8fb09
+type: Request
+parentId: fld_bf023235191d4709a74a8307afcd41fe
+modified: 1692700130514
+created: 1692700130514
+url: "{{baseUrl}}/public/knowledge"
+name: Get Public Knowledges
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130514
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,45 @@
+_id: req_cab9c23c4283458387bba4b6033fe869
+type: Request
+parentId: fld_696cad7a63ac43c6b04bc3add867b4f5
+modified: 1692752736683
+created: 1692700130476
+url: "{{baseUrl}}/secure/users/"
+name: Get User
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: id
+    value: 990bf647-69e5-4b13-8ba7-7924ab1653af
+    disabled: true
+  - name: page
+    value: "3"
+    disabled: true
+  - name: limit
+    value: "5"
+    disabled: true
+  - name: filterField
+    value: username
+    disabled: true
+  - name: filterValue
+    value: octavia
+    disabled: true
+  - name: sortField
+    value: email
+    disabled: true
+  - name: sortOrder
+    value: desc
+    disabled: true
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+metaSortKey: -1692700130476
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

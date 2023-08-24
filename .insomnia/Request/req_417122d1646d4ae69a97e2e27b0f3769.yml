@@ -1,0 +1,27 @@
+_id: req_417122d1646d4ae69a97e2e27b0f3769
+type: Request
+parentId: fld_bacf1a81737445f6bb52d95f3dec5374
+modified: 1692754319445
+created: 1692700130494
+url: "{{baseUrl}}/secure/category/9"
+name: Get Category by Id
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_2da8a1f2d66c4406b482aa2966c4df96
+    name: ""
+    value: ""
+    description: ""
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1692700130496.3125
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

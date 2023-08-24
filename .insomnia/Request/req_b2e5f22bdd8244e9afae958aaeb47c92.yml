@@ -1,0 +1,27 @@
+_id: req_b2e5f22bdd8244e9afae958aaeb47c92
+type: Request
+parentId: fld_bf023235191d4709a74a8307afcd41fe
+modified: 1692700130511
+created: 1692700130511
+url: "{{baseUrl}}/secure/knowledge/search"
+name: Search
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: description
+    value: javascript
+    disabled: true
+  - name: title
+    value: aaaaaaaaaaaaaaaaa
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1692700130511
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

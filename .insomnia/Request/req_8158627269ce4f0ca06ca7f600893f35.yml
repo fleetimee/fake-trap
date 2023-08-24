@@ -1,0 +1,26 @@
+_id: req_8158627269ce4f0ca06ca7f600893f35
+type: Request
+parentId: fld_9994deb084a3495796bf9e89fabe8896
+modified: 1692700130547
+created: 1692700130547
+url: "{{baseUrl}}/secure/content/100"
+name: Update Content By Id
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "content_title": "Novian"
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130547
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

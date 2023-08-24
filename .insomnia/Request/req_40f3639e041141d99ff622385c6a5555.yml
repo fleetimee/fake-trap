@@ -1,0 +1,28 @@
+_id: req_40f3639e041141d99ff622385c6a5555
+type: Request
+parentId: fld_2c5ad71fc64c4aa98d57ed05f22fc05d
+modified: 1692700130462
+created: 1692700130462
+url: "{{baseUrl}}/register"
+name: Register
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    {
+      "username": "SoniaEkapp",
+      "password": "123456",
+      "email": "sonia222ekap222.227@gmail.com"
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130462
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

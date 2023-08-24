@@ -1,0 +1,31 @@
+_id: req_362dcfd2d7bb4400a3e440ab3ab25a4b
+type: Request
+parentId: fld_016e060e019248f48092af41a2e26826
+modified: 1692700130537
+created: 1692700130537
+url: "{{baseUrl}}/secure/section"
+name: Post Section
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    {
+      "section_title": "Getting Started",
+      "knowledge": [
+        {
+          "id_knowledge": 84
+        }
+      ]
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130537
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

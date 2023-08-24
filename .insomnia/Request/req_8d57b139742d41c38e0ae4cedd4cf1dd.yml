@@ -1,0 +1,21 @@
+_id: req_8d57b139742d41c38e0ae4cedd4cf1dd
+type: Request
+parentId: fld_913ceedfcd1f482eb3117b7b0e7053c2
+modified: 1692700130571
+created: 1692700130571
+url: "{{baseUrl}}/secure/quiz/15/users/count"
+name: Get users count
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130571
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

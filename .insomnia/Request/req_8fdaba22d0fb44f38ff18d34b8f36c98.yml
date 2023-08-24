@@ -1,0 +1,27 @@
+_id: req_8fdaba22d0fb44f38ff18d34b8f36c98
+type: Request
+parentId: fld_913ceedfcd1f482eb3117b7b0e7053c2
+modified: 1692700130575
+created: 1692700130575
+url: "{{baseUrl}}/secure/question/quiz/4"
+name: Get Question By Quiz Id
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: limit
+    value: "1"
+    disabled: false
+  - name: page
+    value: "2"
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1692700130575
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

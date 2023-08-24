@@ -1,0 +1,24 @@
+_id: req_d7320c9cf1214eb798242b7021d64a48
+type: Request
+parentId: fld_696cad7a63ac43c6b04bc3add867b4f5
+modified: 1692703742916
+created: 1692700130479
+url: "{{baseUrl}}/secure/user-score"
+name: Get User Score
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+metaSortKey: -1692700130479
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

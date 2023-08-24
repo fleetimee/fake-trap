@@ -1,0 +1,55 @@
+_id: req_7ef3502eb9db44a5a9f54b6266bc02dd
+type: Request
+parentId: fld_bf023235191d4709a74a8307afcd41fe
+modified: 1692776735089
+created: 1692700130502
+url: "{{baseUrl}}/secure/knowledge"
+name: Get Knowledges
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: status
+    value: "2"
+    disabled: true
+    id: pair_42ab87d6e27d4fbfbad355f2d58c0aa3
+  - name: sortBy
+    value: id_category
+    disabled: true
+    id: pair_1412bca5de4f4f5fa40ce99f9afc95a6
+  - name: orderBy
+    value: "1"
+    disabled: true
+    id: pair_d1fb6fde3b05440a993f6ef2ecad4083
+  - name: limit
+    value: "100"
+    disabled: false
+    id: pair_b10707afcd8942d49fc829f40ccc2469
+  - name: filterField
+    value: description
+    disabled: true
+    id: pair_f3d61bb5b5a7479d868b553d6ab21a5e
+  - name: filterValue
+    value: popular
+    disabled: true
+    id: pair_f035f9a951a040acb1bbc00963e8cc99
+  - name: searchQuery
+    value: solidity
+    disabled: true
+    id: pair_b88091a60f2040698a8a9cac71f2b6c5
+  - name: page
+    value: "1"
+    disabled: false
+    id: pair_81c869e8aff54a38a32c6113ce82f784
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1692700130502
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

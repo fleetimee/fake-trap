@@ -1,0 +1,28 @@
+_id: req_7a9d9c29a6e848a68515ab3391fd0ea9
+type: Request
+parentId: fld_bacf1a81737445f6bb52d95f3dec5374
+modified: 1692754523345
+created: 1692700130496
+url: "{{baseUrl}}/secure/category"
+name: Post Category
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "category_name": "Novian"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1692700130496
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

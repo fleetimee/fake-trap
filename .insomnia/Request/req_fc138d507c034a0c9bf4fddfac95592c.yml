@@ -1,0 +1,25 @@
+_id: req_fc138d507c034a0c9bf4fddfac95592c
+type: Request
+parentId: fld_016e060e019248f48092af41a2e26826
+modified: 1692700130540
+created: 1692700130540
+url: "{{baseUrl}}/secure/section/2"
+name: Delete section by id
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  disabled: false
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY2FzZGFAZ21haWwuY29tIiwiZXhwIjoxNjc2NDQ4NjA2LCJpZCI6IjVkY2IyN2ExLTkzMzYtNGRiOS04ODI3LWZjNjJkODRhOTk0YSIsIm9yaWdfaWF0IjoxNjc2NDQ1MDA2LCJ1c2VybmFtZSI6Im9jdGF2aWEifQ.LNYwFXlkUzLXjpLHHFmi7yhfDG7ya_2h4pQghP2X20A
+  prefix: ""
+metaSortKey: -1692700130540
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

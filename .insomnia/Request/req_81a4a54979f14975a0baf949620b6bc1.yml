@@ -1,0 +1,39 @@
+_id: req_81a4a54979f14975a0baf949620b6bc1
+type: Request
+parentId: fld_cfe9af8054564e3a8ba03021b89ebf47
+modified: 1692700130577
+created: 1692700130577
+url: "{{baseUrl}}/secure/question/bulk"
+name: Bulk Insert Question and Answer
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    [
+      {
+        "id_quiz": 12,
+        "question_text": "hehehe?",
+        "answers": [
+          {
+            "answer_text": "trueminth",
+            "is_correct": true
+          },
+          {
+            "answer_text": "trueminth",
+            "is_correct": false
+          }
+        ]
+      }
+    ]
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130577
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

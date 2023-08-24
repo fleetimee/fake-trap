@@ -1,0 +1,10 @@
+_id: fld_a65512950aa14b3c973d239b4219f115
+type: RequestGroup
+parentId: wrk_defc2cfd39774470bd40110b296120a9
+modified: 1692703783690
+created: 1692703783690
+name: Check Skor Kuis
+description: ""
+environment: {}
+environmentPropertyOrder: null
+metaSortKey: -1692703783690
