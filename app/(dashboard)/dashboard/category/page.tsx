@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { CategoryListRes } from "@/types/category/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { CreateCategorySheet } from "@/components/app/category/create-category-sheet"
+import { CreateCategorySheet } from "@/components/app/category/operations/create-category-sheet"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -16,7 +16,7 @@ export const metadata = {
 
 interface CategoryPageProps {
   searchParams: {
-    [key: string]: string | string[] | string
+    [key: string]: string | string[] | undefined
   }
 }
 
@@ -56,7 +56,7 @@ export default async function CategoryPage({
             title: "Dashboard",
           },
           {
-            href: "/dashboard/Kategori",
+            href: "/dashboard/categori",
             title: "Kategori",
           },
         ]}

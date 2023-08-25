@@ -1,6 +1,5 @@
 import { Course } from "@/types/course-res"
-
-import { CardDashboardIndicator } from "../card-dashboard-indicator"
+import { CardDashboardIndicator } from "@/components/app/dashboard/card-dashboard-indicator"
 
 async function getCourse(token: string | undefined): Promise<Course> {
   try {

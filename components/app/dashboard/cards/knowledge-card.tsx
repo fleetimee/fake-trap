@@ -1,33 +1,36 @@
-import { Knowledge } from "@/types/knowledge-res"
+import { KnowledgeListRes } from "@/types/knowledge/res"
+import { CardDashboardIndicator } from "@/components/app/dashboard/card-dashboard-indicator"
 
-import { CardDashboardIndicator } from "../card-dashboard-indicator"
-
-async function getKnowledge(token: string | undefined): Promise<Knowledge> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge?limit=1`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-
-    const data = await response.json()
-
-    return data
-  } catch (error) {
-    console.log(error)
-    throw error
-  }
+interface GetKnowledgeCountProps {
+  token: string | undefined
 }
 
-export async function DashboardKnowledgeCardCount(props: {
+async function getKnowledgeCount({
+  token,
+}: GetKnowledgeCountProps): Promise<KnowledgeListRes> {
+  const knowledgeCountRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await knowledgeCountRes.json()
+}
+
+interface DashboardKnowledgeCardCountProps {
   token: string | undefined
-}) {
-  const knowledgeResp = await getKnowledge(props.token)
+}
+
+export async function DashboardKnowledgeCardCount({
+  token,
+}: DashboardKnowledgeCardCountProps) {
+  const knowledgeResp = await getKnowledgeCount({
+    token: token,
+  })
 
   return (
     <CardDashboardIndicator

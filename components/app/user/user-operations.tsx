@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { UserData } from "@/types/user-res"
+import { UserListResData } from "@/types/user/res"
 import { AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
@@ -49,7 +50,12 @@ interface ErrorResponseProps {
   error: string
 }
 
-async function deleteUser(uuid: string, token: string | undefined) {
+interface DeleteUserProps {
+  uuid: string
+  token: string | undefined
+}
+
+async function deleteUser({ uuid, token }: DeleteUserProps) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`,
     {
@@ -109,7 +115,11 @@ const formSchema = z.object({
     }),
 })
 
-export function UserOperationsAdmin(props: { user: UserData }) {
+interface UserOperationsAdminProps {
+  user: UserListResData
+}
+
+export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -127,8 +137,8 @@ export function UserOperationsAdmin(props: { user: UserData }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: props.user.username,
-      email: props.user.email,
+      username: user.username,
+      email: user.email,
       password: "",
     },
   })
@@ -138,7 +148,7 @@ export function UserOperationsAdmin(props: { user: UserData }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${props.user.uuid}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${user.uuid}`,
         {
           method: "PUT",
           headers: {
@@ -235,10 +245,10 @@ export function UserOperationsAdmin(props: { user: UserData }) {
                 event.preventDefault()
                 setIsDeleteLoading(true)
 
-                const deleted = await deleteUser(
-                  props.user.uuid,
-                  session?.user.token
-                )
+                const deleted = await deleteUser({
+                  uuid: user.uuid,
+                  token: session?.user.token,
+                })
 
                 if (deleted) {
                   setIsDeleteLoading(false)

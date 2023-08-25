@@ -1,39 +1,42 @@
-import { UserResponse } from "@/types/user-res"
-import { getCurrentUser } from "@/lib/session"
+import { UserListRes } from "@/types/user/res"
 import { CardDashboardIndicator } from "@/components/app/dashboard/card-dashboard-indicator"
 
-async function getUser(token: string | undefined): Promise<UserResponse> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-
-    const data = await response.json()
-
-    return data
-  } catch (error) {
-    console.log(error)
-    throw error
-  }
+interface GetUserCountProps {
+  token: string | undefined
 }
 
-export async function DashboardUserCardCount(props: {
+async function getUserCount({
+  token,
+}: GetUserCountProps): Promise<UserListRes> {
+  const userCountRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await userCountRes.json()
+}
+
+interface DashboardUserCardCountProps {
   token: string | undefined
-}) {
-  const userResp = await getUser(props.token)
+}
+
+export async function DashboardUserCardCount({
+  token,
+}: DashboardUserCardCountProps) {
+  const res = await getUserCount({
+    token: token,
+  })
 
   return (
     <CardDashboardIndicator
       title="User"
       icon="user"
-      content={userResp.count}
+      content={res.count}
       description="User yang terdaftar"
     />
   )

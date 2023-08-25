@@ -1,35 +1,36 @@
-import { CategoryResponse } from "@/types/category-res"
+import { CategoryListRes } from "@/types/category/res"
+import { CardDashboardIndicator } from "@/components/app/dashboard/card-dashboard-indicator"
 
-import { CardDashboardIndicator } from "../card-dashboard-indicator"
-
-async function getCategory(
+interface GetCategoryCountProps {
   token: string | undefined
-): Promise<CategoryResponse> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category?limit=1`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-
-    const data = await response.json()
-
-    return data
-  } catch (error) {
-    console.log(error)
-    throw error
-  }
 }
 
-export async function DashboardCategoryCardCount(props: {
+async function getCategoryCount({
+  token,
+}: GetCategoryCountProps): Promise<CategoryListRes> {
+  const categoryCountRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category?limit=1`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await categoryCountRes.json()
+}
+
+interface DashboardCategoryCardCountProps {
   token: string | undefined
-}) {
-  const categoryResp = await getCategory(props.token)
+}
+
+export async function DashboardCategoryCardCount({
+  token,
+}: DashboardCategoryCardCountProps) {
+  const categoryResp = await getCategoryCount({
+    token: token,
+  })
 
   return (
     <CardDashboardIndicator

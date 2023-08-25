@@ -3,25 +3,22 @@
 import * as React from "react"
 import { type ColumnDef } from "@tanstack/react-table"
 
-import { CategoryListResData } from "@/types/category/res"
+import { UserListResData } from "@/types/user/res/user-list"
 import { convertDatetoString } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
-import { CategoryOperations } from "@/components/app/category/operations"
-import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
+import { UserOperationsAdmin } from "@/components/app/user/user-operations"
+import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 
-interface CategoryTableShellProps {
-  data: CategoryListResData[]
+interface UserTableShellProps {
+  data: UserListResData[]
   pageCount: number
 }
 
-export function CategoryTableShell({
-  data,
-  pageCount,
-}: CategoryTableShellProps) {
+export function UserTableShell({ data, pageCount }: UserTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
+  const [selectedRowIds, setSelectedRowIds] = React.useState<string[]>([])
 
-  const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
+  const columns = React.useMemo<ColumnDef<UserListResData, unknown>[]>(
     () => [
       {
         id: "select",
@@ -31,9 +28,7 @@ export function CategoryTableShell({
             onCheckedChange={(value) => {
               table.toggleAllPageRowsSelected(!!value)
               setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_category)
+                prev.length === data.length ? [] : data.map((row) => row.uuid)
               )
             }}
             aria-label="Select all"
@@ -47,8 +42,8 @@ export function CategoryTableShell({
               row.toggleSelected(!!value)
               setSelectedRowIds((prev) =>
                 value
-                  ? [...prev, row.original.id_category]
-                  : prev.filter((id) => id !== row.original.id_category)
+                  ? [...prev, row.original.uuid]
+                  : prev.filter((id) => id !== row.original.uuid)
               )
             }}
             aria-label="Select row"
@@ -59,13 +54,7 @@ export function CategoryTableShell({
         enableHiding: false,
       },
       {
-        accessorKey: "id_category",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-      },
-      {
-        accessorKey: "category_name",
+        accessorKey: "username",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama" />
         ),
@@ -73,8 +62,16 @@ export function CategoryTableShell({
         enableHiding: true,
       },
       {
+        accessorKey: "email",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Email" />
+        ),
+      },
+      {
         accessorKey: "created_at",
-        header: "Dibuat pada",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Dibuat pada" />
+        ),
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
@@ -83,27 +80,58 @@ export function CategoryTableShell({
       },
       {
         accessorKey: "updated_at",
-        header: "Diubah pada",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diubah pada" />
+        ),
         cell: ({ row }) => {
           convertDatetoString(row.original.updated_at.toString())
 
           return <>{convertDatetoString(row.original.updated_at.toString())}</>
         },
       },
+
+      {
+        accessorKey: "last_login",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Terakhir login" />
+        ),
+        cell: ({ row }) => {
+          if (row.original.last_login === null) {
+            return <>-</>
+          } else {
+            return (
+              <>{convertDatetoString(row.original.last_login.toString())}</>
+            )
+          }
+        },
+      },
+
       {
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Aksi" />
         ),
         id: "actions",
         cell: ({ row }) => {
-          const kategori = row.original
+          const user = row.original
 
-          return <CategoryOperations kategori={kategori} />
+          return <UserOperationsAdmin user={user} />
         },
       },
     ],
     [data, setSelectedRowIds]
   )
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      pageCount={pageCount}
+      searchableColumns={[
+        {
+          id: "username",
+          title: "username",
+        },
+      ]}
+    />
+  )
 }

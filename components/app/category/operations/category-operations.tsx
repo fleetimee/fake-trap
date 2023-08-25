@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { DataCategory } from "@/types/category-res"
 import { CategoryListResData } from "@/types/category/res"
 import {
   AlertDialog,
@@ -44,7 +43,6 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
@@ -53,9 +51,14 @@ const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
 })
 
-async function deleteCategory(id: number, token: string | undefined) {
+interface DeleteCategoryProps {
+  idKategori: number
+  token: string | undefined
+}
+
+async function deleteCategory({ idKategori, token }: DeleteCategoryProps) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${id}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${idKategori}`,
     {
       method: "DELETE",
       headers: {
@@ -83,7 +86,11 @@ async function deleteCategory(id: number, token: string | undefined) {
   }
 }
 
-export function CategoryOperations(props: { kategori: CategoryListResData }) {
+interface CategoryOperationsProps {
+  kategori: CategoryListResData
+}
+
+export function CategoryOperations({ kategori }: CategoryOperationsProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -100,7 +107,7 @@ export function CategoryOperations(props: { kategori: CategoryListResData }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      category_name: props.kategori.category_name,
+      category_name: kategori.category_name,
     },
   })
 
@@ -109,7 +116,7 @@ export function CategoryOperations(props: { kategori: CategoryListResData }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${props.kategori.id_category}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${kategori.id_category}`,
         {
           method: "PUT",
           headers: {
@@ -160,9 +167,7 @@ export function CategoryOperations(props: { kategori: CategoryListResData }) {
           <DropdownMenuLabel>Aksi</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() => {
-              navigator.clipboard.writeText(
-                props.kategori.id_category.toString()
-              )
+              navigator.clipboard.writeText(kategori.id_category.toString())
               toast({
                 title: "Berhasil",
                 description: "ID Kategori berhasil dicopy",
@@ -214,10 +219,10 @@ export function CategoryOperations(props: { kategori: CategoryListResData }) {
               onClick={async (event) => {
                 event.preventDefault()
                 setIsDeleteLoading(true)
-                const deleted = await deleteCategory(
-                  props.kategori.id_category,
-                  session?.user.token
-                )
+                const deleted = await deleteCategory({
+                  idKategori: kategori.id_category,
+                  token: session?.user.token,
+                })
 
                 if (deleted) {
                   setIsDeleteLoading(false)
