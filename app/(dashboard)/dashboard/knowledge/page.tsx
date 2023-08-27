@@ -1,13 +1,11 @@
 import { redirect } from "next/navigation"
 
+import { CategoryListRes } from "@/types/category/res"
+import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
-import {
-  getAllCategoriesData,
-  getPaginatedKnowledgeData,
-} from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
-import { CreateKnowledgeButton } from "@/components/app/knowledge/create-knowledge-button"
-import { KnowledgeItemList } from "@/components/app/knowledge/knowledge-item-list"
+import { CreateKnowledgeButton } from "@/components/app/knowledge/operations"
+import { KnowledgeItemList } from "@/components/app/knowledge/ui"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -17,6 +15,58 @@ export const metadata = {
   description: "Pengetahuan yang tersedia di e-learning",
 }
 
+interface GetKnowledgeProps {
+  token: string | undefined
+  page: number
+  limit: number
+}
+
+interface GetCategoryProps {
+  token: string | undefined
+  page: number
+  limit: number
+}
+
+async function getKnowledge({
+  token,
+  page,
+  limit,
+}: GetKnowledgeProps): Promise<KnowledgeListRes> {
+  const knowledgeList = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await knowledgeList.json()
+}
+
+async function getCategory({
+  token,
+  page,
+  limit,
+}: GetCategoryProps): Promise<CategoryListRes> {
+  const categoryList = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await categoryList.json()
+}
+
 export default async function KnowledgePage() {
   const user = await getCurrentUser()
 
@@ -24,22 +74,9 @@ export default async function KnowledgePage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const KNOWLEDGE_PAGE_LIMIT = 1000
-  const KNOWLEDGE_PAGE_SIZE = 1
-
-  const dataKnowledge = getPaginatedKnowledgeData({
-    limit: KNOWLEDGE_PAGE_LIMIT,
-    page: KNOWLEDGE_PAGE_SIZE,
-    token: user?.token,
-  })
-
-  const dataCategory = getAllCategoriesData({
-    token: user?.token,
-  })
-
   const [knowledgeResp, categoryResp] = await Promise.all([
-    dataKnowledge,
-    dataCategory,
+    getKnowledge({ token: user?.token, page: 1, limit: 10 }),
+    getCategory({ token: user?.token, page: 1, limit: 10 }),
   ])
 
   return (
@@ -69,8 +106,8 @@ export default async function KnowledgePage() {
         {knowledgeResp.data.map((item) => (
           <KnowledgeItemList
             key={item.id_knowledge}
-            item={item}
-            category={categoryResp}
+            knowledgeData={item}
+            categoryResponse={categoryResp}
             token={user?.token}
           />
         ))}

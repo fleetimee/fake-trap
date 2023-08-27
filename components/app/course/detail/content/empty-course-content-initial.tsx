@@ -11,7 +11,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EmptyContent } from "@/components/app/knowledge/detail-sidebar-empty-content"
+import { EmptyContent } from "@/components/app/knowledge/detail/knowledge-detail-sidebar-empty"
 
 import { AddCourseContentSheet } from "./create-course-section-content-sheet"
 import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"

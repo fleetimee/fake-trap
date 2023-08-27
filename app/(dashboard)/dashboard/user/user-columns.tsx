@@ -4,11 +4,11 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { UserData } from "@/types/user-res"
 import { convertDatetoString } from "@/lib/utils"
+import { UserOperations } from "@/components/app/course/detail/students/user-operations"
+import { UserOperationsAdmin } from "@/components/app/user/operations/user-operations"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { UserOperations } from "@/components/app/course/detail/students/user-operations"
-import { UserOperationsAdmin } from "@/components/app/user/user-operations"
-import { Icons } from "@/components/icons"
 
 export const columns: ColumnDef<UserData>[] = [
   {
