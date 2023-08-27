@@ -1,35 +1,35 @@
-import { NewestKnowledge } from "@/types/newest-knowledge-res"
+import { KnowledgeGetNewRes } from "@/types/knowledge/res/knowledge-get-new"
+import { CardDashboard } from "@/components/app/dashboard/card-dashboard"
 
-import { CardDashboard } from "../card-dashboard"
-
-async function getNewestKnowledge(
+interface GetNewKnowledgeProps {
   token: string | undefined
-): Promise<NewestKnowledge> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/newest`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-
-    const data = await response.json()
-
-    return data
-  } catch (error) {
-    console.log(error)
-    throw error
-  }
 }
 
-export async function DashboardKnowledgeHighlight(props: {
+async function getNewKnowledge({
+  token,
+}: GetNewKnowledgeProps): Promise<KnowledgeGetNewRes> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/newest`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return response.json()
+}
+
+interface DashboardKnowledgeHighlightProps {
   token: string | undefined
-}) {
-  const knowledgeResp = await getNewestKnowledge(props.token)
+}
+
+export async function DashboardKnowledgeHighlight({
+  token,
+}: DashboardKnowledgeHighlightProps) {
+  const knowledgeResp = await getNewKnowledge({ token })
 
   return (
     <CardDashboard

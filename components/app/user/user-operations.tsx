@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { UserData } from "@/types/user-res"
 import { UserListResData } from "@/types/user/res"
 import { AlertDescription } from "@/components/ui/alert"
 import {

@@ -17,13 +17,6 @@ interface CardProps {
   icon?: keyof typeof Icons
 }
 
-/**
- * Renders a card component that displays a new course with its name, description, and image.
- * @param {string} courseName - The name of the course.
- * @param {string} courseDescription - The description of the course.
- * @param {string} courseImage - The URL of the course image.
- * @returns {JSX.Element} - The JSX element that displays the new course card.
- */
 export function CardDashboard({ title, name, image, icon }: CardProps) {
   const Icon = Icons[icon || "arrowRight"]
 
