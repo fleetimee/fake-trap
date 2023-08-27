@@ -1,5 +1,5 @@
-import { KnowledgeGetNewRes } from "@/types/knowledge/res/knowledge-get-new"
-import { CardDashboard } from "@/components/app/dashboard/card-dashboard"
+import { KnowledgeGetNewRes } from "@/types/knowledge/res"
+import { CardDashboard } from "@/components/app/dashboard/ui"
 
 interface GetNewKnowledgeProps {
   token: string | undefined

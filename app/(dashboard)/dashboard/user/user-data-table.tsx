@@ -20,6 +20,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
+import { CreateUserSheet } from "@/components/app/user/operations/create-user-sheet"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -37,7 +38,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { CreateUserSheet } from "@/components/app/user/create-user-sheet"
 
 interface DataTablePros<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

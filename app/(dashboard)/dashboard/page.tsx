@@ -1,17 +1,17 @@
 import { redirect } from "next/navigation"
-
-import { authOptions } from "@/lib/auth"
-import { getCurrentUser } from "@/lib/session"
 import {
   DashboardCategoryCardCount,
   DashboardCourseCardCount,
   DashboardKnowledgeCardCount,
   DashboardUserCardCount,
-} from "@/components/app/dashboard/cards"
+} from "components/app/dashboard/ui/cards"
 import {
   DashboardCourseHighlight,
   DashboardKnowledgeHighlight,
-} from "@/components/app/dashboard/highlight"
+} from "components/app/dashboard/ui/highlight"
+
+import { authOptions } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/session"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 

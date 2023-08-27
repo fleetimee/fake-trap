@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -27,7 +28,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 interface ErrorResponseProps {
   error: string
@@ -153,7 +153,11 @@ export function CreateUserSheet() {
                   </FormLabel>
 
                   <FormControl>
-                    <Input {...field} placeholder="1337h4cker5" />
+                    <Input
+                      {...field}
+                      placeholder="1337h4cker5"
+                      disabled={isLoading}
+                    />
                   </FormControl>
 
                   <FormDescription>
@@ -178,6 +182,7 @@ export function CreateUserSheet() {
                       {...field}
                       placeholder="hello@bpd.co.id"
                       type="email"
+                      disabled={isLoading}
                     />
                   </FormControl>
                   <FormDescription>Email yang akan digunakan</FormDescription>
@@ -195,7 +200,12 @@ export function CreateUserSheet() {
                     Password <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="********" type="password" />
+                    <Input
+                      {...field}
+                      placeholder="********"
+                      type="password"
+                      disabled={isLoading}
+                    />
                   </FormControl>
                   <FormDescription>
                     Password yang akan digunakan untuk login

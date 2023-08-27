@@ -5,9 +5,9 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { UserListResData } from "@/types/user/res/user-list"
 import { convertDatetoString } from "@/lib/utils"
-import { Checkbox } from "@/components/ui/checkbox"
-import { UserOperationsAdmin } from "@/components/app/user/user-operations"
+import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+import { Checkbox } from "@/components/ui/checkbox"
 
 interface UserTableShellProps {
   data: UserListResData[]

@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -7,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { UserListResData } from "@/types/user/res"
+import { Icons } from "@/components/icons"
 import { AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
@@ -43,7 +46,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 interface ErrorResponseProps {
   error: string
@@ -291,7 +293,11 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
                     </FormLabel>
 
                     <FormControl>
-                      <Input {...field} placeholder="1337h4cker5" />
+                      <Input
+                        {...field}
+                        placeholder="1337h4cker5"
+                        disabled={isEditLoading}
+                      />
                     </FormControl>
 
                     <FormDescription>
@@ -316,6 +322,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
                         {...field}
                         placeholder="hello@bpd.co.id"
                         type="email"
+                        disabled={isEditLoading}
                       />
                     </FormControl>
                     <FormDescription>Email yang akan digunakan</FormDescription>
@@ -337,6 +344,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
                         {...field}
                         placeholder="********"
                         type="password"
+                        disabled={isEditLoading}
                       />
                     </FormControl>
                     <FormDescription>

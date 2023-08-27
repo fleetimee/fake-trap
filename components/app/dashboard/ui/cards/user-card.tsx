@@ -1,5 +1,5 @@
 import { UserListRes } from "@/types/user/res"
-import { CardDashboardIndicator } from "@/components/app/dashboard/card-dashboard-indicator"
+import { CardDashboardIndicator } from "@/components/app/dashboard/ui/"
 
 interface GetUserCountProps {
   token: string | undefined
