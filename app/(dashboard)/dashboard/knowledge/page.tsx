@@ -9,6 +9,7 @@ import { KnowledgeItemList } from "@/components/app/knowledge/ui"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import { KnowledgeTableShell } from "@/components/shell/knowledge-table-shell"
 
 export const metadata = {
   title: "Pengetahuan",
@@ -102,16 +103,22 @@ export default async function KnowledgePage() {
           token={user?.token}
         />
       </DashboardHeader>
-      <div className="divide-y divide-border rounded-md border">
-        {knowledgeResp.data.map((item) => (
-          <KnowledgeItemList
-            key={item.id_knowledge}
-            knowledgeData={item}
-            categoryResponse={categoryResp}
-            token={user?.token}
-          />
-        ))}
-      </div>
+      {/*<div className="divide-y divide-border rounded-md border">*/}
+      {/*  {knowledgeResp.data.map((item) => (*/}
+      {/*    <KnowledgeItemList*/}
+      {/*      key={item.id_knowledge}*/}
+      {/*      knowledgeData={item}*/}
+      {/*      categoryResponse={categoryResp}*/}
+      {/*      token={user?.token}*/}
+      {/*    />*/}
+      {/*  ))}*/}
+      {/*</div>*/}
+
+      <KnowledgeTableShell
+        data={knowledgeResp.data}
+        categoryResp={categoryResp.data}
+        pageCount={knowledgeResp.count}
+      />
     </DashboardShell>
   )
 }
