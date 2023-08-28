@@ -22,11 +22,6 @@ interface KnowledgeTableShellProps {
   pageCount: number
 }
 
-enum Status {
-  PUBLIC = "0031",
-  PRIVATE = "0032",
-}
-
 export function KnowledgeTableShell({
   data,
   categoryResp,
