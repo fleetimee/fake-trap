@@ -48,12 +48,6 @@ interface GetKnowledgeProps {
   sortOrder?: string
 }
 
-interface GetCategoryProps {
-  token: string | undefined
-  page: number
-  limit: number
-}
-
 async function getKnowledge({
   token,
   page,
@@ -75,6 +69,12 @@ async function getKnowledge({
   )
 
   return await knowledgeList.json()
+}
+
+interface GetCategoryProps {
+  token: string | undefined
+  page: number
+  limit: number
 }
 
 async function getCategory({
