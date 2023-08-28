@@ -5,9 +5,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
-import { CategoryListResData } from "@/types/category/res"
+import { CategoryListRes, CategoryListResData } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { convertDatetoString } from "@/lib/utils"
+import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
@@ -15,7 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 interface KnowledgeTableShellProps {
   data: KnowledgeListResData[]
-  categoryResp: CategoryListResData[]
+  categoryResp: CategoryListRes
   pageCount: number
 }
 
@@ -104,7 +105,7 @@ export function KnowledgeTableShell({
         cell: ({ row }) => (
           <Badge variant="secondary">
             {
-              categoryResp.find(
+              categoryResp.data.find(
                 (category) => category.id_category === row.original.id_category
               )?.category_name
             }
@@ -175,9 +176,37 @@ export function KnowledgeTableShell({
           return <>{convertDatetoString(row.original.updated_at.toString())}</>
         },
       },
+      {
+        id: "actions",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Aksi" />
+        ),
+        cell: ({ row }) => {
+          const knowledge = row.original
+
+          return (
+            <KnowledgeOperations
+              knowledgeData={knowledge}
+              categoryRes={categoryResp}
+            />
+          )
+        },
+      },
     ],
     [data, setSelectedRowIds]
   )
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      pageCount={pageCount}
+      searchableColumns={[
+        {
+          id: "knowledge_title",
+          title: "Judul",
+        },
+      ]}
+    />
+  )
 }

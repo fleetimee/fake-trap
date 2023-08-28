@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { CategoryListResData } from "@/types/category/res"
+import { Icons } from "@/components/icons"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,7 +46,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
@@ -140,6 +140,7 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
         toast({
           title: "Error",
           description: "Kategori gagal diubah",
+          variant: "destructive",
         })
       }
     } catch (error) {
@@ -250,9 +251,9 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
       >
         <SheetContent size="content">
           <SheetHeader>
-            <SheetTitle>Tambah Kategori</SheetTitle>
+            <SheetTitle>Perbarui Kategori</SheetTitle>
             <SheetDescription>
-              Tambahkan kategori baru untuk pengelompokan Pengetahuan
+              Perbarui kategori yang sudah ada
             </SheetDescription>
           </SheetHeader>
 
@@ -270,7 +271,11 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
                       Nama Kategori <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Nama Kategori" {...field} />
+                      <Input
+                        placeholder="Nama Kategori"
+                        {...field}
+                        disabled={isEditLoading}
+                      />
                     </FormControl>
                     <FormDescription>
                       Nama Kategori yang akan ditambahkan
@@ -284,7 +289,7 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
                 {isEditLoading ? (
                   <Icons.spinner className="h-5 w-5 animate-spin" />
                 ) : (
-                  "Tambah"
+                  "Update"
                 )}
               </Button>
             </form>

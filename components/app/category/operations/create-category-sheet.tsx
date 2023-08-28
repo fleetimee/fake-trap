@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -27,7 +28,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
@@ -122,7 +122,11 @@ export function CreateCategorySheet() {
                     Nama Kategori <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Nama Kategori" {...field} />
+                    <Input
+                      placeholder="Nama Kategori"
+                      {...field}
+                      disabled={isLoading}
+                    />
                   </FormControl>
                   <FormDescription>
                     Nama Kategori yang akan ditambahkan

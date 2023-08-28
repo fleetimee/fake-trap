@@ -5,7 +5,6 @@ import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { CreateKnowledgeButton } from "@/components/app/knowledge/operations"
-import { KnowledgeItemList } from "@/components/app/knowledge/ui"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -20,6 +19,9 @@ interface GetKnowledgeProps {
   token: string | undefined
   page: number
   limit: number
+  searchQuery?: string
+  sortField?: string
+  sortOrder?: string
 }
 
 interface GetCategoryProps {
@@ -32,9 +34,12 @@ async function getKnowledge({
   token,
   page,
   limit,
+  searchQuery = "",
+  sortField = "id_knowledge",
+  sortOrder = "asc",
 }: GetKnowledgeProps): Promise<KnowledgeListRes> {
   const knowledgeList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/?page=${page}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`,
     {
       method: "GET",
       headers: {
@@ -68,16 +73,45 @@ async function getCategory({
   return await categoryList.json()
 }
 
-export default async function KnowledgePage() {
+interface KnowledgePageProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function KnowledgePage({
+  searchParams,
+}: KnowledgePageProps) {
   const user = await getCurrentUser()
+
+  const { page, per_page, sort, knowledge_title, category } = searchParams ?? {}
+
+  // Initial value
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
+  const sortFieldInitial = typeof sort === "string" ? sort : "id_knowledge"
+  const sortOrderInitial = typeof sort === "string" ? sort : "asc"
+  const searchQueryInitial =
+    typeof knowledge_title === "string" ? knowledge_title : ""
+
+  // Split sort into sortField and sortOrder
+  const sortField = sortFieldInitial.split(".")[0]
+  const sortOrder = sortOrderInitial.split(".")[1]
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
   const [knowledgeResp, categoryResp] = await Promise.all([
-    getKnowledge({ token: user?.token, page: 1, limit: 10 }),
-    getCategory({ token: user?.token, page: 1, limit: 10 }),
+    getKnowledge({
+      token: user?.token,
+      page: pageInitial,
+      limit: limitInitial,
+      searchQuery: searchQueryInitial,
+      sortField: sortField,
+      sortOrder: sortOrder,
+    }),
+    getCategory({ token: user?.token, page: 1, limit: 100 }),
   ])
 
   return (
@@ -116,8 +150,8 @@ export default async function KnowledgePage() {
 
       <KnowledgeTableShell
         data={knowledgeResp.data}
-        categoryResp={categoryResp.data}
-        pageCount={knowledgeResp.count}
+        categoryResp={categoryResp}
+        pageCount={knowledgeResp.totalPage}
       />
     </DashboardShell>
   )
