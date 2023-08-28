@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { CreateKnowledgeButton } from "@/components/app/knowledge/operations"
@@ -13,6 +14,29 @@ import { KnowledgeTableShell } from "@/components/shell/knowledge-table-shell"
 export const metadata = {
   title: "Pengetahuan",
   description: "Pengetahuan yang tersedia di e-learning",
+}
+
+interface GetKnowledgeVibilityProps {
+  refCode: string
+  token: string | undefined
+}
+
+async function getKnowledgeVisibility({
+  token,
+  refCode,
+}: GetKnowledgeVibilityProps): Promise<ReferenceListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await res.json()
 }
 
 interface GetKnowledgeProps {
@@ -102,7 +126,7 @@ export default async function KnowledgePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const [knowledgeResp, categoryResp] = await Promise.all([
+  const [knowledgeResp, categoryResp, referenceResp] = await Promise.all([
     getKnowledge({
       token: user?.token,
       page: pageInitial,
@@ -112,6 +136,10 @@ export default async function KnowledgePage({
       sortOrder: sortOrder,
     }),
     getCategory({ token: user?.token, page: 1, limit: 100 }),
+    getKnowledgeVisibility({
+      token: user?.token,
+      refCode: "003",
+    }),
   ])
 
   return (
@@ -134,6 +162,7 @@ export default async function KnowledgePage({
       >
         <CreateKnowledgeButton
           categoryResponse={categoryResp}
+          referenceResp={referenceResp}
           token={user?.token}
         />
       </DashboardHeader>
@@ -151,6 +180,7 @@ export default async function KnowledgePage({
       <KnowledgeTableShell
         data={knowledgeResp.data}
         categoryResp={categoryResp}
+        referenceResp={referenceResp}
         pageCount={knowledgeResp.totalPage}
       />
     </DashboardShell>

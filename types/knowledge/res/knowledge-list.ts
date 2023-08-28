@@ -11,7 +11,7 @@ export type KnowledgeListResData = {
   id_knowledge: number
   knowledge_title: string
   description: string
-  status: number
+  status: string
   image: string
   section?: KnowledgeListResSection[]
   id_category: number

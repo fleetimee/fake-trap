@@ -7,6 +7,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListRes, CategoryListResData } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { convertDatetoString } from "@/lib/utils"
 import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
@@ -17,17 +18,19 @@ import { Checkbox } from "@/components/ui/checkbox"
 interface KnowledgeTableShellProps {
   data: KnowledgeListResData[]
   categoryResp: CategoryListRes
+  referenceResp: ReferenceListRes
   pageCount: number
 }
 
 enum Status {
-  PUBLIC = 1,
-  PRIVATE = 0,
+  PUBLIC = "0031",
+  PRIVATE = "0032",
 }
 
 export function KnowledgeTableShell({
   data,
   categoryResp,
+  referenceResp,
   pageCount,
 }: KnowledgeTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
@@ -150,7 +153,11 @@ export function KnowledgeTableShell({
         ),
         cell: ({ row }) => (
           <Badge className="text-center">
-            {row.original.status === Status.PUBLIC ? "Publik" : "Privat"}
+            {
+              referenceResp.data.find(
+                (reference) => reference.code_ref2 === row.original.status
+              )?.value_ref1
+            }
           </Badge>
         ),
       },
@@ -188,6 +195,7 @@ export function KnowledgeTableShell({
             <KnowledgeOperations
               knowledgeData={knowledge}
               categoryRes={categoryResp}
+              referenceResp={referenceResp}
             />
           )
         },

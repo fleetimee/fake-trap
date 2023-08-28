@@ -9,7 +9,10 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { CategoryListRes } from "@/types/category/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
+import { CreateButton } from "@/components/create-button"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -43,11 +46,10 @@ import {
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { CreateButton } from "@/components/create-button"
-import { Icons } from "@/components/icons"
 
 interface CreateKnowledgeButtonProps {
   categoryResponse: CategoryListRes
+  referenceResp: ReferenceListRes
   token: string | undefined
 }
 
@@ -75,13 +77,9 @@ const formSchema = z.object({
     .nonempty({
       message: "Deskripsi pengetahuan harus diisi",
     }),
-  status: z
-    .number({
-      required_error: "Status pengetahuan harus diisi",
-    })
-    .int({
-      message: "Status pengetahuan harus diisi",
-    }),
+  status: z.string({
+    required_error: "Status pengetahuan harus diisi",
+  }),
   image: z.string().optional(),
   id_category: z
     .number({
@@ -94,6 +92,7 @@ const formSchema = z.object({
 
 export function CreateKnowledgeButton({
   categoryResponse,
+  referenceResp,
   token,
 }: CreateKnowledgeButtonProps) {
   const router = useRouter()
@@ -253,9 +252,9 @@ export function CreateKnowledgeButton({
                             )}
                           >
                             {field.value
-                              ? statusTypes.find(
-                                  (content) => content.value === field.value
-                                )?.label
+                              ? referenceResp.data.find(
+                                  (content) => content.code_ref2 === field.value
+                                )?.value_ref1
                               : "Pilih Status"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
@@ -266,24 +265,24 @@ export function CreateKnowledgeButton({
                           <CommandInput placeholder="Tipe konten..." />
                           <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
                           <CommandGroup>
-                            {statusTypes.map((language) => (
+                            {referenceResp.data.map((content) => (
                               <CommandItem
-                                value={language.value.toString()}
-                                key={language.value}
+                                value={content.value_ref1}
+                                key={content.id_ref}
                                 onSelect={(value) => {
                                   form.clearErrors("status")
-                                  form.setValue("status", parseInt(value))
+                                  form.setValue("status", content.code_ref2)
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    language.value === field.value
+                                    content.code_ref2 === field.value
                                       ? "opacity-100"
                                       : "opacity-0"
                                   )}
                                 />
-                                {language.label}
+                                {content.value_ref1}
                               </CommandItem>
                             ))}
                           </CommandGroup>
@@ -336,11 +335,14 @@ export function CreateKnowledgeButton({
                           <CommandGroup>
                             {categoryResponse.data.map((category) => (
                               <CommandItem
-                                value={category.id_category.toString()}
+                                value={category.category_name}
                                 key={category.id_category}
                                 onSelect={(value) => {
                                   form.clearErrors("id_category")
-                                  form.setValue("id_category", parseInt(value))
+                                  form.setValue(
+                                    "id_category",
+                                    category.id_category
+                                  )
                                 }}
                               >
                                 <Check
