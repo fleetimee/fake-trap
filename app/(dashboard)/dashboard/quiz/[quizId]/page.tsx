@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import { da } from "date-fns/locale"
 
 import { QuizOneUserCountRes } from "@/types/quiz/res"
 import { QuizOneRes } from "@/types/quiz/res/quiz-get-one"
@@ -13,7 +14,15 @@ import {
   QuizTypeCard,
   QuizUserCountCard,
 } from "@/components/app/quiz/detail/ui"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 type Props = {
   params: {
@@ -136,89 +145,40 @@ export default async function QuizDetailPage({ params }: Props) {
       <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-3">
         <QuizAnswerPromptCard isAlreadyAnswered={isAlreadyHaveQuiz} />
         <QuizUserCountCard userCount={quizUsersCount} />
-        <QuizTypeCard detailQuizType={detailQuizTypeResp} />
+        <QuizTypeCard
+          detailQuizType={detailQuizTypeResp}
+          detailQuizData={detailQuizDataResp}
+        />
       </div>
 
-      <div className="grid grid-flow-row grid-rows-3 gap-4 md:grid-cols-1 lg:grid-cols-2">
-        <Card className="row-span-3 h-auto">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Deskripsi</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
+      <div className="grid grid-flow-row gap-4 md:grid-cols-1 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Deskripsi Kuis</CardTitle>
+            <CardDescription>Deskripsi kuis dimuat disini</CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold">
-              {detailQuizDataResp.data.quiz_desc}
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="row-span-1 h-auto">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Tanggal Pembuatan
-            </CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {convertDatetoString(
-                detailQuizDataResp.data.created_at.toString()
-              )}
+          <CardContent className="grid gap-4">
+            <div className="flex items-start space-x-4">
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  {detailQuizDataResp.data.quiz_desc}
+                </p>
+              </div>
             </div>
           </CardContent>
-        </Card>
-        <Card className="row-span-2 h-auto">
+        </Card>{" "}
+        <Card className="col-span-1 row-span-1 h-auto">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Link and Connection
-            </CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
+            <CardTitle className="text-lg">Tanggal Pembuatan</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">
-              {/* {detailSectionData.data.section_title} /{" "}
-              {detailSectionData.data.course[0].course_name} */}
-
-              {detailQuizDataResp.data.quiz_desc}
-            </p>
+            <Calendar
+              mode="default"
+              disableNavigation
+              className="rounded-md border justify-center items-center"
+              numberOfMonths={2}
+              selected={new Date(detailQuizDataResp.data.created_at)}
+            />
           </CardContent>
         </Card>
       </div>
