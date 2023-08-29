@@ -38,6 +38,7 @@ async function getUserList({
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     }
   )
 

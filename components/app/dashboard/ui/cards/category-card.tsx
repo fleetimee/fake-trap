@@ -15,6 +15,7 @@ async function getCategoryCount({
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     }
   )
 

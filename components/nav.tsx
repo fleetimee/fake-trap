@@ -11,11 +11,6 @@ interface DashboardNavProps {
   items: SidebarNavItem[]
 }
 
-/**
- * Renders a navigation component for the dashboard with the provided items.
- * @param {DashboardNavProps} items - An array of SidebarNavItem objects containing the navigation items to be displayed.
- * @returns {JSX.Element} - A JSX element representing the navigation component.
- */
 export function DashboardNav({ items }: DashboardNavProps) {
   const path = usePathname()
 

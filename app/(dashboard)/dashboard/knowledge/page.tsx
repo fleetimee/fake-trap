@@ -33,6 +33,7 @@ async function getKnowledgeVisibility({
         ContentType: "application/json",
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     }
   )
 
@@ -141,6 +142,8 @@ export default async function KnowledgePage({
       refCode: "003",
     }),
   ])
+
+  console.log(knowledgeResp.totalPage)
 
   return (
     <DashboardShell>

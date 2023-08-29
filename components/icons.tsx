@@ -80,6 +80,7 @@ export const Icons = {
   pizza: Pizza,
   sun: SunMedium,
   moon: Moon,
+  check: Check,
   laptop: Laptop,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
@@ -99,5 +100,4 @@ export const Icons = {
     </svg>
   ),
   twitter: Twitter,
-  check: Check,
 }

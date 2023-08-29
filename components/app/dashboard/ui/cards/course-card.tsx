@@ -15,6 +15,7 @@ async function getCourse({
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     }
   )
 

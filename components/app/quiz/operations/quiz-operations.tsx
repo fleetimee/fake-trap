@@ -10,7 +10,10 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { QuizData } from "@/types/quiz-res"
+import { QuizListResData } from "@/types/quiz/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -60,7 +63,6 @@ import {
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const quizTypes = [
   { value: 1, label: "Quiz" },
@@ -89,12 +91,15 @@ const formSchema = z.object({
     .nonempty({
       message: "Deskripsi kuis harus diisi",
     }),
-  quiz_type: z.number({
-    required_error: "Tipe kuis harus dipilih",
-  }),
+  quiz_type: z.string(),
 })
 
-async function deleteQuiz(id: number, token: string | undefined) {
+interface DeleteQuizProps {
+  id: number
+  token: string | undefined
+}
+
+async function deleteQuiz({ id, token }: DeleteQuizProps) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${id}`,
     {
@@ -124,7 +129,12 @@ async function deleteQuiz(id: number, token: string | undefined) {
   }
 }
 
-export function QuizOperations(props: { quiz: QuizData }) {
+interface QuizOperationsProps {
+  quiz: QuizListResData
+  referenceResp: ReferenceListRes
+}
+
+export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -141,9 +151,9 @@ export function QuizOperations(props: { quiz: QuizData }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      quiz_title: props.quiz.quiz_title,
-      quiz_desc: props.quiz.quiz_desc,
-      quiz_type: props.quiz.quiz_type,
+      quiz_title: quiz.quiz_title,
+      quiz_desc: quiz.quiz_desc,
+      quiz_type: quiz.quiz_type,
     },
   })
 
@@ -152,7 +162,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${props.quiz.id_quiz}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${quiz.id_quiz}`,
 
         {
           method: "PUT",
@@ -245,10 +255,10 @@ export function QuizOperations(props: { quiz: QuizData }) {
                 event.preventDefault()
                 setIsDeleteLoading(true)
 
-                const deleted = await deleteQuiz(
-                  props.quiz.id_quiz,
-                  session?.user.token
-                )
+                const deleted = await deleteQuiz({
+                  id: quiz.id_quiz,
+                  token: session?.user.token,
+                })
 
                 if (deleted) {
                   setIsDeleteLoading(false)
@@ -291,7 +301,11 @@ export function QuizOperations(props: { quiz: QuizData }) {
                     </FormLabel>
 
                     <FormControl>
-                      <Input {...field} placeholder="Judul Kuis" />
+                      <Input
+                        {...field}
+                        placeholder="Judul Kuis"
+                        disabled={isEditLoading}
+                      />
                     </FormControl>
                     <FormDescription>
                       Masukkan judul kuis yang akan dibuat
@@ -313,6 +327,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
                       <Textarea
                         placeholder="Berikan deskripsi singkat tentang kuis"
                         className="h-32 resize-none"
+                        disabled={isEditLoading}
                         {...field}
                       />
                     </FormControl>
@@ -341,15 +356,16 @@ export function QuizOperations(props: { quiz: QuizData }) {
                             <Button
                               variant="outline"
                               role="combobox"
+                              disabled={isEditLoading}
                               className={cn(
                                 "w-full justify-between",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
                               {field.value
-                                ? quizTypes.find(
-                                    (quiz) => quiz.value === field.value
-                                  )?.label
+                                ? referenceResp.data.find(
+                                    (quiz) => quiz.code_ref2 === field.value
+                                  )?.value_ref1
                                 : "Pilih tipe kuis"}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
@@ -360,24 +376,24 @@ export function QuizOperations(props: { quiz: QuizData }) {
                             <CommandInput placeholder="Tipe konten..." />
                             <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
                             <CommandGroup>
-                              {quizTypes.map((quiz) => (
+                              {referenceResp.data.map((quiz) => (
                                 <CommandItem
-                                  value={quiz.value.toString()}
-                                  key={quiz.value}
+                                  value={quiz.value_ref1}
+                                  key={quiz.id_ref}
                                   onSelect={(value) => {
                                     form.clearErrors("quiz_type")
-                                    form.setValue("quiz_type", parseInt(value))
+                                    form.setValue("quiz_type", quiz.code_ref2)
                                   }}
                                 >
                                   <Check
                                     className={cn(
                                       "mr-2 h-4 w-4",
-                                      quiz.value === field.value
+                                      quiz.code_ref2 === field.value
                                         ? "opacity-100"
                                         : "opacity-0"
                                     )}
                                   />
-                                  {quiz.label}
+                                  {quiz.value_ref1}
                                 </CommandItem>
                               ))}
                             </CommandGroup>
@@ -396,7 +412,7 @@ export function QuizOperations(props: { quiz: QuizData }) {
                 {isEditLoading ? (
                   <Icons.spinner className="h-5 w-5 animate-spin" />
                 ) : (
-                  "Tambah"
+                  "Ubah"
                 )}
               </Button>
             </form>

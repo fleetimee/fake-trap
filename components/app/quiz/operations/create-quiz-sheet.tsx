@@ -8,7 +8,9 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { ReferenceListRes, ReferenceListResData } from "@/types/references/res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -42,7 +44,6 @@ import {
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const quizTypes = [
   { value: 1, label: "Quiz" },
@@ -71,12 +72,14 @@ const formSchema = z.object({
     .nonempty({
       message: "Deskripsi kuis harus diisi",
     }),
-  quiz_type: z.number({
-    required_error: "Tipe kuis harus dipilih",
-  }),
+  quiz_type: z.string(),
 })
 
-export function CreateQuizSheet() {
+interface CreateQuizSheetProps {
+  referenceResp: ReferenceListRes
+}
+
+export function CreateQuizSheet({ referenceResp }: CreateQuizSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -90,7 +93,7 @@ export function CreateQuizSheet() {
     defaultValues: {
       quiz_title: "",
       quiz_desc: "",
-      quiz_type: 1,
+      quiz_type: "",
     },
   })
 
@@ -166,7 +169,11 @@ export function CreateQuizSheet() {
                   </FormLabel>
 
                   <FormControl>
-                    <Input {...field} placeholder="Judul Kuis" />
+                    <Input
+                      {...field}
+                      placeholder="Judul Kuis"
+                      disabled={isLoading}
+                    />
                   </FormControl>
                   <FormDescription>
                     Masukkan judul kuis yang akan dibuat
@@ -188,6 +195,7 @@ export function CreateQuizSheet() {
                     <Textarea
                       placeholder="Berikan deskripsi singkat tentang kuis"
                       className="h-32 resize-none"
+                      disabled={isLoading}
                       {...field}
                     />
                   </FormControl>
@@ -216,15 +224,16 @@ export function CreateQuizSheet() {
                           <Button
                             variant="outline"
                             role="combobox"
+                            disabled={isLoading}
                             className={cn(
                               "w-full justify-between",
                               !field.value && "text-muted-foreground"
                             )}
                           >
                             {field.value
-                              ? quizTypes.find(
-                                  (quiz) => quiz.value === field.value
-                                )?.label
+                              ? referenceResp.data.find(
+                                  (quiz) => quiz.code_ref2 === field.value
+                                )?.value_ref1
                               : "Pilih tipe kuis"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
@@ -235,24 +244,24 @@ export function CreateQuizSheet() {
                           <CommandInput placeholder="Tipe konten..." />
                           <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
                           <CommandGroup>
-                            {quizTypes.map((quiz) => (
+                            {referenceResp.data.map((quiz) => (
                               <CommandItem
-                                value={quiz.value.toString()}
-                                key={quiz.value}
+                                value={quiz.value_ref1}
+                                key={quiz.id_ref}
                                 onSelect={(value) => {
                                   form.clearErrors("quiz_type")
-                                  form.setValue("quiz_type", parseInt(value))
+                                  form.setValue("quiz_type", quiz.code_ref2)
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    quiz.value === field.value
+                                    quiz.code_ref2 === field.value
                                       ? "opacity-100"
                                       : "opacity-0"
                                   )}
                                 />
-                                {quiz.label}
+                                {quiz.value_ref1}
                               </CommandItem>
                             ))}
                           </CommandGroup>

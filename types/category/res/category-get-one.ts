@@ -16,7 +16,7 @@ export type CategoryOneResKnowledge = {
   id_knowledge: number
   knowledge_title: string
   description: string
-  status: number
+  status: string
   image: string
   id_category: number
   created_at: Date
