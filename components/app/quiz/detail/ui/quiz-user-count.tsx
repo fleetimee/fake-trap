@@ -18,7 +18,7 @@ interface QuizUserCountCardProps {
 export function QuizUserCountCard({ userCount }: QuizUserCountCardProps) {
   return (
     <Card className="flex flex-col items-center justify-center">
-      <CardHeader className="grid grid-cols-1 xl:grid-cols-[1fr_110px] items-start gap-4 space-y-0">
+      <CardHeader className="grid grid-cols-1 items-start gap-4 space-y-0 xl:grid-cols-[1fr_110px]">
         <div className="space-y-1">
           <CardTitle className="text-lg">Total Murid</CardTitle>
           <CardDescription>
@@ -34,7 +34,7 @@ export function QuizUserCountCard({ userCount }: QuizUserCountCardProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex text-sm space-x-4 items-start text-muted-foreground">
+        <div className="flex items-start space-x-4 text-sm text-muted-foreground">
           <div className="flex items-center">
             <Icons.copy className="mr-1 h-3 w-3" />
             Murid

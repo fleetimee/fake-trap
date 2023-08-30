@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
+import { CreateButton } from "@/components/create-button"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -27,8 +29,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { CreateButton } from "@/components/create-button"
-import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
   section_title: z
@@ -137,7 +137,11 @@ export function CreateSectionButton({
                       Judul Section <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Pendahuluan" {...field} />
+                      <Input
+                        placeholder="Pendahuluan"
+                        {...field}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormDescription>Judul section anda.</FormDescription>
                     <FormMessage />
@@ -145,7 +149,7 @@ export function CreateSectionButton({
                 )}
               />
 
-              <Button type="submit" className="self-end">
+              <Button type="submit" className="self-end" disabled={isLoading}>
                 {isLoading ? (
                   <Icons.spinner className="h-5 w-5 animate-spin" />
                 ) : (

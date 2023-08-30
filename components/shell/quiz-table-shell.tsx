@@ -127,7 +127,7 @@ export function QuizTableShell({
         cell: ({ row }) => {
           return (
             <Badge
-              className="text-center items-center justify-center"
+              className="items-center justify-center text-center"
               variant="outline"
             >
               {row.original.id_section ? "Ya" : "Tidak"}

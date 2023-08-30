@@ -22,6 +22,7 @@ import {
 
 import { useDebounce } from "@/hooks/use-debounce"
 import { DataTablePagination, DataTableToolbar } from "@/components/data-table/"
+import { Card } from "@/components/ui/card"
 import {
   Table,
   TableBody,
@@ -261,7 +262,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="w-full space-y-3 overflow-auto">
+    <Card className="w-full space-y-3 overflow-auto p-4">
       <DataTableToolbar
         table={table}
         filterableColumns={filterableColumns}
@@ -269,7 +270,7 @@ export function DataTable<TData, TValue>({
         newRowLink={newRowLink}
         deleteRowsAction={deleteRowsAction}
       />
-      <div className="rounded-md border overflow-x-auto">
+      <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -320,6 +321,6 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <DataTablePagination table={table} />
-    </div>
+    </Card>
   )
 }

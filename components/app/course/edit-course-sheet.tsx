@@ -13,6 +13,7 @@ import { z } from "zod"
 import { CourseData } from "@/types/course-res"
 import { Knowledge } from "@/types/knowledge-res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -47,11 +48,7 @@ import {
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
-/**
- * Defines the validation schema for the form data used to edit a course
- */
 const formSchema = z.object({
   course_name: z
     .string({

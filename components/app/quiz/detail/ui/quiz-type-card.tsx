@@ -1,6 +1,6 @@
 import { QuizOneRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   Card,
   CardContent,
@@ -44,7 +44,7 @@ export function QuizTypeCard({
             <p className="text-sm font-medium leading-none">{quizType}</p>
             <p className="text-sm text-muted-foreground">
               Kuis ini merupakan{" "}
-              <span className="font-semibold italic lowercase">{quizType}</span>
+              <span className="font-semibold lowercase italic">{quizType}</span>
             </p>
           </div>
         </div>

@@ -10,8 +10,10 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Knowledge } from "@/types/knowledge-res"
+import { KnowledgeListRes } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
+import { CreateButton } from "@/components/create-button"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -48,12 +50,7 @@ import {
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { CreateButton } from "@/components/create-button"
-import { Icons } from "@/components/icons"
 
-/**
- * Defines the form schema for creating a new course.
- */
 const formSchema = z.object({
   course_name: z
     .string({
@@ -85,7 +82,11 @@ const formSchema = z.object({
   }),
 })
 
-export function CreateCourseButton(props: { data: Knowledge }) {
+interface CreateCourseButtonProps {
+  knowledgeResp: KnowledgeListRes
+}
+
+export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -94,12 +95,6 @@ export function CreateCourseButton(props: { data: Knowledge }) {
 
   const [open, setOpen] = React.useState<boolean>(false)
 
-  /**
-   * useForm hook to handle form state and validation.
-   *
-   * @param resolver - The resolver to use for validating the form.
-   * @param defaultValues - The default values for the form fields.
-   */
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -109,11 +104,6 @@ export function CreateCourseButton(props: { data: Knowledge }) {
     },
   })
 
-  /**
-   * Handles form submission by sending a POST request to create a new course.
-   *
-   * @param values - The form values to be sent in the request body.
-   */
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
@@ -182,7 +172,11 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                     Judul Kursus <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Advanced React" {...field} />
+                    <Input
+                      placeholder="Advanced React"
+                      {...field}
+                      disabled={isLoading}
+                    />
                   </FormControl>
                   <FormDescription>
                     Judul kursus yang ingin dibuat.
@@ -204,6 +198,7 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                     <Textarea
                       placeholder="Berikan sedikit deskripsi tentang kursus yang ingin dibuat"
                       className="resize-none"
+                      disabled={isLoading}
                       {...field}
                     />
                   </FormControl>
@@ -224,6 +219,7 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                   <FormControl>
                     <Input
                       placeholder="https://pbs.twimg.com/media/FzRzbF0X0AMlifl?format=jpg&name=small"
+                      disabled={isLoading}
                       {...field}
                     />
                   </FormControl>
@@ -246,6 +242,7 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
+                          disabled={isLoading}
                           variant="outline"
                           role="combobox"
                           className={cn(
@@ -299,6 +296,7 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                         <Button
                           variant="outline"
                           role="combobox"
+                          disabled={isLoading}
                           className={cn(
                             "w-full justify-between",
                             !field.value && "text-muted-foreground"
@@ -356,7 +354,7 @@ export function CreateCourseButton(props: { data: Knowledge }) {
                             )}
                           >
                             {field.value
-                              ? props.data.data.find(
+                              ? knowledgeResp.data.find(
                                   (knowledge) =>
                                     knowledge.id_knowledge === field.value
                                 )?.knowledge_title
@@ -376,15 +374,15 @@ export function CreateCourseButton(props: { data: Knowledge }) {
 
                             <CommandGroup>
                               <ScrollArea className="h-full">
-                                {props.data.data.map((knowledge) => (
+                                {knowledgeResp.data.map((knowledge) => (
                                   <CommandItem
-                                    value={knowledge.id_knowledge.toString()}
+                                    value={knowledge.knowledge_title}
                                     key={knowledge.id_knowledge}
                                     onSelect={(value) => {
                                       form.clearErrors("id_knowledge")
                                       form.setValue(
                                         "id_knowledge",
-                                        parseInt(value)
+                                        knowledge.id_knowledge
                                       )
                                     }}
                                   >

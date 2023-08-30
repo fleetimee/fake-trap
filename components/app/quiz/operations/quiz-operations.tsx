@@ -64,12 +64,6 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 
-const quizTypes = [
-  { value: 1, label: "Quiz" },
-  { value: 2, label: "Exam" },
-  { value: 3, label: "Assignment" },
-]
-
 const formSchema = z.object({
   quiz_title: z
     .string({

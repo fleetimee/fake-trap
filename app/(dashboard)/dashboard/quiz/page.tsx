@@ -126,7 +126,7 @@ export default async function QuizPage({ searchParams }: QuizPageProps) {
           },
         ]}
       />
-      <div className="flex justify-between items-center gap-4">
+      <div className="flex items-center justify-between gap-4">
         <DashboardHeader
           heading="Quiz"
           description="Quiz yang tersedia di e-learning"

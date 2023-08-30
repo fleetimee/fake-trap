@@ -5,6 +5,7 @@ import NextTopLoader from "nextjs-toploader"
 import { siteConfig } from "@/config/site"
 import { fontHeading, fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import { BGGrid } from "@/components/bg-grid"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
@@ -59,7 +60,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <NextTopLoader />
             <div className="relative flex min-h-screen flex-col">
-              <div className="flex-1">{children}</div>
+              <BGGrid>{children}</BGGrid>
               <Toaster />
               <TailwindIndicator />
             </div>

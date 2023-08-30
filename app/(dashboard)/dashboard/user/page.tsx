@@ -94,7 +94,7 @@ export default async function UserPage({ searchParams }: UserPageProps) {
           },
         ]}
       />
-      <div className="flex justify-between items-center w-full mb-4">
+      <div className="mb-4 flex w-full items-center justify-between">
         <DashboardHeader
           heading="User"
           description="User yang tersedia di e-learning"

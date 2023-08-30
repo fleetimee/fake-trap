@@ -11,7 +11,6 @@ import { ReferenceListRes } from "@/types/references/res"
 import { convertDatetoString } from "@/lib/utils"
 import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
@@ -87,7 +86,7 @@ export function KnowledgeTableShell({
               alt={row.original.knowledge_title}
               width={300}
               height={300}
-              className="rounded-xl grayscale hover:grayscale-0 transition-all duration-300 ease-in-out"
+              className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
             />
           </Link>
           // </AspectRatio>
@@ -137,7 +136,7 @@ export function KnowledgeTableShell({
         ),
         cell: ({ row }) => (
           <div className="flex flex-col ">
-            <p className="text-sm line-clamp-2">{row.original.description}</p>
+            <p className="line-clamp-2 text-sm">{row.original.description}</p>
           </div>
         ),
       },

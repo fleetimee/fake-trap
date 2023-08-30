@@ -23,7 +23,6 @@ import {
   Laptop,
   LayoutDashboard,
   Loader2,
-  LucideProps,
   Menu,
   Moon,
   MoreHorizontal,
@@ -38,10 +37,11 @@ import {
   Twitter,
   User,
   X,
-  type Icon as LucideIcon,
+  type LucideIcon,
+  type LucideProps,
 } from "lucide-react"
 
-export type Icon = LucideIcon
+export type Icon = LucideProps
 
 export const Icons = {
   menu: Menu,

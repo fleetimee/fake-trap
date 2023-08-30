@@ -175,7 +175,7 @@ export default async function QuizDetailPage({ params }: Props) {
             <Calendar
               mode="default"
               disableNavigation
-              className="rounded-md border justify-center items-center"
+              className="items-center justify-center rounded-md border"
               numberOfMonths={2}
               selected={new Date(detailQuizDataResp.data.created_at)}
             />
