@@ -111,6 +111,8 @@ export function CourseTableShell({
             </div>
           )
         },
+        enableResizing: true,
+        size: 1000,
       },
       {
         accessorKey: "course_desc",
@@ -139,6 +141,7 @@ export function CourseTableShell({
 
           return <>{convertDatetoString(row.original.created_at.toString())}</>
         },
+        size: 400,
       },
       {
         accessorKey: "date_end",
@@ -150,6 +153,7 @@ export function CourseTableShell({
 
           return <>{convertDatetoString(row.original.created_at.toString())}</>
         },
+        size: 400,
       },
       {
         id: "status",

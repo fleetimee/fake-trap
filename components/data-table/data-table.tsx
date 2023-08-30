@@ -243,7 +243,11 @@ export function DataTable<TData, TValue>({
       rowSelection,
       columnFilters,
     },
-
+    defaultColumn: {
+      minSize: 0,
+      size: Number.MAX_SAFE_INTEGER,
+      maxSize: Number.MAX_SAFE_INTEGER,
+    },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
@@ -270,14 +274,23 @@ export function DataTable<TData, TValue>({
         newRowLink={newRowLink}
         deleteRowsAction={deleteRowsAction}
       />
-      <div className="overflow-x-auto rounded-md border">
+      <div className="max-w-full overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="whitespace-nowrap">
+                    <TableHead
+                      key={header.id}
+                      className="whitespace-nowrap"
+                      style={{
+                        width:
+                          header.getSize() === Number.MAX_SAFE_INTEGER
+                            ? "auto"
+                            : header.getSize(),
+                      }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -298,7 +311,15 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      style={{
+                        width:
+                          cell.column.getSize() === Number.MAX_SAFE_INTEGER
+                            ? "auto"
+                            : cell.column.getSize(),
+                      }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

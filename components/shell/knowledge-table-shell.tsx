@@ -124,10 +124,7 @@ export function KnowledgeTableShell({
             </Link>
           </div>
         ),
-        size: 700,
-        minSize: 300,
-        maxSize: 1000,
-        enableResizing: true,
+        size: 1000,
       },
       {
         accessorKey: "description",
