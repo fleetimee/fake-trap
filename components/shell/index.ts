@@ -1,0 +1,5 @@
+export * from "./category-table-shell"
+export * from "./dashboard-shell"
+export * from "./knowledge-table-shell"
+export * from "./quiz-table-shell"
+export * from "./user-table-shell"
