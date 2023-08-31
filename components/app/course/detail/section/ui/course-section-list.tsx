@@ -3,6 +3,7 @@
 import React from "react"
 
 import { CourseOneResSection } from "@/types/course/res"
+import { EditSectionSheet } from "@/components/app/course/detail/section/operations"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -11,7 +12,7 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
-import { Sheet } from "@/components/ui/sheet"
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 
 interface CourseSectionListProps {
   item: CourseOneResSection
@@ -42,14 +43,35 @@ export function CourseSectionList({ item }: CourseSectionListProps) {
             {item.section_title}
           </ContextMenuItem>
           <ContextMenuSeparator />
-          <ContextMenuItem inset disabled>
-            Edit Section
-          </ContextMenuItem>
-          <ContextMenuItem inset disabled className="text-red-500">
-            Delete Section
-          </ContextMenuItem>
+          <SheetTrigger
+            className="w-full"
+            id="edit-section"
+            asChild
+            onClick={() => {
+              setIsEditSectionOpen(true)
+              setIsDeleteSectionOpen(false)
+            }}
+          >
+            <ContextMenuItem inset>Edit Section</ContextMenuItem>
+          </SheetTrigger>
+          <SheetTrigger
+            className="w-full"
+            id="delete-section"
+            asChild
+            onClick={() => {
+              setIsDeleteSectionOpen(true)
+              setIsEditSectionOpen(false)
+            }}
+          >
+            <ContextMenuItem inset disabled className="text-red-500">
+              Delete Section
+            </ContextMenuItem>
+          </SheetTrigger>
         </ContextMenuContent>
       </ContextMenu>
+      {isEditSectionOpen ? (
+        <EditSectionSheet item={item} open={open} setOpen={setOpen} />
+      ) : null}
     </Sheet>
   )
 }

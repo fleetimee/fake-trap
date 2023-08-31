@@ -3,13 +3,8 @@ import { redirect } from "next/navigation"
 import { CourseListRes } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
-import {
-  getPaginatedCourseData,
-  getPaginatedKnowledgeData,
-} from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
 import { CreateCourseButton } from "@/components/app/course/operations/create-course-sheet"
-import CourseGrid from "@/components/app/course/ui/course-grid"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
