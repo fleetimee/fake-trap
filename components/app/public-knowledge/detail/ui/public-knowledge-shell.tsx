@@ -15,7 +15,7 @@ export function PublicKnowledgeDetailShell({
 }: PublicKnowledgeDetailShellProps) {
   const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
     content_title: "",
-    content_type: 0,
+    content_type: "",
     id_content: 0,
     id_section: 0,
     image: "",

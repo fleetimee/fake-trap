@@ -3,7 +3,10 @@
 import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
-import { getYoutubeLastId } from "@/lib/utils"
+import {
+  renderContent,
+  renderContentButton,
+} from "@/components/app/knowledge/detail/ui"
 import {
   Card,
   CardContent,
@@ -13,11 +16,6 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  renderContent,
-  renderContentButton,
-} from "@/components/app/knowledge/detail"
-import { YoutubePlayer } from "@/components/youtube-player"
 
 interface PublicKnowledgeDetailContentProps {
   dataContentKnowledge: KnowledgeOneRes

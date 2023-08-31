@@ -143,8 +143,6 @@ export default async function KnowledgePage({
     }),
   ])
 
-  console.log(knowledgeResp.totalPage)
-
   return (
     <DashboardShell>
       <BreadCrumbs

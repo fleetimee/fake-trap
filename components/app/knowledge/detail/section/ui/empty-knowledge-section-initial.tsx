@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import { EmptyContent } from "@/components/app/knowledge/detail/knowledge-detail-sidebar-empty"
 import { CreateSectionButton } from "@/components/app/knowledge/detail/section/operations/create-section-button"
+import { EmptyContent } from "@/components/app/knowledge/detail/ui/knowledge-detail-sidebar-empty"
 
 interface EmptyKnowledgeSectionInitialProps {
   id_knowledge: number

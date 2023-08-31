@@ -2,10 +2,11 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getKnowledgeDataById } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
-import { KnowledgeDetailShell } from "@/components/app/knowledge/detail"
+import { KnowledgeDetailShell } from "@/components/app/knowledge/detail/ui"
 import { DashboardShell } from "@/components/shell"
 
 type DetailKnowledgeProps = {
@@ -52,6 +53,29 @@ async function getOneKnowledge({
   return await knowledgeOne.json()
 }
 
+interface GetContentTypeProps {
+  token: string | undefined
+  refCode: string
+}
+
+async function getContentType({
+  token,
+  refCode,
+}: GetContentTypeProps): Promise<ReferenceListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+  return await res.json()
+}
+
 export default async function DetailKnowledge({
   params,
 }: DetailKnowledgeProps) {
@@ -61,14 +85,23 @@ export default async function DetailKnowledge({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const detailKnowledgeData = await getOneKnowledge({
-    token: user.token,
-    idKnowledge: parseInt(params.detail),
-  })
+  const [detailKnowledgeData, contentTypeData] = await Promise.all([
+    getOneKnowledge({
+      token: user.token,
+      idKnowledge: parseInt(params.detail),
+    }),
+    getContentType({
+      token: user.token,
+      refCode: "001",
+    }),
+  ])
 
   return (
     <DashboardShell>
-      <KnowledgeDetailShell detailKnowledgeData={detailKnowledgeData} />
+      <KnowledgeDetailShell
+        detailKnowledgeData={detailKnowledgeData}
+        contentTypeData={contentTypeData.data}
+      />
     </DashboardShell>
   )
 }

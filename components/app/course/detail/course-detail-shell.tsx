@@ -3,36 +3,47 @@
 import React from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
 
-import { Content } from "@/types/content-res"
-import { CourseByIdResponse } from "@/types/course-res"
-import { KnowledgeByIdResponse } from "@/types/knowledge-res"
-import { QuizData, QuizRes } from "@/types/quiz-res"
-import { UserResponse } from "@/types/user-res"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import {
+  CourseOneRes,
+  CourseOneResQuiz,
+} from "@/types/course/res/course-get-one"
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import { QuizListRes } from "@/types/quiz/res"
+import { UserListRes } from "@/types/user/res"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 import { DetailSidebarCourse } from "../detail-sidebar-course"
 import { CourseDetailContent } from "./course-detail-content"
 
-export function CourseDetailShell(props: {
-  courseKnowledgeResp: KnowledgeByIdResponse
-  courseDataResp: CourseByIdResponse
-  userDataResp: UserResponse
-  quizResp: QuizRes
-}) {
-  const [contentData, setContentData] = React.useState<Content>({
+interface CourseDetailShellProps {
+  courseKnowledgeResp: KnowledgeOneRes
+  courseDataResp: CourseOneRes
+  userDataResp: UserListRes
+  quizResp: QuizListRes
+}
+
+export function CourseDetailShell({
+  courseKnowledgeResp,
+  courseDataResp,
+  userDataResp,
+  quizResp,
+}: CourseDetailShellProps) {
+  const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
     content_title: "",
-    content_type: 0,
+    content_type: "",
     id_content: 0,
     id_section: 0,
     image: "",
     link: "",
+    created_at: new Date(),
+    updated_at: new Date(),
   })
 
-  const [contentQuiz, setContentQuiz] = React.useState<QuizData>({
+  const [contentQuiz, setContentQuiz] = React.useState<CourseOneResQuiz>({
     id_quiz: 0,
     quiz_title: "",
-    quiz_type: 0,
+    quiz_type: "",
     id_section: 0,
     quiz_desc: "",
     created_at: new Date(),
@@ -53,8 +64,8 @@ export function CourseDetailShell(props: {
             title: "Kursus",
           },
           {
-            title: props.courseDataResp.data.course_name,
-            href: `/dashboard/knowledge/${props.courseDataResp.data.id_course}`,
+            title: courseDataResp.data.course_name,
+            href: `/dashboard/knowledge/${courseDataResp.data.id_course}`,
           },
         ]}
       />
@@ -66,7 +77,7 @@ export function CourseDetailShell(props: {
           <AlertDescription>
             Kursus ini berdasarkan pada pengetahuan{" "}
             <span className="font-bold">
-              {props.courseKnowledgeResp.data.knowledge_title}
+              {courseKnowledgeResp.data.knowledge_title}
             </span>
           </AlertDescription>
         </Alert>
@@ -74,8 +85,8 @@ export function CourseDetailShell(props: {
 
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <CourseDetailContent
-          data={props.courseDataResp}
-          user={props.userDataResp}
+          courseDataResp={courseDataResp}
+          userDataResp={userDataResp}
           setContentData={setContentData}
           contentData={contentData}
           contentQuiz={contentQuiz}
@@ -86,9 +97,9 @@ export function CourseDetailShell(props: {
         <DetailSidebarCourse
           contentQuiz={contentQuiz}
           setContentQuiz={setContentQuiz}
-          dataKnowledge={props.courseKnowledgeResp}
-          dataCourse={props.courseDataResp}
-          dataQuiz={props.quizResp}
+          courseDataResp={courseDataResp}
+          quizResp={quizResp}
+          courseKnowledgeResp={courseKnowledgeResp}
           setContentData={setContentData}
           contentData={contentData}
           activeIndex={activeIndex}

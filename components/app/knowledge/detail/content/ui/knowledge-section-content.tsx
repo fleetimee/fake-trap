@@ -1,6 +1,12 @@
 import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import { ReferenceListResData } from "@/types/references/res"
+import {
+  CreateSectionContentSheet,
+  DeleteSectionContentSheet,
+  EditSectionContentSheet,
+} from "@/components/app/knowledge/detail/content/operations"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,16 +17,6 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import {
-  CreateSectionContentSheet,
-  DeleteSectionContentSheet,
-  EditSectionContentSheet,
-} from "@/components/app/knowledge/detail/content/operations"
-
-enum ContentType {
-  Video = 1,
-  Files = 2,
-}
 
 interface KnowledgeSectionContentProps {
   content: KnowledgeOneResContent
@@ -29,6 +25,7 @@ interface KnowledgeSectionContentProps {
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: number
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+  contentTypeData: ReferenceListResData[]
 }
 
 export function KnowledgeSectionContent({
@@ -38,6 +35,7 @@ export function KnowledgeSectionContent({
   setContentData,
   activeIndex,
   setActiveIndex,
+  contentTypeData,
 }: KnowledgeSectionContentProps) {
   const [isAddSheetOpen, setIsAddSheetOpen] = React.useState<boolean>(false)
   const [isEditSheetOpen, setIsEditSheetOpen] = React.useState<boolean>(false)
@@ -77,7 +75,11 @@ export function KnowledgeSectionContent({
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
             Tipe:{" "}
-            {content.content_type == ContentType.Video ? "Video" : "Sub Judul"}
+            {
+              contentTypeData.find(
+                (contentX) => contentX.code_ref2 === content.content_type
+              )?.value_ref1
+            }
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
             {content.content_title}
@@ -129,9 +131,15 @@ export function KnowledgeSectionContent({
           id_section={content.id_section}
           open={open}
           setOpen={setOpen}
+          contentTypeData={contentTypeData}
         />
       ) : isEditSheetOpen ? (
-        <EditSectionContentSheet item={content} open={open} setOpen={setOpen} />
+        <EditSectionContentSheet
+          item={content}
+          open={open}
+          setOpen={setOpen}
+          contentTypeData={contentTypeData}
+        />
       ) : (
         <DeleteSectionContentSheet
           item={content}

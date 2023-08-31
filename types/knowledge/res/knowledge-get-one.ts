@@ -28,7 +28,7 @@ export type KnowledgeOneResSection = {
 export type KnowledgeOneResContent = {
   id_content: number
   content_title: string
-  content_type: number
+  content_type: string
   image: string
   link: string
   id_section: number

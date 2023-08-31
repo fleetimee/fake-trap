@@ -4,17 +4,17 @@ import * as React from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
 } from "@tanstack/react-table"
 
-import { CourseByIdResponse } from "@/types/course-res"
-import { UserResponse } from "@/types/user-res"
+import { CourseOneRes } from "@/types/course/res/course-get-one"
+import { UserListRes } from "@/types/user/res"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -39,8 +39,8 @@ export function UserDataTable<TData, TValue>({
   userList,
   courseData,
 }: UserDataTableProps<TData, TValue> & {
-  userList: UserResponse
-  courseData: CourseByIdResponse
+  userList: UserListRes
+  courseData: CourseOneRes
 }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

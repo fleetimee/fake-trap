@@ -1,12 +1,16 @@
-import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
+import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { AccordionTrigger } from "@/components/ui/accordion"
 
-export function CourseKnowledgeSectionList(props: {
-  section: KnowledgeByIdSectionData
-}) {
+interface CourseKnowledgeSectionListProps {
+  section: KnowledgeOneResSection
+}
+
+export function CourseKnowledgeSectionList({
+  section,
+}: CourseKnowledgeSectionListProps) {
   return (
     <AccordionTrigger className="font-heading text-base font-bold">
-      {props.section.section_title}
+      {section.section_title}
     </AccordionTrigger>
   )
 }

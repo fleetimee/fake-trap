@@ -1,6 +1,10 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
+import { CourseOneRes } from "@/types/course/res/course-get-one"
+import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { QuizListRes } from "@/types/quiz/res"
+import { UserListRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
 import {
   getAllQuizDataWithNullSection,
@@ -31,35 +35,120 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function DetailCourse({
-  params,
-}: {
-  params: { detail: string }
-}) {
+interface GetOneCourseProps {
+  token: string | undefined
+  idCourse: string
+}
+
+async function getOneCourse({
+  token,
+  idCourse,
+}: GetOneCourseProps): Promise<CourseOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetUsersListProps {
+  token: string | undefined
+  limit: number
+  page: number
+}
+
+async function getUsersList({
+  token,
+  limit,
+  page,
+}: GetUsersListProps): Promise<UserListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users?limit=${limit}&page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetQuizListWithNullSectionProps {
+  token: string | undefined
+  isNull: boolean
+}
+
+async function getQuizListWithNullSection({
+  token,
+  isNull,
+}: GetQuizListWithNullSectionProps): Promise<QuizListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz?isNullSection=${isNull}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetOneKnowledgeProps {
+  token: string | undefined
+  knowledgeId: string
+}
+
+async function getOneKnowledge({
+  token,
+  knowledgeId,
+}: GetOneKnowledgeProps): Promise<KnowledgeOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${knowledgeId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+export default async function DetailCourse({ params }: Props) {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const detailCourseData = getCourseDataById({
-    id: params.detail,
-    token: user?.token,
-  })
-
-  const userList = getAllUsersData({ token: user?.token })
-
-  const quizList = getAllQuizDataWithNullSection({ token: user?.token })
-
   const [courseDataResp, userDataResp, quizResp] = await Promise.all([
-    detailCourseData,
-    userList,
-    quizList,
+    getOneCourse({ token: user?.token, idCourse: params.detail }),
+    getUsersList({ token: user?.token, limit: 1000, page: 1 }),
+    getQuizListWithNullSection({ token: user?.token, isNull: true }),
   ])
 
-  const courseKnowledgeResp = await getKnowledgeDataById({
-    id: courseDataResp.data.id_knowledge,
+  const courseKnowledgeResp = await getOneKnowledge({
     token: user?.token,
+    knowledgeId: courseDataResp.data.id_knowledge.toString(),
   })
 
   return (

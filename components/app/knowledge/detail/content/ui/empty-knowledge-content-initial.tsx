@@ -2,6 +2,9 @@
 
 import React from "react"
 
+import { ReferenceListResData } from "@/types/references/res"
+import { CreateSectionContentSheet } from "@/components/app/knowledge/detail/content/operations/create-section-content-sheet"
+import { EmptyContent } from "@/components/app/knowledge/detail/ui/knowledge-detail-sidebar-empty"
 import { AccordionContent } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -11,15 +14,15 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { CreateSectionContentSheet } from "@/components/app/knowledge/detail/content/operations/create-section-content-sheet"
-import { EmptyContent } from "@/components/app/knowledge/detail/knowledge-detail-sidebar-empty"
 
 interface EmptyKnowledgeContentInitialProps {
   id_section: number
+  contentTypeData: ReferenceListResData[]
 }
 
 export function EmptyKnowledgeContentInitial({
   id_section,
+  contentTypeData,
 }: EmptyKnowledgeContentInitialProps) {
   const [open, setOpen] = React.useState<boolean>(false)
 
@@ -51,6 +54,7 @@ export function EmptyKnowledgeContentInitial({
         id_section={id_section}
         open={open}
         setOpen={setOpen}
+        contentTypeData={contentTypeData}
       />
     </Sheet>
   )

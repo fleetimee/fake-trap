@@ -6,7 +6,9 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { ReferenceListResData } from "@/types/references/res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -37,14 +39,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
-
-const contentTypes = [
-  { value: 1, label: "Video" },
-  { value: 2, label: "File" },
-  { value: 3, label: "Link" },
-  { value: 4, label: "Text" },
-] as const
 
 const formSchema = z.object({
   content_title: z
@@ -55,13 +49,7 @@ const formSchema = z.object({
       message: "Judul konten tidak boleh lebih dari 40 karakter",
     })
     .nonempty({ message: "Judul konten tidak boleh kosong" }),
-  content_type: z
-    .number({
-      required_error: "Tipe konten harus diisi",
-    })
-    .int({
-      message: "Tipe konten harus berupa angka",
-    }),
+  content_type: z.string(),
   image: z.string().optional(),
   link: z.string().optional(),
   id_section: z.number().int(),
@@ -71,12 +59,14 @@ interface CreateSectionContentSheetProps {
   id_section: number
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  contentTypeData: ReferenceListResData[]
 }
 
 export function CreateSectionContentSheet({
   id_section,
   open,
   setOpen,
+  contentTypeData,
 }: CreateSectionContentSheetProps) {
   const { data: session } = useSession()
 
@@ -88,7 +78,7 @@ export function CreateSectionContentSheet({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content_title: "",
-      content_type: 1,
+      content_type: "",
       image: "",
       link: "",
       id_section: id_section,
@@ -156,7 +146,11 @@ export function CreateSectionContentSheet({
                   Judul Konten <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Sejarah Javascript" {...field} />
+                  <Input
+                    placeholder="Sejarah Javascript"
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
                 <FormDescription>Judul konten anda.</FormDescription>
                 <FormMessage />
@@ -178,16 +172,17 @@ export function CreateSectionContentSheet({
                         <Button
                           variant="outline"
                           role="combobox"
+                          disabled={isLoading}
                           className={cn(
                             "w-full justify-between",
                             !field.value && "text-muted-foreground"
                           )}
                         >
                           {field.value
-                            ? contentTypes.find(
-                                (content) => content.value === field.value
-                              )?.label
-                            : "Select language"}
+                            ? contentTypeData.find(
+                                (content) => content.code_ref2 === field.value
+                              )?.value_ref1
+                            : "Pilih tipe konten"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -195,26 +190,39 @@ export function CreateSectionContentSheet({
                     <PopoverContent className="w-[200px] p-0">
                       <Command>
                         <CommandInput placeholder="Tipe konten..." />
-                        <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
+                        <CommandEmpty>Tipe Konten tidak ditemukan</CommandEmpty>
                         <CommandGroup>
-                          {contentTypes.map((language) => (
+                          {contentTypeData.map((content) => (
                             <CommandItem
-                              value={language.value.toString()}
-                              key={language.value}
+                              value={content.value_ref1}
+                              key={content.id_ref}
                               onSelect={(value) => {
                                 form.clearErrors("content_type")
-                                form.setValue("content_type", parseInt(value))
+                                form.setValue("content_type", content.code_ref2)
+
+                                // also clear the link field if user change the selection
+                                if (content.code_ref2 !== "0012") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0013") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0014") {
+                                  form.setValue("link", "")
+                                }
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  language.value === field.value
+                                  content.code_ref2 === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {content.value_ref1}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -227,7 +235,7 @@ export function CreateSectionContentSheet({
               </FormItem>
             )}
           />
-          {form.watch("content_type") === 1 ? (
+          {form.watch("content_type") === "0012" ? (
             <FormField
               control={form.control}
               name="link"
@@ -238,6 +246,7 @@ export function CreateSectionContentSheet({
                     <Input
                       placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                       {...field}
+                      disabled={isLoading}
                     />
                   </FormControl>
                   <FormDescription>Link video Youtube.</FormDescription>
@@ -245,7 +254,7 @@ export function CreateSectionContentSheet({
                 </FormItem>
               )}
             />
-          ) : form.watch("content_type") === 2 ? (
+          ) : form.watch("content_type") === "0013" ? (
             <FormField
               control={form.control}
               name="link"
@@ -256,6 +265,7 @@ export function CreateSectionContentSheet({
                     <Input
                       placeholder="https://pbs.twimg.com/media/FzDiHrSWIAAQYx9?format=jpg&name=small"
                       {...field}
+                      disabled={isLoading}
                     />
                   </FormControl>
                   <FormDescription>Link ekstensi pdf.</FormDescription>
@@ -263,7 +273,7 @@ export function CreateSectionContentSheet({
                 </FormItem>
               )}
             />
-          ) : form.watch("content_type") === 3 ? (
+          ) : form.watch("content_type") === "0014" ? (
             <FormField
               control={form.control}
               name="link"
@@ -271,14 +281,18 @@ export function CreateSectionContentSheet({
                 <FormItem>
                   <FormLabel>Link</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://example.com" {...field} />
+                    <Input
+                      placeholder="https://example.com"
+                      {...field}
+                      disabled={isLoading}
+                    />
                   </FormControl>
                   <FormDescription>Link Eksternal</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          ) : form.watch("content_type") === 4 ? (
+          ) : form.watch("content_type") === "0015" ? (
             <FormField
               control={form.control}
               name="image"
@@ -286,7 +300,11 @@ export function CreateSectionContentSheet({
                 <FormItem>
                   <FormLabel>Link Gambar</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://example.com" {...field} />
+                    <Input
+                      placeholder="https://example.com"
+                      {...field}
+                      disabled={isLoading}
+                    />
                   </FormControl>
                   <FormDescription>Url Gambar</FormDescription>
                   <FormMessage />
@@ -295,7 +313,7 @@ export function CreateSectionContentSheet({
             />
           ) : null}
 
-          <Button type="submit" className="self-end">
+          <Button type="submit" className="self-end" disabled={isLoading}>
             {isLoading ? (
               <Icons.spinner className="h-5 w-5 animate-spin" />
             ) : (

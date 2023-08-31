@@ -1,17 +1,21 @@
 "use client"
 
-import { Content } from "@/types/content-res"
-import { CourseByIdResponse } from "@/types/course-res"
-import { KnowledgeByIdResponse } from "@/types/knowledge-res"
-import { QuizData, QuizRes } from "@/types/quiz-res"
+import React from "react"
+
+import {
+  CourseOneRes,
+  CourseOneResQuiz,
+} from "@/types/course/res/course-get-one"
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import { QuizListRes } from "@/types/quiz/res"
+import { CourseKnowledgeSectionContent } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-content"
+import { CourseKnowledgeSectionList } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-list"
+import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-knowledge/empty-course-knowledge-content"
+import { EmptyContent } from "@/components/app/knowledge/detail/ui"
 import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CourseKnowledgeSectionContent } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-content"
-import { CourseKnowledgeSectionList } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-list"
-import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-knowledge/empty-course-knowledge-content"
-import { EmptyContent } from "@/components/app/knowledge/detail"
 
 import { CourseSectionContent } from "./detail/content/course-section-content"
 import { CourseSectionQuiz } from "./detail/content/course-section-quiz"
@@ -19,17 +23,19 @@ import { EmptyCourseContentInitial } from "./detail/content/empty-course-content
 import { CreateCourseSectionButton } from "./detail/section/course-create-section-button"
 import { CourseSectionList } from "./detail/section/course-section-list"
 
-export function DetailSidebarCourse(props: {
-  dataKnowledge: KnowledgeByIdResponse
-  dataCourse: CourseByIdResponse
-  dataQuiz: QuizRes
-  contentData: Content
-  contentQuiz: QuizData
-  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
-  setContentData: React.Dispatch<React.SetStateAction<Content>>
+interface CourseDetailShellProps {
+  courseKnowledgeResp: KnowledgeOneRes
+  courseDataResp: CourseOneRes
+  quizResp: QuizListRes
+  contentData: KnowledgeOneResContent
+  contentQuiz: CourseOneResQuiz
+  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
-}) {
+}
+
+export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
@@ -44,15 +50,15 @@ export function DetailSidebarCourse(props: {
 
         <TabsContent value="knowledge">
           <ScrollArea className="h-[660px] w-full">
-            {props.dataKnowledge.data.section ? (
+            {props.courseKnowledgeResp.data.section ? (
               <Accordion
                 type="single"
                 collapsible
                 className="px-4"
-                key={props.dataKnowledge.data.id_knowledge}
-                defaultValue={props.dataKnowledge.data.section[0].id_section.toString()}
+                key={props.courseKnowledgeResp.data.id_knowledge}
+                defaultValue={props.courseKnowledgeResp.data.section[0].id_section.toString()}
               >
-                {props.dataKnowledge.data.section.map((section) => (
+                {props.courseKnowledgeResp.data.section.map((section) => (
                   <AccordionItem
                     key={section.id_section}
                     value={section.id_section.toString()}
@@ -91,18 +97,18 @@ export function DetailSidebarCourse(props: {
 
         <TabsContent value="course">
           <CreateCourseSectionButton
-            id_course={props.dataCourse.data.id_course}
+            id_course={props.courseDataResp.data.id_course}
           />
           <ScrollArea className="h-[600px] w-full">
-            {props.dataCourse.data.section ? (
+            {props.courseDataResp.data.section ? (
               <Accordion
                 type="single"
                 className="px-4"
                 collapsible
-                key={props.dataCourse.data.id_course}
-                defaultValue={props.dataCourse.data.section[0].id_section.toString()}
+                key={props.courseDataResp.data.id_course}
+                defaultValue={props.courseDataResp.data.section[0].id_section.toString()}
               >
-                {props.dataCourse.data.section.map((section) => (
+                {props.courseDataResp.data.section.map((section) => (
                   <AccordionItem
                     key={section.id_section}
                     value={section.id_section.toString()}
@@ -116,7 +122,7 @@ export function DetailSidebarCourse(props: {
                           setContentQuiz={props.setContentQuiz}
                           quizContent={props.contentQuiz}
                           quiz={q}
-                          quizData={props.dataQuiz}
+                          quizData={props.quizResp}
                           activeIndex={props.activeIndex}
                           contentData={props.contentData}
                           setContentData={props.setContentData}
@@ -130,7 +136,7 @@ export function DetailSidebarCourse(props: {
                           contentQuiz={props.contentQuiz}
                           setContentQuiz={props.setContentQuiz}
                           content={content}
-                          quizData={props.dataQuiz}
+                          quizData={props.quizResp}
                           activeIndex={props.activeIndex}
                           contentData={props.contentData}
                           setContentData={props.setContentData}
@@ -142,7 +148,7 @@ export function DetailSidebarCourse(props: {
                       (!section.quiz || section.quiz?.length === 0) && (
                         <EmptyCourseContentInitial
                           id_section={section.id_section}
-                          quizData={props.dataQuiz}
+                          quizData={props.quizResp}
                         />
                       )}
                   </AccordionItem>

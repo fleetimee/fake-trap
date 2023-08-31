@@ -7,7 +7,9 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
+import { ReferenceListResData } from "@/types/references/res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -38,21 +40,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
-const contentTypes = [
-  { value: 1, label: "Video" },
-  { value: 2, label: "File" },
-  { value: 3, label: "Link" },
-  { value: 4, label: "Text" },
-] as const
-
-/**
- * Defines the schema for the knowledge content form.
- */
 const formSchema = z.object({
   content_title: z.string().min(2).max(40).nonempty(),
-  content_type: z.number().int(),
+  content_type: z.string(),
   image: z.string().optional(),
   link: z.string().optional(),
   id_section: z.number().int(),
@@ -62,12 +53,14 @@ interface EditSectionContentSheetProps {
   item: KnowledgeOneResContent
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  contentTypeData: ReferenceListResData[]
 }
 
 export function EditSectionContentSheet({
   item,
   open,
   setOpen,
+  contentTypeData,
 }: EditSectionContentSheetProps) {
   const { data: session } = useSession()
 
@@ -146,7 +139,11 @@ export function EditSectionContentSheet({
               <FormItem>
                 <FormLabel>Judul Konten</FormLabel>
                 <FormControl>
-                  <Input placeholder="Sejarah Javascript" {...field} />
+                  <Input
+                    placeholder="Sejarah Javascript"
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
                 <FormDescription>Judul konten anda.</FormDescription>
                 <FormMessage />
@@ -166,16 +163,17 @@ export function EditSectionContentSheet({
                         <Button
                           variant="outline"
                           role="combobox"
+                          disabled={isLoading}
                           className={cn(
                             "w-full justify-between",
                             !field.value && "text-muted-foreground"
                           )}
                         >
                           {field.value
-                            ? contentTypes.find(
-                                (content) => content.value === field.value
-                              )?.label
-                            : "Select language"}
+                            ? contentTypeData.find(
+                                (content) => content.code_ref2 === field.value
+                              )?.value_ref1
+                            : "Pilih tipe konten"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -183,26 +181,39 @@ export function EditSectionContentSheet({
                     <PopoverContent className="w-[200px] p-0">
                       <Command>
                         <CommandInput placeholder="Tipe konten..." />
-                        <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
+                        <CommandEmpty>Tipe konten tidak ditemukan</CommandEmpty>
                         <CommandGroup>
-                          {contentTypes.map((language) => (
+                          {contentTypeData.map((content) => (
                             <CommandItem
-                              value={language.value.toString()}
-                              key={language.value}
+                              value={content.value_ref1}
+                              key={content.id_ref}
                               onSelect={(value) => {
                                 form.clearErrors("content_type")
-                                form.setValue("content_type", parseInt(value))
+                                form.setValue("content_type", content.code_ref2)
+
+                                // also clear the link field if user change the selection
+                                if (content.code_ref2 !== "0012") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0013") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0014") {
+                                  form.setValue("link", "")
+                                }
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  language.value === field.value
+                                  content.code_ref2 === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {content.value_ref1}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -216,7 +227,7 @@ export function EditSectionContentSheet({
             )}
           />
 
-          {form.watch("content_type") === 1 ? (
+          {form.watch("content_type") === "0012" ? (
             <FormField
               control={form.control}
               name="link"
@@ -227,6 +238,7 @@ export function EditSectionContentSheet({
                     <Input
                       placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                       {...field}
+                      disabled={isLoading}
                     />
                   </FormControl>
                   <FormDescription>Link video Youtube.</FormDescription>
@@ -234,31 +246,70 @@ export function EditSectionContentSheet({
                 </FormItem>
               )}
             />
-          ) : form.watch("content_type") === 2 ? (
+          ) : form.watch("content_type") === "0013" ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link Pdf</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://pbs.twimg.com/media/FzDiHrSWIAAQYx9?format=jpg&name=small"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>Link ekstensi pdf.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === "0014" ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://example.com"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>Link Eksternal</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === "0015" ? (
             <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL Gambar</FormLabel>
+                  <FormLabel>Link Gambar</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="https://pbs.twimg.com/media/FzDiHrSWIAAQYx9?format=jpg&name=small"
+                      placeholder="https://example.com"
                       {...field}
+                      disabled={isLoading}
                     />
                   </FormControl>
-                  <FormDescription>Link gambar.</FormDescription>
+                  <FormDescription>Url Gambar</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           ) : null}
 
-          <Button type="submit" className="self-end">
+          <Button type="submit" className="self-end" disabled={isLoading}>
             {isLoading ? (
               <Icons.spinner className="h-5 w-5 animate-spin" />
             ) : (
-              "Tambah"
+              "Ubah"
             )}
           </Button>
         </form>

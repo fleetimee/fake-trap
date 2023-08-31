@@ -3,10 +3,7 @@
 import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
-import { Accordion, AccordionItem } from "@/components/ui/accordion"
-import { Card } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ReferenceListResData } from "@/types/references/res"
 import {
   EmptyKnowledgeContentInitial,
   KnowledgeSectionContent,
@@ -16,6 +13,10 @@ import {
   EmptyKnowledgeSectionInitial,
   KnowledgeSectionList,
 } from "@/components/app/knowledge/detail/section/ui"
+import { Accordion, AccordionItem } from "@/components/ui/accordion"
+import { Card } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface DetailSidebarKnowledgeProps {
   dataKnowledge: KnowledgeOneRes
@@ -23,6 +24,7 @@ interface DetailSidebarKnowledgeProps {
   activeIndex: number
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
+  contentTypeData: ReferenceListResData[]
 }
 
 export function DetailSidebarKnowledge({
@@ -31,6 +33,7 @@ export function DetailSidebarKnowledge({
   activeIndex,
   setActiveIndex,
   setContentData,
+  contentTypeData,
 }: DetailSidebarKnowledgeProps) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -72,10 +75,12 @@ export function DetailSidebarKnowledge({
                           contentData={contentData}
                           setContentData={setContentData}
                           dataKnowledge={dataKnowledge}
+                          contentTypeData={contentTypeData}
                         />
                       ))
                     ) : (
                       <EmptyKnowledgeContentInitial
+                        contentTypeData={contentTypeData}
                         id_section={section.id_section}
                       />
                     )}

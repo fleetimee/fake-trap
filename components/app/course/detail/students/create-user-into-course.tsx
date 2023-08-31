@@ -8,8 +8,9 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { UserResponse } from "@/types/user-res"
+import { UserListRes } from "@/types/user/res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -41,11 +42,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
-/**
- * Defines a schema for the form data that includes an array of users, each with a UUID string.
- */
 const formSchema = z.object({
   users: z
     .array(
@@ -56,10 +53,15 @@ const formSchema = z.object({
     .nonempty({ message: "Pilih setidaknya satu murid." }),
 })
 
-export function CreateStudentsIntoCourseButton(props: {
-  user: UserResponse
+interface CreateStudentsIntoCourseButtonProps {
+  user: UserListRes
   id_course: number
-}) {
+}
+
+export function CreateStudentsIntoCourseButton({
+  user,
+  id_course,
+}: CreateStudentsIntoCourseButtonProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -80,7 +82,7 @@ export function CreateStudentsIntoCourseButton(props: {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${props.id_course}/users`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${id_course}/users`,
         {
           method: "PUT",
           headers: {
@@ -154,7 +156,7 @@ export function CreateStudentsIntoCourseButton(props: {
                             )}
                           >
                             {field.value
-                              ? props.user.data.find(
+                              ? user.data.find(
                                   (users) =>
                                     users.uuid ===
                                     (field.value && field.value[0]?.uuid)
@@ -169,7 +171,7 @@ export function CreateStudentsIntoCourseButton(props: {
                           <CommandInput placeholder="Jenis Kategori" />
                           <CommandEmpty>User tidak ditemukan</CommandEmpty>
                           <CommandGroup>
-                            {props.user.data.map((user) => (
+                            {user.data.map((user) => (
                               <CommandItem
                                 value={user.uuid}
                                 key={user.uuid}

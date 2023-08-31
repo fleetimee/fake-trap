@@ -5,7 +5,10 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import { ReferenceListResData } from "@/types/references/res"
 import { getYoutubeLastId } from "@/lib/utils"
+import { Icons } from "@/components/icons"
+import { PdfViewer } from "@/components/pdf-viewer"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -21,14 +24,12 @@ import {
 } from "@/components/ui/hover-card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Icons } from "@/components/icons"
-import { PdfViewer } from "@/components/pdf-viewer"
 import { YoutubePlayer } from "@/components/youtube-player"
 
 interface RenderContentProps {
   detailKnowledge: KnowledgeOneRes
   contentData: KnowledgeOneResContent
-  contentType: number
+  contentType: string
 }
 
 export function renderContent({
@@ -37,7 +38,7 @@ export function renderContent({
   contentType,
 }: RenderContentProps) {
   switch (contentType) {
-    case 0:
+    case "":
       return (
         <Image
           src={detailKnowledge.data.image}
@@ -48,13 +49,13 @@ export function renderContent({
         />
       )
 
-    case 1:
+    case "0012":
       return <YoutubePlayer videoId={getYoutubeLastId(contentData.link)} />
 
-    case 2:
+    case "0013":
       return <PdfViewer />
 
-    case 3:
+    case "0014":
       return (
         <Link
           href={contentData.link}
@@ -82,24 +83,15 @@ export function renderContent({
 }
 
 interface RenderContentButtonProps {
-  // detailKnowledge: KnowledgeOneRes
-  // detailKnowledgeContent: KnowledgeOneResContent
-  contentType: number
+  contentType: string
 }
 
-export function renderContentButton({
-  // detailKnowledge,
-  // detailKnowledgeContent,
-  contentType,
-}: RenderContentButtonProps) {
+export function renderContentButton({ contentType }: RenderContentButtonProps) {
   switch (contentType) {
-    case 0:
+    case "0012":
       return null
 
-    case 1:
-      return <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
-
-    case 2:
+    case "0013":
       return (
         <>
           <HoverCard>
@@ -127,6 +119,9 @@ export function renderContentButton({
         </>
       )
 
+    case "0014":
+      return <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
+
     default:
       return null
   }
@@ -135,11 +130,13 @@ export function renderContentButton({
 interface KnowledgeDetailContentProps {
   detailKnowledge: KnowledgeOneRes
   contentData: KnowledgeOneResContent
+  contentTypeData: ReferenceListResData[]
 }
 
 export function KnowledgeDetailContent({
   detailKnowledge,
   contentData,
+  contentTypeData,
 }: KnowledgeDetailContentProps) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">

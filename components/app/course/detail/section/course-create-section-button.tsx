@@ -3,11 +3,12 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { set } from "date-fns"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { CreateButton } from "@/components/create-button"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -28,8 +29,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { CreateButton } from "@/components/create-button"
-import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
   section: z
@@ -50,7 +49,13 @@ const formSchema = z.object({
     }),
 })
 
-export function CreateCourseSectionButton(props: { id_course: number }) {
+interface CreateCourseSectionButtonProps {
+  id_course: number
+}
+
+export function CreateCourseSectionButton({
+  id_course,
+}: CreateCourseSectionButtonProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -71,7 +76,7 @@ export function CreateCourseSectionButton(props: { id_course: number }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${props.id_course}/section`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${id_course}/section`,
         {
           method: "PUT",
           headers: {

@@ -3,6 +3,8 @@
 import React from "react"
 
 import { QuizRes } from "@/types/quiz-res"
+import { QuizListRes } from "@/types/quiz/res"
+import { EmptyContent } from "@/components/app/knowledge/detail/ui/knowledge-detail-sidebar-empty"
 import { AccordionContent } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -11,15 +13,19 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EmptyContent } from "@/components/app/knowledge/detail/knowledge-detail-sidebar-empty"
 
 import { AddCourseContentSheet } from "./create-course-section-content-sheet"
 import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
 
-export function EmptyCourseContentInitial(props: {
+interface EmptyCourseContentInitialProps {
   id_section: number
-  quizData: QuizRes
-}) {
+  quizData: QuizListRes
+}
+
+export function EmptyCourseContentInitial({
+  id_section,
+  quizData,
+}: EmptyCourseContentInitialProps) {
   const [isAddContentOpen, setIsAddContentOpen] = React.useState<boolean>(false)
 
   const [isAddQuizOpen, setIsAddQuizOpen] = React.useState<boolean>(false)
@@ -70,14 +76,14 @@ export function EmptyCourseContentInitial(props: {
       </ContextMenu>
       {isAddContentOpen ? (
         <AddCourseContentSheet
-          id_section={props.id_section}
+          id_section={id_section}
           open={open}
           setOpen={setOpen}
         />
       ) : (
         <AddCourseQuizSheet
-          id_section={props.id_section}
-          quizData={props.quizData}
+          id_section={id_section}
+          quizData={quizData}
           open={open}
           setOpen={setOpen}
         />

@@ -4,26 +4,29 @@ import React from "react"
 import Link from "next/link"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
+import { ReferenceListResData } from "@/types/references/res"
 import {
   DetailSidebarKnowledge,
   KnowledgeDetailContent,
-} from "@/components/app/knowledge/detail"
+} from "@/components/app/knowledge/detail/ui/index"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { toast } from "@/components/ui/use-toast"
 
 interface KnowledgeDetailShellProps {
   detailKnowledgeData: KnowledgeOneRes
+  contentTypeData: ReferenceListResData[]
 }
 
 export function KnowledgeDetailShell({
   detailKnowledgeData,
+  contentTypeData,
 }: KnowledgeDetailShellProps) {
   const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
     content_title: "",
-    content_type: 0,
+    content_type: "",
     id_content: 0,
     id_section: 0,
     image: "",
@@ -90,10 +93,11 @@ export function KnowledgeDetailShell({
           </Link>
         </div>
       </div>
-      <div className="flex h-auto  flex-col gap-4 px-2 lg:flex-row">
+      <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <KnowledgeDetailContent
           detailKnowledge={detailKnowledgeData}
           contentData={contentData}
+          contentTypeData={contentTypeData}
         />
         <DetailSidebarKnowledge
           dataKnowledge={detailKnowledgeData}
@@ -101,6 +105,7 @@ export function KnowledgeDetailShell({
           contentData={contentData}
           activeIndex={activeIndex}
           setActiveIndex={setActiveIndex}
+          contentTypeData={contentTypeData}
         />
       </div>
     </div>

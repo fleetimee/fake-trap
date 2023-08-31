@@ -1,7 +1,11 @@
 import React from "react"
 
-import { Content } from "@/types/content-res"
-import { QuizData, QuizRes } from "@/types/quiz-res"
+import {
+  CourseOneResContent,
+  CourseOneResQuiz,
+} from "@/types/course/res/course-get-one"
+import { KnowledgeOneResContent } from "@/types/knowledge/res"
+import { QuizListRes } from "@/types/quiz/res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,16 +20,18 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { AddCourseContentSheet } from "./create-course-section-content-sheet"
 import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
 
-export function CourseSectionContent(props: {
-  content: Content
-  quizData: QuizRes
-  contentQuiz: QuizData
-  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
-  contentData: Content
-  setContentData: React.Dispatch<React.SetStateAction<Content>>
+interface QuizSectionContentProps {
+  contentQuiz: CourseOneResQuiz
+  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
+  content: CourseOneResContent
+  quizData: QuizListRes
   activeIndex: string
+  contentData: KnowledgeOneResContent
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
-}) {
+}
+
+export function CourseSectionContent({ ...props }: QuizSectionContentProps) {
   const [isAddContentOpen, setIsAddContentOpen] = React.useState<boolean>(false)
 
   const [isAddQuizOpen, setIsAddQuizOpen] = React.useState<boolean>(false)
@@ -54,7 +60,7 @@ export function CourseSectionContent(props: {
                 props.setContentQuiz({
                   id_quiz: 0,
                   quiz_title: "",
-                  quiz_type: 0,
+                  quiz_type: "",
                   id_section: 0,
                   quiz_desc: "",
                   created_at: new Date(),

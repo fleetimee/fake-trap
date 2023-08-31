@@ -8,8 +8,9 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { QuizRes } from "@/types/quiz-res"
+import { QuizListRes } from "@/types/quiz/res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -39,7 +40,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
   quiz: z
@@ -55,12 +55,14 @@ const formSchema = z.object({
     .nonempty({ message: "Pilih setidaknya satu quiz." }),
 })
 
-export function AddCourseQuizSheet(props: {
+interface AddCourseQuizSheetProps {
   id_section: number
-  quizData: QuizRes
+  quizData: QuizListRes
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+}
+
+export function AddCourseQuizSheet({ ...props }: AddCourseQuizSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()

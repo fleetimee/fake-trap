@@ -4,9 +4,17 @@ import Link from "next/link"
 
 import { Content } from "@/types/content-res"
 import { CourseByIdResponse } from "@/types/course-res"
+import {
+  CourseOneRes,
+  CourseOneResQuiz,
+} from "@/types/course/res/course-get-one"
+import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizData } from "@/types/quiz-res"
 import { UserResponse } from "@/types/user-res"
+import { UserListRes } from "@/types/user/res"
 import { convertDatetoString, getYoutubeLastId } from "@/lib/utils"
+import { Icons } from "@/components/icons"
+import { PdfViewer } from "@/components/pdf-viewer"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -17,45 +25,45 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Icons } from "@/components/icons"
-import { PdfViewer } from "@/components/pdf-viewer"
 import { YoutubePlayer } from "@/components/youtube-player"
 
 import { columnUserCourse } from "./user-columns"
 import { UserDataTable } from "./user-data-table"
 
-export function renderContentCourse(
-  contentType: number,
-  props: {
-    data: CourseByIdResponse
-    user: UserResponse
-    contentData: Content
-    setContentData: React.Dispatch<React.SetStateAction<Content>>
-    activeIndex: string
-    setActiveIndex: React.Dispatch<React.SetStateAction<string>>
-  }
-) {
-  switch (contentType) {
-    case 0:
+interface RenderContentCourseProps {
+  contentType: string
+  courseDataResp: CourseOneRes
+  userDataResp: UserListRes
+  contentData: KnowledgeOneResContent
+  contentQuiz: CourseOneResQuiz
+  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
+  activeIndex: string
+  setActiveIndex: React.Dispatch<React.SetStateAction<string>>
+}
+
+export function renderContentCourse({ ...props }: RenderContentCourseProps) {
+  switch (props.contentType) {
+    case "":
       return (
         <Image
-          src={props.data.data.image}
-          alt={props.data.data.course_name}
+          src={props.courseDataResp.data.image}
+          alt={props.courseDataResp.data.course_name}
           className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
           width={1280}
           height={720}
         />
       )
 
-    case 1:
+    case "0012":
       return (
         <YoutubePlayer videoId={getYoutubeLastId(props.contentData.link)} />
       )
 
-    case 2:
+    case "0013":
       return <PdfViewer />
 
-    case 3:
+    case "0014":
       return (
         <Link
           href={props.contentData.link}
@@ -64,8 +72,8 @@ export function renderContentCourse(
           className="flex flex-col gap-4"
         >
           <Image
-            src={props.data.data.image}
-            alt={props.data.data.course_name}
+            src={props.courseDataResp.data.image}
+            alt={props.courseDataResp.data.course_name}
             className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
             width={1280}
             height={720}
@@ -82,31 +90,49 @@ export function renderContentCourse(
   }
 }
 
-export function CourseDetailContent(props: {
-  data: CourseByIdResponse
-  user: UserResponse
-  contentData: Content
-  contentQuiz: QuizData
-  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
-  setContentData: React.Dispatch<React.SetStateAction<Content>>
+interface CourseDetailContentProps {
+  courseDataResp: CourseOneRes
+  userDataResp: UserListRes
+  contentData: KnowledgeOneResContent
+  contentQuiz: CourseOneResQuiz
+  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
-}) {
+}
+
+export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
         <div className="flex flex-row items-center justify-between">
           <p className="grow break-all font-heading text-3xl">
-            {props.data.data.course_name}
+            {props.courseDataResp.data.course_name}
           </p>
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
 
-        {props.contentQuiz.id_quiz == 0 ? (
-          renderContentCourse(props.contentData.content_type, props)
-        ) : props.contentQuiz ? (
-          <p>Test</p>
-        ) : null}
+        {/*{props.contentQuiz.id_quiz == 0 ? (*/}
+        {/*  renderContentCourse(props.contentData.content_type, props)*/}
+        {/*) : props.contentQuiz ? (*/}
+        {/*  <p>Test</p>*/}
+        {/*) : null}*/}
+
+        {props.contentQuiz.id_quiz == 0
+          ? renderContentCourse({
+              contentQuiz: props.contentQuiz,
+              contentType: props.contentData.content_type,
+              courseDataResp: props.courseDataResp,
+              userDataResp: props.userDataResp,
+              contentData: props.contentData,
+              setContentQuiz: props.setContentQuiz,
+              setContentData: props.setContentData,
+              activeIndex: props.activeIndex,
+              setActiveIndex: props.setActiveIndex,
+            })
+          : props.contentQuiz
+          ? null
+          : null}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">
@@ -139,7 +165,7 @@ export function CourseDetailContent(props: {
               </CardHeader>
               <CardContent className="space-y-2">
                 <ScrollArea className="h-[300px] w-full">
-                  <p>{props.data.data.course_desc}</p>
+                  <p>{props.courseDataResp.data.course_desc}</p>
                 </ScrollArea>
               </CardContent>
             </Card>
@@ -159,7 +185,7 @@ export function CourseDetailContent(props: {
                       <p>
                         <span className="font-bold">Tanggal mulai:</span>{" "}
                         {convertDatetoString(
-                          props.data.data.date_start.toString()
+                          props.courseDataResp.data.date_start.toString()
                         )}
                       </p>
                     </li>
@@ -167,7 +193,7 @@ export function CourseDetailContent(props: {
                       <p>
                         <span className="font-bold">Tanggal berakhir:</span>{" "}
                         {convertDatetoString(
-                          props.data.data.date_end.toString()
+                          props.courseDataResp.data.date_end.toString()
                         )}
                       </p>
                     </li>
@@ -189,9 +215,13 @@ export function CourseDetailContent(props: {
                   <div>
                     <UserDataTable
                       columns={columnUserCourse}
-                      data={props.data.data.users ? props.data.data.users : []}
-                      userList={props.user}
-                      courseData={props.data}
+                      data={
+                        props.courseDataResp.data.users
+                          ? props.courseDataResp.data.users
+                          : []
+                      }
+                      userList={props.userDataResp}
+                      courseData={props.courseDataResp}
                     />
                   </div>
                 </ScrollArea>

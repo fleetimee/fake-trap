@@ -1,7 +1,8 @@
 import React from "react"
 
-import { Content } from "@/types/content-res"
-import { QuizData, QuizRes } from "@/types/quiz-res"
+import { CourseOneResQuiz } from "@/types/course/res/course-get-one"
+import { KnowledgeOneResContent } from "@/types/knowledge/res"
+import { QuizListRes } from "@/types/quiz/res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,16 +17,18 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { AddCourseContentSheet } from "./create-course-section-content-sheet"
 import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
 
-export function CourseSectionQuiz(props: {
-  quiz: QuizData
-  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
-  quizContent: QuizData
-  quizData: QuizRes
+interface CourseSectionQuizProps {
+  quiz: CourseOneResQuiz
+  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
+  quizContent: CourseOneResQuiz
+  quizData: QuizListRes
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
-  contentData: Content
-  setContentData: React.Dispatch<React.SetStateAction<Content>>
-}) {
+  contentData: KnowledgeOneResContent
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
+}
+
+export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
   const [isAddContentOpen, setIsAddContentOpen] = React.useState<boolean>(false)
 
   const [isAddQuizOpen, setIsAddQuizOpen] = React.useState<boolean>(false)
@@ -51,11 +54,13 @@ export function CourseSectionQuiz(props: {
 
                 props.setContentData({
                   content_title: "",
-                  content_type: 0,
+                  content_type: "",
                   id_content: 0,
                   id_section: 0,
                   image: "",
                   link: "",
+                  created_at: new Date(),
+                  updated_at: new Date(),
                 })
 
                 props.setContentQuiz(props.quiz)

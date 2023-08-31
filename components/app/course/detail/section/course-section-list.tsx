@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { Section } from "@/types/section-res"
+import { CourseOneResSection } from "@/types/course/res/course-get-one"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -13,7 +13,11 @@ import {
 } from "@/components/ui/context-menu"
 import { Sheet } from "@/components/ui/sheet"
 
-export function CourseSectionList(props: { item: Section }) {
+interface CourseSectionListProps {
+  item: CourseOneResSection
+}
+
+export function CourseSectionList({ item }: CourseSectionListProps) {
   const [isEditSectionOpen, setIsEditSectionOpen] =
     React.useState<boolean>(false)
 
@@ -27,15 +31,15 @@ export function CourseSectionList(props: { item: Section }) {
       <ContextMenu>
         <ContextMenuTrigger>
           <AccordionTrigger className="font-heading text-base font-bold">
-            {props.item.section_title}
+            {item.section_title}
           </AccordionTrigger>
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuItem inset disabled>
-            ID Section: {props.item.id_section}
+            ID Section: {item.id_section}
           </ContextMenuItem>
           <ContextMenuItem inset disabled>
-            {props.item.section_title}
+            {item.section_title}
           </ContextMenuItem>
           <ContextMenuSeparator />
           <ContextMenuItem inset disabled>

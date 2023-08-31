@@ -1,18 +1,23 @@
-import { Content } from "@/types/content-res"
-import { KnowledgeByIdSectionContentData } from "@/types/knowledge-res"
-import { QuizData } from "@/types/quiz-res"
+import React from "react"
+
+import { CourseOneResQuiz } from "@/types/course/res/course-get-one"
+import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 
-export function CourseKnowledgeSectionContent(props: {
-  content: KnowledgeByIdSectionContentData
-  contentData: Content
-  contentQuiz: QuizData
-  setContentQuiz: React.Dispatch<React.SetStateAction<QuizData>>
-  setContentData: React.Dispatch<React.SetStateAction<Content>>
+interface CourseKnowledgeSectionContentProps {
+  content: KnowledgeOneResContent
+  contentData: KnowledgeOneResContent
+  contentQuiz: CourseOneResQuiz
+  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
+  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
-}) {
+}
+
+export function CourseKnowledgeSectionContent({
+  ...props
+}: CourseKnowledgeSectionContentProps) {
   return (
     <AccordionContent key={props.content.id_content} className="py-1">
       <Button
@@ -24,7 +29,7 @@ export function CourseKnowledgeSectionContent(props: {
           props.setContentQuiz({
             id_quiz: 0,
             quiz_title: "",
-            quiz_type: 0,
+            quiz_type: "",
             id_section: 0,
             quiz_desc: "",
             created_at: new Date(),

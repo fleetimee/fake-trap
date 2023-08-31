@@ -1,6 +1,7 @@
 import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import { EmptyContent } from "@/components/app/knowledge/detail/ui"
 import {
   Accordion,
   AccordionContent,
@@ -11,7 +12,6 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { EmptyContent } from "@/components/app/knowledge/detail"
 
 interface PublicKnowledgeDetailContentProps {
   dataKnowledge: KnowledgeOneRes
