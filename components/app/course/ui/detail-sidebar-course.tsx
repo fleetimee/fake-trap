@@ -5,6 +5,7 @@ import React from "react"
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
+import { ReferenceListRes } from "@/types/references/res"
 import {
   CourseSectionContent,
   CourseSectionQuiz,
@@ -33,6 +34,7 @@ interface CourseDetailShellProps {
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
+  contentTypeResp: ReferenceListRes
 }
 
 export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
@@ -119,6 +121,7 @@ export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
                     {section.quiz &&
                       section.quiz?.map((q) => (
                         <CourseSectionQuiz
+                          contentTypeResp={props.contentTypeResp}
                           setContentQuiz={props.setContentQuiz}
                           quizContent={props.contentQuiz}
                           quiz={q}
@@ -141,6 +144,7 @@ export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
                           contentData={props.contentData}
                           setContentData={props.setContentData}
                           setActiveIndex={props.setActiveIndex}
+                          contentTypeResp={props.contentTypeResp}
                         />
                       ))}
 
@@ -149,6 +153,7 @@ export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
                         <EmptyCourseContentInitial
                           id_section={section.id_section}
                           quizData={props.quizResp}
+                          contentTypeResp={props.contentTypeResp}
                         />
                       )}
                   </AccordionItem>

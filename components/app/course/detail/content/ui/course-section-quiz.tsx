@@ -3,6 +3,7 @@ import React from "react"
 import { CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
+import { ReferenceListRes } from "@/types/references/res"
 import {
   AddCourseContentSheet,
   AddCourseQuizSheet,
@@ -27,6 +28,7 @@ interface CourseSectionQuizProps {
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
   contentData: KnowledgeOneResContent
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
+  contentTypeResp: ReferenceListRes
 }
 
 export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
@@ -139,6 +141,7 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
           id_section={props.quiz.id_section}
           open={open}
           setOpen={setOpen}
+          contentTypeResp={props.contentTypeResp}
         />
       ) : (
         <AddCourseQuizSheet

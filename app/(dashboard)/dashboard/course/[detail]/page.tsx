@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { UserListRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -27,6 +28,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: detailCourseData.data.course_name,
   }
+}
+
+interface GetContentTypeProps {
+  token: string | undefined
+  refCode: string
+}
+
+async function getContentType({
+  token,
+  refCode,
+}: GetContentTypeProps): Promise<ReferenceListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+  return await res.json()
 }
 
 interface GetOneCourseProps {
@@ -134,11 +158,16 @@ export default async function DetailCourse({ params }: Props) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const [courseDataResp, userDataResp, quizResp] = await Promise.all([
-    getOneCourse({ token: user?.token, idCourse: params.detail }),
-    getUsersList({ token: user?.token, limit: 1000, page: 1 }),
-    getQuizListWithNullSection({ token: user?.token, isNull: true }),
-  ])
+  const [courseDataResp, userDataResp, quizResp, contentType] =
+    await Promise.all([
+      getOneCourse({ token: user?.token, idCourse: params.detail }),
+      getUsersList({ token: user?.token, limit: 1000, page: 1 }),
+      getQuizListWithNullSection({ token: user?.token, isNull: true }),
+      getContentType({
+        token: user?.token,
+        refCode: "001",
+      }),
+    ])
 
   const courseKnowledgeResp = await getOneKnowledge({
     token: user?.token,
@@ -152,6 +181,7 @@ export default async function DetailCourse({ params }: Props) {
         courseKnowledgeResp={courseKnowledgeResp}
         quizResp={quizResp}
         userDataResp={userDataResp}
+        contentTypeResp={contentType}
       />
     </DashboardShell>
   )

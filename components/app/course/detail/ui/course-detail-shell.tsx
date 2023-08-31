@@ -6,6 +6,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { UserListRes } from "@/types/user/res"
 import { CourseDetailContent } from "@/components/app/course/detail/ui"
 import { DetailSidebarCourse } from "@/components/app/course/ui"
@@ -17,6 +18,7 @@ interface CourseDetailShellProps {
   courseDataResp: CourseOneRes
   userDataResp: UserListRes
   quizResp: QuizListRes
+  contentTypeResp: ReferenceListRes
 }
 
 export function CourseDetailShell({
@@ -24,6 +26,7 @@ export function CourseDetailShell({
   courseDataResp,
   userDataResp,
   quizResp,
+  contentTypeResp,
 }: CourseDetailShellProps) {
   const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
     content_title: "",
@@ -100,6 +103,7 @@ export function CourseDetailShell({
           contentData={contentData}
           activeIndex={activeIndex}
           setActiveIndex={setActiveIndex}
+          contentTypeResp={contentTypeResp}
         />
       </div>
     </>

@@ -3,6 +3,7 @@
 import React from "react"
 
 import { QuizListRes } from "@/types/quiz/res"
+import { ReferenceListRes } from "@/types/references/res"
 import {
   AddCourseContentSheet,
   AddCourseQuizSheet,
@@ -20,11 +21,13 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 interface EmptyCourseContentInitialProps {
   id_section: number
   quizData: QuizListRes
+  contentTypeResp: ReferenceListRes
 }
 
 export function EmptyCourseContentInitial({
   id_section,
   quizData,
+  contentTypeResp,
 }: EmptyCourseContentInitialProps) {
   const [isAddContentOpen, setIsAddContentOpen] = React.useState<boolean>(false)
 
@@ -79,6 +82,7 @@ export function EmptyCourseContentInitial({
           id_section={id_section}
           open={open}
           setOpen={setOpen}
+          contentTypeResp={contentTypeResp}
         />
       ) : (
         <AddCourseQuizSheet

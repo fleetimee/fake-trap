@@ -8,7 +8,9 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -39,7 +41,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const contentTypes = [
   { value: 1, label: "Video" },
@@ -59,21 +60,25 @@ const formSchema = z.object({
     .nonempty({
       message: "Judul konten harus diisi",
     }),
-  content_type: z
-    .number({
-      required_error: "Tipe konten harus diisi",
-    })
-    .int(),
+  content_type: z.string(),
   image: z.string().optional(),
   link: z.string().optional(),
   id_section: z.number().int(),
 })
 
-export function AddCourseContentSheet(props: {
+interface AddCourseContentSheetProps {
   id_section: number
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+  contentTypeResp: ReferenceListRes
+}
+
+export function AddCourseContentSheet({
+  id_section,
+  open,
+  setOpen,
+  contentTypeResp,
+}: AddCourseContentSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -84,10 +89,10 @@ export function AddCourseContentSheet(props: {
     resolver: zodResolver(formSchema),
     defaultValues: {
       content_title: "",
-      content_type: 1,
+      content_type: "",
       image: "",
       link: "",
-      id_section: props.id_section,
+      id_section: id_section,
     },
   })
 
@@ -115,7 +120,7 @@ export function AddCourseContentSheet(props: {
 
         router.refresh()
         form.reset()
-        props.setOpen(false)
+        setOpen(false)
       } else {
         throw new Error("Gagal membuat konten")
       }
@@ -152,7 +157,11 @@ export function AddCourseContentSheet(props: {
                   Judul Konten <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Sejarah Javascript" {...field} />
+                  <Input
+                    placeholder="Sejarah Javascript"
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
                 <FormDescription>Judul konten anda.</FormDescription>
                 <FormMessage />
@@ -174,15 +183,16 @@ export function AddCourseContentSheet(props: {
                         <Button
                           variant="outline"
                           role="combobox"
+                          disabled={isLoading}
                           className={cn(
                             "w-full justify-between",
                             !field.value && "text-muted-foreground"
                           )}
                         >
                           {field.value
-                            ? contentTypes.find(
-                                (content) => content.value === field.value
-                              )?.label
+                            ? contentTypeResp.data.find(
+                                (content) => content.code_ref2 === field.value
+                              )?.value_ref1
                             : "Pilih Tipe Konten"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -193,24 +203,37 @@ export function AddCourseContentSheet(props: {
                         <CommandInput placeholder="Tipe konten..." />
                         <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
                         <CommandGroup>
-                          {contentTypes.map((language) => (
+                          {contentTypeResp.data.map((content) => (
                             <CommandItem
-                              value={language.value.toString()}
-                              key={language.value}
+                              value={content.value_ref1}
+                              key={content.id_ref}
                               onSelect={(value) => {
                                 form.clearErrors("content_type")
-                                form.setValue("content_type", parseInt(value))
+                                form.setValue("content_type", content.code_ref2)
+
+                                // also clear the link field if user change the selection
+                                if (content.code_ref2 !== "0012") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0013") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0014") {
+                                  form.setValue("link", "")
+                                }
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  language.value === field.value
+                                  content.code_ref2 === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {content.value_ref1}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -223,7 +246,7 @@ export function AddCourseContentSheet(props: {
               </FormItem>
             )}
           />
-          {form.watch("content_type") === 1 ? (
+          {form.watch("content_type") === "0012" ? (
             <FormField
               control={form.control}
               name="link"
@@ -234,6 +257,7 @@ export function AddCourseContentSheet(props: {
                     <Input
                       placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                       {...field}
+                      disabled={isLoading}
                     />
                   </FormControl>
                   <FormDescription>Link video Youtube.</FormDescription>
@@ -241,27 +265,66 @@ export function AddCourseContentSheet(props: {
                 </FormItem>
               )}
             />
-          ) : form.watch("content_type") === 2 ? (
+          ) : form.watch("content_type") === "0013" ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link Pdf</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://pbs.twimg.com/media/FzDiHrSWIAAQYx9?format=jpg&name=small"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>Link ekstensi pdf.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === "0014" ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://example.com"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>Link Eksternal</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === "0015" ? (
             <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL Gambar</FormLabel>
+                  <FormLabel>Link Gambar</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="https://pbs.twimg.com/media/FzDiHrSWIAAQYx9?format=jpg&name=small"
+                      placeholder="https://example.com"
                       {...field}
+                      disabled={isLoading}
                     />
                   </FormControl>
-                  <FormDescription>Link gambar.</FormDescription>
+                  <FormDescription>Url Gambar</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           ) : null}
 
-          <Button type="submit" className="self-end">
+          <Button type="submit" className="self-end" disabled={isLoading}>
             {isLoading ? (
               <Icons.spinner className="h-5 w-5 animate-spin" />
             ) : (
