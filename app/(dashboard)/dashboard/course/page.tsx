@@ -8,8 +8,8 @@ import {
   getPaginatedKnowledgeData,
 } from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
-import CourseGrid from "@/components/app/course/course-grid"
 import { CreateCourseButton } from "@/components/app/course/operations/create-course-sheet"
+import CourseGrid from "@/components/app/course/ui/course-grid"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"

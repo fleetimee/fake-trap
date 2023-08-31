@@ -3,18 +3,14 @@
 import React from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
 
-import {
-  CourseOneRes,
-  CourseOneResQuiz,
-} from "@/types/course/res/course-get-one"
+import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
 import { UserListRes } from "@/types/user/res"
+import { CourseDetailContent } from "@/components/app/course/detail/ui"
+import { DetailSidebarCourse } from "@/components/app/course/ui"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
-import { DetailSidebarCourse } from "../detail-sidebar-course"
-import { CourseDetailContent } from "./course-detail-content"
 
 interface CourseDetailShellProps {
   courseKnowledgeResp: KnowledgeOneRes

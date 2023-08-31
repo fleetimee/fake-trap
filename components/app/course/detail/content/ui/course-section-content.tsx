@@ -1,8 +1,12 @@
 import React from "react"
 
-import { CourseOneResQuiz } from "@/types/course/res/course-get-one"
+import { CourseOneResContent, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
+import {
+  AddCourseContentSheet,
+  AddCourseQuizSheet,
+} from "@/components/app/course/detail/content/operations"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,21 +18,18 @@ import {
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 
-import { AddCourseContentSheet } from "./create-course-section-content-sheet"
-import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
-
-interface CourseSectionQuizProps {
-  quiz: CourseOneResQuiz
+interface QuizSectionContentProps {
+  contentQuiz: CourseOneResQuiz
   setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
-  quizContent: CourseOneResQuiz
+  content: CourseOneResContent
   quizData: QuizListRes
   activeIndex: string
-  setActiveIndex: React.Dispatch<React.SetStateAction<string>>
   contentData: KnowledgeOneResContent
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
+  setActiveIndex: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
+export function CourseSectionContent({ ...props }: QuizSectionContentProps) {
   const [isAddContentOpen, setIsAddContentOpen] = React.useState<boolean>(false)
 
   const [isAddQuizOpen, setIsAddQuizOpen] = React.useState<boolean>(false)
@@ -45,25 +46,25 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
     <Sheet open={open} onOpenChange={setOpen}>
       <ContextMenu>
         <ContextMenuTrigger>
-          <AccordionContent key={props.quiz.id_quiz} className="py-1">
+          <AccordionContent key={props.content.id_content} className="py-1">
             <Button
-              disabled={props.activeIndex == `course-${props.quiz.id_quiz}`}
               className="flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading active:bg-gray-800"
+              disabled={
+                props.activeIndex == `course-${props.content.id_content}`
+              }
               onClick={() => {
-                props.setActiveIndex(`course-${props.quiz.id_quiz}`)
+                props.setActiveIndex(`course-${props.content.id_content}`)
 
-                props.setContentData({
-                  content_title: "",
-                  content_type: "",
-                  id_content: 0,
+                props.setContentQuiz({
+                  id_quiz: 0,
+                  quiz_title: "",
+                  quiz_type: "",
                   id_section: 0,
-                  image: "",
-                  link: "",
+                  quiz_desc: "",
                   created_at: new Date(),
-                  updated_at: new Date(),
                 })
 
-                props.setContentQuiz(props.quiz)
+                props.setContentData(props.content)
 
                 window.scrollTo({
                   top: 0,
@@ -71,25 +72,25 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
                 })
               }}
             >
-              {props.quiz.quiz_title}
+              {props.content.content_title}
             </Button>
           </AccordionContent>
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuItem inset disabled>
-            #Kuis
+            #Konten
           </ContextMenuItem>
 
           <ContextMenuItem inset disabled>
-            ID Kuis: {props.quiz.id_quiz}
+            ID Konten: {props.content.id_content}
           </ContextMenuItem>
 
           <ContextMenuItem inset disabled>
-            {`Tipe Kuis: ${props.quiz.quiz_type}`}
+            {`Tipe Konten: ${props.content.content_type}`}
           </ContextMenuItem>
 
           <ContextMenuItem inset disabled>
-            {props.quiz.quiz_title}
+            {props.content.content_title}
           </ContextMenuItem>
 
           <ContextMenuSeparator />
@@ -113,13 +114,13 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
             asChild
             id="add-quiz"
             onClick={() => {
-              setIsAddContentOpen(false)
               setIsAddQuizOpen(true)
+              setIsAddContentOpen(false)
               setIsEditContentOpen(false)
               setIsDeleteContentOpen(false)
             }}
           >
-            <ContextMenuItem inset>Tambah Kuis</ContextMenuItem>
+            <ContextMenuItem inset>Tambah Quiz</ContextMenuItem>
           </SheetTrigger>
 
           <ContextMenuSeparator />
@@ -135,13 +136,13 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
       </ContextMenu>
       {isAddContentOpen ? (
         <AddCourseContentSheet
-          id_section={props.quiz.id_section}
+          id_section={props.content.id_section}
           open={open}
           setOpen={setOpen}
         />
       ) : (
         <AddCourseQuizSheet
-          id_section={props.quiz.id_section}
+          id_section={props.content.id_section}
           open={open}
           setOpen={setOpen}
           quizData={props.quizData}

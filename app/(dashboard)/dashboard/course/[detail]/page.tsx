@@ -1,19 +1,13 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
-import { CourseOneRes } from "@/types/course/res/course-get-one"
+import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
 import { UserListRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
-import {
-  getAllQuizDataWithNullSection,
-  getAllUsersData,
-  getCourseDataById,
-  getKnowledgeDataById,
-} from "@/lib/datasource"
 import { getCurrentUser } from "@/lib/session"
-import { CourseDetailShell } from "@/components/app/course/detail/course-detail-shell"
+import { CourseDetailShell } from "@/components/app/course/detail/ui"
 import { DashboardShell } from "@/components/shell"
 
 type Props = {
@@ -25,9 +19,9 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const user = await getCurrentUser()
 
-  const detailCourseData = await getCourseDataById({
-    id: params.detail,
+  const detailCourseData = await getOneCourse({
     token: user?.token,
+    idCourse: params.detail,
   })
 
   return {

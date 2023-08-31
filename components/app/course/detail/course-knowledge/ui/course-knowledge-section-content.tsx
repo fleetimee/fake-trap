@@ -1,6 +1,6 @@
 import React from "react"
 
-import { CourseOneResQuiz } from "@/types/course/res/course-get-one"
+import { CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"

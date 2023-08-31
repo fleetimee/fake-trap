@@ -2,26 +2,26 @@
 
 import React from "react"
 
-import {
-  CourseOneRes,
-  CourseOneResQuiz,
-} from "@/types/course/res/course-get-one"
+import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
-import { CourseKnowledgeSectionContent } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-content"
-import { CourseKnowledgeSectionList } from "@/components/app/course/detail/course-knowledge/course-knowledge-section-list"
-import { EmptyKnowledgeCourse } from "@/components/app/course/detail/course-knowledge/empty-course-knowledge-content"
+import {
+  CourseSectionContent,
+  CourseSectionQuiz,
+  EmptyCourseContentInitial,
+} from "@/components/app/course/detail/content/ui"
+import {
+  CourseKnowledgeSectionContent,
+  CourseKnowledgeSectionList,
+  EmptyKnowledgeCourse,
+} from "@/components/app/course/detail/course-knowledge/ui"
+import { CreateCourseSectionButton } from "@/components/app/course/detail/section/operations"
+import { CourseSectionList } from "@/components/app/course/detail/section/ui"
 import { EmptyContent } from "@/components/app/knowledge/detail/ui"
 import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-import { CourseSectionContent } from "./detail/content/course-section-content"
-import { CourseSectionQuiz } from "./detail/content/course-section-quiz"
-import { EmptyCourseContentInitial } from "./detail/content/empty-course-content-initial"
-import { CreateCourseSectionButton } from "./detail/section/course-create-section-button"
-import { CourseSectionList } from "./detail/section/course-section-list"
 
 interface CourseDetailShellProps {
   courseKnowledgeResp: KnowledgeOneRes

@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { CourseOneResSection } from "@/types/course/res/course-get-one"
+import { CourseOneResSection } from "@/types/course/res"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
   ContextMenu,

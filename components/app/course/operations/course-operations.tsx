@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { CourseListRes, CourseListResData } from "@/types/course/res"
+import { CourseListResData } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -62,7 +62,6 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"

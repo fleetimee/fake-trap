@@ -2,8 +2,11 @@
 
 import React from "react"
 
-import { QuizRes } from "@/types/quiz-res"
 import { QuizListRes } from "@/types/quiz/res"
+import {
+  AddCourseContentSheet,
+  AddCourseQuizSheet,
+} from "@/components/app/course/detail/content/operations"
 import { EmptyContent } from "@/components/app/knowledge/detail/ui/knowledge-detail-sidebar-empty"
 import { AccordionContent } from "@/components/ui/accordion"
 import {
@@ -13,9 +16,6 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-
-import { AddCourseContentSheet } from "./create-course-section-content-sheet"
-import { AddCourseQuizSheet } from "./create-course-section-quiz-sheet"
 
 interface EmptyCourseContentInitialProps {
   id_section: number

@@ -2,23 +2,11 @@
 
 import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown } from "lucide-react"
 
 import { UserData } from "@/types/user-res"
+import { UserOperations } from "@/components/app/course/detail/students/operations"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
-
-import { DeleteStudentsOutOfCourseButton } from "./students/delete-user-from-course"
-import { UserOperations } from "./students/user-operations"
 
 export const columnUserCourse: ColumnDef<UserData>[] = [
   {

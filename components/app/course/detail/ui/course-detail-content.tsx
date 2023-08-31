@@ -2,17 +2,14 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-import { Content } from "@/types/content-res"
-import { CourseByIdResponse } from "@/types/course-res"
-import {
-  CourseOneRes,
-  CourseOneResQuiz,
-} from "@/types/course/res/course-get-one"
+import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
-import { QuizData } from "@/types/quiz-res"
-import { UserResponse } from "@/types/user-res"
 import { UserListRes } from "@/types/user/res"
 import { convertDatetoString, getYoutubeLastId } from "@/lib/utils"
+import {
+  columnUserCourse,
+  UserDataTable,
+} from "@/components/app/course/detail/students/ui"
 import { Icons } from "@/components/icons"
 import { PdfViewer } from "@/components/pdf-viewer"
 import { Button } from "@/components/ui/button"
@@ -26,9 +23,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { YoutubePlayer } from "@/components/youtube-player"
-
-import { columnUserCourse } from "./user-columns"
-import { UserDataTable } from "./user-data-table"
 
 interface RenderContentCourseProps {
   contentType: string
@@ -111,12 +105,6 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
           </p>
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
-
-        {/*{props.contentQuiz.id_quiz == 0 ? (*/}
-        {/*  renderContentCourse(props.contentData.content_type, props)*/}
-        {/*) : props.contentQuiz ? (*/}
-        {/*  <p>Test</p>*/}
-        {/*) : null}*/}
 
         {props.contentQuiz.id_quiz == 0
           ? renderContentCourse({
