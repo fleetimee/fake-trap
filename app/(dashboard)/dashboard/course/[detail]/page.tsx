@@ -5,6 +5,7 @@ import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { ThreadListRes } from "@/types/threads/res/thread-list"
 import { UserListRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -151,6 +152,33 @@ async function getOneKnowledge({
   return await res.json()
 }
 
+interface GetThreadsListProps {
+  idCourse: string
+  token: string | undefined
+  limit: number
+  page: number
+}
+
+async function getThreadList({
+  idCourse,
+  token,
+  limit,
+  page,
+}: GetThreadsListProps): Promise<ThreadListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/threads?limit=${limit}&page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await res.json()
+}
+
 export default async function DetailCourse({ params }: Props) {
   const user = await getCurrentUser()
 
@@ -174,6 +202,13 @@ export default async function DetailCourse({ params }: Props) {
     knowledgeId: courseDataResp.data.id_knowledge.toString(),
   })
 
+  const threadsResp = await getThreadList({
+    idCourse: params.detail,
+    token: user?.token,
+    limit: 1000,
+    page: 1,
+  })
+
   return (
     <DashboardShell>
       <CourseDetailShell
@@ -182,6 +217,7 @@ export default async function DetailCourse({ params }: Props) {
         quizResp={quizResp}
         userDataResp={userDataResp}
         contentTypeResp={contentType}
+        threadRespData={threadsResp.data}
       />
     </DashboardShell>
   )

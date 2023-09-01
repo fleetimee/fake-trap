@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
+import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
 import { convertDatetoString, getYoutubeLastId } from "@/lib/utils"
 import {
@@ -93,6 +94,7 @@ interface CourseDetailContentProps {
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
   activeIndex: string
   setActiveIndex: React.Dispatch<React.SetStateAction<string>>
+  threadRespData: ThreadListResData[]
 }
 
 export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
@@ -142,6 +144,12 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                 className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
               >
                 Murid
+              </TabsTrigger>
+              <TabsTrigger
+                value="forum"
+                className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              >
+                Forum
               </TabsTrigger>
             </TabsList>
           </div>
@@ -213,6 +221,40 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                     />
                   </div>
                 </ScrollArea>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="forum">
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  Forum untuk {props.courseDataResp.data.course_name}
+                </CardTitle>
+                <CardDescription>
+                  Berinteraksilah dengan sesama murid kursus ini
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {props.threadRespData.length > 0 ? (
+                  <ScrollArea className="h-[300px] w-full">
+                    <div className="flex flex-col gap-4">
+                      {props.threadRespData.map((thread, index) => (
+                        <Link
+                          href={`/dashboard/course/${props.courseDataResp.data.id_course}/forum/`}
+                          key={index}
+                        >
+                          <Card>
+                            <CardHeader>
+                              <p className="font-heading text-lg font-bold">
+                                {thread.threads_title}
+                              </p>
+                            </CardHeader>
+                          </Card>
+                        </Link>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                ) : null}
               </CardContent>
             </Card>
           </TabsContent>

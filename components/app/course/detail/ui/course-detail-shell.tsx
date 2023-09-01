@@ -7,6 +7,7 @@ import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
 import { CourseDetailContent } from "@/components/app/course/detail/ui"
 import { DetailSidebarCourse } from "@/components/app/course/ui"
@@ -19,6 +20,7 @@ interface CourseDetailShellProps {
   userDataResp: UserListRes
   quizResp: QuizListRes
   contentTypeResp: ReferenceListRes
+  threadRespData: ThreadListResData[]
 }
 
 export function CourseDetailShell({
@@ -27,6 +29,7 @@ export function CourseDetailShell({
   userDataResp,
   quizResp,
   contentTypeResp,
+  threadRespData,
 }: CourseDetailShellProps) {
   const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
     content_title: "",
@@ -92,6 +95,7 @@ export function CourseDetailShell({
           setContentQuiz={setContentQuiz}
           activeIndex={activeIndex}
           setActiveIndex={setActiveIndex}
+          threadRespData={threadRespData}
         />
         <DetailSidebarCourse
           contentQuiz={contentQuiz}
