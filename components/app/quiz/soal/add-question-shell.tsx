@@ -5,14 +5,13 @@ import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { RocketIcon } from "@radix-ui/react-icons"
 import { z } from "zod"
 
+import { QuestionForm } from "@/components/app/quiz/soal/add-question"
+import { LottieAnimationQuiz } from "@/components/app/quiz/soal/quiz-lottie-animation"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "@/components/ui/use-toast"
-
-import { Button } from "../../../ui/button"
-import { Card } from "../../../ui/card"
-import { Checkbox } from "../../../ui/checkbox"
-import { QuestionForm } from "./add-question"
-import { LottieAnimationQuiz } from "./quiz-lottie-animation"
 
 export function SoalShell(props: {
   idQuiz: string

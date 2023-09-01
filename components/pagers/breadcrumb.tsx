@@ -1,11 +1,10 @@
-"use client "
+"use client"
 
 import React from "react"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
-
-import { Icons } from "../icons"
+import { Icons } from "@/components/icons"
 
 interface BreadcrumbsProps {
   segments: {

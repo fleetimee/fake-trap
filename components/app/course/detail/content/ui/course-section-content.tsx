@@ -7,6 +7,8 @@ import { ReferenceListRes } from "@/types/references/res"
 import {
   AddCourseContentSheet,
   AddCourseQuizSheet,
+  DeleteCourseContentSheet,
+  EditCourseContentSheet,
 } from "@/components/app/course/detail/content/operations"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
@@ -88,7 +90,12 @@ export function CourseSectionContent({ ...props }: QuizSectionContentProps) {
           </ContextMenuItem>
 
           <ContextMenuItem inset disabled>
-            {`Tipe Konten: ${props.content.content_type}`}
+            Tipe Konten:{" "}
+            {
+              props.contentTypeResp.data.find(
+                (item) => item.code_ref2 == props.content.content_type
+              )?.value_ref1
+            }
           </ContextMenuItem>
 
           <ContextMenuItem inset disabled>
@@ -127,13 +134,35 @@ export function CourseSectionContent({ ...props }: QuizSectionContentProps) {
 
           <ContextMenuSeparator />
 
-          <ContextMenuItem inset disabled>
-            Edit Konten
-          </ContextMenuItem>
+          <SheetTrigger
+            className="w-full"
+            asChild
+            id="edit-content"
+            onClick={() => {
+              setIsEditContentOpen(true)
+              setIsAddContentOpen(false)
+              setIsAddQuizOpen(false)
+              setIsDeleteContentOpen(false)
+            }}
+          >
+            <ContextMenuItem inset>Edit Konten</ContextMenuItem>
+          </SheetTrigger>
 
-          <ContextMenuItem inset disabled className="text-red-500">
-            Hapus Konten
-          </ContextMenuItem>
+          <SheetTrigger
+            className="w-full"
+            asChild
+            id="delete-content"
+            onClick={() => {
+              setIsDeleteContentOpen(true)
+              setIsAddContentOpen(false)
+              setIsAddQuizOpen(false)
+              setIsEditContentOpen(false)
+            }}
+          >
+            <ContextMenuItem inset className="text-red-500">
+              Hapus Konten
+            </ContextMenuItem>
+          </SheetTrigger>
         </ContextMenuContent>
       </ContextMenu>
       {isAddContentOpen ? (
@@ -143,14 +172,27 @@ export function CourseSectionContent({ ...props }: QuizSectionContentProps) {
           setOpen={setOpen}
           contentTypeResp={props.contentTypeResp}
         />
-      ) : (
+      ) : isEditContentOpen ? (
+        <EditCourseContentSheet
+          item={props.content}
+          open={open}
+          setOpen={setOpen}
+          contentTypeData={props.contentTypeResp}
+        />
+      ) : isDeleteContentOpen ? (
+        <DeleteCourseContentSheet
+          item={props.content}
+          open={open}
+          setOpen={setOpen}
+        />
+      ) : isAddQuizOpen ? (
         <AddCourseQuizSheet
           id_section={props.content.id_section}
           open={open}
           setOpen={setOpen}
           quizData={props.quizData}
         />
-      )}
+      ) : null}
     </Sheet>
   )
 }

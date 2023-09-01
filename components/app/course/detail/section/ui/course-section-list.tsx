@@ -3,8 +3,10 @@
 import React from "react"
 
 import { CourseOneResSection } from "@/types/course/res"
-import { EditSectionSheet } from "@/components/app/course/detail/section/operations"
-import { DeleteSection } from "@/components/app/course/detail/section/operations/course-delete-section"
+import {
+  DeleteSection,
+  EditSectionSheet,
+} from "@/components/app/course/detail/section/operations"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
   ContextMenu,

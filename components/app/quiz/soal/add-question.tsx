@@ -1,14 +1,13 @@
 "use client"
 
-import { isContext } from "vm"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Button } from "../../../ui/button"
-import { Card } from "../../../ui/card"
-import { Checkbox } from "../../../ui/checkbox"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -16,9 +15,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../ui/form"
-import { Input } from "../../../ui/input"
-import { toast } from "../../../ui/use-toast"
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { toast } from "@/components/ui/use-toast"
 
 export const formSchemaQuestion = z.object({
   id_quiz: z.number(),

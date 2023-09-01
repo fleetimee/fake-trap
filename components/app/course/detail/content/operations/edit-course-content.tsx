@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { CourseOneResContent } from "@/types/course/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -59,47 +60,47 @@ const formSchema = z.object({
   id_section: z.number().int(),
 })
 
-interface AddCourseContentSheetProps {
-  id_section: number
+interface EditCourseContentSheetProps {
+  contentTypeData: ReferenceListRes
+  item: CourseOneResContent
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  contentTypeResp: ReferenceListRes
 }
 
-export function AddCourseContentSheet({
-  id_section,
+export function EditCourseContentSheet({
+  contentTypeData,
+  item,
   open,
   setOpen,
-  contentTypeResp,
-}: AddCourseContentSheetProps) {
+}: EditCourseContentSheetProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
 
-  const [isLoading, setIsloading] = React.useState<boolean>(false)
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content_title: "",
-      content_type: "",
-      image: "",
-      link: "",
-      id_section: id_section,
+      content_title: item.content_title,
+      content_type: item.content_type,
+      image: item.image,
+      link: item.link,
+      id_section: item.id_section,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsloading(true)
+    setIsLoading(true)
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${item.id_content}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
+            Authorization: `Bearer ${session?.user?.token}`,
           },
           body: JSON.stringify(values),
         }
@@ -107,34 +108,32 @@ export function AddCourseContentSheet({
 
       if (response.ok) {
         toast({
-          title: "Konten berhasil dibuat",
-          description: "Konten berhasil dibuat",
+          title: "Berhasil mengubah konten",
+          description: "Konten berhasil diubah",
         })
 
         router.refresh()
+
         form.reset()
         setOpen(false)
       } else {
-        throw new Error("Gagal membuat konten")
+        toast({
+          title: "Gagal mengubah konten",
+          description: "Konten gagal diubah",
+        })
       }
     } catch (error) {
-      toast({
-        title: "Gagal membuat konten",
-        description: "Gagal membuat konten",
-        variant: "destructive",
-      })
+      console.error(error)
     } finally {
-      setIsloading(false)
+      setIsLoading(false)
     }
   }
 
   return (
     <SheetContent size="content">
       <SheetHeader>
-        <SheetTitle>Tambah Konten</SheetTitle>
-        <SheetDescription>
-          Tambah konten baru ke dalam bagian ini.
-        </SheetDescription>
+        <SheetTitle>Edit Konten</SheetTitle>
+        <SheetDescription>Ubah konten yang ingin kamu ubah.</SheetDescription>
       </SheetHeader>
       <Form {...form}>
         <form
@@ -146,9 +145,7 @@ export function AddCourseContentSheet({
             name="content_title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Judul Konten <span className="text-red-500">*</span>
-                </FormLabel>
+                <FormLabel>Judul Konten</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Sejarah Javascript"
@@ -166,9 +163,7 @@ export function AddCourseContentSheet({
             name="content_type"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Tipe Konten <span className="text-red-500">*</span>
-                </FormLabel>
+                <FormLabel>Tipe Konten</FormLabel>
                 <FormControl>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -183,10 +178,10 @@ export function AddCourseContentSheet({
                           )}
                         >
                           {field.value
-                            ? contentTypeResp.data.find(
+                            ? contentTypeData.data.find(
                                 (content) => content.code_ref2 === field.value
                               )?.value_ref1
-                            : "Pilih Tipe Konten"}
+                            : "Pilih tipe konten"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -194,9 +189,9 @@ export function AddCourseContentSheet({
                     <PopoverContent className="w-[200px] p-0">
                       <Command>
                         <CommandInput placeholder="Tipe konten..." />
-                        <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
+                        <CommandEmpty>Tipe konten tidak ditemukan</CommandEmpty>
                         <CommandGroup>
-                          {contentTypeResp.data.map((content) => (
+                          {contentTypeData.data.map((content) => (
                             <CommandItem
                               value={content.value_ref1}
                               key={content.id_ref}
@@ -239,6 +234,7 @@ export function AddCourseContentSheet({
               </FormItem>
             )}
           />
+
           {form.watch("content_type") === "0012" ? (
             <FormField
               control={form.control}
@@ -321,7 +317,7 @@ export function AddCourseContentSheet({
             {isLoading ? (
               <Icons.spinner className="h-5 w-5 animate-spin" />
             ) : (
-              "Tambah"
+              "Ubah"
             )}
           </Button>
         </form>

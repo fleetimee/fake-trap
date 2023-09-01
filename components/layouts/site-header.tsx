@@ -6,18 +6,17 @@ import { signOut } from "next-auth/react"
 import { dashboardConfig } from "@/config/dashboard"
 import { siteConfig } from "@/config/site"
 import { extractToken } from "@/lib/utils"
-
-import { MainNav } from "../main-nav"
-import { MobileNav } from "../mobile-nav"
-import { Avatar, AvatarFallback } from "../ui/avatar"
-import { buttonVariants } from "../ui/button"
+import { MainNav } from "@/components/main-nav"
+import { MobileNav } from "@/components/mobile-nav"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 
 export function SiteHeader(props: {
   user:

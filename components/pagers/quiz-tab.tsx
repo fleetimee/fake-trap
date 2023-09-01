@@ -4,8 +4,7 @@ import React from "react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
-
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface QuizTabProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
   quizId: string

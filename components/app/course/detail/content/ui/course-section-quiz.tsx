@@ -124,16 +124,6 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
           >
             <ContextMenuItem inset>Tambah Kuis</ContextMenuItem>
           </SheetTrigger>
-
-          <ContextMenuSeparator />
-
-          <ContextMenuItem inset disabled>
-            Edit Konten
-          </ContextMenuItem>
-
-          <ContextMenuItem inset disabled className="text-red-500">
-            Hapus Konten
-          </ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
       {isAddContentOpen ? (

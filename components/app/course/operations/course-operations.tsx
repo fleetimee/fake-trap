@@ -492,7 +492,7 @@ export function CourseOperations({
                                 <CommandItem
                                   value={knowledge.knowledge_title}
                                   key={knowledge.id_knowledge}
-                                  onSelect={(value) => {
+                                  onSelect={() => {
                                     form.clearErrors("id_knowledge")
                                     form.setValue(
                                       "id_knowledge",
