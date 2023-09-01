@@ -19,7 +19,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
   }
 
   return (
-    <nav className="sticky top-20 grid items-start gap-2">
+    <nav className="sticky top-20 grid items-start gap-3">
       {items.map((item, index) => {
         const Icon = Icons[item.icon || "arrowRight"]
         return (
@@ -33,9 +33,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
                 )}
               >
                 <Icon className="mr-2 h-6 w-6" />
-                <span className={cn("font-heading text-muted-foreground")}>
-                  {item.title}
-                </span>
+                <span className={cn("font-heading")}>{item.title}</span>
               </span>
             </Link>
           )

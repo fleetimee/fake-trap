@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   SheetContent,
@@ -12,7 +13,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 interface DeleteSectionContentSheetProps {
   item: KnowledgeOneResContent
@@ -22,7 +22,6 @@ interface DeleteSectionContentSheetProps {
 
 export function DeleteSectionContentSheet({
   item,
-  open,
   setOpen,
 }: DeleteSectionContentSheetProps) {
   const { data: session } = useSession()

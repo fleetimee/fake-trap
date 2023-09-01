@@ -4,6 +4,7 @@ import React from "react"
 
 import { CourseOneResSection } from "@/types/course/res"
 import { EditSectionSheet } from "@/components/app/course/detail/section/operations"
+import { DeleteSection } from "@/components/app/course/detail/section/operations/course-delete-section"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -63,7 +64,7 @@ export function CourseSectionList({ item }: CourseSectionListProps) {
               setIsEditSectionOpen(false)
             }}
           >
-            <ContextMenuItem inset disabled className="text-red-500">
+            <ContextMenuItem inset className="text-red-500">
               Delete Section
             </ContextMenuItem>
           </SheetTrigger>
@@ -71,7 +72,9 @@ export function CourseSectionList({ item }: CourseSectionListProps) {
       </ContextMenu>
       {isEditSectionOpen ? (
         <EditSectionSheet item={item} open={open} setOpen={setOpen} />
-      ) : null}
+      ) : (
+        <DeleteSection item={item} open={open} setOpen={setOpen} />
+      )}
     </Sheet>
   )
 }
