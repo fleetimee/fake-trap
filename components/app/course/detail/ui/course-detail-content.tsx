@@ -7,6 +7,7 @@ import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
 import { convertDatetoString, getYoutubeLastId } from "@/lib/utils"
+import { CreateThreadButton } from "@/components/app/course/detail/forum/operations"
 import {
   columnUserCourse,
   UserDataTable,
@@ -227,12 +228,18 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
           <TabsContent value="forum">
             <Card>
               <CardHeader>
-                <CardTitle>
-                  Forum untuk {props.courseDataResp.data.course_name}
-                </CardTitle>
-                <CardDescription>
-                  Berinteraksilah dengan sesama murid kursus ini
-                </CardDescription>
+                <div className="grid grid-cols-5 items-center justify-between gap-4">
+                  <div className="col-span-4">
+                    <CardTitle>
+                      Forum untuk {props.courseDataResp.data.course_name}
+                    </CardTitle>
+                    <CardDescription>
+                      Berinteraksilah dengan sesama murid kursus ini
+                    </CardDescription>
+                  </div>
+
+                  <CreateThreadButton courseDataResp={props.courseDataResp} />
+                </div>
               </CardHeader>
               <CardContent className="space-y-2">
                 {props.threadRespData.length > 0 ? (
@@ -240,14 +247,26 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                     <div className="flex flex-col gap-4">
                       {props.threadRespData.map((thread, index) => (
                         <Link
-                          href={`/dashboard/course/${props.courseDataResp.data.id_course}/forum/`}
+                          href={{
+                            pathname: `/dashboard/course/${props.courseDataResp.data.id_course}/forum/${thread.id_threads}`,
+                            query: {
+                              thread_title: thread.threads_title,
+                            },
+                          }}
                           key={index}
                         >
                           <Card>
                             <CardHeader>
-                              <p className="font-heading text-lg font-bold">
+                              <CardTitle className="font-heading text-lg font-bold">
                                 {thread.threads_title}
-                              </p>
+                              </CardTitle>
+                              <CardDescription className="inline-flex font-heading text-sm text-muted-foreground">
+                                <Icons.close className="mr-2 h-4 w-4" />
+
+                                {convertDatetoString(
+                                  new Date(thread.created_at).toString()
+                                )}
+                              </CardDescription>
                             </CardHeader>
                           </Card>
                         </Link>

@@ -150,6 +150,7 @@ export function CreateStudentsIntoCourseButton({
                           <Button
                             variant="outline"
                             role="combobox"
+                            disabled={isLoading}
                             className={cn(
                               "w-full justify-between",
                               !field.value && "text-muted-foreground"
@@ -207,7 +208,7 @@ export function CreateStudentsIntoCourseButton({
                 </FormItem>
               )}
             />
-            <Button type="submit" className="self-end">
+            <Button type="submit" className="self-end" disabled={isLoading}>
               {isLoading ? (
                 <Icons.spinner className="h-5 w-5 animate-spin" />
               ) : (
