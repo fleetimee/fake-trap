@@ -173,7 +173,10 @@ export function Editor({ id_threads }: EditorProps) {
                 className="dis w-full resize-none appearance-none overflow-hidden bg-transparent text-xs font-bold focus:outline-none"
                 {...register("content")}
               />
-              <div id="editor" className=" min-h-[50px]" />
+              <div
+                id="editor"
+                className=" min-h-[50px] rounded-2xl border  p-4"
+              />
               <p className="text-sm text-gray-500">
                 Use{" "}
                 <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
