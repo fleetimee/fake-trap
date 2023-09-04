@@ -242,7 +242,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                 </div>
               </CardHeader>
               <CardContent className="space-y-2">
-                {props.threadRespData.length > 0 ? (
+                {props.threadRespData ? (
                   <ScrollArea className="h-[300px] w-full">
                     <div className="flex flex-col gap-4">
                       {props.threadRespData.map((thread, index) => (

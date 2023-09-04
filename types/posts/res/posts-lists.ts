@@ -9,7 +9,7 @@ export type PostsListRes = {
 
 export type PostsListResData = {
   id_post: number
-  id_threads: number
+  id_threads: string
   threads_title: string
   content: string
   created_at: Date
