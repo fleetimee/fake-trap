@@ -17,6 +17,9 @@ type Props = {
   params: {
     detail: string
   }
+  searchParams: {
+    [key: string]: string
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -203,12 +206,14 @@ async function getThreadList({
   return await res.json()
 }
 
-export default async function DetailCourse({ params }: Props) {
+export default async function DetailCourse({ params, searchParams }: Props) {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const { quizId } = searchParams ?? {}
 
   const [courseDataResp, userDataResp, quizResp, contentType] =
     await Promise.all([
@@ -233,13 +238,9 @@ export default async function DetailCourse({ params }: Props) {
     page: 1,
   })
 
-  // check if window.localStorage is not null or undefined
-  const quizId =
-    typeof window !== "undefined" ? localStorage.getItem("quizId") : null
-
   const questionResp = await getQuestionList({
     token: user?.token,
-    idQuiz: quizId ?? "1",
+    idQuiz: quizId,
   })
 
   return (
