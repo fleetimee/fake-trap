@@ -14,7 +14,6 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
-    "@dhaiwat10/react-link-preview": "^1.15.0",
     "@editorjs/code": "^2.8.0",
     "@editorjs/editorjs": "^2.26.5",
     "@editorjs/embed": "^2.5.3",
@@ -48,7 +47,6 @@
     "@radix-ui/react-toast": "^1.1.4",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@tanstack/react-table": "^8.9.2",
-    "axios": "^1.5.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
@@ -70,7 +68,6 @@
     "react-editor-js": "^2.1.0",
     "react-embed": "^3.7.0",
     "react-hook-form": "^7.45.0",
-    "react-nice-avatar": "^1.4.1",
     "react-pdf": "^7.1.2",
     "react-select": "^5.7.3",
     "react-textarea-autosize": "^8.5.3",
@@ -78,7 +75,6 @@
     "react-youtube": "^10.1.0",
     "sharp": "^0.31.3",
     "sonner": "^0.7.0",
-    "swr": "^2.2.1",
     "tailwind-merge": "^1.13.2",
     "tailwindcss-animate": "^1.0.6",
     "ytdl-core": "^4.11.5",

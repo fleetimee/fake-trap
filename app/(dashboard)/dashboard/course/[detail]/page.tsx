@@ -1,3 +1,4 @@
+import * as console from "console"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
@@ -215,6 +216,8 @@ export default async function DetailCourse({ params, searchParams }: Props) {
 
   const { quizId } = searchParams ?? {}
 
+  const quidIdInitial = typeof quizId === "string" ? quizId : "1"
+
   const [courseDataResp, userDataResp, quizResp, contentType] =
     await Promise.all([
       getOneCourse({ token: user?.token, idCourse: params.detail }),
@@ -240,7 +243,7 @@ export default async function DetailCourse({ params, searchParams }: Props) {
 
   const questionResp = await getQuestionList({
     token: user?.token,
-    idQuiz: quizId,
+    idQuiz: quidIdInitial,
   })
 
   return (
