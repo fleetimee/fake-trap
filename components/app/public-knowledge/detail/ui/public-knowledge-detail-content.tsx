@@ -3,10 +3,7 @@
 import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
-import {
-  renderContent,
-  renderContentButton,
-} from "@/components/app/knowledge/detail/ui"
+import { renderContent, renderContentButton } from "@/components/render-content"
 import {
   Card,
   CardContent,
@@ -36,6 +33,7 @@ export function PublicKnowledgeDetailContent({
           <div className="flex">
             {renderContentButton({
               contentType: contentData.content_type,
+              link: contentData.link,
             })}
           </div>
         </div>

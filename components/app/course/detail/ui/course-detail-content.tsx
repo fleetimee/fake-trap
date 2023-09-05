@@ -1,20 +1,25 @@
+"use client"
+
+import * as process from "process"
 import React from "react"
-import Image from "next/image"
 import Link from "next/link"
+import axios from "axios"
+import useSWR, { mutate } from "swr"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
+import { QuestionListRes } from "@/types/question/question-list"
+import { QuizListRes, QuizOneRes } from "@/types/quiz/res"
 import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
-import { convertDatetoString, getYoutubeLastId } from "@/lib/utils"
+import { convertDatetoString, swrFetcher } from "@/lib/utils"
 import { CreateThreadButton } from "@/components/app/course/detail/forum/operations"
 import {
   columnUserCourse,
   UserDataTable,
 } from "@/components/app/course/detail/students/ui"
 import { Icons } from "@/components/icons"
-import { PdfViewer } from "@/components/pdf-viewer"
-import { Button } from "@/components/ui/button"
+import { renderContentCourse } from "@/components/render-content"
 import {
   Card,
   CardContent,
@@ -24,71 +29,11 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { YoutubePlayer } from "@/components/youtube-player"
-
-interface RenderContentCourseProps {
-  contentType: string
-  courseDataResp: CourseOneRes
-  userDataResp: UserListRes
-  contentData: KnowledgeOneResContent
-  contentQuiz: CourseOneResQuiz
-  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
-  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
-  activeIndex: string
-  setActiveIndex: React.Dispatch<React.SetStateAction<string>>
-}
-
-export function renderContentCourse({ ...props }: RenderContentCourseProps) {
-  switch (props.contentType) {
-    case "":
-      return (
-        <Image
-          src={props.courseDataResp.data.image}
-          alt={props.courseDataResp.data.course_name}
-          className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
-          width={1280}
-          height={720}
-        />
-      )
-
-    case "0012":
-      return (
-        <YoutubePlayer videoId={getYoutubeLastId(props.contentData.link)} />
-      )
-
-    case "0013":
-      return <PdfViewer />
-
-    case "0014":
-      return (
-        <Link
-          href={props.contentData.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col gap-4"
-        >
-          <Image
-            src={props.courseDataResp.data.image}
-            alt={props.courseDataResp.data.course_name}
-            className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
-            width={1280}
-            height={720}
-          />
-          <Button className="w-full text-left">
-            <Icons.link className="h-4 w-4" />
-            <span className="ml-2">Buka Link</span>
-          </Button>
-        </Link>
-      )
-
-    default:
-      return null
-  }
-}
 
 interface CourseDetailContentProps {
   courseDataResp: CourseOneRes
   userDataResp: UserListRes
+  questionResp: QuestionListRes
   contentData: KnowledgeOneResContent
   contentQuiz: CourseOneResQuiz
   setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
@@ -99,6 +44,21 @@ interface CourseDetailContentProps {
 }
 
 export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
+  const {
+    data: quizData,
+    error: quizError,
+    isLoading: quizIsLoading,
+  } = useSWR<QuizOneRes, Error>(
+    props.contentQuiz !== null
+      ? `http://localhost:1337/secure/quiz/${props.contentQuiz.id_quiz}`
+      : null,
+    (url) =>
+      swrFetcher(
+        url,
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVheEBnbWFpbC5jb20iLCJleHAiOjE3MjQ0MDE0MjcsImlkIjoiMDJjZjBmNjktNTViYi00ZmY3LThlZmQtOWZjMDYzNTNmZWM1Iiwib3JpZ19pYXQiOjE2OTI4NjU0MjcsInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IkFkbWluIiwicm9sZV9kZXNjcmlwdGlvbiI6IkFkbWluIGNhbiBkbyBhbnl0aGluZyIsImNyZWF0ZWRfYXQiOiIyMDIzLTA4LTI0VDE1OjIzOjQ3LjcyNTAwMDIrMDc6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyMy0wOC0yMVQwODowODozNS40MzUzNjErMDc6MDAifV0sInVzZXJuYW1lIjoib2N0YXZpYSJ9.siUhXelV8s7mv_E4H2Q70LyQXYdWtcJ5xwNK3cQqHvQ"
+      )
+  )
+
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
@@ -109,21 +69,28 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
 
-        {props.contentQuiz.id_quiz == 0
-          ? renderContentCourse({
-              contentQuiz: props.contentQuiz,
-              contentType: props.contentData.content_type,
-              courseDataResp: props.courseDataResp,
-              userDataResp: props.userDataResp,
-              contentData: props.contentData,
-              setContentQuiz: props.setContentQuiz,
-              setContentData: props.setContentData,
-              activeIndex: props.activeIndex,
-              setActiveIndex: props.setActiveIndex,
-            })
-          : props.contentQuiz
-          ? null
-          : null}
+        {props.contentQuiz.id_quiz == 0 ? (
+          renderContentCourse({
+            contentQuiz: props.contentQuiz,
+            contentType: props.contentData.content_type,
+            courseDataResp: props.courseDataResp,
+            userDataResp: props.userDataResp,
+            contentData: props.contentData,
+            setContentQuiz: props.setContentQuiz,
+            setContentData: props.setContentData,
+            activeIndex: props.activeIndex,
+            setActiveIndex: props.setActiveIndex,
+          })
+        ) : props.contentQuiz ? (
+          quizIsLoading ? (
+            <p>Loading</p>
+          ) : quizError ? (
+            <p>Error</p>
+          ) : (
+            // @ts-ignore
+            <p>{quizData?.data.quiz_title}</p>
+          )
+        ) : null}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">

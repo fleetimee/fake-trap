@@ -5,6 +5,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import { QuestionListRes } from "@/types/question/question-list"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { ThreadListResData } from "@/types/threads/res"
@@ -19,6 +20,7 @@ interface CourseDetailShellProps {
   courseDataResp: CourseOneRes
   userDataResp: UserListRes
   quizResp: QuizListRes
+  questionResp: QuestionListRes
   contentTypeResp: ReferenceListRes
   threadRespData: ThreadListResData[]
 }
@@ -28,6 +30,7 @@ export function CourseDetailShell({
   courseDataResp,
   userDataResp,
   quizResp,
+  questionResp,
   contentTypeResp,
   threadRespData,
 }: CourseDetailShellProps) {
@@ -89,6 +92,7 @@ export function CourseDetailShell({
         <CourseDetailContent
           courseDataResp={courseDataResp}
           userDataResp={userDataResp}
+          questionResp={questionResp}
           setContentData={setContentData}
           contentData={contentData}
           contentQuiz={contentQuiz}

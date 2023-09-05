@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -96,4 +98,12 @@ export function getYoutubeLastId(url: string) {
     /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/
   const match = url.match(regex)
   return match ? match[1] : url
+}
+
+export function swrFetcher<T>(url: string, token: string) {
+  return fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => res.json()) as Promise<T>
 }

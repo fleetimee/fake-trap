@@ -1,4 +1,5 @@
 import React from "react"
+import { usePathname, useSearchParams } from "next/navigation"
 
 import { CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
@@ -44,6 +45,29 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
 
   const [open, setOpen] = React.useState<boolean>(false)
 
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const quizId = searchParams.get("quizId") ?? "1"
+
+  // Create query string
+  const createQueryString = React.useCallback(
+    (params: Record<string, string>) => {
+      const newSearchParams = new URLSearchParams(searchParams?.toString())
+
+      for (const [key, value] of Object.entries(params)) {
+        if (value === null) {
+          newSearchParams.delete(key)
+        } else {
+          newSearchParams.set(key, String(value))
+        }
+      }
+
+      return newSearchParams.toString()
+    },
+    [searchParams]
+  )
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <ContextMenu>
@@ -65,6 +89,9 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
                   created_at: new Date(),
                   updated_at: new Date(),
                 })
+
+                // write id quiz to localStorage
+                localStorage.setItem("quizId", props.quiz.id_quiz.toString())
 
                 props.setContentQuiz(props.quiz)
 

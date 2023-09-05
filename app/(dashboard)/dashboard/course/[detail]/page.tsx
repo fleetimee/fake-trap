@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 
 import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { QuestionListRes } from "@/types/question/question-list"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { ThreadListRes } from "@/types/threads/res/thread-list"
@@ -152,6 +153,29 @@ async function getOneKnowledge({
   return await res.json()
 }
 
+interface GetQuestionListProps {
+  token: string | undefined
+  idQuiz: string
+}
+
+async function getQuestionList({
+  token,
+  idQuiz,
+}: GetQuestionListProps): Promise<QuestionListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/question/quiz/${idQuiz}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await res.json()
+}
+
 interface GetThreadsListProps {
   idCourse: string
   token: string | undefined
@@ -209,12 +233,22 @@ export default async function DetailCourse({ params }: Props) {
     page: 1,
   })
 
+  // check if window.localStorage is not null or undefined
+  const quizId =
+    typeof window !== "undefined" ? localStorage.getItem("quizId") : null
+
+  const questionResp = await getQuestionList({
+    token: user?.token,
+    idQuiz: quizId ?? "1",
+  })
+
   return (
     <DashboardShell>
       <CourseDetailShell
         courseDataResp={courseDataResp}
         courseKnowledgeResp={courseKnowledgeResp}
         quizResp={quizResp}
+        questionResp={questionResp}
         userDataResp={userDataResp}
         contentTypeResp={contentType}
         threadRespData={threadsResp.data}

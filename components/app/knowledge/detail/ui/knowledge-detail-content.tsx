@@ -4,19 +4,7 @@ import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { ReferenceListResData } from "@/types/references/res"
-import {
-  BookmarkButton,
-  GenericRender,
-  LinkButton,
-  PdfDownloadButton,
-  VideoDownloadButton,
-} from "@/components/buttons-header"
-import {
-  DefaultRender,
-  LinkRender,
-  PdfRender,
-  YoutubeRender,
-} from "@/components/content-renderer"
+import { renderContent, renderContentButton } from "@/components/render-content"
 import {
   Card,
   CardContent,
@@ -26,82 +14,6 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-interface RenderContentProps {
-  detailKnowledge: KnowledgeOneRes
-  contentData: KnowledgeOneResContent
-  contentType: string
-}
-
-export function renderContent({
-  detailKnowledge,
-  contentData,
-  contentType,
-}: RenderContentProps) {
-  switch (contentType) {
-    case "":
-      return (
-        <DefaultRender
-          image={detailKnowledge.data.image}
-          alt={detailKnowledge.data.knowledge_title}
-        />
-      )
-
-    case "0012":
-      return <YoutubeRender link={contentData.link} />
-
-    case "0013":
-      return <PdfRender link={contentData.link} />
-
-    case "0014":
-      return (
-        <LinkRender
-          link={contentData.link}
-          image={detailKnowledge.data.image}
-          alt={detailKnowledge.data.knowledge_title}
-        />
-      )
-
-    case "0016":
-      return <GenericRender link={contentData.link} />
-
-    case "0017":
-      return <GenericRender link={contentData.link} />
-
-    case "0018":
-      return <GenericRender link={contentData.link} />
-
-    default:
-      return null
-  }
-}
-
-interface RenderContentButtonProps {
-  link: string
-  contentType: string
-}
-
-export function renderContentButton({
-  contentType,
-  link,
-}: RenderContentButtonProps) {
-  switch (contentType) {
-    case "0012":
-      return <VideoDownloadButton link={link} />
-
-    case "0013":
-      return <PdfDownloadButton link={link} />
-
-    case "0014":
-      return <LinkButton link={link} />
-
-    case "0017":
-      return <BookmarkButton />
-
-    default:
-      return null
-  }
-}
 
 interface KnowledgeDetailContentProps {
   detailKnowledge: KnowledgeOneRes
