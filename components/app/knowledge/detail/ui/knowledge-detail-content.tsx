@@ -1,15 +1,22 @@
 "use client"
 
 import React from "react"
-import Image from "next/image"
-import Link from "next/link"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { ReferenceListResData } from "@/types/references/res"
-import { getYoutubeLastId } from "@/lib/utils"
-import { Icons } from "@/components/icons"
-import { PdfViewer } from "@/components/pdf-viewer"
-import { Button } from "@/components/ui/button"
+import {
+  BookmarkButton,
+  GenericRender,
+  LinkButton,
+  PdfDownloadButton,
+  VideoDownloadButton,
+} from "@/components/buttons-header"
+import {
+  DefaultRender,
+  LinkRender,
+  PdfRender,
+  YoutubeRender,
+} from "@/components/content-renderer"
 import {
   Card,
   CardContent,
@@ -17,14 +24,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { YoutubePlayer } from "@/components/youtube-player"
 
 interface RenderContentProps {
   detailKnowledge: KnowledgeOneRes
@@ -40,42 +41,35 @@ export function renderContent({
   switch (contentType) {
     case "":
       return (
-        <Image
-          src={detailKnowledge.data.image}
+        <DefaultRender
+          image={detailKnowledge.data.image}
           alt={detailKnowledge.data.knowledge_title}
-          className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
-          width={1280}
-          height={720}
         />
       )
 
     case "0012":
-      return <YoutubePlayer videoId={getYoutubeLastId(contentData.link)} />
+      return <YoutubeRender link={contentData.link} />
 
     case "0013":
-      return <PdfViewer />
+      return <PdfRender link={contentData.link} />
 
     case "0014":
       return (
-        <Link
-          href={contentData.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col gap-4"
-        >
-          <Image
-            src={detailKnowledge.data.image}
-            alt={detailKnowledge.data.knowledge_title}
-            className="aspect-video rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
-            width={1280}
-            height={720}
-          />
-          <Button className="w-full text-left">
-            <Icons.link className="h-4 w-4" />
-            <span className="ml-2">Buka Link</span>
-          </Button>
-        </Link>
+        <LinkRender
+          link={contentData.link}
+          image={detailKnowledge.data.image}
+          alt={detailKnowledge.data.knowledge_title}
+        />
       )
+
+    case "0016":
+      return <GenericRender link={contentData.link} />
+
+    case "0017":
+      return <GenericRender link={contentData.link} />
+
+    case "0018":
+      return <GenericRender link={contentData.link} />
 
     default:
       return null
@@ -83,44 +77,26 @@ export function renderContent({
 }
 
 interface RenderContentButtonProps {
+  link: string
   contentType: string
 }
 
-export function renderContentButton({ contentType }: RenderContentButtonProps) {
+export function renderContentButton({
+  contentType,
+  link,
+}: RenderContentButtonProps) {
   switch (contentType) {
     case "0012":
-      return null
+      return <VideoDownloadButton link={link} />
 
     case "0013":
-      return (
-        <>
-          <HoverCard>
-            <HoverCardTrigger>
-              <Link
-                href={"/sample.pdf"}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icons.save className="h-14 w-14 flex-none  pl-5" />
-              </Link>
-            </HoverCardTrigger>
-            <HoverCardContent className="w-full">
-              <div className="flex justify-between space-x-4">
-                <div className="space-y-1">
-                  <h4 className="text-sm font-semibold">Unduh / Simpan PDF</h4>
-                  <p className="text-sm">
-                    Unduh atau simpan PDF untuk dibaca nanti.
-                  </p>
-                </div>
-              </div>
-            </HoverCardContent>
-          </HoverCard>
-          <Icons.bookmark className="h-14 w-14 flex-none pl-5" />
-        </>
-      )
+      return <PdfDownloadButton link={link} />
 
     case "0014":
-      return <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
+      return <LinkButton link={link} />
+
+    case "0017":
+      return <BookmarkButton />
 
     default:
       return null
@@ -136,7 +112,6 @@ interface KnowledgeDetailContentProps {
 export function KnowledgeDetailContent({
   detailKnowledge,
   contentData,
-  contentTypeData,
 }: KnowledgeDetailContentProps) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
@@ -148,6 +123,7 @@ export function KnowledgeDetailContent({
           <div className="flex">
             {renderContentButton({
               contentType: contentData.content_type,
+              link: contentData.link,
             })}
           </div>
         </div>

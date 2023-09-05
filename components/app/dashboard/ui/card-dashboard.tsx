@@ -1,5 +1,7 @@
 import Image from "next/image"
+import Link from "next/link"
 
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -8,16 +10,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Icons } from "@/components/icons"
 
 interface CardProps {
   title: string
   name: string
   image: string
+  url?: string
+  buttonText?: string
   icon?: keyof typeof Icons
 }
 
-export function CardDashboard({ title, name, image, icon }: CardProps) {
+export function CardDashboard({
+  title,
+  name,
+  image,
+  url,
+  buttonText,
+  icon,
+}: CardProps) {
   const Icon = Icons[icon || "arrowRight"]
 
   return (
@@ -34,16 +44,20 @@ export function CardDashboard({ title, name, image, icon }: CardProps) {
         </div>
       </CardHeader>
       <CardContent className="flex flex-col">
-        <Image
-          src={image}
-          alt={`Pic ${name}`}
-          width={500}
-          height={500}
-          className="aspect-video flex-none rounded-md object-cover grayscale transition-all hover:scale-105 hover:grayscale-0"
-        />
+        <Link href={url || "#"}>
+          <Image
+            src={image}
+            alt={`Pic ${name}`}
+            width={500}
+            height={500}
+            className="aspect-video flex-none rounded-md object-cover grayscale transition-all hover:scale-105 hover:grayscale-0"
+          />
+        </Link>
       </CardContent>
       <CardFooter className="text-center">
-        <Button className="w-full">Lihat Kursus</Button>
+        <Link href={url || "#"} className="w-full">
+          <Button className="w-full">{buttonText || "Wtf is this?"}</Button>
+        </Link>
       </CardFooter>
     </Card>
   )

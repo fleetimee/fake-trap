@@ -2,9 +2,8 @@
 
 import Youtube, { YouTubeProps } from "react-youtube"
 
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Card } from "@/components/ui/card"
-
-import { AspectRatio } from "./ui/aspect-ratio"
 
 export function YoutubePlayer({ videoId }: YouTubeProps) {
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {

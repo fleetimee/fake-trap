@@ -12,10 +12,12 @@ import {
   ClipboardEdit,
   Copy,
   CreditCard,
+  Download,
   Edit,
   ExternalLink,
   File,
   FileSignature,
+  FileSymlink,
   FileText,
   GraduationCap,
   HelpCircle,
@@ -29,7 +31,6 @@ import {
   MoreVertical,
   Pizza,
   Plus,
-  Save,
   Settings,
   SunMedium,
   Tags,
@@ -37,16 +38,17 @@ import {
   Twitter,
   User,
   X,
-  type LucideIcon,
   type LucideProps,
 } from "lucide-react"
 
 export type Icon = LucideProps
 
 export const Icons = {
+  outsideLink: FileSymlink,
+  download: Download,
   menu: Menu,
   link: ExternalLink,
-  save: Save,
+  save: FileText,
   logo: FileSignature,
   placeholder: Image,
   close: X,

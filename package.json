@@ -67,6 +67,7 @@
     "react-day-picker": "^8.8.0",
     "react-dom": "^18.2.0",
     "react-editor-js": "^2.1.0",
+    "react-embed": "^3.7.0",
     "react-hook-form": "^7.45.0",
     "react-nice-avatar": "^1.4.1",
     "react-pdf": "^7.1.2",

@@ -38,6 +38,8 @@ export async function DashboardKnowledgeHighlight({
       icon="knowledge"
       name={knowledgeResp.data.knowledge_title}
       image={knowledgeResp.data.image}
+      buttonText={`Lihat Pengetahuan`}
+      url={`/dashboard/knowledge/${knowledgeResp.data.id_knowledge}`}
     />
   )
 }

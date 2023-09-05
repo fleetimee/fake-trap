@@ -22,7 +22,10 @@ export async function GET(request: Request, response: Response) {
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
   )
 
-  const data = ytdl(url)
+  const data = ytdl(url, {
+    quality: "highestvideo",
+    filter: "audioandvideo",
+  })
 
   return new Response(data as any, {
     headers: responseHeaders,

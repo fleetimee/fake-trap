@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -191,7 +192,6 @@ export function EditSectionContentSheet({
                                 form.clearErrors("content_type")
                                 form.setValue("content_type", content.code_ref2)
 
-                                // also clear the link field if user change the selection
                                 if (content.code_ref2 !== "0012") {
                                   form.setValue("link", "")
                                 }
@@ -201,6 +201,18 @@ export function EditSectionContentSheet({
                                 }
 
                                 if (content.code_ref2 !== "0014") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0016") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0017") {
+                                  form.setValue("link", "")
+                                }
+
+                                if (content.code_ref2 !== "0018") {
                                   form.setValue("link", "")
                                 }
                               }}
@@ -299,6 +311,90 @@ export function EditSectionContentSheet({
                     />
                   </FormControl>
                   <FormDescription>Url Gambar</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === "0017" ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link Gist Github</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://gist.github.com/mattetti/5914158/f4d1393d83ebedc682a3c8e7bdc6b49670083b84"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Masukkkan link kode snippet dari{" "}
+                    <Link
+                      href={"https://gist.github.com/"}
+                      target="_blank"
+                      className="text-muted-foreground underline"
+                    >
+                      gist
+                    </Link>
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === "0018" ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link Codesandbox</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://codesandbox.io/embed/react-editorjs-example-ng6qzo?fontsize=14&hidenavigation=1&theme=dark"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Masukkkan link kode snippet dari{" "}
+                    <Link
+                      href={"https://codesandbox.io/"}
+                      target="_blank"
+                      className="text-muted-foreground underline"
+                    >
+                      Codesandbox
+                    </Link>
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : form.watch("content_type") === "0016" ? (
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link Soundcloud</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://soundcloud.com/soundcloud/sets/splash-house-2023"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Masukkkan link kode snippet dari{" "}
+                    <Link
+                      href={"https://soundcloud.com/"}
+                      target="_blank"
+                      className="text-muted-foreground underline"
+                    >
+                      Soundcloud
+                    </Link>
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

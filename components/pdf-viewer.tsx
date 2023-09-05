@@ -6,6 +6,7 @@ import { Document, Page, pdfjs } from "react-pdf"
 
 import "react-pdf/dist/esm/Page/TextLayer.css"
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"
+
 import { Button } from "./ui/button"
 import { Card } from "./ui/card"
 import { ScrollArea } from "./ui/scroll-area"
@@ -15,7 +16,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString()
 
-export function PdfViewer() {
+interface PdfViewerProps {
+  link: string
+}
+
+export function PdfViewer({ link }: PdfViewerProps) {
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
 
@@ -27,7 +32,7 @@ export function PdfViewer() {
     <Card className="h-full w-full rounded-2xl">
       <ScrollArea className="h-[695px] w-full">
         <Document
-          file={"/sample.pdf"}
+          file={`${link}`}
           onLoadSuccess={onDocumentLoadSuccess}
           options={{
             standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts`,
