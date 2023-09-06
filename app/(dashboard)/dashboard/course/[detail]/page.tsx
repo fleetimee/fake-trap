@@ -1,10 +1,9 @@
-import * as console from "console"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
-import { QuestionListRes } from "@/types/question/question-list"
+import { QuestionListRes } from "@/types/question/res/question-list"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { ThreadListRes } from "@/types/threads/res/thread-list"
@@ -19,7 +18,7 @@ type Props = {
     detail: string
   }
   searchParams: {
-    [key: string]: string
+    [key: string]: string | string[] | undefined
   }
 }
 
@@ -216,7 +215,7 @@ export default async function DetailCourse({ params, searchParams }: Props) {
 
   const { quizId } = searchParams ?? {}
 
-  const quidIdInitial = typeof quizId === "string" ? quizId : "1"
+  const quizIdInitial = typeof quizId === "string" ? quizId : "1"
 
   const [courseDataResp, userDataResp, quizResp, contentType] =
     await Promise.all([
@@ -243,12 +242,13 @@ export default async function DetailCourse({ params, searchParams }: Props) {
 
   const questionResp = await getQuestionList({
     token: user?.token,
-    idQuiz: quidIdInitial,
+    idQuiz: quizIdInitial,
   })
 
   return (
     <DashboardShell>
       <CourseDetailShell
+        quizIdInitial={quizIdInitial}
         courseDataResp={courseDataResp}
         courseKnowledgeResp={courseKnowledgeResp}
         quizResp={quizResp}

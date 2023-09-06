@@ -4,21 +4,19 @@ import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { MainNavItem } from "@/types"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { useLockBody } from "@/hooks/use-lock-body"
 import { Icons } from "@/components/icons"
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion"
-import { Button } from "./ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+} from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 interface MobileNavProps {
   mainNavItems?: MainNavItem[]

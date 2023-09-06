@@ -5,17 +5,20 @@ import Link from "next/link"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
-import { QuestionListRes } from "@/types/question/question-list"
+import { QuestionListRes } from "@/types/question/res"
 import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
-import { convertDatetoString, swrFetcher } from "@/lib/utils"
+import { convertDatetoString } from "@/lib/utils"
 import { CreateThreadButton } from "@/components/app/course/detail/forum/operations"
+import { CourseQuizForm } from "@/components/app/course/detail/quiz/ui"
+import { QuizFormTemp } from "@/components/app/course/detail/quiz/ui/quiz-form-temp"
 import {
   columnUserCourse,
   UserDataTable,
 } from "@/components/app/course/detail/students/ui"
 import { Icons } from "@/components/icons"
-import { renderContentCourse } from "@/components/render-content"
+import { renderContentCourse, renderQuiz } from "@/components/render-content"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -27,6 +30,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface CourseDetailContentProps {
+  quizIdInitial: string
   courseDataResp: CourseOneRes
   userDataResp: UserListRes
   questionResp: QuestionListRes
@@ -63,9 +67,31 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
               setActiveIndex: props.setActiveIndex,
             })
           : props.contentQuiz
-          ? props.questionResp.data.map((question, index) => (
-              <Card key={index}>{question.question_text}</Card>
-            ))
+          ? // <Card className="flex flex-col items-start justify-between gap-12 p-6">
+            //   {props.questionResp.data.map((question, index) => (
+            //     <CourseQuizForm
+            //       question={question}
+            //       key={question.id_question}
+            //       index={index}
+            //     />
+            //   ))}
+            //   <Button type="submit" className="col-span-1 font-heading">
+            //     Submit
+            //   </Button>
+            // </Card>
+
+            // <QuizFormTemp
+            //   quizIdInitial={props.quizIdInitial}
+            //   questionResp={props.questionResp}
+            //   contentQuiz={props.contentQuiz}
+            // />
+
+            renderQuiz({
+              questionResp: props.questionResp,
+              contentQuiz: props.contentQuiz,
+              quizIdInitial: props.quizIdInitial,
+              idQUiz: props.contentQuiz.id_quiz.toString(),
+            })
           : null}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">

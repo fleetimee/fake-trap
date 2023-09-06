@@ -2,7 +2,9 @@ import React from "react"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import { QuestionListRes } from "@/types/question/res"
 import { UserListRes } from "@/types/user/res"
+import { QuizFormTemp } from "@/components/app/course/detail/quiz/ui/quiz-form-temp"
 import {
   BookmarkButton,
   GenericRender,
@@ -141,5 +143,30 @@ export function renderContentCourse({ ...props }: RenderContentCourseProps) {
 
     default:
       return null
+  }
+}
+
+interface RenderQuizProps {
+  questionResp: QuestionListRes
+  contentQuiz: CourseOneResQuiz
+  quizIdInitial: string
+  idQUiz: string
+}
+
+export function renderQuiz({
+  idQUiz,
+  quizIdInitial,
+  contentQuiz,
+  questionResp,
+}: RenderQuizProps) {
+  switch (idQUiz) {
+    case idQUiz:
+      return (
+        <QuizFormTemp
+          questionResp={questionResp}
+          contentQuiz={contentQuiz}
+          quizIdInitial={quizIdInitial}
+        />
+      )
   }
 }

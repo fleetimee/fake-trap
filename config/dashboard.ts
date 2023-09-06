@@ -64,5 +64,11 @@ export const dashboardConfig: DashboardConfig = {
       icon: "settings",
       items: [],
     },
+    {
+      title: "Profile",
+      href: "/dashboard/me",
+      icon: "pizza",
+      items: [],
+    },
   ],
 }
