@@ -5,23 +5,28 @@ import {
   UserCourseCountRes,
   UserPostCountRes,
   UserQuizCountRes,
+  UserQuizTakenListRes,
   UserRecentPostListRes,
 } from "@/types/me/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import {
-  convertDatetoString,
-  convertDatetoStringShort,
-  extractToken,
-} from "@/lib/utils"
+import { convertDatetoStringShort, extractToken } from "@/lib/utils"
 import {
   AvgScoreCard,
   ProfileCard,
   RecentPostCard,
 } from "@/components/app/me/ui"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export const metadata = {
   title: "Profil Saya",
@@ -156,7 +161,7 @@ interface GetUserQuizTakenList {
 async function getUserQuizTakenList({
   token,
   uuid,
-}: GetUserQuizTakenList): Promise<GetUserQuizTakenList> {
+}: GetUserQuizTakenList): Promise<UserQuizTakenListRes> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizThatUserTaken`,
     {
@@ -210,6 +215,42 @@ export default async function MePages() {
       <AvgScoreCard avgScore={avgScore.data.average_score} />
 
       <RecentPostCard recentPostList={recentPostList} />
+
+      <Card className="col-span-7 flex min-h-[350px] flex-col gap-6 p-6 lg:col-span-7">
+        <div className="flex items-center justify-between">
+          <h1 className="font-heading text-2xl font-light">Riwayat Quiz</h1>
+
+          <Button variant="outline">Lihat semua</Button>
+        </div>
+
+        <Table>
+          <TableCaption>Sebagian quiz ditampilkan</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">ID Quiz</TableHead>
+              <TableHead>Judul</TableHead>
+              <TableHead>Tipe</TableHead>
+              <TableHead>Tanggal</TableHead>
+              <TableHead className="text-right">Skor</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {quizTakenList.data.map((invoice) => (
+              <TableRow key={invoice.id_quiz}>
+                <TableCell className="font-medium">{invoice.id_quiz}</TableCell>
+                <TableCell>{invoice.quiz_title}</TableCell>
+                <TableCell>{invoice.quiz_type}</TableCell>
+                <TableCell>
+                  {convertDatetoStringShort(
+                    new Date(invoice.created_at).toString()
+                  )}
+                </TableCell>
+                <TableCell className="text-right">{invoice.score}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
     </div>
   )
 }
