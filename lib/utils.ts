@@ -17,6 +17,15 @@ export function convertDatetoString(date: string): string {
   })
 }
 
+export function convertDatetoStringShort(date: string): string {
+  const dateObj = new Date(date)
+  return dateObj.toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  })
+}
+
 export function extractToken(token: string | undefined): UserExtracted {
   const tokenParts = token?.split(".")
 

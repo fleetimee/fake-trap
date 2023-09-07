@@ -1,15 +1,175 @@
 import { redirect } from "next/navigation"
-import { generateFromString } from "generate-avatar"
 
+import {
+  UserAvgScoreRes,
+  UserCourseCountRes,
+  UserPostCountRes,
+  UserQuizCountRes,
+  UserRecentPostListRes,
+} from "@/types/me/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  convertDatetoString,
+  convertDatetoStringShort,
+  extractToken,
+} from "@/lib/utils"
+import {
+  AvgScoreCard,
+  ProfileCard,
+  RecentPostCard,
+} from "@/components/app/me/ui"
 import { Card } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 
 export const metadata = {
   title: "Profil Saya",
   description: "Detail mengenai profil anda",
+}
+
+interface GetUserPostCount {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+async function getUserPostCount({
+  token,
+  uuid,
+}: GetUserPostCount): Promise<UserPostCountRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getPostCount`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetUserCourseCount {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+async function getUserCourseCount({
+  token,
+  uuid,
+}: GetUserCourseCount): Promise<UserCourseCountRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getCourseCount`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetUserQuizCount {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+async function getUserQuizCount({
+  token,
+  uuid,
+}: GetUserQuizCount): Promise<UserQuizCountRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizCount`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetUserAvgQuizScore {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+async function getUserAvgQuizScore({
+  token,
+  uuid,
+}: GetUserAvgQuizScore): Promise<UserAvgScoreRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getAverageUserQuiz`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetUserRecentPostList {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+async function getUserRecentPostList({
+  token,
+  uuid,
+}: GetUserRecentPostList): Promise<UserRecentPostListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getRecentPost`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetUserQuizTakenList {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+async function getUserQuizTakenList({
+  token,
+  uuid,
+}: GetUserQuizTakenList): Promise<GetUserQuizTakenList> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizThatUserTaken`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
 }
 
 export default async function MePages() {
@@ -21,29 +181,35 @@ export default async function MePages() {
 
   const tokenExtract = extractToken(user?.token)
 
+  const [
+    postCount,
+    courseCount,
+    quizCount,
+    avgScore,
+    recentPostList,
+    quizTakenList,
+  ] = await Promise.all([
+    getUserPostCount({ token: user?.token, uuid: tokenExtract.id }),
+    getUserCourseCount({ token: user?.token, uuid: tokenExtract.id }),
+    getUserQuizCount({ token: user?.token, uuid: tokenExtract.id }),
+    getUserAvgQuizScore({ token: user?.token, uuid: tokenExtract.id }),
+    getUserRecentPostList({ token: user?.token, uuid: tokenExtract.id }),
+    getUserQuizTakenList({ token: user?.token, uuid: tokenExtract.id }),
+  ])
+
   return (
-    <div className="grid grid-cols-5 items-start justify-between">
-      <Card className="col-span-5 flex  h-auto min-h-[300px] w-auto min-w-[200px] flex-col gap-4 p-4 sm:col-span-3 lg:col-span-2">
-        <h1 className="font-heading text-2xl font-light">Data User</h1>
+    <div className="grid grid-cols-7 items-center justify-between gap-4">
+      <ProfileCard
+        username={tokenExtract.username}
+        email={tokenExtract.email}
+        numberOfPost={postCount.data.number_of_post}
+        numberOfCourse={courseCount.data.number_of_course}
+        numberOfQuiz={quizCount.data.number_of_quiz}
+      />
 
-        <div className="flex items-start justify-start gap-6 space-y-4">
-          <Avatar className="h-20 w-20">
-            <AvatarImage
-              src={`data:image/svg+xml;utf8,${generateFromString(
-                tokenExtract.username
-              )}`}
-            />
-            <AvatarFallback />
-          </Avatar>
+      <AvgScoreCard avgScore={avgScore.data.average_score} />
 
-          <div className="flex flex-col items-start justify-between gap-1 ">
-            <span className=" text-xl font-semibold">
-              {tokenExtract.username}
-            </span>
-            <span className=" text-sm font-semibold">{tokenExtract.email}</span>
-          </div>
-        </div>
-      </Card>
+      <RecentPostCard recentPostList={recentPostList} />
     </div>
   )
 }
