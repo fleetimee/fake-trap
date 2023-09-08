@@ -14,7 +14,7 @@ interface ProfileCardProps {
 
 export function ProfileCard({ ...props }: ProfileCardProps) {
   return (
-    <Card className="col-span-5 flex  h-auto min-h-[350px] w-auto min-w-[250px] flex-col gap-6 p-4  lg:col-span-2">
+    <Card className="col-span-7 flex  h-auto min-h-[350px] w-auto min-w-[250px] flex-col gap-6 p-4  lg:col-span-2">
       <h1 className="font-heading text-2xl font-light">Data User</h1>
 
       <div className="flex items-start justify-start gap-6 space-y-4">

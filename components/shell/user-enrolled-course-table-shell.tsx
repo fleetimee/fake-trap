@@ -1,33 +1,30 @@
 "use client"
 
-import * as React from "react"
-import Image from "next/image"
+import React from "react"
 import Link from "next/link"
-import { type ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table"
 
-import { CourseListResData } from "@/types/course/res"
-import { KnowledgeListRes } from "@/types/knowledge/res"
+import { UserEnrolledCourseListResData } from "@/types/me/res"
 import { convertDatetoString } from "@/lib/utils"
-import { CourseOperations } from "@/components/app/course/operations/course-operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-interface CourseTableShell {
-  data: CourseListResData[]
-  knowledgeResp: KnowledgeListRes
+interface UserEnrolledCourseTableShellProps {
+  data: UserEnrolledCourseListResData[]
   pageCount: number
 }
 
-export function CourseTableShell({
+export function UserEnrolledCourseTableShell({
   data,
-  knowledgeResp,
   pageCount,
-}: CourseTableShell) {
+}: UserEnrolledCourseTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
 
-  const columns = React.useMemo<ColumnDef<CourseListResData, unknown>[]>(
+  const columns = React.useMemo<
+    ColumnDef<UserEnrolledCourseListResData, unknown>[]
+  >(
     () => [
       {
         id: "select",
@@ -71,27 +68,6 @@ export function CourseTableShell({
         ),
       },
       {
-        accessorKey: "image",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Gambar" />
-        ),
-        cell: ({ row }) => (
-          // <AspectRatio ratio={16 / 9}>
-          <Link href={`/dashboard/course/${row.original.id_course}`}>
-            <Image
-              src={row.original.image}
-              alt={row.original.course_name}
-              width={300}
-              height={300}
-              className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
-            />
-          </Link>
-          // </AspectRatio>
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
         accessorKey: "course_name",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama Kursus" />
@@ -120,12 +96,6 @@ export function CourseTableShell({
           <div className="flex flex-col ">
             <p className="line-clamp-2 text-sm">{row.original.course_desc}</p>
           </div>
-        ),
-      },
-      {
-        accessorKey: "id_knowledge",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Pengetahuan" />
         ),
       },
       {
@@ -185,18 +155,6 @@ export function CourseTableShell({
             return <Badge className="text-center">{status[2].name}</Badge>
           }
         },
-      },
-      {
-        id: "actions",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
-        ),
-        cell: ({ row }) => (
-          <CourseOperations
-            courseResp={row.original}
-            knowledgeResp={knowledgeResp}
-          />
-        ),
       },
     ],
     [data, setSelectedRowIds]

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import {
   UserAvgScoreRes,
   UserCourseCountRes,
+  UserEnrolledCourseListRes,
   UserPostCountRes,
   UserQuizCountRes,
   UserQuizTakenListRes,
@@ -13,20 +14,17 @@ import { getCurrentUser } from "@/lib/session"
 import { convertDatetoStringShort, extractToken } from "@/lib/utils"
 import {
   AvgScoreCard,
+  CourseListCard,
   ProfileCard,
   RecentPostCard,
+  RecentQuizCard,
 } from "@/components/app/me/ui"
+import { CourseContainerCard } from "@/components/app/me/ui/course-container-card"
+import { DashboardHeader } from "@/components/header"
+import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { DashboardShell } from "@/components/shell"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 
 export const metadata = {
   title: "Profil Saya",
@@ -177,6 +175,36 @@ async function getUserQuizTakenList({
   return await res.json()
 }
 
+interface GetUserEnrolledCourseList {
+  token: string | undefined
+  uuid: string | undefined
+  limit: number
+  page: number
+  searchQuery?: string
+}
+
+async function getUserEnrolledCourseList({
+  token,
+  uuid,
+  limit,
+  page,
+  searchQuery,
+}: GetUserEnrolledCourseList): Promise<UserEnrolledCourseListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getEnrolledCourse?limit=${limit}&page=${page}&search=${searchQuery}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 export default async function MePages() {
   const user = await getCurrentUser()
 
@@ -193,6 +221,7 @@ export default async function MePages() {
     avgScore,
     recentPostList,
     quizTakenList,
+    enrolledCourseList,
   ] = await Promise.all([
     getUserPostCount({ token: user?.token, uuid: tokenExtract.id }),
     getUserCourseCount({ token: user?.token, uuid: tokenExtract.id }),
@@ -200,57 +229,45 @@ export default async function MePages() {
     getUserAvgQuizScore({ token: user?.token, uuid: tokenExtract.id }),
     getUserRecentPostList({ token: user?.token, uuid: tokenExtract.id }),
     getUserQuizTakenList({ token: user?.token, uuid: tokenExtract.id }),
+    getUserEnrolledCourseList({
+      token: user?.token,
+      uuid: tokenExtract.id,
+      limit: 5,
+      page: 1,
+    }),
   ])
 
   return (
-    <div className="grid grid-cols-7 items-center justify-between gap-4">
-      <ProfileCard
-        username={tokenExtract.username}
-        email={tokenExtract.email}
-        numberOfPost={postCount.data.number_of_post}
-        numberOfCourse={courseCount.data.number_of_course}
-        numberOfQuiz={quizCount.data.number_of_quiz}
+    <DashboardShell>
+      <BreadCrumbs
+        segments={[
+          {
+            href: "/dashboard",
+            title: "Dashboard",
+          },
+          {
+            href: "/dashboard/me",
+            title: `${tokenExtract.username} - (${tokenExtract.email})`,
+          },
+        ]}
       />
-
-      <AvgScoreCard avgScore={avgScore.data.average_score} />
-
-      <RecentPostCard recentPostList={recentPostList} />
-
-      <Card className="col-span-7 flex min-h-[350px] flex-col gap-6 p-6 lg:col-span-7">
-        <div className="flex items-center justify-between">
-          <h1 className="font-heading text-2xl font-light">Riwayat Quiz</h1>
-
-          <Button variant="outline">Lihat semua</Button>
-        </div>
-
-        <Table>
-          <TableCaption>Sebagian quiz ditampilkan</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">ID Quiz</TableHead>
-              <TableHead>Judul</TableHead>
-              <TableHead>Tipe</TableHead>
-              <TableHead>Tanggal</TableHead>
-              <TableHead className="text-right">Skor</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {quizTakenList.data.map((invoice) => (
-              <TableRow key={invoice.id_quiz}>
-                <TableCell className="font-medium">{invoice.id_quiz}</TableCell>
-                <TableCell>{invoice.quiz_title}</TableCell>
-                <TableCell>{invoice.quiz_type}</TableCell>
-                <TableCell>
-                  {convertDatetoStringShort(
-                    new Date(invoice.created_at).toString()
-                  )}
-                </TableCell>
-                <TableCell className="text-right">{invoice.score}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Card>
-    </div>
+      <DashboardHeader
+        heading={`Halo, ${tokenExtract.username}!`}
+        description="Disini anda dapat melihat detail mengenai profil anda"
+      />
+      <div className="grid grid-cols-7 items-center justify-between gap-4">
+        <ProfileCard
+          username={tokenExtract.username}
+          email={tokenExtract.email}
+          numberOfPost={postCount.data.number_of_post}
+          numberOfCourse={courseCount.data.number_of_course}
+          numberOfQuiz={quizCount.data.number_of_quiz}
+        />
+        <AvgScoreCard avgScore={avgScore.data.average_score} />
+        <RecentPostCard recentPostList={recentPostList} />
+        <RecentQuizCard quizTakenList={quizTakenList} />
+        <CourseContainerCard enrolledCourseList={enrolledCourseList} />
+      </div>
+    </DashboardShell>
   )
 }
