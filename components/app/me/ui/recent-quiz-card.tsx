@@ -18,7 +18,7 @@ interface RecentQuizCard {
 
 export function RecentQuizCard({ quizTakenList }: RecentQuizCard) {
   return (
-    <Card className="col-span-7 flex min-h-[350px] flex-col gap-6 p-6 lg:col-span-7">
+    <Card className="col-span-7 flex min-h-[395px] flex-col gap-6 p-4 lg:col-span-4">
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-2xl font-light">Riwayat Quiz</h1>
 
@@ -29,7 +29,6 @@ export function RecentQuizCard({ quizTakenList }: RecentQuizCard) {
         <TableCaption>Sebagian quiz ditampilkan</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">ID Quiz</TableHead>
             <TableHead>Judul</TableHead>
             <TableHead>Tipe</TableHead>
             <TableHead>Tanggal</TableHead>
@@ -39,7 +38,6 @@ export function RecentQuizCard({ quizTakenList }: RecentQuizCard) {
         <TableBody>
           {quizTakenList.data?.map((invoice) => (
             <TableRow key={invoice.id_quiz}>
-              <TableCell className="font-medium">{invoice.id_quiz}</TableCell>
               <TableCell>{invoice.quiz_title}</TableCell>
               <TableCell>{invoice.quiz_type}</TableCell>
               <TableCell>

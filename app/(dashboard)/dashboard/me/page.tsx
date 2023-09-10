@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import {
@@ -6,25 +7,33 @@ import {
   UserEnrolledCourseListRes,
   UserPostCountRes,
   UserQuizCountRes,
+  UserQuizGroupedRes,
   UserQuizTakenListRes,
   UserRecentPostListRes,
 } from "@/types/me/res"
 import { authOptions } from "@/lib/auth"
+import { getRandomPatternStyle } from "@/lib/generate-pattern"
 import { getCurrentUser } from "@/lib/session"
-import { convertDatetoStringShort, extractToken } from "@/lib/utils"
+import { cn, extractToken } from "@/lib/utils"
 import {
   AvgScoreCard,
-  CourseListCard,
+  CourseContainerCard,
   ProfileCard,
   RecentPostCard,
   RecentQuizCard,
 } from "@/components/app/me/ui"
-import { CourseContainerCard } from "@/components/app/me/ui/course-container-card"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export const metadata = {
   title: "Profil Saya",
@@ -205,6 +214,33 @@ async function getUserEnrolledCourseList({
   return await res.json()
 }
 
+interface GetQuizGroupedByCourse {
+  token: string | undefined
+  uuid: string | undefined
+  page: number
+  limit: number
+}
+
+async function getQuizGroupedByCourse({
+  token,
+  uuid,
+  page,
+  limit,
+}: GetQuizGroupedByCourse): Promise<UserQuizGroupedRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+  return await res.json()
+}
+
 export default async function MePages() {
   const user = await getCurrentUser()
 
@@ -222,6 +258,7 @@ export default async function MePages() {
     recentPostList,
     quizTakenList,
     enrolledCourseList,
+    quizGrouped,
   ] = await Promise.all([
     getUserPostCount({ token: user?.token, uuid: tokenExtract.id }),
     getUserCourseCount({ token: user?.token, uuid: tokenExtract.id }),
@@ -233,6 +270,12 @@ export default async function MePages() {
       token: user?.token,
       uuid: tokenExtract.id,
       limit: 5,
+      page: 1,
+    }),
+    getQuizGroupedByCourse({
+      token: user?.token,
+      uuid: tokenExtract.id,
+      limit: 1,
       page: 1,
     }),
   ])
@@ -266,6 +309,48 @@ export default async function MePages() {
         <AvgScoreCard avgScore={avgScore.data.average_score} />
         <RecentPostCard recentPostList={recentPostList} />
         <RecentQuizCard quizTakenList={quizTakenList} />
+
+        <Card className="col-span-7 flex  min-h-[370px]  flex-col gap-4 p-4 xl:col-span-3">
+          <div className="flex items-center justify-between">
+            <h1 className="font-heading text-2xl font-light">Quiz Anda</h1>
+
+            <Button variant="outline">Lihat semua</Button>
+          </div>
+
+          {quizGrouped.data?.map((quiz) => (
+            <Link href={`/dashboard/me/quiz/${quiz.id_quiz}`}>
+              <Card className="max-h-none flex-grow overflow-clip">
+                <AspectRatio ratio={21 / 9}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-transparent to-zinc-950/50" />
+                  <Badge
+                    className={cn(
+                      "pointer-events-none absolute right-2 top-2 rounded-sm px-2 py-1 font-semibold",
+                      quiz.quiz_type === "PRE TEST"
+                        ? "border-green-600/20 bg-green-50 text-green-700"
+                        : "border-red-600/10 bg-red-50 text-red-700"
+                    )}
+                  >
+                    {quiz.quiz_type ? "Pre Test" : "Other"}
+                  </Badge>
+                  <div
+                    className="h-full rounded-t-md border-b"
+                    style={getRandomPatternStyle(String(quiz.quiz_title))}
+                  />
+                </AspectRatio>
+                <CardHeader>
+                  <CardTitle className="line-clamp-1 text-lg">
+                    {quiz.quiz_title}
+                  </CardTitle>
+                  {quiz.quiz_desc ? (
+                    <CardDescription className="line-clamp-2">
+                      {quiz.quiz_desc}
+                    </CardDescription>
+                  ) : null}
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </Card>
         <CourseContainerCard enrolledCourseList={enrolledCourseList} />
       </div>
     </DashboardShell>
