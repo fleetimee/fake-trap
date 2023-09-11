@@ -7,8 +7,7 @@ import { getCurrentUser } from "@/lib/session"
 import { CreateQuizSheet } from "@/components/app/quiz/operations"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
-import { QuizTableShell } from "@/components/shell/quiz-table-shell"
+import { DashboardShell, QuizTableShell } from "@/components/shell"
 
 export const metadata = {
   title: "Quiz",

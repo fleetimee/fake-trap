@@ -6,8 +6,10 @@ import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
-import { UserEnrolledCourseTableShell } from "@/components/shell/user-enrolled-course-table-shell"
+import {
+  DashboardShell,
+  UserEnrolledCourseTableShell,
+} from "@/components/shell"
 
 export const metadata = {
   title: "Semua Kursus Saya",
@@ -86,8 +88,6 @@ export default async function MeCoursePage({
     sortBy,
     searchQuery: searchQueryInitial,
   })
-
-  console.log(userCourseResp)
 
   return (
     <DashboardShell>

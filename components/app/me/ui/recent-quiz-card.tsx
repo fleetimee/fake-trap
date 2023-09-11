@@ -1,5 +1,8 @@
+import Link from "next/link"
+
 import { UserQuizTakenListRes } from "@/types/me/res"
 import { convertDatetoStringShort } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
@@ -22,7 +25,9 @@ export function RecentQuizCard({ quizTakenList }: RecentQuizCard) {
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-2xl font-light">Riwayat Quiz</h1>
 
-        <Button variant="outline">Lihat semua</Button>
+        <Link href={`/dashboard/me/recent-quiz`}>
+          <Button variant="outline">Lihat semua</Button>
+        </Link>
       </div>
 
       <Table>
@@ -39,7 +44,9 @@ export function RecentQuizCard({ quizTakenList }: RecentQuizCard) {
           {quizTakenList.data?.map((invoice) => (
             <TableRow key={invoice.id_quiz}>
               <TableCell>{invoice.quiz_title}</TableCell>
-              <TableCell>{invoice.quiz_type}</TableCell>
+              <TableCell>
+                <Badge>{invoice.quiz_type}</Badge>
+              </TableCell>
               <TableCell>
                 {convertDatetoStringShort(
                   new Date(invoice.created_at).toString()

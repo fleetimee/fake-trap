@@ -8,8 +8,7 @@ import { getCurrentUser } from "@/lib/session"
 import { CreateKnowledgeButton } from "@/components/app/knowledge/operations"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
-import { KnowledgeTableShell } from "@/components/shell/knowledge-table-shell"
+import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
 
 export const metadata = {
   title: "Pengetahuan",

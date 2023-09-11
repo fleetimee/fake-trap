@@ -7,8 +7,7 @@ import { getCurrentUser } from "@/lib/session"
 import { CreateCourseButton } from "@/components/app/course/operations/create-course-sheet"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
-import { CourseTableShell } from "@/components/shell/course-table-shell"
+import { CourseTableShell, DashboardShell } from "@/components/shell"
 
 export const metadata = {
   title: "Kursus",

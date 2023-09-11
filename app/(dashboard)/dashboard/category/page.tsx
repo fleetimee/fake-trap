@@ -6,8 +6,7 @@ import { getCurrentUser } from "@/lib/session"
 import { CreateCategorySheet } from "@/components/app/category/operations/create-category-sheet"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
-import { CategoryTableShell } from "@/components/shell/category-table-shell"
+import { CategoryTableShell, DashboardShell } from "@/components/shell"
 
 export const metadata = {
   title: "Kategori",

@@ -2,6 +2,9 @@ export type UserQuizTakenListRes = {
   code: number
   message: string
   data: UserQuizTakenListResData[]
+  count: number
+  page: number
+  totalPage: number
 }
 
 export type UserQuizTakenListResData = {
