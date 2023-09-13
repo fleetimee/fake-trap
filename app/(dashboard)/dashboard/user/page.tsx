@@ -6,8 +6,7 @@ import { getCurrentUser } from "@/lib/session"
 import { CreateUserSheet } from "@/components/app/user/operations"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
-import { UserTableShell } from "@/components/shell/user-table-shell"
+import { DashboardShell, UserTableShell } from "@/components/shell"
 
 export const metadata = {
   title: "User",

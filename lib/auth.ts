@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
-import { extractToken } from "./utils"
+import { extractToken } from "@/lib/utils"
 
 /**
  * Configuration options for NextAuth authentication.

@@ -3,7 +3,6 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Dialog } from "@radix-ui/react-dialog"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -12,6 +11,7 @@ import { CourseOneRes } from "@/types/course/res"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,

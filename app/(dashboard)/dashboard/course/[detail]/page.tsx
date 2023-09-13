@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 
 import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
-import { QuestionListRes } from "@/types/question/question-list"
+import { QuestionListRes } from "@/types/question/res/question-list"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { ThreadListRes } from "@/types/threads/res/thread-list"
@@ -16,6 +16,9 @@ import { DashboardShell } from "@/components/shell"
 type Props = {
   params: {
     detail: string
+  }
+  searchParams: {
+    [key: string]: string | string[] | undefined
   }
 }
 
@@ -203,12 +206,16 @@ async function getThreadList({
   return await res.json()
 }
 
-export default async function DetailCourse({ params }: Props) {
+export default async function DetailCourse({ params, searchParams }: Props) {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const { quizId } = searchParams ?? {}
+
+  const quizIdInitial = typeof quizId === "string" ? quizId : "1"
 
   const [courseDataResp, userDataResp, quizResp, contentType] =
     await Promise.all([
@@ -233,18 +240,15 @@ export default async function DetailCourse({ params }: Props) {
     page: 1,
   })
 
-  // check if window.localStorage is not null or undefined
-  const quizId =
-    typeof window !== "undefined" ? localStorage.getItem("quizId") : null
-
   const questionResp = await getQuestionList({
     token: user?.token,
-    idQuiz: quizId ?? "1",
+    idQuiz: quizIdInitial,
   })
 
   return (
     <DashboardShell>
       <CourseDetailShell
+        quizIdInitial={quizIdInitial}
         courseDataResp={courseDataResp}
         courseKnowledgeResp={courseKnowledgeResp}
         quizResp={quizResp}

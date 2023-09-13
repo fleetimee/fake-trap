@@ -5,7 +5,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
-import { QuestionListRes } from "@/types/question/question-list"
+import { QuestionListRes } from "@/types/question/res/question-list"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { ThreadListResData } from "@/types/threads/res"
@@ -16,6 +16,7 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface CourseDetailShellProps {
+  quizIdInitial: string
   courseKnowledgeResp: KnowledgeOneRes
   courseDataResp: CourseOneRes
   userDataResp: UserListRes
@@ -26,6 +27,7 @@ interface CourseDetailShellProps {
 }
 
 export function CourseDetailShell({
+  quizIdInitial,
   courseKnowledgeResp,
   courseDataResp,
   userDataResp,
@@ -90,6 +92,7 @@ export function CourseDetailShell({
 
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <CourseDetailContent
+          quizIdInitial={quizIdInitial}
           courseDataResp={courseDataResp}
           userDataResp={userDataResp}
           questionResp={questionResp}

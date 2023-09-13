@@ -1,25 +1,24 @@
 "use client"
 
-import * as process from "process"
 import React from "react"
 import Link from "next/link"
-import axios from "axios"
-import useSWR, { mutate } from "swr"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
-import { QuestionListRes } from "@/types/question/question-list"
-import { QuizListRes, QuizOneRes } from "@/types/quiz/res"
+import { QuestionListRes } from "@/types/question/res"
 import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
-import { convertDatetoString, swrFetcher } from "@/lib/utils"
+import { convertDatetoString } from "@/lib/utils"
 import { CreateThreadButton } from "@/components/app/course/detail/forum/operations"
+import { CourseQuizForm } from "@/components/app/course/detail/quiz/ui"
+import { QuizFormTemp } from "@/components/app/course/detail/quiz/ui/quiz-form-temp"
 import {
   columnUserCourse,
   UserDataTable,
 } from "@/components/app/course/detail/students/ui"
 import { Icons } from "@/components/icons"
-import { renderContentCourse } from "@/components/render-content"
+import { renderContentCourse, renderQuiz } from "@/components/render-content"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -31,6 +30,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface CourseDetailContentProps {
+  quizIdInitial: string
   courseDataResp: CourseOneRes
   userDataResp: UserListRes
   questionResp: QuestionListRes
@@ -44,21 +44,6 @@ interface CourseDetailContentProps {
 }
 
 export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
-  const {
-    data: quizData,
-    error: quizError,
-    isLoading: quizIsLoading,
-  } = useSWR<QuizOneRes, Error>(
-    props.contentQuiz !== null
-      ? `http://localhost:1337/secure/quiz/${props.contentQuiz.id_quiz}`
-      : null,
-    (url) =>
-      swrFetcher(
-        url,
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVheEBnbWFpbC5jb20iLCJleHAiOjE3MjQ0MDE0MjcsImlkIjoiMDJjZjBmNjktNTViYi00ZmY3LThlZmQtOWZjMDYzNTNmZWM1Iiwib3JpZ19pYXQiOjE2OTI4NjU0MjcsInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IkFkbWluIiwicm9sZV9kZXNjcmlwdGlvbiI6IkFkbWluIGNhbiBkbyBhbnl0aGluZyIsImNyZWF0ZWRfYXQiOiIyMDIzLTA4LTI0VDE1OjIzOjQ3LjcyNTAwMDIrMDc6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyMy0wOC0yMVQwODowODozNS40MzUzNjErMDc6MDAifV0sInVzZXJuYW1lIjoib2N0YXZpYSJ9.siUhXelV8s7mv_E4H2Q70LyQXYdWtcJ5xwNK3cQqHvQ"
-      )
-  )
-
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
       <div className="flex w-full flex-col gap-6 p-4">
@@ -69,28 +54,45 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
 
-        {props.contentQuiz.id_quiz == 0 ? (
-          renderContentCourse({
-            contentQuiz: props.contentQuiz,
-            contentType: props.contentData.content_type,
-            courseDataResp: props.courseDataResp,
-            userDataResp: props.userDataResp,
-            contentData: props.contentData,
-            setContentQuiz: props.setContentQuiz,
-            setContentData: props.setContentData,
-            activeIndex: props.activeIndex,
-            setActiveIndex: props.setActiveIndex,
-          })
-        ) : props.contentQuiz ? (
-          quizIsLoading ? (
-            <p>Loading</p>
-          ) : quizError ? (
-            <p>Error</p>
-          ) : (
-            // @ts-ignore
-            <p>{quizData?.data.quiz_title}</p>
-          )
-        ) : null}
+        {props.contentQuiz.id_quiz == 0
+          ? renderContentCourse({
+              contentQuiz: props.contentQuiz,
+              contentType: props.contentData.content_type,
+              courseDataResp: props.courseDataResp,
+              userDataResp: props.userDataResp,
+              contentData: props.contentData,
+              setContentQuiz: props.setContentQuiz,
+              setContentData: props.setContentData,
+              activeIndex: props.activeIndex,
+              setActiveIndex: props.setActiveIndex,
+            })
+          : props.contentQuiz
+          ? // <Card className="flex flex-col items-start justify-between gap-12 p-6">
+            //   {props.questionResp.data.map((question, index) => (
+            //     <CourseQuizForm
+            //       question={question}
+            //       key={question.id_question}
+            //       index={index}
+            //     />
+            //   ))}
+            //   <Button type="submit" className="col-span-1 font-heading">
+            //     Submit
+            //   </Button>
+            // </Card>
+
+            // <QuizFormTemp
+            //   quizIdInitial={props.quizIdInitial}
+            //   questionResp={props.questionResp}
+            //   contentQuiz={props.contentQuiz}
+            // />
+
+            renderQuiz({
+              questionResp: props.questionResp,
+              contentQuiz: props.contentQuiz,
+              quizIdInitial: props.quizIdInitial,
+              idQUiz: props.contentQuiz.id_quiz.toString(),
+            })
+          : null}
 
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">

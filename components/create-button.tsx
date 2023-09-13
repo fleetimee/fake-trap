@@ -3,12 +3,9 @@
 import React from "react"
 
 import { cn } from "@/lib/utils"
-import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
 
-/**
- * Interface for the KnowledgeCreateButton component.
- */
 interface CreateButtonProps extends ButtonProps {}
 
 export function CreateButton({

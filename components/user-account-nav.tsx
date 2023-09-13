@@ -1,11 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { AvatarFallback } from "@radix-ui/react-avatar"
 import { User } from "next-auth"
 import { signOut } from "next-auth/react"
 
 import { UserExtracted } from "@/lib/utils"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,9 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-import { Avatar } from "./ui/avatar"
-import { buttonVariants } from "./ui/button"
 
 /**
  * Props for the UserAccountNav component.

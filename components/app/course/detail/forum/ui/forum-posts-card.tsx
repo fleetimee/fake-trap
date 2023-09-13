@@ -14,10 +14,7 @@ interface ForumPost {
 
 export function ForumPost({ post }: ForumPost) {
   const contentParsed = JSON.parse(post.content)
-  console.log(contentParsed)
-  //
   const parser = new EditorParser(contentParsed.blocks)
-  //
   const parsedBlocks = parser.parse()
 
   return (
@@ -29,7 +26,7 @@ export function ForumPost({ post }: ForumPost) {
       </div>
       <Separator className="my-6" />
       <div className="grid grid-cols-12">
-        <div className="col-span-2 flex max-h-full flex-col items-center justify-center gap-4">
+        <div className="col-span-2 flex max-h-full flex-col items-center justify-start gap-4">
           <Avatar className="h-20 w-20">
             <AvatarImage
               src={`data:image/svg+xml;utf8,${generateFromString(

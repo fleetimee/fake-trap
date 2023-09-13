@@ -1,5 +1,5 @@
 import React from "react"
-import { usePathname, useSearchParams } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 import { CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
@@ -47,6 +47,7 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   const quizId = searchParams.get("quizId") ?? "1"
 
@@ -67,6 +68,19 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
     },
     [searchParams]
   )
+
+  React.useEffect(() => {
+    router.push(
+      `${pathname}?${createQueryString({
+        quizId: props.quizContent.id_quiz.toString(),
+      })}`,
+      {
+        scroll: false,
+      }
+    )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.quizContent.id_quiz])
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -90,9 +104,6 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
                   updated_at: new Date(),
                 })
 
-                // write id quiz to localStorage
-                localStorage.setItem("quizId", props.quiz.id_quiz.toString())
-
                 props.setContentQuiz(props.quiz)
 
                 window.scrollTo({
@@ -101,7 +112,7 @@ export function CourseSectionQuiz({ ...props }: CourseSectionQuizProps) {
                 })
               }}
             >
-              {props.quiz.quiz_title}
+              <>{props.quiz.quiz_title}</>
             </Button>
           </AccordionContent>
         </ContextMenuTrigger>
