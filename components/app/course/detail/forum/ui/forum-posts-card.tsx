@@ -14,10 +14,7 @@ interface ForumPost {
 
 export function ForumPost({ post }: ForumPost) {
   const contentParsed = JSON.parse(post.content)
-  console.log(contentParsed)
-  //
   const parser = new EditorParser(contentParsed.blocks)
-  //
   const parsedBlocks = parser.parse()
 
   return (

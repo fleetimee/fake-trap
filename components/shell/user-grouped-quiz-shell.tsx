@@ -3,12 +3,7 @@
 import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
-import {
-  UserQuizGroupedRes,
-  UserQuizGroupedResData,
-  UserQuizTakenListResData,
-} from "@/types/me/res"
-import { convertDatetoString } from "@/lib/utils"
+import { UserQuizGroupedResData } from "@/types/me/res"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -74,8 +69,42 @@ export function UserQuizGroupedTableShell({
           <DataTableColumnHeader column={column} title="Judul" />
         ),
       },
+      {
+        accessorKey: "quiz_desc",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Deskripsi" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.original.quiz_desc.length > 50
+                ? row.original.quiz_desc.substring(0, 50) + "..."
+                : row.original.quiz_desc}
+            </>
+          )
+        },
+      },
+      {
+        accessorKey: "quiz_type",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Tipe" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <>
+              <Badge className="text-center">{row.original.quiz_type}</Badge>
+            </>
+          )
+        },
+      },
+      {
+        accessorKey: "average_score",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Skor" />
+        ),
+      },
     ],
-    []
+    [setSelectedRowIds, data]
   )
 
   return <DataTable columns={columns} data={data} pageCount={pageCount} />

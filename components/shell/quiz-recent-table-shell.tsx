@@ -4,7 +4,6 @@ import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { UserQuizTakenListResData } from "@/types/me/res"
-import { convertDatetoString } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -98,21 +97,11 @@ export function UserRecentQuizTableShell({
           )
         },
       },
-      {
-        accessorKey: "created_at",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Dibuat" />
-        ),
-        cell: ({ row }) => {
-          convertDatetoString(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
-        },
-      },
       {
         accessorKey: "score",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Skor" />
+          <DataTableColumnHeader column={column} title="Rata Rata Skor" />
         ),
       },
     ],

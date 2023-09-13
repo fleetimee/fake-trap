@@ -31,7 +31,7 @@ async function getQuizGroupedByCourse({
   orderBy = "created_at",
 }: GetQuizGroupedByCourse): Promise<UserQuizGroupedRes> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`,
     {
       method: "GET",
       headers: {
