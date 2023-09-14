@@ -1,11 +1,16 @@
 import { redirect } from "next/navigation"
-import { Terminal } from "lucide-react"
+import { Laugh, Terminal } from "lucide-react"
 
 import { QuizMemberListRes } from "@/types/quiz/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { DashboardShell, QuizMemberTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+export const metadata = {
+  title: "Peserta Kuis",
+  description: "Halaman untuk melihat peserta kuis",
+}
 
 interface GetQuizMemberProps {
   token: string | undefined
@@ -82,10 +87,10 @@ export default async function PesertaPage({
   return (
     <DashboardShell>
       <Alert>
-        <Terminal className="h-4 w-4" />
-        <AlertTitle>Heads up!</AlertTitle>
+        <Laugh className="h-4 w-4" />
+        <AlertTitle>List Peserta</AlertTitle>
         <AlertDescription>
-          You can add components to your app using the cli.
+          Berikut adalah list peserta yang sudah mengerjakan kuis ini
         </AlertDescription>
       </Alert>
       <QuizMemberTableShell

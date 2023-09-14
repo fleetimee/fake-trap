@@ -9,7 +9,7 @@ import {
   DashboardCourseHighlight,
   DashboardKnowledgeHighlight,
 } from "components/app/dashboard/ui/highlight"
-import { Terminal } from "lucide-react"
+import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -43,7 +43,7 @@ export default async function DashboardPage() {
     <DashboardShell>
       <DashboardHeader heading="Dashboard" description={dateNow} />
       <Alert>
-        <Terminal className="h-4 w-4" />
+        <PartyPopper className="h-5 w-5" />
         <AlertTitle>
           Halo,{" "}
           <span className="font-heading uppercase text-primary">

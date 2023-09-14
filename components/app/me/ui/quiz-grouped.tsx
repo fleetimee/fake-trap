@@ -30,7 +30,7 @@ export function QuizGrouped({ quizGrouped }: QuizGroupedProps) {
 
       {quizGrouped.data?.map((quiz) => (
         <Link href={`/dashboard/me/quiz/${quiz.id_quiz}`} key={quiz.id_quiz}>
-          <Card className="max-h-none flex-grow overflow-clip">
+          <Card className="max-h-none grow text-clip">
             <AspectRatio ratio={21 / 9}>
               <div className="absolute inset-0 bg-gradient-to-t from-transparent to-zinc-950/50" />
               <Badge

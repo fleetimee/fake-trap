@@ -13,6 +13,11 @@ import {
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
+export const metadata = {
+  title: "Preview Soal",
+  description: "Halaman untuk melihat preview soal",
+}
+
 interface GetQuizLessonProps {
   token: string | undefined
   quizId: string
