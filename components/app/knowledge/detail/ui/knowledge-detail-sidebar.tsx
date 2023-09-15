@@ -17,6 +17,12 @@ import { Accordion, AccordionItem } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 interface DetailSidebarKnowledgeProps {
   dataKnowledge: KnowledgeOneRes
@@ -44,10 +50,21 @@ export function DetailSidebarKnowledge({
           </TabsTrigger>
         </TabsList>
         {dataKnowledge.data.section ? (
-          <CreateSectionButton
-            id_knowledge={dataKnowledge.data.id_knowledge}
-            name="Section"
-          />
+          <div className="ml-auto flex w-full justify-end py-4 pr-4">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <CreateSectionButton
+                    id_knowledge={dataKnowledge.data.id_knowledge}
+                    name="Section"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Tambahkan Bagian Pengetahuan</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         ) : null}
         <TabsContent value="account">
           <ScrollArea className="h-[600px] w-full">

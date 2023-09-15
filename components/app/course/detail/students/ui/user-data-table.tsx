@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
-import { CourseOneRes } from "@/types/course/res"
+import { CourseOneRes, CourseVacantUserListRes } from "@/types/course/res"
 import { UserListRes } from "@/types/user/res"
 import { CreateStudentsIntoCourseButton } from "@/components/app/course/detail/students/operations"
 import { Button } from "@/components/ui/button"
@@ -38,7 +38,7 @@ export function UserDataTable<TData, TValue>({
   userList,
   courseData,
 }: UserDataTableProps<TData, TValue> & {
-  userList: UserListRes
+  userList: CourseVacantUserListRes
   courseData: CourseOneRes
 }) {
   const [sorting, setSorting] = React.useState<SortingState>([])

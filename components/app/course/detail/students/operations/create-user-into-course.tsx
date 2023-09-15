@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { UserListRes } from "@/types/user/res"
+import { CourseVacantUserListRes } from "@/types/course/res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -54,7 +54,7 @@ const formSchema = z.object({
 })
 
 interface CreateStudentsIntoCourseButtonProps {
-  user: UserListRes
+  user: CourseVacantUserListRes
   id_course: number
 }
 
@@ -159,7 +159,7 @@ export function CreateStudentsIntoCourseButton({
                             {field.value
                               ? user.data.find(
                                   (users) =>
-                                    users.uuid ===
+                                    users.user_uuid ===
                                     (field.value && field.value[0]?.uuid)
                                 )?.username
                               : "Pilih User"}
@@ -174,12 +174,12 @@ export function CreateStudentsIntoCourseButton({
                           <CommandGroup>
                             {user.data.map((user) => (
                               <CommandItem
-                                value={user.uuid}
-                                key={user.uuid}
-                                onSelect={(value) => {
+                                value={user.username}
+                                key={user.user_uuid}
+                                onSelect={() => {
                                   form.setValue("users", [
                                     {
-                                      uuid: value,
+                                      uuid: user.user_uuid,
                                     },
                                   ])
                                 }}
@@ -187,7 +187,7 @@ export function CreateStudentsIntoCourseButton({
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    user.uuid ===
+                                    user.username ===
                                       (field.value && field.value[0]?.uuid)
                                       ? "opacity-100"
                                       : "opacity-0"

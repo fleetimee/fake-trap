@@ -3,7 +3,11 @@
 import React from "react"
 import Link from "next/link"
 
-import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
+import {
+  CourseOneRes,
+  CourseOneResQuiz,
+  CourseVacantUserListRes,
+} from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuestionListRes } from "@/types/question/res"
 import { ThreadListResData } from "@/types/threads/res"
@@ -32,6 +36,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 interface CourseDetailContentProps {
   quizIdInitial: string
   courseDataResp: CourseOneRes
+  userDataDropdown: CourseVacantUserListRes
   userDataResp: UserListRes
   questionResp: QuestionListRes
   contentData: KnowledgeOneResContent
@@ -186,7 +191,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                           ? props.courseDataResp.data.users
                           : []
                       }
-                      userList={props.userDataResp}
+                      userList={props.userDataDropdown}
                       courseData={props.courseDataResp}
                     />
                   </div>

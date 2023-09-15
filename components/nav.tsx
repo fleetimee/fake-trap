@@ -19,7 +19,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
   }
 
   return (
-    <div className="sticky top-20 grid  grid-cols-1 items-start justify-between gap-60 rounded-md bg-background p-4">
+    <div className="sticky top-20 grid min-h-[20rem]   grid-cols-1 items-start justify-between gap-60 rounded-md bg-background p-4">
       <nav className="sticky top-20 grid items-start gap-3">
         {items.map((item, index) => {
           const Icon = Icons[item.icon || "arrowRight"]
@@ -34,20 +34,13 @@ export function DashboardNav({ items }: DashboardNavProps) {
                   )}
                 >
                   <Icon className="mr-2 h-6 w-6" />
-                  <span className={cn("font-heading")}>{item.title}</span>
+                  <span className={cn()}>{item.title}</span>
                 </span>
               </Link>
             )
           )
         })}
       </nav>
-
-      <Link href="/me">
-        <span className="group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground ">
-          <Icons.post className="mr-2 h-6 w-6" />
-          <span className={cn("font-heading")}>Profil</span>
-        </span>
-      </Link>
     </div>
   )
 }

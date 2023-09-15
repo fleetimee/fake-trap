@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { generateFromString } from "generate-avatar"
 import { signOut } from "next-auth/react"
 
 import { dashboardConfig } from "@/config/dashboard"
@@ -8,15 +9,20 @@ import { siteConfig } from "@/config/site"
 import { extractToken } from "@/lib/utils"
 import { MainNav } from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+import { Icons } from "../icons"
 
 export function SiteHeader(props: {
   user:
@@ -49,24 +55,64 @@ export function SiteHeader(props: {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback>{initial}</AvatarFallback>
+                    <AvatarImage
+                      src={`data:image/svg+xml;utf8,${generateFromString(
+                        userExtracted.username
+                      )}`}
+                    />
+                    <AvatarFallback />
                   </Avatar>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <div className="flex items-center justify-start gap-2 p-2">
-                    <div className="flex flex-col space-y-1 leading-none">
-                      {userExtracted.username && (
-                        <p className="font-medium">{userExtracted.username}</p>
-                      )}
-                      {userExtracted.email && (
-                        <p className="w-[200px] truncate text-sm text-muted-foreground">
-                          {userExtracted.email}
-                        </p>
-                      )}
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {userExtracted.username}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {userExtracted.email}
+                      </p>
                     </div>
-                  </div>
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard/me">
+                        <Icons.user
+                          className="mr-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                        Account
+                        <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard/">
+                        <Icons.gitHub
+                          className="mr-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                        Dashboard
+                        <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild disabled>
+                      <Link href="/dashboard/settings">
+                        <Icons.settings
+                          className="mr-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                        Settings
+                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+
+                  <DropdownMenuSeparator />
+
                   <DropdownMenuItem
+                    asChild
                     className="cursor-pointer"
                     onSelect={(event) => {
                       event.preventDefault()
@@ -87,7 +133,14 @@ export function SiteHeader(props: {
                       })
                     }}
                   >
-                    Sign out
+                    <Link href="#">
+                      <Icons.logout
+                        className="mr-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                      Log out
+                      <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

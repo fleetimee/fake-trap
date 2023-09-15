@@ -3,6 +3,10 @@
 import React from "react"
 
 import { KnowledgeOneResSection } from "@/types/knowledge/res"
+import {
+  DeleteSectionSheet,
+  EditSectionSheet,
+} from "@/components/app/knowledge/detail/section/operations"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import {
   ContextMenu,
@@ -12,10 +16,6 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import {
-  DeleteSectionSheet,
-  EditSectionSheet,
-} from "@/components/app/knowledge/detail/section/operations"
 
 interface KnowledgeSectionListProps {
   item: KnowledgeOneResSection
@@ -33,7 +33,7 @@ export function KnowledgeSectionList({ item }: KnowledgeSectionListProps) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <ContextMenu>
-        <ContextMenuTrigger>
+        <ContextMenuTrigger asChild>
           <AccordionTrigger className="font-heading text-base font-bold">
             {item.section_title}
           </AccordionTrigger>
@@ -42,9 +42,7 @@ export function KnowledgeSectionList({ item }: KnowledgeSectionListProps) {
           <ContextMenuItem inset disabled>
             ID Section: {item.id_section}
           </ContextMenuItem>
-          <ContextMenuItem inset disabled>
-            {item.section_title}
-          </ContextMenuItem>
+          <ContextMenuItem disabled>{item.section_title}</ContextMenuItem>
           <ContextMenuSeparator />
           <SheetTrigger
             className="w-full"

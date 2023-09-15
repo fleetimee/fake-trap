@@ -25,6 +25,7 @@ import {
   Laptop,
   LayoutDashboard,
   Loader2,
+  LogOut,
   Menu,
   Moon,
   MoreHorizontal,
@@ -84,6 +85,8 @@ export const Icons = {
   moon: Moon,
   check: Check,
   laptop: Laptop,
+  logout: LogOut,
+
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

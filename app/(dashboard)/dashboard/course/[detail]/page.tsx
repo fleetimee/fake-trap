@@ -1,12 +1,12 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
-import { CourseOneRes } from "@/types/course/res"
+import { CourseOneRes, CourseVacantUserListRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { QuestionListRes } from "@/types/question/res/question-list"
 import { QuizListRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
-import { ThreadListRes } from "@/types/threads/res/thread-list"
+import { ThreadListRes } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -206,6 +206,30 @@ async function getThreadList({
   return await res.json()
 }
 
+interface GetVacantUserProps {
+  token: string | undefined
+  idCourse: string
+}
+
+async function getVacantUser({
+  token,
+  idCourse,
+}: GetVacantUserProps): Promise<CourseVacantUserListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/getVacantUser`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 export default async function DetailCourse({ params, searchParams }: Props) {
   const user = await getCurrentUser()
 
@@ -240,6 +264,11 @@ export default async function DetailCourse({ params, searchParams }: Props) {
     page: 1,
   })
 
+  const vacantUserResp = await getVacantUser({
+    token: user?.token,
+    idCourse: params.detail,
+  })
+
   const questionResp = await getQuestionList({
     token: user?.token,
     idQuiz: quizIdInitial,
@@ -256,6 +285,7 @@ export default async function DetailCourse({ params, searchParams }: Props) {
         userDataResp={userDataResp}
         contentTypeResp={contentType}
         threadRespData={threadsResp.data}
+        courseUserDropdownResp={vacantUserResp}
       />
     </DashboardShell>
   )

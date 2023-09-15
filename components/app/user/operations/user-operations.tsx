@@ -4,6 +4,7 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -24,8 +25,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -193,35 +194,32 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <Icons.moreHorizontal className="h-4 w-4" />
+          <Button
+            aria-label="Open menu"
+            variant="ghost"
+            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          >
+            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+        <DropdownMenuContent align="end" className="w-[160px]">
+          <DropdownMenuItem
+            className="flex  items-center
+          "
+            onSelect={() => setOpenEditUserSheet(true)}
+            asChild
+          >
+            <p>Edit</p>
+          </DropdownMenuItem>
 
           <DropdownMenuSeparator />
 
           <DropdownMenuItem
-            className="flex cursor-pointer items-center
-            "
-            onSelect={() => setOpenEditUserSheet(true)}
-          >
-            <span className="mr-2">
-              <Icons.edit className="h-4 w-4" />
-            </span>
-            Edit User
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            className="flex cursor-pointer items-center text-destructive focus:text-destructive"
+            className="flex  items-center hover:bg-red-600 hover:text-white"
             onSelect={() => setOpenDeleteUserSheet(true)}
           >
-            <span className="mr-2">
-              <Icons.trash className="h-4 w-4" />
-            </span>
-            Hapus User
+            Hapus
+            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -240,7 +238,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             </AlertDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Tidak</AlertDialogCancel>
+            <AlertDialogCancel className="m-4">Tidak</AlertDialogCancel>
             <AlertDialogAction
               onClick={async (event) => {
                 event.preventDefault()
@@ -259,7 +257,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
                   setIsDeleteLoading(false)
                 }
               }}
-              className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
+              className="m-4 bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
             >
               {isDeleteLoading ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

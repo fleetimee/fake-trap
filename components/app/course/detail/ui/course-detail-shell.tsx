@@ -3,7 +3,11 @@
 import React from "react"
 import { RocketIcon } from "@radix-ui/react-icons"
 
-import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
+import {
+  CourseOneRes,
+  CourseOneResQuiz,
+  CourseVacantUserListRes,
+} from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { QuestionListRes } from "@/types/question/res/question-list"
 import { QuizListRes } from "@/types/quiz/res"
@@ -18,6 +22,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 interface CourseDetailShellProps {
   quizIdInitial: string
   courseKnowledgeResp: KnowledgeOneRes
+  courseUserDropdownResp: CourseVacantUserListRes
   courseDataResp: CourseOneRes
   userDataResp: UserListRes
   quizResp: QuizListRes
@@ -35,6 +40,7 @@ export function CourseDetailShell({
   questionResp,
   contentTypeResp,
   threadRespData,
+  courseUserDropdownResp,
 }: CourseDetailShellProps) {
   const [contentData, setContentData] = React.useState<KnowledgeOneResContent>({
     content_title: "",
@@ -92,6 +98,7 @@ export function CourseDetailShell({
 
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <CourseDetailContent
+          userDataDropdown={courseUserDropdownResp}
           quizIdInitial={quizIdInitial}
           courseDataResp={courseDataResp}
           userDataResp={userDataResp}

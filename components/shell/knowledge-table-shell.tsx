@@ -8,7 +8,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { CategoryListRes, CategoryListResData } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
-import { convertDatetoString } from "@/lib/utils"
+import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
 import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -158,9 +158,11 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Dibuat pada" />
         ),
         cell: ({ row }) => {
-          convertDatetoString(row.original.created_at.toString())
+          convertDatetoStringShort(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
+          return (
+            <>{convertDatetoStringShort(row.original.created_at.toString())}</>
+          )
         },
       },
       {
@@ -169,9 +171,11 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Diubah pada" />
         ),
         cell: ({ row }) => {
-          convertDatetoString(row.original.updated_at.toString())
+          convertDatetoStringShort(row.original.updated_at.toString())
 
-          return <>{convertDatetoString(row.original.updated_at.toString())}</>
+          return (
+            <>{convertDatetoStringShort(row.original.updated_at.toString())}</>
+          )
         },
       },
       {

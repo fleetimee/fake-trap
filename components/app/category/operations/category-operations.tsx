@@ -3,6 +3,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -26,6 +27,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -159,13 +161,15 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <Icons.moreHorizontal className="h-4 w-4" />
+          <Button
+            aria-label="Open menu"
+            variant="ghost"
+            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          >
+            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+        <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem
             onClick={() => {
               navigator.clipboard.writeText(kategori.id_category.toString())
@@ -175,32 +179,26 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
               })
             }}
           >
-            <span className="mr-2">
-              <Icons.copy className="h-4 w-4" />
-            </span>
-            Copy ID Kategori
+            Copy
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
 
           <DropdownMenuItem
-            className="flex cursor-pointer items-center
+            className="flex items-center
             "
             onSelect={() => setOpenEditCategorySheet(true)}
           >
-            <span className="mr-2">
-              <Icons.edit className="h-4 w-4" />
-            </span>
-            Edit Kategori
+            Edit
+            <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
           </DropdownMenuItem>
 
+          <DropdownMenuSeparator />
+
           <DropdownMenuItem
-            className="flex cursor-pointer items-center text-destructive focus:text-destructive"
+            className="flex  items-center"
             onSelect={() => setOpenDeleteAlert(true)}
           >
-            <span className="mr-2">
-              <Icons.trash className="h-4 w-4" />
-            </span>
-            Hapus Kategori
+            Hapus
+            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

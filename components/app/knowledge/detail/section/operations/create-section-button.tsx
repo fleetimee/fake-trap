@@ -111,55 +111,53 @@ export function CreateSectionButton({
   }
 
   return (
-    <div className="ml-auto flex w-full justify-end py-4 pr-4">
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <CreateButton name={name} />
-        </SheetTrigger>
-        <SheetContent position="right" size="content">
-          <SheetHeader>
-            <SheetTitle>Tambah Section</SheetTitle>
-            <SheetDescription>
-              Tambah section baru untuk pengetahuan ini.
-            </SheetDescription>
-          </SheetHeader>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col space-y-8 py-8"
-            >
-              <FormField
-                control={form.control}
-                name="section_title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Judul Section <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Pendahuluan"
-                        {...field}
-                        disabled={isLoading}
-                      />
-                    </FormControl>
-                    <FormDescription>Judul section anda.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <CreateButton name={name} />
+      </SheetTrigger>
+      <SheetContent position="right" size="content">
+        <SheetHeader>
+          <SheetTitle>Tambah Section</SheetTitle>
+          <SheetDescription>
+            Tambah section baru untuk pengetahuan ini.
+          </SheetDescription>
+        </SheetHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col space-y-8 py-8"
+          >
+            <FormField
+              control={form.control}
+              name="section_title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Judul Section <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Pendahuluan"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>Judul section anda.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <Button type="submit" className="self-end" disabled={isLoading}>
-                {isLoading ? (
-                  <Icons.spinner className="h-5 w-5 animate-spin" />
-                ) : (
-                  "Tambah"
-                )}
-              </Button>
-            </form>
-          </Form>
-        </SheetContent>
-      </Sheet>
-    </div>
+            <Button type="submit" className="self-end" disabled={isLoading}>
+              {isLoading ? (
+                <Icons.spinner className="h-5 w-5 animate-spin" />
+              ) : (
+                "Tambah"
+              )}
+            </Button>
+          </form>
+        </Form>
+      </SheetContent>
+    </Sheet>
   )
 }
