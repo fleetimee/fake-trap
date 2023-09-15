@@ -5,11 +5,11 @@ import Balance from "react-wrap-balancer"
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
+import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui"
+import { Shell } from "@/components/shell/lobby-shell"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
-import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui"
-import { Shell } from "@/components/shell/lobby-shell"
 
 export const metadata = {
   title: "Explore",
@@ -88,7 +88,7 @@ export default async function IntroductionPage() {
   })
 
   return (
-    <Shell as="div" className="gap-16">
+    <Shell as="div" className="gap-16 ">
       <section
         id="introduction"
         aria-labelledby="introduction-heading"

@@ -1,11 +1,19 @@
 import Link from "next/link"
 import Balancer from "react-wrap-balancer"
 
+import { marketingFeatures } from "@/config/marketing-feature"
 import { getCurrentUser } from "@/lib/session"
+import { cn } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { LottieAnimation } from "@/components/lottie-animation"
 import { buttonVariants } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export const metadata = {
   title: "BPD E-learning: Pelajari apa saja, kapan saja, di mana saja",
@@ -17,13 +25,13 @@ export default async function IndexPage() {
 
   return (
     <>
-      <div className="relative flex min-h-screen flex-col">
+      <div className="relative flex min-h-screen flex-col bg-background">
         <SiteHeader user={user} />
-        <div className="gap-12">
+        <div className="gap-12  ">
           <section
             id="hero"
             aria-labelledby="hero-heading"
-            className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 bg-background pb-8 pt-6 text-center md:pb-12 md:pt-10 lg:py-28"
+            className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 rounded-md pb-8 pt-6 text-center md:pb-12 md:pt-10 lg:py-28"
           >
             <h1
               className="animate-fade-up bg-gradient-to-br from-foreground to-muted-foreground bg-clip-text text-center text-4xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm md:text-7xl/[5rem]"
@@ -63,34 +71,36 @@ export default async function IndexPage() {
             </div>
           </section>
 
-          <section className="space-y-6 py-6 md:pt-10 lg:pt-24">
-            <div className="animate-fade-up mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <section className="space-y-6  py-6 md:pt-10 lg:pt-24">
+            <div className="animate-fade-up mx-auto flex max-w-[58rem] flex-col items-center space-y-4 border-t py-2 text-center">
               <h2 className="pt-4 text-center text-3xl font-bold md:text-4xl">
-                What&apos;s included?
+                Ada apa saja di E Learning ini?
               </h2>
 
               <p className="pb-8 pt-4 text-center text-lg">
                 <Balancer>
-                  This repo comes fully stacked with everything you need for
-                  your enterprise startup. Stop worrying about boilerplate
-                  integrations and start building your product today!
+                  E Learning ini berisi materi-materi yang berkaitan dengan
+                  pengetahuan umum dan berisi kursus yang dapat diikuti oleh
+                  pengguna.
                 </Balancer>
               </p>
             </div>
 
-            {/*<div className="grid grid-cols-1 gap-5 md:grid-cols-3">*/}
-            {/*  {marketingFeatures.map((feature) => (*/}
-            {/*    <Card key={feature.title} className={cn("p-2")}>*/}
-            {/*      <CardHeader>{feature.icon}</CardHeader>*/}
-            {/*      <CardContent className="space-y-2">*/}
-            {/*        <CardTitle>{feature.title}</CardTitle>*/}
-            {/*        <CardDescription className="mt-2">*/}
-            {/*          {feature.body}*/}
-            {/*        </CardDescription>*/}
-            {/*      </CardContent>*/}
-            {/*    </Card>*/}
-            {/*  ))}*/}
-            {/*</div>*/}
+            <div className="animate-fade-up container mx-auto my-16 w-full max-w-screen-lg place-items-center items-center justify-center gap-5  p-5 xl:px-0">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                {marketingFeatures.map((feature) => (
+                  <Card key={feature.title} className={cn("p-2")}>
+                    <CardHeader>{feature.icon}</CardHeader>
+                    <CardContent className="space-y-2">
+                      <CardTitle>{feature.title}</CardTitle>
+                      <CardDescription className="mt-2">
+                        {feature.body}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </section>
         </div>
       </div>
