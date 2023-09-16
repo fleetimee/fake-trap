@@ -40,13 +40,13 @@ export default async function IndexPage() {
               <Balancer>Pelajari apa saja, kapan saja, di mana saja</Balancer>
             </h1>
             <p
-              className="animate-fade-up mt-6 text-center text-muted-foreground/80 opacity-0 md:text-xl"
+              className="mt-6 animate-fade-up text-center text-muted-foreground/80 opacity-0 md:text-xl"
               style={{ animationDelay: "0.30s", animationFillMode: "forwards" }}
             >
               <Balancer>
-                Acme Corp is a Next.js starter kit that includes everything you
-                need to build a modern web application. Mobile application
-                preconfigured, ready to go.
+                BPD E-learning adalah platform pembelajaran online yang
+                menyediakan berbagai macam materi yang dapat diakses oleh
+                pengguna.
               </Balancer>
             </p>
             <div className="flex gap-4">
@@ -54,9 +54,9 @@ export default async function IndexPage() {
                 href={"/intro/"}
                 target="_blank"
                 rel="noreferrer"
-                className={buttonVariants()}
+                className={buttonVariants({ variant: "default" })}
               >
-                Explore
+                <p className="font-bold">Explore</p>
               </Link>
               <Link
                 href="/login"
@@ -66,15 +66,15 @@ export default async function IndexPage() {
                 prefetch={false}
                 className={buttonVariants({ variant: "outline" })}
               >
-                {user ? "Masuk Panel" : "Akses App"}
+                <p className="font-bold">{user ? "Enter" : "Authenticate"}</p>
               </Link>
             </div>
           </section>
 
-          <section className="space-y-6  py-6 md:pt-10 lg:pt-24">
-            <div className="animate-fade-up mx-auto flex max-w-[58rem] flex-col items-center space-y-4 border-t py-2 text-center">
-              <h2 className="pt-4 text-center text-3xl font-bold md:text-4xl">
-                Ada apa saja di E Learning ini?
+          <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
+            <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center  border-t py-2 text-center">
+              <h2 className="pt-4 text-center font-heading text-3xl font-bold md:text-4xl">
+                What's included?
               </h2>
 
               <p className="pb-8 pt-4 text-center text-lg">
@@ -86,13 +86,15 @@ export default async function IndexPage() {
               </p>
             </div>
 
-            <div className="animate-fade-up container mx-auto my-16 w-full max-w-screen-lg place-items-center items-center justify-center gap-5  p-5 xl:px-0">
+            <div className="container mx-auto my-16 w-full max-w-screen-lg animate-fade-up place-items-center items-center justify-center gap-5  p-5 xl:px-0">
               <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 {marketingFeatures.map((feature) => (
                   <Card key={feature.title} className={cn("p-2")}>
                     <CardHeader>{feature.icon}</CardHeader>
                     <CardContent className="space-y-2">
-                      <CardTitle>{feature.title}</CardTitle>
+                      <CardTitle className="font-heading">
+                        {feature.title}
+                      </CardTitle>
                       <CardDescription className="mt-2">
                         {feature.body}
                       </CardDescription>

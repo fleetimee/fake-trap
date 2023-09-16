@@ -4,135 +4,63 @@ import { Icons } from "@/components/icons"
 
 export const marketingFeatures = [
   {
-    icon: <Component className="h-10 w-10" />,
-    title: "UI Package",
+    icon: <Icons.category className="h-10 w-10" />,
+    title: "Kategori",
     body: (
       <>
-        A UI package with all the components you need for your next application.
-        Built by the wonderful{" "}
-        <a
-          href="https://ui.shadcn.com"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium underline underline-offset-4"
-        >
-          Shadcn
-        </a>
-        .
+        Memungkinkan pengguna untuk dengan mudah menavigasi ke kategori yang
+        diinginkan.
       </>
     ),
   },
   {
-    icon: <Icons.gitHub className="h-10" />,
-    title: "Authentication",
+    icon: <Icons.knowledge className="h-10 w-10" />,
+    title: "Pengetahuan",
     body: (
       <>
-        Protect pages and API routes throughout your entire app using{" "}
-        <a
-          href="https://clerk.com"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium underline underline-offset-4"
-        >
-          Clerk
-        </a>
-        .
+        Memungkinkan pengguna untuk mencari dan mengeksplorasi informasi yang
+        relevan.
       </>
     ),
   },
   {
-    icon: <Icons.gitHub className="h-10" />,
-    title: "MDX",
+    icon: <Icons.course className="h-10 w-10" />,
+    title: "Kursus",
     body: (
       <>
-        Preconfigured MDX as Server Components. MDX is the best way to write
-        contentful pages.
+        Memungkinkan pengguna untuk mengeksplorasi kursus yang tersedia dan
+        mengikuti kursus yang diinginkan.
       </>
     ),
   },
   {
-    icon: (
-      <div className="flex gap-3 self-start">
-        <Icons.gitHub className="h-10 w-10" />
-        <Icons.gitHub className="h-10 w-10" />
-      </div>
-    ),
-    title: "Next.js 13 & React 18",
+    icon: <Icons.user className="h-10 w-10" />,
+    title: "Authentikasi",
     body: (
       <>
-        Latest features from Next 13 using the brand new App Router with full
-        React 18 support including streaming.
+        Memungkinkan pengguna untuk masuk ke dalam sistem dan mengakses fitur
+        yang tersedia.
       </>
     ),
   },
 
   {
-    icon: (
-      <div className="flex gap-3 self-start">
-        <Icons.gitHub className="h-10 w-10" />
-        <Icons.gitHub className="h-10 w-10" />
-        <Icons.gitHub className="h-10 w-10" />
-      </div>
-    ),
-    title: "Full-stack Typesafety",
+    icon: <Icons.pizza className="h-10 w-10" />,
+    title: "Explore",
     body: (
       <>
-        Full-stack Typesafety with{" "}
-        <a
-          href="https://trpc.io"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium underline underline-offset-4"
-        >
-          tRPC
-        </a>
-        . Typesafe database querying using{" "}
-        <a
-          href="https://kysely.dev"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium underline underline-offset-4"
-        >
-          Kysely
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://prisma.io"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium underline underline-offset-4"
-        >
-          Prisma
-        </a>
-        .
+        Menyediakan fitur penjelajahan yang memungkinkan pengguna untuk
+        menemukan konten yang relevan
       </>
     ),
   },
   {
     icon: <Globe className="h-10 w-10" />,
-    title: "Edge Compute",
+    title: "Forum",
     body: (
       <>
-        Ready to deploy on Edge functions to ensure a blazingly fast application
-        with optimal UX.
-      </>
-    ),
-  },
-  {
-    icon: <CreditCard className="h-10 w-10" />,
-    title: "Payments",
-    body: (
-      <>
-        Accept payments with{" "}
-        <a
-          href="https://stripe.com"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium underline underline-offset-4"
-        >
-          Stripe
-        </a>
-        .
+        Menyediakan forum diskusi atau komunitas online di mana pengguna dapat
+        berinteraksi
       </>
     ),
   },
