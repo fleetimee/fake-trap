@@ -52,9 +52,8 @@ export default async function IndexPage() {
             <div className="flex gap-4">
               <Link
                 href={"/intro/"}
-                target="_blank"
                 rel="noreferrer"
-                className={buttonVariants({ variant: "default" })}
+                className={buttonVariants({ variant: "default", size: "lg" })}
               >
                 <p className="font-bold">Explore</p>
               </Link>
@@ -64,7 +63,7 @@ export default async function IndexPage() {
                 rel="noopener noreferrer"
                 replace
                 prefetch={false}
-                className={buttonVariants({ variant: "outline" })}
+                className={buttonVariants({ variant: "outline", size: "lg" })}
               >
                 <p className="font-bold">{user ? "Enter" : "Authenticate"}</p>
               </Link>

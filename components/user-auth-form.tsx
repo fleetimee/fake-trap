@@ -5,25 +5,14 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
-/**
- * Props for the UserAuthForm component.
- * @interface UserAuthFormProps
- * @extends React.HTMLAttributes<HTMLDivElement>
- */
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-/**
- * User authentication form component.
- * @param {UserAuthFormProps} props - Component props.
- * @param {string} props.className - Additional class name for the component.
- * @returns {JSX.Element} - Rendered component.
- */
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
 

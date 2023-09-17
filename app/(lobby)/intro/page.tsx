@@ -1,11 +1,15 @@
 import Image from "next/image"
 import Link from "next/link"
+import { Variants } from "framer-motion"
 import Balance from "react-wrap-balancer"
 
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
+import { getRandomPatternStyle } from "@/lib/generate-pattern"
 import { cn } from "@/lib/utils"
 import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui"
+import { MotionDiv } from "@/components/framer-wrapper"
+import { Icons } from "@/components/icons"
 import { Shell } from "@/components/shell/lobby-shell"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
@@ -90,67 +94,69 @@ export default async function IntroductionPage() {
   return (
     <Shell as="div" className="gap-16 ">
       <section
-        id="introduction"
-        aria-labelledby="introduction-heading"
-        className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-12 md:pt-10 lg:py-32"
-      >
-        <h1 className="font-heading text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
-          Explore
-        </h1>
-        <Balance className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
-          Pelajari pengetahuan baru dengan mudah dan menyenangkan.
-        </Balance>
-        <div className="space-x-4">
-          <Link
-            href="/login"
-            className={cn(
-              buttonVariants({
-                size: "lg",
-              })
-            )}
-          >
-            Masuk Panel
-          </Link>
-        </div>
-      </section>
-      <section
         id="categories"
         aria-labelledby="categories-heading"
         className="space-y-6 py-6 md:pt-10 lg:pt-32"
       >
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <h2 className="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
-            Kategori
-          </h2>
+          <MotionDiv
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h2 className="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
+              Kategori
+            </h2>
+          </MotionDiv>
           <Balance className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
             Jelajahi kategori pengetahuan yang tersedia di dalam e-learning ini.
           </Balance>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {publicCategoryResp.data.map((category) => (
-            <Link
-              href={`intro/categories/${category.id_category}`}
+            <MotionDiv
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
               key={category.id_category}
+              className="group relative overflow-hidden rounded-md border"
             >
-              <div className="group relative overflow-hidden rounded-md">
-                <AspectRatio ratio={4 / 5}>
-                  <div className="absolute inset-0 z-10 bg-black/60 transition-colors group-hover:bg-black/70" />
-                  <Image
-                    src="/images/category-image.jpg"
-                    alt="nigga"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                    priority
+              <Link
+                key={category.id_category}
+                href={`/intro/categories/${category.id_category}`}
+              >
+                <AspectRatio ratio={16 / 9}>
+                  <div className="absolute inset-0 z-10 bg-zinc-950/70 transition-colors group-hover:bg-zinc-950/75" />
+                  <div
+                    className="h-full rounded-t-md border-b"
+                    style={getRandomPatternStyle(
+                      String(category.category_name)
+                    )}
                   />
                 </AspectRatio>
-                <div className="absolute inset-0 z-20 flex items-center justify-center">
-                  <h3 className="text-3xl font-medium capitalize text-slate-100 md:text-2xl">
+                <div className="absolute inset-4 z-20 flex flex-col">
+                  <div className="flex items-start justify-between space-x-4">
+                    <div
+                      className={cn(
+                        buttonVariants({
+                          size: "icon",
+                          className:
+                            "pointer-events-none h-8 w-8 bg-zinc-100 text-zinc-950",
+                        })
+                      )}
+                      aria-hidden="true"
+                    >
+                      <Icons.category className="h-4 w-4" />
+                    </div>
+                    <p className="text-sm text-zinc-200">1 items</p>
+                  </div>
+                  <h3 className="mt-auto text-xl font-medium capitalize text-zinc-200">
                     {category.category_name}
                   </h3>
                 </div>
-              </div>
-            </Link>
+                <span className="sr-only">{category.category_name}</span>
+              </Link>
+            </MotionDiv>
           ))}
         </div>
       </section>
@@ -197,10 +203,19 @@ export default async function IntroductionPage() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {publicKnowledgeResp.data.map((knowledge) => (
-            <PublicKnowledgeCard
+            <MotionDiv
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ staggerChildren: 0.1 }}
               key={knowledge.id_knowledge}
-              knowledge={knowledge}
-            />
+              whileHover={{ scale: 1.05 }}
+              viewport={{ once: true }}
+            >
+              <PublicKnowledgeCard
+                key={knowledge.id_knowledge}
+                knowledge={knowledge}
+              />
+            </MotionDiv>
           ))}
         </div>
       </section>
