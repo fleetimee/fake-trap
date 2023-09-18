@@ -16,6 +16,7 @@ import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
 import { CourseDetailContent } from "@/components/app/course/detail/ui"
 import { DetailSidebarCourse } from "@/components/app/course/ui"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
@@ -83,7 +84,12 @@ export function CourseDetailShell({
         ]}
       />
 
-      <div className="flex flex-row gap-4 px-2">
+      <MotionDiv
+        className="flex flex-row gap-4 px-2"
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <Alert className="basis-full">
           <RocketIcon className="h-4 w-4" />
           <AlertTitle>Informasi!</AlertTitle>
@@ -94,7 +100,7 @@ export function CourseDetailShell({
             </span>
           </AlertDescription>
         </Alert>
-      </div>
+      </MotionDiv>
 
       <div className="flex h-auto flex-col gap-4 px-2 lg:flex-row">
         <CourseDetailContent
