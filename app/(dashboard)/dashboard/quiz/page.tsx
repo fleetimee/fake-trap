@@ -5,6 +5,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { CreateQuizSheet } from "@/components/app/quiz/operations"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, QuizTableShell } from "@/components/shell"
@@ -126,11 +127,21 @@ export default async function QuizPage({ searchParams }: QuizPageProps) {
         ]}
       />
       <div className="flex items-center justify-between gap-4">
-        <DashboardHeader
-          heading="Quiz"
-          description="Quiz yang tersedia di e-learning"
-        />
-        <CreateQuizSheet referenceResp={referenceResp} />
+        <MotionDiv
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <DashboardHeader
+            heading="Quiz"
+            description="Quiz yang tersedia di e-learning"
+          />
+        </MotionDiv>
+        <MotionDiv
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <CreateQuizSheet referenceResp={referenceResp} />
+        </MotionDiv>
       </div>
       {/*<QuizDataTable columns={columns} data={quizList.data} />*/}
 

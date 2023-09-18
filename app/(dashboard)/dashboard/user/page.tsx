@@ -4,6 +4,7 @@ import { UserListRes } from "@/types/user/res/user-list"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { CreateUserSheet } from "@/components/app/user/operations"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserTableShell } from "@/components/shell"
@@ -94,15 +95,27 @@ export default async function UserPage({ searchParams }: UserPageProps) {
         ]}
       />
       <div className="mb-4 flex w-full items-center justify-between">
-        <DashboardHeader
-          heading="User"
-          description="User yang tersedia di e-learning"
-        />
+        <MotionDiv
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <DashboardHeader
+            heading="User"
+            description="User yang tersedia di e-learning"
+          />
+        </MotionDiv>
 
-        <CreateUserSheet />
+        <MotionDiv
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <CreateUserSheet />
+        </MotionDiv>
       </div>
 
-      <UserTableShell data={userList.data} pageCount={userList.totalPage} />
+      <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <UserTableShell data={userList.data} pageCount={userList.totalPage} />
+      </MotionDiv>
     </DashboardShell>
   )
 }

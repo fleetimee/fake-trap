@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Variants } from "framer-motion"
+import { Variant, Variants } from "framer-motion"
 import Balance from "react-wrap-balancer"
 
 import { CategoryListRes } from "@/types/category/res"
@@ -91,6 +91,26 @@ export default async function IntroductionPage() {
     page: 1,
   })
 
+  const parentVariants: Variants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { staggerChildren: 0.5 } },
+  }
+
+  const childrenVariant: Variants = {
+    initial: { opacity: 0, x: 50 },
+    animate: { opacity: 1, x: 0 },
+  }
+
+  const parentTagVariants: Variants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  }
+
+  const tagVariants: Variants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+  }
+
   return (
     <Shell as="div" className="gap-16 ">
       <section
@@ -109,15 +129,27 @@ export default async function IntroductionPage() {
             </h2>
           </MotionDiv>
           <Balance className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Jelajahi kategori pengetahuan yang tersedia di dalam e-learning ini.
-          </Balance>
-        </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {publicCategoryResp.data.map((category) => (
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.4 }}
+            >
+              Jelajahi kategori pengetahuan yang tersedia di dalam e-learning
+              ini.
+            </MotionDiv>
+          </Balance>
+        </div>
+        <MotionDiv
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          variants={parentVariants}
+          initial="initial"
+          animate="animate"
+        >
+          {publicCategoryResp.data.map((category) => (
+            <MotionDiv
+              variants={childrenVariant}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               key={category.id_category}
               className="group relative overflow-hidden rounded-md border"
             >
@@ -158,25 +190,35 @@ export default async function IntroductionPage() {
               </Link>
             </MotionDiv>
           ))}
-        </div>
+        </MotionDiv>
       </section>
 
-      <section
+      <MotionDiv
         id="random-subcategories"
         aria-labelledby="random-subcategories-heading"
         className="flex flex-wrap items-center justify-center gap-4 pb-4"
+        variants={parentTagVariants}
+        initial="initial"
+        animate="animate"
       >
         {publicCategoryAll.data.map((category) => (
-          <Link
+          <MotionDiv
+            variants={tagVariants}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             key={category.id_category}
-            href={`/intro/categories/${category.id_category}`}
           >
-            <Badge variant="secondary" className="rounded px-3 py-1">
-              {category.category_name}
-            </Badge>
-          </Link>
+            <Link
+              key={category.id_category}
+              href={`/intro/categories/${category.id_category}`}
+            >
+              <Badge variant="secondary" className="rounded px-3 py-1">
+                {category.category_name}
+              </Badge>
+            </Link>
+          </MotionDiv>
         ))}
-      </section>
+      </MotionDiv>
 
       <section
         id="featured-knowledge"

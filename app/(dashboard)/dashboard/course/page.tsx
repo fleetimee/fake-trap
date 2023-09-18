@@ -5,6 +5,7 @@ import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { CreateCourseButton } from "@/components/app/course/operations/create-course-sheet"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
@@ -130,12 +131,17 @@ export default async function CoursePage({ searchParams }: CoursePageProps) {
           },
         ]}
       />
-      <DashboardHeader
-        heading="Kursus"
-        description="Kursus yang tersedia di e-learning"
+      <MotionDiv
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
       >
-        <CreateCourseButton knowledgeResp={knowledgeResp} />
-      </DashboardHeader>
+        <DashboardHeader
+          heading="Kursus"
+          description="Kursus yang tersedia di e-learning"
+        >
+          <CreateCourseButton knowledgeResp={knowledgeResp} />
+        </DashboardHeader>
+      </MotionDiv>
       {/*<div className="grid grid-cols-1 grid-rows-1 gap-6 md:grid-cols-2 lg:grid-cols-3">*/}
       {/*  {courseResp.data.map((item) => (*/}
       {/*    <CourseGrid data={item} dataKnowledge={knowledgeResp} />*/}

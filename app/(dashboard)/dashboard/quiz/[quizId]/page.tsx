@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import { Variants } from "framer-motion"
 
 import { QuizLinkedList, QuizOneUserCountRes } from "@/types/quiz/res"
 import { QuizOneRes } from "@/types/quiz/res/quiz-get-one"
@@ -15,6 +16,7 @@ import {
   QuizTypeCard,
   QuizUserCountCard,
 } from "@/components/app/quiz/detail/ui"
+import { MotionDiv } from "@/components/framer-wrapper"
 
 type Props = {
   params: {
@@ -170,28 +172,61 @@ export default async function QuizDetailPage({ params }: Props) {
 
   const quizUsersCount = detailQuizUsersCountResp.data.count
 
-  return (
-    <div className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-3">
-        <QuizAnswerPromptCard isAlreadyAnswered={isAlreadyHaveQuiz} />
-        <QuizUserCountCard userCount={quizUsersCount} />
-        <QuizTypeCard
-          detailQuizType={detailQuizTypeResp}
-          detailQuizData={detailQuizDataResp}
-        />
-      </div>
+  const parentVariant: Variants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  }
 
-      <div className="grid grid-cols-1">
+  const childrenVariant: Variants = {
+    initial: { opacity: 0, x: 50 },
+    animate: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        bounce: 0.25,
+        duration: 0.5,
+        type: "spring",
+        stiffness: 500,
+      },
+    },
+  }
+
+  return (
+    <MotionDiv
+      className="space-y-4"
+      initial="initial"
+      animate="animate"
+      variants={parentVariant}
+    >
+      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-3">
+        <MotionDiv className="child" variants={childrenVariant}>
+          <QuizAnswerPromptCard isAlreadyAnswered={isAlreadyHaveQuiz} />
+        </MotionDiv>
+        <MotionDiv className="child" variants={childrenVariant}>
+          <QuizUserCountCard userCount={quizUsersCount} />
+        </MotionDiv>
+        <MotionDiv className="child" variants={childrenVariant}>
+          <QuizTypeCard
+            detailQuizType={detailQuizTypeResp}
+            detailQuizData={detailQuizDataResp}
+          />
+        </MotionDiv>
+      </div>
+      <MotionDiv className="child grid grid-cols-1" variants={childrenVariant}>
         <QuizLinkedCard
           code={linkedCourseResp.code}
           data={linkedCourseResp.data}
         />
-      </div>
-
+      </MotionDiv>
       <div className="grid grid-flow-row gap-4 md:grid-cols-1 lg:grid-cols-2">
-        <QuizDescriptionCard data={detailQuizDataResp.data} />
-        <QuizCalendarCard data={detailQuizDataResp.data} />
+        <MotionDiv className="child" variants={childrenVariant}>
+          <QuizDescriptionCard data={detailQuizDataResp.data} />
+        </MotionDiv>
+        <MotionDiv className="child" variants={childrenVariant}>
+          <QuizCalendarCard data={detailQuizDataResp.data} />
+        </MotionDiv>
       </div>
-    </div>
+      <MotionDiv />
+    </MotionDiv>
   )
 }

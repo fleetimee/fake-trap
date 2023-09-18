@@ -30,7 +30,7 @@ export function QuizTypeCard({
   }
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-lg">Tipe Kuis</CardTitle>
         <CardDescription>Tipe kuis ini adalah</CardDescription>

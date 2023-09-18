@@ -6,6 +6,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { CreateKnowledgeButton } from "@/components/app/knowledge/operations"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
@@ -156,16 +157,21 @@ export default async function KnowledgePage({
           },
         ]}
       />
-      <DashboardHeader
-        heading="Pengetahuan"
-        description="Pengetahuan yang tersedia di e-learning"
+      <MotionDiv
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
       >
-        <CreateKnowledgeButton
-          categoryResponse={categoryResp}
-          referenceResp={referenceResp}
-          token={user?.token}
-        />
-      </DashboardHeader>
+        <DashboardHeader
+          heading="Pengetahuan"
+          description="Pengetahuan yang tersedia di e-learning"
+        >
+          <CreateKnowledgeButton
+            categoryResponse={categoryResp}
+            referenceResp={referenceResp}
+            token={user?.token}
+          />
+        </DashboardHeader>
+      </MotionDiv>
       {/*<div className="divide-y divide-border rounded-md border">*/}
       {/*  {knowledgeResp.data.map((item) => (*/}
       {/*    <KnowledgeItemList*/}

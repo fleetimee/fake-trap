@@ -4,6 +4,7 @@ import { CategoryListRes } from "@/types/category/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { CreateCategorySheet } from "@/components/app/category/operations/create-category-sheet"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CategoryTableShell, DashboardShell } from "@/components/shell"
@@ -62,12 +63,22 @@ export default async function CategoryPage({
       />
 
       <div className="flex items-center justify-between gap-4">
-        <DashboardHeader
-          heading="Kategori"
-          description="Kategori Pengetahuan yang tersedia"
-        />
+        <MotionDiv
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <DashboardHeader
+            heading="Kategori"
+            description="Kategori Pengetahuan yang tersedia"
+          />
+        </MotionDiv>
 
-        <CreateCategorySheet />
+        <MotionDiv
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <CreateCategorySheet />
+        </MotionDiv>
       </div>
 
       <CategoryTableShell
