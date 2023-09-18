@@ -128,7 +128,7 @@ export default async function IntroductionPage() {
               Kategori
             </h2>
           </MotionDiv>
-          <Balance className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+          <Balance className="text-muted-foreground max-w-[46rem] leading-normal sm:text-lg sm:leading-7">
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -226,7 +226,7 @@ export default async function IntroductionPage() {
         className="space-y-16"
       >
         <div className="flex items-center">
-          <h2 className="flex-1 font-heading text-2xl font-medium sm:text-3xl">
+          <h2 className="font-heading flex-1 text-2xl font-medium sm:text-3xl">
             Pengetahuan Unggulan
           </h2>
           <Link href="/products">

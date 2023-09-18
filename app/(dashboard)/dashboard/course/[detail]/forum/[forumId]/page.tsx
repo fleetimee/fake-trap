@@ -7,6 +7,7 @@ import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { ForumPost } from "@/components/app/course/detail/forum/ui"
 import { Editor } from "@/components/editor"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Card } from "@/components/ui/card"
@@ -154,7 +155,15 @@ export default async function ForumPostPage({ params }: Props) {
         <p className="font-heading text-2xl">Balasan</p>
 
         {postsResp.data?.map((post) => (
-          <ForumPost key={post.id_post} post={post} />
+          <MotionDiv
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, staggerChildren: 0.2 }}
+            // only on initial render
+            viewport={{ once: true }}
+          >
+            <ForumPost key={post.id_post} post={post} />
+          </MotionDiv>
         ))}
 
         <Editor id_threads={parseInt(params.forumId)} />

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation"
+import { Variants } from "framer-motion"
 
 import {
   UserAvgScoreRes,
@@ -17,14 +18,14 @@ import {
   AvgScoreCard,
   CourseContainerCard,
   ProfileCard,
+  QuizGrouped,
   RecentPostCard,
   RecentQuizCard,
-  QuizGrouped,
 } from "@/components/app/me/ui"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-
 
 export const metadata = {
   title: "Profil Saya",
@@ -236,6 +237,27 @@ async function getQuizGroupedByCourse({
   return await res.json()
 }
 
+const generateRandomAnimation = (): Variants => {
+  const randomStiffness = Math.floor(Math.random() * 200) + 1
+  const randomDamping = Math.floor(Math.random() * 20) + 1
+
+  return {
+    initial: {
+      opacity: 0,
+      y: -100,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: randomStiffness,
+        damping: randomDamping,
+      },
+    },
+  }
+}
+
 export default async function MePages() {
   const user = await getCurrentUser()
 
@@ -275,6 +297,36 @@ export default async function MePages() {
     }),
   ])
 
+  const parentVariant: Variants = {
+    initial: {
+      opacity: 0,
+      y: -100,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const childVariant: Variants = {
+    initial: {
+      opacity: 0,
+      y: -100,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10,
+      },
+    },
+  }
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -289,24 +341,61 @@ export default async function MePages() {
           },
         ]}
       />
-      <DashboardHeader
-        heading={`Halo, ${tokenExtract.username}!`}
-        description="Disini anda dapat melihat detail mengenai profil anda"
-      />
-      <div className="grid grid-cols-7 items-center justify-between gap-4">
-        <ProfileCard
-          username={tokenExtract.username}
-          email={tokenExtract.email}
-          numberOfPost={postCount.data.number_of_post}
-          numberOfCourse={courseCount.data.number_of_course}
-          numberOfQuiz={quizCount.data.number_of_quiz}
+      <MotionDiv
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <DashboardHeader
+          heading={`Halo, ${tokenExtract.username}!`}
+          description="Disini anda dapat melihat detail mengenai profil anda"
         />
-        <AvgScoreCard avgScore={avgScore.data.average_score} />
-        <RecentPostCard recentPostList={recentPostList} />
-        <RecentQuizCard quizTakenList={quizTakenList} />
-        <QuizGrouped quizGrouped={quizGrouped} />
-        <CourseContainerCard enrolledCourseList={enrolledCourseList} />
-      </div>
+      </MotionDiv>
+      <MotionDiv
+        className="grid grid-cols-7 items-center justify-between gap-4"
+        variants={parentVariant}
+        initial="initial"
+        animate="animate"
+      >
+        <MotionDiv
+          className=" child col-span-7  lg:col-span-2"
+          variants={childVariant}
+        >
+          <ProfileCard
+            username={tokenExtract.username}
+            email={tokenExtract.email}
+            numberOfPost={postCount.data.number_of_post}
+            numberOfCourse={courseCount.data.number_of_course}
+            numberOfQuiz={quizCount.data.number_of_quiz}
+          />
+        </MotionDiv>
+        <MotionDiv
+          className="child col-span-7 lg:col-span-2"
+          variants={childVariant}
+        >
+          <AvgScoreCard avgScore={avgScore.data.average_score} />
+        </MotionDiv>
+        <MotionDiv
+          className="child col-span-7 lg:col-span-3"
+          variants={childVariant}
+        >
+          <RecentPostCard recentPostList={recentPostList} />
+        </MotionDiv>
+        <MotionDiv
+          className="child col-span-7 lg:col-span-4"
+          variants={childVariant}
+        >
+          <RecentQuizCard quizTakenList={quizTakenList} />
+        </MotionDiv>
+        <MotionDiv
+          className="child col-span-7 lg:col-span-3"
+          variants={childVariant}
+        >
+          <QuizGrouped quizGrouped={quizGrouped} />
+        </MotionDiv>
+        <MotionDiv className="child col-span-7" variants={childVariant}>
+          <CourseContainerCard enrolledCourseList={enrolledCourseList} />
+        </MotionDiv>
+      </MotionDiv>
     </DashboardShell>
   )
 }
