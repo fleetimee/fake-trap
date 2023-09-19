@@ -3,9 +3,11 @@ import { Variants } from "framer-motion"
 import Balancer from "react-wrap-balancer"
 
 import { marketingFeatures } from "@/config/marketing-feature"
+import { siteConfig } from "@/config/site"
 import { getCurrentUser } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
+import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { MarketingCard } from "@/components/marketing-card"
@@ -58,6 +60,16 @@ export default async function IndexPage() {
         <div className="gap-12  ">
           <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
             <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center py-2 text-center">
+              <Link href="/" className="hidden items-center space-x-2 md:flex">
+                <Icons.logo
+                  className="h-12 w-12 text-primary"
+                  aria-hidden="true"
+                />
+                <span className="hidden text-4xl font-semibold text-primary sm:inline-block">
+                  {siteConfig.name}
+                </span>
+              </Link>
+
               <p className="pb-8 pt-4 text-center  text-2xl">
                 <Balancer>
                   E Learning ini berisi materi-materi yang berkaitan dengan

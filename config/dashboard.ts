@@ -1,12 +1,6 @@
 import { DashboardConfig } from "types"
 
-/**
- * Configuration object for the dashboard.
- */
 export const dashboardConfig: DashboardConfig = {
-  /**
-   * Main navigation items.
-   */
   mainNav: [
     {
       title: "Documentation",
@@ -18,9 +12,6 @@ export const dashboardConfig: DashboardConfig = {
       disabled: true,
     },
   ],
-  /**
-   * Sidebar navigation items.
-   */
   sidebarNav: [
     {
       title: "Dashboard",
@@ -69,6 +60,41 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/me",
       icon: "pizza",
       items: [],
+    },
+  ],
+}
+
+export const userAreaDashboardConfig: DashboardConfig = {
+  mainNav: [],
+  sidebarNav: [
+    {
+      title: "User Area",
+      href: "/member-area",
+      icon: "dashboard",
+      items: [],
+    },
+  ],
+}
+
+export const userAreaRole = {
+  roleName: "User",
+  roleDescription:
+    "Anda adalah user biasa, silahkan belajar dan berlatih sebanyak mungkin",
+  features: [
+    {
+      title: "Materi",
+      description: "Anda dapat belajar materi yang tersedia",
+      icon: "book",
+    },
+    {
+      title: "Latihan",
+      description: "Anda dapat berlatih dengan latihan yang tersedia",
+      icon: "quiz",
+    },
+    {
+      title: "Kursus",
+      description: "Anda dapat mengikuti kursus yang tersedia",
+      icon: "course",
     },
   ],
 }

@@ -42,9 +42,9 @@ export function MarketingCard({
               className={cn("flex h-full flex-col items-center justify-center")}
             >
               <Card key={feature.title} className={cn("p-2")}>
-                <CardHeader>{feature.icon}</CardHeader>
+                <CardHeader className="text-primary">{feature.icon}</CardHeader>
                 <CardContent className="space-y-2">
-                  <CardTitle className="font-heading">
+                  <CardTitle className="font-heading text-primary">
                     {feature.title}
                   </CardTitle>
                   <CardDescription className="mt-2">
