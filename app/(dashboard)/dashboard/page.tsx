@@ -33,8 +33,6 @@ export default async function DashboardPage() {
 
   const dateNow = convertDatetoString(new Date().toString())
 
-  const getDay = new Date().getDay()
-
   const getDayWithText = new Date().toLocaleString("en", {
     weekday: "long",
   })
