@@ -13,7 +13,7 @@ import { Icons } from "@/components/icons"
 import { Shell } from "@/components/shell/lobby-shell"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata = {
   title: "Explore",
@@ -30,7 +30,7 @@ async function getPublicKnowledge({
   page,
 }: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
   const publicKnowledge = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge?limit=${limit}&page=${page}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge?limit=8&page=1&orderBy=desc&sortBy=created_at`,
     {
       method: "GET",
       headers: {
@@ -52,7 +52,7 @@ async function getPublicCategories({
   page,
 }: GetPublicCategoriesProps): Promise<CategoryListRes> {
   const publicCategories = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}$`,
     {
       method: "GET",
       headers: {
@@ -65,7 +65,7 @@ async function getPublicCategories({
 }
 
 export default async function IntroductionPage() {
-  const PUBLIC_CATEGORY_LIMIT = 4
+  const PUBLIC_CATEGORY_LIMIT = 8
   const PUBLIC_CATEGORY_PAGE_SIZE = 1
 
   const PUBLIC_KNOWLEDGE_LIMIT = 8
@@ -86,6 +86,8 @@ export default async function IntroductionPage() {
     publicKnowledge,
   ])
 
+  console.log(publicKnowledgeResp)
+
   const publicCategoryAll = await getPublicCategories({
     limit: 100,
     page: 1,
@@ -93,7 +95,7 @@ export default async function IntroductionPage() {
 
   const parentVariants: Variants = {
     initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { staggerChildren: 0.5 } },
+    animate: { opacity: 1, transition: { staggerChildren: 0.1 } },
   }
 
   const childrenVariant: Variants = {
@@ -112,7 +114,7 @@ export default async function IntroductionPage() {
   }
 
   return (
-    <Shell as="div" className="gap-16 ">
+    <Shell as="div" className="grid gap-60 ">
       <section
         id="categories"
         aria-labelledby="categories-heading"
@@ -128,17 +130,28 @@ export default async function IntroductionPage() {
               Kategori
             </h2>
           </MotionDiv>
-          <Balance className="text-muted-foreground max-w-[46rem] leading-normal sm:text-lg sm:leading-7">
+          <Balance className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.2 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Jelajahi kategori pengetahuan yang tersedia di dalam e-learning
               ini.
             </MotionDiv>
           </Balance>
         </div>
+        <MotionDiv
+          className="flex flex-col items-end"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <Button size="lg">
+            <Link href="/intro/categories/all">Lihat Semua</Link>
+          </Button>
+        </MotionDiv>
         <MotionDiv
           className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           variants={parentVariants}
@@ -159,11 +172,12 @@ export default async function IntroductionPage() {
               >
                 <AspectRatio ratio={16 / 9}>
                   <div className="absolute inset-0 z-10 bg-zinc-950/70 transition-colors group-hover:bg-zinc-950/75" />
-                  <div
+                  <Image
+                    src={category.image}
+                    alt={category.category_name}
+                    layout="fill"
+                    objectFit="cover"
                     className="h-full rounded-t-md border-b"
-                    style={getRandomPatternStyle(
-                      String(category.category_name)
-                    )}
                   />
                 </AspectRatio>
                 <div className="absolute inset-4 z-20 flex flex-col">
@@ -193,54 +207,35 @@ export default async function IntroductionPage() {
         </MotionDiv>
       </section>
 
-      <MotionDiv
-        id="random-subcategories"
-        aria-labelledby="random-subcategories-heading"
-        className="flex flex-wrap items-center justify-center gap-4 pb-4"
-        variants={parentTagVariants}
-        initial="initial"
-        animate="animate"
-      >
-        {publicCategoryAll.data.map((category) => (
-          <MotionDiv
-            variants={tagVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            key={category.id_category}
-          >
-            <Link
-              key={category.id_category}
-              href={`/intro/categories/${category.id_category}`}
-            >
-              <Badge variant="secondary" className="rounded px-3 py-1">
-                {category.category_name}
-              </Badge>
-            </Link>
-          </MotionDiv>
-        ))}
-      </MotionDiv>
-
       <section
         id="featured-knowledge"
         aria-labelledby="featured-knowledge-heading"
         className="space-y-16"
       >
         <div className="flex items-center">
-          <h2 className="font-heading flex-1 text-2xl font-medium sm:text-3xl">
-            Pengetahuan Unggulan
+          <h2 className="flex-1 font-heading text-2xl font-medium sm:text-3xl">
+            Pengetahuan Terbaru
           </h2>
-          <Link href="/products">
-            <div
-              className={cn(
-                buttonVariants({
-                  size: "sm",
-                })
-              )}
-            >
-              Lihat Semua
-              <span className="sr-only">View all products</span>
-            </div>
-          </Link>
+          <MotionDiv
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link href="intro/knowledge/all">
+              <div
+                className={cn(
+                  buttonVariants({
+                    size: "lg",
+                  })
+                )}
+              >
+                Lihat Semua
+                <span className="sr-only">View all products</span>
+              </div>
+            </Link>
+          </MotionDiv>
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

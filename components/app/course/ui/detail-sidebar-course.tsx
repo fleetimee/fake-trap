@@ -196,6 +196,8 @@ export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
                               <MotionDiv
                                 variants={childrenVariant2}
                                 className="child"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                               >
                                 <CourseSectionContent
                                   contentQuiz={props.contentQuiz}

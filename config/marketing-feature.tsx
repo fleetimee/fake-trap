@@ -12,6 +12,7 @@ export const marketingFeatures = [
         diinginkan.
       </>
     ),
+    link: "/intro/#categories",
   },
   {
     icon: <Icons.knowledge className="h-10 w-10" />,
@@ -22,6 +23,7 @@ export const marketingFeatures = [
         relevan.
       </>
     ),
+    link: "/intro/#featured-knowledge",
   },
   {
     icon: <Icons.course className="h-10 w-10" />,
@@ -32,28 +34,9 @@ export const marketingFeatures = [
         mengikuti kursus yang diinginkan.
       </>
     ),
-  },
-  {
-    icon: <Icons.user className="h-10 w-10" />,
-    title: "Authentikasi",
-    body: (
-      <>
-        Memungkinkan pengguna untuk masuk ke dalam sistem dan mengakses fitur
-        yang tersedia.
-      </>
-    ),
+    link: "/intro/#featured-courses",
   },
 
-  {
-    icon: <Icons.pizza className="h-10 w-10" />,
-    title: "Explore",
-    body: (
-      <>
-        Menyediakan fitur penjelajahan yang memungkinkan pengguna untuk
-        menemukan konten yang relevan
-      </>
-    ),
-  },
   {
     icon: <Globe className="h-10 w-10" />,
     title: "Forum",
@@ -63,5 +46,6 @@ export const marketingFeatures = [
         berinteraksi
       </>
     ),
+    link: "/intro/#forum",
   },
 ]

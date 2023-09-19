@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import getConfig from "next/config"
 import { Document, Page, pdfjs } from "react-pdf"
 
 import "react-pdf/dist/esm/Page/TextLayer.css"

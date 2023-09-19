@@ -77,7 +77,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 } else {
                   setIsLoading(false)
 
-                  router.push(searchParams.get("from") || "/")
+                  // router.push(searchParams.get("from") || "/")
+                  router.push("/")
+
+                  router.refresh()
 
                   toast({
                     title: "Berhasil",
