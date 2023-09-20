@@ -13,7 +13,6 @@ import { createTw } from "react-pdf-tailwind"
 import {
   QuizOneResData,
   QuizQuestionListResData,
-  QuizUserAttemptListData,
   QuizUserResultListResData,
 } from "@/types/quiz/res"
 

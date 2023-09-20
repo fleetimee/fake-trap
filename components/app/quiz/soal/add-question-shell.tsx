@@ -7,6 +7,7 @@ import { z } from "zod"
 
 import { QuestionForm } from "@/components/app/quiz/soal/add-question"
 import { LottieAnimationQuiz } from "@/components/app/quiz/soal/quiz-lottie-animation"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -76,17 +77,25 @@ export function SoalShell(props: {
 
   return (
     <>
-      <Alert className="lg:col-span-2">
-        <RocketIcon className="h-4 w-4" />
-        <AlertTitle>Guide</AlertTitle>
-        <AlertDescription>
-          Tambahkan pertanyaan dan jawaban di sebelah kiri, kemudian klik tombol{" "}
-          <span className="font-semibold">Submit Quiz</span> di sebelah kanan
-          untuk menyimpan soal untuk quiz ini.
-        </AlertDescription>
-      </Alert>
+      <MotionDiv
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="lg:col-span-2"
+      >
+        <Alert>
+          <RocketIcon className="h-4 w-4" />
+          <AlertTitle>Guide</AlertTitle>
+          <AlertDescription>
+            Tambahkan pertanyaan dan jawaban di sebelah kiri, kemudian klik
+            tombol <span className="font-semibold">Submit Quiz</span> di sebelah
+            kanan untuk menyimpan soal untuk quiz ini.
+          </AlertDescription>
+        </Alert>
+      </MotionDiv>
 
-      <QuestionForm setQuizzes={setQuizzes} idQuiz={props.idQuiz} />
+      <MotionDiv initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}>
+        <QuestionForm setQuizzes={setQuizzes} idQuiz={props.idQuiz} />
+      </MotionDiv>
 
       {quizzes.length > 0 && (
         <Card className="flex flex-col gap-8 p-5" ref={parent}>
@@ -94,7 +103,6 @@ export function SoalShell(props: {
             <h1 className="font-heading font-semibold">Hasil Soal</h1>
             <Button onClick={() => onSubmit(quizzes)}>Submit Quiz</Button>
           </div>
-
           {quizzes.map((quiz, index) => (
             <div key={index}>
               <div className="flex items-center justify-between">
@@ -113,7 +121,6 @@ export function SoalShell(props: {
                 {quiz.answers.map((answer, index) => (
                   <li key={index} className="flex items-center gap-3">
                     {/* <input type="checkbox" checked={answer.is_correct} /> */}
-
                     <Checkbox
                       checked={answer.is_correct}
                       disabled={
@@ -121,7 +128,6 @@ export function SoalShell(props: {
                           .length > 0
                       }
                     />
-
                     <p className="text-sm font-medium leading-none">
                       {answer.answer_text}
                     </p>
@@ -134,16 +140,20 @@ export function SoalShell(props: {
       )}
 
       {quizzes.length == 0 && (
-        <Card
-          className="flex flex-col items-center justify-center gap-8 p-5"
-          ref={parent}
+        <MotionDiv
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
         >
-          <LottieAnimationQuiz />
-
-          <p className="font-medium leading-none">
-            Tambahkan pertanyaan untuk melihat hasil soal
-          </p>
-        </Card>
+          <Card
+            className="flex h-full flex-col items-center justify-center gap-8 p-5"
+            ref={parent}
+          >
+            <LottieAnimationQuiz />
+            <p className="font-medium leading-none">
+              Tambahkan pertanyaan untuk melihat hasil soal
+            </p>
+          </Card>
+        </MotionDiv>
       )}
     </>
   )

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -45,13 +46,19 @@ export function CardDashboard({
       </CardHeader>
       <CardContent className="flex flex-col">
         <Link href={url || "#"}>
-          <Image
-            src={image}
-            alt={`Pic ${name}`}
-            width={500}
-            height={500}
-            className="aspect-video flex-none rounded-md object-cover grayscale transition-all hover:scale-105 hover:grayscale-0"
-          />
+          <MotionDiv
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            <Image
+              src={image}
+              alt={`Pic ${name}`}
+              width={500}
+              height={500}
+              className="aspect-video flex-none rounded-md object-cover grayscale transition-all hover:scale-105 hover:grayscale-0"
+            />
+          </MotionDiv>
         </Link>
       </CardContent>
       <CardFooter className="text-center">

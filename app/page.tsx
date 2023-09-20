@@ -1,14 +1,42 @@
 import Link from "next/link"
+import { Variants } from "framer-motion"
+import Balancer from "react-wrap-balancer"
 
+import { siteConfig } from "@/config/site"
 import { getCurrentUser } from "@/lib/session"
-import { buttonVariants } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { LottieAnimation } from "@/components/lottie-animation"
+import { MarketingCard } from "@/components/marketing-card"
 
 export const metadata = {
   title: "BPD E-learning: Pelajari apa saja, kapan saja, di mana saja",
   description: "fleetime",
+}
+
+const parentVariant: Variants = {
+  initial: {
+    opacity: 0,
+    x: -100,
+  },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+}
+
+const childVariant: Variants = {
+  initial: {
+    opacity: 0,
+    x: -100,
+  },
+  animate: {
+    opacity: 1,
+    x: 0,
+  },
 }
 
 export default async function IndexPage() {
@@ -16,43 +44,35 @@ export default async function IndexPage() {
 
   return (
     <>
-      <div className="relative flex min-h-screen flex-col">
+      <div className="relative flex min-h-screen flex-col bg-background">
         <SiteHeader user={user} />
-        <div className="container flex flex-col justify-between py-24 md:flex-row">
-          <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-            <div className="flex max-w-[980px] flex-col items-start gap-2">
-              <h1 className="font-heading text-3xl font-extrabold leading-tight tracking-tight md:text-4xl">
-                E-learning BPD DIY memberikan anda{" "}
-                <br className="hidden sm:inline" />
-                akses ke ribuan kursus online
-              </h1>
-              <p className="max-w-[700px] text-lg text-muted-foreground">
-                Pelajari apa saja, kapan saja, di mana saja
+        <div className="gap-12  ">
+          <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
+            <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center py-2 text-center">
+              <Link href="/" className="hidden items-center space-x-2 md:flex">
+                <Icons.logo
+                  className="h-12 w-12 text-primary"
+                  aria-hidden="true"
+                />
+                <span className="hidden text-4xl font-semibold text-primary sm:inline-block">
+                  {siteConfig.name}
+                </span>
+              </Link>
+
+              <p className="pb-8 pt-4 text-center  text-2xl">
+                <Balancer>
+                  E Learning ini berisi materi-materi yang berkaitan dengan
+                  pengetahuan umum dan berisi kursus yang dapat diikuti oleh
+                  pengguna.
+                </Balancer>
               </p>
-              <pre className="text-sm text-muted-foreground"></pre>
             </div>
-            <div className="flex gap-4">
-              <Link
-                href={"/intro/"}
-                target="_blank"
-                rel="noreferrer"
-                className={buttonVariants()}
-              >
-                Explore
-              </Link>
-              <Link
-                href="/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                replace
-                prefetch={false}
-                className={buttonVariants({ variant: "outline" })}
-              >
-                {user ? "Masuk Panel" : "Akses App"}
-              </Link>
-            </div>
+
+            <MarketingCard
+              parentVariant={parentVariant}
+              childVariant={childVariant}
+            />
           </section>
-          <LottieAnimation />
         </div>
       </div>
       <SiteFooter className="border-t" />

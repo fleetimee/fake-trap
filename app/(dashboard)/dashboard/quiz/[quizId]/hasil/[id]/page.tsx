@@ -8,6 +8,7 @@ import {
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { DashboardShell } from "@/components/shell"
+import { TypingEffect } from "@/components/typing-effect"
 import {
   Card,
   CardContent,
@@ -135,7 +136,9 @@ export default async function HasilUserQuizPage({
     <DashboardShell>
       <Card className="h-full min-h-[40rem]">
         <CardHeader>
-          <CardTitle>{getOneQuizResp.data.quiz_title}</CardTitle>
+          <TypingEffect
+            textTyping={"Hasil Kuis - " + getOneQuizResp.data.quiz_title}
+          />
           <div className="inline-flex items-center gap-4">
             <CardDescription className=" font-heading text-sm font-light">
               Score : {getUserSelectedAnswerResp.data[0].score}

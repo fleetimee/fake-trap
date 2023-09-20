@@ -1,12 +1,6 @@
 import { DashboardConfig } from "types"
 
-/**
- * Configuration object for the dashboard.
- */
 export const dashboardConfig: DashboardConfig = {
-  /**
-   * Main navigation items.
-   */
   mainNav: [
     {
       title: "Documentation",
@@ -18,9 +12,6 @@ export const dashboardConfig: DashboardConfig = {
       disabled: true,
     },
   ],
-  /**
-   * Sidebar navigation items.
-   */
   sidebarNav: [
     {
       title: "Dashboard",
@@ -69,6 +60,72 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/me",
       icon: "pizza",
       items: [],
+    },
+  ],
+}
+
+export const userAreaDashboardConfig: DashboardConfig = {
+  mainNav: [],
+  sidebarNav: [
+    {
+      title: "User Area",
+      href: "/member-area",
+      icon: "dashboard",
+      items: [],
+    },
+    {
+      title: "Pengetahuan",
+      href: "/member-area/knowledge",
+      icon: "knowledge",
+      items: [],
+    },
+  ],
+}
+
+interface UserAreaRole {
+  roleName: string
+  roleDescription: string
+  features: UserAreaFeature[]
+}
+
+type UserAreaFeature = {
+  title: string
+  description: string
+  icon: string
+}
+
+export const userAreaRole: UserAreaRole = {
+  roleName: "User",
+  roleDescription:
+    "Sebagai user, anda dapat mengakses berbagai fitur dibawah ini",
+  features: [
+    {
+      title: "Pengetahuan",
+      description:
+        "Baca dan pelajari pengetahuan yang sudah disediakan oleh pemberi materi",
+      icon: "book",
+    },
+    {
+      title: "Kategori",
+      description:
+        "Jelajahi Pengetahuan berdasarkan kategori yang tersedia untuk memudahkan anda mencari pengetahuan yang anda inginkan",
+      icon: "category",
+    },
+    {
+      title: "Latihan",
+      description: "Anda dapat berlatih dengan latihan yang tersedia",
+      icon: "quiz",
+    },
+    {
+      title: "Kursus atau Pelatihan",
+      description: "Anda dapat mengikuti kursus yang tersedia",
+      icon: "course",
+    },
+    {
+      title: "Forum",
+      description:
+        "Anda dapat berdiskusi dengan user lainnya pada forum yang ada di setiap pelatihan atau kursus yang anda ikuti",
+      icon: "forum",
     },
   ],
 }

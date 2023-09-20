@@ -2,6 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
+import { Variants } from "framer-motion"
 
 import {
   CourseOneRes,
@@ -20,6 +21,7 @@ import {
   columnUserCourse,
   UserDataTable,
 } from "@/components/app/course/detail/students/ui"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { renderContentCourse, renderQuiz } from "@/components/render-content"
 import { Button } from "@/components/ui/button"
@@ -48,17 +50,30 @@ interface CourseDetailContentProps {
   threadRespData: ThreadListResData[]
 }
 
+const parentVariant: Variants = {
+  initial: { opacity: 0, x: -100 },
+  animate: { opacity: 1, x: 0, transition: { staggerChildren: 0.4 } },
+}
+
+const childVariant: Variants = {
+  initial: { opacity: 0, x: -100 },
+  animate: { opacity: 1, x: 0 },
+}
+
 export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
   return (
     <Card className="flex w-full basis-3/4 items-start justify-normal">
-      <div className="flex w-full flex-col gap-6 p-4">
+      <MotionDiv
+        className="flex w-full flex-col gap-6 p-4"
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0, transition: { staggerChildren: 0.4 } }}
+      >
         <div className="flex flex-row items-center justify-between">
           <p className="grow break-all font-heading text-3xl">
             {props.courseDataResp.data.course_name}
           </p>
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
-
         {props.contentQuiz.id_quiz == 0
           ? renderContentCourse({
               contentQuiz: props.contentQuiz,
@@ -84,13 +99,11 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
             //     Submit
             //   </Button>
             // </Card>
-
             // <QuizFormTemp
             //   quizIdInitial={props.quizIdInitial}
             //   questionResp={props.questionResp}
             //   contentQuiz={props.contentQuiz}
             // />
-
             renderQuiz({
               questionResp: props.questionResp,
               contentQuiz: props.contentQuiz,
@@ -98,7 +111,6 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
               idQUiz: props.contentQuiz.id_quiz.toString(),
             })
           : null}
-
         <Tabs defaultValue="description" className="relative mr-auto w-full">
           <div className="flex items-center justify-between pb-3">
             <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
@@ -211,7 +223,6 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                       Berinteraksilah dengan sesama murid kursus ini
                     </CardDescription>
                   </div>
-
                   <CreateThreadButton courseDataResp={props.courseDataResp} />
                 </div>
               </CardHeader>
@@ -236,7 +247,6 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                               </CardTitle>
                               <CardDescription className="inline-flex font-heading text-sm text-muted-foreground">
                                 <Icons.close className="mr-2 h-4 w-4" />
-
                                 {convertDatetoString(
                                   new Date(thread.created_at).toString()
                                 )}
@@ -252,7 +262,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
             </Card>
           </TabsContent>
         </Tabs>
-      </div>
+      </MotionDiv>
     </Card>
   )
 }

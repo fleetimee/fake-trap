@@ -56,7 +56,7 @@ export function ForumPost({ post }: ForumPost) {
                 className: "border-0",
               },
               header: {
-                className: "font-bold",
+                className: "font-bold text-4xl",
               },
 
               image: {
@@ -68,10 +68,11 @@ export function ForumPost({ post }: ForumPost) {
                 },
               },
               list: {
-                className: "list-inside",
+                className: "list-disc list-inside",
               },
+
               paragraph: {
-                className: "text-base text-opacity-75",
+                className: "text-base prose text-opacity-75",
                 actionsClassNames: {
                   alignment: "text-{alignment}", // This is a substitution placeholder: left or center.
                 },
@@ -80,7 +81,8 @@ export function ForumPost({ post }: ForumPost) {
                 className: "py-3 px-5 italic font-serif",
               },
               table: {
-                className: "table-auto",
+                className:
+                  "border-collapse border border-2 w-full max-w-screen-md mx-auto table-auto text-left px-4 text-base prose text-opacity-75",
               },
             }}
           />

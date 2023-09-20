@@ -15,7 +15,7 @@ interface QuizDescriptionCardProps {
 
 export function QuizDescriptionCard({ data }: QuizDescriptionCardProps) {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-lg">Deskripsi Kuis</CardTitle>
         <CardDescription>Deskripsi kuis dimuat disini</CardDescription>

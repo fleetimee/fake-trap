@@ -3,8 +3,9 @@ import { Metadata } from "next"
 import { CategoryOneRes } from "@/types/category/res"
 import { getPublicCategoriesDataById } from "@/lib/datasource"
 import { toTitleCase } from "@/lib/utils"
-import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui/public-knowledge-card"
+import { KnowledgeCard } from "@/components/app/public-knowledge/ui/public-knowledge-card"
 import { HeaderIntro } from "@/components/category-header"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
 
@@ -64,19 +65,25 @@ export default async function DetailIntroCategory({ params }: Props) {
         ]}
       />
 
-      <HeaderIntro
-        title={toTitleCase(detailCategoryData.data.category_name)}
-        description={`Jelajahi pengetahuan ${detailCategoryData.data.category_name} yang ada di E-learning`}
-        size="sm"
-      />
+      <MotionDiv
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <HeaderIntro
+          title={toTitleCase(detailCategoryData.data.category_name)}
+          description={`Jelajahi pengetahuan ${detailCategoryData.data.category_name} yang ada di E-learning`}
+          size="sm"
+        />
+      </MotionDiv>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {!detailCategoryData.data.knowledge
           ? null
           : detailCategoryData.data.knowledge.map((knowledge) => (
-              <PublicKnowledgeCard
+              <KnowledgeCard
                 key={knowledge.id_knowledge}
                 knowledge={knowledge}
+                link={`/intro/knowledge/${knowledge.id_knowledge}`}
               />
             ))}
       </div>

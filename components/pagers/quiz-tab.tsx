@@ -7,9 +7,12 @@ import {
   useSelectedLayoutSegment,
 } from "next/navigation"
 import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs"
+import { Variant, Variants } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
+
+import { MotionDiv } from "../framer-wrapper"
 
 interface QuizTabProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
   quizId: string
@@ -48,34 +51,47 @@ export function QuizTab({ className, quizId, ...props }: QuizTabProps) {
     },
   ]
 
+  const parentVariant: Variants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  }
+
+  const childrenVariant: Variants = {
+    initial: { opacity: 0, x: 50 },
+    animate: { opacity: 1, x: 0 },
+  }
+
   return (
     <Tabs
       defaultValue={tabs.find((tab) => tab.isActive)?.href ?? tabs[0]?.href}
       className="sticky top-0 z-30 h-auto  w-full bg-background px-1"
       onValueChange={(value) => router.push(value)}
     >
-      <TabsList className="inline-flex items-center justify-center space-x-1.5 text-muted-foreground">
-        {tabs.map((tab) => (
-          <div
-            role="none"
-            key={tab.href}
-            className={cn(
-              "border-b-2 border-transparent py-1.5",
-              tab.isActive && "border-foreground"
-            )}
-          >
-            <TabsTrigger
-              value={tab.href}
+      <MotionDiv variants={parentVariant} initial="initial" animate="animate">
+        <TabsList className="inline-flex items-center justify-center space-x-1.5 text-muted-foreground">
+          {tabs.map((tab) => (
+            <MotionDiv
+              variants={childrenVariant}
+              role="none"
+              key={tab.href}
               className={cn(
-                "inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium text-muted-foreground ring-offset-background transition-all hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
-                tab.isActive && "text-foreground"
+                "child border-b-2 border-transparent py-1.5",
+                tab.isActive && "border-foreground"
               )}
             >
-              {tab.title}
-            </TabsTrigger>
-          </div>
-        ))}
-      </TabsList>
+              <TabsTrigger
+                value={tab.href}
+                className={cn(
+                  "inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium text-muted-foreground ring-offset-background transition-all hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+                  tab.isActive && "text-foreground"
+                )}
+              >
+                {tab.title}
+              </TabsTrigger>
+            </MotionDiv>
+          ))}
+        </TabsList>
+      </MotionDiv>
       <Separator />
     </Tabs>
   )

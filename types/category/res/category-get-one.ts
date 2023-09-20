@@ -8,6 +8,7 @@ export type CategoryOneResData = {
   id_category: number
   category_name: string
   knowledge: CategoryOneResKnowledge[]
+  image: string
   created_at: Date
   updated_at: Date
 }

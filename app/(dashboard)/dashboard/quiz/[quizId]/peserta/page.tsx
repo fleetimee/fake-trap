@@ -4,6 +4,7 @@ import { Laugh, Terminal } from "lucide-react"
 import { QuizMemberListRes } from "@/types/quiz/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardShell, QuizMemberTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
@@ -86,13 +87,15 @@ export default async function PesertaPage({
 
   return (
     <DashboardShell>
-      <Alert>
-        <Laugh className="h-4 w-4" />
-        <AlertTitle>List Peserta</AlertTitle>
-        <AlertDescription>
-          Berikut adalah list peserta yang sudah mengerjakan kuis ini
-        </AlertDescription>
-      </Alert>
+      <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <Alert>
+          <Laugh className="h-4 w-4" />
+          <AlertTitle>List Peserta</AlertTitle>
+          <AlertDescription>
+            Berikut adalah list peserta yang sudah mengerjakan kuis ini
+          </AlertDescription>
+        </Alert>
+      </MotionDiv>
       <QuizMemberTableShell
         data={quizMember.data}
         pageCount={quizMember.totalPage}
