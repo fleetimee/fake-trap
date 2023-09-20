@@ -1,4 +1,4 @@
-import IntroKnowledgeLoading from "@/app/(lobby)/intro/knowledge/[detail]/loading"
+import IntroKnowledgeLoading from "../[detail]/loading"
 
 export default function KnowledgeAllLoading() {
   return <IntroKnowledgeLoading />

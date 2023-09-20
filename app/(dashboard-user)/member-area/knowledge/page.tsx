@@ -1,10 +1,8 @@
 import { redirect } from "next/navigation"
-import { Variants } from "framer-motion"
 
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -18,6 +16,11 @@ import {
 } from "@/components/ui/card"
 
 import { UserKnowledgeWrapper } from "./_components/user-knowledge-wrapper"
+
+export const metadata = {
+  title: "Pengetahuan",
+  description: "Halaman pengetahuan member area",
+}
 
 interface GetKnowledgeProps {
   token: string | undefined
@@ -90,13 +93,18 @@ export default async function MemberKnowledgePage() {
       </MotionDiv>
 
       <Card className="h-full min-h-[60rem]">
-        <CardHeader>
-          <CardTitle>Semua Pengetahuan</CardTitle>
-          <CardDescription>
-            Pelajari lebih banyak tentang pengetahuan yang ada di dalam aplikasi
-            ini.
-          </CardDescription>
-        </CardHeader>
+        <MotionDiv
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <CardHeader>
+            <CardTitle>Semua Pengetahuan</CardTitle>
+            <CardDescription>
+              Pelajari lebih banyak tentang pengetahuan yang ada di dalam
+              aplikasi ini.
+            </CardDescription>
+          </CardHeader>
+        </MotionDiv>
 
         <CardContent>
           <UserKnowledgeWrapper knowledgeResp={knowledgeResp} />

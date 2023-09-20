@@ -6,6 +6,7 @@ import Link from "next/link"
 
 import { CategoryOneResKnowledge } from "@/types/category/res"
 import { cn } from "@/lib/utils"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { buttonVariants } from "@/components/ui/button"
@@ -75,7 +76,9 @@ export function KnowledgeCard({
       </Link>
       <CardFooter className="p-4">
         <Link href={link}>
-          <div
+          <MotionDiv
+            whileHover={{ scale: [null, 1.2, 1.1] }}
+            transition={{ duration: 0.3 }}
             className={cn(
               buttonVariants({
                 size: "sm",
@@ -84,7 +87,7 @@ export function KnowledgeCard({
             )}
           >
             Lihat Pengetahuan
-          </div>{" "}
+          </MotionDiv>{" "}
         </Link>
       </CardFooter>
     </Card>

@@ -8,6 +8,7 @@ import { KnowledgeListRes } from "@/types/knowledge/res"
 import { getRandomPatternStyle } from "@/lib/generate-pattern"
 import { cn } from "@/lib/utils"
 import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
+import { CategoryCard } from "@/components/category-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { Shell } from "@/components/shell/lobby-shell"
@@ -164,42 +165,10 @@ export default async function IntroductionPage() {
               key={category.id_category}
               className="group relative overflow-hidden rounded-md border"
             >
-              <Link
-                key={category.id_category}
-                href={`/intro/categories/${category.id_category}`}
-              >
-                <AspectRatio ratio={16 / 9}>
-                  <div className="absolute inset-0 z-10 bg-zinc-950/70 transition-colors group-hover:bg-zinc-950/75" />
-                  <Image
-                    src={category.image}
-                    alt={category.category_name}
-                    layout="fill"
-                    objectFit="cover"
-                    className="h-full rounded-t-md border-b"
-                  />
-                </AspectRatio>
-                <div className="absolute inset-4 z-20 flex flex-col">
-                  <div className="flex items-start justify-between space-x-4">
-                    <div
-                      className={cn(
-                        buttonVariants({
-                          size: "icon",
-                          className:
-                            "pointer-events-none h-8 w-8 bg-zinc-100 text-zinc-950",
-                        })
-                      )}
-                      aria-hidden="true"
-                    >
-                      <Icons.category className="h-4 w-4" />
-                    </div>
-                    <p className="text-sm text-zinc-200">1 items</p>
-                  </div>
-                  <h3 className="mt-auto text-xl font-medium capitalize text-zinc-200">
-                    {category.category_name}
-                  </h3>
-                </div>
-                <span className="sr-only">{category.category_name}</span>
-              </Link>
+              <CategoryCard
+                category={category}
+                link={`/intro/categories/${category.id_category}`}
+              />
             </MotionDiv>
           ))}
         </MotionDiv>
@@ -249,6 +218,7 @@ export default async function IntroductionPage() {
               <KnowledgeCard
                 key={knowledge.id_knowledge}
                 knowledge={knowledge}
+                link={`/intro/knowledge/${knowledge.id_knowledge}`}
               />
             </MotionDiv>
           ))}

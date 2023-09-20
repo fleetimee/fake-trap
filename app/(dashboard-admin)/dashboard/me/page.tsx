@@ -237,27 +237,6 @@ async function getQuizGroupedByCourse({
   return await res.json()
 }
 
-const generateRandomAnimation = (): Variants => {
-  const randomStiffness = Math.floor(Math.random() * 200) + 1
-  const randomDamping = Math.floor(Math.random() * 20) + 1
-
-  return {
-    initial: {
-      opacity: 0,
-      y: -100,
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: randomStiffness,
-        damping: randomDamping,
-      },
-    },
-  }
-}
-
 export default async function MePages() {
   const user = await getCurrentUser()
 

@@ -138,14 +138,29 @@ export default async function MemberAreaPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="container mx-auto flex flex-col items-center justify-center gap-8">
-              <Avatar className="h-28 w-28">
-                <AvatarImage
-                  src={`data:image/svg+xml;utf8,${generateFromString(
-                    userExtracted.username
-                  )}`}
-                />
-                <AvatarFallback />
-              </Avatar>
+              <MotionDiv
+                animate={{
+                  scale: [1, 2, 2, 1, 1],
+                  rotate: [0, 0, 180, 180, 0],
+                  borderRadius: ["0%", "0%", "50%", "50%", "0%"],
+                }}
+                transition={{
+                  duration: 2,
+                  ease: "easeInOut",
+                  times: [0, 0.2, 0.5, 0.8, 1],
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                }}
+              >
+                <Avatar className="h-28 w-28">
+                  <AvatarImage
+                    src={`data:image/svg+xml;utf8,${generateFromString(
+                      userExtracted.username
+                    )}`}
+                  />
+                  <AvatarFallback />
+                </Avatar>
+              </MotionDiv>
               <div className="flex flex-col items-center justify-center gap-1 ">
                 <span className=" text-xl font-semibold">
                   {userExtracted.username}
