@@ -1,17 +1,16 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { CourseListRes, CourseListResData } from "@/types/course/res"
-
-import { AspectRatio } from "./ui/aspect-ratio"
-import { buttonVariants } from "./ui/button"
+import { CourseListResData } from "@/types/course/res"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card"
+} from "@/components/ui/card"
 
 interface CourseCardProps {
   courseResponse: CourseListResData
@@ -20,8 +19,8 @@ interface CourseCardProps {
 
 export function CourseCard({ link, courseResponse }: CourseCardProps) {
   return (
-    <Link href={link}>
-      <Card className="h-full max-h-fit min-h-[18rem] overflow-hidden">
+    <>
+      <Card className="grid h-full max-h-fit min-h-[25rem] flex-col overflow-hidden">
         <AspectRatio ratio={16 / 9}>
           <div className="absolute inset-0 bg-gradient-to-t from-transparent to-zinc-950/50" />
 
@@ -34,30 +33,32 @@ export function CourseCard({ link, courseResponse }: CourseCardProps) {
             loading="lazy"
           />
         </AspectRatio>
-        <CardHeader>
-          <CardTitle className="line-clamp-1 text-lg">
-            {courseResponse.course_name}
-          </CardTitle>
-          {courseResponse.course_desc ? (
-            <CardDescription className="line-clamp-2">
-              {courseResponse.course_desc}
-            </CardDescription>
-          ) : null}
-        </CardHeader>
-        <CardFooter>
-          <Link
-            href={link}
-            className={buttonVariants({
-              size: "lg",
-              variant: "outline",
-              className: "w-full",
-            })}
-          >
-            Lihat Pelatihan
-          </Link>
-        </CardFooter>
+        <div className="flex flex-col justify-between">
+          <CardHeader>
+            <CardTitle className="line-clamp-1 text-lg">
+              {courseResponse.course_name}
+            </CardTitle>
+            {courseResponse.course_desc ? (
+              <CardDescription className="line-clamp-2">
+                {courseResponse.course_desc}
+              </CardDescription>
+            ) : null}
+          </CardHeader>
+          <CardFooter>
+            <Link
+              href={link}
+              className={buttonVariants({
+                size: "lg",
+                variant: "outline",
+                className: "w-full",
+              })}
+            >
+              Lihat Pelatihan
+            </Link>
+          </CardFooter>
+        </div>
       </Card>
       <span className="sr-only">{courseResponse.course_name}</span>
-    </Link>
+    </>
   )
 }

@@ -15,8 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-import { UserCategoryWrapper } from "./_components/user-category-wrapper"
+import { UserCategoryWrapper } from "@/app/(dashboard-user)/member-area/category/_components"
 
 export const metadata = {
   title: "Kategori",
