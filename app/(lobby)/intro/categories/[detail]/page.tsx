@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { CategoryOneRes } from "@/types/category/res"
 import { getPublicCategoriesDataById } from "@/lib/datasource"
 import { toTitleCase } from "@/lib/utils"
-import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui/public-knowledge-card"
+import { KnowledgeCard } from "@/components/app/public-knowledge/ui/public-knowledge-card"
 import { HeaderIntro } from "@/components/category-header"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -80,9 +80,10 @@ export default async function DetailIntroCategory({ params }: Props) {
         {!detailCategoryData.data.knowledge
           ? null
           : detailCategoryData.data.knowledge.map((knowledge) => (
-              <PublicKnowledgeCard
+              <KnowledgeCard
                 key={knowledge.id_knowledge}
                 knowledge={knowledge}
+                link={`/intro/knowledge/${knowledge.id_knowledge}`}
               />
             ))}
       </div>

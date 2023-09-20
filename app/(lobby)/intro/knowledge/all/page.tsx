@@ -1,11 +1,10 @@
 import { Variants } from "framer-motion"
 
 import { KnowledgeListRes } from "@/types/knowledge/res"
-import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui"
-import { HeaderIntro } from "@/components/category-header"
-import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
+
+import { KnowledgeWrapper } from "./_components/knowledge-wrapper"
 
 export const metadata = {
   title: "Semua Pengetahuan",
@@ -34,36 +33,6 @@ async function getPublicKnowledge({
   return await publicKnowledge.json()
 }
 
-const parentVariant: Variants = {
-  initial: {
-    opacity: 0,
-    x: -100,
-  },
-  animate: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-}
-
-const childrenVariant: Variants = {
-  initial: {
-    opacity: 0,
-    x: -100,
-  },
-  animate: {
-    opacity: 1,
-    x: 0,
-
-    transition: {
-      type: "spring",
-      stiffness: 100,
-    },
-  },
-}
-
 export default async function AllPublicKnowledge() {
   const publicKnowledgeResp = await getPublicKnowledge({
     page: 1,
@@ -85,46 +54,7 @@ export default async function AllPublicKnowledge() {
         ]}
       />
 
-      <MotionDiv
-        initial={{
-          opacity: 0,
-          y: -100,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-      >
-        <HeaderIntro
-          title="Semua Pengetahuan"
-          description="Temukan pengetahuan yang kamu butuhkan"
-          size="sm"
-        />
-      </MotionDiv>
-
-      <MotionDiv
-        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        variants={parentVariant}
-        initial="initial"
-        animate="animate"
-      >
-        {!publicKnowledgeResp.data
-          ? null
-          : publicKnowledgeResp.data.map((knowledge) => (
-              <MotionDiv
-                variants={childrenVariant}
-                className="child"
-                whileHover={{
-                  scale: 1.05,
-                }}
-              >
-                <PublicKnowledgeCard
-                  key={knowledge.id_knowledge}
-                  knowledge={knowledge}
-                />
-              </MotionDiv>
-            ))}
-      </MotionDiv>
+      <KnowledgeWrapper publicKnowledgeResp={publicKnowledgeResp} />
     </Shell>
   )
 }

@@ -21,11 +21,13 @@ import {
 interface PublicKnowledgeCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
   knowledge: CategoryOneResKnowledge
+  link: string
 }
 
-export function PublicKnowledgeCard({
+export function KnowledgeCard({
   knowledge,
   className,
+  link,
   ...props
 }: PublicKnowledgeCardProps) {
   return (
@@ -33,7 +35,7 @@ export function PublicKnowledgeCard({
       className={cn("h-full overflow-hidden rounded-sm", className)}
       {...props}
     >
-      <Link href={`/intro/knowledge/${knowledge.id_knowledge}`}>
+      <Link href={link}>
         <CardHeader className="border-b p-0">
           <AspectRatio ratio={4 / 3}>
             {knowledge.image ? (
@@ -61,7 +63,7 @@ export function PublicKnowledgeCard({
           </AspectRatio>
         </CardHeader>
       </Link>
-      <Link href={`/intro/knowledge/${knowledge.id_knowledge}`}>
+      <Link href={link}>
         <CardContent className="grid gap-2.5 p-4">
           <CardTitle className="line-clamp-1">
             {knowledge.knowledge_title}
@@ -72,7 +74,7 @@ export function PublicKnowledgeCard({
         </CardContent>
       </Link>
       <CardFooter className="p-4">
-        <Link href={`/intro/knowledge/${knowledge.id_knowledge}`}>
+        <Link href={link}>
           <div
             className={cn(
               buttonVariants({

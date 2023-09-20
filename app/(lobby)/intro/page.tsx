@@ -7,7 +7,7 @@ import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { getRandomPatternStyle } from "@/lib/generate-pattern"
 import { cn } from "@/lib/utils"
-import { PublicKnowledgeCard } from "@/components/app/public-knowledge/ui"
+import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { Shell } from "@/components/shell/lobby-shell"
@@ -85,8 +85,6 @@ export default async function IntroductionPage() {
     publicCategory,
     publicKnowledge,
   ])
-
-  console.log(publicKnowledgeResp)
 
   const publicCategoryAll = await getPublicCategories({
     limit: 100,
@@ -248,7 +246,7 @@ export default async function IntroductionPage() {
               whileHover={{ scale: 1.05 }}
               viewport={{ once: true }}
             >
-              <PublicKnowledgeCard
+              <KnowledgeCard
                 key={knowledge.id_knowledge}
                 knowledge={knowledge}
               />

@@ -73,18 +73,43 @@ export const userAreaDashboardConfig: DashboardConfig = {
       icon: "dashboard",
       items: [],
     },
+    {
+      title: "Pengetahuan",
+      href: "/member-area/knowledge",
+      icon: "knowledge",
+      items: [],
+    },
   ],
 }
 
-export const userAreaRole = {
+interface UserAreaRole {
+  roleName: string
+  roleDescription: string
+  features: UserAreaFeature[]
+}
+
+type UserAreaFeature = {
+  title: string
+  description: string
+  icon: string
+}
+
+export const userAreaRole: UserAreaRole = {
   roleName: "User",
   roleDescription:
-    "Anda adalah user biasa, silahkan belajar dan berlatih sebanyak mungkin",
+    "Sebagai user, anda dapat mengakses berbagai fitur dibawah ini",
   features: [
     {
-      title: "Materi",
-      description: "Anda dapat belajar materi yang tersedia",
+      title: "Pengetahuan",
+      description:
+        "Baca dan pelajari pengetahuan yang sudah disediakan oleh pemberi materi",
       icon: "book",
+    },
+    {
+      title: "Kategori",
+      description:
+        "Jelajahi Pengetahuan berdasarkan kategori yang tersedia untuk memudahkan anda mencari pengetahuan yang anda inginkan",
+      icon: "category",
     },
     {
       title: "Latihan",
@@ -92,9 +117,15 @@ export const userAreaRole = {
       icon: "quiz",
     },
     {
-      title: "Kursus",
+      title: "Kursus atau Pelatihan",
       description: "Anda dapat mengikuti kursus yang tersedia",
       icon: "course",
+    },
+    {
+      title: "Forum",
+      description:
+        "Anda dapat berdiskusi dengan user lainnya pada forum yang ada di setiap pelatihan atau kursus yang anda ikuti",
+      icon: "forum",
     },
   ],
 }

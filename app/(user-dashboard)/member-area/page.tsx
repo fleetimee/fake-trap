@@ -2,22 +2,19 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 import { generateFromString } from "generate-avatar"
-import { CheckCircle2, PartyPopper } from "lucide-react"
-import { Button } from "react-day-picker"
+import { PartyPopper } from "lucide-react"
 
-import { userAreaRole } from "@/config/dashboard"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { cn, convertDatetoString, extractToken } from "@/lib/utils"
+import { convertDatetoString, extractToken } from "@/lib/utils"
 import {
   DashboardCategoryCardCount,
-  DashboardCourseCardCount,
   DashboardKnowledgeCardCount,
 } from "@/components/app/dashboard/ui/cards"
 import { DashboardKnowledgeHighlight } from "@/components/app/dashboard/ui/highlight"
+import { DashboardInformation } from "@/components/dashboard-information"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
-import { Icons } from "@/components/icons"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -26,7 +23,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -59,7 +55,6 @@ export default async function MemberAreaPage() {
     initial: { opacity: 0, x: 50 },
     animate: { opacity: 1, x: 0 },
   }
-
   const childrenVariantTwo: Variants = {
     initial: { opacity: 0, y: 50, scale: 0.5 },
     animate: {
@@ -68,11 +63,6 @@ export default async function MemberAreaPage() {
       scale: 1,
       transition: {
         staggerChildren: 0.2,
-        type: "spring",
-        stiffness: 500,
-        damping: 30,
-        mass: 0.5,
-        delay: 0.2,
       },
     },
   }
@@ -109,35 +99,7 @@ export default async function MemberAreaPage() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <Card>
-          <CardHeader>
-            <CardTitle className="font-heading">
-              Anda login sebagai :{" "}
-              <span className="font-light underline">
-                {userAreaRole.roleName}
-              </span>
-            </CardTitle>
-
-            <CardDescription>{userAreaRole.roleDescription}</CardDescription>
-          </CardHeader>
-
-          <ul className="flex flex-col gap-4 px-6 pb-6">
-            {userAreaRole.features.map((feature) => (
-              <div className="flex flex-col gap-1">
-                <li key={feature.title} className="flex items-center">
-                  <CheckCircle2 className="mr-4 h-6 w-6 fill-primary text-primary-foreground" />
-                  {feature.title}
-                </li>
-                <li key={feature.title} className="flex items-center">
-                  <CheckCircle2 className="relative mr-4 hidden h-6 w-6 fill-primary text-primary-foreground" />
-                  <p className={cn("text-xs", "px-10 font-light")}>
-                    {feature.description}
-                  </p>
-                </li>
-              </div>
-            ))}
-          </ul>
-        </Card>
+        <DashboardInformation />
       </MotionDiv>
 
       <MotionDiv
