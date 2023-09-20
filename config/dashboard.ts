@@ -91,6 +91,12 @@ export const userAreaDashboardConfig: DashboardConfig = {
       icon: "course",
       items: [],
     },
+    {
+      title: "Profile",
+      href: "/member-area/me",
+      icon: "pizza",
+      items: [],
+    },
   ],
 }
 

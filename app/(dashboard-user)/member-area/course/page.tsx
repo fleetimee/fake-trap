@@ -8,6 +8,15 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+import { UserCourseWrapper } from "./_components/user-course-wrapper"
 
 export const metadata = {
   title: "Pelatihan Kamu",
@@ -82,6 +91,27 @@ export default async function MemberCoursePage() {
       >
         <DashboardHeader heading="Pelatihan Kamu" />
       </MotionDiv>
+
+      <Card className="h-full max-h-max min-h-[40rem]">
+        <MotionDiv
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <CardHeader>
+            <CardTitle>Pelatihan Kamu</CardTitle>
+            <CardDescription>
+              Ini merupakan kumpulan pelatihan yang kamu ikuti, yang sudah di
+              assign oleh pemberi materi
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            <UserCourseWrapper
+              userEnrolledCourseResp={userEnrolledCourseResp}
+            />
+          </CardContent>
+        </MotionDiv>
+      </Card>
     </DashboardShell>
   )
 }

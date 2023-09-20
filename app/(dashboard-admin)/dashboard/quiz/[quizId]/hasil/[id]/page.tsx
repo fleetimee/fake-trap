@@ -16,7 +16,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { PdfResult } from "@/app/(dashboard)/dashboard/quiz/[quizId]/hasil/[id]/_pdf_content"
+
+import { PdfResult } from "./_pdf_content"
 
 interface GetUserSelectedAnswer {
   token: string | undefined
