@@ -23,6 +23,9 @@ export default withAuth(
       "/dashboard/me/averaged-quiz"
     )
 
+    const isCourseDetailAdminPage =
+      req.nextUrl.pathname.startsWith("/dashboard/course/")
+
     const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
 
     const isMemberAreaCoursePageDetail = req.nextUrl.pathname.startsWith(
@@ -58,6 +61,27 @@ export default withAuth(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       )
     }
+
+    if (isCourseDetailAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          // get course id from url
+          const courseId = req.nextUrl.pathname.split("/")[3]
+
+          return NextResponse.redirect(
+            new URL(`/member-area/course/${courseId}`, req.url)
+          )
+        }
+      }
 
     if (isMeAllCoursesAdminPage)
       if (isAuth) {

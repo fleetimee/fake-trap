@@ -311,11 +311,11 @@ export default async function MemberAreaMePage() {
       <BreadCrumbs
         segments={[
           {
-            href: "/dashboard",
-            title: "Dashboard",
+            href: "/member-area",
+            title: "Member Area",
           },
           {
-            href: "/dashboard/me",
+            href: "/member-area/me",
             title: `${tokenExtract.username} - (${tokenExtract.email})`,
           },
         ]}
