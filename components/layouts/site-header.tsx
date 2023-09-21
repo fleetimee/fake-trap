@@ -225,7 +225,6 @@ export function SiteHeader(props: {
           ) : (
             <Link
               href="/login"
-              target="_blank"
               rel="noopener noreferrer"
               replace
               prefetch={false}

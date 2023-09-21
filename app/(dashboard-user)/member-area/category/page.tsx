@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation"
-import { Variants } from "framer-motion"
 
 import { CategoryListRes } from "@/types/category/res"
 import { authOptions } from "@/lib/auth"
@@ -47,37 +46,6 @@ async function getCategory({
 
   return await res.json()
 }
-
-const parentVariant: Variants = {
-  initial: {
-    opacity: 0,
-    x: -100,
-  },
-  animate: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-}
-
-const childrenVariant: Variants = {
-  initial: {
-    opacity: 0,
-    x: -100,
-  },
-  animate: {
-    opacity: 1,
-    x: 0,
-
-    transition: {
-      type: "spring",
-      stiffness: 100,
-    },
-  },
-}
-
 export default async function MemberCategoryPage() {
   const user = await getCurrentUser()
 

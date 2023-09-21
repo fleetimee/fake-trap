@@ -14,10 +14,23 @@ import {
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
+import {
+  AvgScoreCard,
+  CourseContainerCard,
+  ProfileCard,
+  QuizGrouped,
+  RecentPostCard,
+  RecentQuizCard,
+} from "@/components/app/me/ui"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+
+export const metadata = {
+  title: "Profil Saya",
+  description: "Detail mengenai profil anda",
+}
 
 interface GetUserPostCount {
   token: string | undefined
@@ -316,6 +329,58 @@ export default async function MemberAreaMePage() {
           heading={`Halo, ${tokenExtract.username}!`}
           description="Disini anda dapat melihat detail mengenai profil anda"
         />
+      </MotionDiv>
+
+      <MotionDiv
+        className="grid grid-cols-7 items-center justify-between gap-4"
+        variants={parentVariant}
+        initial="initial"
+        animate="animate"
+      >
+        <MotionDiv
+          className=" child col-span-7  lg:col-span-2"
+          variants={childVariant}
+        >
+          <ProfileCard
+            username={tokenExtract.username}
+            email={tokenExtract.email}
+            numberOfPost={postCount.data.number_of_post}
+            numberOfCourse={courseCount.data.number_of_course}
+            numberOfQuiz={quizCount.data.number_of_quiz}
+          />
+        </MotionDiv>
+
+        <MotionDiv
+          className="child col-span-7 lg:col-span-2"
+          variants={childVariant}
+        >
+          <AvgScoreCard avgScore={avgScore.data.average_score} />
+        </MotionDiv>
+
+        <MotionDiv
+          className="child col-span-7 lg:col-span-3"
+          variants={childVariant}
+        >
+          <RecentPostCard recentPostList={recentPostList} />
+        </MotionDiv>
+
+        <MotionDiv
+          className="child col-span-7 lg:col-span-4"
+          variants={childVariant}
+        >
+          <RecentQuizCard quizTakenList={quizTakenList} />
+        </MotionDiv>
+
+        <MotionDiv
+          className="child col-span-7 lg:col-span-3"
+          variants={childVariant}
+        >
+          <QuizGrouped quizGrouped={quizGrouped} />
+        </MotionDiv>
+
+        <MotionDiv className="child col-span-7" variants={childVariant}>
+          <CourseContainerCard enrolledCourseList={enrolledCourseList} />
+        </MotionDiv>
       </MotionDiv>
     </DashboardShell>
   )

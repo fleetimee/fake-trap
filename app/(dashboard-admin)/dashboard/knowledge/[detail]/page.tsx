@@ -20,6 +20,10 @@ export async function generateMetadata({
 }: DetailKnowledgeProps): Promise<Metadata> {
   const user = await getCurrentUser()
 
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
   const detailKnowledgeData = await getKnowledgeDataById({
     id: parseInt(params.detail),
     token: user?.token,

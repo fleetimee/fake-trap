@@ -1,3 +1,4 @@
+// TODO: Remove use client if building
 "use client"
 
 import { Variants } from "framer-motion"

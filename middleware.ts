@@ -12,15 +12,13 @@ export default withAuth(
     const isAuthPage = req.nextUrl.pathname.startsWith("/login")
 
     const isDashboardPage = req.nextUrl.pathname.startsWith("/dashboard")
+    const isMeAdminPage = req.nextUrl.pathname.startsWith("/dashboard/me")
     const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
 
     if (isAuthPage) {
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
-
         const adminRole = "Admin"
-        const userRole = "User"
-
         const userRoles = extractToken.role
 
         if (
@@ -47,12 +45,27 @@ export default withAuth(
       )
     }
 
+    if (isMeAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(new URL("/member-area/me", req.url))
+        }
+      }
+
     if (isDashboardPage)
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
 
         const adminRole = "Admin"
-        const userRole = "User"
 
         const userRoles = extractToken.role
 
@@ -71,7 +84,6 @@ export default withAuth(
         const extractToken = extractTokenMiddleware(token?.token)
 
         const adminRole = "Admin"
-        const userRole = "User"
 
         const userRoles = extractToken.role
 
@@ -84,20 +96,6 @@ export default withAuth(
           return null
         }
       }
-
-    // const requiredRole = "Admin"
-    // const userRoles = extractToken.role
-    // if (
-    //   !userRoles ||
-    //   !userRoles.some((role) => role.role_name === requiredRole)
-    // ) {
-    //   // Check if the user has the role "user"
-    //   if (userRoles && userRoles.some((role) => role.role_name === "User")) {
-    //     return NextResponse.redirect(new URL("/member-area", req.url))
-    //   }
-
-    //   return new Response("Unauthorized", { status: 401 })
-    // }
   },
   {
     callbacks: {
@@ -114,6 +112,7 @@ export default withAuth(
 export const config = {
   matcher: [
     "/dashboard/:path*",
+    "/dashboard/me/:path*",
     "/login",
     "/member-area/:path*",
     "/intro/knowledge/:path*",
