@@ -86,6 +86,43 @@
   }
 }
 
+@layer utilities {
+  .parallax {
+    overflow: hidden;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    margin: 0;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .parallax .scroller {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 100px;
+    display: flex;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .parallax span {
+    display: block;
+    margin-right: 30px;
+  }
+
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center -indent-px font-mono text-base font-medium;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
+
 @media (max-width: 640px) {
   .container {
     @apply px-4;

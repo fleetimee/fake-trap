@@ -1,12 +1,12 @@
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
-import NextTopLoader from "nextjs-toploader"
 
 import { siteConfig } from "@/config/site"
 import { fontHeading, fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { BGGrid } from "@/components/bg-grid"
+import Providers from "@/components/progress-bar"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
@@ -59,9 +59,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <NextAuthProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <NextTopLoader />
+            {/*<NextTopLoader />*/}
             <div className="relative flex min-h-screen flex-col">
-              <BGGrid>{children}</BGGrid>
+              <BGGrid>
+                <Providers>{children}</Providers>
+                {/*{children}*/}
+              </BGGrid>
               <Toaster />
               <TailwindIndicator />
             </div>

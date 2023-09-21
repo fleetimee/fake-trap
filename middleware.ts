@@ -12,15 +12,30 @@ export default withAuth(
     const isAuthPage = req.nextUrl.pathname.startsWith("/login")
 
     const isDashboardPage = req.nextUrl.pathname.startsWith("/dashboard")
+    const isMeAdminPage = req.nextUrl.pathname.startsWith("/dashboard/me")
+    const isMeRecentQuizAdminPage = req.nextUrl.pathname.startsWith(
+      "/dashboard/me/recent-quiz"
+    )
+    const isMeAllCoursesAdminPage = req.nextUrl.pathname.startsWith(
+      "/dashboard/me/course"
+    )
+    const isMeGroupedQuizAdminPage = req.nextUrl.pathname.startsWith(
+      "/dashboard/me/averaged-quiz"
+    )
+
+    const isCourseDetailAdminPage =
+      req.nextUrl.pathname.startsWith("/dashboard/course/")
+
     const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
+
+    const isMemberAreaCoursePageDetail = req.nextUrl.pathname.startsWith(
+      "/member-area/course/:path*"
+    )
 
     if (isAuthPage) {
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
-
         const adminRole = "Admin"
-        const userRole = "User"
-
         const userRoles = extractToken.role
 
         if (
@@ -47,12 +62,100 @@ export default withAuth(
       )
     }
 
+    if (isCourseDetailAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          // get course id from url
+          const courseId = req.nextUrl.pathname.split("/")[3]
+
+          return NextResponse.redirect(
+            new URL(`/member-area/course/${courseId}`, req.url)
+          )
+        }
+      }
+
+    if (isMeAllCoursesAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(new URL("/member-area/course", req.url))
+        }
+      }
+
+    if (isMeGroupedQuizAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(
+            new URL("/member-area/me/averaged-quiz", req.url)
+          )
+        }
+      }
+
+    if (isMeRecentQuizAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(
+            new URL("/member-area/me/recent-quiz", req.url)
+          )
+        }
+      }
+
+    if (isMeAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(new URL("/member-area/me", req.url))
+        }
+      }
+
     if (isDashboardPage)
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
 
         const adminRole = "Admin"
-        const userRole = "User"
 
         const userRoles = extractToken.role
 
@@ -71,7 +174,6 @@ export default withAuth(
         const extractToken = extractTokenMiddleware(token?.token)
 
         const adminRole = "Admin"
-        const userRole = "User"
 
         const userRoles = extractToken.role
 
@@ -84,20 +186,6 @@ export default withAuth(
           return null
         }
       }
-
-    // const requiredRole = "Admin"
-    // const userRoles = extractToken.role
-    // if (
-    //   !userRoles ||
-    //   !userRoles.some((role) => role.role_name === requiredRole)
-    // ) {
-    //   // Check if the user has the role "user"
-    //   if (userRoles && userRoles.some((role) => role.role_name === "User")) {
-    //     return NextResponse.redirect(new URL("/member-area", req.url))
-    //   }
-
-    //   return new Response("Unauthorized", { status: 401 })
-    // }
   },
   {
     callbacks: {
@@ -114,6 +202,7 @@ export default withAuth(
 export const config = {
   matcher: [
     "/dashboard/:path*",
+    "/dashboard/me/:path*",
     "/login",
     "/member-area/:path*",
     "/intro/knowledge/:path*",

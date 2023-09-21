@@ -74,6 +74,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
           </p>
           <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
         </div>
+
         {props.contentQuiz.id_quiz == 0
           ? renderContentCourse({
               contentQuiz: props.contentQuiz,
@@ -87,24 +88,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
               setActiveIndex: props.setActiveIndex,
             })
           : props.contentQuiz
-          ? // <Card className="flex flex-col items-start justify-between gap-12 p-6">
-            //   {props.questionResp.data.map((question, index) => (
-            //     <CourseQuizForm
-            //       question={question}
-            //       key={question.id_question}
-            //       index={index}
-            //     />
-            //   ))}
-            //   <Button type="submit" className="col-span-1 font-heading">
-            //     Submit
-            //   </Button>
-            // </Card>
-            // <QuizFormTemp
-            //   quizIdInitial={props.quizIdInitial}
-            //   questionResp={props.questionResp}
-            //   contentQuiz={props.contentQuiz}
-            // />
-            renderQuiz({
+          ? renderQuiz({
               questionResp: props.questionResp,
               contentQuiz: props.contentQuiz,
               quizIdInitial: props.quizIdInitial,

@@ -74,9 +74,27 @@ export const userAreaDashboardConfig: DashboardConfig = {
       items: [],
     },
     {
+      title: "Kategori",
+      href: "/member-area/category",
+      icon: "category",
+      items: [],
+    },
+    {
       title: "Pengetahuan",
       href: "/member-area/knowledge",
       icon: "knowledge",
+      items: [],
+    },
+    {
+      title: "Pelatihan",
+      href: "/member-area/course",
+      icon: "course",
+      items: [],
+    },
+    {
+      title: "Profile",
+      href: "/member-area/me",
+      icon: "pizza",
       items: [],
     },
   ],

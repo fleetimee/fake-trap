@@ -28,7 +28,6 @@ export function BGGrid({ children }: { children?: React.ReactNode }) {
   )
 }
 
-// TODO: use Shadcn UI Slider
 export function BGGridSlider() {
   return <input type="range" />
 }

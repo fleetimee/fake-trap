@@ -45,8 +45,10 @@ EmptyContent.Icon = function DetailEmptyContentIcon({
 
   return (
     <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-      {/*<LucideIcon className={cn("h-10 w-10", className)} {...props} />*/}
-      {/*<Icon className={cn("h-10 w-10", className)} {...props} />*/}
+      {/* <LucideIcon className={cn("h-10 w-10", className)} {...props} /> */}
+      {/* <Icon className={cn("h-10 w-10", className)} {...props} /> */}
+
+      <LucideIcon />
     </div>
   )
 }

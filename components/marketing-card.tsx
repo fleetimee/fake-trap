@@ -36,6 +36,7 @@ export function MarketingCard({
           <MotionDiv
             className="child transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl"
             variants={childVariant}
+            key={feature.title}
           >
             <Link
               href={feature.link}
