@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { UserQuizTakenListRes } from "@/types/me/res"
@@ -8,9 +9,9 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserRecentQuizTableShell } from "@/components/shell"
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Semua Percobaan Quiz Saya",
-  description: "Percobaan Quiz yang saya ikuti",
+  description: "Semua percobaan quiz saya",
 }
 
 interface GetUserQuizAttemptList {
@@ -50,8 +51,7 @@ interface MeQuizPageProps {
   }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default async function ({ searchParams }: MeQuizPageProps) {
+export default async function MemberMePage({ searchParams }: MeQuizPageProps) {
   const user = await getCurrentUser()
 
   const tokenExtract = extractToken(user?.token)
@@ -86,15 +86,15 @@ export default async function ({ searchParams }: MeQuizPageProps) {
       <BreadCrumbs
         segments={[
           {
-            href: "/dashboard",
-            title: "Dashboard",
+            href: "/member-area",
+            title: "Member Area",
           },
           {
-            href: "/dashboard/me",
+            href: "/member-area/me",
             title: `${tokenExtract.username} - (${tokenExtract.email})`,
           },
           {
-            href: "/dashboard/me/recent-course",
+            href: "/member-area/me/recent-course",
             title: "Semua Percobaan Quiz Saya",
           },
         ]}

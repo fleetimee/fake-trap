@@ -13,7 +13,21 @@ export default withAuth(
 
     const isDashboardPage = req.nextUrl.pathname.startsWith("/dashboard")
     const isMeAdminPage = req.nextUrl.pathname.startsWith("/dashboard/me")
+    const isMeRecentQuizAdminPage = req.nextUrl.pathname.startsWith(
+      "/dashboard/me/recent-quiz"
+    )
+    const isMeAllCoursesAdminPage = req.nextUrl.pathname.startsWith(
+      "/dashboard/me/course"
+    )
+    const isMeGroupedQuizAdminPage = req.nextUrl.pathname.startsWith(
+      "/dashboard/me/averaged-quiz"
+    )
+
     const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
+
+    const isMemberAreaCoursePageDetail = req.nextUrl.pathname.startsWith(
+      "/member-area/course/:path*"
+    )
 
     if (isAuthPage) {
       if (isAuth) {
@@ -44,6 +58,58 @@ export default withAuth(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       )
     }
+
+    if (isMeAllCoursesAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(new URL("/member-area/course", req.url))
+        }
+      }
+
+    if (isMeGroupedQuizAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(
+            new URL("/member-area/me/averaged-quiz", req.url)
+          )
+        }
+      }
+
+    if (isMeRecentQuizAdminPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+        const adminRole = "Admin"
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return null
+        } else {
+          return NextResponse.redirect(
+            new URL("/member-area/me/recent-quiz", req.url)
+          )
+        }
+      }
 
     if (isMeAdminPage)
       if (isAuth) {

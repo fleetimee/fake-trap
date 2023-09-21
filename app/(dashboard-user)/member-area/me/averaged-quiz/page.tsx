@@ -1,19 +1,19 @@
 import { redirect } from "next/navigation"
 
-import { UserQuizTakenListRes } from "@/types/me/res"
+import { UserQuizGroupedRes } from "@/types/me/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell, UserRecentQuizTableShell } from "@/components/shell"
+import { DashboardShell, UserQuizGroupedTableShell } from "@/components/shell"
 
 export const metadata = {
-  title: "Semua Percobaan Quiz Saya",
-  description: "Percobaan Quiz yang saya ikuti",
+  title: "Semua Quiz Saya",
+  description: "Quiz yang saya ikuti",
 }
 
-interface GetUserQuizAttemptList {
+interface GetQuizGroupedByCourse {
   token: string | undefined
   uuid: string | undefined
   page: number
@@ -22,25 +22,25 @@ interface GetUserQuizAttemptList {
   orderBy?: string
 }
 
-async function getUserQuizAttemptList({
+async function getQuizGroupedByCourse({
   token,
   uuid,
   page,
   limit,
   sortBy = "asc",
   orderBy = "created_at",
-}: GetUserQuizAttemptList): Promise<UserQuizTakenListRes> {
+}: GetQuizGroupedByCourse): Promise<UserQuizGroupedRes> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizThatUserTaken?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`,
     {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
     }
   )
-
   return await res.json()
 }
 
@@ -65,20 +65,20 @@ export default async function ({ searchParams }: MeQuizPageProps) {
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
-  const sortInitial = typeof sort === "string" ? sort : "desc"
-  const orderByInitial = typeof sort === "string" ? sort : "created_at"
+  const sortByInitial = typeof sort === "string" ? sort : "asc"
+  const orderByInitial = typeof category === "string" ? category : "created_at"
 
   // split sort
-  const sortBy = sortInitial.split(".")[1]
+  const sortBy = sortByInitial.split(".")[1]
   const orderBy = orderByInitial.split(".")[0]
 
-  const userQuizAttemptRes = await getUserQuizAttemptList({
+  const userQuizGrouped = await getQuizGroupedByCourse({
     token: user?.token,
     uuid: tokenExtract?.id,
     page: pageInitial,
     limit: limitInitial,
-    sortBy,
-    orderBy,
+    sortBy: sortBy,
+    orderBy: orderBy,
   })
 
   return (
@@ -94,18 +94,18 @@ export default async function ({ searchParams }: MeQuizPageProps) {
             title: `${tokenExtract.username} - (${tokenExtract.email})`,
           },
           {
-            href: "/dashboard/me/recent-course",
-            title: "Semua Percobaan Quiz Saya",
+            href: "/dashboard/me/averaged-quiz",
+            title: "Semua Quiz Saya",
           },
         ]}
       />
       <DashboardHeader
-        heading="Semua Percobaan Kuis Saya"
-        description="Semua percobaan kuis yang saya jawab"
+        heading="Semua Kuis Saya"
+        description="Semua kuis yang saya ikuti"
       />
-      <UserRecentQuizTableShell
-        data={userQuizAttemptRes.data}
-        pageCount={userQuizAttemptRes.totalPage}
+      <UserQuizGroupedTableShell
+        data={userQuizGrouped.data}
+        pageCount={userQuizGrouped.totalPage}
       />
     </DashboardShell>
   )

@@ -11,6 +11,7 @@ import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { CategoryCard } from "@/components/category-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
+import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { Shell } from "@/components/shell/lobby-shell"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
@@ -172,6 +173,14 @@ export default async function IntroductionPage() {
             </MotionDiv>
           ))}
         </MotionDiv>
+      </section>
+
+      <section
+        id="parallax-text"
+        aria-labelledby="parallax-text-heading"
+        className="mx-auto hidden space-y-6 px-4 2xl:container sm:px-6 lg:px-8 2xl:block"
+      >
+        <VelocityScroll />
       </section>
 
       <section

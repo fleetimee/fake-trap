@@ -55,6 +55,7 @@ export function UserKnowledgeWrapper({
         ? null
         : knowledgeResp.data.map((knowledge) => (
             <MotionDiv
+              key={knowledge.id_knowledge}
               variants={childrenVariant}
               className="child"
               whileHover={{
