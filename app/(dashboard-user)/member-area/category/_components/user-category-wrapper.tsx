@@ -50,21 +50,23 @@ export function UserCategoryWrapper({
       initial="initial"
       animate="animate"
     >
-      {categoryResp.data.map((category) => (
-        <MotionDiv
-          variants={childrenVariant}
-          className="child group relative overflow-hidden rounded-md border"
-          whileHover={{
-            scale: 1.05,
-          }}
-        >
-          <CategoryCard
-            category={category}
-            key={category.id_category}
-            link={`/member-area/category/${category.id_category}`}
-          />
-        </MotionDiv>
-      ))}
+      {!categoryResp.data
+        ? null
+        : categoryResp.data.map((category) => (
+            <MotionDiv
+              variants={childrenVariant}
+              className="child group relative overflow-hidden rounded-md border"
+              whileHover={{
+                scale: 1.05,
+              }}
+            >
+              <CategoryCard
+                category={category}
+                key={category.id_category}
+                link={`/member-area/category/${category.id_category}`}
+              />
+            </MotionDiv>
+          ))}
     </MotionDiv>
   )
 }
