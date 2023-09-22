@@ -8,6 +8,8 @@ export type ThreadListRes = {
 }
 
 export type ThreadListResData = {
+  number_of_users: number
+  number_of_posts: number
   id_threads: number
   id_course: number
   threads_title: string

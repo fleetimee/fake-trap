@@ -5,6 +5,8 @@ export type ThreadOneRes = {
 }
 
 export type ThreadOneResData = {
+  number_of_users: number
+  number_of_posts: number
   id_threads: number
   id_course: number
   threads_title: string
