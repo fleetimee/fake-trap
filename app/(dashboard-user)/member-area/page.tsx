@@ -4,6 +4,7 @@ import { Variants } from "framer-motion"
 import { generateFromString } from "generate-avatar"
 import { PartyPopper } from "lucide-react"
 
+import { userAreaRole } from "@/config/dashboard"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString, extractToken } from "@/lib/utils"
@@ -99,7 +100,11 @@ export default async function MemberAreaPage() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <DashboardInformation />
+        <DashboardInformation
+          roleName={userAreaRole.roleName}
+          roleDescription={userAreaRole.roleDescription}
+          features={userAreaRole.features}
+        />
       </MotionDiv>
 
       <MotionDiv

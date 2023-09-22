@@ -3,7 +3,7 @@
 import { Variants } from "framer-motion"
 import { CheckCircle2 } from "lucide-react"
 
-import { userAreaRole } from "@/config/dashboard"
+import { UserAreaFeature, userAreaRole } from "@/config/dashboard"
 import { cn } from "@/lib/utils"
 
 import { MotionDiv } from "./framer-wrapper"
@@ -19,24 +19,32 @@ const childrenVariant: Variants = {
   animate: { opacity: 1, x: 0 },
 }
 
-export function DashboardInformation() {
+interface DashboardInformationProps {
+  roleName: string
+  roleDescription: string
+  features: UserAreaFeature[]
+}
+
+export function DashboardInformation({
+  roleName,
+  roleDescription,
+  features,
+}: DashboardInformationProps) {
   return (
     <MotionDiv initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }}>
       <Card>
         <CardHeader>
           <CardTitle className="font-heading">
             Anda login sebagai :{" "}
-            <span className="font-light underline">
-              {userAreaRole.roleName}
-            </span>
+            <span className="font-light underline">{roleName}</span>
           </CardTitle>
 
-          <CardDescription>{userAreaRole.roleDescription}</CardDescription>
+          <CardDescription>{roleDescription}</CardDescription>
         </CardHeader>
 
         <MotionDiv variants={parentVariant} initial="initial" animate="animate">
           <ul className="flex flex-col gap-4 px-6 pb-6">
-            {userAreaRole.features.map((feature) => (
+            {features.map((feature) => (
               <MotionDiv variants={childrenVariant} className="child">
                 <div className="flex flex-col gap-1" key={feature.title}>
                   <li key={feature.title} className="flex items-center">

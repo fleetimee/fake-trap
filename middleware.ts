@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 import { withAuth } from "next-auth/middleware"
 
+import SupervisorAreaPage from "./app/(dashboard-supervisor)/supervisor-area/page"
 import { extractTokenMiddleware } from "./lib/utils"
 
 export default withAuth(
@@ -32,10 +33,17 @@ export default withAuth(
       "/member-area/course/:path*"
     )
 
+    const isSupervisorAreaPage =
+      req.nextUrl.pathname.startsWith("/supervisor-area")
+
     if (isAuthPage) {
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
         const adminRole = "Admin"
+        const superVisorRole = "Supervisor"
+        const pemateriRole = "Pemateri"
+        const normalRole = "User"
+
         const userRoles = extractToken.role
 
         if (
@@ -43,8 +51,16 @@ export default withAuth(
           userRoles.some((role) => role.role_name === adminRole)
         ) {
           return NextResponse.redirect(new URL("/dashboard", req.url))
-        } else {
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === normalRole)
+        ) {
           return NextResponse.redirect(new URL("/member-area", req.url))
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === superVisorRole)
+        ) {
+          return NextResponse.redirect(new URL("/supervisor-area", req.url))
         }
       }
 
@@ -66,6 +82,8 @@ export default withAuth(
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
         const adminRole = "Admin"
+        const superVisorRole = "Supervisor"
+        const normalRole = "User"
         const userRoles = extractToken.role
 
         if (
@@ -156,6 +174,7 @@ export default withAuth(
         const extractToken = extractTokenMiddleware(token?.token)
 
         const adminRole = "Admin"
+        const superVisorRole = "Supervisor"
 
         const userRoles = extractToken.role
 
@@ -164,16 +183,22 @@ export default withAuth(
           userRoles.some((role) => role.role_name === adminRole)
         ) {
           return null
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === superVisorRole)
+        ) {
+          return NextResponse.redirect(new URL("/supervisor-area", req.url))
         } else {
           return NextResponse.redirect(new URL("/member-area", req.url))
         }
       }
 
-    if (isMemberAreaPage)
+    if (isSupervisorAreaPage)
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
 
         const adminRole = "Admin"
+        const normalRole = "User"
 
         const userRoles = extractToken.role
 
@@ -182,7 +207,37 @@ export default withAuth(
           userRoles.some((role) => role.role_name === adminRole)
         ) {
           return NextResponse.redirect(new URL("/dashboard", req.url))
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === normalRole)
+        ) {
+          return NextResponse.redirect(new URL("/member-area", req.url))
         } else {
+          return null
+        }
+      }
+
+    if (isMemberAreaPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const adminRole = "Admin"
+        const superVisorRole = "Supervisor"
+
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return NextResponse.redirect(new URL("/dashboard", req.url))
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === superVisorRole)
+        ) {
+          return NextResponse.redirect(new URL("/supervisor-area", req.url))
+        }
+        {
           return null
         }
       }
@@ -190,9 +245,6 @@ export default withAuth(
   {
     callbacks: {
       async authorized() {
-        // This is a work-around for handling redirect on auth pages.
-        // We return true here so that the middleware function above
-        // is always called.
         return true
       },
     },
@@ -205,6 +257,7 @@ export const config = {
     "/dashboard/me/:path*",
     "/login",
     "/member-area/:path*",
+    "/supervisor-area/:path*",
     "/intro/knowledge/:path*",
     "/intro/categories/:path*",
   ],

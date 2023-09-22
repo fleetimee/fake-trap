@@ -100,13 +100,31 @@ export const userAreaDashboardConfig: DashboardConfig = {
   ],
 }
 
+export const supervisorAreaDashboardConfig: DashboardConfig = {
+  mainNav: [],
+  sidebarNav: [
+    {
+      title: "Supervisor Area",
+      href: "/supervisor-area",
+      icon: "dashboard",
+      items: [],
+    },
+    {
+      title: "Approval",
+      href: "/supervisor-area/approval",
+      icon: "laptop",
+      items: [],
+    },
+  ],
+}
+
 interface UserAreaRole {
   roleName: string
   roleDescription: string
   features: UserAreaFeature[]
 }
 
-type UserAreaFeature = {
+export type UserAreaFeature = {
   title: string
   description: string
   icon: string
@@ -144,6 +162,38 @@ export const userAreaRole: UserAreaRole = {
       description:
         "Anda dapat berdiskusi dengan user lainnya pada forum yang ada di setiap pelatihan atau kursus yang anda ikuti",
       icon: "forum",
+    },
+  ],
+}
+
+export const supervisorAreaRole: UserAreaRole = {
+  roleName: "Supervisor",
+  roleDescription:
+    "Sebagai supervisor, anda dapat mengakses berbagai fitur dibawah ini",
+  features: [
+    {
+      title: "Approval Pengetahuan",
+      description:
+        "Anda dapat menyetujui atau menolak pengetahuan yang diajukan oleh pemateri",
+      icon: "laptop",
+    },
+    {
+      title: "Approval Pelatihan",
+      description:
+        "Anda dapat menyetujui atau menolak Pelatihan yang diajukan oleh pemateri",
+      icon: "laptop",
+    },
+    {
+      title: "Cek Pengetahuan",
+      description:
+        "Anda dapat melihat pengetahuan yang sudah disetujui oleh anda",
+      icon: "book",
+    },
+    {
+      title: "Cek Pelatihan",
+      description:
+        "Anda dapat melihat pelatihan yang sudah disetujui oleh anda",
+      icon: "course",
     },
   ],
 }
