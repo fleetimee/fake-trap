@@ -9,6 +9,7 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  CircleEllipsis,
   ClipboardEdit,
   Clock,
   Copy,
@@ -47,6 +48,7 @@ import {
 export type Icon = LucideProps
 
 export const Icons = {
+  pending: CircleEllipsis,
   outsideLink: FileSymlink,
   download: Download,
   comment: MessageCircle,

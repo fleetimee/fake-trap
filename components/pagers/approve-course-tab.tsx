@@ -10,39 +10,33 @@ import { Separator } from "@/components/ui/separator"
 
 import { MotionDiv } from "../framer-wrapper"
 
-interface QuizTabProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
-  quizId: string
-}
+interface ApproveCourseTabs
+  extends React.ComponentPropsWithoutRef<typeof Tabs> {}
 
-export function QuizTab({ className, quizId }: QuizTabProps) {
+export function ApproveCourseTabs({ className }: ApproveCourseTabs) {
   const router = useRouter()
   const segment = useSelectedLayoutSegment()
 
   const tabs = [
     {
       title: "Overview",
-      href: `/dashboard/quiz/${quizId}`,
+      href: `/supervisor-area/approval/approve-course`,
       isActive: segment === null,
     },
     {
-      title: "Soal Builder",
-      href: `/dashboard/quiz/${quizId}/soal`,
-      isActive: segment === "soal",
+      title: "Pelatihan Pending",
+      href: `/supervisor-area/approval/approve-course/pending-approval`,
+      isActive: segment === "pending-approval",
     },
     {
-      title: "Preview Soal",
-      href: `/dashboard/quiz/${quizId}/preview-soal`,
-      isActive: segment === "preview-soal",
+      title: "Pelatihan Di Setujui",
+      href: `/supervisor-area/approval/approve-course/approved`,
+      isActive: segment === "approved",
     },
     {
-      title: "Peserta",
-      href: `/dashboard/quiz/${quizId}/peserta`,
-      isActive: segment === "peserta",
-    },
-    {
-      title: "Hasil",
-      href: `/dashboard/quiz/${quizId}/hasil`,
-      isActive: segment === "hasil",
+      title: "Pelatihan Di Tolak",
+      href: `/supervisor-area/approval/approve-course/rejected`,
+      isActive: segment === "rejected",
     },
   ]
 
@@ -87,7 +81,6 @@ export function QuizTab({ className, quizId }: QuizTabProps) {
           ))}
         </TabsList>
       </MotionDiv>
-      <Separator />
     </Tabs>
   )
 }
