@@ -1,9 +1,11 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import { Cell, Pie, PieChart } from "recharts"
 
 import { ApprovalListRes } from "@/types/approval/res/approval-list"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
+import { ChartTest } from "@/components/chart"
 import { Icons } from "@/components/icons"
 import { DashboardShell } from "@/components/shell"
 import { RejectedCourseApprovalTableShell } from "@/components/shell/rejected-course-approval-table-shell"
@@ -59,7 +61,7 @@ export default async function SupervisorApproveCourseRejectedPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort, course_name } = searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1

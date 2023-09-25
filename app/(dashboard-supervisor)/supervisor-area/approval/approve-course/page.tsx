@@ -6,6 +6,7 @@ import {
 } from "@/types/approval/res/approval-list"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoStringShort } from "@/lib/utils"
+import { ChartTest } from "@/components/chart"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SupervisorApprovalCountCard } from "@/components/supervisor/card/approval-count-card"
@@ -115,6 +116,12 @@ export default async function SupervisorApproveCoursePage() {
     getApprovalCount({ token: user?.token }),
     getAllAproval({ token: user?.token, limit: 5, page: 1 }),
   ])
+
+  // convert approvalCountRes data to array of object
+  const data = Object.entries(approvalCountRes?.data).map(([key, value]) => ({
+    key,
+    value,
+  }))
 
   return (
     <MotionDiv
