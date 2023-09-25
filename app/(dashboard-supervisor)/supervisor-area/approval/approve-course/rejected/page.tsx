@@ -11,12 +11,6 @@ import { DashboardShell } from "@/components/shell"
 import { RejectedCourseApprovalTableShell } from "@/components/shell/rejected-course-approval-table-shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-export const metadata: Metadata = {
-  title: "Rejected Pelatihan",
-  description:
-    "Halaman untuk menyetujui pengetahuan yang diajukan oleh pemberi materi",
-}
-
 interface GetRejectedApproval {
   token: string | undefined
   limit: number

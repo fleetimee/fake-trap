@@ -1,9 +1,11 @@
+import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 
 import {
   ApprovalListRes,
   ApprovalListResData,
 } from "@/types/approval/res/approval-list"
+import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoStringShort } from "@/lib/utils"
 import { ChartTest } from "@/components/chart"
@@ -112,12 +114,15 @@ function badgeSwitch({ approval }: BadgeSwitchProps) {
 export default async function SupervisorApproveCoursePage() {
   const user = await getCurrentUser()
 
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
   const [approvalCountRes, approvalRes] = await Promise.all([
     getApprovalCount({ token: user?.token }),
     getAllAproval({ token: user?.token, limit: 5, page: 1 }),
   ])
 
-  // convert approvalCountRes data to array of object
   const data = Object.entries(approvalCountRes?.data).map(([key, value]) => ({
     key,
     value,
@@ -130,31 +135,34 @@ export default async function SupervisorApproveCoursePage() {
       animate="animate"
       variants={parentVariant}
     >
-      <MotionDiv
-        className="child grid min-h-[200px] gap-6 md:grid-cols-1 lg:grid-cols-3"
-        variants={childrenVariant}
-      >
-        <SupervisorApprovalCountCard
-          approvalCount={approvalCountRes?.data?.approved}
-          title="Pelatihan Di Setujui"
-          icon={<Icons.check className="h-6 w-6 text-green-500" />}
-          description="Pelatihan yang telah di setujui"
-        />
+      <div className="child grid min-h-[200px] gap-6 md:grid-cols-1 lg:grid-cols-3">
+        <MotionDiv className="child" variants={childrenVariant}>
+          <SupervisorApprovalCountCard
+            approvalCount={approvalCountRes?.data?.approved}
+            title="Pelatihan Di Setujui"
+            icon={<Icons.check className="h-6 w-6 text-green-500" />}
+            description="Pelatihan yang telah di setujui"
+          />
+        </MotionDiv>
 
-        <SupervisorApprovalCountCard
-          approvalCount={approvalCountRes?.data?.pending}
-          title="Pelatihan Pending"
-          icon={<Icons.pending className="h-6 w-6 text-yellow-500" />}
-          description="Pelatihan yang masih menunggu persetujuan"
-        />
+        <MotionDiv className="child" variants={childrenVariant}>
+          <SupervisorApprovalCountCard
+            approvalCount={approvalCountRes?.data?.pending}
+            title="Pelatihan Pending"
+            icon={<Icons.pending className="h-6 w-6 text-yellow-500" />}
+            description="Pelatihan yang masih menunggu persetujuan"
+          />
+        </MotionDiv>
 
-        <SupervisorApprovalCountCard
-          approvalCount={approvalCountRes?.data?.rejected}
-          title="Pelatihan Di Tolak"
-          icon={<Icons.close className="h-6 w-6 text-red-500" />}
-          description="Pelatihan yang telah di tolak"
-        />
-      </MotionDiv>
+        <MotionDiv className="child" variants={childrenVariant}>
+          <SupervisorApprovalCountCard
+            approvalCount={approvalCountRes?.data?.rejected}
+            title="Pelatihan Di Tolak"
+            icon={<Icons.close className="h-6 w-6 text-red-500" />}
+            description="Pelatihan yang telah di tolak"
+          />
+        </MotionDiv>
+      </div>
 
       <MotionDiv
         initial={{ opacity: 0, y: 50 }}

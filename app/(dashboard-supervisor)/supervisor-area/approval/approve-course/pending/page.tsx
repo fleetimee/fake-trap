@@ -9,12 +9,6 @@ import { DashboardShell } from "@/components/shell"
 import { PendingCourseApprovalTableShell } from "@/components/shell/pending-course-approval-table-shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-export const metadata: Metadata = {
-  title: "Pending Pelatihan",
-  description:
-    "Halaman untuk menyetujui pengetahuan yang diajukan oleh pemberi materi",
-}
-
 interface GetPendingApproval {
   token: string | undefined
   limit: number

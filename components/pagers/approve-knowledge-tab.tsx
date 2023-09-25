@@ -12,29 +12,32 @@ import { MotionDiv } from "../framer-wrapper"
 interface ApproveCourseTabs
   extends React.ComponentPropsWithoutRef<typeof Tabs> {}
 
-export function ApproveCourseTabs({ className }: ApproveCourseTabs) {
+export function ApproveKnowledgeTabs({
+  className,
+  ...props
+}: ApproveCourseTabs) {
   const router = useRouter()
   const segment = useSelectedLayoutSegment()
 
   const tabs = [
     {
       title: "Overview",
-      href: `/supervisor-area/approval/approve-course`,
+      href: `/supervisor-area/approval/approve-knowledge`,
       isActive: segment === null,
     },
     {
       title: "Pending",
-      href: `/supervisor-area/approval/approve-course/pending`,
+      href: `/supervisor-area/approval/approve-knowledge/pending`,
       isActive: segment === "pending",
     },
     {
       title: "Approved",
-      href: `/supervisor-area/approval/approve-course/approved`,
+      href: `/supervisor-area/approval/approve-knowledge/approved`,
       isActive: segment === "approved",
     },
     {
       title: "Rejected",
-      href: `/supervisor-area/approval/approve-course/rejected`,
+      href: `/supervisor-area/approval/approve-knowledge/rejected`,
       isActive: segment === "rejected",
     },
   ]

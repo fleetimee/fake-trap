@@ -9,12 +9,6 @@ import { DashboardShell } from "@/components/shell"
 import { ApprovedCourseApprovalTableShell } from "@/components/shell/approved-course-approval-table-shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-export const metadata: Metadata = {
-  title: "Approved Pelatihan",
-  description:
-    "Halaman untuk menyetujui pengetahuan yang diajukan oleh pemberi materi",
-}
-
 interface GetApprovedApproval {
   token: string | undefined
   limit: number
