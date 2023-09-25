@@ -38,7 +38,6 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   pageCount: number
-
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
   newRowLink?: string
@@ -245,11 +244,6 @@ export function DataTable<TData, TValue>({
       rowSelection,
       columnFilters,
     },
-    defaultColumn: {
-      minSize: 0,
-      size: Number.MAX_SAFE_INTEGER,
-      maxSize: Number.MAX_SAFE_INTEGER,
-    },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
@@ -268,84 +262,65 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <Card className="w-full space-y-3 overflow-auto p-4">
-        <DataTableToolbar
-          table={table}
-          filterableColumns={filterableColumns}
-          searchableColumns={searchableColumns}
-          newRowLink={newRowLink}
-          deleteRowsAction={deleteRowsAction}
-        />
-        <div className="max-w-full overflow-x-auto rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className="whitespace-nowrap"
-                        style={{
-                          width:
-                            header.getSize() === Number.MAX_SAFE_INTEGER
-                              ? "auto"
-                              : header.getSize(),
-                        }}
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    )
-                  })}
+    <div className="w-full space-y-3 overflow-auto">
+      <DataTableToolbar
+        table={table}
+        filterableColumns={filterableColumns}
+        searchableColumns={searchableColumns}
+        newRowLink={newRowLink}
+        deleteRowsAction={deleteRowsAction}
+      />
+      <Card className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id} className="whitespace-nowrap">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        style={{
-                          width:
-                            cell.column.getSize() === Number.MAX_SAFE_INTEGER
-                              ? "auto"
-                              : cell.column.getSize(),
-                        }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <DataTablePagination table={table} />
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </Card>
-    </MotionDiv>
+      <DataTablePagination table={table} />
+    </div>
   )
 }

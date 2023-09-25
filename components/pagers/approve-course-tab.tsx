@@ -24,17 +24,17 @@ export function ApproveCourseTabs({ className }: ApproveCourseTabs) {
       isActive: segment === null,
     },
     {
-      title: "Pelatihan Pending",
-      href: `/supervisor-area/approval/approve-course/pending-approval`,
-      isActive: segment === "pending-approval",
+      title: "Pending",
+      href: `/supervisor-area/approval/approve-course/pending`,
+      isActive: segment === "pending",
     },
     {
-      title: "Pelatihan Di Setujui",
+      title: "Approved",
       href: `/supervisor-area/approval/approve-course/approved`,
       isActive: segment === "approved",
     },
     {
-      title: "Pelatihan Di Tolak",
+      title: "Rejected",
       href: `/supervisor-area/approval/approve-course/rejected`,
       isActive: segment === "rejected",
     },

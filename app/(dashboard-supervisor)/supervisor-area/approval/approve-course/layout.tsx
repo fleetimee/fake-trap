@@ -57,7 +57,7 @@ export default async function SupervisorApproveCourseLayout({
         />
       </MotionDiv>
 
-      <div className="space-y-4 overflow-hidden">
+      <div className="space-y-4 overflow-auto">
         <ApproveCourseTabs />
         {children}
       </div>
