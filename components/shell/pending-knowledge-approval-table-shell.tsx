@@ -16,7 +16,7 @@ interface PendingKnowledgeApprovalTableShellProps {
   pageCount: number
 }
 
-export async function PendingKnowledgeApprovalTableShell({
+export function PendingKnowledgeApprovalTableShell({
   data,
   pageCount,
 }: PendingKnowledgeApprovalTableShellProps) {

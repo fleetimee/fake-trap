@@ -89,12 +89,10 @@ export default async function SupervisorApproveKnowledgeApprovedPage({
         </Alert>
       </MotionDiv>
 
-      <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <ApprovedKnowledgeApprovalTableShell
-          data={approvedResp?.data}
-          pageCount={approvedResp.totalPage}
-        />
-      </MotionDiv>
+      <ApprovedKnowledgeApprovalTableShell
+        data={approvedResp?.data}
+        pageCount={approvedResp.totalPage}
+      />
     </DashboardShell>
   )
 }

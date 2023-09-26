@@ -125,6 +125,7 @@ export function ApprovedKnowledgeApprovalTableShell({
             </div>
           )
         },
+        enableSorting: false,
       },
     ],
     [data]
