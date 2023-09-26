@@ -1,20 +1,16 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Variant, Variants } from "framer-motion"
+import { Variants } from "framer-motion"
 import Balance from "react-wrap-balancer"
 
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
-import { getRandomPatternStyle } from "@/lib/generate-pattern"
 import { cn } from "@/lib/utils"
 import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { CategoryCard } from "@/components/category-card"
 import { MotionDiv } from "@/components/framer-wrapper"
-import { Icons } from "@/components/icons"
 import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { Shell } from "@/components/shell/lobby-shell"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata = {
@@ -102,17 +98,6 @@ export default async function IntroductionPage() {
     initial: { opacity: 0, x: 50 },
     animate: { opacity: 1, x: 0 },
   }
-
-  const parentTagVariants: Variants = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
-  }
-
-  const tagVariants: Variants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-  }
-
   return (
     <Shell as="div" className="grid gap-60 ">
       <section

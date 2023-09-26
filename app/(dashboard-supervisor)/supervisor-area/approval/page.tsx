@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { Variants } from "framer-motion"
 
 import { storeSubscriptionPlans } from "@/config/approval-type"
 import { authOptions } from "@/lib/auth"
@@ -21,25 +20,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-const parentVariant: Variants = {
-  initial: { opacity: 0, y: -100 },
-  animate: { opacity: 1, y: 0, transition: { staggerChildren: 0.5 } },
-}
-
-const childrenVariant: Variants = {
-  initial: { opacity: 0, y: 50 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      stiffness: 200,
-      type: "spring",
-      damping: 20,
-      bounce: 0.25,
-    },
-  },
-}
 
 export const metadata: Metadata = {
   title: "Approval",

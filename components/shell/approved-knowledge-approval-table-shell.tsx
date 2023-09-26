@@ -3,26 +3,26 @@
 import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
-import { ApprovalListResData } from "@/types/approval/res/approval-list"
+import { ApprovalKnowledgeListResData } from "@/types/approval/res/approval-list"
 import { convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
 
 import { Badge } from "../ui/badge"
 
-interface RejectedCourseApprovalTableShellProps {
-  data: ApprovalListResData[]
+interface ApprovedKnowledgeApprovalTableShellProps {
+  data: ApprovalKnowledgeListResData[]
   pageCount: number
 }
 
-export function RejectedCourseApprovalTableShell({
+export function ApprovedKnowledgeApprovalTableShell({
   data,
   pageCount,
-}: RejectedCourseApprovalTableShellProps) {
+}: ApprovedKnowledgeApprovalTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
 
-  const columns = React.useMemo<ColumnDef<ApprovalListResData, unknown>[]>(
+  const columns = React.useMemo<ColumnDef<ApprovalKnowledgeListResData>[]>(
     () => [
       {
         id: "select",
@@ -34,7 +34,7 @@ export function RejectedCourseApprovalTableShell({
               setSelectedRowIds((prev) =>
                 prev.length === data.length
                   ? []
-                  : data.map((row) => row.id_approval_course)
+                  : data.map((row) => row.id_approval_knowledge)
               )
             }}
             aria-label="Select all"
@@ -48,8 +48,10 @@ export function RejectedCourseApprovalTableShell({
               row.toggleSelected(!!value)
               setSelectedRowIds((prev) =>
                 value
-                  ? [...prev, row.original.id_approval_course]
-                  : prev.filter((id) => id !== row.original.id_approval_course)
+                  ? [...prev, row.original.id_approval_knowledge]
+                  : prev.filter(
+                      (id) => id !== row.original.id_approval_knowledge
+                    )
               )
             }}
             aria-label="Select row"
@@ -60,29 +62,31 @@ export function RejectedCourseApprovalTableShell({
         enableHiding: false,
       },
       {
-        accessorKey: "course_name",
+        accessorKey: "knowledge_title",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Pelatihan" />
+          <DataTableColumnHeader column={column} title="Judul Pengetahuan" />
         ),
         enableSorting: false,
       },
       {
         accessorKey: "user_request",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Pembuat Materi" />
+          <DataTableColumnHeader column={column} title="Pengaju" />
         ),
         enableSorting: false,
       },
       {
         accessorKey: "created_at",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Tanggal Buat" />
+          <DataTableColumnHeader column={column} title="Tanggal Pengajuan" />
         ),
         cell: ({ row }) => {
           return (
-            <p>
-              {convertDatetoStringShort(row.original.created_at.toString())}
-            </p>
+            <div>
+              {convertDatetoStringShort(
+                new Date(row.original.created_at).toString()
+              )}
+            </div>
           )
         },
       },
@@ -94,7 +98,31 @@ export function RejectedCourseApprovalTableShell({
         enableSorting: false,
         cell: ({ row }) => {
           return (
-            <Badge className="bg-red-500">{row.original.status_text}</Badge>
+            <Badge className="bg-green-400">{row.original.status_text}</Badge>
+          )
+        },
+      },
+      {
+        accessorKey: "user_approver",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Approver" />
+        ),
+        enableSorting: false,
+      },
+      {
+        accessorKey: "approved_at",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Tanggal Approve" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div>
+              {row.original.approved_at.toString() === "0001-01-01T00:00:00Z"
+                ? "-"
+                : convertDatetoStringShort(
+                    new Date(row.original.approved_at).toString()
+                  )}
+            </div>
           )
         },
       },
@@ -109,8 +137,8 @@ export function RejectedCourseApprovalTableShell({
       pageCount={pageCount}
       searchableColumns={[
         {
-          id: "course_name",
-          title: "Nama Pelatihan",
+          id: "knowledge_title",
+          title: "Judul Pengetahuan",
         },
       ]}
     />

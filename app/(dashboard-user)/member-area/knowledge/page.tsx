@@ -14,8 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-import { UserKnowledgeWrapper } from "./_components/user-knowledge-wrapper"
+import { UserKnowledgeWrapper } from "@/app/(dashboard-user)/member-area/knowledge/_components"
 
 export const metadata = {
   title: "Pengetahuan",

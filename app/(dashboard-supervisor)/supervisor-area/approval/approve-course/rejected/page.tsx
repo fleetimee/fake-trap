@@ -1,17 +1,16 @@
-import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { Cell, Pie, PieChart } from "recharts"
 
-import { ApprovalListRes } from "@/types/approval/res/approval-list"
+import { ApprovalListRes } from "@/types/approval/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { ChartTest } from "@/components/chart"
 import { Icons } from "@/components/icons"
-import { DashboardShell } from "@/components/shell"
-import { RejectedCourseApprovalTableShell } from "@/components/shell/rejected-course-approval-table-shell"
+import {
+  DashboardShell,
+  RejectedCourseApprovalTableShell,
+} from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-interface GetRejectedApproval {
+interface GetRejectedApprovalProps {
   token: string | undefined
   limit: number
   page: number
@@ -25,7 +24,7 @@ async function getRejectedApproval({
   page,
   orderBy = "asc",
   searchQuery = "",
-}: GetRejectedApproval): Promise<ApprovalListRes> {
+}: GetRejectedApprovalProps): Promise<ApprovalListRes> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/rejected?limit=${limit}&page=${page}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
     {
@@ -34,6 +33,7 @@ async function getRejectedApproval({
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     }
   )
 

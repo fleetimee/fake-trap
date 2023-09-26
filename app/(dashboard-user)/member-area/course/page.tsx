@@ -15,8 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-import { UserCourseWrapper } from "./_components/user-course-wrapper"
+import { UserCourseWrapper } from "@/app/(dashboard-user)/member-area/course/_components"
 
 export const metadata = {
   title: "Pelatihan Kamu",

@@ -1,11 +1,32 @@
 import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 
+import {
+  ApprovalKnowledgeListRes,
+  ApprovalKnowledgeListResData,
+} from "@/types/approval/res/approval-list"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
+import { convertDatetoStringShort } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
-import { SupervisorApprovalCountCard } from "@/components/supervisor/card/approval-count-card"
+import { SupervisorApprovalCountCard } from "@/components/supervisor/card"
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 interface GetKnowledgeApprovalCount {
   token: string | undefined
@@ -14,6 +35,32 @@ interface GetKnowledgeApprovalCount {
 async function getKnowledgeApprovalCount({ token }: GetKnowledgeApprovalCount) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/count`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetAllKnowledgeApproval {
+  token: string | undefined
+  limit: number
+  page: number
+}
+
+async function getAllKnowledgeApproval({
+  token,
+  limit,
+  page,
+}: GetAllKnowledgeApproval): Promise<ApprovalKnowledgeListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/?limit=${limit}&page=${page}&sortBy=created_at&orderBy=desc`,
     {
       method: "GET",
       headers: {
@@ -57,6 +104,23 @@ const childrenVariant: Variants = {
   },
 }
 
+interface BadgeSwitchProps {
+  approval: ApprovalKnowledgeListResData
+}
+
+function badgeSwitch({ approval }: BadgeSwitchProps) {
+  switch (approval.status) {
+    case "0052":
+      return <Badge className="bg-green-400">{approval.status_text}</Badge>
+    case "0051":
+      return <Badge className="bg-yellow-400">{approval.status_text}</Badge>
+    case "0053":
+      return <Badge className="bg-red-400">{approval.status_text}</Badge>
+    default:
+      return <Badge className="bg-orange-400">{approval.status_text}</Badge>
+  }
+}
+
 export default async function SupervisorApproveCoursePage() {
   const user = await getCurrentUser()
 
@@ -64,9 +128,14 @@ export default async function SupervisorApproveCoursePage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const [approvalCountResp] = await Promise.all([
+  const [approvalCountResp, allApproval] = await Promise.all([
     getKnowledgeApprovalCount({
       token: user?.token,
+    }),
+    getAllKnowledgeApproval({
+      token: user?.token,
+      limit: 5,
+      page: 1,
     }),
   ])
 
@@ -105,6 +174,67 @@ export default async function SupervisorApproveCoursePage() {
           />
         </MotionDiv>
       </div>
+
+      <MotionDiv
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <Card className="flex h-full flex-col justify-between hover:border-primary">
+          <CardHeader className="pb-8">
+            <CardTitle className="inline-flex items-center text-lg">
+              Aksi Terbaru
+            </CardTitle>
+            <CardDescription>
+              Daftar pengetahuan yang telah di buat dan di approve atau di tolak
+              oleh supervisor diurutkan berdasarkan tanggal pembuatan terbaru
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nama Pengetahuan</TableHead>
+                  <TableHead>Pembuat Materi</TableHead>
+                  <TableHead>Approver</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Tanggal Buat</TableHead>
+                  <TableHead>Tanggal Approve</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {allApproval?.data?.map((approval) => (
+                  <TableRow key={approval.id_approval_knowledge}>
+                    <TableCell>{approval.knowledge_title}</TableCell>
+                    <TableCell>{approval.user_request}</TableCell>
+                    <TableCell>
+                      {approval.user_approver ? approval.user_approver : "-"}
+                    </TableCell>
+                    <TableCell>
+                      {badgeSwitch({
+                        approval: approval,
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {convertDatetoStringShort(
+                        new Date(approval.created_at).toString()
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {approval.approved_at.toString() ===
+                      "0001-01-01T00:00:00Z"
+                        ? "-"
+                        : convertDatetoStringShort(
+                            new Date(approval.approved_at).toString()
+                          )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </MotionDiv>
     </MotionDiv>
   )
 }

@@ -1,15 +1,16 @@
-import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
-import { ApprovalListRes } from "@/types/approval/res/approval-list"
+import { ApprovalListRes } from "@/types/approval/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { Icons } from "@/components/icons"
-import { DashboardShell } from "@/components/shell"
-import { PendingCourseApprovalTableShell } from "@/components/shell/pending-course-approval-table-shell"
+import {
+  DashboardShell,
+  PendingCourseApprovalTableShell,
+} from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-interface GetPendingApproval {
+interface GetPendingApprovalProps {
   token: string | undefined
   limit: number
   page: number
@@ -23,7 +24,7 @@ async function getPendingApproval({
   page,
   orderBy = "asc",
   searchQuery = "",
-}: GetPendingApproval): Promise<ApprovalListRes> {
+}: GetPendingApprovalProps): Promise<ApprovalListRes> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/pending?limit=${limit}&page=${page}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
     {
@@ -32,6 +33,7 @@ async function getPendingApproval({
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
     }
   )
 

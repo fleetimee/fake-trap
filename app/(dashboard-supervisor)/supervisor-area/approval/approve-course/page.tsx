@@ -1,17 +1,13 @@
 import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 
-import {
-  ApprovalListRes,
-  ApprovalListResData,
-} from "@/types/approval/res/approval-list"
+import { ApprovalListRes, ApprovalListResData } from "@/types/approval/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoStringShort } from "@/lib/utils"
-import { ChartTest } from "@/components/chart"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
-import { SupervisorApprovalCountCard } from "@/components/supervisor/card/approval-count-card"
+import { SupervisorApprovalCountCard } from "@/components/supervisor/card"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -80,7 +76,7 @@ async function getAllAproval({
   page,
 }: GetAllApproval): Promise<ApprovalListRes> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval?limit=${limit}&page=${page}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval?limit=${limit}&page=${page}&sortBy=created_at&orderBy=desc`,
     {
       method: "GET",
       headers: {
@@ -179,12 +175,13 @@ export default async function SupervisorApproveCoursePage() {
         }}
       >
         <Card className="flex h-full flex-col justify-between hover:border-primary">
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-8">
             <CardTitle className="inline-flex items-center text-lg">
-              Recent Pelatihan
+              Aksi Terbaru
             </CardTitle>
             <CardDescription>
-              Semua pelatihan yang dikirim oleh pemberi materi
+              Daftar pelatihan yang telah di buat dan di approve atau di tolak
+              oleh supervisor diurutkan berdasarkan tanggal dibuat terbaru
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -219,9 +216,12 @@ export default async function SupervisorApproveCoursePage() {
                       )}
                     </TableCell>
                     <TableCell>
-                      {convertDatetoStringShort(
-                        new Date(approval.updated_at).toString()
-                      )}
+                      {approval.approved_at.toString() ===
+                      "0001-01-01T00:00:00Z"
+                        ? "-"
+                        : convertDatetoStringShort(
+                            new Date(approval.approved_at).toString()
+                          )}
                     </TableCell>
                   </TableRow>
                 ))}
