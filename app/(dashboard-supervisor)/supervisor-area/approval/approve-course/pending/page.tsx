@@ -3,12 +3,7 @@ import { redirect } from "next/navigation"
 import { ApprovalListRes } from "@/types/approval/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { Icons } from "@/components/icons"
-import {
-  DashboardShell,
-  PendingCourseApprovalTableShell,
-} from "@/components/shell"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { PendingCourseApprovalTableShell } from "@/components/shell"
 
 interface GetPendingApprovalProps {
   token: string | undefined
@@ -75,19 +70,9 @@ export default async function SupervisorApproveCoursePendingPage({
   })
 
   return (
-    <DashboardShell>
-      <Alert>
-        <Icons.pending className="h-4 w-4 text-yellow-400" />
-        <AlertTitle>Pending Pelatihan</AlertTitle>
-        <AlertDescription>
-          Berikut adalah daftar pelatihan yang masih menunggu persetujuan
-        </AlertDescription>
-      </Alert>
-
-      <PendingCourseApprovalTableShell
-        data={pendingResp.data}
-        pageCount={pendingResp.totalPage}
-      />
-    </DashboardShell>
+    <PendingCourseApprovalTableShell
+      data={pendingResp.data}
+      pageCount={pendingResp.totalPage}
+    />
   )
 }

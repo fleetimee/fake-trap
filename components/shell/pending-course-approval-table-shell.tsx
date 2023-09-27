@@ -103,7 +103,9 @@ export function PendingCourseApprovalTableShell({
           <DataTableColumnHeader column={column} title="Aksi" />
         ),
         cell: ({ row }) => {
-          return <PendingAction />
+          return (
+            <PendingAction id={row.original.id_approval_course.toString()} />
+          )
         },
       },
     ],

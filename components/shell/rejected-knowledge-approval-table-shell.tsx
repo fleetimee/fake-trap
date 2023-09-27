@@ -105,6 +105,38 @@ export function RejectedKnowledgeApprovalTableShell({
           )
         },
       },
+      {
+        accessorKey: "user_uuid_aprover",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Approver" />
+        ),
+        enableSorting: false,
+        cell: ({ row }) => {
+          return (
+            <p>
+              {row.original.user_uuid_aprover
+                ? row.original.user_approver
+                : "-"}
+            </p>
+          )
+        },
+      },
+      {
+        accessorKey: "approved_at",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Tanggal Reject" />
+        ),
+        enableSorting: false,
+        cell: ({ row }) => {
+          return (
+            <p>
+              {row.original.approved_at
+                ? convertDatetoStringShort(row.original.approved_at.toString())
+                : "-"}
+            </p>
+          )
+        },
+      },
     ],
     [data]
   )

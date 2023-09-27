@@ -21,7 +21,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { KnowledgeApprovalForm } from "./_components/approve-form"
+import { KnowledgeRejectForm } from "./_components/rejected-form"
 
 interface GetCheckKnowledgeProps {
   token: string | undefined
@@ -40,7 +40,6 @@ async function getCheckKnowledge({
         ContentType: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      cache: "no-cache",
     }
   )
 
@@ -48,19 +47,19 @@ async function getCheckKnowledge({
 }
 
 export const metadata: Metadata = {
-  title: "Approve Pengajuan",
-  description: "Approve Pengajuan",
+  title: "Reject Pengajuan",
+  description: "Reject Pengajuan",
 }
 
-interface PendingApproveFormProps {
+interface RejectApproveFormProps {
   params: {
     id: string
   }
 }
 
-export default async function PendingApproveForm({
+export default async function RejectApproveForm({
   params,
-}: PendingApproveFormProps) {
+}: RejectApproveFormProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -101,16 +100,17 @@ export default async function PendingApproveForm({
                 </Tooltip>
               </TooltipProvider>
             </span>
-            Approve Pengajuan
+            Reject Pengajuan
           </CardTitle>
           {/* <ProductPager product={product} /> */}
         </div>
         <CardDescription>
-          Approve Pengajuan Pengetahuan yang diajukan oleh pembuat materi
+          Tolak pengajuan serta berikan alasan penolakan nantinya pemberi materi
+          akan menerima notifikasi bahwa pengajuan telah ditolak
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <KnowledgeApprovalForm id={params.id} uuid={uuid} />
+        <KnowledgeRejectForm id={params.id} uuid={uuid} />
       </CardContent>
     </Card>
   )

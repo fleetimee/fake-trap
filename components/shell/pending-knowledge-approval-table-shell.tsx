@@ -105,7 +105,11 @@ export function PendingKnowledgeApprovalTableShell({
           <DataTableColumnHeader column={column} title="Aksi" />
         ),
         cell: ({ row }) => {
-          return <PendingKnowledgeAction />
+          return (
+            <PendingKnowledgeAction
+              id={row.original.id_approval_knowledge.toString()}
+            />
+          )
         },
       },
     ],

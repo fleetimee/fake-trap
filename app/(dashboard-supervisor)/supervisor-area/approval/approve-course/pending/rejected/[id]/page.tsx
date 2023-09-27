@@ -21,19 +21,17 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { KnowledgeApprovalForm } from "./_components/approve-form"
-
-interface GetCheckKnowledgeProps {
+interface GetCheckCourseProps {
   token: string | undefined
   id: string
 }
 
-async function getCheckKnowledge({
+async function getCheckCourse({
   token,
   id,
-}: GetCheckKnowledgeProps): Promise<ApprovalCheckOne> {
+}: GetCheckCourseProps): Promise<ApprovalCheckOne> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/0051/${id}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/0051/${id}`,
     {
       method: "GET",
       headers: {
@@ -48,19 +46,19 @@ async function getCheckKnowledge({
 }
 
 export const metadata: Metadata = {
-  title: "Approve Pengajuan",
-  description: "Approve Pengajuan",
+  title: "Reject Pengajuan",
+  description: "Reject Pengajuan",
 }
 
-interface PendingApproveFormProps {
+interface PendingRejectedFormProps {
   params: {
     id: string
   }
 }
 
-export default async function PendingApproveForm({
+export default async function PendingRejectedForm({
   params,
-}: PendingApproveFormProps) {
+}: PendingRejectedFormProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -71,15 +69,15 @@ export default async function PendingApproveForm({
 
   const uuid = tokenExtract?.id
 
-  const checkKnowledge = await getCheckKnowledge({
+  const checkCourse = await getCheckCourse({
     id: params.id,
     token: user?.token,
   })
 
-  const isKnowledgeExist = checkKnowledge?.data?.is_exist
+  const isCourseExist = checkCourse?.data?.is_exist
 
-  if (!isKnowledgeExist) {
-    notFound()
+  if (!isCourseExist) {
+    return notFound()
   }
 
   return (
@@ -91,7 +89,7 @@ export default async function PendingApproveForm({
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <Link href="/supervisor-area/approval/approve-knowledge/pending">
+                    <Link href="/supervisor-area/approval/approve-course/pending">
                       <Icons.chevronLeft className="h-6 w-6" />
                     </Link>
                   </TooltipTrigger>
@@ -101,16 +99,16 @@ export default async function PendingApproveForm({
                 </Tooltip>
               </TooltipProvider>
             </span>
-            Approve Pengajuan
+            Reject Pelatihan
           </CardTitle>
           {/* <ProductPager product={product} /> */}
         </div>
         <CardDescription>
-          Approve Pengajuan Pengetahuan yang diajukan oleh pembuat materi
+          <p>Apakah Anda yakin ingin menolak pengajuan pelatihan ini?</p>
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <KnowledgeApprovalForm id={params.id} uuid={uuid} />
+        {/* <CourseApprovalForm id={params.id} uuid={uuid} /> */}
       </CardContent>
     </Card>
   )

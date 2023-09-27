@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
@@ -12,7 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export default function PendingKnowledgeAction() {
+interface PendingKnowledgeActionProps {
+  id: string
+}
+
+export default function PendingKnowledgeAction({
+  id,
+}: PendingKnowledgeActionProps) {
   return (
     <>
       <DropdownMenu>
@@ -35,12 +42,22 @@ export default function PendingKnowledgeAction() {
           <DropdownMenuSeparator />
 
           <DropdownMenuItem className="flex items-center">
-            <p className="text-green-500">Approve</p>
-            <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
+            <Link
+              href={`pending/approve/${id}`}
+              className="flex w-full items-center justify-between"
+            >
+              <p className="text-green-500">Approve</p>
+              <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem className="flex items-center">
-            <p className="text-red-500">Reject</p>
+            <Link
+              href={`pending/rejected/${id}`}
+              className="flex w-full items-center justify-between"
+            >
+              <p className="text-red-500">Reject</p>
+            </Link>
             <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
