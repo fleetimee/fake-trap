@@ -4,12 +4,9 @@ import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { ApprovalCheckOne } from "@/types/approval/res/approval-check-get-one"
-import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
-import { ThreadListRes } from "@/types/threads/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { convertDatetoString } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -273,15 +270,14 @@ export default async function KnowledgePreview({
         </Card>
 
         <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
-          <Tabs defaultValue="quiz" className="w-full">
+          <Tabs defaultValue="knowledge" className="w-full">
             <TabsList className="w-full">
-              <TabsTrigger value="quiz" className="w-full font-semibold">
-                Latihan
-              </TabsTrigger>
-              <TabsTrigger value="content" className="w-full font-semibold">
-                Materi
+              <TabsTrigger value="knowledge" className="w-full font-semibold">
+                📑 Pengetahuan
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="knowledge"></TabsContent>
           </Tabs>
         </Card>
       </div>

@@ -136,7 +136,7 @@ export function ApprovedKnowledgeApprovalTableShell({
         cell: ({ row }) => {
           return (
             <ApprovedKnowledgeAction
-              id={row.original.id_approval_knowledge.toString()}
+              id={row.original.id_knowledge.toString()}
             />
           )
         },
