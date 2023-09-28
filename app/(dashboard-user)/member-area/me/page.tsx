@@ -361,7 +361,7 @@ export default async function MemberAreaMePage() {
           className="child col-span-7 lg:col-span-3"
           variants={childVariant}
         >
-          <RecentPostCard recentPostList={recentPostList} />
+          <RecentPostCard recentPostList={recentPostList} isMember />
         </MotionDiv>
 
         <MotionDiv

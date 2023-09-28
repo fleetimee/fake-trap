@@ -21,6 +21,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { CourseRejectForm } from "./_components/rejected-form"
+
 interface GetCheckCourseProps {
   token: string | undefined
   id: string
@@ -108,7 +110,7 @@ export default async function PendingRejectedForm({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {/* <CourseApprovalForm id={params.id} uuid={uuid} /> */}
+        <CourseRejectForm id={params.id} uuid={uuid} />
       </CardContent>
     </Card>
   )

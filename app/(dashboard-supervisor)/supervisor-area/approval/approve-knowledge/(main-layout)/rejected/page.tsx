@@ -76,6 +76,8 @@ export default async function SupervisorRejectedKnowledgeApproval({
     token: user?.token,
   })
 
+  console.log(rejectedResp)
+
   return (
     <DashboardShell>
       <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

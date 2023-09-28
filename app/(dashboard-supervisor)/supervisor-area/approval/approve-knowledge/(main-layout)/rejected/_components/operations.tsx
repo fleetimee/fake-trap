@@ -8,18 +8,17 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-interface PendingKnowledgeActionProps {
+interface RejectedKnowledgeActionProps {
   id: string
 }
 
-export default function PendingKnowledgeAction({
+export default function RejectedKnowledgeActionProps({
   id,
-}: PendingKnowledgeActionProps) {
+}: RejectedKnowledgeActionProps) {
   return (
     <>
       <DropdownMenu>
@@ -35,30 +34,13 @@ export default function PendingKnowledgeAction({
 
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem className="flex items-center">
-            Detail
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem>
-
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem className="flex items-center">
             <Link
-              href={`pending/approve/${id}`}
+              href={`preview-knowledge/${id}`}
               className="flex w-full items-center justify-between"
             >
-              <p className="text-green-500">Approve</p>
-              <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
+              Detail
+              <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
             </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="flex items-center">
-            <Link
-              href={`pending/rejected/${id}`}
-              className="flex w-full items-center justify-between"
-            >
-              <p className="text-red-500">Reject</p>
-            </Link>
-            <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

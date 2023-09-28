@@ -8,9 +8,13 @@ import { Separator } from "@/components/ui/separator"
 
 interface RecentPostCardProps {
   recentPostList: UserRecentPostListRes
+  isMember?: boolean
 }
 
-export function RecentPostCard({ recentPostList }: RecentPostCardProps) {
+export function RecentPostCard({
+  recentPostList,
+  isMember,
+}: RecentPostCardProps) {
   return (
     <Card className="col-span-7 min-h-[350px] gap-4 p-4 lg:col-span-3">
       <h1 className="font-heading text-2xl font-light">Post Terbaru</h1>
@@ -30,7 +34,11 @@ export function RecentPostCard({ recentPostList }: RecentPostCardProps) {
                   baru saja membuat post baru pada forum{" "}
                   <span className="font-semibold underline hover:text-blue-600">
                     <Link
-                      href={`/dashboard/course/${post.id_course}/forum/${post.id_threads}`}
+                      href={
+                        isMember
+                          ? `/member-area/course/${post.id_course}/forum/${post.id_threads}`
+                          : `/dashboard/course/${post.id_course}/forum/${post.id_threads}`
+                      }
                       target={"_blank"}
                     >
                       {post.threads_title}

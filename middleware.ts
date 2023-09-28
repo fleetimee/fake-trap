@@ -33,6 +33,10 @@ export default withAuth(
       "/member-area/course/:path*"
     )
 
+    const isForumThreadAdminPage = req.nextUrl.pathname.startsWith(
+      "/dashboard/forum/thread/:path*/forum/:path*"
+    )
+
     const isSupervisorAreaPage =
       req.nextUrl.pathname.startsWith("/supervisor-area")
 
@@ -255,6 +259,7 @@ export const config = {
   matcher: [
     "/dashboard/:path*",
     "/dashboard/me/:path*",
+    "/dashboard/course/:path*/forum/:path*",
     "/login",
     "/member-area/:path*",
     "/supervisor-area/:path*",

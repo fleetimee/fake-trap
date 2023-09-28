@@ -7,7 +7,7 @@ import { ApprovalKnowledgeListResData } from "@/types/approval/res/approval-list
 import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
-import PendingKnowledgeAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-knowledge/pending/_components/operations"
+import PendingKnowledgeAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-knowledge/(main-layout)/pending/_components/operations"
 
 import { Badge } from "../ui/badge"
 
@@ -108,6 +108,7 @@ export function PendingKnowledgeApprovalTableShell({
           return (
             <PendingKnowledgeAction
               id={row.original.id_approval_knowledge.toString()}
+              idKnowledge={row.original.id_knowledge.toString()}
             />
           )
         },

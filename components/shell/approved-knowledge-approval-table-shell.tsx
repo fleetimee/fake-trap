@@ -7,6 +7,7 @@ import { ApprovalKnowledgeListResData } from "@/types/approval/res/approval-list
 import { convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
+import ApprovedKnowledgeAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-knowledge/(main-layout)/approved/_components/operations"
 
 import { Badge } from "../ui/badge"
 
@@ -123,6 +124,20 @@ export function ApprovedKnowledgeApprovalTableShell({
                     new Date(row.original.approved_at).toString()
                   )}
             </div>
+          )
+        },
+        enableSorting: false,
+      },
+      {
+        id: "action",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Aksi" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <ApprovedKnowledgeAction
+              id={row.original.id_approval_knowledge.toString()}
+            />
           )
         },
         enableSorting: false,

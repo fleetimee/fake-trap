@@ -10,6 +10,7 @@ import {
 import { convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
+import RejectedKnowledgeActionProps from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-knowledge/(main-layout)/rejected/_components/operations"
 
 import { Badge } from "../ui/badge"
 
@@ -134,6 +135,20 @@ export function RejectedKnowledgeApprovalTableShell({
                 ? convertDatetoStringShort(row.original.approved_at.toString())
                 : "-"}
             </p>
+          )
+        },
+      },
+      {
+        id: "action",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Aksi" />
+        ),
+        enableSorting: false,
+        cell: ({ row }) => {
+          return (
+            <RejectedKnowledgeActionProps
+              id={row.original.id_knowledge.toString()}
+            />
           )
         },
       },
