@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 
+import { ApprovalCount } from "@/types/approval/res"
 import {
   ApprovalKnowledgeListRes,
   ApprovalKnowledgeListResData,
@@ -32,7 +33,9 @@ interface GetKnowledgeApprovalCount {
   token: string | undefined
 }
 
-async function getKnowledgeApprovalCount({ token }: GetKnowledgeApprovalCount) {
+async function getKnowledgeApprovalCount({
+  token,
+}: GetKnowledgeApprovalCount): Promise<ApprovalCount> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/count`,
     {

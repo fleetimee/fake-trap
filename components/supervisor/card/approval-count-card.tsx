@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card"
 
 interface SupervisorApprovalCountCardProps {
-  approvalCount: string
+  approvalCount: number
   description: string
   icon: React.ReactNode
   title: string

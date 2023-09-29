@@ -3,6 +3,7 @@ import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
+import { ApprovalLookupOneRes } from "@/types/approval/res"
 import { ApprovalCheckOne } from "@/types/approval/res/approval-check-get-one"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
@@ -35,6 +36,30 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+interface GetIdApproval {
+  token: string | undefined
+  id: string
+}
+
+async function getIdApproval({
+  token,
+  id,
+}: GetIdApproval): Promise<ApprovalLookupOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/lookup/${id}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-cache",
+    }
+  )
+
+  return await res.json()
+}
 
 interface GetCheckKnowledgeProps {
   token: string | undefined
@@ -119,14 +144,17 @@ export default async function KnowledgePreview({
     idKnowledge: params.idKnowledge,
   })
 
+  const [lookUpApproval] = await Promise.all([
+    getIdApproval({
+      id: params.idKnowledge,
+      token: user?.token,
+    }),
+  ])
+
   const checkKnowledgePending = await getCheckKnowledge({
-    id: params.idKnowledge,
+    id: lookUpApproval.data.id_approval_knowledge.toString(),
     token: user?.token,
   })
-
-  console.log(knowledgePreview)
-
-  console.log(checkKnowledgePending)
 
   if (knowledgePreview.code === 400) {
     return notFound()
@@ -195,7 +223,7 @@ export default async function KnowledgePreview({
                     <DropdownMenuContent>
                       <DropdownMenuItem className="min-w-[10rem]">
                         <Link
-                          href={`/supervisor-area/approval/approve-knowledge/pending/approve/${knowledgePreview.data.id_knowledge}`}
+                          href={`/supervisor-area/approval/approve-knowledge/pending/approve/${lookUpApproval.data.id_approval_knowledge}`}
                         >
                           <p className="text-green-500">Approve</p>
                         </Link>
@@ -204,7 +232,7 @@ export default async function KnowledgePreview({
 
                       <DropdownMenuItem className="min-w-[10rem]">
                         <Link
-                          href={`/supervisor-area/approval/approve-knowledge/pending/rejected/${knowledgePreview.data.id_knowledge}`}
+                          href={`/supervisor-area/approval/approve-knowledge/pending/rejected/${lookUpApproval.data.id_approval_knowledge}`}
                         >
                           <p className="text-red-500">Tolak</p>
                         </Link>
