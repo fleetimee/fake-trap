@@ -12,6 +12,12 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
@@ -36,6 +42,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { PreviewKnowledgeDetailSidebar } from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-knowledge/(knowledge-layout)/preview-knowledge/[idKnowledge]/_components/sidebar"
 
 interface GetIdApproval {
   token: string | undefined
@@ -144,6 +151,12 @@ export default async function KnowledgePreview({
     idKnowledge: params.idKnowledge,
   })
 
+  console.log("knowledgePreview", knowledgePreview)
+
+  if (knowledgePreview.code === 400) {
+    return notFound()
+  }
+
   const [lookUpApproval] = await Promise.all([
     getIdApproval({
       id: params.idKnowledge,
@@ -156,7 +169,7 @@ export default async function KnowledgePreview({
     token: user?.token,
   })
 
-  if (knowledgePreview.code === 400) {
+  if (knowledgePreview.code === 400 || checkKnowledgePending.code === 404) {
     return notFound()
   }
 
@@ -260,7 +273,7 @@ export default async function KnowledgePreview({
               <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
             </div>
 
-            <div className="h-full max-h-max min-h-[30rem] rounded-md border border-primary p-4">
+            <div className="h-full max-h-max w-full rounded-md border border-primary p-4">
               {children}
             </div>
 
@@ -297,17 +310,7 @@ export default async function KnowledgePreview({
           </div>
         </Card>
 
-        <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
-          <Tabs defaultValue="knowledge" className="w-full">
-            <TabsList className="w-full">
-              <TabsTrigger value="knowledge" className="w-full font-semibold">
-                📑 Pengetahuan
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="knowledge"></TabsContent>
-          </Tabs>
-        </Card>
+        <PreviewKnowledgeDetailSidebar knowledgePreview={knowledgePreview} />
       </div>
     </DashboardShell>
   )
