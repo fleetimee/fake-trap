@@ -1,0 +1,37 @@
+_id: req_86438f76fc024f368f1f9671b667c086
+type: Request
+parentId: fld_2060c02624ab4522909e708adad24588
+modified: 1695108605076
+created: 1692700130492
+url: "{{baseUrl}}/secure/category"
+name: Get Categories
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: limit
+    value: "6"
+    disabled: false
+    id: pair_777f2b75a23b41b1af75a2429c28e881
+  - id: pair_adaed1c46b63413e95375a5541afd633
+    name: page
+    value: "1"
+    description: ""
+  - id: pair_44ded744de1a4a07be7e96e990d369ae
+    name: orderBy
+    value: asc
+    description: ""
+  - id: pair_1cdca506d9984a8ea09790ed982985cd
+    name: sortBy
+    value: created_at
+    description: ""
+headers: []
+authentication: {}
+metaSortKey: -1692700130492
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

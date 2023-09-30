@@ -1,0 +1,27 @@
+_id: req_53741e204329420ca6ce580b9425b524
+type: Request
+parentId: fld_fd3147da0a164579befdb9ad62d640f1
+modified: 1692700130485
+created: 1692700130485
+url: "{{baseUrl}}/secure/users/2c6033af-1a9f-4262-ab93-462946069332"
+name: Update User By Id
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "email": "noviasssn@students.amikom.ac.id",
+      "password": "12345"
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130485
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

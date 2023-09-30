@@ -1,0 +1,32 @@
+_id: req_5785d8d3cf8d45d49fe9c421d31a6d35
+type: Request
+parentId: fld_2f027c47fc8542b484c6ebee6930f455
+modified: 1695797214728
+created: 1695796709684
+url: "{{ _.baseUrl }}/secure/approval/course/1"
+name: Patch Course Supervisor
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: >-
+    {
+    	"status": "0052",
+    	"user_uuid_approver": "58d76fc2-db09-491a-8387-f2a5750b64e3",
+    	"approved_at": {% faker 'date', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695796709734
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,23 @@
+_id: req_bf8610c479e44022b23988b995eb4f26
+type: Request
+parentId: fld_b12501801773409cacc2393d3e11abc8
+modified: 1695701594757
+created: 1695701548964
+url: "{{ _.baseUrl }}/secure/approval/knowledge/approved"
+name: Get Approved Knowledge
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695701548964
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

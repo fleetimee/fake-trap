@@ -1,0 +1,21 @@
+_id: req_23293bd09e464b67975a0fe15e480742
+type: Request
+parentId: fld_c7ace6e1e87347508234a91e3cd0671d
+modified: 1692700130506
+created: 1692700130506
+url: "{{baseUrl}}/secure/knowledge/85"
+name: Get Knowledge by Id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130506
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

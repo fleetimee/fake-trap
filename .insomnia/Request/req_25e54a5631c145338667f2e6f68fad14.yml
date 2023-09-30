@@ -1,0 +1,26 @@
+_id: req_25e54a5631c145338667f2e6f68fad14
+type: Request
+parentId: fld_2060c02624ab4522909e708adad24588
+modified: 1692700130497
+created: 1692700130497
+url: "{{baseUrl}}/secure/category/16"
+name: Update Category By Id
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "category_name": "Noviannnn"
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130497
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

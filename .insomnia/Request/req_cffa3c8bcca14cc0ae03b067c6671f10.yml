@@ -1,0 +1,31 @@
+_id: req_cffa3c8bcca14cc0ae03b067c6671f10
+type: Request
+parentId: fld_4edb9d66af4745ad8c7cd13f4a16d135
+modified: 1694742624818
+created: 1694652317439
+url: "{{ _.baseUrl }}/secure/quiz/99/getUserAttempt"
+name: Get Quiz User Attempt
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_8d97e7a62b7848d9a23ec74a2d79d4cf
+    name: limit
+    value: "10"
+    description: ""
+  - id: pair_bbe722f4b8044aa0a678a48c55e31c8a
+    name: page
+    value: "1"
+    description: ""
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1694652317440
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

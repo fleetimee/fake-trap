@@ -1,0 +1,23 @@
+_id: env_9c3e8f4445eb44b0b033d1cd0959c9a7
+type: Environment
+parentId: env_6c4d64b2c42444388b83354464af04d9
+modified: 1695720326832
+created: 1692700375014
+name: Learning Management System
+data:
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVheEBnbWFpbC5jb20iLCJleHAiOjE3MjcyNTYzMTUsImlkIjoiMDJjZjBmNjktNTViYi00ZmY3LThlZmQtOWZjMDYzNTNmZWM1Iiwib3JpZ19pYXQiOjE2OTU3MjAzMTUsInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IkFkbWluIiwicm9sZV9kZXNjcmlwdGlvbiI6IkFkbWluIGNhbiBkbyBhbnl0aGluZyIsImNyZWF0ZWRfYXQiOiIyMDIzLTA5LTI2VDE2OjI1OjE1LjIxNzA1OCswNzowMCIsInVwZGF0ZWRfYXQiOiIyMDIzLTA4LTIxVDA4OjA4OjM1LjQzNTM2MSswNzowMCJ9XSwidXNlcm5hbWUiOiJvY3RhdmlhIn0.WQT1xW7IbG6NKXzjDCvQpQ5BchOtKk7UiE9yL5lbqAM
+  baseUrl: http://localhost:1337
+  GLOBAL_HEADERS:
+    Accept: application/json
+    Authorization: Bearer {{ _.token }}
+dataPropertyOrder:
+  "&":
+    - token
+    - baseUrl
+    - GLOBAL_HEADERS
+  "&~|GLOBAL_HEADERS":
+    - Accept
+    - Authorization
+color: null
+isPrivate: false
+metaSortKey: 1692700375015

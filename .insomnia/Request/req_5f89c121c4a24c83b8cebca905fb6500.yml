@@ -1,0 +1,53 @@
+_id: req_5f89c121c4a24c83b8cebca905fb6500
+type: Request
+parentId: fld_fd3147da0a164579befdb9ad62d640f1
+modified: 1695192973270
+created: 1694137127130
+url: "{{ _.baseUrl
+  }}/secure/users/524101f8-69d8-4d35-adeb-8406e39cd2f1/getEnrolledCourse"
+name: Get User Enrolled Course
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_5f42e89c65114326a6da7a129bac157c
+    name: limit
+    value: "10"
+    description: ""
+    disabled: false
+  - id: pair_fcab1cbe206449e8a89235cab408dd09
+    name: page
+    value: "1"
+    description: ""
+    disabled: false
+  - id: pair_7a66f77640584879917731afedfdd579
+    name: orderBy
+    value: created_at
+    description: ""
+    disabled: true
+  - id: pair_797d456d88864142bcb18d42f39dfb7a
+    name: sortBy
+    value: ASC
+    description: ""
+    disabled: true
+  - id: pair_b0088283e3c6405ca8772d4abb9e3fc8
+    name: searchQuery
+    value: PY
+    description: ""
+    disabled: true
+  - id: pair_c922f5f42b3a4ca39f323534098c1f45
+    name: ""
+    value: ""
+    description: ""
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1694137127130
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

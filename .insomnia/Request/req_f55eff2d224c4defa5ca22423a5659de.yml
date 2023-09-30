@@ -1,0 +1,28 @@
+_id: req_f55eff2d224c4defa5ca22423a5659de
+type: Request
+parentId: fld_4edb9d66af4745ad8c7cd13f4a16d135
+modified: 1692700130566
+created: 1692700130566
+url: "{{baseUrl}}/secure/quiz"
+name: Post Quiz
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: >-
+    {
+      "quiz_title": "Trivia Bleach",
+      "quiz_desc": "Quiz Trivia seputar Anime Bleach Thousand Year Blood War Arc",
+      "quiz_type": 1
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130566
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

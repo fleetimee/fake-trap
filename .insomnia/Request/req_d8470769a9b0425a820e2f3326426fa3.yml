@@ -1,0 +1,32 @@
+_id: req_d8470769a9b0425a820e2f3326426fa3
+type: Request
+parentId: fld_4edb9d66af4745ad8c7cd13f4a16d135
+modified: 1693898109450
+created: 1692700130575
+url: "{{baseUrl}}/secure/question/quiz/1"
+name: Get Question By Quiz Id
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: limit
+    value: ""
+    disabled: true
+    id: pair_0d02f9179c7d4084b57738217a87c1cc
+  - name: page
+    value: "1"
+    disabled: true
+    id: pair_2c05437837734de2801a961791f2f7c6
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+metaSortKey: -1692700130575
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

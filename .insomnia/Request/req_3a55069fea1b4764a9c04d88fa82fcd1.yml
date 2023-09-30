@@ -1,0 +1,26 @@
+_id: req_3a55069fea1b4764a9c04d88fa82fcd1
+type: Request
+parentId: fld_4edb9d66af4745ad8c7cd13f4a16d135
+modified: 1692700130568
+created: 1692700130568
+url: "{{baseUrl}}/secure/quiz/2"
+name: Edit Quiz By Id
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "quiz_desc": "Niggaaaa"
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130568
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

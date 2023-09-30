@@ -1,0 +1,21 @@
+_id: req_a7da797492134f038da3689f95a05e5e
+type: Request
+parentId: fld_ca3beb2126ce4ed6964675c82a3b5f3f
+modified: 1692700130554
+created: 1692700130554
+url: "{{baseUrl}}/secure/role/2"
+name: Get role by id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130554
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

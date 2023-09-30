@@ -1,0 +1,37 @@
+_id: req_db5acc27e6584be2a3d9c7160fc29851
+type: Request
+parentId: fld_c7ace6e1e87347508234a91e3cd0671d
+modified: 1695104808161
+created: 1692700130514
+url: "{{baseUrl}}/public/knowledge"
+name: Get Public Knowledges
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_5a3962174f2c407594a5f4f6f18f8601
+    name: limit
+    value: "8"
+    description: ""
+  - id: pair_bd48558427c644eb90d8e7e1d7e05422
+    name: page
+    value: "1"
+    description: ""
+  - id: pair_780ddda051ea4753b6affb6aef143219
+    name: orderBy
+    value: desc
+    description: ""
+  - id: pair_6cc7f7376c12409c8b1863d58049ce9c
+    name: sortBy
+    value: created_at
+    description: ""
+headers: []
+authentication: {}
+metaSortKey: -1692700130514
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

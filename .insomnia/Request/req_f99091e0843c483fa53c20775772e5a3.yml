@@ -1,0 +1,42 @@
+_id: req_f99091e0843c483fa53c20775772e5a3
+type: Request
+parentId: fld_4519891a8aa24bb2b109cf6235ee48c2
+modified: 1695688770879
+created: 1695611738928
+url: "{{ _.baseUrl }}/secure/approval/pending"
+name: Get Pending Approval
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_255fc792ae1347b7839116d6d5de7ef4
+    name: limit
+    value: "1"
+    description: ""
+    disabled: true
+  - id: pair_83cc3e35011b480fa8d0e32658b8429b
+    name: page
+    value: "1"
+    description: ""
+    disabled: true
+  - id: pair_20579229d90842468879059fb82ea90b
+    name: searchQuery
+    value: unity
+    description: ""
+    disabled: true
+  - id: pair_107f2a21d21a4d7882d211735da3c282
+    name: orderBy
+    value: desc
+    description: ""
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695688764235
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

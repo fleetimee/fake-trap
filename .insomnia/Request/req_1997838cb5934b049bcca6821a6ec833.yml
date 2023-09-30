@@ -1,0 +1,29 @@
+_id: req_1997838cb5934b049bcca6821a6ec833
+type: Request
+parentId: fld_ad7788d5c6b64a11b8161d8e38f87462
+modified: 1695720294603
+created: 1692700130465
+url: "{{ _.baseUrl }}/login"
+name: Login
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "username": "octavia",
+      "password": "123456"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1692700130465
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,21 @@
+_id: req_efdaf5b076de488fa5cc2dbadef58cc2
+type: Request
+parentId: fld_1db6aceecf4a40b6a719085963bd9d8b
+modified: 1692700130518
+created: 1692700130518
+url: "{{baseUrl}}/secure/course/ping"
+name: Ping Course
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130518
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,25 @@
+_id: req_f5ddadc5f6134e7fa5287cf6d2f8364f
+type: Request
+parentId: fld_ca3beb2126ce4ed6964675c82a3b5f3f
+modified: 1692700130558
+created: 1692700130558
+url: "{{baseUrl}}/secure/role/1"
+name: Delete role by id
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  disabled: false
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5vdmlhbkBzdHVkZW50cy5hbWlrb20uYWMuaWQiLCJleHAiOjE2NzY1MjQ0MDYsImlkIjoiMDY4ZTljNDAtOTFjMy00YzU3LTk1NDAtNjY3NTFhM2U3MTg3Iiwib3JpZ19pYXQiOjE2NzY1MjA4MDYsInVzZXJuYW1lIjoibm92aWFuIn0.gSYphW9NIRImlhi2p74YPTSZHGHDXJ0PJuqsLJl00Tw
+  prefix: ""
+metaSortKey: -1692700130558
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
