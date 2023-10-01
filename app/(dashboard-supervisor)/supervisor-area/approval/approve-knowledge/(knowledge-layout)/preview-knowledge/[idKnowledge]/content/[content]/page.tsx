@@ -1,8 +1,12 @@
 import { redirect } from "next/navigation"
 
+import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
+import { renderContent } from "@/components/render-content"
+
+import RenderContentWrapper from "./_components/render-content-wrapper"
 
 interface GetOneContentProps {
   token: string | undefined
@@ -48,8 +52,32 @@ async function getContentType({
   return await res.json()
 }
 
+interface GetOneKnowledgeProps {
+  token: string | undefined
+  idKnowledge: number
+}
+
+async function getOneKnowledge({
+  token,
+  idKnowledge,
+}: GetOneKnowledgeProps): Promise<KnowledgeOneRes> {
+  const knowledgeOne = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+  return await knowledgeOne.json()
+}
+
 interface KnowledgePreviewContentProps {
   params: {
+    idKnowledge: string
     content: string
   }
 }
@@ -63,5 +91,22 @@ export default async function KnowledgePreviewContent({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  return <p>KnowledgePreviewContent</p>
+  const [knowledgeRes, contentRes] = await Promise.all([
+    getOneKnowledge({
+      token: user?.token,
+      idKnowledge: parseInt(params.idKnowledge),
+    }),
+    getOneContent({
+      token: user?.token,
+      idContent: params.content,
+    }),
+  ])
+
+  return (
+    <RenderContentWrapper
+      detailKnowledge={knowledgeRes}
+      contentData={contentRes.data}
+      contentType={contentRes.data.content_type}
+    />
+  )
 }

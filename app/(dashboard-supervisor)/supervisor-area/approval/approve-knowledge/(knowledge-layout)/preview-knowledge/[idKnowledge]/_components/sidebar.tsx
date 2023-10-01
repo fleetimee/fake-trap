@@ -9,6 +9,8 @@ import {
 } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { cn } from "@/lib/utils"
+import { EmptyContent } from "@/components/app/knowledge/detail/ui"
 import {
   Accordion,
   AccordionContent,
@@ -27,13 +29,8 @@ interface PreviewKnowledgeDetailSidebarProps {
 export function PreviewKnowledgeDetailSidebar({
   knowledgePreview,
 }: PreviewKnowledgeDetailSidebarProps) {
-  const router = useRouter()
   const segment = useSelectedLayoutSegment()
   const pathname = usePathname()
-
-  console.log(segment)
-
-  console.log("knowledgePreview", knowledgePreview)
 
   const isContent = pathname.includes("/content")
 
@@ -65,25 +62,48 @@ export function PreviewKnowledgeDetailSidebar({
                     <AccordionTrigger className="font-heading text-base font-bold">
                       {section.section_title}
                     </AccordionTrigger>
-                    {section.content
-                      ? section.content.map((content) => (
-                          <AccordionContent className="py-1">
-                            {content.content_title ? (
-                              <Link
-                                href={
-                                  isContent
-                                    ? `/supervisor-area/approval/approve-knowledge/preview-knowledge/${knowledgePreview.data.id_knowledge}/content/${content.id_content}`
-                                    : `${pathname}/content/${content.id_content}`
-                                }
+                    {section.content ? (
+                      section.content.map((content) => (
+                        <AccordionContent className="py-1">
+                          {content.content_title ? (
+                            <Link
+                              href={
+                                isContent
+                                  ? `/supervisor-area/approval/approve-knowledge/preview-knowledge/${knowledgePreview.data.id_knowledge}/content/${content.id_content}`
+                                  : `${pathname}/content/${content.id_content}`
+                              }
+                            >
+                              <Button
+                                className={cn(
+                                  "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background",
+                                  {
+                                    "bg-secondary-foreground":
+                                      isContent &&
+                                      pathname.includes(
+                                        `/content/${content.id_content}`
+                                      ),
+                                  }
+                                )}
                               >
-                                <Button className="flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading active:bg-gray-800">
-                                  {content.content_title}
-                                </Button>
-                              </Link>
-                            ) : null}
-                          </AccordionContent>
-                        ))
-                      : null}
+                                {content.content_title}
+                              </Button>
+                            </Link>
+                          ) : null}
+                        </AccordionContent>
+                      ))
+                    ) : (
+                      <AccordionContent className="py-4">
+                        <EmptyContent className="h-[50px]">
+                          <EmptyContent.Icon name="empty" />
+                          <EmptyContent.Title>
+                            Tidak ada konten
+                          </EmptyContent.Title>
+                          <EmptyContent.Description>
+                            Belum ada konten untuk bagian ini
+                          </EmptyContent.Description>
+                        </EmptyContent>
+                      </AccordionContent>
+                    )}
                   </AccordionItem>
                 ))}
               </Accordion>
