@@ -1,0 +1,30 @@
+_id: req_c0386060379d4362afe0098d19f1367a
+type: Request
+parentId: fld_cd0a4482d9964f45b2de3f9c9604915e
+modified: 1692700130546
+created: 1692700130546
+url: "{{baseUrl}}/secure/content"
+name: Post Content
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    {
+      "content_title": "adsaad",
+      "content_type": 1,
+      "image": "http://placehold.it/32x32",
+      "link": "https://www.youtube.com/watch?v=b-WFetQjifc",
+      "id_section": 1
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130546
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

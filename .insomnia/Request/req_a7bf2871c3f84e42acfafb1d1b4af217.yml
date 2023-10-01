@@ -1,0 +1,44 @@
+_id: req_a7bf2871c3f84e42acfafb1d1b4af217
+type: Request
+parentId: fld_fd3147da0a164579befdb9ad62d640f1
+modified: 1694740119280
+created: 1694053806825
+url: "{{ _.baseUrl
+  }}/secure/users/b3b9b16c-490f-4b02-9ab6-f7cca037f08b/getQuizThatUserTaken"
+name: Get Quiz That User Taken
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_a3e504b697ac433c89888c0d66116b30
+    name: limit
+    value: "10"
+    description: ""
+  - id: pair_40debaa42d1c4469a0fe6863da1fade7
+    name: page
+    value: "1"
+    description: ""
+  - id: pair_d65076201f4b428f9561bf077ccb4727
+    name: orderBy
+    value: created_at
+    description: ""
+  - id: pair_b74c222f4941495084172a1defd289dc
+    name: sortBy
+    value: desc
+    description: ""
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+  disabled: true
+metaSortKey: -1694053806825
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

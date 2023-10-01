@@ -1,0 +1,30 @@
+_id: req_e88312c28969469a83a76b839aeff69d
+type: Request
+parentId: fld_f4a0aeb28cad49e497c8bef9e163c545
+modified: 1695348947576
+created: 1694051677893
+url: "{{ _.baseUrl }}/secure/course/1/threads"
+name: Get Thread List In Course
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_55984f21ce26419d94f0648e2ad60349
+    name: limit
+    value: "5"
+    description: ""
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+metaSortKey: -1694051677893
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

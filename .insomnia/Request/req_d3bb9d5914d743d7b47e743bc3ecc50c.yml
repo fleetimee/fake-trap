@@ -1,0 +1,31 @@
+_id: req_d3bb9d5914d743d7b47e743bc3ecc50c
+type: Request
+parentId: fld_b12501801773409cacc2393d3e11abc8
+modified: 1695710736583
+created: 1695709391106
+url: "{{ _.baseUrl }}/secure/approval/knowledge/pending"
+name: Get Pending Knowledge
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_9f955bd4bcd64bbf8dc2cd2b37656b2c
+    name: limit
+    value: "5"
+    description: ""
+  - id: pair_aaab8aaab6f04b22b6425fad4804dc4d
+    name: searchQuery
+    value: pemula
+    description: ""
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695709391106
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

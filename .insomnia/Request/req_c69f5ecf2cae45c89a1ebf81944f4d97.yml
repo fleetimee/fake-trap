@@ -1,0 +1,24 @@
+_id: req_c69f5ecf2cae45c89a1ebf81944f4d97
+type: Request
+parentId: fld_fd3147da0a164579befdb9ad62d640f1
+modified: 1694050519450
+created: 1692700130478
+url: "{{baseUrl}}/secure/users/02cf0f69-55bb-4ff7-8efd-9fc06353fec5"
+name: Get user by id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+metaSortKey: -1692700130478
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

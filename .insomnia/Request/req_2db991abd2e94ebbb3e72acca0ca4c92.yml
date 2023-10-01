@@ -1,0 +1,28 @@
+_id: req_2db991abd2e94ebbb3e72acca0ca4c92
+type: Request
+parentId: fld_c7ace6e1e87347508234a91e3cd0671d
+modified: 1692700130507
+created: 1692700130507
+url: "{{baseUrl}}/secure/knowledge"
+name: Add Knowledge
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    {
+      "knowledge_title": "Niggaaaa",
+      "description": "Heh",
+      "id_category": 1
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130507
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

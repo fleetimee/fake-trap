@@ -1,0 +1,24 @@
+_id: req_38b92bd05ded45ec8ead79ee1377d756
+type: Request
+parentId: fld_fd3147da0a164579befdb9ad62d640f1
+modified: 1694058600014
+created: 1694057394848
+url: "{{ _.baseUrl
+  }}/secure/users/02cf0f69-55bb-4ff7-8efd-9fc06353fec5/getRecentPost"
+name: Get User Recent Post
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1694057394848
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

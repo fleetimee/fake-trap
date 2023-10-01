@@ -1,0 +1,21 @@
+_id: req_37cbd3494fda4bfbbb2d629db4b0319e
+type: Request
+parentId: fld_cd0a4482d9964f45b2de3f9c9604915e
+modified: 1695969141586
+created: 1692700130545
+url: "{{baseUrl}}/secure/content/19"
+name: Get Content By Id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130545
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

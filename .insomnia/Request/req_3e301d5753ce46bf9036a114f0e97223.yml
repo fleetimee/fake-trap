@@ -1,0 +1,30 @@
+_id: req_3e301d5753ce46bf9036a114f0e97223
+type: Request
+parentId: fld_4edb9d66af4745ad8c7cd13f4a16d135
+modified: 1692700130563
+created: 1692700130563
+url: "{{baseUrl}}/secure/quiz"
+name: Get Quiz
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: isNullSection
+    value: "true"
+    disabled: true
+  - name: page
+    value: "2"
+    disabled: false
+  - name: limit
+    value: "6"
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1692700130563
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

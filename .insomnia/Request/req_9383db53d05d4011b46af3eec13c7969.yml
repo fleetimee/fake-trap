@@ -1,0 +1,30 @@
+_id: req_9383db53d05d4011b46af3eec13c7969
+type: Request
+parentId: fld_2f027c47fc8542b484c6ebee6930f455
+modified: 1695782856416
+created: 1695720190523
+url: "{{ _.baseUrl }}/secure/approval/knowledge/2"
+name: Patch Knowledge Supervisor
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"user_uuid_approver": "58d76fc2-db09-491a-8387-f2a5750b64e3"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695720190523
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

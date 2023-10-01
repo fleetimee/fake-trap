@@ -1,0 +1,34 @@
+_id: req_08a6940e939d43909bbaf5f550ff04f0
+type: Request
+parentId: fld_f4a0aeb28cad49e497c8bef9e163c545
+modified: 1694049826251
+created: 1693555554821
+url: "{{ _.baseUrl }}/secure/threads/1"
+name: Get Threads By Id
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_cac4a5941fc445b5bcc0aa69f8d6325d
+    name: limit
+    value: "10"
+    description: ""
+  - id: pair_e350634b5a234f808cf3f148fa4086d1
+    name: page
+    value: "1"
+    description: ""
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+metaSortKey: -1694049791679
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

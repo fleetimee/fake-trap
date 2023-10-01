@@ -1,0 +1,24 @@
+_id: req_da3f70e037ce4d2b9d517c7434057ce0
+type: Request
+parentId: fld_c7ace6e1e87347508234a91e3cd0671d
+modified: 1692700130504
+created: 1692700130504
+url: "{{baseUrl}}/secure/knowledge"
+name: Filter Knowledges By Status
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: status
+    value: "2"
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1692700130504
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

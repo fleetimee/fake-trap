@@ -1,0 +1,21 @@
+_id: req_e0906fb4945346c1b0114e8737ca9a06
+type: Request
+parentId: fld_1db6aceecf4a40b6a719085963bd9d8b
+modified: 1692700130523
+created: 1692700130523
+url: "{{baseUrl}}/secure/course/new/"
+name: Get Newest Course
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130523
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

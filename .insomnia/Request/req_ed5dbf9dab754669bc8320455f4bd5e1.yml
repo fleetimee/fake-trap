@@ -1,0 +1,26 @@
+_id: req_ed5dbf9dab754669bc8320455f4bd5e1
+type: Request
+parentId: fld_1db6aceecf4a40b6a719085963bd9d8b
+modified: 1692700130531
+created: 1692700130531
+url: "{{baseUrl}}/secure/course/11000"
+name: Update Course By Id
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "course_name": "Hehe"
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130531
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

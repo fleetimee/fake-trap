@@ -1,0 +1,21 @@
+_id: req_b6d392eb37994293826f511b0829e879
+type: Request
+parentId: fld_2060c02624ab4522909e708adad24588
+modified: 1692700130494
+created: 1692700130494
+url: "{{baseUrl}}/secure/category/15"
+name: Get Category by Id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130494
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

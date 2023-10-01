@@ -1,0 +1,23 @@
+_id: req_e70f93b4988c48a99c54add870b5c815
+type: Request
+parentId: fld_4519891a8aa24bb2b109cf6235ee48c2
+modified: 1695688768806
+created: 1695625006023
+url: "{{ _.baseUrl }}/secure/approval/rejected"
+name: Get Rejected Approval
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695688764135
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

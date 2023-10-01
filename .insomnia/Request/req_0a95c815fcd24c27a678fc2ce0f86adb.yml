@@ -1,0 +1,24 @@
+_id: req_0a95c815fcd24c27a678fc2ce0f86adb
+type: Request
+parentId: fld_fd3147da0a164579befdb9ad62d640f1
+modified: 1694061772526
+created: 1694061600384
+url: "{{ _.baseUrl
+  }}/secure/users/02cf0f69-55bb-4ff7-8efd-9fc06353fec5/getQuizCount"
+name: Get User Quiz Count
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1694061600384
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

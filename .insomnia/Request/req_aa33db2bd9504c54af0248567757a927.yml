@@ -1,0 +1,23 @@
+_id: req_aa33db2bd9504c54af0248567757a927
+type: Request
+parentId: fld_2f027c47fc8542b484c6ebee6930f455
+modified: 1695801780874
+created: 1695801202508
+url: "{{ _.baseUrl }}/secure/approval/course/0051/1"
+name: Check If Pengajuan Course Exist
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695801202508
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

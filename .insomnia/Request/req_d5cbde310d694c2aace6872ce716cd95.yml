@@ -1,0 +1,28 @@
+_id: req_d5cbde310d694c2aace6872ce716cd95
+type: Request
+parentId: fld_fd3147da0a164579befdb9ad62d640f1
+modified: 1692700130480
+created: 1692700130480
+url: "{{baseUrl}}/secure/users"
+name: Add User
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    {
+      "username": "novianand",
+      "password": "123456",
+      "email": "zanea.227fd99@gmail.com"
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130480
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

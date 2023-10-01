@@ -1,0 +1,24 @@
+_id: req_20402698b532445a9f612ea2898b957c
+type: Request
+parentId: fld_4edb9d66af4745ad8c7cd13f4a16d135
+modified: 1693898853163
+created: 1692700130564
+url: "{{baseUrl}}/secure/quiz/1"
+name: Get Quiz By Id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_084f5176a9f145f7822bdbc2544066d9',
+    'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+metaSortKey: -1692700130564
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

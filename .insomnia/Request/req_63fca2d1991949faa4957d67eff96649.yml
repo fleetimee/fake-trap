@@ -1,0 +1,27 @@
+_id: req_63fca2d1991949faa4957d67eff96649
+type: Request
+parentId: fld_c7ace6e1e87347508234a91e3cd0671d
+modified: 1692700130508
+created: 1692700130508
+url: "{{baseUrl}}/secure/knowledge/8999"
+name: Update Knowledge By Id
+description: ""
+method: PUT
+body:
+  mimeType: ""
+  text: |-
+    {
+      "knowledge_title": "Python for Data Science and Machine Learning",
+      "status": 2
+    }
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130508
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

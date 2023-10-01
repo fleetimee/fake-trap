@@ -1,0 +1,21 @@
+_id: req_8af33982d9324b18937c1d3cdfdae143
+type: Request
+parentId: fld_c7ace6e1e87347508234a91e3cd0671d
+modified: 1692700130513
+created: 1692700130513
+url: "{{baseUrl}}/secure/knowledge/newest"
+name: Get Newest Knowledges
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1692700130513
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
