@@ -7,6 +7,7 @@ import { ApprovalListResData } from "@/types/approval/res/approval-list"
 import { convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
+import ApprovedCourseAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/(main-layout)/approved/_components/operations"
 
 import { Badge } from "../ui/badge"
 
@@ -117,6 +118,16 @@ export function ApprovedCourseApprovalTableShell({
             </p>
           )
         },
+      },
+      {
+        id: "action",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Aksi" />
+        ),
+        cell: ({ row }) => {
+          return <ApprovedCourseAction id={row.original.id_course.toString()} />
+        },
+        enableSorting: false,
       },
     ],
     [data]

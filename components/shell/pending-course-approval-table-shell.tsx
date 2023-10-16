@@ -7,7 +7,7 @@ import { ApprovalListResData } from "@/types/approval/res/approval-list"
 import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
-import PendingAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/pending/_components/operations"
+import PendingAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/(main-layout)/pending/_components/operations"
 
 import { Badge } from "../ui/badge"
 

@@ -12,12 +12,6 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
