@@ -74,6 +74,4 @@ export default async function CoursePreviewQuiz({
   ])
 
   console.log(quiz)
-
-  return <p>{quiz.data.quiz_title}</p>
 }
