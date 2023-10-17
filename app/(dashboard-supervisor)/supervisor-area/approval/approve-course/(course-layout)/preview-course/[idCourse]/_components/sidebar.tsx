@@ -1,10 +1,8 @@
 "use client"
 
-import path from "path"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AccordionItem } from "@radix-ui/react-accordion"
-import { is } from "date-fns/locale"
 
 import { CourseOneRes } from "@/types/course/res"
 import { cn } from "@/lib/utils"
@@ -73,6 +71,8 @@ export function PreviewCourseDetailSidebar({
                             href={
                               isContent
                                 ? `/supervisor-area/approval/approve-course/preview-course/${coursePreview.data.id_course}/content/${content.id_content}`
+                                : isQuiz
+                                ? `/supervisor-area/approval/approve-course/preview-course/${coursePreview.data.id_course}/content/${content.id_content}`
                                 : `${pathname}/content/${content.id_content}`
                             }
                           >
@@ -139,13 +139,23 @@ export function PreviewCourseDetailSidebar({
                           key={quiz.id_quiz.toString()}
                           className="py-1"
                         >
-                          <Button
-                            className={cn(
-                              "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
-                            )}
+                          <Link
+                            href={
+                              isQuiz
+                                ? `/supervisor-area/approval/approve-course/preview-course/${coursePreview.data.id_course}/quiz/${quiz.id_quiz}`
+                                : isContent
+                                ? `/supervisor-area/approval/approve-course/preview-course/${coursePreview.data.id_course}/quiz/${quiz.id_quiz}`
+                                : `${pathname}/quiz/${quiz.id_quiz}`
+                            }
                           >
-                            {quiz.quiz_title}
-                          </Button>
+                            <Button
+                              className={cn(
+                                "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
+                              )}
+                            >
+                              {quiz.quiz_title}
+                            </Button>
+                          </Link>
                         </AccordionContent>
                       ))
                     ) : (
