@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 
-import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { CourseOneRes } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 
@@ -27,17 +27,17 @@ async function getOneContent({ token, idContent }: GetOneContentProps) {
   return await res.json()
 }
 
-interface GetOneKnowledgeProps {
+interface GetOneCourseProps {
   token: string | undefined
-  idKnowledge: number
+  idCourse: number
 }
 
-async function getOneKnowledge({
+async function getOneCourse({
   token,
-  idKnowledge,
-}: GetOneKnowledgeProps): Promise<KnowledgeOneRes> {
-  const knowledgeOne = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}`,
+  idCourse,
+}: GetOneCourseProps): Promise<CourseOneRes> {
+  const courseOne = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}`,
     {
       method: "GET",
       headers: {
@@ -47,41 +47,35 @@ async function getOneKnowledge({
       cache: "no-store",
     }
   )
-  return await knowledgeOne.json()
+  return await courseOne.json()
 }
 
-interface KnowledgePreviewContentProps {
+interface CoursePreviewContentProps {
   params: {
-    idKnowledge: string
+    idCourse: string
     content: string
   }
 }
 
-export default async function KnowledgePreviewContent({
+export default async function CoursePreviewContent({
   params,
-}: KnowledgePreviewContentProps) {
+}: CoursePreviewContentProps) {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const [knowledgeRes, contentRes] = await Promise.all([
-    getOneKnowledge({
-      token: user?.token,
-      idKnowledge: parseInt(params.idKnowledge),
-    }),
-    getOneContent({
-      token: user?.token,
-      idContent: params.content,
-    }),
+  const [coursePreview, contentPreview] = await Promise.all([
+    getOneCourse({ token: user.token, idCourse: Number(params.idCourse) }),
+    getOneContent({ token: user.token, idContent: params.content }),
   ])
 
   return (
     <RenderContentWrapper
-      detailKnowledge={knowledgeRes}
-      contentData={contentRes.data}
-      contentType={contentRes.data.content_type}
+      contentType={contentPreview.data.content_type}
+      contentData={contentPreview.data}
+      courseDataResp={coursePreview}
     />
   )
 }

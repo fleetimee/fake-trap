@@ -212,6 +212,8 @@ export default async function CoursePreview({
     page: 1,
   })
 
+  console.log(threadsResp)
+
   if (getCourse.code === 404 || checkCoursePending.code === 404) {
     return notFound()
   }
@@ -453,7 +455,7 @@ export default async function CoursePreview({
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    {threadsResp.data.length > 0 ? (
+                    {threadsResp.data ? (
                       <ScrollArea className="h-[300px] w-full">
                         <div className="flex flex-col gap-4">
                           {threadsResp.data.map((thread, index) => (

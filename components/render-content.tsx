@@ -98,13 +98,13 @@ export function renderContentButton({
 interface RenderContentCourseProps {
   contentType: string
   courseDataResp: CourseOneRes
-  userDataResp: UserListRes
+  userDataResp?: UserListRes
   contentData: KnowledgeOneResContent
-  contentQuiz: CourseOneResQuiz
-  setContentQuiz: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
-  setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
-  activeIndex: string
-  setActiveIndex: React.Dispatch<React.SetStateAction<string>>
+  contentQuiz?: CourseOneResQuiz
+  setContentQuiz?: React.Dispatch<React.SetStateAction<CourseOneResQuiz>>
+  setContentData?: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>
+  activeIndex?: string
+  setActiveIndex?: React.Dispatch<React.SetStateAction<string>>
 }
 
 export function renderContentCourse({ ...props }: RenderContentCourseProps) {

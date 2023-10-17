@@ -1,7 +1,10 @@
 "use client"
 
+import path from "path"
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AccordionItem } from "@radix-ui/react-accordion"
+import { is } from "date-fns/locale"
 
 import { CourseOneRes } from "@/types/course/res"
 import { cn } from "@/lib/utils"
@@ -24,6 +27,9 @@ export function PreviewCourseDetailSidebar({
   coursePreview,
 }: PreviewCourseDetailSidebarProps) {
   const pathname = usePathname()
+
+  const isContent = pathname.includes("/content")
+  const isQuiz = pathname.includes("/quiz")
 
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -63,13 +69,28 @@ export function PreviewCourseDetailSidebar({
                           key={content.id_content.toString()}
                           className="py-1"
                         >
-                          <Button
-                            className={cn(
-                              "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
-                            )}
+                          <Link
+                            href={
+                              isContent
+                                ? `/supervisor-area/approval/approve-course/preview-course/${coursePreview.data.id_course}/content/${content.id_content}`
+                                : `${pathname}/content/${content.id_content}`
+                            }
                           >
-                            {content.content_title}
-                          </Button>
+                            <Button
+                              className={cn(
+                                "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background",
+                                {
+                                  "bg-secondary-foreground":
+                                    isContent &&
+                                    pathname.includes(
+                                      `/content/${content.id_content}`
+                                    ),
+                                }
+                              )}
+                            >
+                              {content.content_title}
+                            </Button>
+                          </Link>
                         </AccordionContent>
                       ))
                     ) : (
