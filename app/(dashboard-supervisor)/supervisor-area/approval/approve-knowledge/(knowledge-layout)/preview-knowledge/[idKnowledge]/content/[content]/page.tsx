@@ -4,7 +4,6 @@ import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { renderContent } from "@/components/render-content"
 
 import RenderContentWrapper from "./_components/render-content-wrapper"
 

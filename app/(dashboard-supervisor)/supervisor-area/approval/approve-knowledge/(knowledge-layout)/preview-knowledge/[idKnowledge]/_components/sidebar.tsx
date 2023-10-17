@@ -2,11 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import {
-  usePathname,
-  useRouter,
-  useSelectedLayoutSegment,
-} from "next/navigation"
+import { usePathname } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { cn } from "@/lib/utils"
@@ -29,7 +25,6 @@ interface PreviewKnowledgeDetailSidebarProps {
 export function PreviewKnowledgeDetailSidebar({
   knowledgePreview,
 }: PreviewKnowledgeDetailSidebarProps) {
-  const segment = useSelectedLayoutSegment()
   const pathname = usePathname()
 
   const isContent = pathname.includes("/content")
