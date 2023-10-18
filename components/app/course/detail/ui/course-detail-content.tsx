@@ -15,8 +15,6 @@ import { ThreadListResData } from "@/types/threads/res"
 import { UserListRes } from "@/types/user/res"
 import { convertDatetoString } from "@/lib/utils"
 import { CreateThreadButton } from "@/components/app/course/detail/forum/operations"
-import { CourseQuizForm } from "@/components/app/course/detail/quiz/ui"
-import { QuizFormTemp } from "@/components/app/course/detail/quiz/ui/quiz-form-temp"
 import {
   columnUserCourse,
   UserDataTable,
@@ -24,7 +22,6 @@ import {
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { renderContentCourse, renderQuiz } from "@/components/render-content"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,

@@ -150,7 +150,12 @@ export function PreviewCourseDetailSidebar({
                           >
                             <Button
                               className={cn(
-                                "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
+                                "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background",
+                                {
+                                  "bg-secondary-foreground":
+                                    isQuiz &&
+                                    pathname.includes(`/quiz/${quiz.id_quiz}`),
+                                }
                               )}
                             >
                               {quiz.quiz_title}

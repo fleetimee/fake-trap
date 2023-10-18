@@ -5,6 +5,8 @@ import { QuizOneRes } from "@/types/quiz/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 
+import { QuizForm } from "./_components/quiz_form"
+
 interface GetOneQuizProps {
   token: string | undefined
   idQuiz: string
@@ -74,4 +76,6 @@ export default async function CoursePreviewQuiz({
   ])
 
   console.log(quiz)
+
+  return <QuizForm question={quiz.data.questions} quiz={quiz} />
 }

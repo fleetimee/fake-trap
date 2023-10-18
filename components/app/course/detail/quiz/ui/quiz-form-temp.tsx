@@ -99,14 +99,6 @@ export function QuizFormTemp({
         className="grid w-full grid-cols-1 gap-12"
       >
         <Card className="flex flex-col items-start justify-between gap-12 p-6">
-          {/*{questionResp.data.map((question, index) => (*/}
-          {/*  <CourseQuizForm*/}
-          {/*    question={question}*/}
-          {/*    key={question.id_question}*/}
-          {/*    index={index}*/}
-          {/*  />*/}
-          {/*))}*/}
-
           <FormField
             control={form.control}
             name="id_quiz"
