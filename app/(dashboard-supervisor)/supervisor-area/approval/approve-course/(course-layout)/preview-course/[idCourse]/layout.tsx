@@ -255,7 +255,7 @@ export default async function CoursePreview({
           <div className="flex w-full flex-col items-end justify-between gap-4 lg:flex-row lg:items-center">
             <AlertDescription>
               Ini adalah Preview untuk pelatihan{" "}
-              <span className="font-bold">{params.idCourse}</span>.
+              <span className="font-bold">{getCourse.data.course_name}</span>.
               <span className="block">
                 {" "}
                 Silahkan periksa kembali sebelum menyetujui pengetahuan ini.

@@ -115,6 +115,12 @@ export const supervisorAreaDashboardConfig: DashboardConfig = {
       icon: "laptop",
       items: [],
     },
+    {
+      title: "Profile",
+      href: "/supervisor-area/me",
+      icon: "pizza",
+      items: [],
+    },
   ],
 }
 

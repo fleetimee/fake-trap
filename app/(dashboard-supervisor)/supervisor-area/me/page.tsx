@@ -46,4 +46,6 @@ export default async function SupervisorMePage() {
   })
 
   const userExtracted = extractToken(user.token)
+
+  return <p>Penis</p>
 }
