@@ -205,6 +205,8 @@ export default async function CoursePreview({
     token: user?.token,
   })
 
+  console.log(checkCoursePending)
+
   const threadsResp = await getThreadList({
     idCourse: params.idCourse,
     token: user?.token,
@@ -278,7 +280,7 @@ export default async function CoursePreview({
                     <DropdownMenuContent>
                       <DropdownMenuItem className="min-w-[10rem]">
                         <Link
-                          href={`/supervisor-area/approval/approve-knowledge/pending/approve/${lookupApproval.data.id_approval_course}`}
+                          href={`/supervisor-area/approval/approve-course/pending/approve/${lookupApproval.data.id_approval_course}`}
                         >
                           <p className="text-green-500">Approve</p>
                         </Link>
@@ -287,7 +289,7 @@ export default async function CoursePreview({
 
                       <DropdownMenuItem className="min-w-[10rem]">
                         <Link
-                          href={`/supervisor-area/approval/approve-knowledge/pending/rejected/${lookupApproval.data.id_approval_course}`}
+                          href={`/supervisor-area/approval/approve-course/pending/rejected/${lookupApproval.data.id_approval_course}`}
                         >
                           <p className="text-red-500">Tolak</p>
                         </Link>

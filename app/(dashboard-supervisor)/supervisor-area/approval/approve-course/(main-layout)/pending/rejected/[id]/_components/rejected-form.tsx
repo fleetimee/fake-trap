@@ -201,11 +201,15 @@ export function CourseRejectForm({ id, uuid }: CourseRejectFormProps) {
           >
             Kembali
           </Button>
-          <Button type="submit" className="space-y-20 self-end">
+          <Button
+            type="submit"
+            className="space-y-20 self-end"
+            variant="destructive"
+          >
             {isLoading ? (
               <Icons.spinner className="h-5 w-5 animate-spin" />
             ) : (
-              "Approve"
+              "Reject"
             )}
           </Button>
         </div>

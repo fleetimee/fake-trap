@@ -7,6 +7,7 @@ import { ApprovalListResData } from "@/types/approval/res/approval-list"
 import { convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
+import RejectedAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/(main-layout)/rejected/_components/operations"
 
 import { Badge } from "../ui/badge"
 
@@ -95,6 +96,18 @@ export function RejectedCourseApprovalTableShell({
         cell: ({ row }) => {
           return (
             <Badge className="bg-red-500">{row.original.status_text}</Badge>
+          )
+        },
+      },
+      {
+        id: "action",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Aksi" />
+        ),
+        enablesorting: false,
+        cell: ({ row }) => {
+          return (
+            <RejectedAction id={row.original.id_approval_course.toString()} />
           )
         },
       },

@@ -8,16 +8,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-interface PendingActionProps {
+interface RejectedActionProps {
   id: string
 }
 
-export default function PendingAction({ id }: PendingActionProps) {
+export default function RejectedAction({ id }: RejectedActionProps) {
   return (
     <>
       <DropdownMenu>
@@ -40,28 +39,6 @@ export default function PendingAction({ id }: PendingActionProps) {
               Detail
               <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
             </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem className="flex items-center">
-            <Link
-              href={`pending/approve/${id}`}
-              className="flex w-full items-center justify-between"
-            >
-              <p className="text-green-500">Approve</p>
-              <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="flex items-center">
-            <Link
-              href={`pending/rejected/${id}`}
-              className="flex w-full items-center justify-between"
-            >
-              <p className="text-red-500">Reject</p>
-            </Link>
-            <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
