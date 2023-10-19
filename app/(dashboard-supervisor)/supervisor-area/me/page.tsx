@@ -1,35 +1,64 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { Variants } from "framer-motion"
 
+import { SupervisorCountOneRes } from "@/types/approval/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString, extractToken } from "@/lib/utils"
 
+interface GetSupervisorAcceptedKnowledgeCountProps {
+  token: string | undefined
+  status: string
+  uuid: string
+}
+
+async function getSupervisorKnowledgeCount({
+  token,
+  status,
+  uuid,
+}: GetSupervisorAcceptedKnowledgeCountProps): Promise<SupervisorCountOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/${status}/${uuid}/count`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetSupervisorCourseCountProps {
+  token: string | undefined
+  status: string
+  uuid: string
+}
+
+async function getSupervisorCourseCount({
+  token,
+  status,
+  uuid,
+}: GetSupervisorCourseCountProps): Promise<SupervisorCountOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/${status}/${uuid}/count`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return await res.json()
+}
+
 export const metadata: Metadata = {
   title: "Supervisor Area",
   description: "Supervisor Area",
-}
-
-const parentVariant: Variants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
-}
-
-const childrenVariant: Variants = {
-  initial: { opacity: 0, x: 50 },
-  animate: { opacity: 1, x: 0 },
-}
-const childrenVariantTwo: Variants = {
-  initial: { opacity: 0, y: 50, scale: 0.5 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
 }
 
 export default async function SupervisorMePage() {
