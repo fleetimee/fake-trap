@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 
@@ -200,7 +201,14 @@ export default async function SupervisorApproveCoursePage() {
               <TableBody>
                 {approvalRes?.data?.map((approval) => (
                   <TableRow key={approval.id_approval_course}>
-                    <TableCell>{approval.course_name}</TableCell>
+                    <TableCell>
+                      <Link
+                        href={`/supervisor-area/approval/approve-course/preview-course/${approval.id_course}`}
+                        className="font-semibold text-primary hover:underline"
+                      >
+                        {approval.course_name}
+                      </Link>
+                    </TableCell>
                     <TableCell>{approval.user_request}</TableCell>
                     <TableCell>
                       {approval.user_approver ? approval.user_approver : "-"}

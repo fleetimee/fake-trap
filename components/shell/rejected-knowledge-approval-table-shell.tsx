@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 
 import {
@@ -72,6 +73,16 @@ export function RejectedKnowledgeApprovalTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama Pengetahuan" />
         ),
+        cell: ({ row }) => {
+          return (
+            <Link
+              href={`/supervisor-area/approval/approve-knowledge/preview-knowledge/${row.original.id_knowledge}`}
+              className="cursor-pointer font-semibold text-primary hover:underline focus:underline"
+            >
+              {row.original.knowledge_title}
+            </Link>
+          )
+        },
         enableSorting: false,
       },
       {

@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { ApprovalListResData } from "@/types/approval/res/approval-list"
@@ -65,6 +66,16 @@ export function ApprovedCourseApprovalTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama Pelatihan" />
         ),
+        cell: ({ row }) => {
+          return (
+            <Link
+              href={`/supervisor-area/approval/approve-course/preview-course/${row.original.id_course}`}
+              className="font-semibold text-primary hover:underline"
+            >
+              {row.original.course_name}
+            </Link>
+          )
+        },
         enableSorting: false,
       },
       {
