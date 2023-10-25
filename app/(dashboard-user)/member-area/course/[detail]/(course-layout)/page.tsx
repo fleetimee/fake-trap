@@ -4,7 +4,6 @@ import { redirect } from "next/navigation"
 import { CourseOneRes } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { MotionDiv } from "@/components/framer-wrapper"
 
 interface GetOneCourseProps {
   token: string | undefined

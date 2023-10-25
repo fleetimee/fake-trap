@@ -32,6 +32,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { PreviewCourseDetailSidebar } from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/(course-layout)/preview-course/[idCourse]/_components/sidebar"
+
+import { PreviewUserCourseDetailSidebar } from "./_components/sidebar"
 
 interface GetOneCourseProps {
   token: string | undefined
@@ -205,7 +208,7 @@ export default async function CourseDetailLayout({
               <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
             </div>
 
-            <div className="h-full max-h-max min-h-[30rem] rounded-md border border-primary p-4">
+            <div className="h-full max-h-max  rounded-md border border-primary p-4">
               {children}
             </div>
 
@@ -394,18 +397,7 @@ export default async function CourseDetailLayout({
           </div>
         </Card>
 
-        <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
-          <Tabs defaultValue="quiz" className="w-full">
-            <TabsList className="w-full">
-              <TabsTrigger value="quiz" className="w-full font-semibold">
-                Latihan
-              </TabsTrigger>
-              <TabsTrigger value="content" className="w-full font-semibold">
-                Materi
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </Card>
+        <PreviewUserCourseDetailSidebar coursePreview={dataCourse} />
       </div>
     </DashboardShell>
   )
