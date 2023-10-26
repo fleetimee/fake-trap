@@ -26,10 +26,10 @@ export const metadata: Metadata = {
     "Elearning",
   ],
   creator: "Novian Andika",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+  // themeColor: [
+  //   { media: "(prefers-color-scheme: light)", color: "white" },
+  //   { media: "(prefers-color-scheme: dark)", color: "black" },
+  // ],
   authors: [
     {
       name: "Novian Andika",
