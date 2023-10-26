@@ -227,6 +227,17 @@ export function KnowledgeOperations({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem
+            disabled={
+              knowledgeData.status_code === "0052" ||
+              knowledgeData.status_code === "0053"
+            }
+          >
+            Ajukan
+            <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
             onClick={() => {
               navigator.clipboard.writeText(
                 knowledgeData.id_knowledge.toString()
