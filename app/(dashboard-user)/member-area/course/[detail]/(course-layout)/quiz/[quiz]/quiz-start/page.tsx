@@ -5,7 +5,7 @@ import { QuizOneRes } from "@/types/quiz/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 
-import { QuizStaging } from "./_components/quiz-staging"
+import { QuizForm } from "../_components/quiz_form"
 
 interface GetOneQuizProps {
   token: string | undefined
@@ -61,7 +61,7 @@ interface MemberCourseExercisePageProps {
   }
 }
 
-export default async function MemberCourseExercisePage({
+export default async function QuizStart({
   params,
 }: MemberCourseExercisePageProps) {
   const user = await getCurrentUser()
@@ -75,11 +75,5 @@ export default async function MemberCourseExercisePage({
     getOneQuiz({ token: user.token, idQuiz: params.quiz }),
   ])
 
-  return (
-    <QuizStaging
-      quizName={quiz.data.quiz_title}
-      courseId={params.detail}
-      quizId={quiz.data.id_quiz}
-    />
-  )
+  return <QuizForm question={quiz.data.questions} quiz={quiz} />
 }
