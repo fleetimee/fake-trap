@@ -23,7 +23,7 @@ export function YoutubePlayer({ videoId }: YouTubeProps) {
 
   return (
     <AspectRatio ratio={16 / 9}>
-      <Card className="h-full w-full">
+      <Card className="h-full min-h-full w-full ">
         <Youtube
           videoId={videoId}
           opts={opts}
