@@ -228,9 +228,15 @@ export function KnowledgeOperations({
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem
             disabled={
+              knowledgeData.status_code === "0051" ||
               knowledgeData.status_code === "0052" ||
               knowledgeData.status_code === "0053"
             }
+            onSelect={() => {
+              router.push(
+                `/dashboard/knowledge/request-form/${knowledgeData.id_knowledge}`
+              )
+            }}
           >
             Ajukan
             <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>

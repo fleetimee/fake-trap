@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import {
   Card,
@@ -16,7 +17,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -28,6 +28,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+import { KnowledgeRequestForm } from "./_components/request-knowledge-form"
 
 export const metadata: Metadata = {
   title: "Ajukan Pengetahuan",
@@ -72,6 +74,10 @@ export default async function KnowledgeRequest({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
+  const tokenExtract = extractToken(user.token)
+
+  const uuid = tokenExtract?.id
+
   const knowledgeData = await getOneKnowledge({
     token: user?.token,
     idKnowledge: parseInt(params.idKnowledge),
@@ -98,15 +104,15 @@ export default async function KnowledgeRequest({
                 </Tooltip>
               </TooltipProvider>
             </span>
-            Ajukan Pelatihan
+            Ajukan Pengetahuan
           </CardTitle>
           {/* <ProductPager product={product} /> */}
         </div>
         <CardDescription>
-          Ajukan pelatihan baru untuk ditinjau oleh supervisor
+          Ajukan Pengetahuan baru untuk ditinjau oleh supervisor
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="grid grid-cols-1 gap-8">
         <Table className="rounded-2xl border-2 border-solid border-gray-300">
           <TableHeader>
             <TableRow>
@@ -133,6 +139,8 @@ export default async function KnowledgeRequest({
             </TableRow>
           </TableBody>
         </Table>
+
+        <KnowledgeRequestForm idKnowledge={params.idKnowledge} uuid={uuid} />
       </CardContent>
     </Card>
   )

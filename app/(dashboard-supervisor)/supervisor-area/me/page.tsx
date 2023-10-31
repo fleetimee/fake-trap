@@ -5,7 +5,6 @@ import { Variants } from "framer-motion"
 
 import {
   ApprovalCourseSpvListRes,
-  ApprovalKnowledgeListResData,
   ApprovalKnowledgeSpvListRes,
   SupervisorCountOneRes,
 } from "@/types/approval/res"
@@ -138,7 +137,7 @@ async function getSupervisorCourseList({
   uuid,
 }: GetSupervisorCourseList): Promise<ApprovalCourseSpvListRes> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/list/${uuid}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/list/${uuid}?limit=100`,
     {
       method: "GET",
       headers: {
@@ -162,7 +161,7 @@ async function getSupervisorKnowledgeList({
   uuid,
 }: GetSupervisorKnowledgeList): Promise<ApprovalKnowledgeSpvListRes> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/list/${uuid}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/list/${uuid}?limit=100`,
     {
       method: "GET",
       headers: {
