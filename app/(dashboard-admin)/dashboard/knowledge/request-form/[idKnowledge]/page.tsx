@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
@@ -65,6 +65,27 @@ async function getOneKnowledge({
   return await knowledgeOne.json()
 }
 
+interface LookupKnowledgeProps {
+  token: string | undefined
+  idKnowledge: number
+}
+
+async function lookupKnowledge({ token, idKnowledge }: LookupKnowledgeProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/lookup`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 export default async function KnowledgeRequest({
   params,
 }: KnowledgeRequestProps) {
@@ -83,7 +104,14 @@ export default async function KnowledgeRequest({
     idKnowledge: parseInt(params.idKnowledge),
   })
 
-  console.log(knowledgeData)
+  const knowledgeLookup = await lookupKnowledge({
+    token: user?.token,
+    idKnowledge: parseInt(params.idKnowledge),
+  })
+
+  if (knowledgeLookup.data) {
+    return notFound()
+  }
 
   return (
     <Card className="max-w-xl">
@@ -113,7 +141,7 @@ export default async function KnowledgeRequest({
         </CardDescription>
       </CardHeader>
       <CardContent className="grid grid-cols-1 gap-8">
-        <Table className="rounded-2xl border-2 border-solid border-gray-300">
+        <Table>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">ID</TableHead>

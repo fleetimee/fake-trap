@@ -118,6 +118,7 @@ export function KnowledgeRequestForm({
                   {...field}
                   placeholder="Komentar untuk pengajuan"
                   className="w-full"
+                  disabled={isLoading}
                 />
               </FormControl>
             </FormItem>
@@ -134,7 +135,11 @@ export function KnowledgeRequestForm({
           >
             Kembali
           </Button>
-          <Button type="submit" className="space-y-20 self-end">
+          <Button
+            type="submit"
+            className="space-y-20 self-end"
+            disabled={isLoading}
+          >
             {isLoading ? (
               <Icons.spinner className="h-5 w-5 animate-spin" />
             ) : (

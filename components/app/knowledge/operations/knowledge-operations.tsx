@@ -242,6 +242,16 @@ export function KnowledgeOperations({
             <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
           </DropdownMenuItem>
 
+          <DropdownMenuItem
+            disabled={
+              knowledgeData.status_code === "" ||
+              knowledgeData.status_code === "0051" ||
+              knowledgeData.status_code === "0052"
+            }
+          >
+            Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+          </DropdownMenuItem>
+
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
