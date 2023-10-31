@@ -248,6 +248,11 @@ export function KnowledgeOperations({
               knowledgeData.status_code === "0051" ||
               knowledgeData.status_code === "0052"
             }
+            onSelect={() => {
+              router.push(
+                `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
+              )
+            }}
           >
             Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
           </DropdownMenuItem>

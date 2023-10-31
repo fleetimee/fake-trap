@@ -140,6 +140,7 @@ export default async function KnowledgeRequest({
           Ajukan Pengetahuan baru untuk ditinjau oleh supervisor
         </CardDescription>
       </CardHeader>
+
       <CardContent className="grid grid-cols-1 gap-8">
         <Table>
           <TableHeader>
