@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
@@ -14,13 +15,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { Label } from "@/components/ui/label"
 import { Table, TableHeader, TableRow } from "@/components/ui/table"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+import { RevisionInformation } from "./_components/revision-information"
+import { KnowledgeRevisionForm } from "./_components/revision-knowledge-form"
+
+export const metadata: Metadata = {
+  title: "Revisi Pengajuan Pengetahuan",
+  description: "Revisi Pengajuan Pengetahuan",
+}
 
 interface KnowledgeRevisionProps {
   params: {
@@ -97,8 +109,6 @@ export default async function KnowledgeRevision({
     token: user.token,
   })
 
-  console.log(approval)
-
   return (
     <Card className="max-w-xl">
       <CardHeader className="space-y-1">
@@ -124,16 +134,25 @@ export default async function KnowledgeRevision({
         </div>
 
         <CardDescription className="space-y-2 px-8 text-sm">
-          Revisi Pengajuan Pengetahuan ini akan dikirimkan ke pengaju
+          Revisi Pengajuan Pengetahuan ini akan dikirimkan kembali ke supervisor
         </CardDescription>
       </CardHeader>
 
+      <hr className="border-gray-200 py-2 dark:border-gray-700" />
+
       <CardContent className="grid grid-cols-1 gap-8">
-        <Table>
-          <TableHeader>
-            <TableRow></TableRow>
-          </TableHeader>
-        </Table>
+        <RevisionInformation approval={approval} />
+
+        <hr className="border-gray-200 py-2 dark:border-gray-700" />
+
+        <KnowledgeRevisionForm
+          idApproval={approval.data.id_approval_knowledge.toString()}
+        />
+
+        <Label className="text-sm text-red-400">
+          Pastikan pengetahuan ini sudah di revisi sesuai dengan ketentuan
+          Supervisor kemudian kirim ulang pengajuan ini
+        </Label>
       </CardContent>
     </Card>
   )

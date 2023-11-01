@@ -136,7 +136,7 @@ export default async function KnowledgeRequest({
           </CardTitle>
           {/* <ProductPager product={product} /> */}
         </div>
-        <CardDescription>
+        <CardDescription className="space-y-2 px-8 text-sm">
           Ajukan Pengetahuan baru untuk ditinjau oleh supervisor
         </CardDescription>
       </CardHeader>

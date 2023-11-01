@@ -60,8 +60,6 @@ export function CourseApprovalForm({ id, uuid }: CourseApprovalFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    console.log(values)
-
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/${id}`,

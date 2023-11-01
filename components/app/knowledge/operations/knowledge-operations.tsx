@@ -66,6 +66,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
@@ -215,83 +221,94 @@ export function KnowledgeOperations({
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            aria-label="Open menu"
-            variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-          >
-            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem
-            disabled={
-              knowledgeData.status_code === "0051" ||
-              knowledgeData.status_code === "0052" ||
-              knowledgeData.status_code === "0053"
-            }
-            onSelect={() => {
-              router.push(
-                `/dashboard/knowledge/request-form/${knowledgeData.id_knowledge}`
-              )
-            }}
-          >
-            Ajukan
-            <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            disabled={
-              knowledgeData.status_code === "" ||
-              knowledgeData.status_code === "0051" ||
-              knowledgeData.status_code === "0052"
-            }
-            onSelect={() => {
-              router.push(
-                `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
-              )
-            }}
-          >
-            Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
-          </DropdownMenuItem>
-
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              navigator.clipboard.writeText(
-                knowledgeData.id_knowledge.toString()
-              )
-              toast({
-                title: "Berhasil",
-                description: "ID Kategori berhasil dicopy",
-              })
-            }}
-          >
-            Copy
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            className="flex items-center
-            "
-            onSelect={() => setOpenEditKnowledgeSheet(true)}
-          >
-            Edit
-            <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
-          </DropdownMenuItem>
-
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem
-            className="flex  items-center "
-            onSelect={() => setOpenDeleteKnowledgeAlert(true)}
-          >
-            Hapus
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  aria-label="Open menu"
+                  variant="ghost"
+                  className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+                >
+                  <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[160px]">
+                <DropdownMenuItem
+                  disabled={
+                    knowledgeData.status_code === "0051" ||
+                    knowledgeData.status_code === "0052" ||
+                    knowledgeData.status_code === "0053"
+                  }
+                >
+                  <Link
+                    href={`/dashboard/knowledge/request-form/${knowledgeData.id_knowledge}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Ajukan
+                    <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  disabled={
+                    knowledgeData.status_code === "" ||
+                    knowledgeData.status_code === "0051" ||
+                    knowledgeData.status_code === "0052"
+                  }
+                  onSelect={() => {
+                    router.push(
+                      `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
+                    )
+                  }}
+                >
+                  <Link
+                    href={`/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      knowledgeData.id_knowledge.toString()
+                    )
+                    toast({
+                      title: "Berhasil",
+                      description: "ID Kategori berhasil dicopy",
+                    })
+                  }}
+                >
+                  Copy
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="flex items-center
+                  "
+                  onSelect={() => setOpenEditKnowledgeSheet(true)}
+                >
+                  Edit
+                  <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="flex  items-center "
+                  onSelect={() => setOpenDeleteKnowledgeAlert(true)}
+                >
+                  Hapus
+                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="text-sm">Kelola Pengetahuan</span>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <AlertDialog
         open={openDeleteKnowledgeAlert}
         onOpenChange={setOpenDeleteKnowledgeAlert}

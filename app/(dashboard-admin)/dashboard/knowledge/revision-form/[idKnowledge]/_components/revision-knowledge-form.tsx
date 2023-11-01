@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -23,30 +22,29 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
-  id_knowledge: z.string(),
   status: z.string(),
   comment: z.string(),
   user_uuid_request: z.string(),
 })
 
-interface KnowledgeRequestFormProps {
-  idKnowledge: string
-  uuid: string
+interface KnowledgeRevisionFormProps {
+  idApproval: string
 }
 
-export function KnowledgeRequestForm({
-  idKnowledge,
-  uuid,
-}: KnowledgeRequestFormProps) {
+export function KnowledgeRevisionForm({
+  idApproval,
+}: KnowledgeRevisionFormProps) {
   const { data: session } = useSession()
+
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState(false)
 
+  const uuid: string = session?.expires.id as string
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id_knowledge: idKnowledge,
       status: "0051",
       comment: "",
       user_uuid_request: uuid,
@@ -58,11 +56,10 @@ export function KnowledgeRequestForm({
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/revision/${idApproval}`,
         {
-          method: "POST",
+          method: "PATCH",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user.token}`,
           },
           body: JSON.stringify(values),
@@ -72,7 +69,7 @@ export function KnowledgeRequestForm({
       if (res.ok) {
         toast({
           title: "Berhasil",
-          description: "Pengetahuan berhasil diajukan",
+          description: "Berhasil mengajukan revisi pengetahuan",
         })
 
         form.reset()
@@ -81,13 +78,15 @@ export function KnowledgeRequestForm({
       } else {
         toast({
           title: "Gagal",
-          description: "Pengetahuan gagal diajukan",
+          description: "Gagal mengajukan revisi pengetahuan",
+          variant: "destructive",
         })
       }
     } catch (error) {
       toast({
         title: "Gagal",
-        description: "Pengetahuan gagal diajukan",
+        description: "Gagal mengajukan revisi pengetahuan",
+        variant: "destructive",
       })
     } finally {
       setIsLoading(false)
@@ -98,7 +97,7 @@ export function KnowledgeRequestForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-4"
+        className="grid w-full max-w-2xl gap-8"
       >
         <FormField
           control={form.control}
@@ -109,15 +108,11 @@ export function KnowledgeRequestForm({
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder="Komentar untuk pengajuan"
-                  className="w-full"
-                  disabled={isLoading}
+                  placeholder="Komentar"
+                  className="h-24 w-full resize-none"
                 />
               </FormControl>
-              <FormDescription>
-                Masukkan komentar untuk pengajuan pengetahuan yang diajukan dan
-                akan dikirimkan ke supervisor
-              </FormDescription>
+              <FormDescription>Komentar untuk pengajuan ini</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -133,15 +128,11 @@ export function KnowledgeRequestForm({
           >
             Kembali
           </Button>
-          <Button
-            type="submit"
-            className={cn(isLoading && "cursor-not-allowed opacity-50")}
-            disabled={isLoading}
-          >
+          <Button type="submit" className="space-y-20 self-end">
             {isLoading ? (
               <Icons.spinner className="h-5 w-5 animate-spin" />
             ) : (
-              "Approve"
+              "Revisi"
             )}
           </Button>
         </div>
