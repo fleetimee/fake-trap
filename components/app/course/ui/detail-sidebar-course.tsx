@@ -227,7 +227,13 @@ export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
                   </Accordion>
                 </MotionDiv>
               ) : (
-                <p>Tidak Tersedia</p>
+                <EmptyContent className="h-[625px] items-center justify-center">
+                  <EmptyContent.Icon name="empty" />
+                  <EmptyContent.Title>Tidak ada section</EmptyContent.Title>
+                  <EmptyContent.Description>
+                    Section tidak tersedia
+                  </EmptyContent.Description>
+                </EmptyContent>
               )}
             </ScrollArea>
           </TabsContent>

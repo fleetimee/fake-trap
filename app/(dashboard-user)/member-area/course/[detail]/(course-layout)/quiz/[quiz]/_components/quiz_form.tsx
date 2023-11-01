@@ -8,6 +8,19 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { QuizOneRes, QuizOneResQuestion } from "@/types/quiz/res"
+import { Icons } from "@/components/icons"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
   Form,
@@ -115,45 +128,77 @@ export function QuizForm({ question, quiz }: QuizFormProps) {
                     control={form.control}
                     name={`selected_answers.${question.id_question}`}
                     render={({ field }) => (
-                      <FormItem className="flex flex-col gap-4">
-                        <FormLabel className="font-heading">
-                          {question.question_text}
-                        </FormLabel>
-                        <FormControl>
-                          <RadioGroup
-                            className="grid grid-cols-2 gap-4 xl:grid-cols-2"
-                            // value={field.value.toString()}
-                            onValueChange={(value) => {
-                              form.setValue(
-                                `selected_answers.${question.id_question}`,
-                                parseInt(value)
-                              )
-                            }}
-                          >
-                            {question.answers.map((answer, index) => (
-                              <FormItem
-                                key={index}
-                                className="flex items-center space-x-3 space-y-0"
-                              >
-                                <FormControl>
-                                  <RadioGroupItem
-                                    value={answer.id_answer.toString()}
-                                  />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                  {answer.answer_text}
-                                </FormLabel>
-                              </FormItem>
-                            ))}
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <div className="">
+                        <FormItem className="flex flex-col gap-4">
+                          <FormLabel className="font-heading">
+                            {question.question_text}
+                          </FormLabel>
+                          <FormControl>
+                            <RadioGroup
+                              className="grid grid-cols-2 gap-4 xl:grid-cols-2"
+                              // value={field.value.toString()}
+                              onValueChange={(value) => {
+                                form.setValue(
+                                  `selected_answers.${question.id_question}`,
+                                  parseInt(value)
+                                )
+                              }}
+                            >
+                              {question.answers.map((answer, index) => (
+                                <FormItem
+                                  key={index}
+                                  className="flex items-center space-x-3 space-y-0"
+                                >
+                                  <FormControl>
+                                    <RadioGroupItem
+                                      value={answer.id_answer.toString()}
+                                    />
+                                  </FormControl>
+                                  <FormLabel className="font-normal leading-8">
+                                    {answer.answer_text}
+                                  </FormLabel>
+                                </FormItem>
+                              ))}
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+
+                        <hr className="my-4 w-full border-gray-300" />
+                      </div>
                     )}
                   />
                 ))
               : null}
           </Card>
+
+          <div className="grid grid-cols-1 items-center justify-between gap-6 py-2 xl:grid-cols-2">
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? (
+                <Icons.spinner className="animate-spin" />
+              ) : (
+                "Submit"
+              )}
+            </Button>
+
+            <Button
+              type="reset"
+              disabled={isLoading}
+              variant="outline"
+              onClick={() => {
+                // clear form values first
+                form.reset()
+
+                // trigger reset manually
+                form.trigger()
+
+                // reset form state
+                form.reset()
+              }}
+            >
+              Reset
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

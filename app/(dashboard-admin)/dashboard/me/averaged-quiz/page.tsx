@@ -50,7 +50,7 @@ interface MeQuizPageProps {
   }
 }
 
-export default async function ({ searchParams }: MeQuizPageProps) {
+export default async function MeQuizPage({ searchParams }: MeQuizPageProps) {
   const user = await getCurrentUser()
 
   const tokenExtract = extractToken(user?.token)

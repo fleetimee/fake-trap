@@ -72,6 +72,38 @@ async function getKnowledge({
   return await knowledgeList.json()
 }
 
+interface GetKnowledgeV2Props {
+  token: string | undefined
+  limit: number
+  page: number
+  sortField?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+async function getKnowledgeV2({
+  token,
+  limit,
+  page,
+  sortField = "id_knowledge",
+  orderBy = "asc",
+  searchQuery = "",
+}: GetKnowledgeV2Props): Promise<KnowledgeListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 interface GetCategoryProps {
   token: string | undefined
   page: number
@@ -128,13 +160,13 @@ export default async function KnowledgePage({
   }
 
   const [knowledgeResp, categoryResp, referenceResp] = await Promise.all([
-    getKnowledge({
+    getKnowledgeV2({
       token: user?.token,
       page: pageInitial,
       limit: limitInitial,
       searchQuery: searchQueryInitial,
       sortField: sortField,
-      sortOrder: sortOrder,
+      orderBy: sortOrder,
     }),
     getCategory({ token: user?.token, page: 1, limit: 100 }),
     getKnowledgeVisibility({
@@ -172,16 +204,6 @@ export default async function KnowledgePage({
           />
         </DashboardHeader>
       </MotionDiv>
-      {/*<div className="divide-y divide-border rounded-md border">*/}
-      {/*  {knowledgeResp.data.map((item) => (*/}
-      {/*    <KnowledgeItemList*/}
-      {/*      key={item.id_knowledge}*/}
-      {/*      knowledgeData={item}*/}
-      {/*      categoryResponse={categoryResp}*/}
-      {/*      token={user?.token}*/}
-      {/*    />*/}
-      {/*  ))}*/}
-      {/*</div>*/}
 
       <KnowledgeTableShell
         data={knowledgeResp.data}

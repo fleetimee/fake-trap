@@ -11,8 +11,8 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
 
 export const metadata = {
-  title: "Kursus",
-  description: "Kursus yang tersedia di e-learning",
+  title: "Pelatihan",
+  description: "Pelatihan yang tersedia di e-learning",
 }
 
 interface GetCourseProps {
@@ -127,7 +127,7 @@ export default async function CoursePage({ searchParams }: CoursePageProps) {
           },
           {
             href: "/dashboard/course",
-            title: "Kursus",
+            title: "Pelatihan",
           },
         ]}
       />
@@ -136,8 +136,8 @@ export default async function CoursePage({ searchParams }: CoursePageProps) {
         animate={{ opacity: 1, y: 0 }}
       >
         <DashboardHeader
-          heading="Kursus"
-          description="Kursus yang tersedia di e-learning"
+          heading="Pelatihan"
+          description="Pelatigan yang tersedia di e-learning"
         >
           <CreateCourseButton knowledgeResp={knowledgeResp} />
         </DashboardHeader>

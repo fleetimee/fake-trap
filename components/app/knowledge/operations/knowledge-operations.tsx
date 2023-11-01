@@ -227,6 +227,38 @@ export function KnowledgeOperations({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem
+            disabled={
+              knowledgeData.status_code === "0051" ||
+              knowledgeData.status_code === "0052" ||
+              knowledgeData.status_code === "0053"
+            }
+            onSelect={() => {
+              router.push(
+                `/dashboard/knowledge/request-form/${knowledgeData.id_knowledge}`
+              )
+            }}
+          >
+            Ajukan
+            <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            disabled={
+              knowledgeData.status_code === "" ||
+              knowledgeData.status_code === "0051" ||
+              knowledgeData.status_code === "0052"
+            }
+            onSelect={() => {
+              router.push(
+                `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
+              )
+            }}
+          >
+            Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
             onClick={() => {
               navigator.clipboard.writeText(
                 knowledgeData.id_knowledge.toString()

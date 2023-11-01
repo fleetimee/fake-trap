@@ -14,6 +14,25 @@ import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
+interface BadgeSwitchProps {
+  approval: any
+}
+
+function badgeSwitch({ approval }: BadgeSwitchProps) {
+  console.log(approval)
+
+  switch (approval.status_code) {
+    case "0052":
+      return <Badge className="bg-green-400">{approval.status_text}</Badge>
+    case "0051":
+      return <Badge className="bg-yellow-400">{approval.status_text}</Badge>
+    case "0053":
+      return <Badge className="bg-red-400">{approval.status_text}</Badge>
+    default:
+      return <Badge className="bg-orange-400">Draft</Badge>
+  }
+}
+
 interface KnowledgeTableShellProps {
   data: KnowledgeListResData[]
   categoryResp: CategoryListRes
@@ -140,7 +159,7 @@ export function KnowledgeTableShell({
       {
         accessorKey: "status",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Status" />
+          <DataTableColumnHeader column={column} title="Visibility" />
         ),
         cell: ({ row }) => (
           <Badge className="text-center">
@@ -151,6 +170,22 @@ export function KnowledgeTableShell({
             }
           </Badge>
         ),
+      },
+      {
+        accessorKey: "status_text",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Status" />
+        ),
+        cell: ({ row }) => badgeSwitch({ approval: row.original }),
+        // cell: ({ row }) => (
+        //   <Badge className="text-center">
+        //     {
+        //       referenceResp.data.find(
+        //         (reference) => reference.code_ref2 === row.original.status_text
+        //       )?.value_ref1
+        //     }
+        //   </Badge>
+        // ),
       },
       {
         accessorKey: "created_at",

@@ -13,10 +13,16 @@ export type KnowledgeListResData = {
   description: string
   status: string
   image: string
-  section?: KnowledgeListResSection[]
   id_category: number
   created_at: Date
   updated_at: Date
+  status_code: string
+  status_text: string
+  comment: string
+  user_uuid_approver: string
+  user_uuid_request: string
+  user_approver: string
+  user_request: string
 }
 
 export type KnowledgeListResSection = {
