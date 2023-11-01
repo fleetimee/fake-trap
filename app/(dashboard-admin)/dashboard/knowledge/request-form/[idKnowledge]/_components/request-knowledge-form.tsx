@@ -3,15 +3,12 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import {
   Form,
   FormControl,
@@ -19,13 +16,8 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 
@@ -112,7 +104,7 @@ export function KnowledgeRequestForm({
           name="comment"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Komentar Untuk Pengajuan</FormLabel>
+              <FormLabel>Komentar</FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
@@ -121,6 +113,11 @@ export function KnowledgeRequestForm({
                   disabled={isLoading}
                 />
               </FormControl>
+              <FormDescription>
+                Masukkan komentar untuk pengajuan pengetahuan yang diajukan dan
+                akan dikirimkan ke supervisor
+              </FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
