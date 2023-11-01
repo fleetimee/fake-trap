@@ -28,6 +28,7 @@ interface GetKnowledgeProps {
   searchQuery?: string
   sortField?: string
   sortOrder?: string
+  status?: string
 }
 
 async function getKnowledge({
@@ -37,9 +38,10 @@ async function getKnowledge({
   searchQuery,
   sortField = "created_at",
   sortOrder = "desc",
+  status = "0052",
 }: GetKnowledgeProps): Promise<KnowledgeListRes> {
   const knowledgeList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/user/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}&status=${status}`,
     {
       method: "GET",
       headers: {

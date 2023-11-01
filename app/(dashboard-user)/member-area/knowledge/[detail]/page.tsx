@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { Terminal } from "lucide-react"
 
 import { CategoryOneRes } from "@/types/category/res"
@@ -14,6 +14,30 @@ interface MemberKnowledgeDetailPageProps {
   params: {
     detail: string
   }
+}
+
+interface LookupKnowledgePublicProps {
+  token: string | undefined
+  idKnowledge: number
+}
+
+async function lookupKnowledgePublic({
+  token,
+  idKnowledge,
+}: LookupKnowledgePublicProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/public`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
 }
 
 interface GetOneKnowledgeProps {
@@ -98,7 +122,16 @@ export default async function MemberKnowledgeDetailPage({
     token: user?.token,
   })
 
-  console.log(detailCategory)
+  const isPublic = await lookupKnowledgePublic({
+    idKnowledge: parseInt(params.detail),
+    token: user?.token,
+  })
+
+  console.log(isPublic)
+
+  if (!isPublic.data) {
+    return notFound()
+  }
 
   return (
     <DashboardShell>
