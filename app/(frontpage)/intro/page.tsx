@@ -19,16 +19,24 @@ export const metadata = {
 }
 
 interface GetPublicKnowledgeProps {
-  limit: number
   page: number
+  limit: number
+  searchQuery?: string
+  sortField?: string
+  sortOrder?: string
+  status?: string
 }
 
 async function getPublicKnowledge({
-  limit,
   page,
+  limit,
+  searchQuery = "",
+  sortField = "created_at",
+  sortOrder = "desc",
+  status = "0052",
 }: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
   const publicKnowledge = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge?limit=8&page=1&orderBy=desc&sortBy=created_at`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}&status=${status}`,
     {
       method: "GET",
       headers: {

@@ -1,5 +1,3 @@
-import { Variants } from "framer-motion"
-
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
@@ -12,16 +10,24 @@ export const metadata = {
 }
 
 interface GetPublicKnowledgeProps {
-  limit: number
   page: number
+  limit: number
+  searchQuery?: string
+  sortField?: string
+  sortOrder?: string
+  status?: string
 }
 
 async function getPublicKnowledge({
-  limit,
   page,
+  limit,
+  searchQuery = "",
+  sortField = "created_at",
+  sortOrder = "desc",
+  status = "0052",
 }: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
   const publicKnowledge = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge?limit=1000&page=1&orderBy=desc&sortBy=created_at`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}&status=${status}`,
     {
       method: "GET",
       headers: {
@@ -38,6 +44,8 @@ export default async function AllPublicKnowledge() {
     page: 1,
     limit: 1000,
   })
+
+  console.log(publicKnowledgeResp)
 
   return (
     <Shell>
