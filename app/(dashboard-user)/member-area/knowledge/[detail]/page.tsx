@@ -127,8 +127,6 @@ export default async function MemberKnowledgeDetailPage({
     token: user?.token,
   })
 
-  console.log(isPublic)
-
   if (!isPublic.data) {
     return notFound()
   }

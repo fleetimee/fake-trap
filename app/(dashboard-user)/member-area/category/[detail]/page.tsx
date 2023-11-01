@@ -34,8 +34,6 @@ export async function generateMetadata({
     idCategory: parseInt(params.detail),
   })
 
-  console.log(categoryOne)
-
   return {
     title: `Kategori / ${categoryOne.data.category_name}`,
   }

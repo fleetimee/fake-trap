@@ -75,7 +75,5 @@ export default async function CoursePreviewQuiz({
     getOneQuiz({ token: user.token, idQuiz: params.quiz }),
   ])
 
-  console.log(quiz)
-
   return <QuizForm question={quiz.data.questions} quiz={quiz} />
 }

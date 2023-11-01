@@ -60,8 +60,6 @@ export function KnowledgeRejectForm({ id, uuid }: KnowledgeRejectFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    console.log(values)
-
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/${id}`,

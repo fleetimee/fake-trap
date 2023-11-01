@@ -278,8 +278,6 @@ export default async function SupervisorMePage() {
     uuid: userExtracted.id,
   })
 
-  console.log(getSupervisorCourseList)
-
   return (
     <DashboardShell className="items-center justify-center">
       <BreadCrumbs

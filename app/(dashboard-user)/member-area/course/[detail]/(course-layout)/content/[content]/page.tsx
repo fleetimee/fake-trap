@@ -80,9 +80,6 @@ export default async function MemberCourseContentPage({
     return notFound()
   }
 
-  console.log(coursePreview)
-  console.log(contentPreview)
-
   return (
     <RenderContentWrapper
       contentType={contentPreview.data.content_type}

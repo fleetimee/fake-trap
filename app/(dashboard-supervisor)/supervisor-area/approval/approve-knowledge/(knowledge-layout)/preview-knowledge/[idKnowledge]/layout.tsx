@@ -145,8 +145,6 @@ export default async function KnowledgePreview({
     idKnowledge: params.idKnowledge,
   })
 
-  console.log("knowledgePreview", knowledgePreview)
-
   if (knowledgePreview.code === 400) {
     return notFound()
   }

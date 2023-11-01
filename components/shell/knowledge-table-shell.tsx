@@ -19,8 +19,6 @@ interface BadgeSwitchProps {
 }
 
 function badgeSwitch({ approval }: BadgeSwitchProps) {
-  console.log(approval)
-
   switch (approval.status_code) {
     case "0052":
       return <Badge className="bg-green-400">{approval.status_text}</Badge>

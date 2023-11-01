@@ -103,7 +103,6 @@ export function CreateCourseSectionButton({
         })
       }
     } catch (error) {
-      console.log(error)
       toast({
         title: "Gagal",
         description: "Section gagal ditambahkan",

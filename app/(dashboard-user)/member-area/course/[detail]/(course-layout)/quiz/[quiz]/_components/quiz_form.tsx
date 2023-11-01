@@ -64,8 +64,6 @@ export function QuizForm({ question, quiz }: QuizFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    console.log(values)
-
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/secure/user-answer`,
@@ -94,7 +92,6 @@ export function QuizForm({ question, quiz }: QuizFormProps) {
         })
       }
     } catch (error) {
-      console.log(error)
     } finally {
       setIsLoading(false)
     }

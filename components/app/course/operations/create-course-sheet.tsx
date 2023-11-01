@@ -137,7 +137,6 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
         })
       }
     } catch (error) {
-      console.log(error)
     } finally {
       setIsLoading(false)
     }

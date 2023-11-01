@@ -31,8 +31,6 @@ export async function GET(request: Request, response: Response) {
 
   const data = await fetch(url)
 
-  console.log(data)
-
   const meta = {
     title: data.headers.get("title"),
     description: data.headers.get("description"),

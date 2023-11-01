@@ -198,14 +198,10 @@ export default async function CoursePreview({
     }),
   ])
 
-  console.log(lookupApproval)
-
   const checkCoursePending = await getCheckCourse({
     id: lookupApproval.data.id_approval_course.toString(),
     token: user?.token,
   })
-
-  console.log(checkCoursePending)
 
   const threadsResp = await getThreadList({
     idCourse: params.idCourse,
@@ -213,8 +209,6 @@ export default async function CoursePreview({
     limit: 1000,
     page: 1,
   })
-
-  console.log(threadsResp)
 
   if (getCourse.code === 404 || checkCoursePending.code === 404) {
     return notFound()

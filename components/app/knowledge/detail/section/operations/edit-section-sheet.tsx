@@ -94,8 +94,6 @@ export function EditSectionSheet({ item, open, setOpen }: EditSectionProps) {
         title: "Section gagal diubah",
         description: "Section gagal diubah",
       })
-
-      console.log(error)
     } finally {
       setIsloading(false)
     }

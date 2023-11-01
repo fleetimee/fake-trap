@@ -89,8 +89,6 @@ export function EditSectionSheet({
         title: "Section gagal diubah",
         description: "Section gagal diubah",
       })
-
-      console.log(error)
     } finally {
       setIsloading(false)
     }
