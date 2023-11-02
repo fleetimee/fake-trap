@@ -23,22 +23,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
-  id_knowledge: z.string(),
+  id_course: z.string(),
   status: z.string(),
   comment: z.string(),
   user_uuid_request: z.string(),
 })
 
-interface KnowledgeRequestFormProps {
-  idKnowledge: string
+interface CourseRequestFormProps {
+  idCourse: string
   uuid: string
 }
 
-export function KnowledgeRequestForm({
-  idKnowledge,
-  uuid,
-}: KnowledgeRequestFormProps) {
+export function CourseRequestForm({ idCourse, uuid }: CourseRequestFormProps) {
   const { data: session } = useSession()
+
   const router = useRouter()
 
   const [isLoading, setIsLoading] = React.useState(false)
@@ -46,7 +44,7 @@ export function KnowledgeRequestForm({
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id_knowledge: idKnowledge,
+      id_course: idCourse,
       status: "0051",
       comment: "",
       user_uuid_request: uuid,
@@ -58,7 +56,7 @@ export function KnowledgeRequestForm({
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course`,
         {
           method: "POST",
           headers: {
@@ -72,23 +70,23 @@ export function KnowledgeRequestForm({
       if (res.ok) {
         toast({
           title: "Berhasil",
-          description: "Pengetahuan berhasil diajukan",
+          description: "Pelatihan berhasil diajukan",
         })
 
         form.reset()
-        router.push("/dashboard/knowledge")
+        router.push("/dashboard/course")
         router.refresh()
       } else {
         toast({
           title: "Gagal",
-          description: "Pengetahuan gagal diajukan",
+          description: "Pelatihan gagal diajukan",
           variant: "destructive",
         })
       }
     } catch (error) {
       toast({
         title: "Gagal",
-        description: "Pengetahuan gagal diajukan",
+        description: "Pelatihan gagal diajukan",
         variant: "destructive",
       })
     } finally {
@@ -117,7 +115,7 @@ export function KnowledgeRequestForm({
                 />
               </FormControl>
               <FormDescription>
-                Masukkan komentar untuk pengajuan pengetahuan yang diajukan dan
+                Masukkan komentar untuk pengajuan pelatihan yang diajukan dan
                 akan dikirimkan ke supervisor
               </FormDescription>
               <FormMessage />

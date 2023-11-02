@@ -31,6 +31,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { CourseRequestForm } from "./_components/request-course-form"
+
 export const metadata: Metadata = {
   title: "Ajukan Pelatihan",
   description: "Ajukan Pelatihan",
@@ -123,12 +125,12 @@ export default async function CourseRequest({ params }: CourseRequestProps) {
                   </Tooltip>
                 </TooltipProvider>
               </span>
-              Ajukan Pengetahuan
+              Ajukan Pelatihan
             </CardTitle>
             {/* <ProductPager product={product} /> */}
           </div>
           <CardDescription className="space-y-2 px-8 text-sm">
-            Ajukan Pengetahuan baru untuk ditinjau oleh supervisor
+            Ajukan Pelatihan baru untuk ditinjau oleh supervisor
           </CardDescription>
         </CardHeader>
         <CardContent className="grid grid-cols-1 gap-8">
@@ -162,6 +164,8 @@ export default async function CourseRequest({ params }: CourseRequestProps) {
               </TableRow>
             </TableBody>
           </Table>
+
+          <CourseRequestForm idCourse={params.idCourse} uuid={uuid} />
         </CardContent>
       </Card>
     </DashboardShell>
