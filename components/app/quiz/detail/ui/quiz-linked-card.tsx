@@ -20,9 +20,9 @@ export function QuizLinkedCard({ code, data }: QuizLinkedCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Link Kuis Ke Kursus</CardTitle>
+        <CardTitle className="text-lg">Link Kuis Ke Pelatihan</CardTitle>
         <CardDescription>
-          Apakah kuis ini sudah di linkan ke kursus ?
+          Apakah kuis ini sudah di linkan ke pelatihan ?
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">

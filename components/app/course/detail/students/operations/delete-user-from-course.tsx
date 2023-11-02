@@ -7,10 +7,10 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
   users: z.array(
@@ -58,7 +58,7 @@ export function DeleteStudentsOutOfCourseButton(props: { uuid: string }) {
       if (response.ok) {
         toast({
           title: "Success",
-          description: "User berhasil dihapus dari kursus ini.",
+          description: "User berhasil dihapus dari pelatihan ini.",
         })
 
         router.refresh()
@@ -67,7 +67,7 @@ export function DeleteStudentsOutOfCourseButton(props: { uuid: string }) {
       } else {
         toast({
           title: "Error",
-          description: "User gagal dihapus dari kursus ini.",
+          description: "User gagal dihapus dari pelatihan ini.",
           variant: "destructive",
         })
       }

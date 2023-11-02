@@ -71,27 +71,27 @@ import { toast } from "@/components/ui/use-toast"
 const formSchema = z.object({
   course_name: z
     .string({
-      required_error: "Nama kursus harus diisi.",
+      required_error: "Nama pelatihan harus diisi.",
     })
     .max(36, {
-      message: "Nama kursus tidak boleh lebih dari 36 karakter.",
+      message: "Nama pelatihan tidak boleh lebih dari 36 karakter.",
     })
     .nonempty({
-      message: "Nama kursus harus diisi.",
+      message: "Nama pelatihan harus diisi.",
     }),
   course_desc: z
     .string({
-      required_error: "Deskripsi kursus harus diisi.",
+      required_error: "Deskripsi pelatihan harus diisi.",
     })
     .max(1000)
     .nonempty({
-      message: "Deskripsi kursus harus diisi.",
+      message: "Deskripsi pelatihan harus diisi.",
     }),
   date_start: z.date({
-    required_error: "Tanggal mulai kursus harus diisi.",
+    required_error: "Tanggal mulai pelatihan harus diisi.",
   }),
   date_end: z.date({
-    required_error: "Tanggal berakhir kursus harus diisi.",
+    required_error: "Tanggal berakhir pelatihan harus diisi.",
   }),
   image: z.string().optional(),
   id_knowledge: z.number({
@@ -182,8 +182,8 @@ export function CourseOperations({
 
       if (response.ok) {
         toast({
-          title: "Kursus berhasil diubah",
-          description: "Kursus berhasil diubah",
+          title: "Pelatihan berhasil diubah",
+          description: "Pelatihan berhasil diubah",
         })
 
         router.refresh()
@@ -191,8 +191,8 @@ export function CourseOperations({
         setOpenEditCourse(false)
       } else {
         toast({
-          title: "Kursus gagal diubah",
-          description: "Kursus gagal diubah",
+          title: "Pelatihan gagal diubah",
+          description: "Pelatihan gagal diubah",
         })
       }
     } catch (error) {
@@ -239,10 +239,10 @@ export function CourseOperations({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Apakah anda yakin ingin menghapus kursus ini?
+              Apakah anda yakin ingin menghapus pelatihan ini?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Kursus yang sudah dihapus tidak dapat dikembalikan
+              Pelatihan yang sudah dihapus tidak dapat dikembalikan
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -280,9 +280,9 @@ export function CourseOperations({
       <Sheet open={openEditCourse} onOpenChange={setOpenEditCourse}>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Edit Kursus</SheetTitle>
+            <SheetTitle>Edit Pelatihan</SheetTitle>
             <SheetDescription>
-              Ubah data kursus yang sudah dibuat
+              Ubah data pelatihan yang sudah dibuat
             </SheetDescription>
           </SheetHeader>
           <Form {...form}>
@@ -296,13 +296,13 @@ export function CourseOperations({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Judul Kursus <span className="text-red-500">*</span>
+                      Judul Pelatihan <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Advanced React" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Judul kursus yang ingin dibuat.
+                      Judul pelatihan yang ingin dibuat.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -315,11 +315,12 @@ export function CourseOperations({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Deskripsi Kursus <span className="text-red-500">*</span>
+                      Deskripsi Pelatihan{" "}
+                      <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Berikan sedikit deskripsi tentang kursus yang ingin dibuat"
+                        placeholder="Berikan sedikit deskripsi tentang pelatihan yang ingin dibuat"
                         className="resize-none"
                         {...field}
                       />
@@ -393,7 +394,7 @@ export function CourseOperations({
                       </PopoverContent>
                     </Popover>
                     <FormDescription>
-                      Tanggal mulai kursus yang ingin dibuat.
+                      Tanggal mulai pelatihan yang ingin dibuat.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -444,7 +445,7 @@ export function CourseOperations({
                       </PopoverContent>
                     </Popover>
                     <FormDescription>
-                      Tanggal selesai kursus yang ingin dibuat.
+                      Tanggal selesai pelatihan yang ingin dibuat.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -518,8 +519,8 @@ export function CourseOperations({
                       </Popover>
                     </FormControl>
                     <FormDescription>
-                      Pengetahuan yang ingin dikaitkan dengan kursus yang ingin
-                      dibuat. jika belum ada silahkan tambahkan{" "}
+                      Pengetahuan yang ingin dikaitkan dengan pelatihan yang
+                      ingin dibuat. jika belum ada silahkan tambahkan{" "}
                       <Link
                         href="/dashboard/knowledge"
                         rel="noreferrer"

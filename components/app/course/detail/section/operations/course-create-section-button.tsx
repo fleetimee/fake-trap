@@ -122,7 +122,7 @@ export function CreateCourseSectionButton({
           <SheetHeader>
             <SheetTitle>Tambah Section</SheetTitle>
             <SheetDescription>
-              Tambah section baru untuk kursus ini.
+              Tambah section baru untuk pelatihan ini.
             </SheetDescription>
           </SheetHeader>
 

@@ -75,7 +75,7 @@ export function CourseDetailShell({
           },
           {
             href: "/dashboard/course",
-            title: "Kursus",
+            title: "Pelatihan",
           },
           {
             title: courseDataResp.data.course_name,
@@ -94,7 +94,7 @@ export function CourseDetailShell({
           <RocketIcon className="h-4 w-4" />
           <AlertTitle>Informasi!</AlertTitle>
           <AlertDescription>
-            Kursus ini berdasarkan pada pengetahuan{" "}
+            Pelatihan ini berdasarkan pada pengetahuan{" "}
             <span className="font-bold">
               {courseKnowledgeResp.data.knowledge_title}
             </span>

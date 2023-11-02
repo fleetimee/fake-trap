@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { UserData } from "@/types/user-res"
+import { Icons } from "@/components/icons"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,7 +29,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Form } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 const formSchema = z.object({
   users: z.array(
@@ -53,12 +53,12 @@ async function deleteUserFromCourse(path: string, token: string | undefined) {
   if (response.ok) {
     toast({
       title: "Success",
-      description: "User berhasil dihapus dari kursus ini",
+      description: "User berhasil dihapus dari pelatihan ini",
     })
   } else {
     toast({
       title: "Gagal",
-      description: "User gagal dihapus dari kursus ini",
+      description: "User gagal dihapus dari pelatihan ini",
     })
   }
 }
@@ -104,7 +104,7 @@ export function UserOperations(props: { user: UserData }) {
       if (response.ok) {
         toast({
           title: "Success",
-          description: "User berhasil dihapus dari kursus ini",
+          description: "User berhasil dihapus dari pelatihan ini",
         })
         setIsDeleteLoading(false)
         setOpenDeleteAlert(false)
@@ -113,7 +113,7 @@ export function UserOperations(props: { user: UserData }) {
     } catch (error) {
       toast({
         title: "Gagal",
-        description: "User gagal dihapus dari kursus ini",
+        description: "User gagal dihapus dari pelatihan ini",
         variant: "destructive",
       })
     } finally {
@@ -164,10 +164,10 @@ export function UserOperations(props: { user: UserData }) {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                Apakah anda yakin ingin menghapus user dari kursus ini ?
+                Apakah anda yakin ingin menghapus user dari pelatihan ini ?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                User yang dihapus tidak akan dapat mengakses kursus ini lagi.
+                User yang dihapus tidak akan dapat mengakses pelatihan ini lagi.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

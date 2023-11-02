@@ -125,7 +125,9 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
             <Card>
               <CardHeader>
                 <CardTitle>Deskripsi</CardTitle>
-                <CardDescription>Deskripsi tentang kursus ini</CardDescription>
+                <CardDescription>
+                  Deskripsi tentang pelatihan ini
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <ScrollArea className="h-[300px] w-full">
@@ -139,7 +141,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
               <CardHeader>
                 <CardTitle>Waktu</CardTitle>
                 <CardDescription>
-                  Tanggal berjalannya dan berakhirnya kursus ini
+                  Tanggal berjalannya dan berakhirnya pelatihan ini
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -171,7 +173,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
               <CardHeader>
                 <CardTitle>Murid</CardTitle>
                 <CardDescription>
-                  Murid yang mengikuti kursus ini
+                  Murid yang mengikuti pelatihan ini
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -201,7 +203,7 @@ export function CourseDetailContent({ ...props }: CourseDetailContentProps) {
                       Forum untuk {props.courseDataResp.data.course_name}
                     </CardTitle>
                     <CardDescription>
-                      Berinteraksilah dengan sesama murid kursus ini
+                      Berinteraksilah dengan sesama murid pelatihan ini
                     </CardDescription>
                   </div>
                   <CreateThreadButton courseDataResp={props.courseDataResp} />

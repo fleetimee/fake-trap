@@ -8,6 +8,8 @@ import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Icons } from "@/components/icons"
+import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { DashboardShell } from "@/components/shell"
 import {
   Card,
   CardContent,
@@ -15,10 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
-import { Table, TableHeader, TableRow } from "@/components/ui/table"
-import { Textarea } from "@/components/ui/textarea"
 import {
   Tooltip,
   TooltipContent,
@@ -110,50 +109,67 @@ export default async function KnowledgeRevision({
   })
 
   return (
-    <Card className="max-w-xl">
-      <CardHeader className="space-y-1">
-        <div className="flex items-center justify-between space-x-2">
-          <CardTitle className="inline-flex items-center text-2xl">
-            <span className="mr-2 inline-flex">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Link href="/dashboard/knowledge">
-                      <Icons.chevronLeft className="h-6 w-6" />
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent className="p-4">
-                    Kembali ke halaman sebelumnya
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </span>
-            Revisi Pengajuan Pengetahuan
-          </CardTitle>
-          {/* <ProductPager product={product} /> */}
-        </div>
-
-        <CardDescription className="space-y-2 px-8 text-sm">
-          Revisi Pengajuan Pengetahuan ini akan dikirimkan kembali ke supervisor
-        </CardDescription>
-      </CardHeader>
-
-      <hr className="border-gray-200 py-2 dark:border-gray-700" />
-
-      <CardContent className="grid grid-cols-1 gap-8">
-        <RevisionInformation approval={approval} />
-
+    <DashboardShell>
+      <BreadCrumbs
+        segments={[
+          {
+            href: "/dashboard",
+            title: "Dashboard",
+          },
+          {
+            href: "/dashboard/knowledge",
+            title: "Pengetahuan",
+          },
+          {
+            href: `/dashboard/knowledge/${params.idKnowledge}`,
+            title: knowledge.data.knowledge_title,
+          },
+          {
+            href: `/dashboard/knowledge/${params.idKnowledge}/revision-form`,
+            title: "Revisi Pengajuan Pengetahuan",
+          },
+        ]}
+      />
+      <Card className="max-w-xl">
+        <CardHeader className="space-y-1">
+          <div className="flex items-center justify-between space-x-2">
+            <CardTitle className="inline-flex items-center text-2xl">
+              <span className="mr-2 inline-flex">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Link href="/dashboard/knowledge">
+                        <Icons.chevronLeft className="h-6 w-6" />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent className="p-4">
+                      Kembali ke halaman sebelumnya
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </span>
+              Revisi Pengajuan Pengetahuan
+            </CardTitle>
+            {/* <ProductPager product={product} /> */}
+          </div>
+          <CardDescription className="space-y-2 px-8 text-sm">
+            Revisi Pengajuan Pengetahuan ini akan dikirimkan kembali ke
+            supervisor
+          </CardDescription>
+        </CardHeader>
         <hr className="border-gray-200 py-2 dark:border-gray-700" />
-
-        <KnowledgeRevisionForm
-          idApproval={approval.data.id_approval_knowledge.toString()}
-        />
-
-        <Label className="text-sm text-red-400">
-          Pastikan pengetahuan ini sudah di revisi sesuai dengan ketentuan
-          Supervisor kemudian kirim ulang pengajuan ini
-        </Label>
-      </CardContent>
-    </Card>
+        <CardContent className="grid grid-cols-1 gap-8">
+          <RevisionInformation approval={approval} />
+          <hr className="border-gray-200 py-2 dark:border-gray-700" />
+          <KnowledgeRevisionForm
+            idApproval={approval.data.id_approval_knowledge.toString()}
+          />
+          <Label className="text-sm text-red-400">
+            Pastikan pengetahuan ini sudah di revisi sesuai dengan ketentuan
+            Supervisor kemudian kirim ulang pengajuan ini
+          </Label>
+        </CardContent>
+      </Card>
+    </DashboardShell>
   )
 }

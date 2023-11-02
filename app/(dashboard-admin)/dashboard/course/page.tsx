@@ -33,7 +33,7 @@ async function getCourse({
   searchQuery = "",
 }: GetCourseProps): Promise<CourseListRes> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
     {
       method: "GET",
       headers: {

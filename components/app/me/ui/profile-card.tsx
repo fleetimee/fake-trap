@@ -42,7 +42,7 @@ export function ProfileCard({ ...props }: ProfileCardProps) {
         </div>
 
         <div className="grid grid-cols-1 items-start gap-1">
-          <span className="font-heading text-xs">Jumlah Kursus</span>
+          <span className="font-heading text-xs">Jumlah Pelatihan</span>
           <span className="text-xl font-semibold">{props.numberOfCourse}</span>
         </div>
       </div>

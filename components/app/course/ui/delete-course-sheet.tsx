@@ -4,6 +4,7 @@ import { Dialog } from "@radix-ui/react-dialog"
 import { useSession } from "next-auth/react"
 
 import { CourseData } from "@/types/course-res"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   DialogContent,
@@ -13,7 +14,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 export function DeleteCourseButton(props: { item: CourseData }) {
   const { data: session } = useSession()
@@ -40,16 +40,16 @@ export function DeleteCourseButton(props: { item: CourseData }) {
 
       if (response.ok) {
         toast({
-          title: "Berhasil menghapus kursus",
-          description: "Kursus berhasil dihapus",
+          title: "Berhasil menghapus pelatihan",
+          description: "Pelatihan berhasil dihapus",
         })
 
         router.refresh()
         setOpen(false)
       } else {
         toast({
-          title: "Gagal menghapus kursus",
-          description: "Kursus gagal dihapus",
+          title: "Gagal menghapus pelatihan",
+          description: "Pelatihan gagal dihapus",
           variant: "destructive",
         })
       }
@@ -67,10 +67,10 @@ export function DeleteCourseButton(props: { item: CourseData }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Hapus Kursus</DialogTitle>
+          <DialogTitle>Hapus Pelatihan</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          Apakah anda ingin menghapus kursus ini?
+          Apakah anda ingin menghapus pelatihan ini?
           <p className="font-heading font-semibold">{props.item.course_name}</p>
         </div>
         <DialogFooter>

@@ -368,7 +368,7 @@ export default async function CoursePreview({
                   <CardHeader>
                     <CardTitle>Waktu</CardTitle>
                     <CardDescription>
-                      Tanggal berjalannya dan berakhirnya kursus ini
+                      Tanggal berjalannya dan berakhirnya pelatihan ini
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-2">
@@ -445,7 +445,7 @@ export default async function CoursePreview({
                           Forum untuk {getCourse.data.course_name}
                         </CardTitle>
                         <CardDescription>
-                          Berinteraksilah dengan sesama murid kursus ini
+                          Berinteraksilah dengan sesama murid pelatihan ini
                         </CardDescription>
                       </div>
                     </div>

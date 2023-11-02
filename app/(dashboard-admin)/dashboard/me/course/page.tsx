@@ -12,8 +12,8 @@ import {
 } from "@/components/shell"
 
 export const metadata = {
-  title: "Semua Kursus Saya",
-  description: "Kursus yang saya ikuti",
+  title: "Semua Pelatihan Saya",
+  description: "Pelatihan yang saya ikuti",
 }
 
 interface GetUserEnrolledCourseList {
@@ -103,13 +103,13 @@ export default async function MeCoursePage({
           },
           {
             href: "/dashboard/me/course",
-            title: "Semua Kursus Saya",
+            title: "Semua Pelatihan Saya",
           },
         ]}
       />
       <DashboardHeader
-        heading="Semua Kursus Saya"
-        description="Semua Kursus yang saya ikuti"
+        heading="Semua Pelatihan Saya"
+        description="Semua Pelatihan yang saya ikuti"
       />
       <UserEnrolledCourseTableShell
         data={userCourseResp.data}

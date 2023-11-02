@@ -175,15 +175,6 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Status" />
         ),
         cell: ({ row }) => badgeSwitch({ approval: row.original }),
-        // cell: ({ row }) => (
-        //   <Badge className="text-center">
-        //     {
-        //       referenceResp.data.find(
-        //         (reference) => reference.code_ref2 === row.original.status_text
-        //       )?.value_ref1
-        //     }
-        //   </Badge>
-        // ),
       },
       {
         accessorKey: "created_at",

@@ -151,7 +151,7 @@ export function CreateQuizSheet({ referenceResp }: CreateQuizSheetProps) {
         <SheetHeader>
           <SheetTitle>Tambah Kuis</SheetTitle>
           <SheetDescription>
-            Buat kuis baru untuk di assign ke dalam kursus
+            Buat kuis baru untuk di assign ke dalam pelatihan
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>

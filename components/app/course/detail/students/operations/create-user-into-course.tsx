@@ -96,7 +96,7 @@ export function CreateStudentsIntoCourseButton({
       if (response.ok) {
         toast({
           title: "Success",
-          description: "User berhasil ditambahkan untuk kursus ini.",
+          description: "User berhasil ditambahkan untuk pelatihan ini.",
         })
 
         router.refresh()
@@ -106,7 +106,7 @@ export function CreateStudentsIntoCourseButton({
         toast({
           title: "Error",
           description:
-            "Terjadi kesalahan saat menambahkan user untuk kursus ini.",
+            "Terjadi kesalahan saat menambahkan user untuk pelatihan ini.",
           variant: "destructive",
         })
       }
@@ -126,7 +126,7 @@ export function CreateStudentsIntoCourseButton({
         <SheetHeader>
           <SheetTitle>Tambah Murid</SheetTitle>
           <SheetDescription>
-            Pilih murid yang ingin ditambahkan ke kursus ini.
+            Pilih murid yang ingin ditambahkan ke pelatihan ini.
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>
@@ -202,7 +202,7 @@ export function CreateStudentsIntoCourseButton({
                     </Popover>
                   </FormControl>
                   <FormDescription>
-                    User yang ingin ditambahkan ke kursus ini.
+                    User yang ingin ditambahkan ke pelatihan ini.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

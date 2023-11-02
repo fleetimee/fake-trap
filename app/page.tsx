@@ -71,7 +71,7 @@ export default async function IndexPage() {
               >
                 <Balancer>
                   E Learning ini berisi materi-materi yang berkaitan dengan
-                  pengetahuan umum dan berisi kursus yang dapat diikuti oleh
+                  pengetahuan umum dan berisi pelatihan yang dapat diikuti oleh
                   pengguna.
                 </Balancer>
               </p>

@@ -7,11 +7,28 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { CourseListResData } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
-import { convertDatetoString } from "@/lib/utils"
+import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
 import { CourseOperations } from "@/components/app/course/operations/course-operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
+
+interface BadgeSwitchProps {
+  approval: any
+}
+
+function badgeSwitch({ approval }: BadgeSwitchProps) {
+  switch (approval.status_code) {
+    case "0052":
+      return <Badge className="bg-green-400">{approval.status_text}</Badge>
+    case "0051":
+      return <Badge className="bg-yellow-400">{approval.status_text}</Badge>
+    case "0053":
+      return <Badge className="bg-red-400">{approval.status_text}</Badge>
+    default:
+      return <Badge className="bg-orange-400">Draft</Badge>
+  }
+}
 
 interface CourseTableShell {
   data: CourseListResData[]
@@ -94,7 +111,7 @@ export function CourseTableShell({
       {
         accessorKey: "course_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Kursus" />
+          <DataTableColumnHeader column={column} title="Nama Pelatihan" />
         ),
         cell: ({ row }) => {
           return (
@@ -123,10 +140,19 @@ export function CourseTableShell({
         ),
       },
       {
-        accessorKey: "id_knowledge",
+        accessorKey: "status_text",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Status" />
+        ),
+        cell: ({ row }) => badgeSwitch({ approval: row.original }),
+      },
+      {
+        accessorKey: "knowledge_title",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Pengetahuan" />
         ),
+
+        minSize: 3000,
       },
       {
         accessorKey: "date_start",
@@ -136,7 +162,9 @@ export function CourseTableShell({
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
+          return (
+            <>{convertDatetoStringShort(row.original.created_at.toString())}</>
+          )
         },
         size: 400,
       },
@@ -148,14 +176,17 @@ export function CourseTableShell({
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
+          return (
+            <>{convertDatetoStringShort(row.original.created_at.toString())}</>
+          )
         },
         size: 400,
       },
+
       {
         id: "status",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Status" />
+          <DataTableColumnHeader column={column} title="Waktu" />
         ),
         cell: ({ row }) => {
           const status = [
@@ -210,7 +241,7 @@ export function CourseTableShell({
       searchableColumns={[
         {
           id: "course_name",
-          title: "Nama Kursus",
+          title: "Nama Pelatihan",
         },
       ]}
     />

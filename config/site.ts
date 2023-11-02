@@ -7,7 +7,7 @@ export const siteConfig = {
   name: "BPD Elearning",
   url: `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}`,
   description:
-    "E-learning BPD DIY memberikan anda akses ke ribuan kursus online. Pelajari apa saja, kapan saja, di mana saja",
+    "E-learning BPD DIY memberikan anda akses ke ribuan pelatihan online. Pelajari apa saja, kapan saja, di mana saja",
   mainNav: [
     {
       title: "Explore",

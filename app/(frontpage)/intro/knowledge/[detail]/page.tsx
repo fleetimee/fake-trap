@@ -140,13 +140,13 @@ export default async function IntroDetailKnowledge({ params }: Props) {
           <AlertTitle>
             {detailKnowledgeResult.data.course
               ? `
-              Ada ${detailKnowledgeResult.data.course.length} kursus yang tersedia untuk pengetahuan ini`
-              : `Tidak ada kursus untuk pengetahuan ini`}
+              Ada ${detailKnowledgeResult.data.course.length} pelatihan yang tersedia untuk pengetahuan ini`
+              : `Tidak ada pelatihan untuk pengetahuan ini`}
           </AlertTitle>
           <AlertDescription>
             {user
-              ? `Pergi ke panel mu untuk melihat kursus ini`
-              : `Kamu harus login untuk mengakses kursus`}
+              ? `Pergi ke panel mu untuk melihat pelatihan ini`
+              : `Kamu harus login untuk mengakses pelatihan`}
           </AlertDescription>
         </Alert>
       </div>

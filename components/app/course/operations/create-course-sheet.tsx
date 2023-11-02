@@ -54,27 +54,27 @@ import { toast } from "@/components/ui/use-toast"
 const formSchema = z.object({
   course_name: z
     .string({
-      required_error: "Nama kursus harus diisi.",
+      required_error: "Nama pelatihan harus diisi.",
     })
     .max(36, {
-      message: "Nama kursus tidak boleh lebih dari 36 karakter.",
+      message: "Nama pelatihan tidak boleh lebih dari 36 karakter.",
     })
     .nonempty({
-      message: "Nama kursus harus diisi.",
+      message: "Nama pelatihan harus diisi.",
     }),
   course_desc: z
     .string({
-      required_error: "Deskripsi kursus harus diisi.",
+      required_error: "Deskripsi pelatihan harus diisi.",
     })
     .max(1000)
     .nonempty({
-      message: "Deskripsi kursus harus diisi.",
+      message: "Deskripsi pelatihan harus diisi.",
     }),
   date_start: z.date({
-    required_error: "Tanggal mulai kursus harus diisi.",
+    required_error: "Tanggal mulai pelatihan harus diisi.",
   }),
   date_end: z.date({
-    required_error: "Tanggal berakhir kursus harus diisi.",
+    required_error: "Tanggal berakhir pelatihan harus diisi.",
   }),
   image: z.string().optional(),
   id_knowledge: z.number({
@@ -122,8 +122,8 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
 
       if (response.ok) {
         toast({
-          title: "Kursus berhasil dibuat",
-          description: "Kursus berhasil dibuat",
+          title: "Pelatihan berhasil dibuat",
+          description: "Pelatihan berhasil dibuat",
         })
 
         router.refresh()
@@ -131,8 +131,8 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
         setOpen(false)
       } else {
         toast({
-          title: "Kursus gagal dibuat",
-          description: "Kursus gagal dibuat",
+          title: "Pelatihan gagal dibuat",
+          description: "Pelatihan gagal dibuat",
           variant: "destructive",
         })
       }
@@ -152,9 +152,9 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Tambah Kursus</SheetTitle>
+          <SheetTitle>Tambah Pelatihan</SheetTitle>
           <SheetDescription>
-            Tambah kursus baru dengan pengetahuan yang telah dibuat
+            Tambah pelatihan baru dengan pengetahuan yang telah dibuat
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>
@@ -168,7 +168,7 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Judul Kursus <span className="text-red-500">*</span>
+                    Judul Pelatihan <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -178,7 +178,7 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
                     />
                   </FormControl>
                   <FormDescription>
-                    Judul kursus yang ingin dibuat.
+                    Judul pelatihan yang ingin dibuat.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -191,11 +191,11 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Deskripsi Kursus <span className="text-red-500">*</span>
+                    Deskripsi Pelatihan <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Berikan sedikit deskripsi tentang kursus yang ingin dibuat"
+                      placeholder="Berikan sedikit deskripsi tentang pelatihan yang ingin dibuat"
                       className="resize-none"
                       disabled={isLoading}
                       {...field}
@@ -273,7 +273,7 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
                     </PopoverContent>
                   </Popover>
                   <FormDescription>
-                    Tanggal mulai kursus yang ingin dibuat.
+                    Tanggal mulai pelatihan yang ingin dibuat.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -325,7 +325,7 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
                     </PopoverContent>
                   </Popover>
                   <FormDescription>
-                    Tanggal selesai kursus yang ingin dibuat.
+                    Tanggal selesai pelatihan yang ingin dibuat.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -404,7 +404,7 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
                     </Popover>
                   </FormControl>
                   <FormDescription>
-                    Pengetahuan yang ingin dikaitkan dengan kursus yang ingin
+                    Pengetahuan yang ingin dikaitkan dengan pelatihan yang ingin
                     dibuat. jika belum ada silahkan tambahkan{" "}
                     <Link
                       href="/dashboard/knowledge"

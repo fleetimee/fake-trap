@@ -84,7 +84,7 @@ export function DetailSidebarCourse({ ...props }: CourseDetailShellProps) {
             Pengetahuan
           </TabsTrigger>
           <TabsTrigger value="course" className="w-full font-semibold">
-            Kursus
+            Pelatihan
           </TabsTrigger>
         </TabsList>
 

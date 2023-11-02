@@ -132,7 +132,7 @@ export default async function ForumPostPage({ params }: Props) {
           },
           {
             href: "/dashboard/course",
-            title: "Kursus",
+            title: "Pelatihan",
           },
           {
             href: `/dashboard/course/${courseResp.data.id_course}`,

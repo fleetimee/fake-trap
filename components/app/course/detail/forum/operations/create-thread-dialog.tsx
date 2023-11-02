@@ -108,7 +108,7 @@ export function CreateThreadButton({
         <DialogHeader>
           <DialogTitle>Buat Thread</DialogTitle>
           <DialogDescription>
-            Buat thread baru untuk kursus ini.
+            Buat thread baru untuk pelatihan ini.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

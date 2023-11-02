@@ -16,7 +16,7 @@ export function CourseContainerCard({
     <Card className="col-span-7 flex min-h-[300px] w-full flex-col gap-8 p-4">
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-2xl font-light">
-          Kursus Yang Diikuti
+          Pelatihan Yang Diikuti
         </h1>
 
         <Link href={`/dashboard/me/course`}>

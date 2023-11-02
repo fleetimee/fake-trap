@@ -44,7 +44,7 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Kursus",
+      title: "Pelatihan",
       href: "/dashboard/course",
       icon: "course",
       items: [],
@@ -159,14 +159,14 @@ export const userAreaRole: UserAreaRole = {
       icon: "quiz",
     },
     {
-      title: "Kursus atau Pelatihan",
-      description: "Anda dapat mengikuti kursus yang tersedia",
+      title: "Pelatihan atau Pelatihan",
+      description: "Anda dapat mengikuti pelatihan yang tersedia",
       icon: "course",
     },
     {
       title: "Forum",
       description:
-        "Anda dapat berdiskusi dengan user lainnya pada forum yang ada di setiap pelatihan atau kursus yang anda ikuti",
+        "Anda dapat berdiskusi dengan user lainnya pada forum yang ada di setiap pelatihan atau pelatihan yang anda ikuti",
       icon: "forum",
     },
   ],

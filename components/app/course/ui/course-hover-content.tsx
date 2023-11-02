@@ -2,9 +2,9 @@
 
 import { CourseData } from "@/types/course-res"
 import { convertDatetoString } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { HoverCardContent } from "@/components/ui/hover-card"
-import { Icons } from "@/components/icons"
 
 export function CourseHoverContent(props: { data: CourseData }) {
   return (
@@ -15,7 +15,7 @@ export function CourseHoverContent(props: { data: CourseData }) {
           <AvatarFallback>VC</AvatarFallback>
         </Avatar>
         <div className="w-5/6 space-y-1">
-          <h4 className="text-sm font-semibold">Detail Kursus</h4>
+          <h4 className="text-sm font-semibold">Detail Pelatihan</h4>
           <p className="text-sm">{props.data.course_desc}</p>
           <div className="flex items-center pt-2">
             <Icons.calendar className="mr-2 h-4 w-4 opacity-70" />{" "}

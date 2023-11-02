@@ -27,11 +27,11 @@ export const marketingFeatures = [
   },
   {
     icon: <Icons.course className="h-10 w-10" />,
-    title: "Kursus",
+    title: "Pelatihan",
     body: (
       <>
-        Memungkinkan pengguna untuk mengeksplorasi kursus yang tersedia dan
-        mengikuti kursus yang diinginkan.
+        Memungkinkan pengguna untuk mengeksplorasi pelatihan yang tersedia dan
+        mengikuti pelatihan yang diinginkan.
       </>
     ),
     link: "/intro/#featured-courses",

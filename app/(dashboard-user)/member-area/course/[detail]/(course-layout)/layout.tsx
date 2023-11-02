@@ -190,7 +190,7 @@ export default async function CourseDetailLayout({
           <PartyPopper className="h-5 w-5" />
           <AlertTitle>Informasi!</AlertTitle>
           <AlertDescription>
-            Kursus ini berdasarkan pada pengetahuan{" "}
+            Pelatihan ini berdasarkan pada pengetahuan{" "}
             <span className="font-bold">
               {courseKnowledgeResp.data.knowledge_title}
             </span>
@@ -249,7 +249,7 @@ export default async function CourseDetailLayout({
                   <CardHeader>
                     <CardTitle>Deskripsi</CardTitle>
                     <CardDescription>
-                      Deskripsi tentang kursus ini
+                      Deskripsi tentang pelatihan ini
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-2">
@@ -264,7 +264,7 @@ export default async function CourseDetailLayout({
                   <CardHeader>
                     <CardTitle>Waktu</CardTitle>
                     <CardDescription>
-                      Tanggal berjalannya dan berakhirnya kursus ini
+                      Tanggal berjalannya dan berakhirnya pelatihan ini
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-2">
@@ -340,7 +340,7 @@ export default async function CourseDetailLayout({
                           Forum untuk {dataCourse.data.course_name}
                         </CardTitle>
                         <CardDescription>
-                          Berinteraksilah dengan sesama murid kursus ini
+                          Berinteraksilah dengan sesama murid pelatihan ini
                         </CardDescription>
                       </div>
                     </div>
