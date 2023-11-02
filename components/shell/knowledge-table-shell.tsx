@@ -203,6 +203,28 @@ export function KnowledgeTableShell({
         },
       },
       {
+        accessorKey: "user_approver",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Supervisor" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <>{row.original.user_approver ? row.original.user_approver : "-"}</>
+          )
+        },
+      },
+      {
+        accessorKey: "user_request",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Pengaju" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <>{row.original.user_request ? row.original.user_request : "-"}</>
+          )
+        },
+      },
+      {
         id: "actions",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Aksi" />
@@ -220,7 +242,7 @@ export function KnowledgeTableShell({
         },
       },
     ],
-    [data, setSelectedRowIds]
+    [categoryResp, data, referenceResp]
   )
 
   return (

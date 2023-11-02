@@ -10,11 +10,10 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { CategoryListRes, CategoryListResData } from "@/types/category/res"
+import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
-import { statusTypes } from "@/components/app/knowledge/operations/create-knowledge-button"
 import { Icons } from "@/components/icons"
 import {
   AlertDialog,
@@ -38,7 +37,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,

@@ -66,6 +66,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
@@ -204,37 +210,60 @@ export function CourseOperations({
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            aria-label="Open menu"
-            variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-          >
-            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem
-            className="flex  items-center
-            "
-            onSelect={() => setOpenEditCourse(true)}
-          >
-            Edit
-            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-          </DropdownMenuItem>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  aria-label="Open menu"
+                  variant="ghost"
+                  className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+                >
+                  <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[160px]">
+                <DropdownMenuItem
+                  disabled={
+                    courseResp.status_code === "0051" ||
+                    courseResp.status_code === "0052" ||
+                    courseResp.status_code === "0053"
+                  }
+                >
+                  <Link
+                    href={`/dashboard/course/request-form/${courseResp.id_course}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Ajukan
+                    <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
 
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem
-            className="flex  items-center "
-            onSelect={() => setOpenDeleteCourse(true)}
-          >
-            Hapus
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="flex  items-center
+                  "
+                  onSelect={() => setOpenEditCourse(true)}
+                >
+                  Edit
+                  <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="flex  items-center "
+                  onSelect={() => setOpenDeleteCourse(true)}
+                >
+                  Hapus
+                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </TooltipTrigger>
+          <TooltipContent>Kelola pelatihan ini</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <AlertDialog open={openDeleteCourse} onOpenChange={setOpenDeleteCourse}>
         <AlertDialogContent>
           <AlertDialogHeader>
