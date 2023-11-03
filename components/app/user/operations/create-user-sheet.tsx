@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { Icons } from "@/components/icons"
@@ -27,7 +28,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 interface ErrorResponseProps {
   error: string
@@ -99,8 +99,7 @@ export function CreateUserSheet() {
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "User berhasil dibuat",
         })
 
@@ -110,17 +109,13 @@ export function CreateUserSheet() {
       } else {
         const errorResponse: ErrorResponseProps = await response.json()
 
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: `${errorResponse.error}`,
-          variant: "destructive",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "User gagal dibuat",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsLoading(false)

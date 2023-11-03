@@ -8,6 +8,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CategoryListRes } from "@/types/category/res"
@@ -70,7 +71,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   knowledge_title: z
@@ -122,18 +122,14 @@ async function deleteKnowledge({ idKnowledge, token }: DeleteKnowledgeProps) {
   )
 
   if (response.ok) {
-    toast({
-      title: "Berhasil menghapus pengetahuan",
+    sonnerToast.success("Berhasil", {
       description: "Pengetahuan berhasil dihapus",
-      variant: "default",
     })
 
     return true
   } else {
-    toast({
-      title: "Gagal menghapus pengetahuan",
+    sonnerToast.error("Gagal", {
       description: "Pengetahuan gagal dihapus",
-      variant: "destructive",
     })
 
     return false
@@ -190,27 +186,21 @@ export function KnowledgeOperations({
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil mengubah pengetahuan",
+        sonnerToast.success("Berhasil", {
           description: "Pengetahuan berhasil diubah",
-          variant: "default",
         })
 
         router.refresh()
         setOpenEditKnowledgeSheet(false)
       } else {
-        toast({
-          title: "Gagal mengubah pengetahuan",
+        sonnerToast.error("Gagal", {
           description: "Pengetahuan gagal diubah",
-          variant: "destructive",
         })
       }
     } catch (error) {
       console.error(error)
-      toast({
-        title: "Gagal mengubah pengetahuan",
-        description: "Pengetahuan gagal diubah",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsEditLoading(false)
@@ -275,9 +265,9 @@ export function KnowledgeOperations({
                     navigator.clipboard.writeText(
                       knowledgeData.id_knowledge.toString()
                     )
-                    toast({
-                      title: "Berhasil",
-                      description: "ID Kategori berhasil dicopy",
+
+                    sonnerToast.info("Berhasil", {
+                      description: "ID Pengetahuan berhasil dicopy",
                     })
                   }}
                 >

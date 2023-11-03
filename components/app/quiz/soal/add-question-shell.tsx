@@ -3,6 +3,7 @@
 import React from "react"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { RocketIcon } from "@radix-ui/react-icons"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { QuestionForm } from "@/components/app/quiz/soal/add-question"
@@ -12,7 +13,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { toast } from "@/components/ui/use-toast"
 
 export function SoalShell(props: {
   idQuiz: string
@@ -58,16 +58,18 @@ export function SoalShell(props: {
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Soal berhasil ditambahkan",
         })
 
         setQuizzes([])
+      } else {
+        sonnerToast.error("Gagal", {
+          description: "Soal gagal ditambahkan",
+        })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
+      sonnerToast.error("Gagal", {
         description: "Soal gagal ditambahkan",
       })
     } finally {

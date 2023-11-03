@@ -8,6 +8,7 @@ import { format } from "date-fns"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { KnowledgeListRes } from "@/types/knowledge/res"
@@ -49,7 +50,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   course_name: z
@@ -121,8 +121,7 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Pelatihan berhasil dibuat",
+        sonnerToast.success("Berhasil", {
           description: "Pelatihan berhasil dibuat",
         })
 
@@ -130,10 +129,8 @@ export function CreateCourseButton({ knowledgeResp }: CreateCourseButtonProps) {
         form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Pelatihan gagal dibuat",
+        sonnerToast.error("Gagal", {
           description: "Pelatihan gagal dibuat",
-          variant: "destructive",
         })
       }
     } catch (error) {

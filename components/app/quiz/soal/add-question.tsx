@@ -3,6 +3,7 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -17,7 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
 
 export const formSchemaQuestion = z.object({
   id_quiz: z.number(),
@@ -78,26 +78,20 @@ export function QuestionForm(props: {
     })
 
     if (form.getValues("answers").length < 2) {
-      return toast({
-        title: "Error",
+      return sonnerToast.warning("Perhatian", {
         description: "Jawaban minimal 2 pilihan",
-        variant: "destructive",
       })
     }
 
     if (!isCorrectAnswer) {
-      return toast({
-        title: "Error",
+      return sonnerToast.warning("Perhatian", {
         description: "Jawaban benar harus ada",
-        variant: "destructive",
       })
     }
 
     if (correctAnswer.length > 1) {
-      return toast({
-        title: "Error",
+      return sonnerToast.warning("Perhatian", {
         description: "Jawaban benar hanya boleh satu",
-        variant: "destructive",
       })
     }
 
@@ -114,19 +108,15 @@ export function QuestionForm(props: {
       ],
     })
 
-    toast({
-      title: "Success",
+    sonnerToast.success("Berhasil", {
       description: "Pertanyaan berhasil ditambahkan",
     })
   }
 
   function onAddAnswer() {
-    // Check if answer length is more than 5
     if (form.getValues("answers").length > 4) {
-      return toast({
-        title: "Error",
+      return sonnerToast.warning("Perhatian", {
         description: "Jawaban maksimal 5 pilihan",
-        variant: "destructive",
       })
     }
 

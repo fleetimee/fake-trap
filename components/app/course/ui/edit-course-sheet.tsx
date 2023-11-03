@@ -8,6 +8,7 @@ import { format } from "date-fns"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CourseData } from "@/types/course-res"
@@ -47,7 +48,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   course_name: z
@@ -92,9 +92,6 @@ export function EditCourseButton(props: {
 
   const [open, setOpen] = React.useState<boolean>(false)
 
-  /**
-   * Initializes the form with default values and validation schema
-   */
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -105,10 +102,6 @@ export function EditCourseButton(props: {
     },
   })
 
-  /**
-   * Handles form submission by sending a PUT request to update the course data
-   * @param values - The form values to be submitted
-   */
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsloading(true)
 
@@ -126,8 +119,7 @@ export function EditCourseButton(props: {
       )
 
       if (response.ok) {
-        toast({
-          title: "Pelatihan berhasil diubah",
+        sonnerToast.success("Berhasil", {
           description: "Pelatihan berhasil diubah",
         })
 
@@ -135,13 +127,14 @@ export function EditCourseButton(props: {
         form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Pelatihan gagal diubah",
+        sonnerToast.error("Gagal", {
           description: "Pelatihan gagal diubah",
         })
       }
     } catch (error) {
-      console.error(error)
+      sonnerToast.error("Gagal", {
+        description: "Pelatihan gagal diubah",
+      })
     } finally {
       setIsloading(false)
     }

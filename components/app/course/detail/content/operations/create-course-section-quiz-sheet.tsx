@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { QuizListRes } from "@/types/quiz/res"
@@ -39,7 +40,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   quiz: z
@@ -91,8 +91,7 @@ export function AddCourseQuizSheet({ ...props }: AddCourseQuizSheetProps) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Success",
+        sonnerToast.success("Berhasil", {
           description: "Quiz berhasil ditambahkan pada bagian ini",
         })
 
@@ -100,17 +99,13 @@ export function AddCourseQuizSheet({ ...props }: AddCourseQuizSheetProps) {
         form.reset()
         props.setOpen(false)
       } else {
-        toast({
-          title: "Error",
+        sonnerToast.error("Gagal", {
           description: "Quiz gagal ditambahkan pada bagian ini",
-          variant: "destructive",
         })
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Quiz gagal ditambahkan pada bagian ini",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsLoading(false)

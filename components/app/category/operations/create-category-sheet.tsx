@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { Icons } from "@/components/icons"
@@ -27,7 +28,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
@@ -67,8 +67,7 @@ export function CreateCategorySheet() {
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Kategori berhasil dibuat",
         })
 
@@ -76,17 +75,13 @@ export function CreateCategorySheet() {
         setOpen(false)
         form.reset()
       } else {
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: "Kategori gagal dibuat",
-          variant: "destructive",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "Kategori gagal dibuat",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
 
       console.error(error)

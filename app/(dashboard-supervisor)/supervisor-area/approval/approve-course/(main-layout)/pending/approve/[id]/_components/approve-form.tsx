@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { cn } from "@/lib/utils"
@@ -27,7 +28,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   status: z.string(),
@@ -73,8 +73,7 @@ export function CourseApprovalForm({ id, uuid }: CourseApprovalFormProps) {
       )
 
       if (res.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Pengajuan berhasil di approve",
         })
 
@@ -82,15 +81,13 @@ export function CourseApprovalForm({ id, uuid }: CourseApprovalFormProps) {
         router.push("/supervisor-area/approval/approve-course/pending")
         router.refresh()
       } else {
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: "Pengajuan gagal di approve",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "Pengajuan gagal di approve",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsLoading(false)

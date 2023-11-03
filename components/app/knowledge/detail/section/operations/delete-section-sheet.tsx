@@ -1,8 +1,10 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
+import { toast as sonnerToast } from "sonner"
 
 import { KnowledgeOneResSection } from "@/types/knowledge/res"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   SheetContent,
@@ -11,8 +13,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
 
 interface DeleteSectionSheetProps {
   item: KnowledgeOneResSection
@@ -47,22 +47,21 @@ export function DeleteSectionSheet({
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil menghapus section",
+        sonnerToast.success("Berhasil", {
           description: "Section berhasil dihapus",
         })
 
         router.refresh()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal menghapus section",
-          description: `Section gagal dihapus`,
-          variant: "destructive",
+        sonnerToast.error("Gagal", {
+          description: "Section gagal dihapus",
         })
       }
     } catch (error) {
-      console.error(error)
+      sonnerToast.error("Gagal", {
+        description: "Section gagal dihapus",
+      })
     } finally {
       setIsLoading(false)
     }

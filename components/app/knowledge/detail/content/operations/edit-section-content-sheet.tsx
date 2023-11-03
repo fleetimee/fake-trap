@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
@@ -40,7 +41,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   content_title: z.string().min(2).max(40).nonempty(),
@@ -69,9 +69,6 @@ export function EditSectionContentSheet({
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  /**
-   * Initializes the form with default values and validation schema.
-   */
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -100,8 +97,7 @@ export function EditSectionContentSheet({
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil mengubah konten",
+        sonnerToast.success("Berhasil", {
           description: "Konten berhasil diubah",
         })
 
@@ -110,13 +106,14 @@ export function EditSectionContentSheet({
         form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal mengubah konten",
+        sonnerToast.error("Gagal", {
           description: "Konten gagal diubah",
         })
       }
     } catch (error) {
-      console.error(error)
+      sonnerToast.error("Gagal", {
+        description: `Konten gagal diubah: ${error}`,
+      })
     } finally {
       setIsLoading(false)
     }

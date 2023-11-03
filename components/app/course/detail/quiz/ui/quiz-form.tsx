@@ -10,15 +10,12 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { toast } from "@/components/ui/use-toast"
 
 interface CourseQuizFormProps {
   question: QuestionListResData
@@ -47,40 +44,7 @@ export function CourseQuizForm({ question, index }: CourseQuizFormProps) {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // setIsLoading(true)
-    // try {
-    //   const res = await fetch(
-    //     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/user-answer`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${session?.user.token}`,
-    //       },
-    //     }
-    //   )
-    //
-    //   if (res.ok) {
-    //     toast({
-    //       title: "Berhasil",
-    //       description: "Jawaban berhasil disimpan.",
-    //     })
-    //
-    //     router.refresh()
-    //     form.reset()
-    //   } else {
-    //     toast({
-    //       title: "Gagal",
-    //       description: "Jawaban gagal disimpan.",
-    //     })
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // } finally {
-    //   setIsLoading(false)
-    // }
-  }
+  async function onSubmit(values: z.infer<typeof formSchema>) {}
 
   return (
     <Form {...form}>
@@ -132,27 +96,5 @@ export function CourseQuizForm({ question, index }: CourseQuizFormProps) {
         </Button>
       </form>
     </Form>
-
-    // <div className="grid grid-cols-1 justify-between gap-4">
-    //   <p className="font-heading text-sm">
-    //     {index + 1}. {question.question_text}
-    //   </p>
-    //
-    //   {/*  Implement Radio Button for answer*/}
-    //
-    //   <div className="grid grid-cols-2 items-center justify-between gap-4">
-    //     {question.answers.map((answer, index) => (
-    //       <RadioGroup key={index}>
-    //         <div className="flex items-center space-x-2">
-    //           <RadioGroupItem
-    //             value={answer.id_answer.toString()}
-    //             id={answer.id_answer.toString()}
-    //           />
-    //           <Label className="font-light">{answer.id_answer}</Label>
-    //         </div>
-    //       </RadioGroup>
-    //     ))}
-    //   </div>
-    // </div>
   )
 }

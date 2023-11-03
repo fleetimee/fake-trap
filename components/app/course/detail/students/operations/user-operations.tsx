@@ -1,17 +1,16 @@
 import React from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { set } from "date-fns"
 import { MoreHorizontal } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { UserData } from "@/types/user-res"
 import { Icons } from "@/components/icons"
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -28,7 +27,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Form } from "@/components/ui/form"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   users: z.array(
@@ -51,14 +49,12 @@ async function deleteUserFromCourse(path: string, token: string | undefined) {
   )
 
   if (response.ok) {
-    toast({
-      title: "Success",
-      description: "User berhasil dihapus dari pelatihan ini",
+    sonnerToast.success("Berhasil", {
+      description: "User berhasil dihapus dari pelatihan ini.",
     })
   } else {
-    toast({
-      title: "Gagal",
-      description: "User gagal dihapus dari pelatihan ini",
+    sonnerToast.error("Gagal", {
+      description: "User gagal dihapus dari pelatihan ini.",
     })
   }
 }
@@ -102,19 +98,17 @@ export function UserOperations(props: { user: UserData }) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Success",
-          description: "User berhasil dihapus dari pelatihan ini",
+        sonnerToast.success("Berhasil", {
+          description: "User berhasil dihapus dari pelatihan ini.",
         })
+
         setIsDeleteLoading(false)
         setOpenDeleteAlert(false)
         router.refresh()
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "User gagal dihapus dari pelatihan ini",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: "User gagal dihapus dari pelatihan ini.",
       })
     } finally {
       setIsDeleteLoading(false)
@@ -135,8 +129,8 @@ export function UserOperations(props: { user: UserData }) {
           <DropdownMenuItem
             onClick={() => {
               navigator.clipboard.writeText(props.user.uuid)
-              toast({
-                title: "Copied!",
+
+              sonnerToast.info("Copied!", {
                 description: "User ID berhasil dicopy!",
               })
             }}

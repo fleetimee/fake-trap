@@ -2,6 +2,7 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import { Dialog } from "@radix-ui/react-dialog"
 import { useSession } from "next-auth/react"
+import { toast as sonnerToast } from "sonner"
 
 import { CourseData } from "@/types/course-res"
 import { Icons } from "@/components/icons"
@@ -13,7 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { toast } from "@/components/ui/use-toast"
 
 export function DeleteCourseButton(props: { item: CourseData }) {
   const { data: session } = useSession()
@@ -39,18 +39,15 @@ export function DeleteCourseButton(props: { item: CourseData }) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil menghapus pelatihan",
+        sonnerToast.success("Berhasil", {
           description: "Pelatihan berhasil dihapus",
         })
 
         router.refresh()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal menghapus pelatihan",
+        sonnerToast.error("Gagal", {
           description: "Pelatihan gagal dihapus",
-          variant: "destructive",
         })
       }
     } catch (error) {

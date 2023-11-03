@@ -1,19 +1,10 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
+import { toast as sonnerToast } from "sonner"
 
 import { CourseOneResSection } from "@/types/course/res"
 import { Icons } from "@/components/icons"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
   SheetContent,
@@ -22,7 +13,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 interface DeleteSectionProps {
   idSection: number
@@ -42,17 +32,14 @@ async function deleteSection({ idSection, token }: DeleteSectionProps) {
   )
 
   if (response.ok) {
-    toast({
-      title: "Berhasil",
+    sonnerToast.success("Berhasil", {
       description: "Section berhasil dihapus",
     })
 
     return true
   } else {
-    toast({
-      title: "Gagal",
+    sonnerToast.error("Gagal", {
       description: "Section gagal dihapus",
-      variant: "destructive",
     })
 
     return false
@@ -92,17 +79,15 @@ export function DeleteSection({
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil menghapus konten",
-          description: "Konten berhasil dihapus",
+        sonnerToast.success("Berhasil", {
+          description: "Section berhasil dihapus",
         })
 
         router.refresh()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal menghapus konten",
-          description: "Konten gagal dihapus",
+        sonnerToast.error("Gagal", {
+          description: "Section gagal dihapus",
         })
       }
     } catch (error) {

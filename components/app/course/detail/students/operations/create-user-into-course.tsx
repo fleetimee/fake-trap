@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CourseVacantUserListRes } from "@/types/course/res"
@@ -41,7 +42,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   users: z
@@ -94,8 +94,7 @@ export function CreateStudentsIntoCourseButton({
       )
 
       if (response.ok) {
-        toast({
-          title: "Success",
+        sonnerToast.success("Berhasil", {
           description: "User berhasil ditambahkan untuk pelatihan ini.",
         })
 
@@ -103,15 +102,15 @@ export function CreateStudentsIntoCourseButton({
         setOpen(false)
         form.reset()
       } else {
-        toast({
-          title: "Error",
+        sonnerToast.error("Gagal", {
           description:
             "Terjadi kesalahan saat menambahkan user untuk pelatihan ini.",
-          variant: "destructive",
         })
       }
     } catch (error) {
-      console.error(error)
+      sonnerToast.error("Gagal", {
+        description: `Terjadi kesalahan saat menambahkan user untuk pelatihan ini. ${error}`,
+      })
     } finally {
       setIsLoading(false)
     }

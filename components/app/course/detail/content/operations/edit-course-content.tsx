@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CourseOneResContent } from "@/types/course/res"
@@ -41,7 +42,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   content_title: z
@@ -107,8 +107,7 @@ export function EditCourseContentSheet({
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil mengubah konten",
+        sonnerToast.success("Berhasil", {
           description: "Konten berhasil diubah",
         })
 
@@ -117,13 +116,14 @@ export function EditCourseContentSheet({
         form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal mengubah konten",
+        sonnerToast.error("Gagal", {
           description: "Konten gagal diubah",
         })
       }
     } catch (error) {
-      console.error(error)
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
+      })
     } finally {
       setIsLoading(false)
     }
