@@ -8,9 +8,9 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
-import { QuizData } from "@/types/quiz-res"
 import { QuizListResData } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
@@ -36,7 +36,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -64,7 +63,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   quiz_title: z
@@ -108,17 +106,14 @@ async function deleteQuiz({ id, token }: DeleteQuizProps) {
   )
 
   if (response.ok) {
-    toast({
-      title: "Success",
+    sonnerToast.success("Berhasil", {
       description: "Berhasil menghapus quiz",
     })
 
     return true
   } else {
-    toast({
-      title: "Error",
+    sonnerToast.error("Gagal", {
       description: "Gagal menghapus quiz",
-      variant: "destructive",
     })
 
     return false
@@ -171,8 +166,7 @@ export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Success",
+        sonnerToast.success("Berhasil", {
           description: "Berhasil mengubah quiz",
         })
 
@@ -180,20 +174,15 @@ export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
         setOpenEditQuizSheet(false)
         router.refresh()
       } else {
-        toast({
-          title: "Error",
+        sonnerToast.error("Gagal", {
           description: "Gagal mengubah quiz",
-          variant: "destructive",
         })
 
         setIsEditLoading(false)
       }
     } catch (error) {
-      console.error(error)
-      toast({
-        title: "Error",
-        description: "Gagal mengubah quiz",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsEditLoading(false)

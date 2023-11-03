@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ReferenceListResData } from "@/types/references/res"
@@ -39,7 +40,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   content_title: z
@@ -102,8 +102,7 @@ export function CreateSectionContentSheet({
       )
 
       if (response.ok) {
-        toast({
-          title: "Konten berhasil dibuat",
+        sonnerToast.success("Berhasil", {
           description: "Konten berhasil dibuat",
         })
 
@@ -111,13 +110,13 @@ export function CreateSectionContentSheet({
         form.reset()
         setOpen(false)
       } else {
-        throw new Error("Gagal membuat konten")
+        sonnerToast.error("Gagal", {
+          description: "Konten gagal dibuat",
+        })
       }
     } catch (error) {
-      toast({
-        title: "Gagal membuat konten",
-        description: "Gagal membuat konten",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `Konten gagal dibuat. ${error}`,
       })
     } finally {
       setIsloading(false)

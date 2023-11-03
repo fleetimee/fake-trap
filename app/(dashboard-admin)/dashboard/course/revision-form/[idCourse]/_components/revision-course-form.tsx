@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { Icons } from "@/components/icons"
@@ -19,7 +20,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   status: z.string(),
@@ -49,8 +49,6 @@ export function CourseRevisionForm({ idApproval }: CourseRevisionFormProps) {
     },
   })
 
-  console.log(form.getValues())
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
@@ -68,26 +66,21 @@ export function CourseRevisionForm({ idApproval }: CourseRevisionFormProps) {
       )
 
       if (res.ok) {
-        toast({
-          title: "Berhasil",
-          description: "Revisi Pelatihan Berhasil",
+        sonnerToast.success("Berhasil", {
+          description: "Revisi Pelatihan Berhasil Diajukan",
         })
 
         form.reset()
         router.push("/dashboard/course")
         router.refresh()
       } else {
-        toast({
-          title: "Gagal",
-          description: "Revisi Pelatihan Gagal",
-          variant: "destructive",
+        sonnerToast.error("Gagal", {
+          description: "Revisi Pelatihan Gagal Diajukan",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "Revisi Pelatihan Gagal",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsLoading(false)

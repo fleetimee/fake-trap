@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CreateButton } from "@/components/create-button"
@@ -28,7 +29,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   section: z
@@ -88,8 +88,7 @@ export function CreateCourseSectionButton({
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Section berhasil ditambahkan",
         })
 
@@ -97,14 +96,12 @@ export function CreateCourseSectionButton({
         form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: "Section gagal ditambahkan",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
+      sonnerToast.error("Gagal", {
         description: "Section gagal ditambahkan",
       })
     } finally {

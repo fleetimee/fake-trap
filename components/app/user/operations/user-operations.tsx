@@ -7,6 +7,7 @@ import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { UserListResData } from "@/types/user/res"
@@ -46,7 +47,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 interface ErrorResponseProps {
   error: string
@@ -70,17 +70,14 @@ async function deleteUser({ uuid, token }: DeleteUserProps) {
   )
 
   if (response.ok) {
-    toast({
-      title: "Success",
+    sonnerToast.success("Berhasil", {
       description: "User berhasil dihapus",
     })
 
     return true
   } else {
-    toast({
-      title: "Gagal",
+    sonnerToast.error("Gagal", {
       description: "User gagal dihapus",
-      variant: "destructive",
     })
 
     return false
@@ -162,8 +159,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Success",
+        sonnerToast.success("Berhasil", {
           description: "User berhasil diubah",
         })
 
@@ -173,17 +169,13 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
       } else {
         const errorResponse: ErrorResponseProps = await response.json()
 
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: errorResponse.error,
-          variant: "destructive",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "User gagal diubah",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsEditLoading(false)

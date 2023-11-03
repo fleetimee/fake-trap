@@ -11,6 +11,7 @@ import * as z from "zod"
 import "@/styles/editor.css"
 
 import { useSession } from "next-auth/react"
+import { toast as sonnerToast } from "sonner"
 
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -22,7 +23,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   id_threads: z.number().optional(),
@@ -136,18 +136,16 @@ export function Editor({ id_threads }: EditorProps) {
     setIsSaving(false)
 
     if (!res?.ok) {
-      return toast({
-        title: "Something went wrong.",
-        description: "Your post was not saved. Please try again.",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: "Post gagal disimpan. Silahkan coba lagi.",
       })
     }
 
     ref.current?.clear()
     router.refresh()
 
-    return toast({
-      description: "Your post has been saved.",
+    return sonnerToast.success("Berhasil", {
+      description: "Post berhasil disimpan.",
     })
   }
 
@@ -166,7 +164,7 @@ export function Editor({ id_threads }: EditorProps) {
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid w-full gap-10">
-            <div className="prose prose-stone dark:prose-invert mx-auto w-[800px] ">
+            <div className="prose prose-stone mx-auto w-[800px] dark:prose-invert ">
               <TextareaAutosize
                 id="title"
                 disabled

@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { cn } from "@/lib/utils"
@@ -27,7 +28,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   status: z.string(),
@@ -73,27 +73,23 @@ export function KnowledgeRejectForm({ id, uuid }: KnowledgeRejectFormProps) {
       )
 
       if (res.ok) {
-        toast({
-          title: "Berhasil",
-          description: "Pengajuan berhasil ditolak",
+        sonnerToast.success("Berhasil", {
+          description: "Pengajuan berhasil ditolak.",
         })
+
         form.reset()
         router.push(
           "/supervisor-area/approval/approve-knowledge/pending?page=1"
         )
         router.refresh()
       } else {
-        toast({
-          title: "Gagal",
-          description: "Pengajuan gagal ditolak",
-          variant: "destructive",
+        sonnerToast.error("Gagal", {
+          description: "Pengajuan gagal ditolak.",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "Pengajuan gagal ditolak",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsLoading(false)

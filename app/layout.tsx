@@ -9,6 +9,7 @@ import { BGGrid } from "@/components/bg-grid"
 import Providers from "@/components/progress-bar"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
+import { SonnerToaster } from "@/components/ui/sonner-toaster"
 import { Toaster } from "@/components/ui/toaster"
 import { NextAuthProvider } from "@/app/providers"
 
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <TailwindIndicator />
             </div>
           </ThemeProvider>
+          <SonnerToaster />
         </NextAuthProvider>
       </body>
     </html>

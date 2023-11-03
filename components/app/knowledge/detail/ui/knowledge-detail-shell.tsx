@@ -2,6 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
+import { toast as sonnerToast } from "sonner"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { ReferenceListResData } from "@/types/references/res"
@@ -13,7 +14,6 @@ import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
 
 interface KnowledgeDetailShellProps {
   detailKnowledgeData: KnowledgeOneRes
@@ -73,8 +73,7 @@ export function KnowledgeDetailShell({
                 `${process.env.NEXT_PUBLIC_BASE_URL}/intro/knowledge/${detailKnowledgeData.data.id_knowledge}`
               )
 
-              toast({
-                title: "Berhasil menyalin link",
+              sonnerToast.info("Berhasil menyalin link", {
                 description: "Link berhasil disalin ke clipboard",
               })
             }}

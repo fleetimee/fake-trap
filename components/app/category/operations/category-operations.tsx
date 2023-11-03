@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CategoryListResData } from "@/types/category/res"
@@ -25,7 +26,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -47,7 +47,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
@@ -71,17 +70,14 @@ async function deleteCategory({ idKategori, token }: DeleteCategoryProps) {
   )
 
   if (response.ok) {
-    toast({
-      title: "Berhasil",
+    sonnerToast.success("Berhasil", {
       description: "Kategori berhasil dihapus",
     })
 
     return true
   } else {
-    toast({
-      title: "Gagal",
+    sonnerToast.error("Gagal", {
       description: "Kategori gagal dihapus",
-      variant: "destructive",
     })
 
     return false
@@ -130,8 +126,7 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Success",
+        sonnerToast.success("Berhasil", {
           description: "Kategori berhasil diubah",
         })
 
@@ -139,16 +134,13 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
         form.reset()
         setOpenEditCategorySheet(false)
       } else {
-        toast({
-          title: "Error",
+        sonnerToast.error("Gagal", {
           description: "Kategori gagal diubah",
-          variant: "destructive",
         })
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Kategori gagal diubah",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
 
       console.error(error)
@@ -173,10 +165,8 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
           <DropdownMenuItem
             onClick={() => {
               navigator.clipboard.writeText(kategori.id_category.toString())
-              toast({
-                title: "Berhasil",
-                description: "ID Kategori berhasil dicopy",
-              })
+
+              sonnerToast.info("ID Kategori berhasil dicopy")
             }}
           >
             Copy

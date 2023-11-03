@@ -3,13 +3,13 @@
 import { SyntheticEvent, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react"
+import { toast as sonnerToast } from "sonner"
 
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { toast } from "@/components/ui/use-toast"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -69,21 +69,17 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 if (res?.error === "Login failed") {
                   setIsLoading(false)
 
-                  toast({
-                    title: "Error",
+                  sonnerToast.warning("Perhatian", {
                     description: "Username atau password salah",
-                    variant: "destructive",
                   })
                 } else {
                   setIsLoading(false)
 
-                  // router.push(searchParams.get("from") || "/")
                   router.push("/")
 
                   router.refresh()
 
-                  toast({
-                    title: "Berhasil",
+                  sonnerToast.success("Berhasil", {
                     description: "Anda berhasil masuk",
                   })
                 }

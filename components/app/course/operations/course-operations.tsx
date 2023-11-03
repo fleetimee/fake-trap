@@ -10,6 +10,7 @@ import { format } from "date-fns"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CourseListResData } from "@/types/course/res"
@@ -38,7 +39,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -72,7 +72,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   course_name: z
@@ -122,17 +121,14 @@ async function deleteCourse({ courseId, token }: DeleteCourseProps) {
   )
 
   if (res.ok) {
-    toast({
-      title: "Success",
-      description: "Berhasil menghapus quiz",
+    sonnerToast.success("Berhasil", {
+      description: "Pelatihan berhasil dihapus",
     })
 
     return true
   } else {
-    toast({
-      title: "Error",
-      description: "Gagal menghapus quiz",
-      variant: "destructive",
+    sonnerToast.error("Gagal", {
+      description: "Pelatihan gagal dihapus",
     })
 
     return false
@@ -187,8 +183,7 @@ export function CourseOperations({
       )
 
       if (response.ok) {
-        toast({
-          title: "Pelatihan berhasil diubah",
+        sonnerToast.success("Berhasil", {
           description: "Pelatihan berhasil diubah",
         })
 
@@ -196,8 +191,7 @@ export function CourseOperations({
         form.reset()
         setOpenEditCourse(false)
       } else {
-        toast({
-          title: "Pelatihan gagal diubah",
+        sonnerToast.error("Gagal", {
           description: "Pelatihan gagal diubah",
         })
       }

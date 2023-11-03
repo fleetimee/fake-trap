@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { QuizOneRes, QuizOneResQuestion } from "@/types/quiz/res"
@@ -19,7 +20,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   uuid: z.string().optional(),
@@ -65,20 +65,21 @@ export function QuizForm({ question, quiz }: QuizFormProps) {
       )
 
       if (res.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Jawaban berhasil disimpan.",
         })
 
         router.back()
         form.reset()
       } else {
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: "Jawaban gagal disimpan.",
         })
       }
     } catch (error) {
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
+      })
     } finally {
       setIsLoading(false)
     }

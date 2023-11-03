@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { KnowledgeOneResSection } from "@/types/knowledge/res"
@@ -23,7 +24,6 @@ import {
   SheetDescription,
   SheetHeader,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   section_title: z
@@ -75,8 +75,7 @@ export function EditSectionSheet({ item, open, setOpen }: EditSectionProps) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Section berhasil diubah",
+        sonnerToast.success("Berhasil", {
           description: "Section berhasil diubah",
         })
 
@@ -84,14 +83,12 @@ export function EditSectionSheet({ item, open, setOpen }: EditSectionProps) {
         form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Section gagal diubah",
+        sonnerToast.error("Gagal", {
           description: "Section gagal diubah",
         })
       }
     } catch (error) {
-      toast({
-        title: "Section gagal diubah",
+      sonnerToast.error("Gagal", {
         description: "Section gagal diubah",
       })
     } finally {

@@ -1,6 +1,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
+import { toast as sonnerToast } from "sonner"
 
 import { CourseOneResContent } from "@/types/course/res"
 import { Icons } from "@/components/icons"
@@ -12,7 +13,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { toast } from "@/components/ui/use-toast"
 
 interface DeleteCourseContentSheet {
   item: CourseOneResContent
@@ -44,21 +44,21 @@ export function DeleteCourseContentSheet({
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil menghapus konten",
+        sonnerToast.success("Berhasil", {
           description: "Konten berhasil dihapus",
         })
 
         router.refresh()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal menghapus konten",
+        sonnerToast.error("Gagal", {
           description: "Konten gagal dihapus",
         })
       }
     } catch (error) {
-      console.error(error)
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
+      })
     } finally {
       setIsLoading(false)
     }

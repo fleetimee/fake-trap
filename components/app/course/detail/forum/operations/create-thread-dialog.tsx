@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CourseOneRes } from "@/types/course/res"
@@ -29,7 +30,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   id_course: z.number(),
@@ -78,8 +78,7 @@ export function CreateThreadButton({
       )
 
       if (res.ok) {
-        toast({
-          title: "Berhasil membuat thread.",
+        sonnerToast.success("Berhasil", {
           description: "Thread berhasil dibuat.",
         })
 
@@ -87,13 +86,14 @@ export function CreateThreadButton({
         setOpen(false)
         form.reset()
       } else {
-        toast({
-          title: "Gagal membuat thread.",
+        sonnerToast.error("Gagal", {
           description: "Thread gagal dibuat.",
         })
       }
     } catch (e) {
-      console.error(e)
+      sonnerToast.error("Gagal", {
+        description: `${e}`,
+      })
     } finally {
       setIsLoading(false)
     }

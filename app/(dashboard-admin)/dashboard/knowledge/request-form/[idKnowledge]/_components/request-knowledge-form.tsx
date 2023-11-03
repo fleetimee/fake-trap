@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { cn } from "@/lib/utils"
@@ -20,7 +21,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   id_knowledge: z.string(),
@@ -70,8 +70,7 @@ export function KnowledgeRequestForm({
       )
 
       if (res.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Pengetahuan berhasil diajukan",
         })
 
@@ -79,17 +78,13 @@ export function KnowledgeRequestForm({
         router.push("/dashboard/knowledge")
         router.refresh()
       } else {
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: "Pengetahuan gagal diajukan",
-          variant: "destructive",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
-        description: "Pengetahuan gagal diajukan",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsLoading(false)

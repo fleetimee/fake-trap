@@ -3,10 +3,12 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CourseOneResQuiz } from "@/types/course/res"
 import { QuestionListRes } from "@/types/question/res"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
@@ -19,7 +21,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   uuid: z.string().optional(),
@@ -70,20 +71,21 @@ export function QuizFormTemp({
       )
 
       if (res.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Jawaban berhasil disimpan.",
         })
 
         router.back()
         form.reset()
       } else {
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: "Jawaban gagal disimpan.",
         })
       }
     } catch (error) {
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
+      })
     } finally {
       setIsLoading(false)
     }
@@ -152,8 +154,16 @@ export function QuizFormTemp({
             />
           ))}
 
-          <Button type="submit" className="col-span-1 w-full font-heading">
-            Submit
+          <Button
+            type="submit"
+            className="col-span-1 w-full font-heading"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Icons.spinner className="h-5 w-5 animate-spin" />
+            ) : (
+              "Simpan Jawaban"
+            )}
           </Button>
         </Card>
       </form>

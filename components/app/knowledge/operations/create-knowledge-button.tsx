@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CategoryListRes } from "@/types/category/res"
@@ -45,7 +46,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
 
 interface CreateKnowledgeButtonProps {
   categoryResponse: CategoryListRes
@@ -127,8 +127,7 @@ export function CreateKnowledgeButton({
       )
 
       if (response.ok) {
-        toast({
-          title: "Pengetahuan berhasil dibuat",
+        sonnerToast.success("Berhasil", {
           description: "Pengetahuan berhasil dibuat",
         })
 
@@ -136,13 +135,13 @@ export function CreateKnowledgeButton({
         form.reset()
         setOpen(false)
       } else {
-        throw new Error("Gagal membuat pengetahuan")
+        sonnerToast.error("Gagal", {
+          description: "Pengetahuan gagal dibuat",
+        })
       }
     } catch (error) {
-      toast({
-        title: "Gagal membuat pengetahuan",
-        description: "Gagal membuat pengetahuan",
-        variant: "destructive",
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
       })
     } finally {
       setIsloading(false)

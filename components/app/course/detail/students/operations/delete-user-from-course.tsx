@@ -5,12 +5,12 @@ import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   users: z.array(
@@ -56,8 +56,7 @@ export function DeleteStudentsOutOfCourseButton(props: { uuid: string }) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Success",
+        sonnerToast.success("Berhasil", {
           description: "User berhasil dihapus dari pelatihan ini.",
         })
 
@@ -65,14 +64,14 @@ export function DeleteStudentsOutOfCourseButton(props: { uuid: string }) {
 
         setOpen(false)
       } else {
-        toast({
-          title: "Error",
+        sonnerToast.error("Gagal", {
           description: "User gagal dihapus dari pelatihan ini.",
-          variant: "destructive",
         })
       }
     } catch (error) {
-      console.error(error)
+      sonnerToast.error("Gagal", {
+        description: "User gagal dihapus dari pelatihan ini.",
+      })
     } finally {
       setIsLoading(false)
     }

@@ -6,9 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
-import { ReferenceListRes, ReferenceListResData } from "@/types/references/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -43,13 +44,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
-
-const quizTypes = [
-  { value: 1, label: "Quiz" },
-  { value: 2, label: "Exam" },
-  { value: 3, label: "Assignment" },
-]
 
 const formSchema = z.object({
   quiz_title: z
@@ -114,8 +108,7 @@ export function CreateQuizSheet({ referenceResp }: CreateQuizSheetProps) {
       )
 
       if (response.ok) {
-        toast({
-          title: "Berhasil",
+        sonnerToast.success("Berhasil", {
           description: "Kuis berhasil dibuat",
         })
 
@@ -123,20 +116,14 @@ export function CreateQuizSheet({ referenceResp }: CreateQuizSheetProps) {
         form.reset()
         setOpen(false)
       } else {
-        toast({
-          title: "Gagal",
+        sonnerToast.error("Gagal", {
           description: "Kuis gagal dibuat",
-          variant: "destructive",
         })
       }
     } catch (error) {
-      toast({
-        title: "Gagal",
+      sonnerToast.error("Gagal", {
         description: "Kuis gagal dibuat",
-        variant: "destructive",
       })
-
-      console.error(error)
     } finally {
       setIsLoading(false)
     }
@@ -248,7 +235,7 @@ export function CreateQuizSheet({ referenceResp }: CreateQuizSheetProps) {
                               <CommandItem
                                 value={quiz.value_ref1}
                                 key={quiz.id_ref}
-                                onSelect={(value) => {
+                                onSelect={() => {
                                   form.clearErrors("quiz_type")
                                   form.setValue("quiz_type", quiz.code_ref2)
                                 }}
