@@ -96,8 +96,6 @@ export default async function KnowledgeRevision({
 
   const tokenExtract = extractToken(user.token)
 
-  const uuid = tokenExtract?.id
-
   const knowledge = await getOneKnowledge({
     idKnowledge: Number(params.idKnowledge),
     token: user.token,

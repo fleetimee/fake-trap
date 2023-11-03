@@ -241,6 +241,23 @@ export function CourseOperations({
                   </Link>
                 </DropdownMenuItem>
 
+                <DropdownMenuItem
+                  disabled={
+                    courseResp.status_code === "" ||
+                    courseResp.status_code === "0051" ||
+                    courseResp.status_code === "0052"
+                  }
+                >
+                  <Link
+                    href={`/dashboard/course/revision-form/${courseResp.id_course}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Revisi
+                    <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="flex  items-center
