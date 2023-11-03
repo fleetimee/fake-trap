@@ -15,8 +15,7 @@ export default async function LoginPage() {
         <div
           className="absolute inset-0 bg-cover"
           style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1596113069223-8bcd534df0cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80)",
+            backgroundImage: "url(/images/bg-login.jpg)",
           }}
         />
         <div className="relative z-20 flex items-center text-lg font-medium">
