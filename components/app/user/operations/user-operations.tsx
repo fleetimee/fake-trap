@@ -205,6 +205,24 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             </Link>
           </DropdownMenuItem>
 
+          <DropdownMenuItem className="flex items-center">
+            <Link
+              className="flex w-full cursor-default items-center"
+              href={`/dashboard/user/promote-pemateri/${user.uuid}`}
+            >
+              Promosikan Sebagai Pemateri
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem className="flex items-center">
+            <Link
+              className="flex w-full cursor-default items-center"
+              href={`/dashboard/user/promote-admin/${user.uuid}`}
+            >
+              Promosikan Sebagai Admin
+            </Link>
+          </DropdownMenuItem>
+
           <DropdownMenuSeparator />
 
           <DropdownMenuItem

@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { Metadata } from "next"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
@@ -8,18 +9,23 @@ import { toast as sonnerToast } from "sonner"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 
-interface PromoteToSupervisorFormProps {
+export const metadata: Metadata = {
+  title: "Promosikan Ke Admin",
+  description: "Promosikan Ke Admin",
+}
+
+interface PromoteToAdminFormProps {
   uuid: string
 }
 
-interface PromoteToSupervisorProps {
+interface PromoteToAdminProps {
   uuid: string
   token: string | undefined
 }
 
-async function promoteSupervisor({ uuid, token }: PromoteToSupervisorProps) {
+async function promoteAdmin({ uuid, token }: PromoteToAdminProps) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/promoteSupervisor`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/promoteAdmin`,
     {
       method: "POST",
       headers: {
@@ -30,19 +36,17 @@ async function promoteSupervisor({ uuid, token }: PromoteToSupervisorProps) {
   )
 
   if (res.ok) {
-    sonnerToast.success("Berhasil mempromosikan ke supervisor")
+    sonnerToast.success("Berhasil mempromosikan ke admin")
 
     return true
   } else {
-    sonnerToast.error("Gagal mempromosikan ke supervisor")
+    sonnerToast.error("Gagal mempromosikan ke admin")
 
     return false
   }
 }
 
-export function PromoteToSupervisorForm({
-  uuid,
-}: PromoteToSupervisorFormProps) {
+export function PromoteToAdminForm({ uuid }: PromoteToAdminFormProps) {
   const [isLoading, setIsLoading] = React.useState(false)
 
   const { data: session } = useSession()
@@ -56,26 +60,25 @@ export function PromoteToSupervisorForm({
         event.preventDefault()
         setIsLoading(true)
 
-        const res = await promoteSupervisor({
+        const res = await promoteAdmin({
           uuid,
           token: session?.user.token,
         })
 
-        console.log("res", res)
-
         if (res) {
           setIsLoading(false)
-          router.push("/dashboard/user")
+          router.back()
           router.refresh()
         } else {
           setIsLoading(false)
         }
       }}
+      className="flex items-center justify-center space-x-2"
     >
       {isLoading ? (
         <Icons.spinner className="animate-spin" />
       ) : (
-        "Promosikan Ke Supervisor"
+        "Promosikan Ke Admin"
       )}
     </Button>
   )

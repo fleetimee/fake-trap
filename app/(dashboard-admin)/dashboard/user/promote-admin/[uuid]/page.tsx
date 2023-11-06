@@ -23,14 +23,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { PromoteToSupervisorForm } from "./_components/promote-supervisor-form"
+import { PromoteToAdminForm } from "./_components/promote-admin-form/promote-admin-form"
 
 export const metadata: Metadata = {
-  title: "Promosikan Ke Supervisor",
-  description: "Promosikan Ke Supervisor",
+  title: "Promosikan Ke Admin",
+  description: "Promosikan Ke Admin",
 }
 
-interface PromoteSupervisorPageProps {
+interface PromoteAdminPageProps {
   params: {
     uuid: string
   }
@@ -60,9 +60,9 @@ async function getOneUser({
   return await res.json()
 }
 
-export default async function PromoteSupervisorPage({
+export default async function PromoteAdminPage({
   params,
-}: PromoteSupervisorPageProps) {
+}: PromoteAdminPageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -84,8 +84,8 @@ export default async function PromoteSupervisorPage({
             title: "User",
           },
           {
-            href: `/dashboard/user/promote-supervisor`,
-            title: "Promote Supervisor",
+            href: `/dashboard/user/promote-admin`,
+            title: "Promote Admin",
           },
         ]}
       />
@@ -108,11 +108,11 @@ export default async function PromoteSupervisorPage({
                   </Tooltip>
                 </TooltipProvider>
               </span>
-              Promosikan Ke Supervisor
+              Promosikan Ke Admin
             </CardTitle>
           </div>
           <CardDescription className="space-y-2 px-8 text-sm">
-            Upgrade user menjadi supervisor
+            Upgrade user menjadi Admin
           </CardDescription>
         </CardHeader>
 
@@ -133,7 +133,7 @@ export default async function PromoteSupervisorPage({
             </div>
           </ScrollArea>
 
-          <PromoteToSupervisorForm uuid={userData.data.uuid} />
+          <PromoteToAdminForm uuid={params.uuid} />
         </CardContent>
       </Card>
     </DashboardShell>

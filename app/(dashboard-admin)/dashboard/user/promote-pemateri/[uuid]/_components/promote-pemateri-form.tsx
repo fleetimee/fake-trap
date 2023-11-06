@@ -8,18 +8,18 @@ import { toast as sonnerToast } from "sonner"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 
-interface PromoteToSupervisorFormProps {
+interface PromoteToPemateriFormProps {
   uuid: string
 }
 
-interface PromoteToSupervisorProps {
+interface PromoteToPemateriProps {
   uuid: string
   token: string | undefined
 }
 
-async function promoteSupervisor({ uuid, token }: PromoteToSupervisorProps) {
+async function promotePemateri({ uuid, token }: PromoteToPemateriProps) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/promoteSupervisor`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/promotePemateri`,
     {
       method: "POST",
       headers: {
@@ -30,19 +30,17 @@ async function promoteSupervisor({ uuid, token }: PromoteToSupervisorProps) {
   )
 
   if (res.ok) {
-    sonnerToast.success("Berhasil mempromosikan ke supervisor")
+    sonnerToast.success("Berhasil mempromosikan ke pemateri")
 
     return true
   } else {
-    sonnerToast.error("Gagal mempromosikan ke supervisor")
+    sonnerToast.error("Gagal mempromosikan ke pemateri")
 
     return false
   }
 }
 
-export function PromoteToSupervisorForm({
-  uuid,
-}: PromoteToSupervisorFormProps) {
+export function PromoteToPemateriForm({ uuid }: PromoteToPemateriFormProps) {
   const [isLoading, setIsLoading] = React.useState(false)
 
   const { data: session } = useSession()
@@ -56,12 +54,10 @@ export function PromoteToSupervisorForm({
         event.preventDefault()
         setIsLoading(true)
 
-        const res = await promoteSupervisor({
+        const res = await promotePemateri({
           uuid,
           token: session?.user.token,
         })
-
-        console.log("res", res)
 
         if (res) {
           setIsLoading(false)
@@ -75,7 +71,7 @@ export function PromoteToSupervisorForm({
       {isLoading ? (
         <Icons.spinner className="animate-spin" />
       ) : (
-        "Promosikan Ke Supervisor"
+        "Promosikan Ke Pemateri"
       )}
     </Button>
   )
