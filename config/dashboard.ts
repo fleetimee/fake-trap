@@ -100,6 +100,24 @@ export const userAreaDashboardConfig: DashboardConfig = {
   ],
 }
 
+export const pemateriAreaDashboardConfig: DashboardConfig = {
+  mainNav: [],
+  sidebarNav: [
+    {
+      title: "Admin Area",
+      href: "/pemateri-area",
+      icon: "dashboard",
+      items: [],
+    },
+    {
+      title: "User Management",
+      href: "/pemateri-area/user-management",
+      icon: "user",
+      items: [],
+    },
+  ],
+}
+
 export const supervisorAreaDashboardConfig: DashboardConfig = {
   mainNav: [],
   sidebarNav: [
@@ -200,6 +218,24 @@ export const supervisorAreaRole: UserAreaRole = {
       description:
         "Anda dapat melihat pelatihan yang sudah disetujui oleh anda",
       icon: "course",
+    },
+  ],
+}
+
+export const pemateriAreaRole: UserAreaRole = {
+  roleName: "Admin",
+  roleDescription:
+    "Sebagai admin, anda dapat mengakses berbagai fitur dibawah ini",
+  features: [
+    {
+      icon: "course",
+      title: "Management User",
+      description: "Anda dapat mengelola user yang terdaftar pada sistem",
+    },
+    {
+      icon: "laptop",
+      title: "Maanagemen Kewenanangan",
+      description: "Anda dapat mengelola kewenangan user",
     },
   ],
 }
