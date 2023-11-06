@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { CourseOneRes } from "@/types/course/res"
@@ -8,7 +8,7 @@ import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { ThreadListRes } from "@/types/threads/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { convertDatetoString } from "@/lib/utils"
+import { convertDatetoString, extractToken } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -32,7 +32,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PreviewCourseDetailSidebar } from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/(course-layout)/preview-course/[idCourse]/_components/sidebar"
 
 import { PreviewUserCourseDetailSidebar } from "./_components/sidebar"
 
@@ -111,6 +110,32 @@ async function getThreadList({
   return await res.json()
 }
 
+interface CheckUserEnrolledProps {
+  token: string | undefined
+  idCourse: string
+  uuid: string
+}
+
+async function checkUserEnrolled({
+  token,
+  idCourse,
+  uuid,
+}: CheckUserEnrolledProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/checkIfUserEnrolled/${idCourse}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 interface CourseDetailLayoutProps {
   children: React.ReactNode
   params: {
@@ -121,10 +146,36 @@ interface CourseDetailLayoutProps {
 export async function generateMetadata({ params }: CourseDetailLayoutProps) {
   const user = await getCurrentUser()
 
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
+  const tokenExtracted = extractToken(user?.token)
+
   const dataCourse = await getOneCourse({
     token: user?.token,
     idCourse: params.detail,
   })
+
+  if (dataCourse.code === 403) {
+    return {
+      title: "Pelatihan tidak ditemukan",
+      description: "Pelatihan tidak ditemukan",
+    }
+  }
+
+  const checkEnrolled = await checkUserEnrolled({
+    token: user?.token,
+    idCourse: params.detail,
+    uuid: tokenExtracted?.id,
+  })
+
+  if (checkEnrolled.code === 404) {
+    return {
+      title: "Pelatihan tidak ditemukan",
+      description: "Pelatihan tidak ditemukan",
+    }
+  }
 
   return {
     title: dataCourse.data.course_name,
@@ -142,12 +193,28 @@ export default async function CourseDetailLayout({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
+  const tokenExtracted = extractToken(user?.token)
+
   const [dataCourse] = await Promise.all([
     getOneCourse({
       token: user?.token,
       idCourse: params.detail,
     }),
   ])
+
+  if (dataCourse.code === 403) {
+    return notFound()
+  }
+
+  const checkEnrolled = await checkUserEnrolled({
+    token: user?.token,
+    idCourse: params.detail,
+    uuid: tokenExtracted?.id,
+  })
+
+  if (checkEnrolled.code === 404) {
+    return notFound()
+  }
 
   const courseKnowledgeResp = await getOneKnowledge({
     token: user?.token,
@@ -346,7 +413,9 @@ export default async function CourseDetailLayout({
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    {threadsResp.data.length > 0 ? (
+                    {threadsResp &&
+                    threadsResp.data &&
+                    threadsResp.data.length > 0 ? (
                       <ScrollArea className="h-[300px] w-full">
                         <div className="flex flex-col gap-4">
                           {threadsResp.data.map((thread, index) => (
