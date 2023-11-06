@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
@@ -194,10 +195,20 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
+        <DropdownMenuContent align="end" className="w-auto">
+          <DropdownMenuItem className="flex items-center">
+            <Link
+              className="flex w-full cursor-default items-center"
+              href={`/dashboard/user/promote-supervisor/${user.uuid}`}
+            >
+              Promosikan Sebagai Supervisor
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
           <DropdownMenuItem
-            className="flex  items-center
-          "
+            className="flex items-center"
             onSelect={() => setOpenEditUserSheet(true)}
             asChild
           >
