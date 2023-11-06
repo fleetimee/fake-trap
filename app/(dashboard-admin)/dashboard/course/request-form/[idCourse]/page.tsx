@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { CourseOneRes } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
@@ -68,6 +68,27 @@ async function getOneCourse({
   return await res.json()
 }
 
+interface LookupCourseProps {
+  token: string | undefined
+  idCourse: string
+}
+
+async function lookupCourse({ token, idCourse }: LookupCourseProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/lookup`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 export default async function CourseRequest({ params }: CourseRequestProps) {
   const user = await getCurrentUser()
 
@@ -83,6 +104,15 @@ export default async function CourseRequest({ params }: CourseRequestProps) {
     token: user.token,
     idCourse: params.idCourse,
   })
+
+  const lookupCourseData = await lookupCourse({
+    token: user.token,
+    idCourse: params.idCourse,
+  })
+
+  if (lookupCourseData.data) {
+    return notFound()
+  }
 
   return (
     <DashboardShell>

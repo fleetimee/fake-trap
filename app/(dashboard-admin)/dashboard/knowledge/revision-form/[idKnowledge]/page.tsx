@@ -1,12 +1,11 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { ApprovalOneRes } from "@/types/approval/res"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -79,6 +78,30 @@ async function getOneApprovalKnowledge({
         ContentType: "application/json",
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface CheckIfKnowledgeIsRejectedProps {
+  token: string | undefined
+  idKnowledge: number
+}
+
+async function checkIfKnowledgeIsRejected({
+  token,
+  idKnowledge,
+}: CheckIfKnowledgeIsRejectedProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/isRejected`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
 
@@ -94,8 +117,6 @@ export default async function KnowledgeRevision({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const tokenExtract = extractToken(user.token)
-
   const knowledge = await getOneKnowledge({
     idKnowledge: Number(params.idKnowledge),
     token: user.token,
@@ -105,6 +126,15 @@ export default async function KnowledgeRevision({
     idKnowledge: Number(params.idKnowledge),
     token: user.token,
   })
+
+  const isRejected = await checkIfKnowledgeIsRejected({
+    idKnowledge: Number(params.idKnowledge),
+    token: user.token,
+  })
+
+  if (!isRejected.data) {
+    return notFound()
+  }
 
   return (
     <DashboardShell>

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { ApprovalCourseOneRes } from "@/types/approval/res"
 import { CourseOneRes } from "@/types/course/res"
@@ -86,6 +86,29 @@ async function getOneApprovalCourse({
   return await res.json()
 }
 
+interface CheckIfCourseIsRejectedProps {
+  token: string | undefined
+  idCourse: number
+}
+
+async function checkIfCourseIsRejected({
+  token,
+  idCourse,
+}: CheckIfCourseIsRejectedProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/isRejected`,
+    {
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 export default async function CourseRevision({ params }: CourseRevisionProps) {
   const user = await getCurrentUser()
 
@@ -94,8 +117,6 @@ export default async function CourseRevision({ params }: CourseRevisionProps) {
   }
 
   const tokenExtract = extractToken(user.token)
-
-  const uuid = tokenExtract?.id
 
   const course = await getOneCourse({
     idCourse: params.idCourse,
@@ -106,6 +127,15 @@ export default async function CourseRevision({ params }: CourseRevisionProps) {
     idCourse: Number(params.idCourse),
     token: user.token,
   })
+
+  const isRejected = await checkIfCourseIsRejected({
+    idCourse: Number(params.idCourse),
+    token: user.token,
+  })
+
+  if (!isRejected.data) {
+    return notFound()
+  }
 
   return (
     <DashboardShell>
