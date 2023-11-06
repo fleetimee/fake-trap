@@ -62,6 +62,13 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         enableHiding: true,
       },
       {
+        accessorKey: "roles",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Role" />
+        ),
+        enableSorting: false,
+      },
+      {
         accessorKey: "email",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Email" />
