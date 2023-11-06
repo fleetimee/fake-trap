@@ -14,6 +14,38 @@ export const metadata = {
   description: "User yang tersedia di e-learning",
 }
 
+interface GetUserV2Props {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+async function getUserV2({
+  token,
+  page,
+  limit,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetUserV2Props): Promise<UserListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/v2?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 interface GetUserListProps {
   token: string | undefined
   page: number
@@ -32,7 +64,7 @@ async function getUserList({
   sortOrder = "desc",
 }: GetUserListProps): Promise<UserListRes> {
   const userList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users?page=${page}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}&filterField=username&filterValue=${username}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/v2?page=${page}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}&filterField=username&filterValue=${username}`,
     {
       method: "GET",
       headers: {
@@ -71,13 +103,13 @@ export default async function UserPage({ searchParams }: UserPageProps) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const userList = await getUserList({
+  const userList = await getUserV2({
     token: user?.token,
     page: pageInitial,
     limit: limitInitial,
-    sortField: sortField,
-    sortOrder: sortOrder,
-    username: nameInitial,
+    sortBy: sortField,
+    orderBy: sortOrder,
+    searchQuery: nameInitial,
   })
 
   return (
