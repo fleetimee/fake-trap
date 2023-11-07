@@ -7,10 +7,12 @@ import { Card } from "@/components/ui/card"
 
 interface CourseContainerCardProps {
   enrolledCourseList: UserEnrolledCourseListRes
+  link?: string
 }
 
 export function CourseContainerCard({
   enrolledCourseList,
+  link,
 }: CourseContainerCardProps) {
   return (
     <Card className="col-span-7 flex min-h-[300px] w-full flex-col gap-8 p-4">
@@ -19,7 +21,7 @@ export function CourseContainerCard({
           Pelatihan Yang Diikuti
         </h1>
 
-        <Link href={`/dashboard/me/course`}>
+        <Link href={link ?? "/dashboard/me/course"}>
           <Button variant="outline">Lihat semua</Button>
         </Link>
       </div>
