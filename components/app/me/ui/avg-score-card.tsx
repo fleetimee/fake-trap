@@ -13,7 +13,7 @@ export function AvgScoreCard({ avgScore }: AvgScoreCardProps) {
 
       <div className="m-auto flex  flex-col">
         <p className="items-center justify-center font-heading text-6xl">
-          {avgScore}
+          {avgScore.toFixed(2)}
         </p>
       </div>
     </Card>
