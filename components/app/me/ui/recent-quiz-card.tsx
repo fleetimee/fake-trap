@@ -17,15 +17,16 @@ import {
 
 interface RecentQuizCard {
   quizTakenList: UserQuizTakenListRes
+  link?: string
 }
 
-export function RecentQuizCard({ quizTakenList }: RecentQuizCard) {
+export function RecentQuizCard({ quizTakenList, link }: RecentQuizCard) {
   return (
     <Card className="col-span-7 flex min-h-[395px] flex-col gap-6 p-4 lg:col-span-4">
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-2xl font-light">Riwayat Quiz</h1>
 
-        <Link href={`/dashboard/me/recent-quiz`}>
+        <Link href={link ?? "/dashboard/me/recent-quiz"}>
           <Button variant="outline">Lihat semua</Button>
         </Link>
       </div>
