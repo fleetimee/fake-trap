@@ -15,15 +15,16 @@ import {
 
 interface QuizGroupedProps {
   quizGrouped: UserQuizGroupedRes
+  link?: string
 }
 
-export function QuizGrouped({ quizGrouped }: QuizGroupedProps) {
+export function QuizGrouped({ quizGrouped, link }: QuizGroupedProps) {
   return (
     <Card className="col-span-7 flex  min-h-[370px]  flex-col gap-4 p-4 xl:col-span-3">
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-2xl font-light">Nilai Anda</h1>
 
-        <Link href={`/dashboard/me/averaged-quiz`}>
+        <Link href={link ?? "/dashboard/me/averaged-quiz"}>
           <Button variant="outline">Lihat semua</Button>
         </Link>
       </div>
