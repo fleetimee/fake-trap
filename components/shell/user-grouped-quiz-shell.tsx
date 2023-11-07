@@ -102,6 +102,9 @@ export function UserQuizGroupedTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Skor" />
         ),
+        cell: ({ row }) => {
+          return <p>{row.original.average_score.toFixed(2)}</p>
+        },
       },
     ],
     [setSelectedRowIds, data]
