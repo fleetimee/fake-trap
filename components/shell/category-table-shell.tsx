@@ -1,13 +1,17 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
+import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
 import { convertDatetoString } from "@/lib/utils"
-import { Checkbox } from "@/components/ui/checkbox"
 import { CategoryOperations } from "@/components/app/category/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
+import { Checkbox } from "@/components/ui/checkbox"
+
+import { AspectRatio } from "../ui/aspect-ratio"
 
 interface CategoryTableShellProps {
   data: CategoryListResData[]
@@ -71,6 +75,23 @@ export function CategoryTableShell({
         ),
         enableSorting: true,
         enableHiding: true,
+      },
+      {
+        accessorKey: "image",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Gambar" />
+        ),
+        cell: ({ row }) => (
+          <Image
+            src={row.original.image}
+            alt={row.original.image}
+            width={150}
+            height={150}
+            className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
+          />
+        ),
+        enableSorting: false,
+        enableHiding: false,
       },
       {
         accessorKey: "created_at",

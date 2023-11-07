@@ -50,6 +50,7 @@ import {
 
 const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
+  image: z.string().url().optional(),
 })
 
 interface DeleteCategoryProps {
@@ -106,6 +107,7 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       category_name: kategori.category_name,
+      image: kategori.image,
     },
   })
 
@@ -267,6 +269,27 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
                     </FormControl>
                     <FormDescription>
                       Nama Kategori yang akan ditambahkan
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gambar</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Gambar"
+                        {...field}
+                        disabled={isEditLoading}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Gambar yang akan ditambahkan
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

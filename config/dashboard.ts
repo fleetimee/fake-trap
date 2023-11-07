@@ -239,3 +239,42 @@ export const pemateriAreaRole: UserAreaRole = {
     },
   ],
 }
+
+export const adminAreaRole: UserAreaRole = {
+  roleName: "Pemateri",
+  roleDescription:
+    "Sebagai pemateri, anda dapat mengakses berbagai fitur dibawah ini",
+  features: [
+    {
+      icon: "laptop",
+      title: "Pengetahuan",
+      description: "Anda dapat mengelola pengetahuan yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Pelatihan",
+      description: "Anda dapat mengelola pelatihan yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Kategori",
+      description: "Anda dapat mengelola kategori yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Quiz",
+      description: "Anda dapat mengelola quiz yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Forum",
+      description: "Anda dapat mengelola forum yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Konten",
+      description:
+        "Anda dapat mengelola konten pengetahuan dan pelatihan yang anda buat",
+    },
+  ],
+}

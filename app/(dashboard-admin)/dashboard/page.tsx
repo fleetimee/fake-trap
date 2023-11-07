@@ -12,9 +12,11 @@ import {
 import { Variants } from "framer-motion"
 import { PartyPopper } from "lucide-react"
 
+import { adminAreaRole, pemateriAreaRole } from "@/config/dashboard"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString, extractToken } from "@/lib/utils"
+import { DashboardInformation } from "@/components/dashboard-information"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
@@ -74,6 +76,7 @@ export default async function DashboardPage() {
       >
         <DashboardHeader heading="Dashboard" description={dateNow} />
       </MotionDiv>
+
       <MotionDiv
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
@@ -92,6 +95,18 @@ export default async function DashboardPage() {
           </AlertDescription>
         </Alert>
       </MotionDiv>
+
+      <MotionDiv
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <DashboardInformation
+          roleName={adminAreaRole.roleName}
+          roleDescription={adminAreaRole.roleDescription}
+          features={adminAreaRole.features}
+        />
+      </MotionDiv>
+
       <MotionDiv
         className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4"
         variants={parentVariant}

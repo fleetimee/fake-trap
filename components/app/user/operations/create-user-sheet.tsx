@@ -125,7 +125,9 @@ export function CreateUserSheet() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
-        <Button className="ml-2">Tambah</Button>
+        {/* <Button className="ml-2 " disabled>
+          Tambah
+        </Button> */}
       </SheetTrigger>
       <SheetContent size="content">
         <SheetHeader>

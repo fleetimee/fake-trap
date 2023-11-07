@@ -196,7 +196,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-auto">
-          <DropdownMenuItem className="flex items-center">
+          <DropdownMenuItem className="flex items-center" disabled>
             <Link
               className="flex w-full cursor-default items-center"
               href={`/dashboard/user/promote-supervisor/${user.uuid}`}
@@ -205,7 +205,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="flex items-center">
+          <DropdownMenuItem className="flex items-center" disabled>
             <Link
               className="flex w-full cursor-default items-center"
               href={`/dashboard/user/promote-pemateri/${user.uuid}`}
@@ -214,7 +214,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="flex items-center">
+          <DropdownMenuItem className="flex items-center" disabled>
             <Link
               className="flex w-full cursor-default items-center"
               href={`/dashboard/user/promote-admin/${user.uuid}`}
@@ -229,6 +229,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             className="flex items-center"
             onSelect={() => setOpenEditUserSheet(true)}
             asChild
+            disabled
           >
             <p>Edit</p>
           </DropdownMenuItem>
@@ -238,6 +239,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
           <DropdownMenuItem
             className="flex  items-center hover:bg-red-600 hover:text-white"
             onSelect={() => setOpenDeleteUserSheet(true)}
+            disabled
           >
             Hapus
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
