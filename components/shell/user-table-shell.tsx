@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { UserListResData } from "@/types/user/res/user-list"
@@ -56,8 +57,18 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
       {
         accessorKey: "username",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama" />
+          <DataTableColumnHeader column={column} title="Usernam" />
         ),
+        cell: ({ row }) => {
+          return (
+            <Link
+              href={`/dashboard/user/${row.original.uuid}`}
+              className="text-sm font-bold text-blue-500 hover:underline"
+            >
+              <p>{row.original.username}</p>
+            </Link>
+          )
+        },
         enableSorting: true,
         enableHiding: true,
       },
