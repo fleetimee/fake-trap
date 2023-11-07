@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
@@ -10,8 +9,6 @@ import { convertDatetoString } from "@/lib/utils"
 import { CategoryOperations } from "@/components/app/category/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 import { Checkbox } from "@/components/ui/checkbox"
-
-import { AspectRatio } from "../ui/aspect-ratio"
 
 interface CategoryTableShellProps {
   data: CategoryListResData[]
