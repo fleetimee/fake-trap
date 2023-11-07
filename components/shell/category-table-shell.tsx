@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
@@ -70,6 +71,17 @@ export function CategoryTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama" />
         ),
+        cell: ({ row }) => {
+          return (
+            <Link
+              href={`/dashboard/category/${row.original.id_category}`}
+              passHref
+              className="cursor-pointer text-blue-500 hover:text-blue-600 hover:underline"
+            >
+              <p className="text-sm font-bold">{row.original.category_name}</p>
+            </Link>
+          )
+        },
         enableSorting: true,
         enableHiding: true,
       },
