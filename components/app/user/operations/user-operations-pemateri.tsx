@@ -119,7 +119,7 @@ interface UserOperationsAdminProps {
   user: UserListResData
 }
 
-export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
+export function UserOperationsAdminV2({ user }: UserOperationsAdminProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -196,28 +196,28 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-auto">
-          <DropdownMenuItem className="flex items-center" disabled>
+          <DropdownMenuItem className="flex items-center">
             <Link
               className="flex w-full cursor-default items-center"
-              href={`/dashboard/user/promote-supervisor/${user.uuid}`}
+              href={`/pemateri-area/user-management/promote-supervisor/${user.uuid}`}
             >
               Promosikan Sebagai Supervisor
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="flex items-center" disabled>
+          <DropdownMenuItem className="flex items-center">
             <Link
               className="flex w-full cursor-default items-center"
-              href={`/dashboard/user/promote-pemateri/${user.uuid}`}
+              href={`/pemateri-area/user-management/promote-pemateri/${user.uuid}`}
             >
               Promosikan Sebagai Pemateri
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="flex items-center" disabled>
+          <DropdownMenuItem className="flex items-center">
             <Link
               className="flex w-full cursor-default items-center"
-              href={`/dashboard/user/promote-admin/${user.uuid}`}
+              href={`/pemateri-area/user-management/promote-admin/${user.uuid}`}
             >
               Promosikan Sebagai Admin
             </Link>
@@ -229,7 +229,6 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             className="flex items-center"
             onSelect={() => setOpenEditUserSheet(true)}
             asChild
-            disabled
           >
             <p>Edit</p>
           </DropdownMenuItem>
@@ -239,7 +238,6 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
           <DropdownMenuItem
             className="flex  items-center hover:bg-red-600 hover:text-white"
             onSelect={() => setOpenDeleteUserSheet(true)}
-            disabled
           >
             Hapus
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

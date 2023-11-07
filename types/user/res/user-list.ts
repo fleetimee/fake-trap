@@ -17,4 +17,5 @@ export type UserListResData = {
   password: string
   last_login: Date | null
   user_quiz: null
+  roles: string
 }

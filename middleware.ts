@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 import { withAuth } from "next-auth/middleware"
 
-import SupervisorAreaPage from "./app/(dashboard-supervisor)/supervisor-area/page"
 import { extractTokenMiddleware } from "./lib/utils"
 
 export default withAuth(
@@ -40,6 +39,8 @@ export default withAuth(
     const isSupervisorAreaPage =
       req.nextUrl.pathname.startsWith("/supervisor-area")
 
+    const isPemateriAreaPage = req.nextUrl.pathname.startsWith("/pemateri-area")
+
     if (isAuthPage) {
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
@@ -65,6 +66,11 @@ export default withAuth(
           userRoles.some((role) => role.role_name === superVisorRole)
         ) {
           return NextResponse.redirect(new URL("/supervisor-area", req.url))
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === pemateriRole)
+        ) {
+          return NextResponse.redirect(new URL("/pemateri-area", req.url))
         }
       }
 
@@ -179,6 +185,7 @@ export default withAuth(
 
         const adminRole = "Admin"
         const superVisorRole = "Supervisor"
+        const pemateriRole = "Pemateri"
 
         const userRoles = extractToken.role
 
@@ -192,6 +199,11 @@ export default withAuth(
           userRoles.some((role) => role.role_name === superVisorRole)
         ) {
           return NextResponse.redirect(new URL("/supervisor-area", req.url))
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === pemateriRole)
+        ) {
+          return NextResponse.redirect(new URL("/pemateri-area", req.url))
         } else {
           return NextResponse.redirect(new URL("/member-area", req.url))
         }
@@ -203,6 +215,7 @@ export default withAuth(
 
         const adminRole = "Admin"
         const normalRole = "User"
+        const pematerRole = "Pemateri"
 
         const userRoles = extractToken.role
 
@@ -216,6 +229,42 @@ export default withAuth(
           userRoles.some((role) => role.role_name === normalRole)
         ) {
           return NextResponse.redirect(new URL("/member-area", req.url))
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === pematerRole)
+        ) {
+          return NextResponse.redirect(new URL("/pemateri-area", req.url))
+        } else {
+          return null
+        }
+      }
+
+    if (isPemateriAreaPage)
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const adminRole = "Admin"
+        const normalRole = "User"
+        const superVisorRole = "Supervisor"
+
+        const userRoles = extractToken.role
+
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === adminRole)
+        ) {
+          return NextResponse.redirect(new URL("/dashboard", req.url))
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === normalRole)
+        ) {
+          return NextResponse.redirect(new URL("/member-area", req.url))
+        }
+        if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === superVisorRole)
+        ) {
+          return NextResponse.redirect(new URL("/supervisor-area", req.url))
         } else {
           return null
         }
@@ -227,6 +276,7 @@ export default withAuth(
 
         const adminRole = "Admin"
         const superVisorRole = "Supervisor"
+        const pemateriRole = "Pemateri"
 
         const userRoles = extractToken.role
 
@@ -240,8 +290,12 @@ export default withAuth(
           userRoles.some((role) => role.role_name === superVisorRole)
         ) {
           return NextResponse.redirect(new URL("/supervisor-area", req.url))
-        }
-        {
+        } else if (
+          userRoles &&
+          userRoles.some((role) => role.role_name === pemateriRole)
+        ) {
+          return NextResponse.redirect(new URL("/pemateri-area", req.url))
+        } else {
           return null
         }
       }
@@ -263,6 +317,7 @@ export const config = {
     "/login",
     "/member-area/:path*",
     "/supervisor-area/:path*",
+    "/pemateri-area/:path*",
     "/intro/knowledge/:path*",
     "/intro/categories/:path*",
   ],

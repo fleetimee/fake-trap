@@ -49,12 +49,12 @@ export const dashboardConfig: DashboardConfig = {
       icon: "course",
       items: [],
     },
-    {
-      title: "Settings",
-      href: "/dashboard/settings",
-      icon: "settings",
-      items: [],
-    },
+    // {
+    //   title: "Settings",
+    //   href: "/dashboard/settings",
+    //   icon: "settings",
+    //   items: [],
+    // },
     {
       title: "Profile",
       href: "/dashboard/me",
@@ -95,6 +95,24 @@ export const userAreaDashboardConfig: DashboardConfig = {
       title: "Profile",
       href: "/member-area/me",
       icon: "pizza",
+      items: [],
+    },
+  ],
+}
+
+export const pemateriAreaDashboardConfig: DashboardConfig = {
+  mainNav: [],
+  sidebarNav: [
+    {
+      title: "Admin Area",
+      href: "/pemateri-area",
+      icon: "dashboard",
+      items: [],
+    },
+    {
+      title: "User Management",
+      href: "/pemateri-area/user-management",
+      icon: "user",
       items: [],
     },
   ],
@@ -200,6 +218,63 @@ export const supervisorAreaRole: UserAreaRole = {
       description:
         "Anda dapat melihat pelatihan yang sudah disetujui oleh anda",
       icon: "course",
+    },
+  ],
+}
+
+export const pemateriAreaRole: UserAreaRole = {
+  roleName: "Admin",
+  roleDescription:
+    "Sebagai admin, anda dapat mengakses berbagai fitur dibawah ini",
+  features: [
+    {
+      icon: "course",
+      title: "Management User",
+      description: "Anda dapat mengelola user yang terdaftar pada sistem",
+    },
+    {
+      icon: "laptop",
+      title: "Maanagemen Kewenanangan",
+      description: "Anda dapat mengelola kewenangan user",
+    },
+  ],
+}
+
+export const adminAreaRole: UserAreaRole = {
+  roleName: "Pemateri",
+  roleDescription:
+    "Sebagai pemateri, anda dapat mengakses berbagai fitur dibawah ini",
+  features: [
+    {
+      icon: "laptop",
+      title: "Pengetahuan",
+      description: "Anda dapat mengelola pengetahuan yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Pelatihan",
+      description: "Anda dapat mengelola pelatihan yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Kategori",
+      description: "Anda dapat mengelola kategori yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Quiz",
+      description: "Anda dapat mengelola quiz yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Forum",
+      description: "Anda dapat mengelola forum yang anda buat",
+    },
+    {
+      icon: "laptop",
+      title: "Konten",
+      description:
+        "Anda dapat mengelola konten pengetahuan dan pelatihan yang anda buat",
     },
   ],
 }

@@ -118,12 +118,12 @@ export default async function UserPage({ searchParams }: UserPageProps) {
       <BreadCrumbs
         segments={[
           {
-            href: "/dashboard",
-            title: "Dashboard",
+            href: "/pemateri-area",
+            title: "Admin Area",
           },
           {
-            href: "/dashboard/user",
-            title: "User",
+            href: "/pemateri-area/user-management",
+            title: "User Management",
           },
         ]}
       />
@@ -147,7 +147,7 @@ export default async function UserPage({ searchParams }: UserPageProps) {
       </div>
 
       <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <UserTableShell data={userList.data} pageCount={userList.totalPage} />
+        <UserTableShellV2 data={userList.data} pageCount={userList.totalPage} />
       </MotionDiv>
     </DashboardShell>
   )

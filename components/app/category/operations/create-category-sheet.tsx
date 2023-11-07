@@ -31,6 +31,7 @@ import {
 
 const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
+  image: z.string().url().optional(),
 })
 
 export function CreateCategorySheet() {
@@ -46,6 +47,7 @@ export function CreateCategorySheet() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       category_name: "",
+      image: "",
     },
   })
 
@@ -125,6 +127,27 @@ export function CreateCategorySheet() {
                   </FormControl>
                   <FormDescription>
                     Nama Kategori yang akan ditambahkan
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Gambar</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Gambar"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Gambar yang akan ditambahkan
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

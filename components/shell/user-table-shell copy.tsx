@@ -9,12 +9,14 @@ import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
 
+import { UserOperationsAdminV2 } from "../app/user/operations/user-operations-pemateri"
+
 interface UserTableShellProps {
   data: UserListResData[]
   pageCount: number
 }
 
-export function UserTableShell({ data, pageCount }: UserTableShellProps) {
+export function UserTableShellV2({ data, pageCount }: UserTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<string[]>([])
 
@@ -121,7 +123,7 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         cell: ({ row }) => {
           const user = row.original
 
-          return <UserOperationsAdmin user={user} />
+          return <UserOperationsAdminV2 user={user} />
         },
       },
     ],
