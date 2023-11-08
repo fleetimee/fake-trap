@@ -33,8 +33,8 @@ async function getOneUserProps({
 }
 
 export const metadata = {
-  title: "Semua Percobaan Quiz Saya",
-  description: "Percobaan Quiz yang saya ikuti",
+  title: "Riwayat Quiz",
+  description: "Riwayat quiz yang saya ikuti",
 }
 
 interface GetUserQuizAttemptList {
