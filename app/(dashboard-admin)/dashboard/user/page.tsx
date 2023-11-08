@@ -8,7 +8,6 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserTableShell } from "@/components/shell"
-import { UserTableShellV2 } from "@/components/shell/user-table-shell copy"
 
 export const metadata = {
   title: "User",
@@ -45,37 +44,6 @@ async function getUserV2({
   )
 
   return await res.json()
-}
-
-interface GetUserListProps {
-  token: string | undefined
-  page: number
-  limit: number
-  username?: string
-  sortField?: string
-  sortOrder?: string
-}
-
-async function getUserList({
-  token,
-  page,
-  limit,
-  username = "",
-  sortField = "created_at",
-  sortOrder = "desc",
-}: GetUserListProps): Promise<UserListRes> {
-  const userList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/v2?page=${page}&limit=${limit}&sortField=${sortField}&sortOrder=${sortOrder}&filterField=username&filterValue=${username}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return userList.json()
 }
 
 interface UserPageProps {
