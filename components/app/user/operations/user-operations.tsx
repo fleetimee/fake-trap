@@ -196,6 +196,17 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-auto">
+          <DropdownMenuItem className="flex items-center">
+            <Link
+              className="flex w-full cursor-default items-center"
+              href={`/dashboard/user/${user.uuid}`}
+            >
+              Lihat
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
           <DropdownMenuItem className="flex items-center" disabled>
             <Link
               className="flex w-full cursor-default items-center"
