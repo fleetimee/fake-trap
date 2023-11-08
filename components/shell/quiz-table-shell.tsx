@@ -156,6 +156,16 @@ export function QuizTableShell({
       columns={columns}
       data={data}
       pageCount={pageCount}
+      filterableColumns={[
+        {
+          id: "quiz_type",
+          title: "Tipe Kuis",
+          options: referenceResp.data.map((reference) => ({
+            value: reference.code_ref2,
+            label: reference.value_ref1,
+          })),
+        },
+      ]}
       searchableColumns={[
         {
           id: "quiz_title",
