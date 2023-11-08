@@ -83,7 +83,7 @@ interface UserAveragedQuizPageProps {
   }
 }
 
-export default async function MeQuizPage({
+export default async function UserAveragedQuizPage({
   searchParams,
   params,
 }: UserAveragedQuizPageProps) {
