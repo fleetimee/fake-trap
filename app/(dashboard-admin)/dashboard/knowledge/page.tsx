@@ -40,45 +40,15 @@ async function getKnowledgeVisibility({
   return await res.json()
 }
 
-interface GetKnowledgeProps {
-  token: string | undefined
-  page: number
-  limit: number
-  searchQuery?: string
-  sortField?: string
-  sortOrder?: string
-}
-
-async function getKnowledge({
-  token,
-  page,
-  limit,
-  searchQuery = "",
-  sortField = "id_knowledge",
-  sortOrder = "asc",
-}: GetKnowledgeProps): Promise<KnowledgeListRes> {
-  const knowledgeList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await knowledgeList.json()
-}
-
 interface GetKnowledgeV2Props {
-  token: string | undefined
+  token: string
   limit: number
   page: number
   sortField?: string
   orderBy?: string
   searchQuery?: string
+  categoryIds?: string | string[] | undefined // Add this line
+  statusCode?: string | string[] | undefined // And this line
 }
 
 async function getKnowledgeV2({
@@ -88,22 +58,31 @@ async function getKnowledgeV2({
   sortField = "id_knowledge",
   orderBy = "asc",
   searchQuery = "",
+  categoryIds = "", // And this line
+  statusCode = "", // And this line
 }: GetKnowledgeV2Props): Promise<KnowledgeListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  // If categoryIds is provided, add it to the URL
+  if (categoryIds) {
+    url += `&categoryIds=${categoryIds}`
+  }
+
+  if (statusCode) {
+    url += `&statusCodes=${statusCode}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
 
   return await res.json()
 }
-
 interface GetCategoryProps {
   token: string | undefined
   page: number
@@ -141,7 +120,8 @@ export default async function KnowledgePage({
 }: KnowledgePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, knowledge_title, category } = searchParams ?? {}
+  const { page, per_page, sort, knowledge_title, id_category, status_text } =
+    searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
@@ -167,6 +147,8 @@ export default async function KnowledgePage({
       searchQuery: searchQueryInitial,
       sortField: sortField,
       orderBy: sortOrder,
+      categoryIds: id_category, // Add this line
+      statusCode: status_text, // Add this line
     }),
     getCategory({ token: user?.token, page: 1, limit: 100 }),
     getKnowledgeVisibility({
