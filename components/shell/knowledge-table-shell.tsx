@@ -276,6 +276,14 @@ export function KnowledgeTableShell({
             },
           ],
         },
+        {
+          id: "status",
+          title: "Filter Visibility",
+          options: referenceResp.data.map((reference) => ({
+            label: reference.value_ref1,
+            value: reference.code_ref2,
+          })) as any,
+        },
       ]}
       pageCount={pageCount}
       searchableColumns={[
