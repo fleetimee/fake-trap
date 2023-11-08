@@ -46,6 +46,7 @@ interface GetQuizProps {
   sortBy?: string
   orderBy?: string
   searchQuery?: string
+  quizTypes?: string | string[] | undefined
 }
 
 async function getQuiz({
@@ -55,18 +56,22 @@ async function getQuiz({
   sortBy = "id_quiz",
   orderBy = "asc",
   searchQuery = "",
+  quizTypes = "",
 }: GetQuizProps): Promise<QuizListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (quizTypes) {
+    url += `&quizTypes=${quizTypes}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
 
   return await res.json()
 }
@@ -80,7 +85,7 @@ interface QuizPageProps {
 export default async function QuizPage({ searchParams }: QuizPageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, quiz_title, category } = searchParams ?? {}
+  const { page, per_page, sort, quiz_title, quiz_type } = searchParams ?? {}
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -105,6 +110,7 @@ export default async function QuizPage({ searchParams }: QuizPageProps) {
       sortBy: sortField,
       orderBy: sortOrder,
       searchQuery: searchQueryInitial,
+      quizTypes: quiz_type,
     }),
     getQuizType({
       token: user?.token,
