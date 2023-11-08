@@ -47,6 +47,7 @@ interface GetKnowledgeV2Props {
   sortField?: string
   orderBy?: string
   searchQuery?: string
+  visibilityId?: string | string[] | undefined // Add this line
   categoryIds?: string | string[] | undefined // Add this line
   statusCode?: string | string[] | undefined // And this line
 }
@@ -59,6 +60,7 @@ async function getKnowledgeV2({
   orderBy = "asc",
   searchQuery = "",
   categoryIds = "", // And this line
+  visibilityId = "", // And this line
   statusCode = "", // And this line
 }: GetKnowledgeV2Props): Promise<KnowledgeListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
@@ -66,6 +68,10 @@ async function getKnowledgeV2({
   // If categoryIds is provided, add it to the URL
   if (categoryIds) {
     url += `&categoryIds=${categoryIds}`
+  }
+
+  if (visibilityId) {
+    url += `&visibility=${visibilityId}`
   }
 
   if (statusCode) {
@@ -120,8 +126,15 @@ export default async function KnowledgePage({
 }: KnowledgePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, knowledge_title, id_category, status_text } =
-    searchParams ?? {}
+  const {
+    page,
+    per_page,
+    sort,
+    knowledge_title,
+    id_category,
+    status_text,
+    status,
+  } = searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
@@ -149,6 +162,7 @@ export default async function KnowledgePage({
       orderBy: sortOrder,
       categoryIds: id_category, // Add this line
       statusCode: status_text, // Add this line
+      visibilityId: status, // Add this line
     }),
     getCategory({ token: user?.token, page: 1, limit: 100 }),
     getKnowledgeVisibility({
