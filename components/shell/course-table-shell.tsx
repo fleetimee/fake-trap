@@ -237,6 +237,26 @@ export function CourseTableShell({
     <DataTable
       columns={columns}
       data={data}
+      filterableColumns={[
+        {
+          id: "status_text",
+          title: "Filter Status",
+          options: [
+            {
+              label: "Pending",
+              value: "0051",
+            },
+            {
+              label: "Approved",
+              value: "0052",
+            },
+            {
+              label: "Rejected",
+              value: "0053",
+            },
+          ],
+        },
+      ]}
       pageCount={pageCount}
       searchableColumns={[
         {

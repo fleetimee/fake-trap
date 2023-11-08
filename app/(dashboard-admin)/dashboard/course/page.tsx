@@ -22,6 +22,7 @@ interface GetCourseProps {
   sortBy?: string
   orderBy?: string
   searchQuery?: string
+  statusText?: string | string[] | undefined // Add this line
 }
 
 async function getCourse({
@@ -31,17 +32,21 @@ async function getCourse({
   sortBy = "id_course",
   orderBy = "asc",
   searchQuery = "",
+  statusText = "", // Add this line
 }: GetCourseProps): Promise<CourseListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (statusText) {
+    url = `${url}&status=${statusText}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
 
   return await res.json()
 }
@@ -84,7 +89,7 @@ interface CoursePageProps {
 export default async function CoursePage({ searchParams }: CoursePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort, course_name, status_text } = searchParams ?? {}
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -109,6 +114,7 @@ export default async function CoursePage({ searchParams }: CoursePageProps) {
       sortBy: sortBy,
       orderBy: orderBy,
       searchQuery: searchQueryInitial,
+      statusText: status_text, // Add this line
     }),
     getKnowledge({
       token: user?.token,
