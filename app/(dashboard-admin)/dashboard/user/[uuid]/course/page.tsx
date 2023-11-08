@@ -13,7 +13,7 @@ import {
 } from "@/components/shell"
 
 export const metadata = {
-  title: "Semua Pelatihan Saya",
+  title: "Semua Pelatihan",
   description: "Pelatihan yang saya ikuti",
 }
 
