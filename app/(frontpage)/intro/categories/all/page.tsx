@@ -20,26 +20,31 @@ export const metadata = {
   description: "Explore our products and services.",
 }
 
-interface GetPublicCategoriesProps {
-  limit: number
+interface GetPublicCategoryV2Props {
   page: number
+  limit: number
+  searchQuery?: string
+  sortField?: string
+  sortOrder?: string
 }
 
 async function getPublicCategories({
-  limit,
-  page,
-}: GetPublicCategoriesProps): Promise<CategoryListRes> {
-  const publicCategories = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}$`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    }
-  )
-  return await publicCategories.json()
+  page = 1,
+  limit = 1000,
+  sortField = "created_at",
+  sortOrder = "desc",
+  searchQuery = "",
+}: GetPublicCategoryV2Props): Promise<CategoryListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+    },
+    cache: "no-store",
+  })
+  return await res.json()
 }
 
 export default async function AllPublicCategories() {
