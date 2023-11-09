@@ -4,18 +4,22 @@ import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { UserQuizTakenListResData } from "@/types/me/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
 interface UserEnrolledCourseTableShellProps {
   data: UserQuizTakenListResData[]
+  referenceResp: ReferenceListRes
+
   pageCount: number
 }
 
 export function UserRecentQuizTableShell({
   data,
   pageCount,
+  referenceResp,
 }: UserEnrolledCourseTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -108,5 +112,27 @@ export function UserRecentQuizTableShell({
     []
   )
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      pageCount={pageCount}
+      searchableColumns={[
+        {
+          id: "quiz_title",
+          title: "Judul",
+        },
+      ]}
+      filterableColumns={[
+        {
+          id: "quiz_type",
+          title: "Tipe",
+          options: referenceResp.data.map((reference) => ({
+            value: reference.code_ref2,
+            label: reference.value_ref1,
+          })),
+        },
+      ]}
+    />
+  )
 }

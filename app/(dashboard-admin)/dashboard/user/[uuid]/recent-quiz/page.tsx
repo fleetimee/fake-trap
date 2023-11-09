@@ -37,28 +37,21 @@ export const metadata = {
   description: "Riwayat quiz yang saya ikuti",
 }
 
-interface GetUserQuizAttemptList {
+interface GetQuizTypeProps {
+  refCode: string
   token: string | undefined
-  uuid: string | undefined
-  page: number
-  limit: number
-  sortBy?: string
-  orderBy?: string
 }
 
-async function getUserQuizAttemptList({
+async function getQuizType({
   token,
-  uuid,
-  page,
-  limit,
-  sortBy = "asc",
-  orderBy = "created_at",
-}: GetUserQuizAttemptList): Promise<UserQuizTakenListRes> {
+  refCode,
+}: GetQuizTypeProps): Promise<ReferenceListRes> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizThatUserTaken?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
     {
       method: "GET",
       headers: {
+        ContentType: "application/json",
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
@@ -68,6 +61,43 @@ async function getUserQuizAttemptList({
   return await res.json()
 }
 
+interface GetUserQuizAttemptList {
+  token: string | undefined
+  uuid: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  quizTypes?: string | string[] | undefined
+}
+
+async function getUserQuizAttemptList({
+  token,
+  uuid,
+  page,
+  limit,
+  sortBy = "asc",
+  orderBy = "created_at",
+  searchQuery = "",
+  quizTypes = "",
+}: GetUserQuizAttemptList): Promise<UserQuizTakenListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizThatUserTaken?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (quizTypes) {
+    url = `${url}&quizTypes=${quizTypes}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
 interface UserQuizPageProps {
   params: {
     uuid: string
@@ -85,28 +115,38 @@ export default async function UserQuizPage({
 
   const tokenExtract = extractToken(user?.token)
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
-
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
+  const { page, per_page, sort, quiz_title, quiz_type } = searchParams ?? {}
+
+  // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortInitial = typeof sort === "string" ? sort : "desc"
   const orderByInitial = typeof sort === "string" ? sort : "created_at"
 
+  // split sort
   const sortBy = sortInitial.split(".")[1]
   const orderBy = orderByInitial.split(".")[0]
 
-  const userQuizAttemptRes = await getUserQuizAttemptList({
-    token: user?.token,
-    uuid: params.uuid,
-    page: pageInitial,
-    limit: limitInitial,
-    sortBy,
-    orderBy,
-  })
+  const [quizResp, referenceResp] = await Promise.all([
+    getUserQuizAttemptList({
+      token: user?.token,
+      uuid: params.uuid,
+      page: pageInitial,
+      limit: limitInitial,
+      sortBy,
+      orderBy,
+      searchQuery: quiz_title,
+      quizTypes: quiz_type,
+    }),
+    getQuizType({
+      token: user?.token,
+      refCode: "002",
+    }),
+  ])
 
   const userData = await getOneUserProps({
     token: user?.token,
@@ -140,8 +180,9 @@ export default async function UserQuizPage({
         description={`Semua percobaan quiz yang diikuti oleh ${userData.data?.username}`}
       />
       <UserRecentQuizTableShell
-        data={userQuizAttemptRes.data}
-        pageCount={userQuizAttemptRes.totalPage}
+        data={quizResp.data}
+        pageCount={quizResp.totalPage}
+        referenceResp={referenceResp}
       />
     </DashboardShell>
   )

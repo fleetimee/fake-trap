@@ -13,6 +13,30 @@ export const metadata = {
   description: "Percobaan Quiz yang saya ikuti",
 }
 
+interface GetQuizTypeProps {
+  refCode: string
+  token: string | undefined
+}
+
+async function getQuizType({
+  token,
+  refCode,
+}: GetQuizTypeProps): Promise<ReferenceListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 interface GetUserQuizAttemptList {
   token: string | undefined
   uuid: string | undefined
@@ -20,6 +44,8 @@ interface GetUserQuizAttemptList {
   limit: number
   sortBy?: string
   orderBy?: string
+  searchQuery?: string
+  quizTypes?: string | string[] | undefined
 }
 
 async function getUserQuizAttemptList({
@@ -29,17 +55,22 @@ async function getUserQuizAttemptList({
   limit,
   sortBy = "asc",
   orderBy = "created_at",
+  searchQuery = "",
+  quizTypes = "",
 }: GetUserQuizAttemptList): Promise<UserQuizTakenListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizThatUserTaken?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getQuizThatUserTaken?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (quizTypes) {
+    url = `${url}&quizTypes=${quizTypes}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
 
   return await res.json()
 }
@@ -56,7 +87,7 @@ export default async function ({ searchParams }: MeQuizPageProps) {
 
   const tokenExtract = extractToken(user?.token)
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort, quiz_title, quiz_type } = searchParams ?? {}
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -72,14 +103,22 @@ export default async function ({ searchParams }: MeQuizPageProps) {
   const sortBy = sortInitial.split(".")[1]
   const orderBy = orderByInitial.split(".")[0]
 
-  const userQuizAttemptRes = await getUserQuizAttemptList({
-    token: user?.token,
-    uuid: tokenExtract?.id,
-    page: pageInitial,
-    limit: limitInitial,
-    sortBy,
-    orderBy,
-  })
+  const [quizResp, referenceResp] = await Promise.all([
+    getUserQuizAttemptList({
+      token: user?.token,
+      uuid: tokenExtract?.id,
+      page: pageInitial,
+      limit: limitInitial,
+      sortBy,
+      orderBy,
+      searchQuery: quiz_title,
+      quizTypes: quiz_type,
+    }),
+    getQuizType({
+      token: user?.token,
+      refCode: "002",
+    }),
+  ])
 
   return (
     <DashboardShell>
@@ -94,18 +133,19 @@ export default async function ({ searchParams }: MeQuizPageProps) {
             title: `${tokenExtract.username} - (${tokenExtract.email})`,
           },
           {
-            href: "/dashboard/me/recent-course",
-            title: "Semua Percobaan Quiz Saya",
+            href: "/dashboard/me/recent-quiz",
+            title: "Riwayat Quiz",
           },
         ]}
       />
       <DashboardHeader
-        heading="Semua Percobaan Kuis Saya"
-        description="Semua percobaan kuis yang saya jawab"
+        heading="Riwayat Quiz"
+        description="Daftar quiz yang pernah saya ikuti"
       />
       <UserRecentQuizTableShell
-        data={userQuizAttemptRes.data}
-        pageCount={userQuizAttemptRes.totalPage}
+        data={quizResp.data}
+        pageCount={quizResp.totalPage}
+        referenceResp={referenceResp}
       />
     </DashboardShell>
   )
