@@ -14,8 +14,6 @@ interface CategoryCardProps {
 }
 
 export async function CategoryCard({ category, link }: CategoryCardProps) {
-  const categoryItems = category.knowledge?.length ?? 0
-
   return (
     <Link key={category.id_category} href={link}>
       <AspectRatio ratio={16 / 9}>
@@ -43,7 +41,9 @@ export async function CategoryCard({ category, link }: CategoryCardProps) {
           >
             <Icons.category className="h-4 w-4" />
           </div>
-          <p className="text-sm text-zinc-200">{categoryItems} pengetahuan</p>
+          <p className="text-sm text-zinc-200">
+            {category.total_knowledge} pengetahuan
+          </p>
         </div>
         <h3 className="mt-auto text-xl font-medium capitalize text-zinc-200">
           {category.category_name}
