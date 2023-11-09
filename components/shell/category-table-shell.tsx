@@ -69,7 +69,7 @@ export function CategoryTableShell({
       {
         accessorKey: "category_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama" />
+          <DataTableColumnHeader column={column} title="Nama Kategori" />
         ),
         cell: ({ row }) => {
           return (
@@ -86,6 +86,18 @@ export function CategoryTableShell({
         enableHiding: true,
       },
       {
+        accessorKey: "total_knowledge",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Total Pengetahuan" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <p className="text-sm font-bold">{row.original.total_knowledge}</p>
+          )
+        },
+        enableSorting: false,
+      },
+      {
         accessorKey: "image",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Gambar" />
@@ -94,8 +106,8 @@ export function CategoryTableShell({
           <Image
             src={row.original.image}
             alt={row.original.image}
-            width={150}
-            height={150}
+            width={100}
+            height={100}
             className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
           />
         ),
@@ -104,21 +116,30 @@ export function CategoryTableShell({
       },
       {
         accessorKey: "created_at",
-        header: "Dibuat pada",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Dibuat pada" />
+        ),
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
           return <>{convertDatetoString(row.original.created_at.toString())}</>
         },
+        enableSorting: true,
+        enableHiding: true,
       },
       {
         accessorKey: "updated_at",
-        header: "Diubah pada",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diubah pada" />
+        ),
+
         cell: ({ row }) => {
           convertDatetoString(row.original.updated_at.toString())
 
           return <>{convertDatetoString(row.original.updated_at.toString())}</>
         },
+        enablesorting: true,
+        enableHiding: true,
       },
       {
         header: ({ column }) => (
@@ -135,5 +156,17 @@ export function CategoryTableShell({
     [data, setSelectedRowIds]
   )
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      pageCount={pageCount}
+      searchableColumns={[
+        {
+          id: "category_name",
+          title: "Kategori",
+        },
+      ]}
+    />
+  )
 }
