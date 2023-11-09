@@ -49,24 +49,29 @@ async function getPublicKnowledge({
 }
 
 interface GetPublicCategoriesProps {
-  limit: number
   page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
 }
 
 async function getPublicCategories({
   limit,
   page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
 }: GetPublicCategoriesProps): Promise<CategoryListRes> {
-  const publicCategories = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}$`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  const publicCategories = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+    },
+    cache: "no-store",
+  })
   return await publicCategories.json()
 }
 
@@ -91,11 +96,6 @@ export default async function IntroductionPage() {
     publicCategory,
     publicKnowledge,
   ])
-
-  const publicCategoryAll = await getPublicCategories({
-    limit: 100,
-    page: 1,
-  })
 
   const parentVariants: Variants = {
     initial: { opacity: 0 },
