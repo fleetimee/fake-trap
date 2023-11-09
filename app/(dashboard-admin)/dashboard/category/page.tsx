@@ -14,6 +14,37 @@ export const metadata = {
   description: "Kategori Pengetahuan yang tersedia",
 }
 
+interface GetCategoryProps {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+async function getCategory({
+  token,
+  page,
+  limit,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetCategoryProps): Promise<CategoryListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
 interface CategoryPageProps {
   searchParams: {
     [key: string]: string | string[] | undefined
@@ -25,27 +56,29 @@ export default async function CategoryPage({
 }: CategoryPageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, name, category } = searchParams ?? {}
+  const { page, per_page, sort, category_name, category } = searchParams ?? {}
 
-  const limit = typeof per_page === "string" ? parseInt(per_page) : 10
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
+  const sortFieldInitial = typeof sort === "string" ? sort : "created_at"
+  const sortOrderInitial = typeof sort === "string" ? sort : "desc"
+  const searchQueryInitial = typeof name === "string" ? name : ""
+
+  const sortField = sortFieldInitial.split(".")[0]
+  const sortOrder = sortOrderInitial.split(".")[1]
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const categoryList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/?page=${page}&limit=${limit}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-        Authorization: `Bearer ${user?.token}`,
-      },
-      cache: "no-cache",
-    }
-  )
-
-  const categoryListData: CategoryListRes = await categoryList.json()
+  const categoryListData = await getCategory({
+    token: user?.token,
+    page: pageInitial,
+    limit: limitInitial,
+    sortBy: sortField,
+    orderBy: sortOrder,
+    searchQuery: category_name,
+  })
 
   return (
     <DashboardShell>
