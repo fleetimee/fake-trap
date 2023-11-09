@@ -10,19 +10,8 @@ export type CategoryListRes = {
 export type CategoryListResData = {
   id_category: number
   category_name: string
-  image: string
   created_at: Date
   updated_at: Date
-  knowledge?: CategoryListResKnowledge[]
-}
-
-export type CategoryListResKnowledge = {
-  id_knowledge: number
-  knowledge_title: string
-  description: string
-  status: number
   image: string
-  id_category: number
-  created_at: Date
-  updated_at: Date
+  total_knowledge: number
 }
