@@ -9,6 +9,7 @@ export type UserQuizTakenListRes = {
 
 export type UserQuizTakenListResData = {
   id_quiz: number
+  id_user_quiz: number
   quiz_title: string
   quiz_desc: string
   quiz_type: string

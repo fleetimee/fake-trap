@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { UserQuizGroupedRes } from "@/types/me/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { UserOneRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -37,10 +38,28 @@ async function getOneUserProps({
   return await res.json()
 }
 
-interface UserDetailPageProps {
-  params: {
-    uuid: string
-  }
+interface GetQuizTypeProps {
+  refCode: string
+  token: string | undefined
+}
+
+async function getQuizType({
+  token,
+  refCode,
+}: GetQuizTypeProps): Promise<ReferenceListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
 }
 
 interface GetQuizGroupedByCourse {
@@ -50,6 +69,8 @@ interface GetQuizGroupedByCourse {
   limit: number
   sortBy?: string
   orderBy?: string
+  searchQuery?: string
+  quizTypes?: string | string[] | undefined
 }
 
 async function getQuizGroupedByCourse({
@@ -59,18 +80,23 @@ async function getQuizGroupedByCourse({
   limit,
   sortBy = "asc",
   orderBy = "created_at",
+  searchQuery = "",
+  quizTypes = "",
 }: GetQuizGroupedByCourse): Promise<UserQuizGroupedRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (quizTypes) {
+    url = `${url}&quizTypes=${quizTypes}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
   return await res.json()
 }
 
@@ -91,7 +117,7 @@ export default async function UserAveragedQuizPage({
 
   const tokenExtract = extractToken(user?.token)
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort, quiz_title, quiz_type } = searchParams ?? {}
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -101,25 +127,45 @@ export default async function UserAveragedQuizPage({
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortByInitial = typeof sort === "string" ? sort : "asc"
-  const orderByInitial = typeof category === "string" ? category : "created_at"
+  const orderByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const searchQueryInitial = typeof quiz_title === "string" ? quiz_title : ""
 
   // split sort
   const sortBy = sortByInitial.split(".")[1]
   const orderBy = orderByInitial.split(".")[0]
 
-  const userQuizGrouped = await getQuizGroupedByCourse({
-    token: user?.token,
-    uuid: params.uuid,
-    page: pageInitial,
-    limit: limitInitial,
-    sortBy: sortBy,
-    orderBy: orderBy,
-  })
+  // const userQuizGrouped = await getQuizGroupedByCourse({
+  //   token: user?.token,
+  //   uuid: params.uuid,
+  //   page: pageInitial,
+  //   limit: limitInitial,
+  //   sortBy: sortBy,
+  //   orderBy: orderBy,
+  //   searchQuery: searchQueryInitial,
+  // })
 
   const userData = await getOneUserProps({
     token: user?.token,
     uuid: params.uuid,
   })
+
+  const [userQuizGrouped, quizType] = await Promise.all([
+    getQuizGroupedByCourse({
+      token: user?.token,
+      uuid: params.uuid,
+      page: pageInitial,
+      limit: limitInitial,
+      sortBy: sortBy,
+      orderBy: orderBy,
+      searchQuery: searchQueryInitial,
+      quizTypes: quiz_type,
+    }),
+    getQuizType({
+      token: user?.token,
+      refCode: "002",
+    }),
+  ])
 
   return (
     <DashboardShell>
@@ -150,6 +196,7 @@ export default async function UserAveragedQuizPage({
       <UserQuizGroupedTableShell
         data={userQuizGrouped.data}
         pageCount={userQuizGrouped.totalPage}
+        referenceResp={quizType}
       />
     </DashboardShell>
   )

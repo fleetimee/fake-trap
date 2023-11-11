@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { UserQuizTakenListRes } from "@/types/me/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { UserOneRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -126,6 +127,7 @@ export default async function UserQuizPage({
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortInitial = typeof sort === "string" ? sort : "desc"
   const orderByInitial = typeof sort === "string" ? sort : "created_at"
+  const searchQueryInitial = typeof quiz_title === "string" ? quiz_title : ""
 
   // split sort
   const sortBy = sortInitial.split(".")[1]
@@ -139,7 +141,7 @@ export default async function UserQuizPage({
       limit: limitInitial,
       sortBy,
       orderBy,
-      searchQuery: quiz_title,
+      searchQuery: searchQueryInitial,
       quizTypes: quiz_type,
     }),
     getQuizType({
@@ -183,6 +185,7 @@ export default async function UserQuizPage({
         data={quizResp.data}
         pageCount={quizResp.totalPage}
         referenceResp={referenceResp}
+        link={`/dashboard/user/${userData.data?.uuid}/recent-quiz`}
       />
     </DashboardShell>
   )

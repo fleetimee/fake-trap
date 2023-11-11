@@ -11,8 +11,8 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserRecentQuizTableShell } from "@/components/shell"
 
 export const metadata: Metadata = {
-  title: "Semua Percobaan Quiz Saya",
-  description: "Semua percobaan quiz saya",
+  title: "Riwayat Quiz",
+  description: "Riwayat quiz yang saya ikuti",
 }
 
 interface GetQuizTypeProps {

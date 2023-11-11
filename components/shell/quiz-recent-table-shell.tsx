@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { UserQuizTakenListResData } from "@/types/me/res"
@@ -12,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 interface UserEnrolledCourseTableShellProps {
   data: UserQuizTakenListResData[]
   referenceResp: ReferenceListRes
-
+  link?: string
   pageCount: number
 }
 
@@ -20,6 +21,7 @@ export function UserRecentQuizTableShell({
   data,
   pageCount,
   referenceResp,
+  link,
 }: UserEnrolledCourseTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -61,17 +63,26 @@ export function UserRecentQuizTableShell({
         enableSorting: false,
         enableHiding: false,
       },
-      {
-        accessorKey: "id_quiz",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-      },
+
       {
         accessorKey: "quiz_title",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Judul" />
         ),
+        cell: ({ row }) => {
+          return (
+            <Link
+              href={{
+                pathname: link ? `${link}/${row.original.id_user_quiz}` : "#",
+                query: { idQuiz: row.original.id_quiz },
+              }}
+            >
+              <p className="cursor-pointer font-semibold text-blue-600 hover:underline">
+                {row.original.quiz_title}
+              </p>
+            </Link>
+          )
+        },
       },
       {
         accessorKey: "quiz_type",
@@ -126,7 +137,7 @@ export function UserRecentQuizTableShell({
       filterableColumns={[
         {
           id: "quiz_type",
-          title: "Tipe",
+          title: "Filter Tipe Quiz",
           options: referenceResp.data.map((reference) => ({
             value: reference.code_ref2,
             label: reference.value_ref1,

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { UserQuizGroupedRes } from "@/types/me/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
@@ -9,8 +10,32 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserQuizGroupedTableShell } from "@/components/shell"
 
 export const metadata = {
-  title: "Semua Quiz Saya",
-  description: "Quiz yang saya ikuti",
+  title: "Nilai Rata Rata Quiz",
+  description: "Nilai rata rata quiz yang saya ikuti",
+}
+
+interface GetQuizTypeProps {
+  refCode: string
+  token: string | undefined
+}
+
+async function getQuizType({
+  token,
+  refCode,
+}: GetQuizTypeProps): Promise<ReferenceListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
 }
 
 interface GetQuizGroupedByCourse {
@@ -20,6 +45,8 @@ interface GetQuizGroupedByCourse {
   limit: number
   sortBy?: string
   orderBy?: string
+  searchQuery?: string
+  quizTypes?: string | string[] | undefined
 }
 
 async function getQuizGroupedByCourse({
@@ -29,18 +56,27 @@ async function getQuizGroupedByCourse({
   limit,
   sortBy = "asc",
   orderBy = "created_at",
+  searchQuery = "",
+  quizTypes = "",
 }: GetQuizGroupedByCourse): Promise<UserQuizGroupedRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getDistinctQuizGroupedAndAveraged?limit=${limit}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
+
+  if (searchQuery) {
+    url += `&searchQuery=${searchQuery}`
+  }
+
+  if (quizTypes) {
+    url += `&quizTypes=${quizTypes}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
   return await res.json()
 }
 
@@ -55,7 +91,7 @@ export default async function MeQuizPage({ searchParams }: MeQuizPageProps) {
 
   const tokenExtract = extractToken(user?.token)
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort, quiz_title, quiz_type } = searchParams ?? {}
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -65,20 +101,40 @@ export default async function MeQuizPage({ searchParams }: MeQuizPageProps) {
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortByInitial = typeof sort === "string" ? sort : "asc"
-  const orderByInitial = typeof category === "string" ? category : "created_at"
+  const orderByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const searchQueryInitial = typeof quiz_title === "string" ? quiz_title : ""
 
   // split sort
   const sortBy = sortByInitial.split(".")[1]
   const orderBy = orderByInitial.split(".")[0]
 
-  const userQuizGrouped = await getQuizGroupedByCourse({
-    token: user?.token,
-    uuid: tokenExtract?.id,
-    page: pageInitial,
-    limit: limitInitial,
-    sortBy: sortBy,
-    orderBy: orderBy,
-  })
+  // const userQuizGrouped = await getQuizGroupedByCourse({
+  //   token: user?.token,
+  //   uuid: tokenExtract?.id,
+  //   page: pageInitial,
+  //   limit: limitInitial,
+  //   sortBy: sortBy,
+  //   orderBy: orderBy,
+  //   searchQuery: searchQueryInitial,
+  // })
+
+  const [userQuizGrouped, quizTypes] = await Promise.all([
+    getQuizGroupedByCourse({
+      token: user?.token,
+      uuid: tokenExtract?.id,
+      page: pageInitial,
+      limit: limitInitial,
+      sortBy: sortBy,
+      orderBy: orderBy,
+      searchQuery: searchQueryInitial,
+      quizTypes: quiz_type,
+    }),
+    getQuizType({
+      token: user?.token,
+      refCode: "002",
+    }),
+  ])
 
   return (
     <DashboardShell>
@@ -99,12 +155,13 @@ export default async function MeQuizPage({ searchParams }: MeQuizPageProps) {
         ]}
       />
       <DashboardHeader
-        heading="Semua Kuis Saya"
-        description="Semua kuis yang saya ikuti"
+        heading="Nilai Rata Rata Quiz"
+        description="Nilai rata rata quiz yang saya ikuti"
       />
       <UserQuizGroupedTableShell
         data={userQuizGrouped.data}
         pageCount={userQuizGrouped.totalPage}
+        referenceResp={quizTypes}
       />
     </DashboardShell>
   )

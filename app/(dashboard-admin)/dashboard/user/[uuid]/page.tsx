@@ -423,6 +423,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
           <RecentQuizCard
             quizTakenList={quizTakenList}
             link={`/dashboard/user/${params.uuid}/recent-quiz`}
+            detailLink={`/dashboard/user/${params.uuid}/recent-quiz`}
           />
         </MotionDiv>
         <MotionDiv

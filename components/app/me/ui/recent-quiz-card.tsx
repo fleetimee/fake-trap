@@ -18,9 +18,14 @@ import {
 interface RecentQuizCard {
   quizTakenList: UserQuizTakenListRes
   link?: string
+  detailLink?: string
 }
 
-export function RecentQuizCard({ quizTakenList, link }: RecentQuizCard) {
+export function RecentQuizCard({
+  quizTakenList,
+  link,
+  detailLink,
+}: RecentQuizCard) {
   return (
     <Card className="col-span-7 flex min-h-[395px] flex-col gap-6 p-4 lg:col-span-4">
       <div className="flex items-center justify-between">
@@ -44,7 +49,17 @@ export function RecentQuizCard({ quizTakenList, link }: RecentQuizCard) {
         <TableBody>
           {quizTakenList.data?.map((invoice) => (
             <TableRow key={invoice.id_quiz}>
-              <TableCell>{invoice.quiz_title}</TableCell>
+              <TableCell>
+                <Link
+                  href={
+                    detailLink ? `${detailLink}/${invoice.id_user_quiz}` : `#`
+                  }
+                >
+                  <p className="cursor-pointer font-semibold text-blue-600 hover:underline">
+                    {invoice.quiz_title}
+                  </p>
+                </Link>
+              </TableCell>
               <TableCell>
                 <Badge>{invoice.quiz_type}</Badge>
               </TableCell>

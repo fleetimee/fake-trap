@@ -12,7 +12,7 @@ import {
 } from "@/components/shell"
 
 export const metadata = {
-  title: "Semua Pelatihan Saya",
+  title: "Pelatihan Saya",
   description: "Pelatihan yang saya ikuti",
 }
 
@@ -108,8 +108,8 @@ export default async function MeCoursePage({
         ]}
       />
       <DashboardHeader
-        heading="Semua Pelatihan Saya"
-        description="Semua Pelatihan yang saya ikuti"
+        heading="Pelatihan Saya"
+        description="Pelatihan yang saya ikuti"
       />
       <UserEnrolledCourseTableShell
         data={userCourseResp.data}

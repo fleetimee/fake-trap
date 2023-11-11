@@ -62,7 +62,8 @@ export default async function CategoryPage({
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortFieldInitial = typeof sort === "string" ? sort : "created_at"
   const sortOrderInitial = typeof sort === "string" ? sort : "desc"
-  const searchQueryInitial = typeof name === "string" ? name : ""
+  const searchQueryInitial =
+    typeof category_name === "string" ? category_name : ""
 
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
@@ -77,7 +78,7 @@ export default async function CategoryPage({
     limit: limitInitial,
     sortBy: sortField,
     orderBy: sortOrder,
-    searchQuery: category_name,
+    searchQuery: searchQueryInitial,
   })
 
   return (

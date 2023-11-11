@@ -12,6 +12,18 @@
       "database": "lms-test-course",
       "username": "postgres",
       "password": "postgres"
+    },
+    {
+      "pgOptions": {
+        "ssl": true
+      },
+      "previewLimit": 50,
+      "server": "ep-holy-field-33129751.ap-southeast-1.aws.neon.tech",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "NeonDB",
+      "database": "neondb",
+      "username": "fleetimee"
     }
   ]
 }

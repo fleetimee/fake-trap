@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { UserQuizTakenListRes } from "@/types/me/res"
+import { ReferenceListRes } from "@/types/references/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
@@ -9,8 +10,8 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserRecentQuizTableShell } from "@/components/shell"
 
 export const metadata = {
-  title: "Semua Percobaan Quiz Saya",
-  description: "Percobaan Quiz yang saya ikuti",
+  title: "Riwayat Quiz",
+  description: "Riwayat quiz yang saya ikuti",
 }
 
 interface GetQuizTypeProps {
@@ -98,6 +99,7 @@ export default async function ({ searchParams }: MeQuizPageProps) {
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortInitial = typeof sort === "string" ? sort : "desc"
   const orderByInitial = typeof sort === "string" ? sort : "created_at"
+  const searchQueryInitial = typeof quiz_title === "string" ? quiz_title : ""
 
   // split sort
   const sortBy = sortInitial.split(".")[1]
@@ -111,7 +113,7 @@ export default async function ({ searchParams }: MeQuizPageProps) {
       limit: limitInitial,
       sortBy,
       orderBy,
-      searchQuery: quiz_title,
+      searchQuery: searchQueryInitial,
       quizTypes: quiz_type,
     }),
     getQuizType({
