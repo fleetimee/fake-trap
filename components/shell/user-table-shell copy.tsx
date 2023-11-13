@@ -68,6 +68,19 @@ export function UserTableShellV2({ data, pageCount }: UserTableShellProps) {
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Role" />
         ),
+        cell: ({ row }) => {
+          const user = row.original
+
+          return (
+            <p>
+              {user.roles === "Pemateri"
+                ? "Admin"
+                : user.roles === "Admin"
+                ? "Pemateri"
+                : user.roles}
+            </p>
+          )
+        },
         enableSorting: false,
       },
       {

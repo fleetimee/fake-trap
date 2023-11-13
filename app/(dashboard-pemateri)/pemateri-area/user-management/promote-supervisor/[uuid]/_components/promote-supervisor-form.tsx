@@ -65,7 +65,7 @@ export function PromoteToSupervisorForm({
 
         if (res) {
           setIsLoading(false)
-          router.push("/dashboard/user")
+          router.back()
           router.refresh()
         } else {
           setIsLoading(false)

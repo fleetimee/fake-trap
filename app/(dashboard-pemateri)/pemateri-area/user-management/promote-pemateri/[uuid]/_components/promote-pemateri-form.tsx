@@ -61,7 +61,7 @@ export function PromoteToPemateriForm({ uuid }: PromoteToPemateriFormProps) {
 
         if (res) {
           setIsLoading(false)
-          router.push("/dashboard/user")
+          router.back()
           router.refresh()
         } else {
           setIsLoading(false)
