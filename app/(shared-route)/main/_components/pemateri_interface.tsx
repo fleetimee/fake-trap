@@ -1,5 +1,3 @@
-"use client"
-
 import { Variants } from "framer-motion"
 import { PartyPopper } from "lucide-react"
 

@@ -1,4 +1,3 @@
-"use client"
 
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
