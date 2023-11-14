@@ -1,80 +1,49 @@
-import { redirect } from "next/navigation"
+"use client"
+
+import { Variants } from "framer-motion"
+import { PartyPopper } from "lucide-react"
+
+import { adminAreaRole } from "@/config/dashboard"
 import {
   DashboardCategoryCardCount,
   DashboardCourseCardCount,
   DashboardKnowledgeCardCount,
   DashboardUserCardCount,
-} from "components/app/dashboard/ui/cards"
+} from "@/components/app/dashboard/ui/cards"
 import {
   DashboardCourseHighlight,
   DashboardKnowledgeHighlight,
-} from "components/app/dashboard/ui/highlight"
-import { Variants } from "framer-motion"
-import { PartyPopper } from "lucide-react"
-
-import { adminAreaRole } from "@/config/dashboard"
-import { authOptions } from "@/lib/auth"
-import { getCurrentUser } from "@/lib/session"
-import { convertDatetoString, extractToken } from "@/lib/utils"
+} from "@/components/app/dashboard/ui/highlight"
 import { DashboardInformation } from "@/components/dashboard-information"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-export const metadata = {
-  title: "Dashboard",
+interface PemateriInterfaceProps {
+  dateNow: string
+  username: string
+  getDayWithText: string
+  parentVariant: Variants
+  childrenVariant: Variants
+  token: string
 }
 
-export default async function DashboardPage() {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
-  }
-
-  const dateNow = convertDatetoString(new Date().toString())
-
-  const getDayWithText = new Date().toLocaleString("en", {
-    weekday: "long",
-  })
-
-  const userExtracted = extractToken(user.token)
-
-  const parentVariant: Variants = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
-  }
-
-  const childrenVariant: Variants = {
-    initial: { opacity: 0, x: 50 },
-    animate: { opacity: 1, x: 0 },
-  }
-
-  const childrenVariantTwo: Variants = {
-    initial: { opacity: 0, y: 50, scale: 0.5 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        staggerChildren: 0.2,
-        type: "spring",
-        stiffness: 500,
-        damping: 30,
-        mass: 0.5,
-        delay: 0.2,
-      },
-    },
-  }
-
+export function PemateriInterface({
+  dateNow,
+  username,
+  getDayWithText,
+  parentVariant,
+  childrenVariant,
+  token,
+}: PemateriInterfaceProps) {
   return (
     <DashboardShell>
       <MotionDiv
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <DashboardHeader heading="Dashboard" description={dateNow} />
+        <DashboardHeader heading="Pemateri" description={dateNow} />
       </MotionDiv>
 
       <MotionDiv
@@ -86,7 +55,7 @@ export default async function DashboardPage() {
           <AlertTitle>
             Halo,{" "}
             <span className="font-heading uppercase text-primary">
-              {userExtracted.username}
+              {username}
             </span>
           </AlertTitle>
           <AlertDescription>
@@ -114,16 +83,16 @@ export default async function DashboardPage() {
         animate="animate"
       >
         <MotionDiv variants={childrenVariant} className="child">
-          <DashboardUserCardCount token={user.token} />
+          <DashboardUserCardCount token={token} />
         </MotionDiv>
         <MotionDiv variants={childrenVariant} className="child">
-          <DashboardKnowledgeCardCount token={user.token} />
+          <DashboardKnowledgeCardCount token={token} />
         </MotionDiv>
         <MotionDiv variants={childrenVariant} className="child">
-          <DashboardCourseCardCount token={user.token} />
+          <DashboardCourseCardCount token={token} />
         </MotionDiv>
         <MotionDiv variants={childrenVariant} className="child">
-          <DashboardCategoryCardCount token={user.token} />
+          <DashboardCategoryCardCount token={token} />
         </MotionDiv>
       </MotionDiv>
 
@@ -133,11 +102,11 @@ export default async function DashboardPage() {
         initial="initial"
         animate="animate"
       >
-        <MotionDiv className="child h-full" variants={childrenVariantTwo}>
-          <DashboardKnowledgeHighlight token={user.token} />
+        <MotionDiv className="child h-full" variants={parentVariant}>
+          <DashboardKnowledgeHighlight token={token} />
         </MotionDiv>
-        <MotionDiv className="child h-full" variants={childrenVariantTwo}>
-          <DashboardCourseHighlight token={user.token} />
+        <MotionDiv className="child h-full" variants={parentVariant}>
+          <DashboardCourseHighlight token={token} />
         </MotionDiv>
       </MotionDiv>
     </DashboardShell>

@@ -53,6 +53,8 @@ export interface UserExtracted {
   orig_iat: number
   role: Role[]
   username: string
+  group: number
+  name: string
 }
 
 export interface Role {
