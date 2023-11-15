@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString, extractToken } from "@/lib/utils"
 
+import { OperatorLMSInterface } from "./_components/operator_sdm_interface"
 import { PemateriInterface } from "./_components/pemateri_interface"
 import { SupervisorPemateriInterface } from "./_components/supervisor_pemateri_interface"
 
@@ -59,7 +60,7 @@ export default async function DashboardPage() {
   }
 
   if (tokenExtracted.group === 3) {
-    return <p>Operator LMS</p>
+    return <OperatorLMSInterface />
   }
 
   if (tokenExtracted.group === 4) {
