@@ -6,258 +6,73 @@ import { extractTokenMiddleware } from "./lib/utils"
 
 export default withAuth(
   async function middleware(req) {
-    // const token = await getToken({ req })
-    // const isAuth = !!token
-    // const isAuthPage = req.nextUrl.pathname.startsWith("/login")
-    // const isDashboardPage = req.nextUrl.pathname.startsWith("/dashboard")
-    // const isMeAdminPage = req.nextUrl.pathname.startsWith("/dashboard/me")
-    // const isMeRecentQuizAdminPage = req.nextUrl.pathname.startsWith(
-    //   "/dashboard/me/recent-quiz"
-    // )
-    // const isMeAllCoursesAdminPage = req.nextUrl.pathname.startsWith(
-    //   "/dashboard/me/course"
-    // )
-    // const isMeGroupedQuizAdminPage = req.nextUrl.pathname.startsWith(
-    //   "/dashboard/me/averaged-quiz"
-    // )
-    // const isCourseDetailAdminPage =
-    //   req.nextUrl.pathname.startsWith("/dashboard/course/")
-    // const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
-    // const isMemberAreaCoursePageDetail = req.nextUrl.pathname.startsWith(
-    //   "/member-area/course/:path*"
-    // )
-    // const isForumThreadAdminPage = req.nextUrl.pathname.startsWith(
-    //   "/dashboard/forum/thread/:path*/forum/:path*"
-    // )
-    // const isSupervisorAreaPage =
-    //   req.nextUrl.pathname.startsWith("/supervisor-area")
-    // const isPemateriAreaPage = req.nextUrl.pathname.startsWith("/pemateri-area")
-    // if (isAuthPage) {
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const superVisorRole = "Supervisor"
-    //     const pemateriRole = "Pemateri"
-    //     const normalRole = "User"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/dashboard", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === normalRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/member-area", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === superVisorRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/supervisor-area", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === pemateriRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/pemateri-area", req.url))
-    //     }
-    //   }
-    //   return null
-    // }
-    // if (!isAuth) {
-    //   let from = req.nextUrl.pathname
-    //   if (req.nextUrl.search) {
-    //     from += req.nextUrl.search
-    //   }
-    //   return NextResponse.redirect(
-    //     new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
-    //   )
-    // }
-    // if (isCourseDetailAdminPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const superVisorRole = "Supervisor"
-    //     const normalRole = "User"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return null
-    //     } else {
-    //       // get course id from url
-    //       const courseId = req.nextUrl.pathname.split("/")[3]
-    //       return NextResponse.redirect(
-    //         new URL(`/member-area/course/${courseId}`, req.url)
-    //       )
-    //     }
-    //   }
-    // if (isMeAllCoursesAdminPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return null
-    //     } else {
-    //       return NextResponse.redirect(new URL("/member-area/course", req.url))
-    //     }
-    //   }
-    // if (isMeGroupedQuizAdminPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return null
-    //     } else {
-    //       return NextResponse.redirect(
-    //         new URL("/member-area/me/averaged-quiz", req.url)
-    //       )
-    //     }
-    //   }
-    // if (isMeRecentQuizAdminPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return null
-    //     } else {
-    //       return NextResponse.redirect(
-    //         new URL("/member-area/me/recent-quiz", req.url)
-    //       )
-    //     }
-    //   }
-    // if (isMeAdminPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return null
-    //     } else {
-    //       return NextResponse.redirect(new URL("/member-area/me", req.url))
-    //     }
-    //   }
-    // if (isDashboardPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const superVisorRole = "Supervisor"
-    //     const pemateriRole = "Pemateri"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return null
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === superVisorRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/supervisor-area", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === pemateriRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/pemateri-area", req.url))
-    //     } else {
-    //       return NextResponse.redirect(new URL("/member-area", req.url))
-    //     }
-    //   }
-    // if (isSupervisorAreaPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const normalRole = "User"
-    //     const pematerRole = "Pemateri"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/dashboard", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === normalRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/member-area", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === pematerRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/pemateri-area", req.url))
-    //     } else {
-    //       return null
-    //     }
-    //   }
-    // if (isPemateriAreaPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const normalRole = "User"
-    //     const superVisorRole = "Supervisor"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/dashboard", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === normalRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/member-area", req.url))
-    //     }
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === superVisorRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/supervisor-area", req.url))
-    //     } else {
-    //       return null
-    //     }
-    //   }
-    // if (isMemberAreaPage)
-    //   if (isAuth) {
-    //     const extractToken = extractTokenMiddleware(token?.token)
-    //     const adminRole = "Admin"
-    //     const superVisorRole = "Supervisor"
-    //     const pemateriRole = "Pemateri"
-    //     const userRoles = extractToken.role
-    //     if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === adminRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/dashboard", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === superVisorRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/supervisor-area", req.url))
-    //     } else if (
-    //       userRoles &&
-    //       userRoles.some((role) => role.role_name === pemateriRole)
-    //     ) {
-    //       return NextResponse.redirect(new URL("/pemateri-area", req.url))
-    //     } else {
-    //       return null
-    //     }
-    //   }
+    const token = await getToken({ req })
+    const isAuth = !!token
+    const isAuthPage = req.nextUrl.pathname.startsWith("/login")
+
+    if (isAuthPage) {
+      if (isAuth) {
+        const extractToken = extractTokenMiddleware(token?.token)
+
+        const userRoles = extractToken.role
+
+        console.log(userRoles.length)
+
+        // if userRoles contains more than 1 role
+        if (userRoles.length > 1) {
+          return NextResponse.redirect(new URL("/panel-selector", req.url))
+        } else {
+          // if userRoles contains only 1 role
+          const isRoleAdmin = userRoles.some((role) => role.id_role === 1)
+          const isRoleMember = userRoles.some((role) => role.id_role === 2)
+          const isRoleSupervisor = userRoles.some((role) => role.id_role === 3)
+          const isRolePemateri = userRoles.some((role) => role.id_role === 4)
+
+          if (isRoleAdmin) {
+            return NextResponse.redirect(new URL("/dashboard", req.url))
+          }
+
+          if (isRoleMember) {
+            return NextResponse.redirect(new URL("/member-area", req.url))
+          }
+
+          if (isRoleSupervisor) {
+            return NextResponse.redirect(new URL("/supervisor-area", req.url))
+          }
+
+          if (isRolePemateri) {
+            return NextResponse.redirect(new URL("/pemateri-area", req.url))
+          }
+        }
+      }
+      return null
+    }
+
+    if (req.nextUrl.pathname.startsWith("/dashboard")) {
+      const extractToken = extractTokenMiddleware(token?.token)
+
+      const userRoles = extractToken.role
+
+      if (!isAuth) {
+        return NextResponse.redirect(new URL("/login", req.url))
+      }
+
+      const isRoleAdmin = userRoles.some((role) => role.id_role === 1)
+
+      if (!isRoleAdmin) {
+        return NextResponse.redirect(new URL("/", req.url))
+      }
+    }
+
+    if (!isAuth) {
+      let from = req.nextUrl.pathname
+      if (req.nextUrl.search) {
+        from += req.nextUrl.search
+      }
+      return NextResponse.redirect(
+        new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
+      )
+    }
   },
   {
     callbacks: {
