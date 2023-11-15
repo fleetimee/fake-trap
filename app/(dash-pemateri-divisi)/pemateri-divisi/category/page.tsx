@@ -1,3 +1,3 @@
-export default function PemateriDivisiPage() {
+export default function PemateriDivisiCategoryPage() {
   return <p>Penis</p>
 }
