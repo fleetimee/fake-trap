@@ -9,6 +9,7 @@ export type UserOneResData = {
   created_at: Date
   updated_at: Date
   deleted_at: null
+  name: string
   username: string
   email: string
   password: string

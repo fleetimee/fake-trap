@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { generateFromString } from "generate-avatar"
 import { signOut } from "next-auth/react"
 
@@ -24,7 +25,7 @@ import {
 
 import { Icons } from "../icons"
 
-export function SiteHeader(props: {
+interface SiteHeaderProps {
   user:
     | {
         code: number
@@ -32,13 +33,27 @@ export function SiteHeader(props: {
         token: string
       }
     | undefined
-}) {
-  if (props.user) {
-    const userExtracted = extractToken(props.user.token)
+  isMoreThanOneRole: boolean
+  displayName: string
+  emailName: string
+}
 
-    const initial = `${userExtracted.username
-      .charAt(0)
-      .toUpperCase()}${userExtracted.username.charAt(1).toUpperCase()}`
+export function SiteHeader({ ...props }: SiteHeaderProps) {
+  const pathname = usePathname()
+
+  const isUrlIncludePemateriDivisi = pathname.includes("/pemateri-divisi")
+  const isUrlIncludeSupervisorPemateriDivisi = pathname.includes(
+    "/supervisor-pemateri-divisi"
+  )
+  const isUrlIncludeOperatorLMS = pathname.includes("/operator-lms")
+  const isUrlIncludeSupervisorOperatorLMS = pathname.includes("/supervisor-lms")
+  const isUrlIncludePeserta = pathname.includes("/peserta")
+  const isUrlIncludeExecutive = pathname.includes("/executive")
+
+  if (props.user) {
+    console.log(props.displayName)
+    console.log(props.emailName)
+    console.log(props.isMoreThanOneRole)
 
     return (
       <header className="sticky top-0 z-40 border-b bg-background">
@@ -57,7 +72,7 @@ export function SiteHeader(props: {
                   <Avatar className="h-8 w-8">
                     <AvatarImage
                       src={`data:image/svg+xml;utf8,${generateFromString(
-                        userExtracted.username
+                        props.displayName
                       )}`}
                     />
                     <AvatarFallback />
@@ -67,29 +82,77 @@ export function SiteHeader(props: {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {userExtracted.username}
+                        {props.displayName}
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        {userExtracted.email}
+                        {props.emailName}
                       </p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
                   <DropdownMenuGroup>
+                    <DropdownMenuItem
+                      asChild
+                      disabled={props.isMoreThanOneRole}
+                    >
+                      <Link href={"/panel-selector"}>
+                        <Icons.empty
+                          className="mr-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                        Panel Selector
+                        <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuSeparator />
+
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/me">
+                      <Link
+                        href={
+                          isUrlIncludeSupervisorOperatorLMS
+                            ? "/supervisor-lms/profile"
+                            : isUrlIncludeOperatorLMS
+                            ? "/operator-lms/profile"
+                            : isUrlIncludeSupervisorPemateriDivisi
+                            ? "/supervisor-pemateri-divisi/profile"
+                            : isUrlIncludePemateriDivisi
+                            ? "/pemateri-divisi/profile"
+                            : isUrlIncludeExecutive
+                            ? "/executive/profile"
+                            : isUrlIncludePeserta
+                            ? "/peserta/profile"
+                            : "/dashboard"
+                        }
+                      >
                         <Icons.user
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Account
+                        Profile
                         <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard/">
-                        <Icons.gitHub
+                      <Link
+                        href={
+                          isUrlIncludePemateriDivisi
+                            ? "/pemateri-divisi"
+                            : isUrlIncludeSupervisorPemateriDivisi
+                            ? "/supervisor-pemateri-divisi"
+                            : isUrlIncludeOperatorLMS
+                            ? "/operator-lms"
+                            : isUrlIncludeSupervisorOperatorLMS
+                            ? "/supervisor-lms"
+                            : isUrlIncludeExecutive
+                            ? "/executive"
+                            : isUrlIncludePeserta
+                            ? "/peserta"
+                            : "/dashboard"
+                        }
+                      >
+                        <Icons.dashboard
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
@@ -97,8 +160,24 @@ export function SiteHeader(props: {
                         <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild disabled>
-                      <Link href="/dashboard/settings">
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href={
+                          isUrlIncludePemateriDivisi
+                            ? "/pemateri-divisi/setting"
+                            : isUrlIncludeSupervisorPemateriDivisi
+                            ? "/supervisor-pemateri-divis/setting"
+                            : isUrlIncludeOperatorLMS
+                            ? "/operator-lms/setting"
+                            : isUrlIncludeSupervisorOperatorLMS
+                            ? "/supervisor-lms/setting"
+                            : isUrlIncludeExecutive
+                            ? "/executive/setting"
+                            : isUrlIncludePeserta
+                            ? "/peserta/setting"
+                            : "/dashboard"
+                        }
+                      >
                         <Icons.settings
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
