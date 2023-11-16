@@ -39,7 +39,7 @@ export default async function PanelSelector() {
       <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
         <Balancer>
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Howdy 👋
+            Halo, {tokenExtracted.name} 👋
           </h2>
         </Balancer>
 
@@ -102,6 +102,14 @@ export default async function PanelSelector() {
           untuk panel tersebut. Jika anda merasa memiliki hak akses untuk panel
           tersebut, silahkan hubungi Operator LMS.
         </p>
+      </div>
+
+      <div className="mx-auto flex max-w-[25rem] items-center justify-center text-center">
+        <Link href={"/"}>
+          <Button size="default" className="mr-4 w-full" variant="destructive">
+            Keluar
+          </Button>
+        </Link>
       </div>
     </section>
   )
