@@ -39,6 +39,9 @@ interface SiteHeaderProps {
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
+  /**
+   * The current pathname of the page.
+   */
   const pathname = usePathname()
 
   const isUrlIncludePemateriDivisi = pathname.includes("/pemateri-divisi")
