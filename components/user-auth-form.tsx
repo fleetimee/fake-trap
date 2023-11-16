@@ -75,7 +75,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 } else {
                   setIsLoading(false)
 
-                  router.push("/")
+                  router.push("/login")
 
                   router.refresh()
 

@@ -1,5 +1,6 @@
 "use client"
 
+import { Metadata } from "next"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -12,6 +13,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+export const metadata: Metadata = {
+  title: "What are you looking for?",
+  description: "404",
+}
 
 export default function NotFound() {
   const router = useRouter()
