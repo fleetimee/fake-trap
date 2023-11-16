@@ -94,7 +94,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                   <DropdownMenuGroup>
                     <DropdownMenuItem
                       asChild
-                      disabled={props.isMoreThanOneRole}
+                      disabled={!props.isMoreThanOneRole}
                     >
                       <Link href={"/panel-selector"}>
                         <Icons.empty

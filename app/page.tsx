@@ -2,8 +2,10 @@ import Link from "next/link"
 import { Variants } from "framer-motion"
 import Balancer from "react-wrap-balancer"
 
+import { UserOneRes } from "@/types/user/res"
 import { siteConfig } from "@/config/site"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
@@ -42,13 +44,52 @@ const childVariant: Variants = {
   },
 }
 
+interface GetUserProps {
+  token: string | undefined
+  uuid: string
+}
+
+async function getLoggedOnUser({
+  token,
+  uuid,
+}: GetUserProps): Promise<UserOneRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return res.json()
+}
+
 export default async function IndexPage() {
   const user = await getCurrentUser()
+
+  const tokenExtracted = extractToken(user?.token)
+
+  const loggedOnUser = await getLoggedOnUser({
+    token: user?.token,
+    uuid: tokenExtracted.id,
+  })
+
+  const isMoreThanOneRole = tokenExtracted
+    ? tokenExtracted.role.length > 1
+    : false
 
   return (
     <>
       <div className="relative flex min-h-screen flex-col bg-background">
-        <SiteHeader user={user} />
+        <SiteHeader
+          user={user}
+          displayName={loggedOnUser?.data?.name ?? "No User"}
+          emailName={loggedOnUser?.data?.email ?? "No Email"}
+          isMoreThanOneRole={isMoreThanOneRole ?? false}
+        />
         <div className="gap-12  ">
           <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
             <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center py-2 text-center">

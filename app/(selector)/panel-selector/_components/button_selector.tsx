@@ -15,9 +15,9 @@ export function ButtonSelector({ ...props }: ButtonSelectorProps) {
   return (
     <div
       className={cn({
-        "relative overflow-hidden rounded-lg border bg-zinc-100 p-2":
+        "relative overflow-hidden rounded-lg border bg-background p-2":
           props.disabled,
-        "relative overflow-hidden rounded-lg border bg-white p-2 hover:border-primary":
+        "relative overflow-hidden rounded-lg border bg-background p-2 hover:border-primary":
           !props.disabled,
       })}
     >

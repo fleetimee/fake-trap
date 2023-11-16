@@ -29,6 +29,19 @@ export function convertDatetoStringShort(date: string): string {
 export function extractToken(token: string | undefined): UserExtracted {
   const tokenParts = token?.split(".")
 
+  if (!tokenParts) {
+    return {
+      email: "",
+      exp: 0,
+      id: "",
+      orig_iat: 0,
+      role: [],
+      username: "",
+      group: 0,
+      name: "",
+    }
+  }
+
   const encodedPayload = tokenParts?.[1]
 
   const rawPayload = atob(encodedPayload!)
@@ -118,3 +131,9 @@ export function swrFetcher<T>(url: string, token: string) {
     },
   }).then((res) => res.json()) as Promise<T>
 }
+
+export const dateNow = convertDatetoString(new Date().toString())
+
+export const getDayWithText = new Date().toLocaleString("en", {
+  weekday: "long",
+})
