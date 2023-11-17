@@ -6,6 +6,7 @@ import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
+import { RuleOneResData } from "@/types/rule/res"
 import { convertDatetoString } from "@/lib/utils"
 import { CategoryOperations } from "@/components/app/category/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
@@ -14,11 +15,13 @@ import { Checkbox } from "@/components/ui/checkbox"
 interface CategoryTableShellProps {
   data: CategoryListResData[]
   pageCount: number
+  rule: RuleOneResData
 }
 
 export function CategoryTableShell({
   data,
   pageCount,
+  rule,
 }: CategoryTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -149,7 +152,7 @@ export function CategoryTableShell({
         cell: ({ row }) => {
           const kategori = row.original
 
-          return <CategoryOperations kategori={kategori} />
+          return <CategoryOperations kategori={kategori} rule={rule} />
         },
       },
     ],

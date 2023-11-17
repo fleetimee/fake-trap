@@ -124,7 +124,7 @@ export default async function IndexPage() {
                   className="mt-4 space-y-2 py-2"
                 >
                   <Link
-                    href="/dashboard"
+                    href="/login"
                     className={buttonVariants({
                       size: "lg",
                       variant: "default",
@@ -133,7 +133,7 @@ export default async function IndexPage() {
                     <span className="mr-2">
                       <Icons.arrowRight className="h-4 w-4" />
                     </span>
-                    ENTER APP
+                    Masuk ke Dashboard
                   </Link>
                 </MotionDiv>
               ) : null}

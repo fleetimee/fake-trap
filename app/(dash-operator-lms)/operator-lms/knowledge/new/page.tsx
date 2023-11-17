@@ -2,8 +2,9 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
+import { getReference } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { AddCategoryForm } from "@/components/forms/add-category-form"
+import { AddKnowledgeForm } from "@/components/forms/add-knowledge-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import {
@@ -15,16 +16,21 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah Kategori",
-  description: "Tambah Kategori baru",
+  title: "Tambah Pengetahuan Baru",
+  description: "Operator LMS New Knowledge Page",
 }
 
-export default async function OperatorLmsCategoryPageNew() {
+export default async function OperatorLMSKnowledgePageNew() {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const reference = await getReference({
+    token: user?.token,
+    refCode: "003",
+  })
 
   return (
     <DashboardShell>
@@ -35,24 +41,24 @@ export default async function OperatorLmsCategoryPageNew() {
             title: "Dashboard",
           },
           {
-            href: "/operator-lms/category",
-            title: "Kategori",
+            href: "/operator-lms/knowledge",
+            title: "Pengetahuan",
           },
           {
-            href: "/operator-lms/category/new",
-            title: "Tambah Kategori",
+            href: "/operator-lms/knowledge/new",
+            title: "Tambah Pengetahuan Baru",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Kategori</CardTitle>
-          <CardDescription>Tambah Kategori Baru</CardDescription>
+          <CardTitle className="text-xl">Tambah Pengetahuan</CardTitle>
+          <CardDescription>Tambah Pengetahuan Baru</CardDescription>
         </CardHeader>
 
         <CardContent>
-          <AddCategoryForm />
+          <AddKnowledgeForm reference={reference} />
         </CardContent>
       </Card>
     </DashboardShell>

@@ -8,11 +8,14 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
-import { courseSchema } from "@/lib/validations/course"
+import { categorySchema } from "@/lib/validations/category"
 
+import { Icons } from "../icons"
+import { Button } from "../ui/button"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,44 +24,42 @@ import {
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 
-type Inputs = z.infer<typeof courseSchema>
+type Inputs = z.infer<typeof categorySchema>
 
-export function AddCourseForm() {
+export function AddCategoryForm() {
   const { data: session } = useSession()
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsloading] = useState(false)
 
   const router = useRouter()
 
   const form = useForm<Inputs>({
-    resolver: zodResolver(courseSchema),
+    resolver: zodResolver(categorySchema),
     defaultValues: {
-      course_name: "",
-      course_desc: "",
+      category_name: "",
       image: "",
-      tutor_uuid: "",
+      created_by: session?.expires.id,
     },
   })
 
   async function onSubmit(data: Inputs) {
-    setIsLoading(true)
+    setIsloading(true)
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category`
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+        body: JSON.stringify(data),
+      })
 
       if (response.ok) {
         sonnerToast.success("Berhasil", {
-          description: "Pelatihan berhasil dibuat",
+          description: "Kategori berhasil ditambahkan",
         })
 
         router.back()
@@ -66,12 +67,12 @@ export function AddCourseForm() {
         form.reset()
       } else {
         sonnerToast.error("Gagal", {
-          description: "Pelatihan gagal dibuat",
+          description: "Kategori gagal ditambahkan",
         })
       }
     } catch (error) {
     } finally {
-      setIsLoading(false)
+      setIsloading(false)
     }
   }
 
@@ -83,36 +84,21 @@ export function AddCourseForm() {
       >
         <FormField
           control={form.control}
-          name="course_name"
+          name="category_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nama Pelatihan</FormLabel>
+              <FormLabel>
+                Nama Kategori <span className="text-red-500">*</span>
+              </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Ketikkan judul pelatihan disini"
+                  type="text"
+                  placeholder="Tuliskan nama kategori"
                   {...field}
                   disabled={isLoading}
                 />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <FormField
-          control={form.control}
-          name="course_desc"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Deskripsi Pelatihan</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Ketikkan deskripsi pelatihan disini"
-                  {...field}
-                  disabled={isLoading}
-                  className="h-40 resize-none"
-                />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -126,16 +112,42 @@ export function AddCourseForm() {
               <FormLabel>Gambar</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Ketikkan deskripsi pelatihan disini"
+                  placeholder="Masukkan link gambar"
                   {...field}
                   disabled={isLoading}
-                  className="h-20 resize-none"
+                  className="h-10 resize-none"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="created_by"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Dibuat Oleh <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input type="text" {...field} disabled />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" className="w-fit" disabled={isLoading}>
+          {isLoading && (
+            <Icons.spinner
+              className="mr-2 h-4 w-4 animate-spin"
+              aria-hidden="true"
+            />
+          )}
+          Simpan
+        </Button>
       </form>
     </Form>
   )

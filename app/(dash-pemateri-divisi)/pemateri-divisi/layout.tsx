@@ -9,7 +9,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
-export default async function OperatorLMSLayout({
+export default async function PemateriDivisiLayout({
   children,
 }: DashboardLayoutProps) {
   const user = await getCurrentUser()
@@ -18,13 +18,15 @@ export default async function OperatorLMSLayout({
 
   const menu = await getMenu({
     token: user?.token,
-    idRole: "3",
+    idRole: "1",
   })
 
   const userLogged = await getLoggedOnUser({
     token: user?.token,
     uuid: tokenExtracted.id,
   })
+
+  console.log("userLogged", userLogged)
 
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
 

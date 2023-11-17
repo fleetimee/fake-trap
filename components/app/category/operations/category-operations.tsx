@@ -11,6 +11,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CategoryListResData } from "@/types/category/res"
+import { RuleOneResData } from "@/types/rule/res"
 import { Icons } from "@/components/icons"
 import {
   AlertDialog,
@@ -88,9 +89,13 @@ async function deleteCategory({ idKategori, token }: DeleteCategoryProps) {
 
 interface CategoryOperationsProps {
   kategori: CategoryListResData
+  rule: RuleOneResData
 }
 
-export function CategoryOperations({ kategori }: CategoryOperationsProps) {
+export function CategoryOperations({
+  kategori,
+  rule,
+}: CategoryOperationsProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -182,11 +187,16 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
           </DropdownMenuItem>
 
           <DropdownMenuItem
-            className="flex items-center
-            "
-            onSelect={() => setOpenEditCategorySheet(true)}
+            className="flex items-center"
+            disabled={!rule.can_write_knowledge}
           >
-            Edit
+            <Link
+              href={`/operator-lms/category/update/${kategori.id_category}`}
+              passHref
+              className="flex w-full items-center justify-between"
+            >
+              Edit
+            </Link>
             <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
           </DropdownMenuItem>
 
@@ -194,6 +204,7 @@ export function CategoryOperations({ kategori }: CategoryOperationsProps) {
 
           <DropdownMenuItem
             className="flex  items-center"
+            disabled={!rule.can_write_knowledge}
             onSelect={() => setOpenDeleteAlert(true)}
           >
             Hapus

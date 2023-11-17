@@ -9,7 +9,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
-export default async function OperatorLMSLayout({
+export default async function SupervisorLMSLayout({
   children,
 }: DashboardLayoutProps) {
   const user = await getCurrentUser()
@@ -18,7 +18,7 @@ export default async function OperatorLMSLayout({
 
   const menu = await getMenu({
     token: user?.token,
-    idRole: "3",
+    idRole: "4",
   })
 
   const userLogged = await getLoggedOnUser({

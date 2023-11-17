@@ -1,3 +1,5 @@
+import React from "react"
+
 import { getLoggedOnUser, getMenu } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
@@ -9,7 +11,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
-export default async function OperatorLMSLayout({
+export default async function PesertaLayout({
   children,
 }: DashboardLayoutProps) {
   const user = await getCurrentUser()
@@ -18,7 +20,7 @@ export default async function OperatorLMSLayout({
 
   const menu = await getMenu({
     token: user?.token,
-    idRole: "3",
+    idRole: "5",
   })
 
   const userLogged = await getLoggedOnUser({

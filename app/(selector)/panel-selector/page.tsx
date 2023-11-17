@@ -76,7 +76,7 @@ export default async function PanelSelector() {
         <ButtonSelector
           title="Spv Operator LMS"
           description="Spv Operator LMS dapat menapprove pelatihan yang ada di LMS."
-          link="/supervisor-operator-lms"
+          link="/supervisor-lms"
           disabled={!isSpvOperatorLMS}
           isTextMuted
         />
