@@ -4,6 +4,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     basePath: "",
   },
+
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [

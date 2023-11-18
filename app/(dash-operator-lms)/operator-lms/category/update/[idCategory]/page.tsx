@@ -1,8 +1,8 @@
 import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
-import { CategoryOneRes } from "@/types/category/res"
 import { authOptions } from "@/lib/auth"
+import { getOneCategory } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import UpdateCategoryForm from "@/components/forms/update-category-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -24,29 +24,6 @@ interface OperatorLMSUpdateCategoryPageProps {
   params: {
     idCategory: string
   }
-}
-
-interface GetOneCategoryProps {
-  token: string | undefined
-  idCategory: string
-}
-
-async function getOneCategory({
-  token,
-  idCategory,
-}: GetOneCategoryProps): Promise<CategoryOneRes> {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${idCategory}`
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache",
-  })
-
-  return await res.json()
 }
 
 export default async function OperatorLMSUpdateCategoryPage({

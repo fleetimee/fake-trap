@@ -1,4 +1,5 @@
-import { CategoryListRes } from "@/types/category/res"
+import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
+import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { RuleOneRes } from "@/types/rule/res"
@@ -99,6 +100,128 @@ export async function getListCategory({
   )
 
   return await categoryList.json()
+}
+
+interface GetOneCategoryProps {
+  token: string | undefined
+  idCategory: string
+}
+
+/**
+ * Retrieves a single category from the server.
+ * @param {GetOneCategoryProps} options - The options for retrieving the category.
+ * @returns {Promise<CategoryOneRes>} - A promise that resolves to the category response.
+ */
+export async function getOneCategory({
+  token,
+  idCategory,
+}: GetOneCategoryProps): Promise<CategoryOneRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${idCategory}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetKnowledgeV2Props {
+  token: string
+  limit: number
+  page: number
+  sortField?: string
+  orderBy?: string
+  searchQuery?: string
+  visibilityId?: string | string[] | undefined
+  categoryIds?: string | string[] | undefined
+  statusCode?: string | string[] | undefined
+}
+
+/**
+ * Retrieves a list of knowledge items based on the provided parameters.
+ * @param token - The authentication token.
+ * @param limit - The maximum number of knowledge items to retrieve per page.
+ * @param page - The page number of the knowledge items to retrieve.
+ * @param sortField - The field to sort the knowledge items by. Defaults to "id_knowledge".
+ * @param orderBy - The order in which to sort the knowledge items. Defaults to "asc".
+ * @param searchQuery - The search query to filter the knowledge items.
+ * @param categoryIds - The category IDs to filter the knowledge items by.
+ * @param visibilityId - The visibility ID to filter the knowledge items by.
+ * @param statusCode - The status code to filter the knowledge items by.
+ * @returns A promise that resolves to a KnowledgeListRes object containing the retrieved knowledge items.
+ */
+export async function getKnowledgeV2({
+  token,
+  limit,
+  page,
+  sortField = "id_knowledge",
+  orderBy = "asc",
+  searchQuery = "",
+  categoryIds = "",
+  visibilityId = "",
+  statusCode = "",
+}: GetKnowledgeV2Props): Promise<KnowledgeListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  // If categoryIds is provided, add it to the URL
+  if (categoryIds) {
+    url += `&categoryIds=${categoryIds}`
+  }
+
+  if (visibilityId) {
+    url += `&visibility=${visibilityId}`
+  }
+
+  if (statusCode) {
+    url += `&statusCodes=${statusCode}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetOneKnowledgeProps {
+  token: string
+  idKnowledge: string
+}
+
+/**
+ * Retrieves a single knowledge item from the server.
+ * @param {GetOneKnowledgeProps} options - The options for fetching the knowledge item.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.idKnowledge - The ID of the knowledge item to fetch.
+ * @returns {Promise<any>} - A promise that resolves to the fetched knowledge item.
+ */
+export async function getOneKnowledge({
+  token,
+  idKnowledge,
+}: GetOneKnowledgeProps): Promise<KnowledgeOneRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
+  })
+
+  return await res.json()
 }
 
 interface GetMenuProps {

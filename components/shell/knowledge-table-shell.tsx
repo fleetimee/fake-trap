@@ -14,6 +14,8 @@ import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
+import { ContextMenu } from "../ui/context-menu"
+
 interface BadgeSwitchProps {
   approval: any
 }
@@ -246,52 +248,54 @@ export function KnowledgeTableShell({
   )
 
   return (
-    <DataTable
-      columns={columns}
-      data={data}
-      filterableColumns={[
-        {
-          id: "id_category",
-          title: "Filter Kategori",
-          options: categoryResp.data.map((category) => ({
-            label: category.category_name,
-            value: category.id_category,
-          })) as any,
-        },
-        {
-          id: "status_text",
-          title: "Filter Status",
-          options: [
-            {
-              label: "Pending",
-              value: "0051",
-            },
-            {
-              label: "Approved",
-              value: "0052",
-            },
-            {
-              label: "Rejected",
-              value: "0053",
-            },
-          ],
-        },
-        {
-          id: "status",
-          title: "Filter Visibility",
-          options: referenceResp.data.map((reference) => ({
-            label: reference.value_ref1,
-            value: reference.code_ref2,
-          })) as any,
-        },
-      ]}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "knowledge_title",
-          title: "Judul",
-        },
-      ]}
-    />
+    <ContextMenu>
+      <DataTable
+        columns={columns}
+        data={data}
+        filterableColumns={[
+          {
+            id: "id_category",
+            title: "Filter Kategori",
+            options: categoryResp.data.map((category) => ({
+              label: category.category_name,
+              value: category.id_category,
+            })) as any,
+          },
+          {
+            id: "status_text",
+            title: "Filter Status",
+            options: [
+              {
+                label: "Pending",
+                value: "0051",
+              },
+              {
+                label: "Approved",
+                value: "0052",
+              },
+              {
+                label: "Rejected",
+                value: "0053",
+              },
+            ],
+          },
+          {
+            id: "status",
+            title: "Filter Visibility",
+            options: referenceResp.data.map((reference) => ({
+              label: reference.value_ref1,
+              value: reference.code_ref2,
+            })) as any,
+          },
+        ]}
+        pageCount={pageCount}
+        searchableColumns={[
+          {
+            id: "knowledge_title",
+            title: "Judul",
+          },
+        ]}
+      />
+    </ContextMenu>
   )
 }

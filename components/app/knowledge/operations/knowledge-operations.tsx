@@ -276,10 +276,16 @@ export function KnowledgeOperations({
                 <DropdownMenuItem
                   className="flex items-center
                   "
-                  onSelect={() => setOpenEditKnowledgeSheet(true)}
+                  // onSelect={() => setOpenEditKnowledgeSheet(true)}
                 >
-                  Edit
-                  <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
+                  <Link
+                    href={`/operator-lms/knowledge/update/${knowledgeData.id_knowledge}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Edit
+                    <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
