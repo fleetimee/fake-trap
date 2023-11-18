@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { CategoryListRes } from "@/types/category/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
 import { knowledgeSchema } from "@/lib/validations/knowledge"
@@ -19,6 +20,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command"
 import {
   Form,
@@ -36,13 +38,20 @@ import {
 } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 
+import { Icons } from "../icons"
+import { ScrollArea } from "../ui/scroll-area"
+
 type Inputs = z.infer<typeof knowledgeSchema>
 
 interface AddKnowledgeFormProps {
   reference: ReferenceListRes
+  category: CategoryListRes
 }
 
-export function AddKnowledgeForm({ reference }: AddKnowledgeFormProps) {
+export function AddKnowledgeForm({
+  reference,
+  category,
+}: AddKnowledgeFormProps) {
   const { data: session } = useSession()
 
   const [open, setOpen] = React.useState(false)
@@ -58,8 +67,9 @@ export function AddKnowledgeForm({ reference }: AddKnowledgeFormProps) {
       description: "",
       image: "",
       status: "",
-      id_category: "",
+      id_category: 0,
       created_by: session?.expires.id,
+      updated_by: session?.expires.id,
     },
   })
 
@@ -84,6 +94,7 @@ export function AddKnowledgeForm({ reference }: AddKnowledgeFormProps) {
 
           router.back()
           router.refresh()
+          form.reset()
         } else {
           sonnerToast.error("Gagal", {
             description: "Pengetahuan gagal ditambahkan",
@@ -94,7 +105,6 @@ export function AddKnowledgeForm({ reference }: AddKnowledgeFormProps) {
           description: "Pengetahuan gagal ditambahkan",
         })
       } finally {
-        form.reset()
       }
     })
   }
@@ -227,6 +237,98 @@ export function AddKnowledgeForm({ reference }: AddKnowledgeFormProps) {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="id_category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Kategori <span className="text-red-500">*</span>{" "}
+              </FormLabel>
+              <FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "w-full justify-between",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value
+                          ? category.data.find(
+                              (category) => category.id_category === field.value
+                            )?.category_name
+                          : "Pilih Kategori"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="h-[300px] w-[400px] p-0 xl:w-[680px]">
+                    <Command>
+                      <CommandInput placeholder="Jenis Kategori" />
+                      <CommandList>
+                        <CommandEmpty>Kategori tidak ditemukan</CommandEmpty>
+                        <CommandGroup>
+                          <ScrollArea className="h-full">
+                            {category.data.map((category) => (
+                              <CommandItem
+                                value={category.category_name}
+                                key={category.id_category}
+                                onSelect={(value) => {
+                                  form.clearErrors("id_category")
+                                  form.setValue(
+                                    "id_category",
+                                    category.id_category
+                                  )
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    category.id_category === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {category.category_name}
+                              </CommandItem>
+                            ))}
+                          </ScrollArea>
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="created_by"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Dibuat Oleh <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Created By" disabled />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" className="w-fit" disabled={isPending}>
+          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          Tambah
+        </Button>
       </form>
     </Form>
   )

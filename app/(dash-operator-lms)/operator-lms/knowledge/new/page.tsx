@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getReference } from "@/lib/fetcher"
+import { getListCategory, getReference } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddKnowledgeForm } from "@/components/forms/add-knowledge-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -32,6 +32,12 @@ export default async function OperatorLMSKnowledgePageNew() {
     refCode: "003",
   })
 
+  const category = await getListCategory({
+    token: user?.token,
+    page: 1,
+    limit: 999,
+  })
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -58,7 +64,7 @@ export default async function OperatorLMSKnowledgePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddKnowledgeForm reference={reference} />
+          <AddKnowledgeForm reference={reference} category={category} />
         </CardContent>
       </Card>
     </DashboardShell>

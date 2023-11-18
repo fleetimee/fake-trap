@@ -16,7 +16,7 @@ export const knowledgeSchema = z.object({
     message: "Status tidak boleh kosong",
   }),
   image: z.string().optional(),
-  id_category: z.string().min(1, {
+  id_category: z.number().min(1, {
     message: "Kategori tidak boleh kosong",
   }),
   created_by: z.string().min(1, {
