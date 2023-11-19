@@ -2,7 +2,12 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getListCategory, getOneKnowledge, getReference } from "@/lib/fetcher"
+import {
+  getListCategory,
+  getOneKnowledge,
+  getReference,
+  getRule,
+} from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { UpdateKnowledgeForm } from "@/components/forms/update-knowledge-form"
@@ -32,8 +37,6 @@ export default async function OperatorLMSUpdateKnowledgePage({
 }: OperatorLMSUpdateKnowledgePageProps) {
   const user = await getCurrentUser()
 
-  const tokenExtracted = extractToken(user?.token)
-
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -55,6 +58,15 @@ export default async function OperatorLMSUpdateKnowledgePage({
   })
 
   if (knowledge.code === 400) {
+    return notFound()
+  }
+
+  const rule = await getRule({
+    token: user?.token,
+    idRole: "3",
+  })
+
+  if (!rule.data.can_write_knowledge) {
     return notFound()
   }
 

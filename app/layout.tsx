@@ -62,10 +62,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             {/*<NextTopLoader />*/}
             <div className="relative flex min-h-screen flex-col">
-              <BGGrid>
-                <Providers>{children}</Providers>
-                {/*{children}*/}
-              </BGGrid>
+              {/* <BGGrid> */}
+              <Providers>{children}</Providers>
+              {/*{children}*/}
+              {/* </BGGrid> */}
               <Toaster />
               <TailwindIndicator />
             </div>

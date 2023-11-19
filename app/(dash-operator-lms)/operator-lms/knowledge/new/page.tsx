@@ -1,8 +1,8 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getListCategory, getReference } from "@/lib/fetcher"
+import { getListCategory, getReference, getRule } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddKnowledgeForm } from "@/components/forms/add-knowledge-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -37,6 +37,15 @@ export default async function OperatorLMSKnowledgePageNew() {
     page: 1,
     limit: 999,
   })
+
+  const rule = await getRule({
+    token: user?.token,
+    idRole: "3",
+  })
+
+  if (!rule.data.can_write_knowledge) {
+    return notFound()
+  }
 
   return (
     <DashboardShell>

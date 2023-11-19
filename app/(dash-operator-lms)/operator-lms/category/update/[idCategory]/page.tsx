@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCategory } from "@/lib/fetcher"
+import { getOneCategory, getRule } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import UpdateCategoryForm from "@/components/forms/update-category-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -41,6 +41,15 @@ export default async function OperatorLMSUpdateCategoryPage({
   })
 
   if (category.code === 400) {
+    return notFound()
+  }
+
+  const rule = await getRule({
+    token: user?.token,
+    idRole: "3",
+  })
+
+  if (!rule.data.can_write_knowledge) {
     return notFound()
   }
 

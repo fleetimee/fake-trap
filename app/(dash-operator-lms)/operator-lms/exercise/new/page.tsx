@@ -1,10 +1,8 @@
 import { Metadata } from "next"
-import { notFound, redirect } from "next/navigation"
+import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getRule } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { AddCategoryForm } from "@/components/forms/add-category-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import {
@@ -16,24 +14,15 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah Kategori",
-  description: "Tambah Kategori baru",
+  title: "Tambah Test dan Latihan",
+  description: "Tambah Test dan Latihan",
 }
 
-export default async function OperatorLmsCategoryPageNew() {
+export default async function OperatorLMSExercisePageNew() {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
-  }
-
-  const rule = await getRule({
-    token: user?.token,
-    idRole: "3",
-  })
-
-  if (!rule.data.can_write_knowledge) {
-    return notFound()
   }
 
   return (
@@ -45,25 +34,25 @@ export default async function OperatorLmsCategoryPageNew() {
             title: "Dashboard",
           },
           {
-            href: "/operator-lms/category",
-            title: "Kategori",
+            href: "/operator-lms/exercise",
+            title: "Test dan Latihan",
           },
           {
-            href: "/operator-lms/category/new",
-            title: "Tambah Kategori",
+            href: "/operator-lms/exercise/new",
+            title: "Tambah Test dan Latihan",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Kategori</CardTitle>
-          <CardDescription>Tambah Kategori Baru</CardDescription>
+          <CardTitle className="text-xl">Tambah Test dan Latihan</CardTitle>
+          <CardDescription>
+            Buat Pre Test, Post Test, dan Latihan untuk peserta Anda.
+          </CardDescription>
         </CardHeader>
 
-        <CardContent>
-          <AddCategoryForm />
-        </CardContent>
+        <CardContent></CardContent>
       </Card>
     </DashboardShell>
   )
