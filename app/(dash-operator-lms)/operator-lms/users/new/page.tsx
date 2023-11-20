@@ -7,6 +7,7 @@ import { getReference } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { useBearStore } from "@/lib/store/reference_store"
 import { AddTestForm } from "@/components/forms/add-test-form"
+import { AddUserForm } from "@/components/forms/add-users-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -64,6 +65,10 @@ export default async function OperatorLMSUsersPageNew() {
             Tambahkan user baru untuk mengakses sistem
           </CardDescription>
         </CardHeader>
+
+        <CardContent>
+          <AddUserForm />
+        </CardContent>
       </Card>
     </DashboardShell>
   )
