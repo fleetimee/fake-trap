@@ -33,6 +33,7 @@ import { Button } from "../ui/button"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -355,6 +356,9 @@ export function UpdateKnowledgeForm({
               <FormControl>
                 <Input {...field} placeholder="Created By" disabled />
               </FormControl>
+              <FormDescription>
+                Ini adalah unique identifier dari user yang mensuting tes ini
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

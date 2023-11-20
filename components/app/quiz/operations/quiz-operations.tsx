@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog"
@@ -205,10 +206,15 @@ export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
           <DropdownMenuItem
             className="flex items-center
             "
-            onSelect={() => setOpenEditQuizSheet(true)}
+            // onSelect={() => setOpenEditQuizSheet(true)}
           >
-            Edit
-            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+            <Link
+              href={`/operator-lms/exercise/update/${quiz.id_quiz}`}
+              className="flex w-full cursor-default items-center"
+            >
+              Edit
+              <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />

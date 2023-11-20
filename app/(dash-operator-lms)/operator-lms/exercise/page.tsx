@@ -3,12 +3,13 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
+import { getOperatorQuiz, getReference } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { DashboardShell, QuizTableShell } from "@/components/shell"
+import { buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Test dan Latihan",
@@ -29,6 +30,35 @@ export default async function OperatorLMSExercisePage({
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const { page, per_page, sort, quiz_title, quiz_type } = searchParams ?? {}
+
+  // Initial value
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
+  const sortFieldInitial = typeof sort === "string" ? sort : "id_quiz"
+  const sortOrderInitial = typeof sort === "string" ? sort : "asc"
+  const searchQueryInitial = typeof quiz_title === "string" ? quiz_title : ""
+
+  // Split sort into sortField and sortOrder
+  const sortField = sortFieldInitial.split(".")[0]
+  const sortOrder = sortOrderInitial.split(".")[1]
+
+  const [quiz, references] = await Promise.all([
+    getOperatorQuiz({
+      token: user?.token,
+      page: pageInitial,
+      limit: limitInitial,
+      sortBy: sortField,
+      orderBy: sortOrder,
+      searchQuery: searchQueryInitial,
+      quizTypes: quiz_type,
+    }),
+    getReference({
+      refCode: "002",
+      token: user?.token,
+    }),
+  ])
 
   return (
     <DashboardShell>
@@ -71,12 +101,18 @@ export default async function OperatorLMSExercisePage({
               className: "ml-2",
             })}
           >
-            Buat Test Baru
+            Managemen User
           </Link>
 
           {/* <CreateQuizSheet referenceResp={referenceResp} /> */}
         </MotionDiv>
       </div>
+
+      <QuizTableShell
+        data={quiz.data}
+        pageCount={quiz.totalPage}
+        referenceResp={references}
+      />
     </DashboardShell>
   )
 }

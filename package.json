@@ -87,7 +87,8 @@
     "tailwindcss-animate": "^1.0.7",
     "xlsx": "^0.18.5",
     "ytdl-core": "^4.11.5",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.6"
   },
   "overrides": {
     "@react-pdf/font": "2.2.1",

@@ -25,6 +25,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -320,6 +321,9 @@ export function AddKnowledgeForm({
               <FormControl>
                 <Input {...field} placeholder="Created By" disabled />
               </FormControl>
+              <FormDescription>
+                Ini adalah unique identifier dari user yang membuat tes
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

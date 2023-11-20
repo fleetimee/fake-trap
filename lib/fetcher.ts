@@ -1,6 +1,7 @@
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
+import { QuizListRes, QuizOneRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { RuleOneRes } from "@/types/rule/res"
 import { UserOneRes } from "@/types/user/res"
@@ -222,6 +223,82 @@ export async function getOneKnowledge({
   })
 
   return await res.json()
+}
+
+interface GetQuizProps {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  quizTypes?: string | string[] | undefined
+}
+
+/**
+ * Retrieves a list of operator quizzes based on the provided parameters.
+ * @param token - The authentication token.
+ * @param page - The page number of the quiz list.
+ * @param limit - The maximum number of quizzes to retrieve per page.
+ * @param sortBy - The field to sort the quizzes by (default: "id_quiz").
+ * @param orderBy - The order in which to sort the quizzes (default: "asc").
+ * @param searchQuery - The search query to filter the quizzes by (default: "").
+ * @param quizTypes - The types of quizzes to filter by (optional).
+ * @returns A promise that resolves to the list of operator quizzes.
+ */
+export async function getOperatorQuiz({
+  token,
+  page,
+  limit,
+  sortBy = "id_quiz",
+  orderBy = "asc",
+  searchQuery = "",
+  quizTypes = "",
+}: GetQuizProps): Promise<QuizListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (quizTypes) {
+    url += `&quizTypes=${quizTypes}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetOneQuizProps {
+  id: string
+  token: string | undefined
+}
+
+/**
+ * Retrieves a single quiz from the server.
+ * @param {GetOneQuizProps} options - The options for fetching the quiz.
+ * @returns {Promise<QuizOneRes>} - A promise that resolves to the fetched quiz.
+ */
+export async function getOneQuiz({
+  id,
+  token,
+}: GetOneQuizProps): Promise<QuizOneRes> {
+  const quizOne = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${id}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+  return await quizOne.json()
 }
 
 interface GetMenuProps {

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { QuizOneResData } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
 import { testSchema } from "@/lib/validations/test"
@@ -41,11 +42,12 @@ import { Icons } from "../icons"
 
 type Inputs = z.infer<typeof testSchema>
 
-interface AddTestFormProps {
+interface UpdateTestFormProps {
+  quiz: QuizOneResData
   references: ReferenceListRes
 }
 
-export function AddTestForm({ references }: AddTestFormProps) {
+export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -55,10 +57,10 @@ export function AddTestForm({ references }: AddTestFormProps) {
   const form = useForm<Inputs>({
     resolver: zodResolver(testSchema),
     defaultValues: {
-      quiz_title: "",
-      quiz_desc: "",
-      quiz_type: "",
-      created_by: session?.expires.id,
+      quiz_title: quiz.quiz_title,
+      quiz_desc: quiz.quiz_desc,
+      quiz_type: quiz.quiz_type,
+      created_by: quiz.created_by,
       updated_by: session?.expires.id,
     },
   })
@@ -66,28 +68,28 @@ export function AddTestForm({ references }: AddTestFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz`
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${quiz.id_quiz}`
 
-        const response = await fetch(url, {
-          method: "POST",
+        const res = await fetch(url, {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
+            Authorization: `Bearer ${session?.user.token}`,
           },
           body: JSON.stringify(data),
+          cache: "no-cache",
         })
 
-        if (response.ok) {
+        if (res.ok) {
           sonnerToast.success("Berhasil", {
-            description: "Tes berhasil dibuat",
+            description: "Data berhasil diubah",
           })
 
           router.back()
           router.refresh()
-          form.reset()
         } else {
           sonnerToast.error("Gagal", {
-            description: "Tes gagal dibuat",
+            description: "Data gagal diubah",
           })
         }
       } catch (error) {
@@ -181,7 +183,7 @@ export function AddTestForm({ references }: AddTestFormProps) {
                   <PopoverContent className="w-[400px] p-0 xl:w-[680px]">
                     <Command>
                       <CommandInput placeholder="Pilih tipe quiz..." />
-                      <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
+                      <CommandEmpty>Tipe Quiz tidak ditemukan</CommandEmpty>
                       <CommandGroup>
                         {references.data.map((quiz) => (
                           <CommandItem
@@ -215,7 +217,7 @@ export function AddTestForm({ references }: AddTestFormProps) {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="created_by"
           render={({ field }) => (
@@ -230,11 +232,35 @@ export function AddTestForm({ references }: AddTestFormProps) {
               </FormDescription>
             </FormItem>
           )}
+        /> */}
+
+        <FormField
+          control={form.control}
+          name="updated_by"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Diubah Oleh</FormLabel>
+
+              <FormControl>
+                <Input {...field} disabled placeholder="" />
+              </FormControl>
+              <FormDescription>
+                Ini adalah unique identifier dari user yang mengubah tes
+              </FormDescription>
+            </FormItem>
+          )}
         />
 
-        <Button type="submit" className="w-fit" disabled={isPending}>
+        <Button
+          type="submit"
+          className="w-fit"
+          disabled={isPending}
+          onClick={() => {
+            console.log("clicked")
+          }}
+        >
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Tambah
+          Update
         </Button>
       </form>
     </Form>
