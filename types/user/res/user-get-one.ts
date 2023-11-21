@@ -15,6 +15,7 @@ export type UserOneResData = {
   password: string
   last_login: Date
   role: UserOneResRole[]
+  created_by: string
 }
 
 export type UserOneResRole = {

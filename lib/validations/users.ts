@@ -13,4 +13,15 @@ export const usersSchema = z.object({
   created_by: z.string().min(1, {
     message: "Created by tidak boleh kosong",
   }),
+  role: z
+    .array(
+      z.object({
+        id_role: z.number().min(1, {
+          message: "Id role tidak boleh kosong",
+        }),
+      })
+    )
+    .min(1, {
+      message: "Role tidak boleh kosong",
+    }),
 })

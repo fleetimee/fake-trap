@@ -238,11 +238,17 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
 
           <DropdownMenuItem
             className="flex items-center"
-            onSelect={() => setOpenEditUserSheet(true)}
+            // onSelect={() => setOpenEditUserSheet(true)}
             asChild
-            disabled
+            // disabled
           >
-            <p>Edit</p>
+            <Link
+              href={`/operator-lms/users/update/${user.uuid}`}
+              className="flex w-full cursor-default items-center"
+            >
+              <p>Edit</p>
+              <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />

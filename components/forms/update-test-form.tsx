@@ -251,14 +251,7 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-fit"
-          disabled={isPending}
-          onClick={() => {
-            console.log("clicked")
-          }}
-        >
+        <Button type="submit" className="w-fit" disabled={isPending}>
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           Update
         </Button>

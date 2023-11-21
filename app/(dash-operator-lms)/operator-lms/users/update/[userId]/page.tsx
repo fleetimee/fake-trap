@@ -1,12 +1,9 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { Shield } from "lucide-react"
 
-import { RoleListRes } from "@/types/role/res"
-import { authOptions } from "@/lib/auth"
-import { getRole } from "@/lib/fetcher"
+import { getOneUser, getRole } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { AddUserForm } from "@/components/forms/add-users-form"
+import { UpdateUserForm } from "@/components/forms/update-users-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -19,18 +16,29 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah User Baru",
-  description: "Tambah User Baru",
+  title: "Update User",
+  description: "Update User",
 }
 
-export default async function OperatorLMSUsersPageNew() {
+interface OperatorLMSUsersPageUpdateProps {
+  params: {
+    userId: string
+  }
+}
+
+export default async function OperatorLMSUsersPageUpdate({
+  params,
+}: OperatorLMSUsersPageUpdateProps) {
   const user = await getCurrentUser()
 
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
-  }
+  const person = await getOneUser({
+    token: user?.token,
+    uuid: params.userId,
+  })
 
-  const role = await getRole({ token: user?.token })
+  const role = await getRole({
+    token: user?.token,
+  })
 
   return (
     <DashboardShell>
@@ -45,11 +53,12 @@ export default async function OperatorLMSUsersPageNew() {
             title: "Managemen User",
           },
           {
-            href: "/operator-lms/users/new",
-            title: "Tambah User Baru",
+            href: "/operator-lms/users/update",
+            title: "Update User",
           },
         ]}
       />
+
       <Alert variant="destructive">
         <Shield className="h-4 w-4" />
         <AlertTitle>Perhatian!</AlertTitle>
@@ -61,14 +70,17 @@ export default async function OperatorLMSUsersPageNew() {
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah User Baru</CardTitle>
+          <CardTitle className="text-xl">
+            Update User: {""}
+            <span className="font-semibold">{person?.data?.name}</span>
+          </CardTitle>
           <CardDescription>
-            Tambahkan user baru untuk mengakses sistem
+            Update User yang sudah dibuat sebelumnya
           </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <AddUserForm roleOptions={role.data} />
+          <UpdateUserForm roleOptions={role.data} user={person.data} />
         </CardContent>
       </Card>
     </DashboardShell>

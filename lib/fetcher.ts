@@ -3,8 +3,9 @@ import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
 import { QuizListRes, QuizOneRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
-import { UserOneRes } from "@/types/user/res"
+import { UserListRes, UserOneRes } from "@/types/user/res"
 
 interface GetUserProps {
   token: string | undefined
@@ -304,6 +305,91 @@ export async function getOneQuiz({
 interface GetMenuProps {
   token: string | undefined
   idRole: string
+}
+
+interface GetUserV2Props {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+/**
+ * Retrieves a list of users based on the provided parameters.
+ *
+ * @param token - The authentication token.
+ * @param page - The page number.
+ * @param limit - The maximum number of users to retrieve per page.
+ * @param sortBy - The field to sort the users by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the users. Defaults to "desc".
+ * @param searchQuery - The search query to filter the users.
+ * @returns A promise that resolves to the list of users.
+ */
+export async function getUserV2({
+  token,
+  page,
+  limit,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetUserV2Props): Promise<UserListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/v2?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface GetOneUserProps {
+  token: string | undefined
+  uuid: string
+}
+
+export async function getOneUser({
+  token,
+  uuid,
+}: GetOneUserProps): Promise<UserOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+  return await res.json()
+}
+
+interface GetRoleProps {
+  token: string | undefined
+}
+
+export async function getRole({ token }: GetRoleProps): Promise<RoleListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/role`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
 }
 
 /**

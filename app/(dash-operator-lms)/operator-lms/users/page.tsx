@@ -3,12 +3,16 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOperatorQuiz, getReference } from "@/lib/fetcher"
+import { getOperatorQuiz, getReference, getUserV2 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell, QuizTableShell } from "@/components/shell"
+import {
+  DashboardShell,
+  QuizTableShell,
+  UserTableShell,
+} from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
@@ -25,7 +29,29 @@ interface OperatorLMSUsersPageProps {
 export default async function OperatorLMSUsersPage({
   searchParams,
 }: OperatorLMSUsersPageProps) {
+  const { page, per_page, sort, username, category } = searchParams ?? {}
+
+  // Initial value
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
+  const sortFieldInitial = typeof sort === "string" ? sort : "created_at"
+  const sortOrderInitial = typeof sort === "string" ? sort : "desc"
+  const nameInitial = typeof username === "string" ? username : ""
+
+  // Split sort into sortField and sortOrder
+  const sortField = sortFieldInitial.split(".")[0]
+  const sortOrder = sortOrderInitial.split(".")[1]
+
   const user = await getCurrentUser()
+
+  const userList = await getUserV2({
+    token: user?.token,
+    page: pageInitial,
+    limit: limitInitial,
+    sortBy: sortField,
+    orderBy: sortOrder,
+    searchQuery: nameInitial,
+  })
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -61,10 +87,6 @@ export default async function OperatorLMSUsersPage({
           animate={{ opacity: 1, y: 0 }}
           className="flex xl:justify-end"
         >
-          {/* <Button className="ml-2" size="sm">
-            Buat Test Baru
-          </Button> */}
-
           <Link
             href="/operator-lms/users/new"
             className={buttonVariants({
@@ -74,10 +96,12 @@ export default async function OperatorLMSUsersPage({
           >
             Buat User Baru
           </Link>
-
-          {/* <CreateQuizSheet referenceResp={referenceResp} /> */}
         </MotionDiv>
       </div>
+
+      <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <UserTableShell data={userList.data} pageCount={userList.totalPage} />
+      </MotionDiv>
     </DashboardShell>
   )
 }

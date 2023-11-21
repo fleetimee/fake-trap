@@ -10,6 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { RoleListResData } from "@/types/role/res"
+import { UserOneResData } from "@/types/user/res"
 import { cn } from "@/lib/utils"
 import { usersSchema } from "@/lib/validations/users"
 import { Button } from "@/components/ui/button"
@@ -40,19 +41,18 @@ import { Icons } from "../icons"
 import { Badge } from "../ui/badge"
 
 interface ErrorResponseProps {
-  error: string
+  message: string
 }
 
 type Inputs = z.infer<typeof usersSchema>
 
-interface AddUserFormProps {
+interface UpdateUsersFormProps {
   roleOptions: RoleListResData[]
+  user: UserOneResData
 }
 
-export function AddUserForm({ roleOptions }: AddUserFormProps) {
+export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
   type RoleNovian = z.infer<typeof usersSchema.shape.role>
-
-  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>([])
 
   const { data: session } = useSession()
 
@@ -63,48 +63,34 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
   const form = useForm<Inputs>({
     resolver: zodResolver(usersSchema),
     defaultValues: {
-      name: "",
-      username: "",
-      email: "",
-      created_by: session?.expires.id,
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      created_by: user.created_by,
+      role: user.role,
     },
   })
 
-  const name = form.watch("name")
-
-  React.useEffect(() => {
-    if (name) {
-      const words = name.split(" ")
-      let username = ""
-      if (words.length >= 3) {
-        username = `${words[0]}.${words[words.length - 1]}`
-      } else {
-        username = words.join(".")
-      }
-      form.setValue("username", username.toLowerCase())
-    }
-  }, [name, form])
-
-  React.useEffect(() => {
-    form.setValue("role", selectedRole)
-  }, [form, selectedRole])
+  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>(user.role)
 
   async function onSubmit(data: Inputs) {
+    console.log(data)
+
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/`
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${user.uuid}`
 
         const response = await fetch(url, {
-          method: "POST",
+          method: "PUT",
           headers: {
-            Authorization: `Bearer ${session?.user?.token}`,
+            Authorization: `Bearer ${session?.user.token}`,
           },
           body: JSON.stringify(data),
         })
 
         if (response.ok) {
           sonnerToast.success("Berhasil", {
-            description: "User berhasil dibuat",
+            description: "User berhasil diupdate",
           })
 
           router.back()
@@ -114,7 +100,7 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
           const errorResponse: ErrorResponseProps = await response.json()
 
           sonnerToast.error("Gagal", {
-            description: `${errorResponse.error}`,
+            description: errorResponse.message,
           })
         }
       } catch (error) {
@@ -160,11 +146,7 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
                 Username <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Masukkan username"
-                  disabled={isPending}
-                />
+                <Input {...field} placeholder="Masukkan username" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -354,7 +336,7 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
 
         <Button type="submit" disabled={isPending} className="w-fit">
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Tambah
+          Update
         </Button>
       </form>
     </Form>
