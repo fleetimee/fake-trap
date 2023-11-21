@@ -234,6 +234,15 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             </Link>
           </DropdownMenuItem>
 
+          <DropdownMenuItem className="flex items-center">
+            <Link
+              className="flex w-full cursor-default items-center"
+              href={`/operator-lms/users/reset-password/${user.uuid}`}
+            >
+              Reset Password
+            </Link>
+          </DropdownMenuItem>
+
           <DropdownMenuSeparator />
 
           <DropdownMenuItem
