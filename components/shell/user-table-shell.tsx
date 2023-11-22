@@ -164,6 +164,8 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
     <DataTable
       columns={columns}
       data={data}
+      isExportable
+      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/users/xlsx`}
       pageCount={pageCount}
       searchableColumns={[
         {

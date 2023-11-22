@@ -256,10 +256,16 @@ export function CourseOperations({
                 <DropdownMenuItem
                   className="flex  items-center
                   "
-                  onSelect={() => setOpenEditCourse(true)}
+                  // onSelect={() => setOpenEditCourse(true)}
                 >
-                  Edit
-                  <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+                  <Link
+                    href={`/operator-lms/course/update/${courseResp.id_course}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Edit
+                    <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem

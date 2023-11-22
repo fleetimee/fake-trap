@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { CourseOneResData } from "@/types/course/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { cn } from "@/lib/utils"
@@ -42,49 +43,54 @@ import { Textarea } from "../ui/textarea"
 
 type Inputs = z.infer<typeof courseSchema>
 
-interface AddCourseFormProps {
+interface UpdateCourseFormProps {
+  course: CourseOneResData
   knowledge: KnowledgeListResData[]
   tutors: UserRoleListResData[]
 }
 
-export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
+export function UpdateCourseForm({
+  course,
+  knowledge,
+  tutors,
+}: UpdateCourseFormProps) {
   const { data: session } = useSession()
 
-  const [isLoading, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
 
   const form = useForm<Inputs>({
     resolver: zodResolver(courseSchema),
     defaultValues: {
-      course_name: "",
-      course_desc: "",
-      date_start: new Date(),
-      date_end: new Date(),
-      image: "",
-      tutor_uuid: "",
-      created_by: session?.expires.id,
+      course_name: course.course_name,
+      course_desc: course.course_desc,
+      image: course.image,
+      id_knowledge: course.id_knowledge,
+      tutor_uuid: course.tutor_uuid,
+      date_start: new Date(course.date_start),
+      date_end: new Date(course.date_end),
+      created_by: course.created_by,
     },
   })
 
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${session?.user.token}`,
-            },
-            body: JSON.stringify(data),
-          }
-        )
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${course.id_course}`
 
-        if (response.ok) {
+        const res = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user?.token}`,
+          },
+          body: JSON.stringify(data),
+        })
+
+        if (res.ok) {
           sonnerToast.success("Berhasil", {
-            description: "Pelatihan berhasil dibuat",
+            description: "Data berhasil diubah",
           })
 
           router.back()
@@ -92,12 +98,12 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
           form.reset()
         } else {
           sonnerToast.error("Gagal", {
-            description: "Pelatihan gagal dibuat",
+            description: "Data gagal diubah",
           })
         }
       } catch (error) {
         sonnerToast.error("Gagal", {
-          description: "Pelatihan gagal dibuat",
+          description: "Data gagal diubah",
         })
       }
     })
@@ -121,7 +127,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                 <Input
                   placeholder="Ketikkan judul pelatihan disini"
                   {...field}
-                  disabled={isLoading}
+                  disabled={isPending}
                 />
               </FormControl>
               <FormMessage />
@@ -142,7 +148,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        disabled={isLoading}
+                        disabled={isPending}
                         variant="outline"
                         role="combobox"
                         className={cn(
@@ -220,7 +226,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        disabled={isLoading}
+                        disabled={isPending}
                         variant="outline"
                         role="combobox"
                         className={cn(
@@ -291,7 +297,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                 <Textarea
                   placeholder="Ketikkan deskripsi pelatihan disini"
                   {...field}
-                  disabled={isLoading}
+                  disabled={isPending}
                   className="h-40 resize-none"
                 />
               </FormControl>
@@ -310,7 +316,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                 <Textarea
                   placeholder="Ketikkan deskripsi pelatihan disini"
                   {...field}
-                  disabled={isLoading}
+                  disabled={isPending}
                   className="h-20 resize-none"
                 />
               </FormControl>
@@ -332,7 +338,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      disabled={isLoading}
+                      disabled={isPending}
                       variant="outline"
                       role="combobox"
                       className={cn(
@@ -386,7 +392,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                     <Button
                       variant="outline"
                       role="combobox"
-                      disabled={isLoading}
+                      disabled={isPending}
                       className={cn(
                         "w-full justify-between",
                         !field.value && "text-muted-foreground"
@@ -446,9 +452,9 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
           )}
         />
 
-        <Button type="submit" className="w-fit" disabled={isLoading}>
-          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Tambah
+        <Button type="submit" className="w-fit" disabled={isPending}>
+          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          Update
         </Button>
       </form>
     </Form>

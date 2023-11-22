@@ -1,11 +1,12 @@
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
+import { CourseListRes, CourseOneRes } from "@/types/course/res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
 import { QuizListRes, QuizOneRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
-import { UserListRes, UserOneRes } from "@/types/user/res"
+import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
 
 interface GetUserProps {
   token: string | undefined
@@ -226,6 +227,73 @@ export async function getOneKnowledge({
   return await res.json()
 }
 
+interface GetCourseProps {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  statusText?: string | string[] | undefined // Add this line
+}
+
+export async function getCourse({
+  token,
+  page,
+  limit,
+  sortBy = "id_course",
+  orderBy = "asc",
+  searchQuery = "",
+  statusText = "", // Add this line
+}: GetCourseProps): Promise<CourseListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (statusText) {
+    url = `${url}&status=${statusText}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetOneCourseProps {
+  token: string | undefined
+  idCourse: string
+}
+
+/**
+ * Retrieves information about a specific course.
+ * @param {GetOneCourseProps} options - The options for retrieving the course.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.idCourse - The ID of the course to retrieve.
+ * @returns {Promise<CourseOneRes>} - A promise that resolves to the course information.
+ */
+export async function getOneCourse({
+  token,
+  idCourse,
+}: GetOneCourseProps): Promise<CourseOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 interface GetQuizProps {
   token: string | undefined
   page: number
@@ -355,6 +423,13 @@ interface GetOneUserProps {
   uuid: string
 }
 
+/**
+ * Retrieves information about a single user.
+ * @param {GetOneUserProps} options - The options for retrieving the user.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.uuid - The UUID of the user.
+ * @returns {Promise<UserOneRes>} - A promise that resolves to the user information.
+ */
 export async function getOneUser({
   token,
   uuid,
@@ -370,6 +445,36 @@ export async function getOneUser({
       cache: "no-store",
     }
   )
+  return await res.json()
+}
+
+interface GetPemateriProps {
+  token: string | undefined
+  idGroup: number
+}
+
+/**
+ * Retrieves a list of pemateri (user roles) from the server.
+ *
+ * @param {GetPemateriProps} options - The options for fetching the pemateri list.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.idGroup - The ID of the group.
+ * @returns {Promise<UserRoleListRes>} - A promise that resolves to the pemateri list response.
+ */
+export async function getPemateriList({
+  token,
+  idGroup,
+}: GetPemateriProps): Promise<UserRoleListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/group/${idGroup}/`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
   return await res.json()
 }
 

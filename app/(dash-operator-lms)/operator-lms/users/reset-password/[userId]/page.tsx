@@ -57,7 +57,10 @@ export default async function OperatorLmsUsersResetPasswordPage({
         <CardHeader className="space-y-1">
           <CardTitle className="text-xl">Reset Password</CardTitle>
           <CardDescription>
-            Force reset password untuk user ${person?.data?.name}
+            Reset password untuk user{" "}
+            <span className="font-semibold uppercase">
+              {person?.data?.name}
+            </span>
           </CardDescription>
         </CardHeader>
 

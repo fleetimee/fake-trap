@@ -9,11 +9,20 @@ export const courseSchema = z.object({
   }),
   date_start: z.date(),
   date_end: z.date(),
-  image: z.string().optional(),
+  image: z
+    .string()
+    .url({
+      message: "URL gambar tidak valid",
+    })
+    .optional()
+    .or(z.literal("")),
   id_knowledge: z.number({
     required_error: "Materi harus dipilih",
   }),
   tutor_uuid: z.string().min(1, {
     message: "Tutor harus dipilih",
+  }),
+  created_by: z.string().min(1, {
+    message: "Pembuat harus dipilih",
   }),
 })

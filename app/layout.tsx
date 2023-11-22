@@ -63,7 +63,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
             {/*<NextTopLoader />*/}
             <div className="relative flex min-h-screen flex-col">
               {/* <BGGrid> */}
-              <Providers>{children}</Providers>
+              {/* <Providers>{children}</Providers> */}
+
+              {children}
+
               {/*{children}*/}
               {/* </BGGrid> */}
               <Toaster />

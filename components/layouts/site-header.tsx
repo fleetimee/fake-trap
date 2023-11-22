@@ -7,7 +7,6 @@ import { signOut } from "next-auth/react"
 
 import { dashboardConfig } from "@/config/dashboard"
 import { siteConfig } from "@/config/site"
-import { extractToken } from "@/lib/utils"
 import { MainNav } from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -39,25 +38,7 @@ interface SiteHeaderProps {
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
-  /**
-   * The current pathname of the page.
-   */
-  const pathname = usePathname()
-
-  const isUrlIncludePemateriDivisi = pathname.includes("/pemateri-divisi")
-  const isUrlIncludeSupervisorPemateriDivisi = pathname.includes(
-    "/supervisor-pemateri-divisi"
-  )
-  const isUrlIncludeOperatorLMS = pathname.includes("/operator-lms")
-  const isUrlIncludeSupervisorOperatorLMS = pathname.includes("/supervisor-lms")
-  const isUrlIncludePeserta = pathname.includes("/peserta")
-  const isUrlIncludeExecutive = pathname.includes("/executive")
-
   if (props.user) {
-    console.log(props.displayName)
-    console.log(props.emailName)
-    console.log(props.isMoreThanOneRole)
-
     return (
       <header className="sticky top-0 z-40 border-b bg-background">
         <div className="container flex h-16 items-center">
@@ -108,8 +89,6 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                         <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
-
-                    <DropdownMenuSeparator />
                   </DropdownMenuGroup>
 
                   <DropdownMenuSeparator />
