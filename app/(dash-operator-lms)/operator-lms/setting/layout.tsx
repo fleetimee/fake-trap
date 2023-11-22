@@ -13,7 +13,7 @@ import { SidebarNav } from "./_components/setting_sidebar"
 const sidebarNavItem = [
   {
     title: "Profil",
-    href: "/operator-lms/setting/profile",
+    href: "/operator-lms/setting",
   },
   {
     title: "Akun",
@@ -65,7 +65,7 @@ export default async function OperatorLMSSettingLayout({
       <Separator />
 
       <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className="-mx-4 lg:w-1/5">
+        <aside className=" lg:w-1/5">
           <SidebarNav items={sidebarNavItem} />
         </aside>
         <div className="flex-1 lg:max-w-2xl">{children}</div>
