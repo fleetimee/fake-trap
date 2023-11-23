@@ -44,6 +44,8 @@ import { ScrollArea } from "../ui/scroll-area"
 
 type Inputs = z.infer<typeof knowledgeSchema>
 
+type InputsWithIndexSignature = Inputs & { [key: string]: any }
+
 interface AddKnowledgeFormProps {
   reference: ReferenceListRes
   category: CategoryListRes
@@ -66,7 +68,7 @@ export function AddKnowledgeForm({
     defaultValues: {
       knowledge_title: "",
       description: "",
-      image: "",
+      image: undefined,
       status: "",
       id_category: 0,
       created_by: session?.expires.id,
@@ -74,19 +76,27 @@ export function AddKnowledgeForm({
     },
   })
 
-  async function onSubmit(data: Inputs) {
+  async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge`
 
+        const formData = new FormData()
+
+        //append data
+        Object.keys(data).forEach((key) => {
+          formData.append(key, data[key])
+        })
+
         const response = await fetch(url, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user.token}`,
           },
-          body: JSON.stringify(data),
+          body: formData,
         })
+
+        console.log(formData)
 
         if (response.ok) {
           sonnerToast.success("Berhasil", {
@@ -159,24 +169,45 @@ export function AddKnowledgeForm({
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="image"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Gambar</FormLabel>
               <FormControl>
-                <Textarea
-                  {...field}
+                <Input
                   placeholder="Masukkan link gambar"
                   disabled={isPending}
-                  className="h-5 resize-none"
+                  type="file"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      form.setValue("image", e.target.files[0])
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
+
+        <FormItem>
+          <FormLabel>Gambar</FormLabel>
+          <FormControl>
+            <Input
+              placeholder="Masukkan link gambar"
+              disabled={isPending}
+              type="file"
+              onChange={(e) => {
+                if (e.target.files) {
+                  form.setValue("image", e.target.files[0])
+                }
+              }}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
 
         <FormField
           control={form.control}
