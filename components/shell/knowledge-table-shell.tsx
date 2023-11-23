@@ -101,7 +101,7 @@ export function KnowledgeTableShell({
           // <AspectRatio ratio={16 / 9}>
           <Link href={`/dashboard/knowledge/${row.original.id_knowledge}`}>
             <Image
-              src={row.original.image}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
               alt={row.original.knowledge_title}
               width={300}
               height={300}

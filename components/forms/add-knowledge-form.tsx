@@ -55,6 +55,8 @@ export function AddKnowledgeForm({
   reference,
   category,
 }: AddKnowledgeFormProps) {
+  const [preview, setPreview] = React.useState<string | null>(null)
+
   const { data: session } = useSession()
 
   const [open, setOpen] = React.useState(false)
@@ -88,6 +90,11 @@ export function AddKnowledgeForm({
           formData.append(key, data[key])
         })
 
+        //append image
+        if (data.image) {
+          formData.append("image", data.image)
+        }
+
         const response = await fetch(url, {
           method: "POST",
           headers: {
@@ -95,8 +102,6 @@ export function AddKnowledgeForm({
           },
           body: formData,
         })
-
-        console.log(formData)
 
         if (response.ok) {
           sonnerToast.success("Berhasil", {
@@ -192,22 +197,28 @@ export function AddKnowledgeForm({
           )}
         /> */}
 
-        <FormItem>
-          <FormLabel>Gambar</FormLabel>
-          <FormControl>
-            <Input
-              placeholder="Masukkan link gambar"
-              disabled={isPending}
-              type="file"
-              onChange={(e) => {
-                if (e.target.files) {
-                  form.setValue("image", e.target.files[0])
-                }
-              }}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Gambar</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Masukkan link gambar"
+                  disabled={isPending}
+                  type="file"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      form.setValue("image", e.target.files[0])
+                    }
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
