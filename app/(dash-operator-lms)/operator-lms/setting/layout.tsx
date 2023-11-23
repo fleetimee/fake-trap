@@ -19,6 +19,10 @@ const sidebarNavItem = [
     title: "Akun",
     href: "/operator-lms/setting/account",
   },
+  {
+    title: "Keamanan",
+    href: "/operator-lms/setting/security",
+  },
 ]
 
 interface OperatorLMSSettingLayoutProps {
