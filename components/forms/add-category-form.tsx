@@ -40,9 +40,9 @@ export function AddCategoryForm() {
   const form = useForm<Inputs>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
-      category_name: "",
+      CategoryName: "",
       image: new File([], ""),
-      created_by: session?.expires.id,
+      CreatedBy: session?.expires.id,
     },
   })
 
@@ -99,7 +99,7 @@ export function AddCategoryForm() {
       >
         <FormField
           control={form.control}
-          name="category_name"
+          name="CategoryName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -166,7 +166,7 @@ export function AddCategoryForm() {
 
         <FormField
           control={form.control}
-          name="created_by"
+          name="CreatedBy"
           render={({ field }) => (
             <FormItem>
               <FormLabel>

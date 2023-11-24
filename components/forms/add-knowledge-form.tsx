@@ -3,7 +3,6 @@
 import React, { useTransition } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
