@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
@@ -22,11 +23,14 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
 
 type Inputs = z.infer<typeof categorySchema>
 
+type InputsWithIndexSignature = Inputs & { [key: string]: any }
+
 export function AddCategoryForm() {
+  const [preview, setPreview] = useState<string | null>(null)
+
   const { data: session } = useSession()
 
   const [isLoading, setIsloading] = useState(false)
@@ -37,24 +41,35 @@ export function AddCategoryForm() {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       category_name: "",
-      image: "",
+      image: new File([], ""),
       created_by: session?.expires.id,
     },
   })
 
-  async function onSubmit(data: Inputs) {
+  async function onSubmit(data: InputsWithIndexSignature) {
     setIsloading(true)
 
     try {
       const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category`
 
+      const formData = new FormData()
+
+      //append data
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key])
+      })
+
+      //append image
+      if (data.image) {
+        formData.append("image", data.image)
+      }
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${session?.user.token}`,
         },
-        body: JSON.stringify(data),
+        body: formData,
       })
 
       if (response.ok) {
@@ -107,21 +122,47 @@ export function AddCategoryForm() {
         <FormField
           control={form.control}
           name="image"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Gambar</FormLabel>
               <FormControl>
-                <Textarea
+                <Input
+                  type="file"
                   placeholder="Masukkan link gambar"
-                  {...field}
                   disabled={isLoading}
                   className="h-10 resize-none"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      form.setValue("image", e.target.files[0])
+
+                      const reader = new FileReader()
+                      reader.onloadend = () => {
+                        setPreview(reader.result as string)
+                      }
+                      reader.readAsDataURL(e.target.files[0])
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <FormItem>
+          <FormLabel>Preview</FormLabel>
+          <FormControl>
+            {preview && (
+              <Image
+                src={preview}
+                alt="Picture of the author"
+                width={200}
+                height={200}
+                className="rounded-md"
+              />
+            )}
+          </FormControl>
+        </FormItem>
 
         <FormField
           control={form.control}

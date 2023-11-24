@@ -14,7 +14,10 @@ import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeOneResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
-import { knowledgeSchema } from "@/lib/validations/knowledge"
+import {
+  knowledgeSchema,
+  updateKnowledgeSchema,
+} from "@/lib/validations/knowledge"
 import {
   Command,
   CommandEmpty,
@@ -44,7 +47,7 @@ import { Input } from "../ui/input"
 import { ScrollArea } from "../ui/scroll-area"
 import { Textarea } from "../ui/textarea"
 
-type Inputs = z.infer<typeof knowledgeSchema>
+type Inputs = z.infer<typeof updateKnowledgeSchema>
 
 type InputsWithIndexSignature = Inputs & { [key: string]: any }
 
@@ -69,17 +72,15 @@ export function UpdateKnowledgeForm({
 
   const [isPending, startTransition] = useTransition()
 
-  const [isLoading, setIsLoading] = useState(false)
-
   const form = useForm<Inputs>({
-    resolver: zodResolver(knowledgeSchema),
+    resolver: zodResolver(updateKnowledgeSchema),
     defaultValues: {
-      knowledge_title: knowledge.knowledge_title,
-      description: knowledge.description,
-      status: knowledge.status,
-      id_category: knowledge.id_category,
-      updated_by: session?.expires.id,
-      created_by: session?.expires.id,
+      KnowledgeTitle: knowledge.knowledge_title,
+      Description: knowledge.description,
+      Status: knowledge.status,
+      IdCategory: knowledge.id_category,
+      UpdatedBy: session?.expires.id,
+      CreatedBy: session?.expires.id,
     },
   })
 
@@ -126,40 +127,6 @@ export function UpdateKnowledgeForm({
         })
       }
     })
-
-    // setIsLoading(true)
-
-    // try {
-    //   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${knowledge.id_knowledge}`
-
-    //   const response = await fetch(url, {
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${session?.user.token}`,
-    //     },
-    //     body: JSON.stringify(data),
-    //   })
-
-    //   if (response.ok) {
-    //     sonnerToast.success("Berhasil", {
-    //       description: "Pengetahuan berhasil diubah",
-    //     })
-
-    //     router.back()
-    //     router.refresh()
-    //   } else {
-    //     sonnerToast.error("Gagal", {
-    //       description: "Pengetahuan gagal diubah",
-    //     })
-    //   }
-    // } catch (error) {
-    //   sonnerToast.error("Gagal", {
-    //     description: `${error}`,
-    //   })
-    // } finally {
-    //   setIsLoading(false)
-    // }
   }
 
   return (
@@ -170,7 +137,7 @@ export function UpdateKnowledgeForm({
       >
         <FormField
           control={form.control}
-          name="knowledge_title"
+          name="KnowledgeTitle"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -190,7 +157,7 @@ export function UpdateKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="description"
+          name="Description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -249,7 +216,7 @@ export function UpdateKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="status"
+          name="Status"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Status</FormLabel>
@@ -283,9 +250,9 @@ export function UpdateKnowledgeForm({
                           <CommandItem
                             value={content.value_ref1}
                             key={content.id_ref}
-                            onSelect={(value) => {
-                              form.clearErrors("status")
-                              form.setValue("status", content.code_ref2)
+                            onSelect={() => {
+                              form.clearErrors("Status")
+                              form.setValue("Status", content.code_ref2)
                             }}
                           >
                             <Check
@@ -311,7 +278,7 @@ export function UpdateKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="id_category"
+          name="IdCategory"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -349,10 +316,10 @@ export function UpdateKnowledgeForm({
                               <CommandItem
                                 value={category.category_name}
                                 key={category.id_category}
-                                onSelect={(value) => {
-                                  form.clearErrors("id_category")
+                                onSelect={() => {
+                                  form.clearErrors("IdCategory")
                                   form.setValue(
-                                    "id_category",
+                                    "IdCategory",
                                     category.id_category
                                   )
                                 }}
@@ -382,7 +349,7 @@ export function UpdateKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="updated_by"
+          name="UpdatedBy"
           render={({ field }) => (
             <FormItem>
               <FormLabel>

@@ -107,7 +107,7 @@ export function CategoryTableShell({
         ),
         cell: ({ row }) => (
           <Image
-            src={row.original.image}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
             alt={row.original.image}
             width={100}
             height={100}

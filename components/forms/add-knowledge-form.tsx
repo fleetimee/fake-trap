@@ -3,6 +3,7 @@
 import React, { useTransition } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
@@ -69,13 +70,13 @@ export function AddKnowledgeForm({
   const form = useForm<Inputs>({
     resolver: zodResolver(knowledgeSchema),
     defaultValues: {
-      knowledge_title: "",
-      description: "",
-      image: undefined,
-      status: "",
-      id_category: 0,
-      created_by: session?.expires.id,
-      updated_by: session?.expires.id,
+      KnowledgeTitle: "",
+      Description: "",
+      image: new File([], ""),
+      Status: "",
+      IdCategory: 0,
+      CreatedBy: session?.expires.id,
+      UpdatedBy: session?.expires.id,
     },
   })
 
@@ -90,11 +91,6 @@ export function AddKnowledgeForm({
         Object.keys(data).forEach((key) => {
           formData.append(key, data[key])
         })
-
-        //append image
-        if (data.image) {
-          formData.append("image", data.image)
-        }
 
         const response = await fetch(url, {
           method: "POST",
@@ -134,7 +130,7 @@ export function AddKnowledgeForm({
       >
         <FormField
           control={form.control}
-          name="knowledge_title"
+          name="KnowledgeTitle"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -155,7 +151,7 @@ export function AddKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="description"
+          name="Description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -221,7 +217,7 @@ export function AddKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="status"
+          name="Status"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Status</FormLabel>
@@ -255,9 +251,9 @@ export function AddKnowledgeForm({
                           <CommandItem
                             value={content.value_ref1}
                             key={content.id_ref}
-                            onSelect={(value) => {
-                              form.clearErrors("status")
-                              form.setValue("status", content.code_ref2)
+                            onSelect={() => {
+                              form.clearErrors("Status")
+                              form.setValue("Status", content.code_ref2)
                             }}
                           >
                             <Check
@@ -282,7 +278,7 @@ export function AddKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="id_category"
+          name="IdCategory"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -320,10 +316,10 @@ export function AddKnowledgeForm({
                               <CommandItem
                                 value={category.category_name}
                                 key={category.id_category}
-                                onSelect={(value) => {
-                                  form.clearErrors("id_category")
+                                onSelect={() => {
+                                  form.clearErrors("IdCategory")
                                   form.setValue(
-                                    "id_category",
+                                    "IdCategory",
                                     category.id_category
                                   )
                                 }}
@@ -353,7 +349,7 @@ export function AddKnowledgeForm({
 
         <FormField
           control={form.control}
-          name="created_by"
+          name="CreatedBy"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
