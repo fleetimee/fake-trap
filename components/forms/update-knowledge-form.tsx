@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useTransition } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -45,6 +46,8 @@ import { Textarea } from "../ui/textarea"
 
 type Inputs = z.infer<typeof knowledgeSchema>
 
+type InputsWithIndexSignature = Inputs & { [key: string]: any }
+
 interface UpdateKnowledgeFormProps {
   knowledge: KnowledgeOneResData
   reference: ReferenceListRes
@@ -58,6 +61,10 @@ export function UpdateKnowledgeForm({
 }: UpdateKnowledgeFormProps) {
   const { data: session } = useSession()
 
+  const [selectedImage, setSelectedImage] = useState(
+    `${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.image}`
+  )
+
   const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
@@ -69,7 +76,6 @@ export function UpdateKnowledgeForm({
     defaultValues: {
       knowledge_title: knowledge.knowledge_title,
       description: knowledge.description,
-      image: knowledge.image,
       status: knowledge.status,
       id_category: knowledge.id_category,
       updated_by: session?.expires.id,
@@ -77,18 +83,29 @@ export function UpdateKnowledgeForm({
     },
   })
 
-  async function onSubmit(data: Inputs) {
+  async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${knowledge.id_knowledge}`
 
+        const formData = new FormData()
+
+        // append data
+        Object.keys(data).forEach((key) => {
+          formData.append(key, data[key])
+        })
+
+        // append image
+        if (data.image) {
+          formData.append("image", data.image)
+        }
+
         const response = await fetch(url, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user.token}`,
           },
-          body: JSON.stringify(data),
+          body: formData,
         })
 
         if (response.ok) {
@@ -196,21 +213,39 @@ export function UpdateKnowledgeForm({
         <FormField
           control={form.control}
           name="image"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Gambar</FormLabel>
               <FormControl>
-                <Textarea
-                  {...field}
+                <Input
                   placeholder="Masukkan link gambar"
                   disabled={isPending}
-                  className="h-5 resize-none"
+                  type="file"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      form.setValue("image", e.target.files[0])
+                      setSelectedImage(URL.createObjectURL(e.target.files[0]))
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <FormItem>
+          <FormLabel>Preview Image</FormLabel>
+          <FormControl>
+            <Image
+              src={selectedImage}
+              alt={knowledge.knowledge_title}
+              width={200}
+              height={200}
+              className="rounded-md"
+            />
+          </FormControl>
+        </FormItem>
 
         <FormField
           control={form.control}

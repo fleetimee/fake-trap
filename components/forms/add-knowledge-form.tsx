@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useTransition } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -174,33 +175,10 @@ export function AddKnowledgeForm({
           )}
         />
 
-        {/* <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Gambar</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Masukkan link gambar"
-                  disabled={isPending}
-                  type="file"
-                  onChange={(e) => {
-                    if (e.target.files) {
-                      form.setValue("image", e.target.files[0])
-                    }
-                  }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
         <FormField
           control={form.control}
           name="image"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Gambar</FormLabel>
               <FormControl>
@@ -211,6 +189,12 @@ export function AddKnowledgeForm({
                   onChange={(e) => {
                     if (e.target.files) {
                       form.setValue("image", e.target.files[0])
+
+                      const reader = new FileReader()
+                      reader.onloadend = () => {
+                        setPreview(reader.result as string)
+                      }
+                      reader.readAsDataURL(e.target.files[0])
                     }
                   }}
                 />
@@ -219,6 +203,21 @@ export function AddKnowledgeForm({
             </FormItem>
           )}
         />
+
+        <FormItem>
+          <FormLabel>Preview</FormLabel>
+          <FormControl>
+            {preview && (
+              <Image
+                src={preview}
+                alt="Picture of the author"
+                width={200}
+                height={200}
+                className="rounded-md"
+              />
+            )}
+          </FormControl>
+        </FormItem>
 
         <FormField
           control={form.control}
