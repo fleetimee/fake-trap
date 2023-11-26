@@ -77,7 +77,7 @@ export default async function OperatorLMSCoursePageUpdate({
         ]}
       />
 
-      <Card className="w-full max-w-2xl">
+      <Card>
         <CardHeader className="space-y-1">
           <CardTitle className="text-xl">Update Pelatihan</CardTitle>
           <CardDescription>Update pelatihan yang sudah ada</CardDescription>

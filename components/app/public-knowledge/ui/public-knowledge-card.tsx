@@ -48,7 +48,7 @@ export function KnowledgeCard({
               <AspectRatio ratio={4 / 3}>
                 {knowledge.image ? (
                   <Image
-                    src={knowledge.image}
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.image}`}
                     alt={knowledge.id_knowledge.toString()}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     fill

@@ -57,7 +57,7 @@ export default async function OperatorLMSCoursePageNew() {
         ]}
       />
 
-      <Card className="w-full max-w-2xl">
+      <Card>
         <CardHeader className="space-y-1">
           <CardTitle className="text-xl">Tambah Platihan</CardTitle>
           <CardDescription>

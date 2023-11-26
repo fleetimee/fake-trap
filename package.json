@@ -52,6 +52,7 @@
     "@react-pdf/renderer": "^3.1.12",
     "@tanstack/react-table": "^8.9.2",
     "@types/recharts": "^1.8.24",
+    "browser-image-compression": "^2.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",

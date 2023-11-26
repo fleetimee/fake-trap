@@ -4,6 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import imageCompression from "browser-image-compression"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -56,12 +57,20 @@ export function AddCategoryForm() {
 
       //append data
       Object.keys(data).forEach((key) => {
-        formData.append(key, data[key])
+        if (key !== "image") {
+          formData.append(key, data[key])
+        }
       })
 
       //append image
       if (data.image) {
-        formData.append("image", data.image)
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        }
+        const compressedFile = await imageCompression(data.image, options)
+        formData.append("image", compressedFile)
       }
 
       const response = await fetch(url, {

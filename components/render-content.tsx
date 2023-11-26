@@ -34,7 +34,7 @@ export function renderContent({
     case "":
       return (
         <DefaultRender
-          image={detailKnowledge.data.image}
+          image={`${process.env.NEXT_PUBLIC_BASE_URL}${detailKnowledge.data.image}`}
           alt={detailKnowledge.data.knowledge_title}
         />
       )
@@ -49,7 +49,7 @@ export function renderContent({
       return (
         <LinkRender
           link={contentData.link}
-          image={detailKnowledge.data.image}
+          image={`${process.env.NEXT_PUBLIC_BASE_URL}${detailKnowledge.data.image}`}
           alt={detailKnowledge.data.knowledge_title}
         />
       )
