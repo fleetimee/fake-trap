@@ -42,7 +42,14 @@ export function MarketingCard({
               href={feature.link}
               className={cn("flex h-full flex-col items-center justify-center")}
             >
-              <Card key={feature.title} className={cn("p-2")}>
+              <Card
+                key={feature.title}
+                className={cn("p-2")}
+                style={{
+                  backgroundImage: `url(https://img-c.udemycdn.com/course/750x422/4834448_66ec.jpg)`,
+                  backgroundSize: "cover",
+                }}
+              >
                 <CardHeader className="text-primary">{feature.icon}</CardHeader>
                 <CardContent className="space-y-2">
                   <CardTitle className="font-heading text-primary">
