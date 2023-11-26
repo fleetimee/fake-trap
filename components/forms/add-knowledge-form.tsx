@@ -181,6 +181,7 @@ export function AddKnowledgeForm({
                   placeholder="Masukkan link gambar"
                   disabled={isPending}
                   type="file"
+                  accept="image/*"
                   onChange={(e) => {
                     if (e.target.files) {
                       form.setValue("image", e.target.files[0])

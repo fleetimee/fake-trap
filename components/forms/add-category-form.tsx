@@ -129,6 +129,7 @@ export function AddCategoryForm() {
                 <Input
                   type="file"
                   placeholder="Masukkan link gambar"
+                  accept="image/*"
                   disabled={isLoading}
                   className="h-10 resize-none"
                   onChange={(e) => {

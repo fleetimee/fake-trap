@@ -12,6 +12,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CategoryListRes } from "@/types/category/res"
+import { ErrorResponse } from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
@@ -128,8 +129,10 @@ async function deleteKnowledge({ idKnowledge, token }: DeleteKnowledgeProps) {
 
     return true
   } else {
+    const errorResponse: ErrorResponse = await response.json()
+
     sonnerToast.error("Gagal", {
-      description: "Pengetahuan gagal dihapus",
+      description: errorResponse.error,
     })
 
     return false

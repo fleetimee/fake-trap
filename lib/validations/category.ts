@@ -54,6 +54,7 @@ export const updateCategorySchema = z.object({
         message:
           "Ukuran file tidak boleh lebih dari 1MB dan harus berformat jpg, png, bmp, atau jpeg",
       }
-    ),
+    )
+    .optional(),
   CreatedBy: z.string().optional(),
 })

@@ -1,6 +1,7 @@
 "use client"
 
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
@@ -9,7 +10,8 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CategoryOneResData } from "@/types/category/res"
-import { categorySchema } from "@/lib/validations/category"
+import { ErrorResponse } from "@/types/error-res"
+import { updateCategorySchema } from "@/lib/validations/category"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
@@ -22,44 +24,53 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
 
 interface UpdateCategoryFormProps {
   category: CategoryOneResData
 }
 
-type Inputs = z.infer<typeof categorySchema>
+type Inputs = z.infer<typeof updateCategorySchema>
+
+type InputsWithIndexSignature = Inputs & { [key: string]: any }
 
 export default function UpdateCategoryForm({
   category,
 }: UpdateCategoryFormProps) {
+  const [selectedImage, setSelectedImage] = useState(
+    `${process.env.NEXT_PUBLIC_BASE_URL}${category.image}`
+  )
+
   const { data: session } = useSession()
 
   const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<Inputs>({
-    resolver: zodResolver(categorySchema),
+  const form = useForm<InputsWithIndexSignature>({
+    resolver: zodResolver(updateCategorySchema),
     defaultValues: {
-      category_name: category.category_name,
-      image: category.image,
-      created_by: session?.expires.id,
+      CategoryName: category.category_name,
+      CreatedBy: session?.expires.id,
     },
   })
 
-  async function onSubmit(data: Inputs) {
+  async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${category.id_category}`
 
+        const formData = new FormData()
+
+        Object.keys(data).forEach((key) => {
+          formData.append(key, data[key])
+        })
+
         const response = await fetch(url, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user.token}`,
           },
-          body: JSON.stringify(data),
+          body: formData,
         })
 
         if (response.ok) {
@@ -70,8 +81,10 @@ export default function UpdateCategoryForm({
           router.back()
           router.refresh()
         } else {
+          const errorResponse: ErrorResponse = await response.json()
+
           sonnerToast.error("Gagal", {
-            description: "Kategori gagal diubah",
+            description: errorResponse.error,
           })
         }
       } catch (error) {
@@ -91,7 +104,7 @@ export default function UpdateCategoryForm({
       >
         <FormField
           control={form.control}
-          name="category_name"
+          name="CategoryName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Nama Kategori</FormLabel>
@@ -115,16 +128,35 @@ export default function UpdateCategoryForm({
             <FormItem>
               <FormLabel>Gambar</FormLabel>
               <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder="Gambar"
+                <Input
+                  type="file"
                   disabled={isPending}
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      form.setValue("image", e.target.files[0])
+                      setSelectedImage(URL.createObjectURL(e.target.files[0]))
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <FormItem>
+          <FormLabel>Preview Image</FormLabel>
+          <FormControl>
+            <Image
+              src={selectedImage}
+              alt={category.category_name}
+              width={200}
+              height={200}
+              className="rounded-md"
+            />
+          </FormControl>
+        </FormItem>
 
         <Button type="submit" className="w-fit" disabled={isPending}>
           {isPending && (
