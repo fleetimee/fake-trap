@@ -59,7 +59,7 @@ export default async function OperatorLMSCoursePageNew() {
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Platihan</CardTitle>
+          <CardTitle className="text-xl">Tambah Pelatihan</CardTitle>
           <CardDescription>
             Tambahkan pelatihan baru ke dalam platform lms.
           </CardDescription>
