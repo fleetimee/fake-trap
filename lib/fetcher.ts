@@ -1,11 +1,13 @@
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { CourseListRes, CourseOneRes } from "@/types/course/res"
+import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
 import { QuizListRes, QuizOneRes } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
+import { SectionOneRes } from "@/types/section/res"
 import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
 
 interface GetUserProps {
@@ -235,6 +237,36 @@ interface GetCourseProps {
   orderBy?: string
   searchQuery?: string
   statusText?: string | string[] | undefined // Add this line
+}
+
+interface GetOneSectionProps {
+  token: string | undefined
+  idSection: string
+}
+
+/**
+ * Retrieves a single section from the server.
+ * @param {GetOneSectionProps} options - The options for retrieving the section.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.idSection - The ID of the section to retrieve.
+ * @returns {Promise<any>} - A promise that resolves to the JSON response from the server.
+ */
+export async function getOneSection({
+  token,
+  idSection,
+}: GetOneSectionProps): Promise<SectionOneRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${idSection}`
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await response.json()
 }
 
 export async function getCourse({

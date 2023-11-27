@@ -3,6 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListRes } from "@/types/category/res"
@@ -48,6 +49,9 @@ export function KnowledgeTableShell({
 }: KnowledgeTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
+
+  const pathname = usePathname()
+
 
   const columns = React.useMemo<ColumnDef<KnowledgeListResData, unknown>[]>(
     () => [
@@ -99,7 +103,7 @@ export function KnowledgeTableShell({
         ),
         cell: ({ row }) => (
           // <AspectRatio ratio={16 / 9}>
-          <Link href={`/dashboard/knowledge/${row.original.id_knowledge}`}>
+          <Link href={`${pathname}/detail/${row.original.id_knowledge}`}>
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
               alt={row.original.knowledge_title}
@@ -136,7 +140,7 @@ export function KnowledgeTableShell({
         cell: ({ row }) => (
           <div className="flex flex-col ">
             <Link
-              href={`/dashboard/knowledge/${row.original.id_knowledge}`}
+              href={`${pathname}/detail/${row.original.id_knowledge}`}
               className="text-sm font-semibold text-blue-600 hover:underline"
             >
               {row.original.knowledge_title}
