@@ -1,6 +1,7 @@
 "use client"
 
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import format from "date-fns/format"
@@ -14,7 +15,7 @@ import { CourseOneResData } from "@/types/course/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { cn } from "@/lib/utils"
-import { courseSchema } from "@/lib/validations/course"
+import { updateCourseSchema } from "@/lib/validations/course"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
@@ -40,8 +41,11 @@ import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { ScrollArea } from "../ui/scroll-area"
 import { Textarea } from "../ui/textarea"
+import { Zoom } from "../zoom-image"
 
-type Inputs = z.infer<typeof courseSchema>
+type Inputs = z.infer<typeof updateCourseSchema>
+
+type InputsWithIndexSignature = Inputs & { [key: string]: any }
 
 interface UpdateCourseFormProps {
   course: CourseOneResData
@@ -56,36 +60,56 @@ export function UpdateCourseForm({
 }: UpdateCourseFormProps) {
   const { data: session } = useSession()
 
+  const [selectedImage, setSelectedImage] = useState(
+    `${process.env.NEXT_PUBLIC_BASE_URL}${course.image}`
+  )
+
   const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
 
   const form = useForm<Inputs>({
-    resolver: zodResolver(courseSchema),
+    resolver: zodResolver(updateCourseSchema),
     defaultValues: {
-      course_name: course.course_name,
-      course_desc: course.course_desc,
-      image: course.image,
-      id_knowledge: course.id_knowledge,
-      tutor_uuid: course.tutor_uuid,
-      date_start: new Date(course.date_start),
-      date_end: new Date(course.date_end),
-      created_by: course.created_by,
+      CourseName: course.course_name,
+      CourseDesc: course.course_desc,
+      IdKnowledge: course.id_knowledge,
+      TutorUUID: course.tutor_uuid,
+      DateStart: new Date(course.date_start),
+      DateEnd: new Date(course.date_end),
+      CreatedBy: course.created_by,
     },
   })
 
-  async function onSubmit(data: Inputs) {
+  async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${course.id_course}`
 
+        const formData = new FormData()
+
+        Object.keys(data).forEach((key) => {
+          if (key === "TutorUUID") {
+            console.log("TutorUUID:", data[key])
+          }
+
+          if (data[key] instanceof Date) {
+            formData.append(key, data[key].toISOString())
+          } else {
+            formData.append(key, data[key])
+          }
+        })
+
+        if (data.image) {
+          formData.append("image", data.image)
+        }
+
         const res = await fetch(url, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user?.token}`,
           },
-          body: JSON.stringify(data),
+          body: formData,
         })
 
         if (res.ok) {
@@ -117,7 +141,7 @@ export function UpdateCourseForm({
       >
         <FormField
           control={form.control}
-          name="course_name"
+          name="CourseName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -137,7 +161,7 @@ export function UpdateCourseForm({
 
         <FormField
           control={form.control}
-          name="id_knowledge"
+          name="IdKnowledge"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -180,9 +204,9 @@ export function UpdateCourseForm({
                                 value={knowledge.knowledge_title}
                                 key={knowledge.id_knowledge}
                                 onSelect={(value) => {
-                                  form.clearErrors("id_knowledge")
+                                  form.clearErrors("IdKnowledge")
                                   form.setValue(
-                                    "id_knowledge",
+                                    "IdKnowledge",
                                     knowledge.id_knowledge
                                   )
                                 }}
@@ -215,7 +239,7 @@ export function UpdateCourseForm({
 
         <FormField
           control={form.control}
-          name="tutor_uuid"
+          name="TutorUUID"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -226,7 +250,7 @@ export function UpdateCourseForm({
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        disabled={isPending}
+                        disabled
                         variant="outline"
                         role="combobox"
                         className={cn(
@@ -257,8 +281,8 @@ export function UpdateCourseForm({
                                 value={tutor.name}
                                 key={tutor.user_uuid}
                                 onSelect={(value) => {
-                                  form.clearErrors("tutor_uuid")
-                                  form.setValue("tutor_uuid", tutor.user_uuid)
+                                  form.clearErrors("TutorUUID")
+                                  form.setValue("TutorUUID", tutor.user_uuid)
                                 }}
                               >
                                 <Check
@@ -289,7 +313,7 @@ export function UpdateCourseForm({
 
         <FormField
           control={form.control}
-          name="course_desc"
+          name="CourseDesc"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Deskripsi Pelatihan</FormLabel>
@@ -313,11 +337,16 @@ export function UpdateCourseForm({
             <FormItem>
               <FormLabel>Gambar</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Ketikkan deskripsi pelatihan disini"
-                  {...field}
+                <Input
                   disabled={isPending}
-                  className="h-20 resize-none"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      form.setValue("image", e.target.files[0])
+                      setSelectedImage(URL.createObjectURL(e.target.files[0]))
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -325,9 +354,25 @@ export function UpdateCourseForm({
           )}
         />
 
+        <FormItem>
+          <FormLabel>Preview Image</FormLabel>
+          <FormControl>
+            <Zoom>
+              <Image
+                src={selectedImage}
+                alt="preview image"
+                width={300}
+                height={300}
+                className="rounded-md"
+                objectFit="cover"
+              />
+            </Zoom>
+          </FormControl>
+        </FormItem>
+
         <FormField
           control={form.control}
-          name="date_start"
+          name="DateStart"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -379,7 +424,7 @@ export function UpdateCourseForm({
 
         <FormField
           control={form.control}
-          name="date_end"
+          name="DateEnd"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -431,7 +476,7 @@ export function UpdateCourseForm({
 
         <FormField
           control={form.control}
-          name="created_by"
+          name="CreatedBy"
           render={({ field }) => (
             <FormItem>
               <FormLabel>

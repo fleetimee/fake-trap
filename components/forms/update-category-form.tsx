@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
+import { Zoom } from "../zoom-image"
 
 interface UpdateCategoryFormProps {
   category: CategoryOneResData
@@ -148,13 +149,15 @@ export default function UpdateCategoryForm({
         <FormItem>
           <FormLabel>Preview Image</FormLabel>
           <FormControl>
-            <Image
-              src={selectedImage}
-              alt={category.category_name}
-              width={200}
-              height={200}
-              className="rounded-md"
-            />
+            <Zoom>
+              <Image
+                src={selectedImage}
+                alt={category.category_name}
+                width={200}
+                height={200}
+                className="rounded-md"
+              />
+            </Zoom>
           </FormControl>
         </FormItem>
 

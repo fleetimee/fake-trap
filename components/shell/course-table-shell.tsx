@@ -96,7 +96,7 @@ export function CourseTableShell({
           // <AspectRatio ratio={16 / 9}>
           <Link href={`/dashboard/course/${row.original.id_course}`}>
             <Image
-              src={row.original.image}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
               alt={row.original.course_name}
               width={300}
               height={300}

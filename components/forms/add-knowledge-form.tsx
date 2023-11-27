@@ -42,6 +42,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 import { Icons } from "../icons"
 import { ScrollArea } from "../ui/scroll-area"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof knowledgeSchema>
 
@@ -204,13 +205,15 @@ export function AddKnowledgeForm({
           <FormLabel>Preview</FormLabel>
           <FormControl>
             {preview && (
-              <Image
-                src={preview}
-                alt="Picture of the author"
-                width={200}
-                height={200}
-                className="rounded-md"
-              />
+              <Zoom>
+                <Image
+                  src={preview}
+                  alt="Picture of the author"
+                  width={200}
+                  height={200}
+                  className="rounded-md"
+                />
+              </Zoom>
             )}
           </FormControl>
         </FormItem>

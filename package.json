@@ -75,6 +75,7 @@
     "react-editor-js": "^2.1.0",
     "react-embed": "^3.7.0",
     "react-hook-form": "^7.45.0",
+    "react-medium-image-zoom": "^5.1.8",
     "react-pdf": "^7.1.2",
     "react-pdf-tailwind": "^2.1.0",
     "react-select": "^5.7.3",

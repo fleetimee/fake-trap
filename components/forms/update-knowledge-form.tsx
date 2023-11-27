@@ -14,10 +14,7 @@ import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeOneResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { cn } from "@/lib/utils"
-import {
-  knowledgeSchema,
-  updateKnowledgeSchema,
-} from "@/lib/validations/knowledge"
+import { updateKnowledgeSchema } from "@/lib/validations/knowledge"
 import {
   Command,
   CommandEmpty,
@@ -46,6 +43,7 @@ import {
 import { Input } from "../ui/input"
 import { ScrollArea } from "../ui/scroll-area"
 import { Textarea } from "../ui/textarea"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof updateKnowledgeSchema>
 
@@ -205,13 +203,15 @@ export function UpdateKnowledgeForm({
         <FormItem>
           <FormLabel>Preview Image</FormLabel>
           <FormControl>
-            <Image
-              src={selectedImage}
-              alt={knowledge.knowledge_title}
-              width={200}
-              height={200}
-              className="rounded-md"
-            />
+            <Zoom>
+              <Image
+                src={selectedImage}
+                alt={knowledge.knowledge_title}
+                width={200}
+                height={200}
+                className="rounded-md"
+              />
+            </Zoom>
           </FormControl>
         </FormItem>
 
@@ -226,6 +226,7 @@ export function UpdateKnowledgeForm({
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        disabled={isPending}
                         variant="outline"
                         role="combobox"
                         className={cn(
@@ -290,6 +291,7 @@ export function UpdateKnowledgeForm({
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        disabled={isPending}
                         variant="outline"
                         role="combobox"
                         className={cn(

@@ -101,7 +101,7 @@ export default async function OperatorLMSExercisePage({
               className: "ml-2",
             })}
           >
-            Managemen User
+            Buat Tes Baru
           </Link>
 
           {/* <CreateQuizSheet referenceResp={referenceResp} /> */}

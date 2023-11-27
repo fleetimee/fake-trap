@@ -1,6 +1,7 @@
 "use client"
 
-import { useTransition } from "react"
+import React, { useTransition } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import format from "date-fns/format"
@@ -10,6 +11,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { ErrorResponse } from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { cn } from "@/lib/utils"
@@ -39,8 +41,11 @@ import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { ScrollArea } from "../ui/scroll-area"
 import { Textarea } from "../ui/textarea"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof courseSchema>
+
+type InputsWithIndexSignature = Inputs & { [key: string]: any }
 
 interface AddCourseFormProps {
   knowledge: KnowledgeListResData[]
@@ -50,6 +55,8 @@ interface AddCourseFormProps {
 export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
   const { data: session } = useSession()
 
+  const [preview, setPreview] = React.useState<string | null>(null)
+
   const [isLoading, startTransition] = useTransition()
 
   const router = useRouter()
@@ -57,28 +64,39 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
   const form = useForm<Inputs>({
     resolver: zodResolver(courseSchema),
     defaultValues: {
-      course_name: "",
-      course_desc: "",
-      date_start: new Date(),
-      date_end: new Date(),
-      image: "",
-      tutor_uuid: "",
-      created_by: session?.expires.id,
+      CourseName: "",
+      CourseDesc: "",
+      DateStart: new Date(),
+      DateEnd: new Date(),
+      image: new File([], ""),
+      TutorUUID: "",
+      IdKnowledge: 0,
+      CreatedBy: session?.expires.id,
     },
   })
 
-  async function onSubmit(data: Inputs) {
+  async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
+        const formData = new FormData()
+
+        //append data to form data
+        Object.keys(data).forEach((key) => {
+          if (data[key] instanceof Date) {
+            formData.append(key, data[key].toISOString())
+          } else {
+            formData.append(key, data[key])
+          }
+        })
+
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course`,
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Bearer ${session?.user.token}`,
             },
-            body: JSON.stringify(data),
+            body: formData,
           }
         )
 
@@ -91,13 +109,15 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
           router.refresh()
           form.reset()
         } else {
+          const errorResponse: ErrorResponse = await response.json()
+
           sonnerToast.error("Gagal", {
-            description: "Pelatihan gagal dibuat",
+            description: `${errorResponse.error}`,
           })
         }
       } catch (error) {
         sonnerToast.error("Gagal", {
-          description: "Pelatihan gagal dibuat",
+          description: `${error}`,
         })
       }
     })
@@ -111,7 +131,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
       >
         <FormField
           control={form.control}
-          name="course_name"
+          name="CourseName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -131,7 +151,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
 
         <FormField
           control={form.control}
-          name="id_knowledge"
+          name="IdKnowledge"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -174,9 +194,9 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                                 value={knowledge.knowledge_title}
                                 key={knowledge.id_knowledge}
                                 onSelect={(value) => {
-                                  form.clearErrors("id_knowledge")
+                                  form.clearErrors("IdKnowledge")
                                   form.setValue(
-                                    "id_knowledge",
+                                    "IdKnowledge",
                                     knowledge.id_knowledge
                                   )
                                 }}
@@ -209,7 +229,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
 
         <FormField
           control={form.control}
-          name="tutor_uuid"
+          name="TutorUUID"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -251,8 +271,8 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                                 value={tutor.name}
                                 key={tutor.user_uuid}
                                 onSelect={(value) => {
-                                  form.clearErrors("tutor_uuid")
-                                  form.setValue("tutor_uuid", tutor.user_uuid)
+                                  form.clearErrors("TutorUUID")
+                                  form.setValue("TutorUUID", tutor.user_uuid)
                                 }}
                               >
                                 <Check
@@ -283,7 +303,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
 
         <FormField
           control={form.control}
-          name="course_desc"
+          name="CourseDesc"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Deskripsi Pelatihan</FormLabel>
@@ -303,15 +323,25 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
         <FormField
           control={form.control}
           name="image"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Gambar</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Ketikkan deskripsi pelatihan disini"
-                  {...field}
+                <Input
+                  type="file"
                   disabled={isLoading}
-                  className="h-20 resize-none"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      form.setValue("image", e.target.files[0])
+
+                      const reader = new FileReader()
+                      reader.onloadend = () => {
+                        setPreview(reader.result as string)
+                      }
+                      reader.readAsDataURL(e.target.files[0])
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -319,9 +349,26 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
           )}
         />
 
+        <FormItem>
+          <FormLabel>Preview</FormLabel>
+          <FormControl>
+            {preview && (
+              <Zoom>
+                <Image
+                  src={preview}
+                  alt="Picture of the author"
+                  width={200}
+                  height={200}
+                  className="rounded-md"
+                />
+              </Zoom>
+            )}
+          </FormControl>
+        </FormItem>
+
         <FormField
           control={form.control}
-          name="date_start"
+          name="DateStart"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -373,7 +420,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
 
         <FormField
           control={form.control}
-          name="date_end"
+          name="DateEnd"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -425,7 +472,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
 
         <FormField
           control={form.control}
-          name="created_by"
+          name="CreatedBy"
           render={({ field }) => (
             <FormItem>
               <FormLabel>

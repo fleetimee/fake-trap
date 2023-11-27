@@ -4,7 +4,6 @@ import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import imageCompression from "browser-image-compression"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -24,6 +23,7 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof categorySchema>
 
@@ -56,22 +56,26 @@ export function AddCategoryForm() {
       const formData = new FormData()
 
       //append data
+      // Object.keys(data).forEach((key) => {
+      //   if (key !== "image") {
+      //     formData.append(key, data[key])
+      //   }
+      // })
+
       Object.keys(data).forEach((key) => {
-        if (key !== "image") {
-          formData.append(key, data[key])
-        }
+        formData.append(key, data[key])
       })
 
       //append image
-      if (data.image) {
-        const options = {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 1920,
-          useWebWorker: true,
-        }
-        const compressedFile = await imageCompression(data.image, options)
-        formData.append("image", compressedFile)
-      }
+      // if (data.image) {
+      //   const options = {
+      //     maxSizeMB: 1,
+      //     maxWidthOrHeight: 1920,
+      //     useWebWorker: true,
+      //   }
+      //   const compressedFile = await imageCompression(data.image, options)
+      //   formData.append("image", compressedFile)
+      // }
 
       const response = await fetch(url, {
         method: "POST",
@@ -163,13 +167,15 @@ export function AddCategoryForm() {
           <FormLabel>Preview</FormLabel>
           <FormControl>
             {preview && (
-              <Image
-                src={preview}
-                alt="Picture of the author"
-                width={200}
-                height={200}
-                className="rounded-md"
-              />
+              <Zoom>
+                <Image
+                  src={preview}
+                  alt="Picture of the author"
+                  width={200}
+                  height={200}
+                  className="rounded-md"
+                />
+              </Zoom>
             )}
           </FormControl>
         </FormItem>

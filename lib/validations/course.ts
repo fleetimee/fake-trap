@@ -1,28 +1,76 @@
 import { z } from "zod"
 
 export const courseSchema = z.object({
-  course_name: z.string().min(1, {
+  CourseName: z.string().min(1, {
     message: "Nama pelatihan harus diisi",
   }),
-  course_desc: z.string().min(1, {
+  CourseDesc: z.string().min(1, {
     message: "Deskripsi pelatihan harus diisi",
   }),
-  date_start: z.date(),
-  date_end: z.date(),
+  DateStart: z.date(),
+  DateEnd: z.date(),
   image: z
-    .string()
-    .url({
-      message: "URL gambar tidak valid",
+    .instanceof(File, {
+      message: "Gambar tidak boleh kosong",
     })
-    .optional()
-    .or(z.literal("")),
-  id_knowledge: z.number({
+    .refine(
+      (file) => {
+        if (file) {
+          const validFileTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/bmp",
+            "image/jpg",
+          ]
+          return file.size < 1000000 && validFileTypes.includes(file.type)
+        }
+        return true
+      },
+      {
+        message:
+          "Ukuran file tidak boleh lebih dari 1MB dan harus berformat jpg, png, bmp, atau jpeg",
+      }
+    ),
+  IdKnowledge: z.number({
     required_error: "Materi harus dipilih",
   }),
-  tutor_uuid: z.string().min(1, {
+  TutorUUID: z.string().min(1, {
     message: "Tutor harus dipilih",
   }),
-  created_by: z.string().min(1, {
+  CreatedBy: z.string().min(1, {
     message: "Pembuat harus dipilih",
   }),
+})
+
+export const updateCourseSchema = z.object({
+  CourseName: z.string().optional(),
+  CourseDesc: z.string().optional(),
+  DateStart: z.date().optional(),
+  DateEnd: z.date().optional(),
+  image: z
+    .instanceof(File, {
+      message: "Gambar tidak boleh kosong",
+    })
+    .refine(
+      (file) => {
+        if (file) {
+          const validFileTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/bmp",
+            "image/jpg",
+          ]
+          return file.size < 1000000 && validFileTypes.includes(file.type)
+        }
+        return true
+      },
+      {
+        message:
+          "Ukuran file tidak boleh lebih dari 1MB dan harus berformat jpg, png, bmp, atau jpeg",
+      }
+    )
+    .optional(),
+  IdKnowledge: z.number().optional(),
+  TutorUUID: z.string().optional(),
+  CreatedBy: z.string().optional(),
 })
