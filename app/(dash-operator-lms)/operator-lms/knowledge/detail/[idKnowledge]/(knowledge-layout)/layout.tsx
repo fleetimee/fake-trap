@@ -42,6 +42,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { KnowledgeDeleteSection } from "./_components/delete-section"
+
 interface KnowledgeDetailLayoutProps {
   children: React.ReactNode
   params: {
@@ -189,6 +191,11 @@ export default async function KnowledgeDetailLayout({
                                   <ContextMenuShortcut>⌘[</ContextMenuShortcut>
                                 </Link>
                               </ContextMenuItem>
+
+                              <KnowledgeDeleteSection
+                                idSection={section.id_section.toString()}
+                              />
+
                               <ContextMenuItem inset disabled>
                                 {section.section_title}
                                 <ContextMenuShortcut>⌘]</ContextMenuShortcut>
