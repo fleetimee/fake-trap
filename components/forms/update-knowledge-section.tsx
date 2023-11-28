@@ -9,7 +9,6 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
-import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { SectionOneResData } from "@/types/section/res"
 import { updateSectionSchema } from "@/lib/validations/section"
 import { Button } from "@/components/ui/button"

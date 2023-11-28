@@ -1,7 +1,6 @@
 "use client"
 
 import { Metadata } from "next"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 import { Icons } from "@/components/icons"

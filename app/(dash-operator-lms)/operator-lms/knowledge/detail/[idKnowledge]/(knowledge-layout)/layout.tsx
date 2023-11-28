@@ -33,6 +33,14 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
@@ -170,7 +178,7 @@ export default async function KnowledgeDetailLayout({
                         className="text-sm"
                       >
                         <AccordionTrigger className="font-heading text-base font-bold">
-                          <ContextMenu>
+                          <ContextMenu key={section.id_section}>
                             <ContextMenuTrigger>
                               {section.section_title}
                             </ContextMenuTrigger>
@@ -205,42 +213,118 @@ export default async function KnowledgeDetailLayout({
                         </AccordionTrigger>
 
                         {section.content ? (
-                          section.content.map((content) => (
-                            <AccordionContent
-                              key={content.id_content.toString()}
-                              className="py-1"
-                            >
-                              {/* <Link
-                            href={
-                              isContent
-                                ? `/member-area/course/${coursePreview.data.id_course}/content/${content.id_content}`
-                                : isQuiz
-                                ? `/member-area/course/${coursePreview.data.id_course}/content/${content.id_content}`
-                                : `${pathname}/content/${content.id_content}`
-                            }
-                          > */}
-                              <Button
-                                className={cn(
-                                  "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
-                                  // {
-                                  //   "bg-secondary-foreground":
-                                  //     isContent &&
-                                  //     pathname.includes(
-                                  //       `/content/${content.id_content}`
-                                  //     ),
-                                  // }
-                                )}
-                              >
-                                {content.content_title}
-                              </Button>
-                              {/* </Link> */}
+                          <>
+                            {section.content.map((content) => (
+                              <ContextMenu key={content.id_content.toString()}>
+                                <ContextMenuTrigger>
+                                  <AccordionContent
+                                    key={content.id_content.toString()}
+                                    className="py-1"
+                                  >
+                                    <Button
+                                      className={cn(
+                                        "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
+                                      )}
+                                    >
+                                      {content.content_title}
+                                    </Button>
+                                  </AccordionContent>
+                                </ContextMenuTrigger>
+                                <ContextMenuContent className="w-64">
+                                  <ContextMenuLabel inset>
+                                    Options
+                                  </ContextMenuLabel>
+                                  <ContextMenuSeparator />
+                                  <ContextMenuItem inset>
+                                    Back
+                                    <ContextMenuShortcut>
+                                      ⌘[
+                                    </ContextMenuShortcut>
+                                  </ContextMenuItem>
+                                </ContextMenuContent>
+                              </ContextMenu>
+                            ))}
+                            <AccordionContent className="py-1">
+                              <DropdownMenu>
+                                <DropdownMenuTrigger className="flex w-full items-center justify-end">
+                                  <Link
+                                    href="#"
+                                    className={buttonVariants({
+                                      size: "sm",
+                                      variant: "default",
+                                    })}
+                                  >
+                                    <Icons.add className="h-4 w-4" />
+                                  </Link>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                  <DropdownMenuLabel>
+                                    Tambah Konten
+                                  </DropdownMenuLabel>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem>
+                                    <Link
+                                      href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/video/new`}
+                                      className="flex w-full items-center justify-between"
+                                    >
+                                      Video
+                                    </Link>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    <Link
+                                      href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/file/new`}
+                                      className="flex w-full items-center justify-between"
+                                    >
+                                      File
+                                    </Link>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem>Text</DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    Subscription
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
                             </AccordionContent>
-                          ))
+                          </>
                         ) : (
                           <AccordionContent className="py-4">
-                            <p className="text-sm text-muted-foreground">
-                              Tidak ada konten
-                            </p>
+                            <div className="flex flex-col gap-4">
+                              <p className="text-sm text-muted-foreground">
+                                Tidak ada konten
+                              </p>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger className="flex w-full items-center justify-end">
+                                  <Link
+                                    href="#"
+                                    className={buttonVariants({
+                                      size: "sm",
+                                      variant: "default",
+                                    })}
+                                  >
+                                    <Icons.add className="h-4 w-4" />
+                                  </Link>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                  <DropdownMenuLabel>
+                                    Tambah Konten
+                                  </DropdownMenuLabel>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem>
+                                    <Link
+                                      href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/video/new`}
+                                      className="flex w-full items-center justify-between"
+                                    >
+                                      Video
+                                    </Link>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem>File</DropdownMenuItem>
+                                  <DropdownMenuItem>Text</DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    Subscription
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
                           </AccordionContent>
                         )}
                       </AccordionItem>
