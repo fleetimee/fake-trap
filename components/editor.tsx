@@ -89,7 +89,7 @@ export function Editor({ id_threads }: EditorProps) {
         },
       })
     }
-  }, [id_threads])
+  }, [])
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {

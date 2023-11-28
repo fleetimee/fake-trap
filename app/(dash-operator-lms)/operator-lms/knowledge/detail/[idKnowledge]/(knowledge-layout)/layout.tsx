@@ -50,6 +50,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { KnowledgeDeleteContent } from "./_components/delete-content"
 import { KnowledgeDeleteSection } from "./_components/delete-section"
 
 interface KnowledgeDetailLayoutProps {
@@ -235,12 +236,10 @@ export default async function KnowledgeDetailLayout({
                                     Options
                                   </ContextMenuLabel>
                                   <ContextMenuSeparator />
-                                  <ContextMenuItem inset>
-                                    Back
-                                    <ContextMenuShortcut>
-                                      ⌘[
-                                    </ContextMenuShortcut>
-                                  </ContextMenuItem>
+                                  {/* This is custom component to delete content */}
+                                  <KnowledgeDeleteContent
+                                    idContent={content.id_content.toString()}
+                                  />
                                 </ContextMenuContent>
                               </ContextMenu>
                             ))}
