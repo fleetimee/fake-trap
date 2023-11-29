@@ -643,3 +643,42 @@ export async function getOneContent({
 
   return await res.json()
 }
+
+interface GetOneExerciseProps {
+  token: string | undefined
+  idExercise: string
+}
+
+/**
+ * Retrieves a single exercise from the API.
+ * @param {GetOneExerciseProps} params - The parameters for fetching the exercise.
+ * @returns {Promise<QuizOneRes>} - A promise that resolves to the fetched exercise.
+ */
+export async function getOneExercise({
+  token,
+  idExercise,
+}: GetOneExerciseProps): Promise<QuizOneRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetOneQuizUserCountProps {
+  token: string | undefined
+  idExercise: string
+}
+
+export async function getOneExerciseUserCount({
+  token,
+  idExercise,
+}: GetOneQuizUserCountProps) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/users/count`
+}
