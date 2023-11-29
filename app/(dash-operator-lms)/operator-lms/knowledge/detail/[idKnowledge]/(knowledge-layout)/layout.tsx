@@ -1,6 +1,12 @@
 import React from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import {
+  CursorTextIcon,
+  FileIcon,
+  FileTextIcon,
+  VideoIcon,
+} from "@radix-ui/react-icons"
 
 import { authOptions } from "@/lib/auth"
 import { getOneKnowledge } from "@/lib/fetcher"
@@ -8,6 +14,7 @@ import { getCurrentUser } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { EmptyContent } from "@/components/app/knowledge/detail/ui"
 import { Icons } from "@/components/icons"
+import CreateContentDropdownButton from "@/components/knowledge/create-content-dropdown-button"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import {
@@ -222,13 +229,17 @@ export default async function KnowledgeDetailLayout({
                                     key={content.id_content.toString()}
                                     className="py-1"
                                   >
-                                    <Button
-                                      className={cn(
-                                        "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
-                                      )}
+                                    <Link
+                                      href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/${content.id_content}`}
                                     >
-                                      {content.content_title}
-                                    </Button>
+                                      <Button
+                                        className={cn(
+                                          "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
+                                        )}
+                                      >
+                                        {content.content_title}
+                                      </Button>
+                                    </Link>
                                   </AccordionContent>
                                 </ContextMenuTrigger>
                                 <ContextMenuContent className="w-64">
@@ -244,45 +255,12 @@ export default async function KnowledgeDetailLayout({
                               </ContextMenu>
                             ))}
                             <AccordionContent className="py-1">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger className="flex w-full items-center justify-end">
-                                  <Link
-                                    href="#"
-                                    className={buttonVariants({
-                                      size: "sm",
-                                      variant: "default",
-                                    })}
-                                  >
-                                    <Icons.add className="h-4 w-4" />
-                                  </Link>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                  <DropdownMenuLabel>
-                                    Tambah Konten
-                                  </DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem>
-                                    <Link
-                                      href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/video/new`}
-                                      className="flex w-full items-center justify-between"
-                                    >
-                                      Video
-                                    </Link>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    <Link
-                                      href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/file/new`}
-                                      className="flex w-full items-center justify-between"
-                                    >
-                                      File
-                                    </Link>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>Text</DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    Subscription
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
+                              {/* Create content button */}
+                              <CreateContentDropdownButton
+                                videoCreationUrl={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/video/new`}
+                                fileCreationUrl={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/file/new`}
+                                articleCreationUrl={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/article/new`}
+                              />
                             </AccordionContent>
                           </>
                         ) : (
@@ -291,38 +269,12 @@ export default async function KnowledgeDetailLayout({
                               <p className="text-sm text-muted-foreground">
                                 Tidak ada konten
                               </p>
-                              <DropdownMenu>
-                                <DropdownMenuTrigger className="flex w-full items-center justify-end">
-                                  <Link
-                                    href="#"
-                                    className={buttonVariants({
-                                      size: "sm",
-                                      variant: "default",
-                                    })}
-                                  >
-                                    <Icons.add className="h-4 w-4" />
-                                  </Link>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                  <DropdownMenuLabel>
-                                    Tambah Konten
-                                  </DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem>
-                                    <Link
-                                      href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/video/new`}
-                                      className="flex w-full items-center justify-between"
-                                    >
-                                      Video
-                                    </Link>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>File</DropdownMenuItem>
-                                  <DropdownMenuItem>Text</DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    Subscription
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
+                              {/* Create content button */}
+                              <CreateContentDropdownButton
+                                videoCreationUrl={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/video/new`}
+                                fileCreationUrl={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/file/new`}
+                                articleCreationUrl={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/article/new`}
+                              />
                             </div>
                           </AccordionContent>
                         )}

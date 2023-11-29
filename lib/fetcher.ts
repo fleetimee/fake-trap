@@ -1,4 +1,5 @@
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
+import { ContentOneRes } from "@/types/content/res"
 import { CourseListRes, CourseOneRes } from "@/types/course/res"
 import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
@@ -611,6 +612,34 @@ export async function getReference({
       cache: "no-store",
     }
   )
+
+  return await res.json()
+}
+
+interface GetOneContentProps {
+  token: string | undefined
+  idContent: string
+}
+
+/**
+ * Retrieves a single content item from the server.
+ * @param {GetOneContentProps} options - The options for retrieving the content.
+ * @returns {Promise<ContentOneRes>} - A promise that resolves to the retrieved content.
+ */
+export async function getOneContent({
+  token,
+  idContent,
+}: GetOneContentProps): Promise<ContentOneRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/${idContent}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
 
   return await res.json()
 }

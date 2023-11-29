@@ -23,6 +23,7 @@
     "@editorjs/link": "^2.5.0",
     "@editorjs/list": "^1.8.0",
     "@editorjs/paragraph": "^2.9.0",
+    "@editorjs/simple-image": "^1.6.0",
     "@editorjs/table": "^2.2.1",
     "@formkit/auto-animate": "^0.7.0",
     "@hookform/resolvers": "^3.1.1",

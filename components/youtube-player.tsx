@@ -28,7 +28,7 @@ export function YoutubePlayer({ videoId }: YouTubeProps) {
           videoId={videoId}
           opts={opts}
           onReady={onPlayerReady}
-          className="aspect-video h-full w-full rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
+          className="aspect-video h-full w-full rounded-lg object-cover shadow-md "
         />
       </Card>
     </AspectRatio>

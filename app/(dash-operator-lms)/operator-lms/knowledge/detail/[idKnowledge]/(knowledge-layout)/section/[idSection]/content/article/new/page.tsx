@@ -3,6 +3,8 @@ import { notFound, redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getOneSection } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { AddArticleForm } from "@/components/forms/add-article-form"
+import { Separator } from "@/components/ui/separator"
 
 interface KnowledgeContentArticleNewPageProps {
   params: {
@@ -28,4 +30,18 @@ export default async function KnowledgeContentArticleNewPage({
   if (section.code === 400) {
     return notFound()
   }
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium">Konten Article</h3>
+        <p className="text-sm text-muted-foreground">
+          Tambahkan konten artikel untuk {section.data.section_title}
+        </p>
+      </div>
+      <Separator />
+
+      <AddArticleForm idSection={Number(params.idSection)} />
+    </div>
+  )
 }
