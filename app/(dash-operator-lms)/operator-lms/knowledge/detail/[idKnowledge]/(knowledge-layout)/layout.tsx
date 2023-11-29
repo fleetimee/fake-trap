@@ -232,11 +232,7 @@ export default async function KnowledgeDetailLayout({
                                     <Link
                                       href={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/${section.id_section}/content/${content.id_content}`}
                                     >
-                                      <Button
-                                        className={cn(
-                                          "flex h-[65px] w-full justify-start rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"
-                                        )}
-                                      >
+                                      <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
                                         {content.content_title}
                                       </Button>
                                     </Link>
@@ -281,16 +277,7 @@ export default async function KnowledgeDetailLayout({
                       </AccordionItem>
                     ))}
                   </Accordion>
-                ) : (
-                  // Empty Section
-                  <EmptyContent className="h-[50px]">
-                    <EmptyContent.Icon name="empty" />
-                    <EmptyContent.Title>Tidak ada konten</EmptyContent.Title>
-                    <EmptyContent.Description>
-                      Belum ada konten untuk bagian ini
-                    </EmptyContent.Description>
-                  </EmptyContent>
-                )}
+                ) : null}
               </ScrollArea>
             </TabsContent>
           </Tabs>

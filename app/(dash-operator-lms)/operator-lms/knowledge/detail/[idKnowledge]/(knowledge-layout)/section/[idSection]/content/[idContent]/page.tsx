@@ -88,7 +88,7 @@ export default async function KnowledgeContentPage({
 
         <Separator />
 
-        <p className="text-xl italic ">{content.data.video?.flavor_text}</p>
+        <p className="text-sm italic ">{content.data.video?.flavor_text}</p>
 
         <YoutubeRender link={content.data.video?.video_url} />
       </div>
