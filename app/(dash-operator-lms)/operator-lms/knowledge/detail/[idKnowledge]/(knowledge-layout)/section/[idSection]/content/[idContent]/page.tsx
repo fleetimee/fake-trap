@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { DownloadIcon } from "@radix-ui/react-icons"
@@ -24,7 +25,8 @@ import { getOneContent } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { YoutubeRender } from "@/components/content-renderer"
 import { Icons } from "@/components/icons"
-import { Card, CardHeader } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -106,42 +108,53 @@ export default async function KnowledgeContentPage({
           baca
         </p>
 
-        {content.data.files &&
-          content.data.files.map((file) => (
-            <div className="grid grid-cols-1 items-start justify-center gap-3">
-              <Card className="flex min-h-[5rem] min-w-[30rem] max-w-2xl items-center justify-between p-4 hover:border-primary">
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/${file.file_path}`}
-                  target="_blank"
-                >
-                  <p className="text-blue-500 underline">{file.file_path}</p>
-                </Link>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <DownloadIcon className="mr-2 h-6 w-6" />
-                  </DropdownMenuTrigger>
-
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>Files</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem>
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Download</span>
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <CreditCard className="mr-2 h-4 w-4" />
-                        <span>Preview</span>
-                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+        <div className="grid grid-cols-1 items-start justify-center gap-3  xl:grid-cols-2">
+          {content.data.files &&
+            content.data.files.map((file) => (
+              <Card
+                key="1"
+                className="mx-auto w-80 overflow-hidden rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl"
+              >
+                <Image
+                  alt="Profile picture"
+                  className="w-full object-cover"
+                  height="320"
+                  src="/placeholder.svg"
+                  style={{
+                    aspectRatio: "320/320",
+                    objectFit: "cover",
+                  }}
+                  width="320"
+                />
+                <CardContent className="p-4">
+                  <h2 className="text-2xl font-bold transition-all duration-200 hover:text-gray-700">
+                    {file.file_type}
+                  </h2>
+                  <h3 className="text-gray-500 transition-all duration-200 hover:text-gray-600">
+                    {file.file_size}
+                  </h3>
+                  <p className="mt-2 text-gray-600 transition-all duration-200 hover:text-gray-700">
+                    {file.file_path.split("/").pop()}
+                  </p>
+                  <div className="mt-4 flex space-x-2">
+                    <Button
+                      className="w-full transition-all duration-200 hover:bg-gray-700 hover:text-white"
+                      size="sm"
+                    >
+                      Download
+                    </Button>
+                    <Button
+                      className="w-full transition-all duration-200 hover:border-gray-700 hover:text-gray-700"
+                      size="sm"
+                      variant="outline"
+                    >
+                      Preview
+                    </Button>
+                  </div>
+                </CardContent>
               </Card>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     )
   }

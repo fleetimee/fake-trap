@@ -52,7 +52,6 @@ export function KnowledgeTableShell({
 
   const pathname = usePathname()
 
-
   const columns = React.useMemo<ColumnDef<KnowledgeListResData, unknown>[]>(
     () => [
       {
@@ -109,7 +108,7 @@ export function KnowledgeTableShell({
               alt={row.original.knowledge_title}
               width={300}
               height={300}
-              className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
+              className="rounded-xl transition-all duration-300 ease-in-out "
             />
           </Link>
           // </AspectRatio>
