@@ -182,7 +182,7 @@ export function AddContentFileForm({
             Maksimal 3 file dengan ukuran maksimal 4MB
           </FormDescription>
 
-          <FormMessage />
+          <FormMessage>{form.formState.errors.files?.message}</FormMessage>
         </FormItem>
 
         <Button type="submit" className="w-fit" disabled={isPending}>

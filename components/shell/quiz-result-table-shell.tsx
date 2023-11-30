@@ -12,11 +12,13 @@ import { Checkbox } from "@/components/ui/checkbox"
 interface UserQuizResultTableShellProps {
   data: QuizUserAttemptListData[]
   pageCount: number
+  linkString?: string
 }
 
 export function UserQuizResultTableShell({
   data,
   pageCount,
+  linkString,
 }: UserQuizResultTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -92,7 +94,11 @@ export function UserQuizResultTableShell({
         cell: ({ row }) => {
           return (
             <Link
-              href={`/dashboard/quiz/${row.original.id_quiz}/hasil/${row.original.id_user_quiz}?user_uuid=${row.original.user_uuid}`}
+              href={
+                linkString
+                  ? `${linkString}/${row.original.id_quiz}/hasil/${row.original.user_uuid}?idAttempt=${row.original.id_user_quiz}`
+                  : "#"
+              }
             >
               <p className="text-primary hover:underline">
                 {row.original.score}

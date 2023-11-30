@@ -4,7 +4,16 @@ import { CourseListRes, CourseOneRes } from "@/types/course/res"
 import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
-import { QuizListRes, QuizOneRes } from "@/types/quiz/res"
+import {
+  QuizLinkedList,
+  QuizListRes,
+  QuizMemberListRes,
+  QuizOneRes,
+  QuizOneUserCountRes,
+  QuizQuestionListRes,
+  QuizUserAttemptList,
+  QuizUserResultListRes,
+} from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
@@ -39,6 +48,37 @@ export async function getLoggedOnUser({
   })
 
   return res.json()
+}
+
+interface GetExerciseUserSelectedAnswerProps {
+  token: string | undefined
+  idAttempt: string
+  userUuid: string
+}
+
+/**
+ * Retrieves the user-selected answer for a specific exercise attempt.
+ * @param token - The authentication token.
+ * @param idAttempt - The ID of the exercise attempt.
+ * @param userUuid - The UUID of the user.
+ * @returns A promise that resolves to the user-selected answer for the exercise attempt.
+ */
+export async function getExerciseUserSelectedAnswer({
+  token,
+  idAttempt,
+  userUuid,
+}: GetExerciseUserSelectedAnswerProps): Promise<QuizUserResultListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/getSelectedAnswer/${idAttempt}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
 }
 
 interface GetCategoryProps {
@@ -671,14 +711,169 @@ export async function getOneExercise({
   return await res.json()
 }
 
-interface GetOneQuizUserCountProps {
+interface GetOneExerciseUserCountProps {
   token: string | undefined
   idExercise: string
 }
 
+/**
+ * Retrieves the count of users who have attempted a specific exercise.
+ * @param token - The authentication token.
+ * @param idExercise - The ID of the exercise.
+ * @returns A promise that resolves to the count of users who have attempted the exercise.
+ */
 export async function getOneExerciseUserCount({
   token,
   idExercise,
-}: GetOneQuizUserCountProps) {
+}: GetOneExerciseUserCountProps): Promise<QuizOneUserCountRes> {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/users/count`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetOneExerciseLinkedCourseProps {
+  token: string | undefined
+  idExercise: string
+}
+
+/**
+ * Retrieves a single exercise linked to a course.
+ * @param {GetOneExerciseLinkedCourseProps} options - The options for retrieving the exercise.
+ * @returns {Promise<QuizLinkedList>} - A promise that resolves to the linked exercise.
+ */
+export async function getOneExerciseLinkedCourse({
+  token,
+  idExercise,
+}: GetOneExerciseLinkedCourseProps): Promise<QuizLinkedList> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/linked-course`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetOneExerciseLessonProps {
+  token: string | undefined
+  idExercise: string
+}
+
+/**
+ * Retrieves a single quiz lesson.
+ * @param {GetOneExerciseLessonProps} options - The options for retrieving the quiz lesson.
+ * @returns {Promise<any>} - A promise that resolves to the JSON response of the quiz lesson.
+ */
+export async function getOneExerciseLesson({
+  token,
+  idExercise,
+}: GetOneExerciseLessonProps): Promise<QuizQuestionListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getLesson`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetExerciseListMemberProps {
+  token: string | undefined
+  idExercise: string
+  limit: number
+  page: number
+  sortBy: string
+  orderBy: string
+}
+
+/**
+ * Retrieves a list of exercise members.
+ * @param token - The authentication token.
+ * @param idExercise - The ID of the exercise.
+ * @param limit - The maximum number of members to retrieve per page.
+ * @param page - The page number.
+ * @param sortBy - The field to sort the members by (default: "attempts").
+ * @param orderBy - The order in which to sort the members (default: "desc").
+ * @returns A promise that resolves to the list of exercise members.
+ */
+export async function getListExerciseMember({
+  token,
+  idExercise,
+  limit,
+  page,
+  sortBy = "attempts",
+  orderBy = "desc",
+}: GetExerciseListMemberProps): Promise<QuizMemberListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getMember?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetExerciseResultProps {
+  token: string | undefined
+  idExercise: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+}
+
+/**
+ * Retrieves a list of exercise results based on the provided parameters.
+ * @param {GetExerciseResultProps} options - The options for fetching exercise results.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.idExercise - The ID of the exercise.
+ * @param {number} options.limit - The maximum number of results to retrieve per page.
+ * @param {number} options.page - The page number of the results to retrieve.
+ * @param {string} [options.sortBy="created_at"] - The field to sort the results by. Defaults to "created_at".
+ * @param {string} [options.orderBy="desc"] - The order in which to sort the results. Defaults to "desc".
+ * @returns {Promise<any>} - A promise that resolves to the fetched exercise results.
+ */
+export async function getListExerciseResult({
+  token,
+  idExercise,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+}: GetExerciseResultProps): Promise<QuizUserAttemptList> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getUserAttempt?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ContentType: "application/json",
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
 }

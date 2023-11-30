@@ -3,6 +3,8 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getOneExercise } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { MotionDiv } from "@/components/framer-wrapper"
+import { HeaderSubMenu } from "@/components/header-submenu"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { QuizTab } from "@/components/pagers/quiz-tab"
 import { DashboardShell } from "@/components/shell"
@@ -48,8 +50,15 @@ export default async function ExerciseDetailLayout({
         ]}
       />
 
+      <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <HeaderSubMenu title={exercise?.data?.quiz_title} />
+      </MotionDiv>
+
       <div className="space-y-4 overflow-hidden">
-        <QuizTab quizId={params.idExercise} />
+        <QuizTab
+          quizId={params.idExercise}
+          initialRoute={`/operator-lms/exercise/detail/${params.idExercise}`}
+        />
         {children}
       </div>
     </DashboardShell>

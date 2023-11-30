@@ -4,7 +4,11 @@ const nextConfig = {
   publicRuntimeConfig: {
     basePath: "",
   },
-
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [

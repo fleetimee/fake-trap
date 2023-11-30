@@ -8,10 +8,11 @@ export const contentFileSchema = z.object({
     .unknown()
     .refine((val) => {
       if (!Array.isArray(val)) return false
+      if (val.length === 0) return false
       if (val.some((file) => !(file instanceof File))) return false
       return true
-    }, "Must be an array of File")
-    .optional()
+    }, "Must be an array of File and contain at least one file")
+
     .nullable()
     .default(null),
 })

@@ -16,12 +16,14 @@ interface QuizTableShellProps {
   data: QuizListResData[]
   referenceResp: ReferenceListRes
   pageCount: number
+  link?: string
 }
 
 export function QuizTableShell({
   data,
   pageCount,
   referenceResp,
+  link,
 }: QuizTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -78,7 +80,11 @@ export function QuizTableShell({
           return (
             <div className="flex flex-col">
               <Link
-                href={`/dashboard/quiz/${row.original.id_quiz}`}
+                href={
+                  link
+                    ? `${link}/${row.original.id_quiz}`
+                    : `/operator-lms/exercise/detail/${row.original.id_quiz}`
+                }
                 className="text-sm font-semibold text-blue-600 hover:underline"
               >
                 {row.original.quiz_title}

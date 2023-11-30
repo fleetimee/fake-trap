@@ -14,7 +14,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 
 import { PdfResult } from "./_pdf_content"

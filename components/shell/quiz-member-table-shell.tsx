@@ -24,6 +24,12 @@ export function QuizMemberTableShell({
   const columns = React.useMemo<ColumnDef<QuizMemberListResData, unknown>[]>(
     () => [
       {
+        accessorKey: "name",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Nama" />
+        ),
+      },
+      {
         accessorKey: "username",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Username" />

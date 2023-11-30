@@ -1,63 +1,34 @@
+import { Suspense } from "react"
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { Laugh } from "lucide-react"
+import { PersonIcon } from "@radix-ui/react-icons"
 
-import { QuizMemberListRes } from "@/types/quiz/res"
 import { authOptions } from "@/lib/auth"
+import { getListExerciseMember } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardShell, QuizMemberTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-export const metadata = {
-  title: "Peserta Kuis",
-  description: "Halaman untuk melihat peserta kuis",
+export const metadata: Metadata = {
+  title: "Peserta Ujian",
+  description: "Peserta Ujian",
 }
 
-interface GetQuizMemberProps {
-  token: string | undefined
-  quizId: string
-  limit: number
-  page: number
-  sortBy: string
-  orderBy: string
-}
-
-async function getQuizMember({
-  token,
-  quizId,
-  limit,
-  page,
-  sortBy = "attemps",
-  orderBy = "desc",
-}: GetQuizMemberProps): Promise<QuizMemberListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${quizId}/getMember?limit=${limit}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await res.json()
-}
-
-interface PesertaPageProps {
+interface ExerciseDetailPesertaPageProps {
   params: {
-    quizId: string
+    idExercise: string
   }
   searchParams: {
     [key: string]: string | string[] | undefined
   }
 }
 
-export default async function PesertaPage({
+export default async function ExerciseDetailPesertaPage({
   params,
   searchParams,
-}: PesertaPageProps) {
+}: ExerciseDetailPesertaPageProps) {
   const user = await getCurrentUser()
 
   const { page, per_page, sort, course_name, category } = searchParams ?? {}
@@ -76,11 +47,11 @@ export default async function PesertaPage({
   const sortBy = sortByInitial.split(".")[0]
   const orderBy = orderByInitial.split(".")[1]
 
-  const quizMember = await getQuizMember({
+  const exerciseMember = await getListExerciseMember({
     token: user?.token,
-    quizId: params.quizId,
-    limit: limitInitial,
+    idExercise: params.idExercise,
     page: pageInitial,
+    limit: limitInitial,
     sortBy: sortBy,
     orderBy: orderBy,
   })
@@ -89,17 +60,20 @@ export default async function PesertaPage({
     <DashboardShell>
       <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Alert>
-          <Laugh className="h-4 w-4" />
+          <PersonIcon className="h-4 w-4" />
           <AlertTitle>List Peserta</AlertTitle>
           <AlertDescription>
-            Berikut adalah list peserta yang sudah mengerjakan kuis ini
+            Berikut adalah list peserta yang sudah mengerjakan tes ini
           </AlertDescription>
         </Alert>
       </MotionDiv>
-      <QuizMemberTableShell
-        data={quizMember.data}
-        pageCount={quizMember.totalPage}
-      />
+
+      <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
+        <QuizMemberTableShell
+          data={exerciseMember.data}
+          pageCount={exerciseMember.totalPage}
+        />
+      </Suspense>
     </DashboardShell>
   )
 }

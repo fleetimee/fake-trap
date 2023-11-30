@@ -112,6 +112,7 @@ export default async function OperatorLMSExercisePage({
         data={quiz.data}
         pageCount={quiz.totalPage}
         referenceResp={references}
+        link="/operator-lms/exercise/detail"
       />
     </DashboardShell>
   )

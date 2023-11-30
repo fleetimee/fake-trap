@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -10,6 +11,7 @@ import {
   getRule,
 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -130,12 +132,14 @@ export default async function OperatorLMSKnowledgePage({
         </MotionDiv>
       </div>
 
-      <KnowledgeTableShell
-        data={knowledgeResp.data}
-        categoryResp={categoryResp}
-        referenceResp={referenceResp}
-        pageCount={knowledgeResp.totalPage}
-      />
+      <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
+        <KnowledgeTableShell
+          data={knowledgeResp.data}
+          categoryResp={categoryResp}
+          referenceResp={referenceResp}
+          pageCount={knowledgeResp.totalPage}
+        />
+      </Suspense>
     </DashboardShell>
   )
 }

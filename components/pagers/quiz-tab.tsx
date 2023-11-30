@@ -12,36 +12,45 @@ import { MotionDiv } from "../framer-wrapper"
 
 interface QuizTabProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
   quizId: string
+  initialRoute?: string
 }
 
-export function QuizTab({ className, quizId }: QuizTabProps) {
+export function QuizTab({ className, quizId, initialRoute }: QuizTabProps) {
   const router = useRouter()
   const segment = useSelectedLayoutSegment()
 
   const tabs = [
     {
       title: "Overview",
-      href: `/dashboard/quiz/${quizId}`,
+      href: initialRoute ? `${initialRoute}` : `/dashboard/quiz/${quizId}`,
       isActive: segment === null,
     },
     {
       title: "Soal Builder",
-      href: `/dashboard/quiz/${quizId}/soal`,
+      href: initialRoute
+        ? `${initialRoute}/soal`
+        : `/dashboard/quiz/${quizId}/soal`,
       isActive: segment === "soal",
     },
     {
       title: "Preview Soal",
-      href: `/dashboard/quiz/${quizId}/preview-soal`,
+      href: initialRoute
+        ? `${initialRoute}/preview-soal`
+        : `/dashboard/quiz/${quizId}/preview-soal`,
       isActive: segment === "preview-soal",
     },
     {
       title: "Peserta",
-      href: `/dashboard/quiz/${quizId}/peserta`,
+      href: initialRoute
+        ? `${initialRoute}/peserta`
+        : `/dashboard/quiz/${quizId}/peserta`,
       isActive: segment === "peserta",
     },
     {
       title: "Hasil",
-      href: `/dashboard/quiz/${quizId}/hasil`,
+      href: initialRoute
+        ? `${initialRoute}/hasil`
+        : `/dashboard/quiz/${quizId}/hasil`,
       isActive: segment === "hasil",
     },
   ]
