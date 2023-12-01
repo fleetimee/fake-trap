@@ -141,26 +141,24 @@ export default async function ExerciseResultDetailPage({
                 )
 
                 return (
-                  <div key={index} className="space-y-5">
+                  <div key={item.id_question} className="space-y-5">
                     <Label htmlFor="current">
                       {index + 1}. {item.question_text}
                     </Label>
                     <div className="grid grid-cols-2 gap-6">
                       {item?.answers?.map((answer) => {
                         return (
-                          <>
-                            <RadioGroup
-                              key={answer.id_answer}
-                              className="flex items-center space-x-3 space-y-0"
-                            >
-                              <RadioGroupItem
-                                checked={answer.is_correct}
-                                value={answer.id_answer.toString()}
-                                disabled
-                              />
-                              <Label>{answer.answer_text}</Label>
-                            </RadioGroup>
-                          </>
+                          <RadioGroup
+                            key={answer.id_answer}
+                            className="flex items-center space-x-3 space-y-0"
+                          >
+                            <RadioGroupItem
+                              checked={answer.is_correct}
+                              value={answer.id_answer.toString()}
+                              disabled
+                            />
+                            <Label>{answer.answer_text}</Label>
+                          </RadioGroup>
                         )
                       })}
                     </div>
@@ -169,9 +167,11 @@ export default async function ExerciseResultDetailPage({
                         <Label>Benar ?</Label>
                         {userAnswer?.map((answer, index) => {
                           return (
-                            <div className="flex flex-col">
+                            <div
+                              key={answer.id_answer}
+                              className="flex flex-col"
+                            >
                               <Badge
-                                key={index}
                                 className={`${
                                   answer.is_correct
                                     ? "bg-green-100 text-green-500"

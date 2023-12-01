@@ -1,6 +1,7 @@
 import { Metadata } from "next"
+import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
-import { Link, PartyPopper } from "lucide-react"
+import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
@@ -98,7 +99,7 @@ export default async function CourseDetailLayout({
               href="#"
               className="inline-block rounded-lg bg-white px-4 py-2 font-medium text-gray-800 shadow-md duration-150 hover:bg-gray-100 hover:shadow-none active:bg-gray-200"
             >
-              Mulai Pelatihan
+              Tambah Section
             </Link>
           </div>
         </div>
