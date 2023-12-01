@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const sectionSchema = z.object({
+export const knowledgeSectionSchema = z.object({
   section_title: z
     .string({
       required_error: "Judul section harus diisi",
@@ -18,7 +18,7 @@ export const sectionSchema = z.object({
   ),
 })
 
-export const updateSectionSchema = z.object({
+export const updateKnowledgeSectionSchema = z.object({
   section_title: z
     .string({
       required_error: "Judul section harus diisi",
@@ -30,4 +30,28 @@ export const updateSectionSchema = z.object({
       message: "Judul section tidak boleh lebih dari 18 karakter",
     })
     .optional(),
+})
+
+export const courseSectionSchema = z.object({
+  section: z
+    .array(
+      z.object({
+        section_title: z
+          .string({
+            required_error: "Judul section harus diisi",
+          })
+          .min(1, {
+            message: "Judul section tidak boleh kosong",
+          })
+          .max(18, {
+            message: "Judul section tidak boleh lebih dari 18 karakter",
+          }),
+        course: z.array(
+          z.object({
+            id_course: z.number().min(1).int(),
+          })
+        ),
+      })
+    )
+    .nonempty(),
 })

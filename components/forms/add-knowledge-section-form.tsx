@@ -9,8 +9,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
-import { SectionOneResData } from "@/types/section/res"
-import { updateSectionSchema } from "@/lib/validations/section"
+import { knowledgeSectionSchema } from "@/lib/validations/section"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -24,17 +23,13 @@ import { Input } from "@/components/ui/input"
 
 import { Icons } from "../icons"
 
-type Inputs = z.infer<typeof updateSectionSchema>
+type Inputs = z.infer<typeof knowledgeSectionSchema>
 
-interface UpdateSectionFormProps {
-  idSection: number
-  section: SectionOneResData
+interface AddSectionFormProps {
+  idKnowledge: number
 }
 
-export function UpdateSectionForm({
-  idSection,
-  section,
-}: UpdateSectionFormProps) {
+export function AddSectionForm({ idKnowledge }: AddSectionFormProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -42,19 +37,24 @@ export function UpdateSectionForm({
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<Inputs>({
-    resolver: zodResolver(updateSectionSchema),
+    resolver: zodResolver(knowledgeSectionSchema),
     defaultValues: {
-      section_title: section.section_title,
+      section_title: "",
+      knowledge: [
+        {
+          id_knowledge: idKnowledge,
+        },
+      ],
     },
   })
 
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${idSection}`
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section`
 
         const response = await fetch(url, {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user?.token}`,
@@ -64,24 +64,20 @@ export function UpdateSectionForm({
 
         if (response.ok) {
           sonnerToast.success("Berhasil", {
-            description: "Section berhasil diperbarui",
+            description: "Section berhasil ditambahkan",
           })
 
           router.back()
           router.refresh()
           form.reset()
         } else {
-          const error: ErrorResponse = await response.json()
+          const errorResponse: ErrorResponse = await response.json()
 
           sonnerToast.error("Gagal", {
-            description: error.error,
+            description: errorResponse.error,
           })
         }
-      } catch (error) {
-        sonnerToast.error("Gagal", {
-          description: `${error}`,
-        })
-      }
+      } catch (error) {}
     })
   }
 
@@ -100,8 +96,7 @@ export function UpdateSectionForm({
               <Input
                 disabled={isPending}
                 id="section_title"
-                type="text"
-                placeholder="Nama Section"
+                placeholder="Judul Section"
                 {...field}
               />
               <FormDescription>Berikan judul yang sesuai</FormDescription>
@@ -112,7 +107,7 @@ export function UpdateSectionForm({
 
         <Button type="submit" className="w-fit" disabled={isPending}>
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Update
+          Tambah
         </Button>
       </form>
     </Form>

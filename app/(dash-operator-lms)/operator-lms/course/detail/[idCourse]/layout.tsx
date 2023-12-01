@@ -96,7 +96,7 @@ export default async function CourseDetailLayout({
           </div>
           <div className="mt-4 flex-none md:mt-0">
             <Link
-              href="#"
+              href={`/operator-lms/course/detail/${params.idCourse}/section/new`}
               className="inline-block rounded-lg bg-white px-4 py-2 font-medium text-gray-800 shadow-md duration-150 hover:bg-gray-100 hover:shadow-none active:bg-gray-200"
             >
               Tambah Section

@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -5,15 +6,15 @@ import { getCurrentUser } from "@/lib/session"
 import { AddSectionForm } from "@/components/forms/add-knowledge-section-form"
 import { Separator } from "@/components/ui/separator"
 
-interface KnowledgeSectionNewPageProps {
+interface CourseSectionNewPageProps {
   params: {
-    idKnowledge: string
+    idCourse: string
   }
 }
 
-export default async function KnowledgeSectionNewPage({
+export default async function CourseSectionNewPage({
   params,
-}: KnowledgeSectionNewPageProps) {
+}: CourseSectionNewPageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -25,11 +26,10 @@ export default async function KnowledgeSectionNewPage({
       <div>
         <h3 className="text-lg font-medium">Section / Bagian</h3>
         <p className="text-sm text-muted-foreground">
-          Tambah Section atau Bagian baru untuk pengetahuan yang anda miliki.
+          Tambah Section atau Bagian baru untuk pelatihan ini.
         </p>
       </div>
       <Separator />
-      <AddSectionForm idKnowledge={Number(params.idKnowledge)} />
     </div>
   )
 }
