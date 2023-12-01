@@ -107,6 +107,7 @@ export default async function OperatorLMSCoursePage({
         data={course.data}
         knowledgeResp={knowledge}
         pageCount={course.totalPage}
+        linkString="/operator-lms/course/detail"
       />
     </DashboardShell>
   )

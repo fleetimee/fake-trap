@@ -26,44 +26,9 @@ export function UserQuizResultTableShell({
   const columns = React.useMemo<ColumnDef<QuizUserAttemptListData, unknown>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_user_quiz)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_user_quiz]
-                  : prev.filter((id) => id !== row.original.id_user_quiz)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_user_quiz",
+        accessorKey: "name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
+          <DataTableColumnHeader column={column} title="Nama" />
         ),
       },
       {
@@ -100,7 +65,7 @@ export function UserQuizResultTableShell({
                   : "#"
               }
             >
-              <p className="text-primary hover:underline">
+              <p className="font-semibold text-primary hover:underline">
                 {row.original.score}
               </p>
             </Link>

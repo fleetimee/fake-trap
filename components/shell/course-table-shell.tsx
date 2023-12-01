@@ -34,12 +34,14 @@ interface CourseTableShell {
   data: CourseListResData[]
   knowledgeResp: KnowledgeListRes
   pageCount: number
+  linkString?: string
 }
 
 export function CourseTableShell({
   data,
   knowledgeResp,
   pageCount,
+  linkString,
 }: CourseTableShell) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -117,7 +119,9 @@ export function CourseTableShell({
           return (
             <div className="flex flex-col">
               <Link
-                href={`/dashboard/course/${row.original.id_course}`}
+                href={
+                  linkString ? `${linkString}/${row.original.id_course}` : "#"
+                }
                 className="text-sm font-semibold text-blue-600 hover:underline"
               >
                 {row.original.course_name}

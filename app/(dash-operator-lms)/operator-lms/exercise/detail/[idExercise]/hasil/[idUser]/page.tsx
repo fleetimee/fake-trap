@@ -1,5 +1,7 @@
+import { env } from "process"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import { PrinterIcon } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import {
@@ -9,6 +11,7 @@ import {
   getOneUser,
 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { PdfViewer } from "@/components/pdf-viewer"
 import { DashboardShell } from "@/components/shell"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -25,6 +28,8 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+import { PrintButton } from "./PrintButton"
 
 export const metadata: Metadata = {
   title: "Hasil Tes",
@@ -51,11 +56,6 @@ export default async function ExerciseResultDetailPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const exercise = await getOneExercise({
-    idExercise: params.idExercise,
-    token: user?.token,
-  })
-
   const exerciseLesson = await getOneExerciseLesson({
     idExercise: params.idExercise,
     token: user?.token,
@@ -72,13 +72,8 @@ export default async function ExerciseResultDetailPage({
     uuid: params.idUser,
   })
 
-  console.log(exerciseUserAnswer)
-
   const correctAnswer =
     exerciseUserAnswer.data.filter((item) => item.is_correct).length ?? 0
-
-  const wrongAnswer =
-    exerciseUserAnswer.data.filter((item) => !item.is_correct).length ?? 0
 
   const totalQuestion = exerciseUserAnswer.data.length ?? 0
 
@@ -145,15 +140,13 @@ export default async function ExerciseResultDetailPage({
                   (answer) => answer.id_question === item.id_question
                 )
 
-                console.log(userAnswer)
-
                 return (
                   <div key={index} className="space-y-5">
                     <Label htmlFor="current">
                       {index + 1}. {item.question_text}
                     </Label>
                     <div className="grid grid-cols-2 gap-6">
-                      {item?.answers?.map((answer, index) => {
+                      {item?.answers?.map((answer) => {
                         return (
                           <>
                             <RadioGroup
@@ -201,25 +194,26 @@ export default async function ExerciseResultDetailPage({
         </TabsContent>
         <TabsContent value="password">
           <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
+            <CardHeader className="grid grid-cols-2 justify-between">
+              <div>
+                <CardTitle>Printout</CardTitle>
+                <CardDescription className="text-lg">
+                  Cetak hasil tes peserta{" "}
+                  <span className="font-semibold">{person.data.name}</span>{" "}
+                </CardDescription>
+              </div>
+
+              <div className="flex justify-end">
+                <PrintButton
+                  pdfUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${params.idUser}/${searchParams.idAttempt}`}
+                />
+              </div>
             </CardHeader>
             <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
+              <PdfViewer
+                link={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${params.idUser}/${searchParams.idAttempt}`}
+              />
             </CardContent>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
           </Card>
         </TabsContent>
       </Tabs>
