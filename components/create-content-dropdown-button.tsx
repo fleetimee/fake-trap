@@ -31,10 +31,12 @@ export default function CreateContentDropdownButton({
           href="#"
           className={buttonVariants({
             size: "sm",
-            variant: "default",
+            variant: "outline",
           })}
         >
           <Icons.add className="h-4 w-4" />
+
+          <span className="ml-2">Tambah Konten</span>
         </Link>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

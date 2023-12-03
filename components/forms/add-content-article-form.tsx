@@ -156,12 +156,11 @@ export function AddArticleForm({ idSection }: AddArticleFormProps) {
   }
 
   return (
-    // <Form {...form}>
     <form
       onSubmit={form.handleSubmit(onSubmit)}
       className="grid w-full max-w-2xl gap-8 sm:gap-4 md:gap-6"
     >
-      <div className="prose prose-stone mx-auto w-full dark:prose-invert sm:w-3/4 md:w-1/2 lg:w-[800px]">
+      <div className="prose prose-stone dark:prose-invert mx-auto w-full sm:w-3/4 md:w-1/2 lg:w-[800px]">
         <div className="mb-4 flex w-full max-w-2xl flex-col gap-3">
           <Label htmlFor="content_title">Judul</Label>
           <TextareaAutosize
@@ -193,6 +192,5 @@ export function AddArticleForm({ idSection }: AddArticleFormProps) {
         <span>Save</span>
       </button>
     </form>
-    // </Form>
   )
 }
