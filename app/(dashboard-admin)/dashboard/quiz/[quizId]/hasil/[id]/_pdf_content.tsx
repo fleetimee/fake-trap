@@ -9,6 +9,10 @@ import {
 } from "@/types/quiz/res"
 import MyDocument from "@/components/pdf-maker"
 
+
+
+
+
 interface PdfResultProps {
   getQuizLesson: QuizQuestionListResData[]
   getOneQuiz: QuizOneResData

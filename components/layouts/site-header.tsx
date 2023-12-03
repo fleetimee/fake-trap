@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { generateFromString } from "generate-avatar"
 import { signOut } from "next-auth/react"
 
@@ -23,6 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Icons } from "../icons"
+
 
 interface SiteHeaderProps {
   user:

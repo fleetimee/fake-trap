@@ -8,8 +8,6 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
-import { UserOneResData } from "@/types/user/res"
-import { accountSchema } from "@/lib/validations/account"
 import { changePasswordSchema } from "@/lib/validations/change-password"
 
 import { Icons } from "../icons"
@@ -23,7 +21,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { Input } from "../ui/input"
+import { Input } from "../ui/input";
+
 
 type Inputs = z.infer<typeof changePasswordSchema>
 

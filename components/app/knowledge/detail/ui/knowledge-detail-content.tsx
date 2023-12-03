@@ -4,7 +4,6 @@ import React from "react"
 
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { ReferenceListResData } from "@/types/references/res"
-import { MotionDiv } from "@/components/framer-wrapper"
 import { renderContent, renderContentButton } from "@/components/render-content"
 import {
   Card,
@@ -15,6 +14,10 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+
+
+
 
 interface KnowledgeDetailContentProps {
   detailKnowledge: KnowledgeOneRes

@@ -2,6 +2,10 @@
 
 import React from "react"
 
+
+
+
+
 export function BGGrid({ children }: { children?: React.ReactNode }) {
   // State can be: radial (linear-gradient), background-size
   // useReducer instead. And pass property down

@@ -38,6 +38,10 @@ import {
 } from "@/components/ui/tooltip"
 import { PreviewKnowledgeDetailSidebar } from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-knowledge/(knowledge-layout)/preview-knowledge/[idKnowledge]/_components/sidebar"
 
+
+
+
+
 interface GetIdApproval {
   token: string | undefined
   id: string

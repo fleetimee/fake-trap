@@ -11,6 +11,10 @@ import {
   UserEnrolledCourseTableShell,
 } from "@/components/shell"
 
+
+
+
+
 export const metadata = {
   title: "Pelatihan Saya",
   description: "Pelatihan yang saya ikuti",

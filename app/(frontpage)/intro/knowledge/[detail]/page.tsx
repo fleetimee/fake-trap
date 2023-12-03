@@ -11,6 +11,10 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+
+
+
+
 interface LookupKnowledgePublicProps {
   token: string | undefined
   idKnowledge: number

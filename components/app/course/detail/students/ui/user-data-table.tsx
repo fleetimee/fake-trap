@@ -14,7 +14,6 @@ import {
 } from "@tanstack/react-table"
 
 import { CourseOneRes, CourseVacantUserListRes } from "@/types/course/res"
-import { UserListRes } from "@/types/user/res"
 import { CreateStudentsIntoCourseButton } from "@/components/app/course/detail/students/operations"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,6 +25,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+
+
+
+
 
 interface UserDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

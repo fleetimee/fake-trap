@@ -5,6 +5,10 @@ import { authOptions } from "@/lib/auth"
 import { getOneCourse } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 
+
+
+
+
 interface CourseDetailPageProps {
   params: {
     idCourse: string

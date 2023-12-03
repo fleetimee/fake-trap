@@ -4,6 +4,7 @@ import { withAuth } from "next-auth/middleware"
 
 import { extractTokenMiddleware } from "./lib/utils"
 
+
 /**
  * Middleware function that handles authentication and authorization for different user roles.
  * @param req - The request object.

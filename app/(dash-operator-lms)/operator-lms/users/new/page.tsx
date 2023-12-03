@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { Shield } from "lucide-react"
 
-import { RoleListRes } from "@/types/role/res"
 import { authOptions } from "@/lib/auth"
 import { getRole } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
@@ -17,6 +16,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+
+
+
 
 export const metadata: Metadata = {
   title: "Tambah User Baru",

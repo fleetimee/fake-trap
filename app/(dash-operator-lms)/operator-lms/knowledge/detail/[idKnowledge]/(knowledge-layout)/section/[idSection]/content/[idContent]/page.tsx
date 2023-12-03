@@ -1,48 +1,19 @@
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { DownloadIcon } from "@radix-ui/react-icons"
 import Blocks from "editorjs-blocks-react-renderer"
-import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getOneContent } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { cn } from "@/lib/utils"
 import { YoutubeRender } from "@/components/content-renderer"
-import { Icons } from "@/components/icons"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+
+
+
+
 
 interface KnowledgeContentPageProps {
   params: {

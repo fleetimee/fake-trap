@@ -23,6 +23,7 @@ import {
 
 import { KnowledgeApprovalForm } from "./_components/approve-form"
 
+
 interface GetCheckKnowledgeProps {
   token: string | undefined
   id: string

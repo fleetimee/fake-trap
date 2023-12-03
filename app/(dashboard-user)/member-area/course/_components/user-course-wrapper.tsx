@@ -6,6 +6,10 @@ import { UserEnrolledCourseListRes } from "@/types/me/res"
 import { CourseCard } from "@/components/course-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 
+
+
+
+
 const parentVariant: Variants = {
   initial: {
     opacity: 0,

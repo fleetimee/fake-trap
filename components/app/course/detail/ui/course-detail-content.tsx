@@ -32,6 +32,10 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+
+
+
+
 interface CourseDetailContentProps {
   quizIdInitial: string
   courseDataResp: CourseOneRes

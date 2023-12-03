@@ -37,20 +37,13 @@ export const courseSectionSchema = z.object({
     .array(
       z.object({
         section_title: z
-          .string({
-            required_error: "Judul section harus diisi",
-          })
+          .string()
           .min(1, {
             message: "Judul section tidak boleh kosong",
           })
           .max(18, {
             message: "Judul section tidak boleh lebih dari 18 karakter",
           }),
-        course: z.array(
-          z.object({
-            id_course: z.number().min(1).int(),
-          })
-        ),
       })
     )
     .nonempty(),

@@ -14,7 +14,6 @@ import {
 import { UserOneRes } from "@/types/user/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
 import {
   AvgScoreCard,
   CourseContainerCard,
@@ -27,6 +26,10 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+
+
+
+
 
 interface GetUserPostCount {
   token: string | undefined

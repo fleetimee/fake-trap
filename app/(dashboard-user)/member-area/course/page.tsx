@@ -17,6 +17,10 @@ import {
 } from "@/components/ui/card"
 import { UserCourseWrapper } from "@/app/(dashboard-user)/member-area/course/_components"
 
+
+
+
+
 export const metadata = {
   title: "Pelatihan Kamu",
   description: "Halaman pelatihan member area",

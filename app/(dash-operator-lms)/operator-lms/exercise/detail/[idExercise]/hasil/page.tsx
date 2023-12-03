@@ -10,6 +10,10 @@ import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DashboardShell, UserQuizResultTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+
+
+
+
 export const metadata: Metadata = {
   title: "Hasil Tes",
   description: "Hasil Tes",

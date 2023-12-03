@@ -6,6 +6,10 @@ import { getCurrentUser } from "@/lib/session"
 import { UpdateSectionForm } from "@/components/forms/update-knowledge-section"
 import { Separator } from "@/components/ui/separator"
 
+
+
+
+
 interface KnowledgeSectionNewPageProps {
   params: {
     idKnowledge: string

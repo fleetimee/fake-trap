@@ -2,6 +2,10 @@ import { ErrorCard } from "@/components/cards/error-card"
 import { Shell } from "@/components/shell/lobby-shell"
 import { Card } from "@/components/ui/card"
 
+
+
+
+
 export default function ProductNotFound() {
   return (
     <Card>

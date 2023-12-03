@@ -9,6 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+
+
+
+
 interface QuizTypeCardProps {
   detailQuizData: QuizOneRes
   detailQuizType: ReferenceListRes

@@ -1,9 +1,12 @@
 import React from "react"
 
-import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+
+
+
 
 interface SupervisorPendingCourseLayoutProps {
   children: React.ReactNode

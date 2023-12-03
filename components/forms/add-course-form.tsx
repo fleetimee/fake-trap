@@ -40,8 +40,9 @@ import {
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { ScrollArea } from "../ui/scroll-area"
-import { Textarea } from "../ui/textarea"
-import { Zoom } from "../zoom-image"
+import { Textarea } from "../ui/textarea";
+import { Zoom } from "../zoom-image";
+
 
 type Inputs = z.infer<typeof courseSchema>
 

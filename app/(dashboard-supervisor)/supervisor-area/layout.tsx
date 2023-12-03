@@ -1,11 +1,12 @@
-import {
-  dashboardConfig,
-  supervisorAreaDashboardConfig,
-} from "@/config/dashboard"
+import { supervisorAreaDashboardConfig } from "@/config/dashboard"
 import { getCurrentUser } from "@/lib/session"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { DashboardNav } from "@/components/nav"
+
+
+
+
 
 interface DashboardLayoutProps {
   children: React.ReactNode

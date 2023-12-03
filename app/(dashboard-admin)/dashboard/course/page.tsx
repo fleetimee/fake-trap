@@ -10,6 +10,10 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
 
+
+
+
+
 export const metadata = {
   title: "Pelatihan",
   description: "Pelatihan yang tersedia di e-learning",

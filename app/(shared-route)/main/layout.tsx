@@ -1,10 +1,12 @@
-import { userAreaDashboardConfig } from "@/config/dashboard"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { DashboardNav } from "@/components/nav"
 import { DashboardNavNew } from "@/components/shared-nav"
+
+
+
+
 
 interface DashboardLayoutProps {
   children: React.ReactNode

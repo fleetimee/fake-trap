@@ -2,7 +2,10 @@ import { Suspense } from "react"
 import Link from "next/link"
 
 import { ForgotPasswordForm } from "@/components/forms/forgot-password-form"
-import { UserAuthForm } from "@/components/user-auth-form"
+
+
+
+
 
 export const metadata = {
   title: "Lupa Password",

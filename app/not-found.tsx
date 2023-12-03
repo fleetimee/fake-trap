@@ -3,15 +3,9 @@
 import { Metadata } from "next"
 import { useRouter } from "next/navigation"
 
-import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+
+
+
 
 export const metadata: Metadata = {
   title: "What are you looking for?",

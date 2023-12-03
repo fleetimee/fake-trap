@@ -6,6 +6,10 @@ import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { PublicKnowledgeDetailContent } from "@/components/app/public-knowledge/detail/ui/public-knowledge-detail-content"
 import { PublicDetailSidebarKnowledge } from "@/components/app/public-knowledge/detail/ui/public-knowledge-detail-sidebar"
 
+
+
+
+
 interface PublicKnowledgeDetailShellProps {
   detailKnowledge: KnowledgeOneRes
 }

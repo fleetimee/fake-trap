@@ -5,6 +5,10 @@ import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { AccordionContent } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 
+
+
+
+
 interface CourseKnowledgeSectionContentProps {
   content: KnowledgeOneResContent
   contentData: KnowledgeOneResContent

@@ -1,9 +1,8 @@
-import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { AddSectionForm } from "@/components/forms/add-knowledge-section-form"
+import { AddCourseSectionForm } from "@/components/forms/add-course-section-form"
 import { Separator } from "@/components/ui/separator"
 
 interface CourseSectionNewPageProps {
@@ -30,6 +29,7 @@ export default async function CourseSectionNewPage({
         </p>
       </div>
       <Separator />
+      <AddCourseSectionForm idCourse={Number(params.idCourse)} />
     </div>
   )
 }

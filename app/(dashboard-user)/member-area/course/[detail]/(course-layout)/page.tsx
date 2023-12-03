@@ -5,6 +5,10 @@ import { CourseOneRes } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 
+
+
+
+
 interface GetOneCourseProps {
   token: string | undefined
   idKnowledge: string

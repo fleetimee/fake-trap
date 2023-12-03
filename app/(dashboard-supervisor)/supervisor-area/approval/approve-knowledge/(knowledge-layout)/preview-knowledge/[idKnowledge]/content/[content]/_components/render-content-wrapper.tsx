@@ -3,6 +3,10 @@
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
 import { renderContent } from "@/components/render-content"
 
+
+
+
+
 interface RenderContentWrapperProps {
   detailKnowledge: KnowledgeOneRes
   contentData: KnowledgeOneResContent

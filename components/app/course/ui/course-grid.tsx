@@ -12,6 +12,10 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card"
 
+
+
+
+
 export default function CourseGrid(props: {
   data: CourseData
   dataKnowledge: Knowledge

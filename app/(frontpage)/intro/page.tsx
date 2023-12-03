@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { Variants } from "framer-motion"
 import Balance from "react-wrap-balancer"
@@ -12,6 +11,10 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { Shell } from "@/components/shell/lobby-shell"
 import { Button, buttonVariants } from "@/components/ui/button"
+
+
+
+
 
 export const metadata = {
   title: "Explore",

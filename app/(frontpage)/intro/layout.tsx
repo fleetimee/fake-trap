@@ -6,6 +6,10 @@ import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 
+
+
+
+
 interface GetUserProps {
   token: string | undefined
   uuid: string

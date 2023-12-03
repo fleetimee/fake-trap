@@ -1,6 +1,10 @@
 import React from "react"
 import Image from "next/image"
 
+
+
+
+
 interface DefaultRenderProps {
   image: string
   alt: string

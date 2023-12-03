@@ -23,7 +23,8 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { Zoom } from "../zoom-image"
+import { Zoom } from "../zoom-image";
+
 
 type Inputs = z.infer<typeof categorySchema>
 

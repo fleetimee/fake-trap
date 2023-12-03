@@ -20,6 +20,10 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+
+
+
+
 interface CourseDetailShellProps {
   quizIdInitial: string
   courseKnowledgeResp: KnowledgeOneRes

@@ -1,20 +1,12 @@
 import React from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import {
-  CursorTextIcon,
-  FileIcon,
-  FileTextIcon,
-  VideoIcon,
-} from "@radix-ui/react-icons"
 
 import { authOptions } from "@/lib/auth"
 import { getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { cn } from "@/lib/utils"
-import { EmptyContent } from "@/components/app/knowledge/detail/ui"
+import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { Icons } from "@/components/icons"
-import CreateContentDropdownButton from "@/components/knowledge/create-content-dropdown-button"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import {
@@ -23,39 +15,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
   ContextMenu,
-  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
 import { KnowledgeDeleteContent } from "./_components/delete-content"
 import { KnowledgeDeleteSection } from "./_components/delete-section"

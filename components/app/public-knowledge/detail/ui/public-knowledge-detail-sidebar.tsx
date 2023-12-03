@@ -15,6 +15,10 @@ import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+
+
+
+
 interface PublicKnowledgeDetailContentProps {
   dataKnowledge: KnowledgeOneRes
   setContentData: React.Dispatch<React.SetStateAction<KnowledgeOneResContent>>

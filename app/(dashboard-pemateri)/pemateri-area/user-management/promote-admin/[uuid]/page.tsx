@@ -25,6 +25,7 @@ import {
 
 import { PromoteToAdminForm } from "./_components/promote-admin-form/promote-admin-form"
 
+
 export const metadata: Metadata = {
   title: "Promosikan Ke Admin",
   description: "Promosikan Ke Admin",

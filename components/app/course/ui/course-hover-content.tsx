@@ -6,6 +6,10 @@ import { Icons } from "@/components/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { HoverCardContent } from "@/components/ui/hover-card"
 
+
+
+
+
 export function CourseHoverContent(props: { data: CourseData }) {
   return (
     <HoverCardContent className="w-80">

@@ -21,7 +21,10 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Icons } from "../icons"
+
+
+import { Icons } from "../icons";
+
 
 type Inputs = z.infer<typeof knowledgeSectionSchema>
 
@@ -29,7 +32,7 @@ interface AddSectionFormProps {
   idKnowledge: number
 }
 
-export function AddSectionForm({ idKnowledge }: AddSectionFormProps) {
+export function AddKnowledgeSectionForm({ idKnowledge }: AddSectionFormProps) {
   const { data: session } = useSession()
 
   const router = useRouter()

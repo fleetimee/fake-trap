@@ -19,6 +19,10 @@ import {
   YoutubeRender,
 } from "@/components/content-renderer"
 
+
+
+
+
 interface RenderContentProps {
   detailKnowledge: KnowledgeOneRes
   contentData: KnowledgeOneResContent

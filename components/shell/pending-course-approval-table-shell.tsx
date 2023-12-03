@@ -5,12 +5,13 @@ import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { ApprovalListResData } from "@/types/approval/res/approval-list"
-import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
+import { convertDatetoString } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
 import PendingAction from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/(main-layout)/pending/_components/operations"
 
 import { Badge } from "../ui/badge"
+
 
 interface PendingCourseApprovalTableShellProps {
   data: ApprovalListResData[]

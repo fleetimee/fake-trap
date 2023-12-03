@@ -1,7 +1,9 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+
+
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

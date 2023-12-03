@@ -8,6 +8,10 @@ import { extractToken } from "@/lib/utils"
 import { AccountForm } from "@/components/forms/account-form"
 import { Separator } from "@/components/ui/separator"
 
+
+
+
+
 export const metadata: Metadata = {
   title: "Akun",
   description: "Pengaturan",

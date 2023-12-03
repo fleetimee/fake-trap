@@ -12,6 +12,7 @@ import RejectedAction from "@/app/(dashboard-supervisor)/supervisor-area/approva
 
 import { Badge } from "../ui/badge"
 
+
 interface RejectedCourseApprovalTableShellProps {
   data: ApprovalListResData[]
   pageCount: number

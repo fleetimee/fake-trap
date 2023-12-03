@@ -1,6 +1,10 @@
 import { KnowledgeGetNewRes } from "@/types/knowledge/res"
 import { CardDashboard } from "@/components/app/dashboard/ui"
 
+
+
+
+
 interface GetNewKnowledgeProps {
   token: string | undefined
 }

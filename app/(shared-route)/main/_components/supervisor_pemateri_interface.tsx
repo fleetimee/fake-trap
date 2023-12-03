@@ -1,7 +1,10 @@
-
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
+
+
+
+
 
 export function SupervisorPemateriInterface() {
   return (

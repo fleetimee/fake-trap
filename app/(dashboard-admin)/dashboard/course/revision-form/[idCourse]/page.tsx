@@ -28,6 +28,7 @@ import {
 import { CourseRevisionForm } from "./_components/revision-course-form"
 import { RevisionInformation } from "./_components/revision-information"
 
+
 export const metadata: Metadata = {
   title: "Revisi Pelatihan",
   description: "Revisi Pelatihan",

@@ -6,6 +6,10 @@ import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { buttonVariants } from "@/components/ui/button"
 
+
+
+
+
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full bg-background">

@@ -6,9 +6,9 @@ import { Document, Page, pdfjs } from "react-pdf"
 import "react-pdf/dist/esm/Page/TextLayer.css"
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"
 
-import { Button } from "./ui/button"
 import { Card } from "./ui/card"
 import { ScrollArea } from "./ui/scroll-area"
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",

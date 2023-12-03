@@ -1,8 +1,9 @@
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneSection } from "@/lib/fetcher"
+import { getOneSection, getQuizListWithNullSection } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { AddQuizMultipleChoiceQuiz } from "@/components/forms/add-quiz-multiple"
 import { Separator } from "@/components/ui/separator"
 
 interface CourseQuizMultipleChoicePageProps {
@@ -12,7 +13,9 @@ interface CourseQuizMultipleChoicePageProps {
   }
 }
 
-export default async function ({ params }: CourseQuizMultipleChoicePageProps) {
+export default async function CourseQuizMultipleChoicePage({
+  params,
+}: CourseQuizMultipleChoicePageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -22,6 +25,11 @@ export default async function ({ params }: CourseQuizMultipleChoicePageProps) {
   const section = await getOneSection({
     token: user.token,
     idSection: params.idSection,
+  })
+
+  const quizNull = await getQuizListWithNullSection({
+    token: user.token,
+    isNull: true,
   })
 
   if (section.code === 400) {
@@ -38,6 +46,11 @@ export default async function ({ params }: CourseQuizMultipleChoicePageProps) {
         </p>
       </div>
       <Separator />
+
+      <AddQuizMultipleChoiceQuiz
+        idSection={Number(params.idSection)}
+        quizList={quizNull.data}
+      />
     </div>
   )
 }

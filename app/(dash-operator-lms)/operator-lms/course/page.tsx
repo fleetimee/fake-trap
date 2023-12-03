@@ -11,6 +11,10 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
 
+
+
+
+
 export const metadata: Metadata = {
   title: "Pelatihan",
   description: "Pelatihan",

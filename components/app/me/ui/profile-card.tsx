@@ -4,6 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
+
+
+
+
 interface ProfileCardProps {
   username: string
   email: string

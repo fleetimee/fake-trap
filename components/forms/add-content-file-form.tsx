@@ -13,7 +13,6 @@ import { ErrorResponse } from "@/types/error-res"
 import { SectionOneResData } from "@/types/section/res"
 import { isArrayOfFile } from "@/lib/utils"
 import { contentFileSchema } from "@/lib/validations/content-file"
-import { contentVideoSchema } from "@/lib/validations/content-video"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -27,8 +26,8 @@ import {
 
 import { FileDialog, FileWithPreview } from "../file-dialog"
 import { Icons } from "../icons"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
+import { Input } from "../ui/input";
+
 
 type Inputs = z.infer<typeof contentFileSchema>
 

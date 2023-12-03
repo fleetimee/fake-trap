@@ -1,7 +1,6 @@
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { ContentOneRes } from "@/types/content/res"
 import { CourseListRes, CourseOneRes } from "@/types/course/res"
-import { KnowledgeByIdSectionData } from "@/types/knowledge-res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
 import {
@@ -411,6 +410,36 @@ export async function getOperatorQuiz({
     },
     cache: "no-store",
   })
+
+  return await res.json()
+}
+
+interface GetQuizListWithNullSectionProps {
+  token: string | undefined
+  isNull: boolean
+}
+
+/**
+ * Retrieves a list of quizzes with a null section.
+ * @param token - The authentication token.
+ * @param isNull - Indicates whether the section is null or not.
+ * @returns A promise that resolves to the response containing the quiz list.
+ */
+export async function getQuizListWithNullSection({
+  token,
+  isNull,
+}: GetQuizListWithNullSectionProps): Promise<QuizListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz?isNullSection=${isNull}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
 
   return await res.json()
 }

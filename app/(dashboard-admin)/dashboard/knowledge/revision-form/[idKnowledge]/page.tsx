@@ -27,6 +27,7 @@ import {
 import { RevisionInformation } from "./_components/revision-information"
 import { KnowledgeRevisionForm } from "./_components/revision-knowledge-form"
 
+
 export const metadata: Metadata = {
   title: "Revisi Pengajuan Pengetahuan",
   description: "Revisi Pengajuan Pengetahuan",

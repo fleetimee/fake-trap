@@ -33,6 +33,7 @@ import {
 
 import { CourseRequestForm } from "./_components/request-course-form"
 
+
 export const metadata: Metadata = {
   title: "Ajukan Pelatihan",
   description: "Ajukan Pelatihan",

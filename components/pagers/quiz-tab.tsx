@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator"
 
 import { MotionDiv } from "../framer-wrapper"
 
+
 interface QuizTabProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
   quizId: string
   initialRoute?: string

@@ -6,6 +6,10 @@ import { getCurrentUser } from "@/lib/session"
 import { AddContentFileForm } from "@/components/forms/add-content-file-form"
 import { Separator } from "@/components/ui/separator"
 
+
+
+
+
 interface KnowledgeContentVideoNewPageProps {
   params: {
     idKnowledge: string

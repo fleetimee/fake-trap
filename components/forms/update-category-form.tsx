@@ -24,7 +24,8 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { Zoom } from "../zoom-image"
+import { Zoom } from "../zoom-image";
+
 
 interface UpdateCategoryFormProps {
   category: CategoryOneResData

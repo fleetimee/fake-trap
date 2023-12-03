@@ -9,6 +9,10 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CategoryTableShell, DashboardShell } from "@/components/shell"
 
+
+
+
+
 export const metadata = {
   title: "Kategori",
   description: "Kategori Pengetahuan yang tersedia",

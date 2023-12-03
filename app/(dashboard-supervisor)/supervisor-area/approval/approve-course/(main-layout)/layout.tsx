@@ -10,6 +10,10 @@ import { ApproveCourseTabs } from "@/components/pagers/approve-course-tab"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 
+
+
+
+
 export const metadata: Metadata = {
   title: "Approve Pelatihan",
   description:

@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "./ui/card"
 
+
 interface MarketingCardProps {
   parentVariant: Variants
   childVariant: Variants

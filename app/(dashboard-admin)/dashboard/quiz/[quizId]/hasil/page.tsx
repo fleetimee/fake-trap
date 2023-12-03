@@ -7,6 +7,10 @@ import { getCurrentUser } from "@/lib/session"
 import { DashboardShell, UserQuizResultTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+
+
+
+
 export const metadata = {
   title: "Hasil Quiz",
   description: "Halaman untuk melihat hasil quiz",

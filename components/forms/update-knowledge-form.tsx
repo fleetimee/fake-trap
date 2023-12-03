@@ -42,8 +42,9 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 import { ScrollArea } from "../ui/scroll-area"
-import { Textarea } from "../ui/textarea"
-import { Zoom } from "../zoom-image"
+import { Textarea } from "../ui/textarea";
+import { Zoom } from "../zoom-image";
+
 
 type Inputs = z.infer<typeof updateKnowledgeSchema>
 

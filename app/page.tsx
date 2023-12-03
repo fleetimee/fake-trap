@@ -11,8 +11,11 @@ import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { MarketingCard } from "@/components/marketing-card"
-import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { buttonVariants } from "@/components/ui/button"
+
+
+
+
 
 export const metadata = {
   title: "BPD E-learning: Pelajari apa saja, kapan saja, di mana saja",

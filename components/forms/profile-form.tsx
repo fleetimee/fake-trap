@@ -22,7 +22,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { Input } from "../ui/input"
+import { Input } from "../ui/input";
+
 
 type Inputs = z.infer<typeof profileSchema>
 

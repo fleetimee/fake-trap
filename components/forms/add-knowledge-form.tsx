@@ -41,8 +41,9 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 
 import { Icons } from "../icons"
-import { ScrollArea } from "../ui/scroll-area"
-import { Zoom } from "../zoom-image"
+import { ScrollArea } from "../ui/scroll-area";
+import { Zoom } from "../zoom-image";
+
 
 type Inputs = z.infer<typeof knowledgeSchema>
 

@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button"
 
 import { Icons } from "./icons"
 
+
 interface CategoryCardProps {
   category: CategoryListResData
   link: string

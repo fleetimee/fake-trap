@@ -1,5 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
+
+
+
+
 export default function KnowledgeContentVideoNewPageSkeleton() {
   return (
     <div className="space-y-6">

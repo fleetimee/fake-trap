@@ -1,6 +1,10 @@
 import { EmptyContent } from "@/components/app/knowledge/detail/ui"
 import { AccordionContent } from "@/components/ui/accordion"
 
+
+
+
+
 export function EmptyKnowledgeCourse() {
   return (
     <AccordionContent className="py-4">

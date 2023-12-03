@@ -16,6 +16,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+
+
+
+
 interface MemberCategoryDetailPageProps {
   params: {
     detail: string

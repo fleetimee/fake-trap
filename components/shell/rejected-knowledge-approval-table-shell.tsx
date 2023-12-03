@@ -4,16 +4,14 @@ import React from "react"
 import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 
-import {
-  ApprovalKnowledgeListResData,
-  ApprovalListResData,
-} from "@/types/approval/res/approval-list"
+import { ApprovalKnowledgeListResData } from "@/types/approval/res/approval-list"
 import { convertDatetoStringShort } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
 import RejectedKnowledgeActionProps from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-knowledge/(main-layout)/rejected/_components/operations"
 
 import { Badge } from "../ui/badge"
+
 
 interface RejectedKnowledgeApprovalTableShellProps {
   data: ApprovalKnowledgeListResData[]

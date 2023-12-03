@@ -12,6 +12,7 @@ import ApprovedCourseAction from "@/app/(dashboard-supervisor)/supervisor-area/a
 
 import { Badge } from "../ui/badge"
 
+
 interface ApprovedCourseApprovalTableShellProps {
   data: ApprovalListResData[]
   pageCount: number

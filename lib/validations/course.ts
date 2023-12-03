@@ -1,5 +1,9 @@
 import { z } from "zod"
 
+
+
+
+
 export const courseSchema = z.object({
   CourseName: z.string().min(1, {
     message: "Nama pelatihan harus diisi",

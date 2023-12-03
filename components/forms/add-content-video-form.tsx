@@ -24,7 +24,8 @@ import {
 
 import { Icons } from "../icons"
 import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
+import { Textarea } from "../ui/textarea";
+
 
 type Inputs = z.infer<typeof contentVideoSchema>
 

@@ -7,6 +7,10 @@ import { KnowledgeListRes } from "@/types/knowledge/res"
 import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { MotionDiv } from "@/components/framer-wrapper"
 
+
+
+
+
 const parentVariant: Variants = {
   initial: {
     opacity: 0,

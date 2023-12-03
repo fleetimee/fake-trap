@@ -23,6 +23,7 @@ import {
 
 import { CourseRejectForm } from "./_components/rejected-form"
 
+
 interface GetCheckCourseProps {
   token: string | undefined
   id: string

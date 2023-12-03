@@ -1,4 +1,4 @@
-import { EditorParser, EditorRenderer } from "@mobtakr/editorjs-parser"
+import { EditorParser } from "@mobtakr/editorjs-parser"
 import Blocks from "editorjs-blocks-react-renderer"
 import { generateFromString } from "generate-avatar"
 
@@ -7,6 +7,10 @@ import { convertDatetoString } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+
+
+
+
 
 interface ForumPost {
   post: PostsListResData

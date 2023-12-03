@@ -4,6 +4,10 @@ import { CourseOneRes } from "@/types/course/res"
 import { KnowledgeOneResContent } from "@/types/knowledge/res"
 import { renderContentCourse } from "@/components/render-content"
 
+
+
+
+
 interface RenderContentWrapperProps {
   contentType: string
   contentData: KnowledgeOneResContent

@@ -10,6 +10,10 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, QuizTableShell } from "@/components/shell"
 
+
+
+
+
 export const metadata = {
   title: "Quiz",
   description: "Quiz yang tersedia di e-learning",

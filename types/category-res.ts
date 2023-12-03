@@ -1,5 +1,9 @@
 import { Knowledge, KnowledgeData } from "@/types/knowledge-res"
 
+
+
+
+
 export type CategoryResponse = {
   count: number
   data: DataCategory[]

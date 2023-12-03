@@ -1,6 +1,10 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 
+
+
+
+
 /**
  * Renders a skeleton card component with placeholders for content.
  */

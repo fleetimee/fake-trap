@@ -9,6 +9,10 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserTableShell } from "@/components/shell"
 
+
+
+
+
 export const metadata = {
   title: "User",
   description: "User yang tersedia di e-learning",

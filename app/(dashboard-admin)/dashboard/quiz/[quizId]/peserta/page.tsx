@@ -8,6 +8,10 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardShell, QuizMemberTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+
+
+
+
 export const metadata = {
   title: "Peserta Kuis",
   description: "Halaman untuk melihat peserta kuis",

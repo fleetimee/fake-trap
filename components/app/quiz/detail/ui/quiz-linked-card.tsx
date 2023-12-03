@@ -11,6 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+
+
+
+
 interface QuizLinkedCardProps {
   code: number
   data: QuizLinkedListData

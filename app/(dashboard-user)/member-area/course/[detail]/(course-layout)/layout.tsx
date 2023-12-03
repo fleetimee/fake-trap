@@ -35,6 +35,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { PreviewUserCourseDetailSidebar } from "./_components/sidebar"
 
+
 interface GetOneCourseProps {
   token: string | undefined
   idCourse: string

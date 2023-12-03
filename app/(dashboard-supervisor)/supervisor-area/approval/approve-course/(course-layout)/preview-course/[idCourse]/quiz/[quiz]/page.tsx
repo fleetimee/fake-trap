@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/session"
 
 import { QuizForm } from "./_components/quiz_form"
 
+
 interface GetOneQuizProps {
   token: string | undefined
   idQuiz: string

@@ -12,6 +12,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+
+
+
+
 interface CourseCardProps {
   courseResponse: CourseListResData
   link: string

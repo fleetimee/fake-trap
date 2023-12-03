@@ -1,17 +1,20 @@
 import Link from "next/link"
-import { notFound, redirect } from "next/navigation"
+import { redirect } from "next/navigation"
 
 import { CourseListRes } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import { CreateCourseButton } from "@/components/app/course/operations"
 import { CreateButton } from "@/components/create-button"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
+
+
+
+
 
 export const metadata = {
   title: "Pelatihan",

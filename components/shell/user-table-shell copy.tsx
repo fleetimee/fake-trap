@@ -5,11 +5,11 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { UserListResData } from "@/types/user/res/user-list"
 import { convertDatetoString } from "@/lib/utils"
-import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Checkbox } from "@/components/ui/checkbox"
 
 import { UserOperationsAdminV2 } from "../app/user/operations/user-operations-pemateri"
+
 
 interface UserTableShellProps {
   data: UserListResData[]

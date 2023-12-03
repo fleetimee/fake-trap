@@ -5,6 +5,10 @@ import React from "react"
 import { CreateSectionButton } from "@/components/app/knowledge/detail/section/operations/create-section-button"
 import { EmptyContent } from "@/components/app/knowledge/detail/ui/knowledge-detail-sidebar-empty"
 
+
+
+
+
 interface EmptyKnowledgeSectionInitialProps {
   id_knowledge: number
 }

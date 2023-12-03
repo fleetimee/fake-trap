@@ -13,6 +13,10 @@ import { getCurrentUser } from "@/lib/session"
 import { CourseDetailShell } from "@/components/app/course/detail/ui"
 import { DashboardShell } from "@/components/shell"
 
+
+
+
+
 type Props = {
   params: {
     detail: string

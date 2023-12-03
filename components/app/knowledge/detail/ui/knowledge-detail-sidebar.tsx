@@ -26,6 +26,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+
+
+
+
 interface DetailSidebarKnowledgeProps {
   dataKnowledge: KnowledgeOneRes
   contentData: KnowledgeOneResContent

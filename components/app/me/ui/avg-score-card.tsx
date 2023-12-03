@@ -2,6 +2,10 @@
 
 import { Card } from "@/components/ui/card"
 
+
+
+
+
 interface AvgScoreCardProps {
   avgScore: number
 }

@@ -9,6 +9,10 @@ import { getCurrentUser } from "@/lib/session"
 import { KnowledgeDetailShell } from "@/components/app/knowledge/detail/ui"
 import { DashboardShell } from "@/components/shell"
 
+
+
+
+
 type DetailKnowledgeProps = {
   params: {
     detail: string

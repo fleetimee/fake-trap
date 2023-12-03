@@ -5,6 +5,10 @@ import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import RenderContentWrapper from "@/app/(dashboard-supervisor)/supervisor-area/approval/approve-course/(course-layout)/preview-course/[idCourse]/content/[content]/_components/render-content-wrapper"
 
+
+
+
+
 interface GetOneContentProps {
   token: string | undefined
   idContent: string

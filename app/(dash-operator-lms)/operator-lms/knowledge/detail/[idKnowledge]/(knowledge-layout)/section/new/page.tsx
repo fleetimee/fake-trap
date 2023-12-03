@@ -2,8 +2,12 @@ import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
-import { AddSectionForm } from "@/components/forms/add-knowledge-section-form"
+import { AddKnowledgeSectionForm } from "@/components/forms/add-knowledge-section-form"
 import { Separator } from "@/components/ui/separator"
+
+
+
+
 
 interface KnowledgeSectionNewPageProps {
   params: {
@@ -29,7 +33,7 @@ export default async function KnowledgeSectionNewPage({
         </p>
       </div>
       <Separator />
-      <AddSectionForm idKnowledge={Number(params.idKnowledge)} />
+      <AddKnowledgeSectionForm idKnowledge={Number(params.idKnowledge)} />
     </div>
   )
 }

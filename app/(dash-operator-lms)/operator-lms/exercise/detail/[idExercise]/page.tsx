@@ -20,6 +20,10 @@ import {
 } from "@/components/app/quiz/detail/ui"
 import { MotionDiv } from "@/components/framer-wrapper"
 
+
+
+
+
 interface ExerciseDetailPageProps {
   params: {
     idExercise: string

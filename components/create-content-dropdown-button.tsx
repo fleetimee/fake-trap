@@ -21,7 +21,7 @@ interface CreateContentDropdownButtonProps {
   articleCreationUrl: string
 }
 
-export default function CreateContentDropdownButton({
+export function CreateContentDropdownButton({
   ...props
 }: CreateContentDropdownButtonProps) {
   return (

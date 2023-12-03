@@ -12,6 +12,10 @@ import { CategoryOperations } from "@/components/app/category/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 import { Checkbox } from "@/components/ui/checkbox"
 
+
+
+
+
 interface CategoryTableShellProps {
   data: CategoryListResData[]
   pageCount: number

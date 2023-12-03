@@ -3,11 +3,13 @@
 import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
-import { UserQuizTakenListResData } from "@/types/me/res"
 import { QuizMemberListResData } from "@/types/quiz/res"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
+
+
+
+
 
 interface QuizMemberTableShellProps {
   data: QuizMemberListResData[]

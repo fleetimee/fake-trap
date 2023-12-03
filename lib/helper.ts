@@ -1,5 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next/types"
+import { NextApiRequest } from "next/types"
 import { getToken } from "next-auth/jwt"
+
+
+
+
 
 const secret = process.env.NEXTAUTH_SECRET
 

@@ -6,6 +6,10 @@ import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 
+
+
+
+
 interface GetOneKnowledgeProps {
   token: string | undefined
   idKnowledge: string

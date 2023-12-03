@@ -1,6 +1,10 @@
 import { KnowledgeOneResSection } from "@/types/knowledge/res"
 import { AccordionTrigger } from "@/components/ui/accordion"
 
+
+
+
+
 interface CourseKnowledgeSectionListProps {
   section: KnowledgeOneResSection
 }

@@ -1,12 +1,9 @@
-import { env } from "process"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { PrinterIcon } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import {
   getExerciseUserSelectedAnswer,
-  getOneExercise,
   getOneExerciseLesson,
   getOneUser,
 } from "@/lib/fetcher"
@@ -14,22 +11,22 @@ import { getCurrentUser } from "@/lib/session"
 import { PdfViewer } from "@/components/pdf-viewer"
 import { DashboardShell } from "@/components/shell"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import { PrintButton } from "./PrintButton"
+
+
+import { PrintButton } from "./PrintButton";
+
 
 export const metadata: Metadata = {
   title: "Hasil Tes",

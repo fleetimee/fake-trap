@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 import { PartyPopper } from "lucide-react"
 
-import { pemateriAreaRole, supervisorAreaRole } from "@/config/dashboard"
+import { pemateriAreaRole } from "@/config/dashboard"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString, extractToken } from "@/lib/utils"
@@ -12,6 +12,10 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+
+
+
 
 export const metadata: Metadata = {
   title: "Admin Area",

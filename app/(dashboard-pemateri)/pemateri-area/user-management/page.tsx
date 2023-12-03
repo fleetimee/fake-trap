@@ -7,8 +7,12 @@ import { CreateUserSheet } from "@/components/app/user/operations"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell, UserTableShell } from "@/components/shell"
+import { DashboardShell } from "@/components/shell"
 import { UserTableShellV2 } from "@/components/shell/user-table-shell copy"
+
+
+
+
 
 export const metadata = {
   title: "User",

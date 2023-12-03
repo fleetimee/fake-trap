@@ -6,6 +6,7 @@ import { getCurrentUser } from "@/lib/session"
 
 import RenderContentWrapper from "./_components/render-content-wrapper"
 
+
 interface GetOneContentProps {
   token: string | undefined
   idContent: string

@@ -18,6 +18,10 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
 import { Button, buttonVariants } from "@/components/ui/button"
 
+
+
+
+
 export const metadata: Metadata = {
   title: "Pengetahuan",
   description: "Operator LMS Knowledge Page",

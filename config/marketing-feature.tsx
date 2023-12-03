@@ -1,6 +1,10 @@
-import { Component, CreditCard, Globe } from "lucide-react"
+import { Globe } from "lucide-react"
 
 import { Icons } from "@/components/icons"
+
+
+
+
 
 export const marketingFeatures = [
   {

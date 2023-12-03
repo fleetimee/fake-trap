@@ -10,6 +10,10 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+
+
+
+
 interface MemberKnowledgeDetailPageProps {
   params: {
     detail: string

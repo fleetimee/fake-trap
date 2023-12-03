@@ -50,7 +50,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { PreviewCourseDetailSidebar } from "./_components/sidebar"
+
+
+import { PreviewCourseDetailSidebar } from "./_components/sidebar";
+
 
 interface GetThreadsListProps {
   idCourse: string

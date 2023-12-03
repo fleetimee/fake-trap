@@ -23,6 +23,7 @@ import {
 
 import { CourseApprovalForm } from "./_components/approve-form"
 
+
 interface GetCheckCourseProps {
   token: string | undefined
   id: string

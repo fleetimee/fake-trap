@@ -15,6 +15,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
+
+
+
+
 export function DeleteCourseButton(props: { item: CourseData }) {
   const { data: session } = useSession()
 

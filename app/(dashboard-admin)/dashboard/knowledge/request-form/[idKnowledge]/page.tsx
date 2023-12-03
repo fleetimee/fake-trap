@@ -33,6 +33,7 @@ import {
 
 import { KnowledgeRequestForm } from "./_components/request-knowledge-form"
 
+
 export const metadata: Metadata = {
   title: "Ajukan Pengetahuan",
   description: "Ajukan Pengetahuan",

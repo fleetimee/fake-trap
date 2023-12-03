@@ -4,6 +4,7 @@ import { Shell } from "@/components/shell/lobby-shell"
 
 import { KnowledgeWrapper } from "./_components/knowledge-wrapper"
 
+
 export const metadata = {
   title: "Semua Pengetahuan",
   description: "fleetime",

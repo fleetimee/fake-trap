@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 
-import { ApprovalKnowledgeListRes, ApprovalListRes } from "@/types/approval/res"
+import { ApprovalKnowledgeListRes } from "@/types/approval/res"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -10,6 +10,10 @@ import {
   RejectedKnowledgeApprovalTableShell,
 } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+
+
+
 
 interface GetRejectedKnowledgeProps {
   token: string | undefined

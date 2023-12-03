@@ -37,7 +37,8 @@ import {
 } from "@/components/ui/popover"
 
 import { Icons } from "../icons"
-import { Badge } from "../ui/badge"
+import { Badge } from "../ui/badge";
+
 
 interface ErrorResponseProps {
   error: string

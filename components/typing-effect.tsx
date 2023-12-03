@@ -2,7 +2,10 @@
 
 // this comes from the framer-motion docs, just ported to twcss
 import React from "react"
-import { motion } from "framer-motion"
+
+
+
+
 
 interface TypingEffectProps {
   textTyping: string

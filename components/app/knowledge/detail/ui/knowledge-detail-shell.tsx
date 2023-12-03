@@ -15,6 +15,10 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+
+
+
+
 interface KnowledgeDetailShellProps {
   detailKnowledgeData: KnowledgeOneRes
   contentTypeData: ReferenceListResData[]

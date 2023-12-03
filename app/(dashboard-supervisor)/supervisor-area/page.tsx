@@ -23,6 +23,10 @@ import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+
+
+
+
 export const metadata: Metadata = {
   title: "Supervisor Area",
   description: "Supervisor Area",

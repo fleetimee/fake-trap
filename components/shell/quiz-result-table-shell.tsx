@@ -7,7 +7,10 @@ import { ColumnDef } from "@tanstack/react-table"
 import { QuizUserAttemptListData } from "@/types/quiz/res"
 import { convertDatetoString } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
-import { Checkbox } from "@/components/ui/checkbox"
+
+
+
+
 
 interface UserQuizResultTableShellProps {
   data: QuizUserAttemptListData[]

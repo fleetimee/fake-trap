@@ -4,18 +4,18 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOperatorQuiz, getReference, getUserV2 } from "@/lib/fetcher"
+import { getUserV2 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import {
-  DashboardShell,
-  QuizTableShell,
-  UserTableShell,
-} from "@/components/shell"
+import { DashboardShell, UserTableShell } from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
+
+
+
+
 
 export const metadata: Metadata = {
   title: "Managemen User",

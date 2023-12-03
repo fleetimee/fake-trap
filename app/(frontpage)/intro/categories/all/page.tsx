@@ -1,19 +1,9 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Variants } from "framer-motion"
-
 import { CategoryListRes } from "@/types/category/res"
-import { cn } from "@/lib/utils"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
-import { HeaderIntro } from "@/components/category-header"
-import { MotionDiv } from "@/components/framer-wrapper"
-import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { buttonVariants } from "@/components/ui/button"
 
 import { CategoryWrapper } from "./_components/category-wrapper"
+
 
 export const metadata = {
   title: "Semua Kategori",

@@ -24,6 +24,10 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 
+
+
+
+
 interface PublicKnowledgeCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
   knowledge: CategoryOneResKnowledge

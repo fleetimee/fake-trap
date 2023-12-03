@@ -12,6 +12,7 @@ import ApprovedKnowledgeAction from "@/app/(dashboard-supervisor)/supervisor-are
 
 import { Badge } from "../ui/badge"
 
+
 interface ApprovedKnowledgeApprovalTableShellProps {
   data: ApprovalKnowledgeListResData[]
   pageCount: number

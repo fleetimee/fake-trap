@@ -9,6 +9,10 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
 
+
+
+
+
 type Props = {
   params: {
     detail: string

@@ -7,6 +7,10 @@ import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { HeaderIntro } from "@/components/category-header"
 import { MotionDiv } from "@/components/framer-wrapper"
 
+
+
+
+
 const parentVariant: Variants = {
   initial: {
     opacity: 0,

@@ -8,6 +8,10 @@ import { UserData } from "@/types/user-res"
 import { UserOperations } from "@/components/app/course/detail/students/operations"
 import { Button } from "@/components/ui/button"
 
+
+
+
+
 export const columnUserCourse: ColumnDef<UserData>[] = [
   {
     accessorKey: "uuid",

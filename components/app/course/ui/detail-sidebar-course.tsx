@@ -26,6 +26,10 @@ import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+
+
+
+
 interface CourseDetailShellProps {
   courseKnowledgeResp: KnowledgeOneRes
   courseDataResp: CourseOneRes

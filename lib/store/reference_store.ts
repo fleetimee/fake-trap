@@ -1,5 +1,9 @@
 import { create } from "zustand"
 
+
+
+
+
 interface BearState {
   bears: number
   increasePopulation: () => void

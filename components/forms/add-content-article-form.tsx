@@ -27,7 +27,7 @@ interface AddArticleFormProps {
   idSection: number
 }
 
-export function AddArticleForm({ idSection }: AddArticleFormProps) {
+export function AddContentArticleForm({ idSection }: AddArticleFormProps) {
   const { data: session } = useSession()
 
   const form = useForm<Inputs>({

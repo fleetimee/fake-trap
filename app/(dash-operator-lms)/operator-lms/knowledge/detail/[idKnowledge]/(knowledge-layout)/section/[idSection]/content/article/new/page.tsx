@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getOneSection } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { AddArticleForm } from "@/components/forms/add-article-form"
+import { AddContentArticleForm } from "@/components/forms/add-content-article-form"
 import { Separator } from "@/components/ui/separator"
 
 interface KnowledgeContentArticleNewPageProps {
@@ -41,7 +41,7 @@ export default async function KnowledgeContentArticleNewPage({
       </div>
       <Separator />
 
-      <AddArticleForm idSection={Number(params.idSection)} />
+      <AddContentArticleForm idSection={Number(params.idSection)} />
     </div>
   )
 }

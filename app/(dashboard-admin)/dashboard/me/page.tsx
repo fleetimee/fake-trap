@@ -27,6 +27,10 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 
+
+
+
+
 export const metadata = {
   title: "Profil Saya",
   description: "Detail mengenai profil anda",

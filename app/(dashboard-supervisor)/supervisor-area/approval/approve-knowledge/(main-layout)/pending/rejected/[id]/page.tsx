@@ -23,6 +23,7 @@ import {
 
 import { KnowledgeRejectForm } from "./_components/rejected-form"
 
+
 interface GetCheckKnowledgeProps {
   token: string | undefined
   id: string

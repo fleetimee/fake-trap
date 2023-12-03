@@ -9,6 +9,10 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { QuizTab } from "@/components/pagers/quiz-tab"
 import { DashboardShell } from "@/components/shell"
 
+
+
+
+
 interface ExerciseDetailLayoutProps {
   children: React.ReactNode
   params: {

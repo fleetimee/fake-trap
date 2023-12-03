@@ -17,6 +17,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+
+
+
+
 export const metadata: Metadata = {
   title: "Tambah Pelatihan",
   description: "Tambah Pelatihan baru",
