@@ -8,7 +8,9 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { ErrorResponse } from "@/types/error-res"
 import { QuizOneRes, QuizOneResQuestion } from "@/types/quiz/res"
+import { userSubmittedAnswerSchema } from "@/lib/validations/user-submitted-answer"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -23,68 +25,66 @@ import {
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-const formSchema = z.object({
-  uuid: z.string().optional(),
-  id_quiz: z.number().optional(),
-  selected_answers: z.record(z.string(), z.number()).optional(),
-})
-
-interface QuizFormProps {
+interface UserSubmittedAnswerFormProps {
   question: QuizOneResQuestion[]
   quiz: QuizOneRes
 }
 
-export function QuizForm({ question, quiz }: QuizFormProps) {
+type Inputs = z.infer<typeof userSubmittedAnswerSchema>
+
+export function UserSubmittedAnswerFormProps({
+  question,
+  quiz,
+}: UserSubmittedAnswerFormProps) {
   const { data: session } = useSession()
+
+  const [isPending, startTransition] = React.useTransition()
 
   const router = useRouter()
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<Inputs>({
+    resolver: zodResolver(userSubmittedAnswerSchema),
     defaultValues: {
-      uuid: session?.expires.id,
-      id_quiz: quiz.data.id_quiz,
+      uuid: session?.expires?.id,
+      id_quiz: quiz?.data?.id_quiz,
       selected_answers: {},
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
+  async function onSubmit(values: Inputs) {
+    startTransition(async () => {
+      try {
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/user-answer`
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/user-answer`,
-        {
+        const res = await fetch(url, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
+            ContentType: "application/json",
+            Authorization: `Bearer ${session?.user?.token}`,
           },
           body: JSON.stringify(values),
-        }
-      )
-
-      if (res.ok) {
-        sonnerToast.success("Berhasil", {
-          description: "Jawaban berhasil disimpan.",
         })
 
-        router.back()
-        form.reset()
-      } else {
+        if (res.ok) {
+          sonnerToast.success("Berhasil", {
+            description: "Jawaban berhasil disimpan",
+          })
+
+          router.back()
+          form.reset()
+        } else {
+          const errorResponse: ErrorResponse = await res.json()
+
+          sonnerToast.error("Gagal", {
+            description: errorResponse?.error,
+          })
+        }
+      } catch (error) {
         sonnerToast.error("Gagal", {
-          description: "Jawaban gagal disimpan.",
+          description: `${error}`,
         })
       }
-    } catch (error) {
-      sonnerToast.error("Gagal", {
-        description: `${error}`,
-      })
-    } finally {
-      setIsLoading(false)
-    }
+    })
   }
 
   return (
@@ -160,17 +160,15 @@ export function QuizForm({ question, quiz }: QuizFormProps) {
           </Card>
 
           <div className="grid grid-cols-1 items-center justify-between gap-6 py-2 xl:grid-cols-2">
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? (
-                <Icons.spinner className="animate-spin" />
-              ) : (
-                "Submit"
-              )}
+            <Button type="submit" className="w-fit" disabled={isPending}>
+              {isPending && <Icons.spinner className="animate-spin" />}
+              Kirim Jawaban
             </Button>
 
             <Button
               type="reset"
-              disabled={isLoading}
+              className="w-fit"
+              disabled={isPending}
               variant="outline"
               onClick={() => {
                 // clear form values first

@@ -17,6 +17,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
 import { SectionOneRes } from "@/types/section/res"
+import { ThreadListRes } from "@/types/threads/res"
 import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
 
 interface GetUserProps {
@@ -894,6 +895,41 @@ export async function getListExerciseResult({
   orderBy = "desc",
 }: GetExerciseResultProps): Promise<QuizUserAttemptList> {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getUserAttempt?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ContentType: "application/json",
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetThreadsListProps {
+  idCourse: string
+  token: string | undefined
+  limit: number
+  page: number
+}
+
+/**
+ * Retrieves a list of threads for a given course.
+ * @param idCourse - The ID of the course.
+ * @param token - The authentication token.
+ * @param limit - The maximum number of threads to retrieve.
+ * @param page - The page number of the thread list.
+ * @returns A promise that resolves to the thread list response.
+ */
+export async function getThreadList({
+  idCourse,
+  token,
+  limit,
+  page,
+}: GetThreadsListProps): Promise<ThreadListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/threads?page=${page}&limit=${limit}`
 
   const res = await fetch(url, {
     method: "GET",

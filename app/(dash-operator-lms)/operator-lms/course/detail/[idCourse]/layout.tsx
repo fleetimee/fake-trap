@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import VercelToolbar from "@/components/vercel-toolbar"
 
 interface CourseDetailLayoutProps {
   children: React.ReactNode
@@ -132,6 +133,13 @@ export default async function CourseDetailLayout({
           </AlertDescription>
         </Alert>
       </MotionDiv>
+
+      <div className="flex items-center justify-end">
+        <VercelToolbar
+          homeButton={`/operator-lms/course/detail/${params.idCourse}`}
+          forumButton={`/operator-lms/course/detail/${params.idCourse}/threads`}
+        />
+      </div>
 
       <div
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
@@ -270,7 +278,7 @@ export default async function CourseDetailLayout({
                                 className="py-1"
                               >
                                 <Link
-                                  href={`/operator-lms/course/detail/${params.idCourse}/quiz/${quiz.id_quiz}`}
+                                  href={`/operator-lms/course/detail/${params.idCourse}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
                                 >
                                   <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
                                     {quiz.quiz_title}
