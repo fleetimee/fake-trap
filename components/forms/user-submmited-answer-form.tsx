@@ -160,14 +160,13 @@ export function UserSubmittedAnswerFormProps({
           </Card>
 
           <div className="grid grid-cols-1 items-center justify-between gap-6 py-2 xl:grid-cols-2">
-            <Button type="submit" className="w-fit" disabled={isPending}>
+            <Button type="submit" disabled={isPending}>
               {isPending && <Icons.spinner className="animate-spin" />}
               Kirim Jawaban
             </Button>
 
             <Button
               type="reset"
-              className="w-fit"
               disabled={isPending}
               variant="outline"
               onClick={() => {

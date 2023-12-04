@@ -10,11 +10,7 @@ import { Editor } from "@/components/editor"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import { Card } from "@/components/ui/card";
-
-
-
-
+import { Card } from "@/components/ui/card"
 
 type Props = {
   params: {

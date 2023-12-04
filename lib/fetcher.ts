@@ -3,6 +3,7 @@ import { ContentOneRes } from "@/types/content/res"
 import { CourseListRes, CourseOneRes } from "@/types/course/res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
+import { PostsListRes } from "@/types/posts/res"
 import {
   QuizLinkedList,
   QuizListRes,
@@ -939,6 +940,39 @@ export async function getThreadList({
     },
     cache: "no-cache",
   })
+
+  return await res.json()
+}
+
+interface GetPostsListProps {
+  token: string | undefined
+  idThreads: string
+  limit: number
+  page: number
+}
+
+/**
+ * Retrieves a list of posts based on the provided parameters.
+ * @param {GetPostsListProps} options - The options for fetching the posts list.
+ * @returns {Promise<PostsListRes>} - A promise that resolves to the posts list response.
+ */
+export async function getPostsList({
+  token,
+  idThreads,
+  limit,
+  page,
+}: GetPostsListProps): Promise<PostsListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/threads/${idThreads}/posts/?limit=${limit}&page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
 
   return await res.json()
 }

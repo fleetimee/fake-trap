@@ -1,3 +1,13 @@
+import Link from "next/link"
+import { redirect } from "next/navigation"
+
+import { authOptions } from "@/lib/auth"
+import { getThreadList } from "@/lib/fetcher"
+import { getCurrentUser } from "@/lib/session"
+import { cn } from "@/lib/utils"
+import { ForumCard } from "@/components/forum-card"
+import { buttonVariants } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
 interface CourseThreadPageProps {
@@ -9,6 +19,19 @@ interface CourseThreadPageProps {
 export default async function CourseThreadPage({
   params,
 }: CourseThreadPageProps) {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
+  const threads = await getThreadList({
+    token: user?.token,
+    idCourse: params.idCourse,
+    limit: 1000,
+    page: 1,
+  })
+
   return (
     <div className="space-y-6">
       <div>
@@ -19,6 +42,35 @@ export default async function CourseThreadPage({
         </p>
       </div>
       <Separator />
+
+      <div className="flex justify-end">
+        <Link
+          href={`/operator-lms/course/detail/${params.idCourse}/threads/new`}
+          className={buttonVariants({
+            size: "lg",
+            variant: "outline",
+          })}
+        >
+          Buat Thread Baru
+        </Link>
+      </div>
+
+      {threads && threads.data && threads.data.length > 0 ? (
+        <ScrollArea className="h-[700px] w-full">
+          <div className="flex flex-col gap-4">
+            {threads.data.map((thread) => (
+              <ForumCard
+                idCourse={params.idCourse}
+                idThreads={thread.id_threads.toString()}
+                title={thread.threads_title}
+                createdAt={thread.created_at.toString()}
+                numberOfPosts={thread.number_of_posts}
+                numberOfUsers={thread.number_of_users}
+              />
+            ))}
+          </div>
+        </ScrollArea>
+      ) : null}
     </div>
   )
 }
