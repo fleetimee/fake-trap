@@ -138,6 +138,7 @@ export default async function CourseDetailLayout({
         <VercelToolbar
           homeButton={`/operator-lms/course/detail/${params.idCourse}`}
           forumButton={`/operator-lms/course/detail/${params.idCourse}/threads`}
+          userButton={`/operator-lms/course/detail/${params.idCourse}/people`}
         />
       </div>
 
