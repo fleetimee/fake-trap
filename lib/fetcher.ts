@@ -368,6 +368,38 @@ export async function getOneCourse({
   return await res.json()
 }
 
+interface GetCourseUser {
+  token: string | undefined
+  idCourse: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+export async function getCourseUser({
+  token,
+  idCourse,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetCourseUser): Promise<UserListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/users?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
 interface GetQuizProps {
   token: string | undefined
   page: number
