@@ -18,7 +18,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
 import { SectionOneRes } from "@/types/section/res"
-import { ThreadListRes } from "@/types/threads/res"
+import { ThreadListRes, ThreadOneRes } from "@/types/threads/res"
 import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
 
 interface GetUserProps {
@@ -940,6 +940,36 @@ export async function getThreadList({
     },
     cache: "no-cache",
   })
+
+  return await res.json()
+}
+
+interface GetOneThreadProps {
+  token: string | undefined
+  idThreads: string
+}
+
+/**
+ * Retrieves a single thread from the server.
+ * @param token - The authentication token.
+ * @param idThreads - The ID of the thread to retrieve.
+ * @returns A promise that resolves to the response containing the thread.
+ */
+export async function getOneThread({
+  token,
+  idThreads,
+}: GetOneThreadProps): Promise<ThreadOneRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/threads/${idThreads}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
 
   return await res.json()
 }

@@ -23,8 +23,7 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { Zoom } from "../zoom-image";
-
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof categorySchema>
 
@@ -66,17 +65,6 @@ export function AddCategoryForm() {
       Object.keys(data).forEach((key) => {
         formData.append(key, data[key])
       })
-
-      //append image
-      // if (data.image) {
-      //   const options = {
-      //     maxSizeMB: 1,
-      //     maxWidthOrHeight: 1920,
-      //     useWebWorker: true,
-      //   }
-      //   const compressedFile = await imageCompression(data.image, options)
-      //   formData.append("image", compressedFile)
-      // }
 
       const response = await fetch(url, {
         method: "POST",

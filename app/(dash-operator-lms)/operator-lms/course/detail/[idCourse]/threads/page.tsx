@@ -49,6 +49,9 @@ export default async function CourseThreadPage({
           className={buttonVariants({
             size: "lg",
             variant: "outline",
+            className: cn(
+              "inline-block border-4 border-black bg-yellow-300 px-6 py-2 text-lg text-black hover:bg-yellow-400"
+            ),
           })}
         >
           Buat Thread Baru
@@ -66,6 +69,7 @@ export default async function CourseThreadPage({
                 createdAt={thread.created_at.toString()}
                 numberOfPosts={thread.number_of_posts}
                 numberOfUsers={thread.number_of_users}
+                linkString={`/operator-lms/course/detail/${params.idCourse}/threads/${thread.id_threads}`}
               />
             ))}
           </div>

@@ -8,30 +8,27 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
-
-
-
-
 interface ForumPost {
   post: PostsListResData
 }
 
 export function ForumPost({ post }: ForumPost) {
   const contentParsed = JSON.parse(post.content)
-  const parser = new EditorParser(contentParsed.blocks)
-  const parsedBlocks = parser.parse()
 
   return (
-    <Card key={post.id_post} className="h-full min-h-[350px] w-full p-8">
+    <Card
+      key={post.id_post}
+      className="h-full min-h-[350px] w-full border-2 border-black bg-yellow-300 p-8 text-black hover:bg-yellow-400"
+    >
       <div className="flex flex-col items-end">
-        <p className="items-end text-xs">
+        <p className="items-end text-xs font-bold">
           {convertDatetoString(new Date(post.created_at).toString())}
         </p>
       </div>
       <Separator className="my-6" />
       <div className="grid grid-cols-12">
-        <div className="col-span-2 flex max-h-full flex-col items-center justify-start gap-4">
-          <Avatar className="h-20 w-20">
+        <div className="col-span-2 mr-4 flex max-h-full flex-col items-center justify-start gap-4">
+          <Avatar className="h-20 w-20 border-2 border-black bg-white">
             <AvatarImage
               src={`data:image/svg+xml;utf8,${generateFromString(
                 post.username
@@ -39,57 +36,11 @@ export function ForumPost({ post }: ForumPost) {
             />
             <AvatarFallback />
           </Avatar>
-          <p className="font-heading">{post.username}</p>
+          <p className="font-heading text-2xl">{post.username}</p>
         </div>
-        {/*<div className="col-span-10 text-sm">{post.content}</div>*/}
-        {/*<div className="col-span-10">*/}
-        {/*  <EditorRenderer parsedBlocks={parsedBlocks} styles />*/}
-        {/*</div>*/}
 
-        <div className="col-span-10">
-          <Blocks
-            data={contentParsed}
-            config={{
-              code: {
-                className: "language-js",
-              },
-              delimiter: {
-                className: "border border-2 w-16 mx-auto",
-              },
-              embed: {
-                className: "border-0",
-              },
-              header: {
-                className: "font-bold text-4xl",
-              },
-
-              image: {
-                className: "w-full max-w-screen-md",
-                actionsClassNames: {
-                  stretched: "w-full h-80 object-cover",
-                  withBorder: "border border-2",
-                  withBackground: "p-2",
-                },
-              },
-              list: {
-                className: "list-disc list-inside",
-              },
-
-              paragraph: {
-                className: "text-base prose text-opacity-75",
-                actionsClassNames: {
-                  alignment: "text-{alignment}", // This is a substitution placeholder: left or center.
-                },
-              },
-              quote: {
-                className: "py-3 px-5 italic font-serif",
-              },
-              table: {
-                className:
-                  "border-collapse border border-2 w-full max-w-screen-md mx-auto table-auto text-left px-4 text-base prose text-opacity-75",
-              },
-            }}
-          />
+        <div className="whatever-you-want col-span-10 ml-4 border-2 border-black bg-white p-4">
+          <Blocks data={contentParsed} />
         </div>
       </div>
     </Card>

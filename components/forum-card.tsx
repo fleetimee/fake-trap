@@ -12,23 +12,27 @@ interface ForumCardProps {
   createdAt: string
   numberOfUsers: number
   numberOfPosts: number
+  linkString: string
 }
 
 export function ForumCard({ ...props }: ForumCardProps) {
   return (
-    <Card key={props.idThreads}>
+    <Card
+      key={props.idThreads}
+      className="border-4 border-black bg-yellow-300 p-8 text-black"
+    >
       <CardHeader>
         <Link
           href={{
-            pathname: `/member-area/course/${props.idCourse}/threads/${props.idThreads}`,
+            pathname: props.linkString,
           }}
         >
-          <CardTitle className="font-heading text-lg font-bold hover:text-blue-600 hover:underline">
+          <CardTitle className="font-heading text-2xl font-bold hover:text-blue-600 hover:underline">
             {props.title}
           </CardTitle>
         </Link>
         <CardDescription className="grid grid-cols-2 justify-between text-sm text-muted-foreground">
-          <div className="inline-flex items-center text-primary">
+          <div className="inline-flex items-center text-xl font-semibold text-primary">
             <Icons.clock className="mr-2 h-4 w-4" />
             {convertDatetoString(new Date(props.createdAt).toString())}
           </div>
@@ -36,12 +40,12 @@ export function ForumCard({ ...props }: ForumCardProps) {
           <div className="flex items-center justify-end">
             <div className="grid grid-cols-2 justify-between">
               <div className="mr-2 inline-flex text-green-500">
-                <Icons.user className="mr-2 h-4 w-4" />
+                <Icons.user className="mr-2 h-8 w-8" />
                 {props.numberOfUsers}
               </div>
 
               <div className="inline-flex text-red-600">
-                <Icons.comment className="mr-2 h-4 w-4" />
+                <Icons.comment className="mr-2 h-8 w-8" />
                 {props.numberOfUsers}
               </div>
             </div>

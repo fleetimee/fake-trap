@@ -24,10 +24,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 const formSchema = z.object({
   id_threads: z.number().optional(),
   content: z.any().optional(),
@@ -155,20 +151,10 @@ export function Editor({ id_threads }: EditorProps) {
 
   return (
     <Card className="grid items-center justify-center p-8">
-      <CardHeader>
-        <CardTitle>
-          <h2 className="text-2xl font-bold">Buat Post Baru</h2>
-        </CardTitle>
-        <CardDescription>
-          <p className="text-sm text-gray-500">
-            Buat post baru untuk berbagi informasi dengan anggota lain.
-          </p>
-        </CardDescription>
-      </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid w-full gap-10">
-            <div className="prose prose-stone mx-auto w-[800px] dark:prose-invert ">
+            <div className="prose prose-stone dark:prose-invert whatever-you-want mx-auto w-[800px]">
               <TextareaAutosize
                 id="title"
                 disabled
