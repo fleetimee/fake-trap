@@ -26,8 +26,6 @@ export default async function CourseUserNewPage({
     idCourse: params.idCourse,
   })
 
-  console.log(vacantUsers)
-
   return (
     <div className="space-y-6">
       <div>
