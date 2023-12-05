@@ -1,6 +1,10 @@
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { ContentOneRes } from "@/types/content/res"
-import { CourseListRes, CourseOneRes } from "@/types/course/res"
+import {
+  CourseListRes,
+  CourseOneRes,
+  CourseVacantUserListRes,
+} from "@/types/course/res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
 import { MenuListResNew } from "@/types/menu/res"
 import { PostsListRes } from "@/types/posts/res"
@@ -378,6 +382,17 @@ interface GetCourseUser {
   searchQuery?: string
 }
 
+/**
+ * Retrieves a list of users enrolled in a course.
+ * @param token - The authentication token.
+ * @param idCourse - The ID of the course.
+ * @param limit - The maximum number of users to retrieve per page.
+ * @param page - The page number of the users to retrieve.
+ * @param sortBy - The field to sort the users by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the users. Defaults to "desc".
+ * @param searchQuery - The search query to filter the users by. Defaults to an empty string.
+ * @returns A promise that resolves to the list of users.
+ */
 export async function getCourseUser({
   token,
   idCourse,
@@ -396,6 +411,37 @@ export async function getCourseUser({
     },
     cache: "no-store",
   })
+
+  return await res.json()
+}
+
+interface GetVacantUserProps {
+  token: string | undefined
+  idCourse: string
+}
+
+/**
+ * Retrieves the list of vacant users for a specific course.
+ * @param {GetVacantUserProps} options - The options for retrieving vacant users.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.idCourse - The ID of the course.
+ * @returns {Promise<CourseVacantUserListRes>} - The promise that resolves to the list of vacant users.
+ */
+export async function getVacantUser({
+  token,
+  idCourse,
+}: GetVacantUserProps): Promise<CourseVacantUserListRes> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/getVacantUser`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
 
   return await res.json()
 }

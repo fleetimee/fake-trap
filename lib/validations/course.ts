@@ -1,9 +1,5 @@
 import { z } from "zod"
 
-
-
-
-
 export const courseSchema = z.object({
   CourseName: z.string().min(1, {
     message: "Nama pelatihan harus diisi",
@@ -77,4 +73,18 @@ export const updateCourseSchema = z.object({
   IdKnowledge: z.number().optional(),
   TutorUUID: z.string().optional(),
   CreatedBy: z.string().optional(),
+})
+
+export const addCourseUserSchema = z.object({
+  users: z
+    .array(
+      z.object({
+        uuid: z.string().min(1, {
+          message: "User harus dipilih",
+        }),
+      })
+    )
+    .min(1, {
+      message: "User harus dipilih",
+    }),
 })

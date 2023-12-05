@@ -5,6 +5,7 @@ export type CourseVacantUserListRes = {
 }
 
 export type CourseVacantUserListResData = {
+  name: string
   username: string
   user_uuid: string
 }
