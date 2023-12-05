@@ -76,7 +76,7 @@ export default async function PemateriDivisiCategoryPage({
             title: "Dashboard",
           },
           {
-            href: "/pemateri-divisi/kategori",
+            href: "/pemateri-divisi/category",
             title: "Kategori",
           },
         ]}
@@ -89,7 +89,7 @@ export default async function PemateriDivisiCategoryPage({
         >
           <DashboardHeader
             heading="Kategori"
-            description="Kategori Pengetahuan yang tersedia"
+            description="Kategori yang anda buat"
           />
         </MotionDiv>
       </div>

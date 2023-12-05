@@ -62,15 +62,15 @@ export default async function PemateriDivisiUpdateCategoryPage({
             title: "Dashboard",
           },
           {
-            href: "/pemateri-divisi/kategori",
+            href: "/pemateri-divisi/category",
             title: "Kategori",
           },
           {
-            href: `/pemateri-divisi/kategori/${params.idCategory}`,
+            href: `/pemateri-divisi/category/update/${params.idCategory}`,
             title: category.data.category_name,
           },
           {
-            href: `/pemateri-divisi/kategori/${params.idCategory}/ubah`,
+            href: `/pemateri-divisi/category/update/${params.idCategory}`,
             title: "Ubah Kategori",
           },
         ]}

@@ -45,11 +45,11 @@ export default async function PemateriDivisiCategoryPageNew() {
             title: "Dashboard",
           },
           {
-            href: "/pemateri-divisi/kategori",
+            href: "/pemateri-divisi/category",
             title: "Kategori",
           },
           {
-            href: "/pemateri-divisi/kategori/tambah",
+            href: "/pemateri-divisi/category/new",
             title: "Tambah Kategori",
           },
         ]}

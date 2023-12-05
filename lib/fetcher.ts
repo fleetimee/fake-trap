@@ -1,29 +1,20 @@
-import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
-import { ContentOneRes } from "@/types/content/res"
-import {
-  CourseListRes,
-  CourseOneRes,
-  CourseVacantUserListRes,
-} from "@/types/course/res"
-import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
-import { MenuListResNew } from "@/types/menu/res"
-import { PostsListRes } from "@/types/posts/res"
-import {
-  QuizLinkedList,
-  QuizListRes,
-  QuizMemberListRes,
-  QuizOneRes,
-  QuizOneUserCountRes,
-  QuizQuestionListRes,
-  QuizUserAttemptList,
-  QuizUserResultListRes,
-} from "@/types/quiz/res"
-import { ReferenceListRes } from "@/types/references/res"
-import { RoleListRes } from "@/types/role/res"
-import { RuleOneRes } from "@/types/rule/res"
-import { SectionOneRes } from "@/types/section/res"
-import { ThreadListRes, ThreadOneRes } from "@/types/threads/res"
-import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
+import { CategoryListRes, CategoryOneRes } from "@/types/category/res";
+import { ContentOneRes } from "@/types/content/res";
+import { CourseListRes, CourseOneRes, CourseVacantUserListRes } from "@/types/course/res";
+import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res";
+import { MenuListResNew } from "@/types/menu/res";
+import { PostsListRes } from "@/types/posts/res";
+import { QuizLinkedList, QuizListRes, QuizMemberListRes, QuizOneRes, QuizOneUserCountRes, QuizQuestionListRes, QuizUserAttemptList, QuizUserResultListRes } from "@/types/quiz/res";
+import { ReferenceListRes } from "@/types/references/res";
+import { RoleListRes } from "@/types/role/res";
+import { RuleOneRes } from "@/types/rule/res";
+import { SectionOneRes } from "@/types/section/res";
+import { ThreadListRes, ThreadOneRes } from "@/types/threads/res";
+import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res";
+
+
+
+
 
 interface GetUserProps {
   token: string | undefined
@@ -251,6 +242,58 @@ export async function getKnowledgeV2({
   statusCode = "",
 }: GetKnowledgeV2Props): Promise<KnowledgeListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  // If categoryIds is provided, add it to the URL
+  if (categoryIds) {
+    url += `&categoryIds=${categoryIds}`
+  }
+
+  if (visibilityId) {
+    url += `&visibility=${visibilityId}`
+  }
+
+  if (statusCode) {
+    url += `&statusCodes=${statusCode}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetKnowledgeByCreatedBy {
+  userUuid: string
+  token: string
+  limit: number
+  page: number
+  sortField?: string
+  orderBy?: string
+  searchQuery?: string
+  visibilityId?: string | string[] | undefined
+  categoryIds?: string | string[] | undefined
+  statusCode?: string | string[] | undefined
+}
+
+export async function getKnowledgeByCreatedBy({
+  userUuid,
+  token,
+  limit,
+  page,
+  sortField = "id_knowledge",
+  orderBy = "asc",
+  searchQuery = "",
+  categoryIds = "",
+  visibilityId = "",
+  statusCode = "",
+}: GetKnowledgeByCreatedBy): Promise<KnowledgeListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/by/${userUuid}?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
 
   // If categoryIds is provided, add it to the URL
   if (categoryIds) {
