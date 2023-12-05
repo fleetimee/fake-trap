@@ -124,7 +124,11 @@ export function AddCourseUserForm({
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
-                      <div className="relative flex min-h-[36px] items-center justify-end rounded-md border data-[state=open]:border-ring">
+                      <div
+                        className={`relative flex min-h-[36px] items-center justify-end rounded-md border data-[state=open]:border-ring ${
+                          isPending ? "cursor-not-allowed" : ""
+                        }`}
+                      >
                         <div className="relative flex min-h-[36px] flex-wrap items-center justify-end rounded-md ">
                           {selectedUsers.length > 0 ? (
                             userLists &&
