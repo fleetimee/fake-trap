@@ -53,21 +53,26 @@ export function SidebarNavRole({ items }: SidebarNavRoleProps) {
 
   return (
     <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
-      {items.map((item) => (
-        <Link
-          key={item.id_role}
-          href={`/operator-lms/roles/${item.role_name.toLowerCase()}`}
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            pathname === `/operator-lms/roles/${item.role_name.toLowerCase()}`
-              ? "bg-muted hover:bg-muted"
-              : "hover:bg-transparent hover:underline",
-            "justify-start"
-          )}
-        >
-          {item.role_name}
-        </Link>
-      ))}
+      {items.map((item) => {
+        const formattedRoleName = item.role_name
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+        return (
+          <Link
+            key={item.id_role}
+            href={`/operator-lms/roles/${formattedRoleName}`}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              pathname === `/operator-lms/roles/${formattedRoleName}`
+                ? "bg-muted hover:bg-muted"
+                : "hover:bg-transparent hover:underline",
+              "justify-start"
+            )}
+          >
+            {item.role_name}
+          </Link>
+        )
+      })}
     </nav>
   )
 }
