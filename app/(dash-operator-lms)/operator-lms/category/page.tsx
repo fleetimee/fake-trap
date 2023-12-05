@@ -1,3 +1,4 @@
+import React from "react"
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -5,15 +6,12 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getOperatorCategory, getRule } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CategoryTableShell, DashboardShell } from "@/components/shell"
 import { Button, buttonVariants } from "@/components/ui/button"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Kategori",
@@ -110,11 +108,13 @@ export default async function OperatorLmsCategoryPage({
         </MotionDiv>
       </div>
 
-      <CategoryTableShell
-        data={categoryData.data}
-        pageCount={categoryData.totalPage}
-        rule={rule.data}
-      />
+      <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
+        <CategoryTableShell
+          data={categoryData.data}
+          pageCount={categoryData.totalPage}
+          rule={rule.data}
+        />
+      </React.Suspense>
     </DashboardShell>
   )
 }
