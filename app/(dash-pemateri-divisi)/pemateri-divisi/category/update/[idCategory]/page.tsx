@@ -20,15 +20,15 @@ export const metadata: Metadata = {
   description: "Halaman untuk mengubah kategori",
 }
 
-interface OperatorLMSUpdateCategoryPageProps {
+interface PemateriDivisiUpdateCategoryPageProps {
   params: {
     idCategory: string
   }
 }
 
-export default async function OperatorLMSUpdateCategoryPage({
+export default async function PemateriDivisiUpdateCategoryPage({
   params,
-}: OperatorLMSUpdateCategoryPageProps) {
+}: PemateriDivisiUpdateCategoryPageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -46,7 +46,7 @@ export default async function OperatorLMSUpdateCategoryPage({
 
   const rule = await getRule({
     token: user?.token,
-    idRole: "3",
+    idRole: "1",
   })
 
   if (!rule.data.can_write_knowledge) {
@@ -58,33 +58,31 @@ export default async function OperatorLMSUpdateCategoryPage({
       <BreadCrumbs
         segments={[
           {
-            href: "/operator-lms",
+            href: "/pemateri-divisi",
             title: "Dashboard",
           },
           {
-            href: "/operator-lms/category",
+            href: "/pemateri-divisi/kategori",
             title: "Kategori",
           },
           {
-            href: `/operator-lms/category/update/${category.data.id_category}`,
-            title: "Update Kategori",
+            href: `/pemateri-divisi/kategori/${params.idCategory}`,
+            title: category.data.category_name,
           },
           {
-            href: `/operator-lms/category/update/${category.data.id_category}`,
-            title: `${category.data.category_name}`,
+            href: `/pemateri-divisi/kategori/${params.idCategory}/ubah`,
+            title: "Ubah Kategori",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">
-            Update Kategori:{" "}
-            <span className="font-bold">{category.data.category_name}</span>
-          </CardTitle>
-          <CardDescription>Update Kategori yang sudah ada</CardDescription>
+          <CardTitle className="text-xl">Ubah Kategori</CardTitle>
+          <CardDescription>
+            Ubah kategori dengan mengisi form di bawah ini.
+          </CardDescription>
         </CardHeader>
-
         <CardContent>
           <UpdateCategoryForm category={category.data} />
         </CardContent>
