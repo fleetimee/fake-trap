@@ -12,20 +12,22 @@ import { CategoryOperations } from "@/components/app/category/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 import { Checkbox } from "@/components/ui/checkbox"
 
-
-
-
+import { AspectRatio } from "../ui/aspect-ratio"
 
 interface CategoryTableShellProps {
   data: CategoryListResData[]
   pageCount: number
   rule: RuleOneResData
+  newRowLink?: string
+  editRowLink?: string
 }
 
 export function CategoryTableShell({
   data,
   pageCount,
   rule,
+  newRowLink,
+  editRowLink,
 }: CategoryTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -115,7 +117,7 @@ export function CategoryTableShell({
             alt={row.original.image}
             width={100}
             height={100}
-            className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
+            className="rounded-xl  transition-all duration-300 ease-in-out "
           />
         ),
         enableSorting: false,
@@ -156,11 +158,17 @@ export function CategoryTableShell({
         cell: ({ row }) => {
           const kategori = row.original
 
-          return <CategoryOperations kategori={kategori} rule={rule} />
+          return (
+            <CategoryOperations
+              kategori={kategori}
+              rule={rule}
+              editRowLink={editRowLink}
+            />
+          )
         },
       },
     ],
-    [data, setSelectedRowIds]
+    [data, editRowLink, rule]
   )
 
   return (
@@ -168,6 +176,7 @@ export function CategoryTableShell({
       columns={columns}
       data={data}
       pageCount={pageCount}
+      newRowLink={newRowLink ? newRowLink : undefined}
       searchableColumns={[
         {
           id: "category_name",

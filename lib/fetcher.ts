@@ -122,7 +122,40 @@ export async function getOperatorCategory({
   return await res.json()
 }
 
-interface GetCategoryProps {
+interface GetCategoryByCreatorProps {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  createdBy?: string
+}
+
+export async function getCategoryByCreator({
+  token,
+  page,
+  limit,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+  createdBy = "",
+}: GetCategoryByCreatorProps): Promise<CategoryListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/by/${createdBy}?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetCategoryByCreatorProps {
   token: string | undefined
   page: number
   limit: number
@@ -130,14 +163,14 @@ interface GetCategoryProps {
 
 /**
  * Retrieves a list of categories.
- * @param {GetCategoryProps} options - The options for fetching the category list.
+ * @param {GetCategoryByCreatorProps} options - The options for fetching the category list.
  * @returns {Promise<CategoryListRes>} - A promise that resolves to the category list response.
  */
 export async function getListCategory({
   token,
   page,
   limit,
-}: GetCategoryProps): Promise<CategoryListRes> {
+}: GetCategoryByCreatorProps): Promise<CategoryListRes> {
   const categoryList = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/?page=${page}&limit=${limit}`,
     {

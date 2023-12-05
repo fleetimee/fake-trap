@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Tambah Kategori baru",
 }
 
-export default async function OperatorLmsCategoryPageNew() {
+export default async function PemateriDivisiCategoryPageNew() {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -29,7 +29,7 @@ export default async function OperatorLmsCategoryPageNew() {
 
   const rule = await getRule({
     token: user?.token,
-    idRole: "3",
+    idRole: "1",
   })
 
   if (!rule.data.can_write_knowledge) {
@@ -41,15 +41,15 @@ export default async function OperatorLmsCategoryPageNew() {
       <BreadCrumbs
         segments={[
           {
-            href: "/operator-lms",
+            href: "/pemateri-divisi",
             title: "Dashboard",
           },
           {
-            href: "/operator-lms/category",
+            href: "/pemateri-divisi/kategori",
             title: "Kategori",
           },
           {
-            href: "/operator-lms/category/new",
+            href: "/pemateri-divisi/kategori/tambah",
             title: "Tambah Kategori",
           },
         ]}

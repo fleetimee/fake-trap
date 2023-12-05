@@ -50,10 +50,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 
-
-
-
-
 const formSchema = z.object({
   category_name: z.string().nonempty().min(3).max(36),
   image: z.string().url().optional(),
@@ -94,11 +90,13 @@ async function deleteCategory({ idKategori, token }: DeleteCategoryProps) {
 interface CategoryOperationsProps {
   kategori: CategoryListResData
   rule: RuleOneResData
+  editRowLink?: string
 }
 
 export function CategoryOperations({
   kategori,
   rule,
+  editRowLink,
 }: CategoryOperationsProps) {
   const { data: session } = useSession()
 
@@ -120,6 +118,14 @@ export function CategoryOperations({
       image: kategori.image,
     },
   })
+
+  const buildEditRowLink = () => {
+    if (editRowLink) {
+      return `${editRowLink}update/${kategori.id_category}`
+    } else {
+      return `/operator-lms/category/update/${kategori.id_category}`
+    }
+  }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsEditLoading(true)
@@ -195,7 +201,11 @@ export function CategoryOperations({
             disabled={!rule.can_write_knowledge}
           >
             <Link
-              href={`/operator-lms/category/update/${kategori.id_category}`}
+              href={
+                editRowLink
+                  ? buildEditRowLink()
+                  : `/operator-lms/category/update/${kategori.id_category}`
+              }
               passHref
               className="flex w-full items-center justify-between"
             >
