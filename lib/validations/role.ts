@@ -1,9 +1,6 @@
 import { z } from "zod"
 
 export const ruleSchema = z.object({
-  role_name: z.string(),
-  id_role_rules: z.number(),
-  id_role: z.number(),
   can_write_knowledge: z.boolean(),
   can_write_course: z.boolean(),
   can_write_quiz: z.boolean(),

@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
+import { ErrorResponse } from "@/types/error-res"
 import { RuleOneResData } from "@/types/rule/res"
 import { UserOneResData } from "@/types/user/res"
 import { profileSchema } from "@/lib/validations/profile"
@@ -57,9 +58,44 @@ export function RuleForm({ rule }: RuleFormProps) {
     },
   })
 
+  async function onSubmit(data: Inputs) {
+    startTransition(async () => {
+      try {
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/rule/role/${rule.id_role}`
+
+        const res = await fetch(url, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user?.token}`,
+          },
+          body: JSON.stringify(data),
+        })
+
+        if (res.ok) {
+          sonnerToast.success("Berhasil", {
+            description: "Kewenangan berhasil diubah",
+          })
+
+          router.refresh()
+        } else {
+          const errorResponse: ErrorResponse = await res.json()
+
+          sonnerToast.error("Gagal", {
+            description: errorResponse.error,
+          })
+        }
+      } catch (error) {
+        sonnerToast.error("Gagal", {
+          description: `${error}`,
+        })
+      }
+    })
+  }
+
   return (
     <Form {...form}>
-      <form className="w-full space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
         <div>
           <div className="space-y-4">
             <FormField
@@ -75,6 +111,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -98,6 +135,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -119,6 +157,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -140,6 +179,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -163,6 +203,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -186,6 +227,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -207,6 +249,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -228,6 +271,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -251,6 +295,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -272,6 +317,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -295,6 +341,7 @@ export function RuleForm({ rule }: RuleFormProps) {
                   </div>
                   <FormControl>
                     <Switch
+                      disabled={isPending}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
