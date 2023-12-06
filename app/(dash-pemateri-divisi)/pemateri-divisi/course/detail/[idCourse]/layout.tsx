@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/auth"
 import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
+import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { CreateQuizDropdownButton } from "@/components/create-quiz-dropwdown"
 import SectionBanner from "@/components/create-section-banner"
@@ -137,6 +138,9 @@ export default async function CourseDetailLayout({
       >
         {/* Content Section */}
         <Content title={course?.data?.course_name}>{children}</Content>
+
+        {/* Sidebar Section */}
+        <CourseContentSidebar course={course} />
       </div>
     </DashboardShell>
   )

@@ -7,6 +7,7 @@ import { PartyPopper } from "lucide-react"
 import { authOptions } from "@/lib/auth"
 import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { Content } from "@/components/content"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { CreateQuizDropdownButton } from "@/components/create-quiz-dropwdown"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -147,20 +148,7 @@ export default async function CourseDetailLayout({
         id="scrollTarget"
       >
         {/* Content Section */}
-        <Card className="flex w-full basis-3/4 items-start justify-normal">
-          <div className="flex w-full flex-col gap-6 p-4">
-            <div className="flex flex-row items-center justify-between">
-              <p className="grow break-all font-heading text-3xl">
-                {knowledge.data?.knowledge_title}
-              </p>
-              <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
-            </div>
-
-            <div className="h-full max-h-max  rounded-md border border-primary p-4">
-              {children}
-            </div>
-          </div>
-        </Card>
+        <Content title={course?.data?.course_name}>{children}</Content>
 
         {/* Sidebar Section */}
         <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">

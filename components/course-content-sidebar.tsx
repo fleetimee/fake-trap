@@ -4,10 +4,8 @@ import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { CourseOneRes } from "@/types/course/res"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
-import { KnowledgeDeleteContent } from "@/components/delete-content"
-import { KnowledgeDeleteSection } from "@/components/delete-section"
 import {
   Accordion,
   AccordionContent,
@@ -19,26 +17,21 @@ import { Card } from "@/components/ui/card"
 import {
   ContextMenu,
   ContextMenuContent,
-  ContextMenuItem,
   ContextMenuLabel,
   ContextMenuSeparator,
-  ContextMenuShortcut,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { EmptyContent } from "./app/knowledge/detail/ui"
+import { CreateQuizDropdownButton } from "./create-quiz-dropwdown"
 
-interface KnowledgeContentSidebarProps {
-  knowledge: KnowledgeOneRes
-  baseUrl: string
+interface CourseContentSidebarProps {
+  course: CourseOneRes
 }
 
-export function KnowledgeContentSidebar({
-  knowledge,
-  baseUrl,
-}: KnowledgeContentSidebarProps) {
+export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
   const pathname = usePathname()
 
   return (
@@ -46,65 +39,34 @@ export function KnowledgeContentSidebar({
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="knowledge" className="w-full font-semibold">
-            Pengetahuan
+            Konten
+          </TabsTrigger>
+          <TabsTrigger value="course" className="w-full font-semibold">
+            Pelatihan
           </TabsTrigger>
         </TabsList>
 
+        {/* Course Content Section */}
         <TabsContent value="knowledge">
-          <ScrollArea className="h-[700px] w-full">
-            {/* Iterate Section Title */}
-            {knowledge.data?.section ? (
+          <ScrollArea className="h-700px w-full">
+            {course?.data?.section ? (
               <Accordion
                 type="single"
                 collapsible
                 className="px-4"
-                key={knowledge.data?.section[0].id_section}
-                defaultValue={knowledge.data?.section[0].id_section.toString()}
+                key={course.data.section[0].id_section.toString()}
+                defaultValue={course.data.section[0].id_section.toString()}
               >
-                {/* Iterate Item */}
-                {knowledge.data.section.map((section) => (
+                {course.data.section.map((section) => (
                   <AccordionItem
                     key={section.id_section.toString()}
                     value={section.id_section.toString()}
-                    className="text-sm"
                   >
                     <AccordionTrigger className="font-heading text-base font-bold">
-                      <ContextMenu key={section.id_section}>
-                        <ContextMenuTrigger>
-                          {section.section_title}
-                        </ContextMenuTrigger>
-                        <ContextMenuContent className="w-64">
-                          <ContextMenuItem inset disabled>
-                            Section
-                            <ContextMenuShortcut>⌘1</ContextMenuShortcut>
-                          </ContextMenuItem>
-
-                          <ContextMenuSeparator />
-
-                          <ContextMenuItem inset>
-                            <Link
-                              // href={`${baseUrl}/section/update/${section.id_section}`}
-                              href={`${pathname}/section/update/${section.id_section}`}
-                              className="flex w-full items-center justify-between"
-                            >
-                              Update
-                              <ContextMenuShortcut>⌘[</ContextMenuShortcut>
-                            </Link>
-                          </ContextMenuItem>
-
-                          <KnowledgeDeleteSection
-                            idSection={section.id_section.toString()}
-                          />
-
-                          <ContextMenuItem inset disabled>
-                            {section.section_title}
-                            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
-                          </ContextMenuItem>
-                        </ContextMenuContent>
-                      </ContextMenu>
+                      {`Konten ${section.section_title}`}
                     </AccordionTrigger>
 
-                    {section.content ? (
+                    {section?.content ? (
                       <>
                         {section.content.map((content) => (
                           <ContextMenu key={content.id_content.toString()}>
@@ -114,7 +76,6 @@ export function KnowledgeContentSidebar({
                                 className="py-1"
                               >
                                 <Link
-                                  // href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                   href={`${pathname}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
@@ -126,20 +87,12 @@ export function KnowledgeContentSidebar({
                             <ContextMenuContent className="w-64">
                               <ContextMenuLabel inset>Options</ContextMenuLabel>
                               <ContextMenuSeparator />
-                              {/* This is custom component to delete content */}
-                              <KnowledgeDeleteContent
-                                idContent={content.id_content.toString()}
-                              />
                             </ContextMenuContent>
                           </ContextMenu>
                         ))}
                         <AccordionContent className="py-1">
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            // videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            // fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            // articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-
                             videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
                             fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
                             articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
@@ -162,10 +115,6 @@ export function KnowledgeContentSidebar({
                           </AccordionContent>
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            // videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            // fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            // articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-
                             videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
                             fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
                             articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
@@ -176,8 +125,79 @@ export function KnowledgeContentSidebar({
                   </AccordionItem>
                 ))}
               </Accordion>
+            ) : null}
+          </ScrollArea>
+        </TabsContent>
+
+        {/* Course Test Section */}
+        <TabsContent value="course">
+          <ScrollArea className="h-[700px] w-full">
+            {course?.data?.section ? (
+              <Accordion
+                type="single"
+                collapsible
+                className="px-4"
+                key={course.data.section[0].id_section.toString()}
+                defaultValue={course.data.section[0].id_section.toString()}
+              >
+                {course.data.section.map((section) => (
+                  <AccordionItem
+                    key={section.id_section.toString()}
+                    value={section.id_section.toString()}
+                  >
+                    <AccordionTrigger className="font-heading text-base font-bold">
+                      {` Test ${section.section_title}`}
+                    </AccordionTrigger>
+
+                    {section?.quiz ? (
+                      <>
+                        {section.quiz.map((quiz) => (
+                          <AccordionContent
+                            key={quiz.id_quiz.toString()}
+                            className="py-1"
+                          >
+                            <Link
+                              href={`${pathname}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
+                            >
+                              <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
+                                {quiz.quiz_title}
+                              </Button>
+                            </Link>
+                          </AccordionContent>
+                        ))}
+                        <AccordionContent className="py-1">
+                          {/* Create quiz button */}
+                          <CreateQuizDropdownButton
+                            quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
+                          />
+                        </AccordionContent>
+                      </>
+                    ) : (
+                      <AccordionContent className="py-4">
+                        <div className="flex flex-col gap-4">
+                          <AccordionContent className="py-4">
+                            <EmptyContent className="h-[50px]">
+                              <EmptyContent.Icon name="empty" />
+                              <EmptyContent.Title>
+                                Tidak ada kuis
+                              </EmptyContent.Title>
+                              <EmptyContent.Description>
+                                Belum ada kuis untuk bagian ini
+                              </EmptyContent.Description>
+                            </EmptyContent>
+                          </AccordionContent>
+                          {/* Create content button */}
+                          <CreateQuizDropdownButton
+                            quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
+                          />
+                        </div>
+                      </AccordionContent>
+                    )}
+                  </AccordionItem>
+                ))}
+              </Accordion>
             ) : (
-              <EmptyContent className="flex h-[50px] items-center justify-center">
+              <EmptyContent className="h-[50px]">
                 <EmptyContent.Icon name="empty" />
                 <EmptyContent.Title>Belum ada section</EmptyContent.Title>
                 <EmptyContent.Description>
