@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import VercelToolbar from "@/components/vercel-toolbar"
+import { VercelToolbar } from "@/components/vercel-toolbar"
 
 interface CourseDetailLayoutProps {
   children: React.ReactNode

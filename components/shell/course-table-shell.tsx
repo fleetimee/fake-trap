@@ -3,6 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CourseListResData } from "@/types/course/res"
@@ -12,10 +13,6 @@ import { CourseOperations } from "@/components/app/course/operations/course-oper
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-
-
-
-
 
 interface BadgeSwitchProps {
   approval: any
@@ -38,17 +35,19 @@ interface CourseTableShell {
   data: CourseListResData[]
   knowledgeResp: KnowledgeListRes
   pageCount: number
-  linkString?: string
+  isOperator?: boolean
 }
 
 export function CourseTableShell({
   data,
   knowledgeResp,
   pageCount,
-  linkString,
+  isOperator = true,
 }: CourseTableShell) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
+
+  const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<CourseListResData, unknown>[]>(
     () => [
@@ -123,9 +122,7 @@ export function CourseTableShell({
           return (
             <div className="flex flex-col">
               <Link
-                href={
-                  linkString ? `${linkString}/${row.original.id_course}` : "#"
-                }
+                href={`${pathname}/detail/${row.original.id_course}`}
                 className="text-sm font-semibold text-blue-600 hover:underline"
               >
                 {row.original.course_name}
@@ -230,15 +227,17 @@ export function CourseTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Aksi" />
         ),
-        cell: ({ row }) => (
-          <CourseOperations
-            courseResp={row.original}
-            knowledgeResp={knowledgeResp}
-          />
-        ),
+        cell: ({ row }) => {
+          return isOperator ? (
+            <CourseOperations
+              courseResp={row.original}
+              knowledgeResp={knowledgeResp}
+            />
+          ) : null
+        },
       },
     ],
-    [data, setSelectedRowIds]
+    [data, isOperator, knowledgeResp, pathname]
   )
 
   return (

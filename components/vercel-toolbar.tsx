@@ -5,7 +5,7 @@
  * @see https://v0.dev/t/aLUPWlh
  */
 import { JSX, SVGProps } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -29,8 +29,10 @@ interface VercelToolbarProps {
   forumButton?: string
 }
 
-export default function VercelToolbar({ ...props }: VercelToolbarProps) {
+export function VercelToolbar({ ...props }: VercelToolbarProps) {
   const router = useRouter()
+
+  const pathname = usePathname()
 
   return (
     <div className="flex max-w-max items-center justify-between rounded-full bg-zinc-800 p-2">

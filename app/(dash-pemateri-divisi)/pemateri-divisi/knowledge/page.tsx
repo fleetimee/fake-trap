@@ -1,12 +1,10 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import {
   getKnowledgeByCreatedBy,
-  getKnowledgeV2,
   getListCategory,
   getReference,
   getRule,
@@ -18,7 +16,6 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
-import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Pengetahuan",
@@ -88,8 +85,6 @@ export default async function PemateriDivisiKnowledgePage({
       refCode: "003",
     }),
   ])
-
-  console.log(knowledge)
 
   return (
     <DashboardShell>

@@ -360,16 +360,6 @@ export async function getOneKnowledge({
   return await res.json()
 }
 
-interface GetCourseProps {
-  token: string | undefined
-  page: number
-  limit: number
-  sortBy?: string
-  orderBy?: string
-  searchQuery?: string
-  statusText?: string | string[] | undefined // Add this line
-}
-
 interface GetOneSectionProps {
   token: string | undefined
   idSection: string
@@ -400,6 +390,16 @@ export async function getOneSection({
   return await response.json()
 }
 
+interface GetCourseProps {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  statusText?: string | string[] | undefined // Add this line
+}
+
 export async function getCourse({
   token,
   page,
@@ -410,6 +410,44 @@ export async function getCourse({
   statusText = "", // Add this line
 }: GetCourseProps): Promise<CourseListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (statusText) {
+    url = `${url}&status=${statusText}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetCourseByTutorProps {
+  token: string | undefined
+  tutorUuid: string
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  statusText?: string | string[] | undefined
+}
+
+export async function getCourseByTutor({
+  token,
+  tutorUuid,
+  page,
+  limit,
+  sortBy = "id_course",
+  orderBy = "asc",
+  searchQuery = "",
+  statusText = "",
+}: GetCourseByTutorProps): Promise<CourseListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/by/${tutorUuid}?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
 
   if (statusText) {
     url = `${url}&status=${statusText}`
