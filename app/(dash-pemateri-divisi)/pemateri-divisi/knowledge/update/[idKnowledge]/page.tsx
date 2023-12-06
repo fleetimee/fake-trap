@@ -4,7 +4,6 @@ import { notFound, redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import {
   getCategoryByCreator,
-  getListCategory,
   getOneKnowledge,
   getReference,
   getRule,

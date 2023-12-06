@@ -5,7 +5,7 @@ import Link from "next/link"
 import { CursorTextIcon, FileIcon, VideoIcon } from "@radix-ui/react-icons"
 
 import { Icons } from "@/components/icons"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,17 +27,11 @@ export function CreateContentDropdownButton({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex w-full items-center justify-end">
-        <Link
-          href="#"
-          className={buttonVariants({
-            size: "sm",
-            variant: "outline",
-          })}
-        >
+        <Button size="sm" variant="outline">
           <Icons.add className="h-4 w-4" />
 
           <span className="ml-2">Tambah Konten</span>
-        </Link>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>Tambah Konten</DropdownMenuLabel>

@@ -5,15 +5,15 @@ import { authOptions } from "@/lib/auth"
 import { getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 
-interface KnowledgeDetailPageProps {
+interface KnowledgeDetailProps {
   params: {
     idKnowledge: string
   }
 }
 
-export default async function KnowledgeDetailPage({
+export default async function KnowledgeDetail({
   params,
-}: KnowledgeDetailPageProps) {
+}: KnowledgeDetailProps) {
   const user = await getCurrentUser()
 
   if (!user) {
