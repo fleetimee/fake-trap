@@ -11,6 +11,7 @@ export type CategoryOneResData = {
   image: string
   created_at: Date
   updated_at: Date
+  created_by: string
 }
 
 export type CategoryOneResKnowledge = {

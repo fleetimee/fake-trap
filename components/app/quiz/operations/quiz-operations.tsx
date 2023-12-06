@@ -63,11 +63,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { Textarea } from "@/components/ui/textarea";
-
-
-
-
+import { Textarea } from "@/components/ui/textarea"
 
 const formSchema = z.object({
   quiz_title: z
@@ -128,9 +124,14 @@ async function deleteQuiz({ id, token }: DeleteQuizProps) {
 interface QuizOperationsProps {
   quiz: QuizListResData
   referenceResp: ReferenceListRes
+  linkString: string
 }
 
-export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
+export function QuizOperations({
+  quiz,
+  referenceResp,
+  linkString,
+}: QuizOperationsProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -213,10 +214,10 @@ export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
             // onSelect={() => setOpenEditQuizSheet(true)}
           >
             <Link
-              href={`/operator-lms/exercise/update/${quiz.id_quiz}`}
+              href={`${linkString}/update/${quiz.id_quiz}`}
               className="flex w-full cursor-default items-center"
             >
-              Edit
+              Update
               <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>

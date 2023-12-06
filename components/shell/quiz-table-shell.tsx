@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { QuizListResData } from "@/types/quiz/res"
@@ -12,25 +13,21 @@ import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-
-
-
-
 interface QuizTableShellProps {
   data: QuizListResData[]
   referenceResp: ReferenceListRes
   pageCount: number
-  link?: string
 }
 
 export function QuizTableShell({
   data,
   pageCount,
   referenceResp,
-  link,
 }: QuizTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
+
+  const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<QuizListResData, unknown>[]>(
     () => [
@@ -84,11 +81,7 @@ export function QuizTableShell({
           return (
             <div className="flex flex-col">
               <Link
-                href={
-                  link
-                    ? `${link}/${row.original.id_quiz}`
-                    : `/operator-lms/exercise/detail/${row.original.id_quiz}`
-                }
+                href={`${pathname}/detail/${row.original.id_quiz}`}
                 className="text-sm font-semibold text-blue-600 hover:underline"
               >
                 {row.original.quiz_title}
@@ -154,11 +147,17 @@ export function QuizTableShell({
         cell: ({ row }) => {
           const quiz = row.original
 
-          return <QuizOperations quiz={quiz} referenceResp={referenceResp} />
+          return (
+            <QuizOperations
+              quiz={quiz}
+              referenceResp={referenceResp}
+              linkString={`${pathname}`}
+            />
+          )
         },
       },
     ],
-    [data, setSelectedRowIds]
+    [data, pathname, referenceResp]
   )
 
   return (
@@ -182,6 +181,7 @@ export function QuizTableShell({
           title: "Judul Kuis",
         },
       ]}
+      newRowLink={`${pathname}/new`}
     />
   )
 }

@@ -1,20 +1,29 @@
-import { CategoryListRes, CategoryOneRes } from "@/types/category/res";
-import { ContentOneRes } from "@/types/content/res";
-import { CourseListRes, CourseOneRes, CourseVacantUserListRes } from "@/types/course/res";
-import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res";
-import { MenuListResNew } from "@/types/menu/res";
-import { PostsListRes } from "@/types/posts/res";
-import { QuizLinkedList, QuizListRes, QuizMemberListRes, QuizOneRes, QuizOneUserCountRes, QuizQuestionListRes, QuizUserAttemptList, QuizUserResultListRes } from "@/types/quiz/res";
-import { ReferenceListRes } from "@/types/references/res";
-import { RoleListRes } from "@/types/role/res";
-import { RuleOneRes } from "@/types/rule/res";
-import { SectionOneRes } from "@/types/section/res";
-import { ThreadListRes, ThreadOneRes } from "@/types/threads/res";
-import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res";
-
-
-
-
+import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
+import { ContentOneRes } from "@/types/content/res"
+import {
+  CourseListRes,
+  CourseOneRes,
+  CourseVacantUserListRes,
+} from "@/types/course/res"
+import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
+import { MenuListResNew } from "@/types/menu/res"
+import { PostsListRes } from "@/types/posts/res"
+import {
+  QuizLinkedList,
+  QuizListRes,
+  QuizMemberListRes,
+  QuizOneRes,
+  QuizOneUserCountRes,
+  QuizQuestionListRes,
+  QuizUserAttemptList,
+  QuizUserResultListRes,
+} from "@/types/quiz/res"
+import { ReferenceListRes } from "@/types/references/res"
+import { RoleListRes } from "@/types/role/res"
+import { RuleOneRes } from "@/types/rule/res"
+import { SectionOneRes } from "@/types/section/res"
+import { ThreadListRes, ThreadOneRes } from "@/types/threads/res"
+import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
 
 interface GetUserProps {
   token: string | undefined
@@ -553,6 +562,45 @@ export async function getOperatorQuiz({
   quizTypes = "",
 }: GetQuizProps): Promise<QuizListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+
+  if (quizTypes) {
+    url += `&quizTypes=${quizTypes}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetQuizByCreatorProps {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  quizTypes?: string | string[] | undefined
+  createdBy: string
+}
+
+export async function getQuizByCreator({
+  token,
+  page,
+  limit,
+  sortBy = "id_quiz",
+  orderBy = "asc",
+  searchQuery = "",
+  quizTypes = "",
+  createdBy,
+}: GetQuizByCreatorProps): Promise<QuizListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/by/${createdBy}?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
 
   if (quizTypes) {
     url += `&quizTypes=${quizTypes}`

@@ -2,10 +2,10 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCategory, getRule } from "@/lib/fetcher"
+import { getOneQuiz, getReference } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import UpdateCategoryForm from "@/components/forms/update-category-form"
+import { UpdateTestForm } from "@/components/forms/update-test-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import {
@@ -17,19 +17,19 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Update Kategori",
-  description: "Halaman untuk mengubah kategori",
+  title: "Update Test dan Latihan",
+  description: "Update Test dan Latihan",
 }
 
-interface PemateriDivisiUpdateCategoryPageProps {
+interface PemateriDivisiExercisePageUpdateProps {
   params: {
-    idCategory: string
+    idQuiz: string
   }
 }
 
-export default async function PemateriDivisiUpdateCategoryPage({
+export default async function PemateriDivisiExercisePageUpdate({
   params,
-}: PemateriDivisiUpdateCategoryPageProps) {
+}: PemateriDivisiExercisePageUpdateProps) {
   const user = await getCurrentUser()
 
   const tokenExtracted = extractToken(user?.token)
@@ -38,21 +38,17 @@ export default async function PemateriDivisiUpdateCategoryPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const category = await getOneCategory({
+  const quiz = await getOneQuiz({
+    id: params.idQuiz,
     token: user?.token,
-    idCategory: params.idCategory,
   })
 
-  if (category.code === 400 || category.data.created_by !== tokenExtracted.id) {
-    return notFound()
-  }
-
-  const rule = await getRule({
+  const reference = await getReference({
+    refCode: "002",
     token: user?.token,
-    idRole: "1",
   })
 
-  if (!rule.data.can_write_knowledge) {
+  if (quiz.code === 400 || quiz.data.created_by !== tokenExtracted.id) {
     return notFound()
   }
 
@@ -65,29 +61,29 @@ export default async function PemateriDivisiUpdateCategoryPage({
             title: "Dashboard",
           },
           {
-            href: "/pemateri-divisi/category",
-            title: "Kategori",
+            href: "/pemateri-divisi/exercise",
+            title: "Test dan Latihan",
           },
           {
-            href: `/pemateri-divisi/category/update/${params.idCategory}`,
-            title: category.data.category_name,
-          },
-          {
-            href: `/pemateri-divisi/category/update/${params.idCategory}`,
-            title: "Ubah Kategori",
+            href: `/pemateri-divisi/exercise/update/${params.idQuiz}`,
+            title: "Update Test dan Latihan",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Ubah Kategori</CardTitle>
+          <CardTitle>
+            Update Tes:{" "}
+            <span className="font-semibold">{quiz.data?.quiz_title}</span>
+          </CardTitle>
           <CardDescription>
-            Ubah kategori dengan mengisi form di bawah ini.
+            Update Tes yang sudah dibuat sebelumnya
           </CardDescription>
         </CardHeader>
+
         <CardContent>
-          <UpdateCategoryForm category={category.data} />
+          <UpdateTestForm quiz={quiz.data} references={reference} />
         </CardContent>
       </Card>
     </DashboardShell>

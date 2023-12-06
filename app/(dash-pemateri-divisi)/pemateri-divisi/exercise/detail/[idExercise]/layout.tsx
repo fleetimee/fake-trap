@@ -36,16 +36,16 @@ export default async function ExerciseDetailLayout({
       <BreadCrumbs
         segments={[
           {
-            href: "/operator-lms",
+            href: "/pemateri-divisi",
             title: "Dashboard",
           },
           {
-            href: "/operator-lms/exercise",
+            href: "/pemateri-divisi/exercise",
             title: "Test dan Latihan",
           },
           {
-            href: `/operator-lms/exercise/detail/${params.idExercise}`,
-            title: exercise?.data?.quiz_title,
+            href: `/pemateri-divisi/exercise/detail/${params.idExercise}`,
+            title: exercise.data?.quiz_title,
           },
         ]}
       />
@@ -57,7 +57,7 @@ export default async function ExerciseDetailLayout({
       <div className="space-y-4 overflow-hidden">
         <QuizTab
           quizId={params.idExercise}
-          initialRoute={`/operator-lms/exercise/detail/${params.idExercise}`}
+          initialRoute={`/pemateri-divisi/exercise/detail/${params.idExercise}`}
         />
         {children}
       </div>

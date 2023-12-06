@@ -60,7 +60,10 @@ export default async function PemateriDivisiUpdateKnowledgePage({
     page: 1,
   })
 
-  if (knowledge.code === 400) {
+  if (
+    knowledge.code === 400 ||
+    knowledge.data.created_by !== tokenExtracted?.id
+  ) {
     return notFound()
   }
 

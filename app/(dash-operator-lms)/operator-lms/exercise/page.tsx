@@ -11,10 +11,6 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, QuizTableShell } from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
 
-
-
-
-
 export const metadata: Metadata = {
   title: "Test dan Latihan",
   description: "Test",
@@ -116,7 +112,6 @@ export default async function OperatorLMSExercisePage({
         data={quiz.data}
         pageCount={quiz.totalPage}
         referenceResp={references}
-        link="/operator-lms/exercise/detail"
       />
     </DashboardShell>
   )
