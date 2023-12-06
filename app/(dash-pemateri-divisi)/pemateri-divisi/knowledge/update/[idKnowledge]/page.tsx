@@ -5,12 +5,13 @@ import { authOptions } from "@/lib/auth"
 import {
   getCategoryByCreator,
   getListCategory,
+  getOneKnowledge,
   getReference,
   getRule,
 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import { AddKnowledgeForm } from "@/components/forms/add-knowledge-form"
+import { UpdateKnowledgeForm } from "@/components/forms/update-knowledge-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import {
@@ -22,11 +23,19 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah Pengetahuan Baru",
-  description: "Operator LMS New Knowledge Page",
+  title: "Update Pengetahuan",
+  description: "Halaman untuk mengubah pengetahuan",
 }
 
-export default async function PemateriDivisiKnowledgePageNew() {
+interface PemateriDivisiUpdateKnowledgePageProps {
+  params: {
+    idKnowledge: string
+  }
+}
+
+export default async function PemateriDivisiUpdateKnowledgePage({
+  params,
+}: PemateriDivisiUpdateKnowledgePageProps) {
   const user = await getCurrentUser()
 
   const tokenExtracted = extractToken(user?.token)
@@ -34,6 +43,11 @@ export default async function PemateriDivisiKnowledgePageNew() {
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const knowledge = await getOneKnowledge({
+    token: user?.token,
+    idKnowledge: params.idKnowledge,
+  })
 
   const reference = await getReference({
     token: user?.token,
@@ -43,9 +57,13 @@ export default async function PemateriDivisiKnowledgePageNew() {
   const category = await getCategoryByCreator({
     createdBy: tokenExtracted?.id,
     token: user?.token,
-    page: 1,
     limit: 999,
+    page: 1,
   })
+
+  if (knowledge.code === 400) {
+    return notFound()
+  }
 
   const rule = await getRule({
     token: user?.token,
@@ -69,20 +87,33 @@ export default async function PemateriDivisiKnowledgePageNew() {
             title: "Pengetahuan",
           },
           {
-            href: "/pemateri-divisi/knowledge/new",
-            title: "Tambah Pengetahuan Baru",
+            href: `/pemateri-divisi/knowledge/update/${knowledge.data.id_knowledge}`,
+            title: knowledge.data.knowledge_title,
+          },
+          {
+            href: "#",
+            title: "Update",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Pengetahuan</CardTitle>
-          <CardDescription>Tambah Pengetahuan Baru</CardDescription>
+          <CardTitle className="text-xl">
+            Update Pengetahuan:{" "}
+            <span className="font-semibold">
+              {knowledge.data.knowledge_title}
+            </span>
+          </CardTitle>
+          <CardDescription>Update Pengetahuan yang sudah ada</CardDescription>
         </CardHeader>
 
         <CardContent>
-          <AddKnowledgeForm reference={reference} category={category} />
+          <UpdateKnowledgeForm
+            knowledge={knowledge.data}
+            category={category}
+            reference={reference}
+          />
         </CardContent>
       </Card>
     </DashboardShell>

@@ -73,10 +73,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-
-
-
-
 const formSchema = z.object({
   knowledge_title: z
     .string({
@@ -147,12 +143,14 @@ interface KnowledgeOperationsProps {
   knowledgeData: KnowledgeListResData
   categoryRes: CategoryListRes
   referenceResp: ReferenceListRes
+  updateRowLink?: string
 }
 
 export function KnowledgeOperations({
   knowledgeData,
   categoryRes,
   referenceResp,
+  updateRowLink,
 }: KnowledgeOperationsProps) {
   const { data: session } = useSession()
   const router = useRouter()
@@ -286,11 +284,15 @@ export function KnowledgeOperations({
                   // onSelect={() => setOpenEditKnowledgeSheet(true)}
                 >
                   <Link
-                    href={`/operator-lms/knowledge/update/${knowledgeData.id_knowledge}`}
+                    href={
+                      updateRowLink
+                        ? updateRowLink
+                        : `/operator-lms/knowledge/update/${knowledgeData.id_knowledge}`
+                    }
                     rel="noreferrer"
                     className="flex w-full cursor-default items-center"
                   >
-                    Edit
+                    Update
                     <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>

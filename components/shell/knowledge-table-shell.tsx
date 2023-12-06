@@ -17,7 +17,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 import { ContextMenu } from "../ui/context-menu"
 
-
 interface BadgeSwitchProps {
   approval: any
 }
@@ -243,12 +242,13 @@ export function KnowledgeTableShell({
               knowledgeData={knowledge}
               categoryRes={categoryResp}
               referenceResp={referenceResp}
+              updateRowLink={`${pathname}/update/${knowledge.id_knowledge}`}
             />
           )
         },
       },
     ],
-    [categoryResp, data, referenceResp]
+    [categoryResp, data, pathname, referenceResp]
   )
 
   return (
@@ -292,6 +292,7 @@ export function KnowledgeTableShell({
             })) as any,
           },
         ]}
+        newRowLink={`${pathname}/new`}
         pageCount={pageCount}
         searchableColumns={[
           {
