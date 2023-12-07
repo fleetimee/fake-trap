@@ -24,10 +24,6 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 
-
-
-
-
 interface PublicKnowledgeCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
   knowledge: CategoryOneResKnowledge
@@ -44,7 +40,10 @@ export function KnowledgeCard({
     <HoverCard>
       <HoverCardTrigger>
         <Card
-          className={cn("h-full overflow-hidden rounded-sm", className)}
+          className={cn(
+            "h-full overflow-hidden rounded-sm hover:border-primary ",
+            className
+          )}
           {...props}
         >
           <Link href={link}>

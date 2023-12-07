@@ -15,7 +15,6 @@ import {
   CardTitle,
 } from "./ui/card"
 
-
 interface MarketingCardProps {
   parentVariant: Variants
   childVariant: Variants
@@ -43,16 +42,10 @@ export function MarketingCard({
               href={feature.link}
               className={cn("flex h-full flex-col items-center justify-center")}
             >
-              <Card
-                key={feature.title}
-                className={cn("p-2")}
-                style={{
-                  backgroundImage: `url(https://img-c.udemycdn.com/course/750x422/4834448_66ec.jpg)`,
-                  backgroundSize: "cover",
-                }}
-              >
+              <Card key={feature.title} className="relative overflow-hidden">
+                <div className="bg-no-repeat, bg-[linear-gradient(to right bottom, rgba(126,213,111,0.8), rgba(40,180,133,0.8)), url(https://img-c.udemycdn.com/course/750x422/4834448_66ec.jpg)] absolute inset-0 bg-gradient-to-r  bg-contain bg-clip-content bg-right-bottom"></div>
                 <CardHeader className="text-primary">{feature.icon}</CardHeader>
-                <CardContent className="space-y-2">
+                <CardContent className="relative space-y-2">
                   <CardTitle className="font-heading text-primary">
                     {feature.title}
                   </CardTitle>

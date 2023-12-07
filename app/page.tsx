@@ -13,10 +13,6 @@ import { SiteHeader } from "@/components/layouts/site-header"
 import { MarketingCard } from "@/components/marketing-card"
 import { buttonVariants } from "@/components/ui/button"
 
-
-
-
-
 export const metadata = {
   title: "BPD E-learning: Pelajari apa saja, kapan saja, di mana saja",
   description: "fleetime",

@@ -7,10 +7,6 @@ import { CategoryListRes } from "@/types/category/res"
 import { CategoryCard } from "@/components/category-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 
-
-
-
-
 const parentVariant: Variants = {
   initial: {
     opacity: 0,
@@ -61,9 +57,6 @@ export function UserCategoryWrapper({
             <MotionDiv
               variants={childrenVariant}
               className="child group relative overflow-hidden rounded-md border"
-              whileHover={{
-                scale: 1.05,
-              }}
             >
               <CategoryCard
                 category={category}

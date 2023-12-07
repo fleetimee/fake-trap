@@ -132,6 +132,17 @@ interface GetCategoryByCreatorProps {
   createdBy?: string
 }
 
+/**
+ * Retrieves a list of categories based on the creator.
+ * @param token - The authentication token.
+ * @param page - The page number.
+ * @param limit - The maximum number of categories to retrieve per page.
+ * @param sortBy - The field to sort the categories by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the categories. Defaults to "desc".
+ * @param searchQuery - The search query to filter the categories.
+ * @param createdBy - The creator of the categories.
+ * @returns A promise that resolves to the list of categories.
+ */
 export async function getCategoryByCreator({
   token,
   page,
@@ -184,6 +195,130 @@ export async function getListCategory({
   )
 
   return await categoryList.json()
+}
+
+interface GetCategoryWithKnowledge {
+  token: string | undefined
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+/**
+ * Retrieves a list of categories with associated knowledge.
+ *
+ * @param token - The authentication token.
+ * @param page - The page number to retrieve.
+ * @param limit - The maximum number of categories to retrieve per page.
+ * @param sortBy - The field to sort the categories by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the categories. Defaults to "desc".
+ * @param searchQuery - The search query to filter the categories.
+ * @returns A promise that resolves to a CategoryListRes object containing the list of categories.
+ */
+export async function getCategoriesWithKnowledge({
+  token,
+  page,
+  limit,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetCategoryWithKnowledge): Promise<CategoryListRes> {
+  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/haveKnowledge`
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetCategoryKnowledge {
+  token: string | undefined
+  idCategory: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+/**
+ * Retrieves a list of knowledge items for a specific category.
+ *
+ * @param {GetCategoryKnowledge} options - The options for fetching category knowledge.
+ * @returns {Promise<KnowledgeListRes>} - A promise that resolves to the list of knowledge items.
+ */
+export async function getCategoryKnowledge({
+  token,
+  idCategory,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetCategoryKnowledge): Promise<KnowledgeListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/fetchKnowledge/${idCategory}`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
 }
 
 interface GetOneCategoryProps {
