@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -5,6 +6,8 @@ import { getOneThread, getPostsList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { ForumPost } from "@/components/app/course/detail/forum/ui"
 import { Editor } from "@/components/editor"
+import { Icons } from "@/components/icons"
+import { buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
 interface ThreadPageProps {
@@ -48,6 +51,20 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
       {/* <Editor id_threads={parseInt(params.idThreads)} /> */}
 
       {posts.data?.map((post) => <ForumPost key={post.id_post} post={post} />)}
+
+      <div className="flex justify-end">
+        <Link
+          href={`/editor/${params.idThreads}`}
+          className={buttonVariants({
+            variant: "outline",
+            size: "lg",
+            className: "flex w-[200px] ",
+          })}
+        >
+          <Icons.comment className="mr-2 h-4 w-4" />
+          Balas
+        </Link>
+      </div>
     </div>
   )
 }

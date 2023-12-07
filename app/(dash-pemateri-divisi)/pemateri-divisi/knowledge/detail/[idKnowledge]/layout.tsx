@@ -1,5 +1,4 @@
 import React from "react"
-import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -8,30 +7,9 @@ import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
-import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import SectionBanner from "@/components/create-section-banner"
-import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface KnowledgeDetailLayoutProps {
   children: React.ReactNode

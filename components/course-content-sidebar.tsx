@@ -17,8 +17,10 @@ import { Card } from "@/components/ui/card"
 import {
   ContextMenu,
   ContextMenuContent,
+  ContextMenuItem,
   ContextMenuLabel,
   ContextMenuSeparator,
+  ContextMenuShortcut,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -26,6 +28,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { EmptyContent } from "./app/knowledge/detail/ui"
 import { CreateQuizDropdownButton } from "./create-quiz-dropwdown"
+import { DeleteSection } from "./delete-section"
 
 interface CourseContentSidebarProps {
   course: CourseOneRes
@@ -65,7 +68,44 @@ export function CourseContentSidebar({
                     value={section.id_section.toString()}
                   >
                     <AccordionTrigger className="font-heading text-base font-bold">
-                      {`Konten ${section.section_title}`}
+                      <ContextMenu>
+                        <ContextMenuTrigger>
+                          {/* Trigger for Context Menu */}
+                          {`Konten ${section.section_title}`}
+                        </ContextMenuTrigger>
+                        <ContextMenuContent className="w-64">
+                          <ContextMenuItem inset disabled>
+                            Section
+                            <ContextMenuShortcut>Ctrl + S</ContextMenuShortcut>
+                          </ContextMenuItem>
+
+                          <ContextMenuSeparator />
+
+                          {/* Update Section */}
+                          <ContextMenuItem inset>
+                            <Link
+                              href={`${baseUrl}/section/update/${section.id_section}`}
+                              className="flex w-full cursor-pointer items-center justify-between"
+                            >
+                              Update
+                              <ContextMenuShortcut>
+                                Ctrl + U
+                              </ContextMenuShortcut>
+                            </Link>
+                          </ContextMenuItem>
+
+                          {/* Delete Section */}
+                          <DeleteSection
+                            idSection={section.id_section.toString()}
+                          />
+
+                          {/* Section Name */}
+                          <ContextMenuItem inset disabled>
+                            {section.section_title}
+                            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                          </ContextMenuItem>
+                        </ContextMenuContent>
+                      </ContextMenu>
                     </AccordionTrigger>
 
                     {section?.content ? (
@@ -78,7 +118,6 @@ export function CourseContentSidebar({
                                 className="py-1"
                               >
                                 <Link
-                                  // href={`${pathname}/section/${section.id_section}/content/${content.id_content}`}
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
@@ -96,10 +135,6 @@ export function CourseContentSidebar({
                         <AccordionContent className="py-1">
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            // videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
-                            // fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
-                            // articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
-
                             videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
                             fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
                             articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
@@ -122,10 +157,6 @@ export function CourseContentSidebar({
                           </AccordionContent>
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            // videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
-                            // fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
-                            // articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
-
                             videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
                             fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
                             articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
@@ -165,7 +196,41 @@ export function CourseContentSidebar({
                     value={section.id_section.toString()}
                   >
                     <AccordionTrigger className="font-heading text-base font-bold">
-                      {` Test ${section.section_title}`}
+                      <ContextMenu>
+                        <ContextMenuTrigger>{` Test ${section.section_title}`}</ContextMenuTrigger>
+                        <ContextMenuContent className="w-64">
+                          <ContextMenuItem inset disabled>
+                            Section
+                            <ContextMenuShortcut>Ctrl + S</ContextMenuShortcut>
+                          </ContextMenuItem>
+
+                          <ContextMenuSeparator />
+
+                          {/* Update Section */}
+                          <ContextMenuItem inset>
+                            <Link
+                              href={`${baseUrl}/section/update/${section.id_section}`}
+                              className="flex w-full cursor-pointer items-center justify-between"
+                            >
+                              Update
+                              <ContextMenuShortcut>
+                                Ctrl + U
+                              </ContextMenuShortcut>
+                            </Link>
+                          </ContextMenuItem>
+
+                          {/* Delete Section */}
+                          <DeleteSection
+                            idSection={section.id_section.toString()}
+                          />
+
+                          {/* Section Name */}
+                          <ContextMenuItem inset disabled>
+                            {section.section_title}
+                            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                          </ContextMenuItem>
+                        </ContextMenuContent>
+                      </ContextMenu>
                     </AccordionTrigger>
 
                     {section?.quiz ? (

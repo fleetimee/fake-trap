@@ -11,10 +11,6 @@ import {
   ContextMenuShortcut,
 } from "@/components/ui/context-menu"
 
-
-
-
-
 interface KnowledgeDeleteSectionProcessProps {
   idSection: string
   token: string | undefined
@@ -56,9 +52,7 @@ interface KnowledgeDeleteSectionProps {
   idSection: string
 }
 
-export function KnowledgeDeleteSection({
-  idSection,
-}: KnowledgeDeleteSectionProps) {
+export function DeleteSection({ idSection }: KnowledgeDeleteSectionProps) {
   const { data: session } = useSession()
 
   const [isPending, startTransition] = React.useTransition()

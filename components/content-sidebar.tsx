@@ -6,7 +6,7 @@ import Link from "next/link"
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { KnowledgeDeleteContent } from "@/components/delete-content"
-import { KnowledgeDeleteSection } from "@/components/delete-section"
+import { DeleteSection } from "@/components/delete-section"
 import {
   Accordion,
   AccordionContent,
@@ -68,6 +68,7 @@ export function KnowledgeContentSidebar({
                     <AccordionTrigger className="font-heading text-base font-bold">
                       <ContextMenu key={section.id_section}>
                         <ContextMenuTrigger>
+                          {/* The Trigger is the Accordion Title */}
                           {section.section_title}
                         </ContextMenuTrigger>
                         <ContextMenuContent className="w-64">
@@ -77,7 +78,7 @@ export function KnowledgeContentSidebar({
                           </ContextMenuItem>
 
                           <ContextMenuSeparator />
-
+                          {/* Update Section */}
                           <ContextMenuItem inset>
                             <Link
                               href={`${baseUrl}/section/update/${section.id_section}`}
@@ -88,7 +89,8 @@ export function KnowledgeContentSidebar({
                             </Link>
                           </ContextMenuItem>
 
-                          <KnowledgeDeleteSection
+                          {/* Delete Section */}
+                          <DeleteSection
                             idSection={section.id_section.toString()}
                           />
 

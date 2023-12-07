@@ -1,4 +1,3 @@
-import { EditorParser } from "@mobtakr/editorjs-parser"
 import Blocks from "editorjs-blocks-react-renderer"
 import { generateFromString } from "generate-avatar"
 
@@ -26,8 +25,8 @@ export function ForumPost({ post }: ForumPost) {
         </p>
       </div>
       <Separator className="my-6" />
-      <div className="grid grid-cols-12">
-        <div className="col-span-2 mr-4 flex max-h-full flex-col items-center justify-start gap-4">
+      <div className="grid sm:grid-cols-1 lg:grid-cols-12">
+        <div className="mr-4 flex max-h-full flex-col items-center justify-start gap-4 sm:col-span-full lg:col-span-2">
           <Avatar className="h-20 w-20 border-2 border-black bg-white">
             <AvatarImage
               src={`data:image/svg+xml;utf8,${generateFromString(
@@ -36,10 +35,10 @@ export function ForumPost({ post }: ForumPost) {
             />
             <AvatarFallback />
           </Avatar>
-          <p className="font-heading text-2xl">{post.username}</p>
+          <p className="truncate font-sans text-lg">{post.username}</p>{" "}
         </div>
 
-        <div className="whatever-you-want col-span-10 ml-4 border-2 border-black bg-white p-4">
+        <div className="whatever-you-want ml-4 border-2 border-black bg-white p-4 sm:col-span-full lg:col-span-10">
           <Blocks data={contentParsed} />
         </div>
       </div>

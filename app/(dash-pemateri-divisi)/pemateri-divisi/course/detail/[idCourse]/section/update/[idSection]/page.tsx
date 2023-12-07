@@ -6,16 +6,16 @@ import { getCurrentUser } from "@/lib/session"
 import { UpdateSectionForm } from "@/components/forms/update-knowledge-section-form"
 import { Separator } from "@/components/ui/separator"
 
-interface KnowledgeSectionUpdatePageProps {
+interface CourseSectionUpdatePageProps {
   params: {
-    idKnowledge: string
+    idCourse: string
     idSection: string
   }
 }
 
-export default async function KnowledgeSectionUpdatePage({
+export default async function CourseSectionUpdatePage({
   params,
-}: KnowledgeSectionUpdatePageProps) {
+}: CourseSectionUpdatePageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -23,7 +23,7 @@ export default async function KnowledgeSectionUpdatePage({
   }
 
   const section = await getOneSection({
-    token: user?.token,
+    token: user.token,
     idSection: params.idSection,
   })
 

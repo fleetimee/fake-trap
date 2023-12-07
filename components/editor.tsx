@@ -10,19 +10,14 @@ import * as z from "zod"
 
 import "@/styles/editor.css"
 
+import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
+import { ErrorResponse } from "@/types/error-res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-import { buttonVariants } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 const formSchema = z.object({
   id_threads: z.number().optional(),
@@ -66,6 +61,8 @@ export function Editor({ id_threads }: EditorProps) {
     const LinkTool = (await import("@editorjs/link")).default
     // @ts-ignore
     const InlineCode = (await import("@editorjs/inline-code")).default
+    // @ts-ignore
+    const SimpleImage = (await import("@editorjs/simple-image")).default
 
     const body = formSchema.parse(formSchema)
 
@@ -86,6 +83,7 @@ export function Editor({ id_threads }: EditorProps) {
           inlineCode: InlineCode,
           table: Table,
           embed: Embed,
+          image: SimpleImage,
         },
       })
     }
@@ -135,55 +133,68 @@ export function Editor({ id_threads }: EditorProps) {
 
     setIsSaving(false)
 
-    if (!res?.ok) {
+    if (res?.ok) {
+      sonnerToast.success("Berhasil", {
+        description: "Post berhasil disimpan.",
+      })
+
+      ref.current?.clear()
+      router.refresh()
+      router.back()
+    } else {
+      const errorResponse: ErrorResponse = await res.json()
+
       sonnerToast.error("Gagal", {
-        description: "Post gagal disimpan. Silahkan coba lagi.",
+        description: errorResponse.error,
       })
     }
-
-    ref.current?.clear()
-    router.refresh()
-
-    return sonnerToast.success("Berhasil", {
-      description: "Post berhasil disimpan.",
-    })
   }
 
   return (
-    <Card className="grid items-center justify-center p-8">
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid w-full gap-10">
-            <div className="prose prose-stone dark:prose-invert whatever-you-want mx-auto w-[800px]">
-              <TextareaAutosize
-                id="title"
-                disabled
-                className="dis w-full resize-none appearance-none overflow-hidden bg-transparent text-xs font-bold focus:outline-none"
-                {...register("content")}
-              />
-              <div
-                id="editor"
-                className=" min-h-[50px] rounded-2xl border  p-4"
-              />
-              <p className="text-sm text-gray-500">
-                Use{" "}
-                <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-                  Tab
-                </kbd>{" "}
-                to open the command menu.
-              </p>
-            </div>
-            <div className="grid w-full grid-cols-1 items-center justify-between">
-              <button type="submit" className={cn(buttonVariants())}>
-                {isSaving && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                <span>Save</span>
-              </button>
-            </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid w-full gap-10">
+        <div className="flex w-full items-center justify-between">
+          <div className="flex items-center space-x-10">
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={() => {
+                router.back()
+              }}
+            >
+              <>
+                <Icons.chevronLeft className="mr-2 h-4 w-4" />
+                Back
+              </>
+            </Button>
+            {/* <p className="text-sm text-muted-foreground">
+              {post.published ? "Published" : "Draft"}
+            </p> */}
           </div>
-        </form>
-      </CardContent>
-    </Card>
+          <button type="submit" className={cn(buttonVariants())}>
+            {isSaving && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            <span>Save</span>
+          </button>
+        </div>
+        <div className="prose prose-stone dark:prose-invert whatever-you-want mx-auto w-[800px]">
+          <TextareaAutosize
+            id="title"
+            disabled
+            className="dis w-full resize-none appearance-none overflow-hidden bg-transparent text-xs font-bold focus:outline-none"
+            {...register("content")}
+          />
+          <div id="editor" className="min-h-[500px]" />
+          <p className="text-sm text-gray-500">
+            Use{" "}
+            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+              Tab
+            </kbd>{" "}
+            to open the command menu.
+          </p>
+        </div>
+      </div>
+    </form>
   )
 }
