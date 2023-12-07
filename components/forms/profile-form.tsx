@@ -78,12 +78,11 @@ export function ProfileForm({ person }: ProfileFormProps) {
         <FormField
           control={form.control}
           name="username"
-          disabled
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} disabled={isPending} />
+                <Input placeholder="shadcn" {...field} disabled />
               </FormControl>
               <FormDescription>
                 Ini merupakan username yang akan digunakan untuk login anda.
