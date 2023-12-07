@@ -45,7 +45,7 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
 
       <p className="font-heading text-2xl">Balasan</p>
 
-      <Editor id_threads={parseInt(params.idThreads)} />
+      {/* <Editor id_threads={parseInt(params.idThreads)} /> */}
 
       {posts.data?.map((post) => <ForumPost key={post.id_post} post={post} />)}
     </div>

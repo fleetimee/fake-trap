@@ -32,6 +32,7 @@ interface UserSubmittedAnswerFormProps {
   question: QuizOneResQuestion[]
   quiz: QuizOneRes
   baseUrl: string
+  isPreviewOnly?: boolean
 }
 
 type Inputs = z.infer<typeof userSubmittedAnswerSchema>
@@ -40,6 +41,7 @@ export function UserSubmittedAnswerFormProps({
   question,
   quiz,
   baseUrl,
+  isPreviewOnly = false,
 }: UserSubmittedAnswerFormProps) {
   const { data: session } = useSession()
   const [key, setKey] = useState(0)
@@ -152,6 +154,7 @@ export function UserSubmittedAnswerFormProps({
                           <FormControl>
                             <RadioGroup
                               key={key}
+                              disabled={isPending || isPreviewOnly}
                               className="grid grid-cols-2 gap-4 xl:grid-cols-2"
                               // value={field.value.toString()}
                               onValueChange={(value) => {
@@ -190,14 +193,14 @@ export function UserSubmittedAnswerFormProps({
           </Card>
 
           <div className="grid grid-cols-1 items-center justify-between gap-6 py-2 xl:grid-cols-2">
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending || isPreviewOnly}>
               {isPending && <Icons.spinner className="animate-spin" />}
               Kirim Jawaban
             </Button>
 
             <Button
               type="reset"
-              disabled={isPending}
+              disabled={isPending || isPreviewOnly}
               variant="outline"
               onClick={() => {
                 setKey((prev) => prev + 1)

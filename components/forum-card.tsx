@@ -17,17 +17,14 @@ interface ForumCardProps {
 
 export function ForumCard({ ...props }: ForumCardProps) {
   return (
-    <Card
-      key={props.idThreads}
-      className="border-4 border-black bg-yellow-300 p-8 text-black"
-    >
+    <Card key={props.idThreads} className="rounded-md">
       <CardHeader>
         <Link
           href={{
             pathname: props.linkString,
           }}
         >
-          <CardTitle className="font-heading text-2xl font-bold hover:text-blue-600 hover:underline">
+          <CardTitle className="block -translate-x-2 -translate-y-2 rounded-md border-2 border-black bg-yellow-500 p-4 text-2xl font-bold hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
             {props.title}
           </CardTitle>
         </Link>
