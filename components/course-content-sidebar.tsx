@@ -29,11 +29,13 @@ import { CreateQuizDropdownButton } from "./create-quiz-dropwdown"
 
 interface CourseContentSidebarProps {
   course: CourseOneRes
+  baseUrl: string
 }
 
-export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
-  const pathname = usePathname()
-
+export function CourseContentSidebar({
+  course,
+  baseUrl,
+}: CourseContentSidebarProps) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
@@ -76,7 +78,8 @@ export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
                                 className="py-1"
                               >
                                 <Link
-                                  href={`${pathname}/section/${section.id_section}/content/${content.id_content}`}
+                                  // href={`${pathname}/section/${section.id_section}/content/${content.id_content}`}
+                                  href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
                                     {content.content_title}
@@ -93,9 +96,13 @@ export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
                         <AccordionContent className="py-1">
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
+                            // videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
+                            // fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
+                            // articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
+
+                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
                           />
                         </AccordionContent>
                       </>
@@ -115,9 +122,13 @@ export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
                           </AccordionContent>
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
+                            // videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
+                            // fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
+                            // articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
+
+                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
                           />
                         </div>
                       </AccordionContent>
@@ -125,7 +136,15 @@ export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
                   </AccordionItem>
                 ))}
               </Accordion>
-            ) : null}
+            ) : (
+              <EmptyContent className="flex h-[50px] items-center justify-center">
+                <EmptyContent.Icon name="empty" />
+                <EmptyContent.Title>Belum ada section</EmptyContent.Title>
+                <EmptyContent.Description>
+                  Silahkan tambahkan section pada tombol diatas
+                </EmptyContent.Description>
+              </EmptyContent>
+            )}
           </ScrollArea>
         </TabsContent>
 
@@ -157,7 +176,8 @@ export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
                             className="py-1"
                           >
                             <Link
-                              href={`${pathname}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
+                              // href={`${pathname}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
+                              href={`${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
                             >
                               <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
                                 {quiz.quiz_title}
@@ -168,7 +188,9 @@ export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
                         <AccordionContent className="py-1">
                           {/* Create quiz button */}
                           <CreateQuizDropdownButton
-                            quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
+                            // quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
+
+                            quizCreationUrl={`${baseUrl}/section/${section.id_section}/quiz/multiple-choice/new`}
                           />
                         </AccordionContent>
                       </>
@@ -188,7 +210,8 @@ export function CourseContentSidebar({ course }: CourseContentSidebarProps) {
                           </AccordionContent>
                           {/* Create content button */}
                           <CreateQuizDropdownButton
-                            quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
+                            // quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
+                            quizCreationUrl={`${baseUrl}/section/${section.id_section}/quiz/multiple-choice/new`}
                           />
                         </div>
                       </AccordionContent>

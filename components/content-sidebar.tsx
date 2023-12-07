@@ -2,7 +2,6 @@
 
 import React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
@@ -39,8 +38,6 @@ export function KnowledgeContentSidebar({
   knowledge,
   baseUrl,
 }: KnowledgeContentSidebarProps) {
-  const pathname = usePathname()
-
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
@@ -83,8 +80,7 @@ export function KnowledgeContentSidebar({
 
                           <ContextMenuItem inset>
                             <Link
-                              // href={`${baseUrl}/section/update/${section.id_section}`}
-                              href={`${pathname}/section/update/${section.id_section}`}
+                              href={`${baseUrl}/section/update/${section.id_section}`}
                               className="flex w-full items-center justify-between"
                             >
                               Update
@@ -114,8 +110,7 @@ export function KnowledgeContentSidebar({
                                 className="py-1"
                               >
                                 <Link
-                                  // href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
-                                  href={`${pathname}/section/${section.id_section}/content/${content.id_content}`}
+                                  href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
                                     {content.content_title}
@@ -136,13 +131,9 @@ export function KnowledgeContentSidebar({
                         <AccordionContent className="py-1">
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            // videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            // fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            // articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-
-                            videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
+                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
                           />
                         </AccordionContent>
                       </>
@@ -162,13 +153,13 @@ export function KnowledgeContentSidebar({
                           </AccordionContent>
                           {/* Create content button */}
                           <CreateContentDropdownButton
-                            // videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            // fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            // articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
+                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
 
-                            videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
+                            // videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
+                            // fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
+                            // articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
                           />
                         </div>
                       </AccordionContent>

@@ -140,7 +140,10 @@ export default async function CourseDetailLayout({
         <Content title={course?.data?.course_name}>{children}</Content>
 
         {/* Sidebar Section */}
-        <CourseContentSidebar course={course} />
+        <CourseContentSidebar
+          course={course}
+          baseUrl={`/pemateri-divisi/course/detail/${params.idCourse}`}
+        />
       </div>
     </DashboardShell>
   )
