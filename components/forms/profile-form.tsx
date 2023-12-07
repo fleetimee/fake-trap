@@ -22,8 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { Input } from "../ui/input";
-
+import { Input } from "../ui/input"
 
 type Inputs = z.infer<typeof profileSchema>
 
@@ -79,6 +78,7 @@ export function ProfileForm({ person }: ProfileFormProps) {
         <FormField
           control={form.control}
           name="username"
+          disabled
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
