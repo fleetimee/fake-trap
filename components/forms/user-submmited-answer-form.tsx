@@ -1,6 +1,7 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
@@ -12,7 +13,7 @@ import { ErrorResponse } from "@/types/error-res"
 import { QuizOneRes, QuizOneResQuestion } from "@/types/quiz/res"
 import { userSubmittedAnswerSchema } from "@/lib/validations/user-submitted-answer"
 import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
   Form,
@@ -25,9 +26,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
+import { EmptyContent } from "../app/knowledge/detail/ui"
+
 interface UserSubmittedAnswerFormProps {
   question: QuizOneResQuestion[]
   quiz: QuizOneRes
+  baseUrl: string
 }
 
 type Inputs = z.infer<typeof userSubmittedAnswerSchema>
@@ -35,8 +39,10 @@ type Inputs = z.infer<typeof userSubmittedAnswerSchema>
 export function UserSubmittedAnswerFormProps({
   question,
   quiz,
+  baseUrl,
 }: UserSubmittedAnswerFormProps) {
   const { data: session } = useSession()
+  const [key, setKey] = useState(0)
 
   const [isPending, startTransition] = React.useTransition()
 
@@ -87,6 +93,29 @@ export function UserSubmittedAnswerFormProps({
     })
   }
 
+  if (!quiz.data.questions) {
+    return (
+      <EmptyContent className="h-[50px]">
+        <EmptyContent.Icon name="warning" />
+        <EmptyContent.Title>Oops</EmptyContent.Title>
+        <EmptyContent.Description>
+          Belum ada soal untuk Tes ini silahkan tambahkan soal terlebih dahulu
+        </EmptyContent.Description>
+
+        <Link
+          href={`${baseUrl}exercise/detail/${quiz.data.id_quiz}/soal`}
+          className={buttonVariants({
+            size: "sm",
+            className:
+              "mt-4 w-full bg-blue-500 text-center text-white hover:bg-blue-600",
+          })}
+        >
+          Tambah Soal
+        </Link>
+      </EmptyContent>
+    )
+  }
+
   return (
     <div>
       <Form {...form}>
@@ -122,6 +151,7 @@ export function UserSubmittedAnswerFormProps({
                           </FormLabel>
                           <FormControl>
                             <RadioGroup
+                              key={key}
                               className="grid grid-cols-2 gap-4 xl:grid-cols-2"
                               // value={field.value.toString()}
                               onValueChange={(value) => {
@@ -170,14 +200,11 @@ export function UserSubmittedAnswerFormProps({
               disabled={isPending}
               variant="outline"
               onClick={() => {
-                // clear form values first
-                form.reset()
+                setKey((prev) => prev + 1)
 
-                // trigger reset manually
-                form.trigger()
-
-                // reset form state
-                form.reset()
+                sonnerToast.info("Reset", {
+                  description: "Jawaban berhasil direset",
+                })
               }}
             >
               Reset

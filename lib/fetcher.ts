@@ -659,6 +659,7 @@ export async function getQuizByCreator({
 interface GetQuizListWithNullSectionProps {
   token: string | undefined
   isNull: boolean
+  createdBy?: string
 }
 
 /**
@@ -670,18 +671,22 @@ interface GetQuizListWithNullSectionProps {
 export async function getQuizListWithNullSection({
   token,
   isNull,
+  createdBy,
 }: GetQuizListWithNullSectionProps): Promise<QuizListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz?isNullSection=${isNull}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz?isNullSection=${isNull}`
+
+  if (createdBy) {
+    url += `&createdBy=${createdBy}`
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
 
   return await res.json()
 }

@@ -31,7 +31,7 @@ export default async function CourseQuizStartPage({
     <UserSubmittedAnswerFormProps
       question={quiz?.data?.questions}
       quiz={quiz}
-      baseUrl="/operator-lms/"
+      baseUrl="/pemateri-divisi/"
     />
   )
 }
