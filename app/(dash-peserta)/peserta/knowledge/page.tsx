@@ -77,7 +77,7 @@ export default async function PesertaKnowledgePage() {
             <KnowledgeCard
               key={knowledge.id_knowledge}
               knowledge={knowledge}
-              link={`/public-knowledge/${knowledge.id_knowledge}`}
+              link={`/peserta/knowledge/detail/${knowledge.id_knowledge}`}
             />
           ))}
         </React.Suspense>

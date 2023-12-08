@@ -10,6 +10,7 @@ import {
   getReference,
 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import {
   QuizAnswerPromptCard,
   QuizCalendarCard,
@@ -47,6 +48,8 @@ export default async function ExerciseDetailPage({
   params,
 }: ExerciseDetailPageProps) {
   const user = await getCurrentUser()
+
+  const tokenExtracted = extractToken(user?.token)
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -94,7 +97,10 @@ export default async function ExerciseDetailPage({
     },
   }
 
-  if (exercise.code === 400) {
+  if (
+    exercise.code === 400 ||
+    exercise.data.created_by !== tokenExtracted?.id
+  ) {
     return notFound()
   }
 

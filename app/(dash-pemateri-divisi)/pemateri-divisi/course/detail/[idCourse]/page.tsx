@@ -28,7 +28,7 @@ export default async function CourseDetailPage({
     idCourse: params.idCourse,
   })
 
-  if (course.code === 400) {
+  if (course.code === 400 || course.data.tutor_uuid !== tokenExtracted?.id) {
     return notFound()
   }
 

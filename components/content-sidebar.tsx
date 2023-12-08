@@ -32,11 +32,13 @@ import { EmptyContent } from "./app/knowledge/detail/ui"
 interface KnowledgeContentSidebarProps {
   knowledge: KnowledgeOneRes
   baseUrl: string
+  canCreateContent?: boolean
 }
 
 export function KnowledgeContentSidebar({
   knowledge,
   baseUrl,
+  canCreateContent = true,
 }: KnowledgeContentSidebarProps) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -71,34 +73,39 @@ export function KnowledgeContentSidebar({
                           {/* The Trigger is the Accordion Title */}
                           {section.section_title}
                         </ContextMenuTrigger>
-                        <ContextMenuContent className="w-64">
-                          <ContextMenuItem inset disabled>
-                            Section
-                            <ContextMenuShortcut>⌘1</ContextMenuShortcut>
-                          </ContextMenuItem>
+                        {
+                          // This is the Context Menu Content
+                          canCreateContent ? (
+                            <ContextMenuContent className="w-64">
+                              <ContextMenuItem inset disabled>
+                                Section
+                                <ContextMenuShortcut>⌘1</ContextMenuShortcut>
+                              </ContextMenuItem>
 
-                          <ContextMenuSeparator />
-                          {/* Update Section */}
-                          <ContextMenuItem inset>
-                            <Link
-                              href={`${baseUrl}/section/update/${section.id_section}`}
-                              className="flex w-full items-center justify-between"
-                            >
-                              Update
-                              <ContextMenuShortcut>⌘[</ContextMenuShortcut>
-                            </Link>
-                          </ContextMenuItem>
+                              <ContextMenuSeparator />
+                              {/* Update Section */}
+                              <ContextMenuItem inset>
+                                <Link
+                                  href={`${baseUrl}/section/update/${section.id_section}`}
+                                  className="flex w-full items-center justify-between"
+                                >
+                                  Update
+                                  <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+                                </Link>
+                              </ContextMenuItem>
 
-                          {/* Delete Section */}
-                          <DeleteSection
-                            idSection={section.id_section.toString()}
-                          />
+                              {/* Delete Section */}
+                              <DeleteSection
+                                idSection={section.id_section.toString()}
+                              />
 
-                          <ContextMenuItem inset disabled>
-                            {section.section_title}
-                            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
-                          </ContextMenuItem>
-                        </ContextMenuContent>
+                              <ContextMenuItem inset disabled>
+                                {section.section_title}
+                                <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                              </ContextMenuItem>
+                            </ContextMenuContent>
+                          ) : null
+                        }
                       </ContextMenu>
                     </AccordionTrigger>
 
@@ -120,24 +127,30 @@ export function KnowledgeContentSidebar({
                                 </Link>
                               </AccordionContent>
                             </ContextMenuTrigger>
-                            <ContextMenuContent className="w-64">
-                              <ContextMenuLabel inset>Options</ContextMenuLabel>
-                              <ContextMenuSeparator />
-                              {/* This is custom component to delete content */}
-                              <KnowledgeDeleteContent
-                                idContent={content.id_content.toString()}
-                              />
-                            </ContextMenuContent>
+                            {canCreateContent ? (
+                              <ContextMenuContent className="w-64">
+                                <ContextMenuLabel inset>
+                                  Options
+                                </ContextMenuLabel>
+                                <ContextMenuSeparator />
+                                {/* This is custom component to delete content */}
+                                <KnowledgeDeleteContent
+                                  idContent={content.id_content.toString()}
+                                />
+                              </ContextMenuContent>
+                            ) : null}
                           </ContextMenu>
                         ))}
-                        <AccordionContent className="py-1">
-                          {/* Create content button */}
-                          <CreateContentDropdownButton
-                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-                          />
-                        </AccordionContent>
+                        {canCreateContent ? (
+                          <AccordionContent className="py-1">
+                            {/* Create content button */}
+                            <CreateContentDropdownButton
+                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
+                            />
+                          </AccordionContent>
+                        ) : null}
                       </>
                     ) : (
                       <AccordionContent className="py-4">
@@ -154,15 +167,13 @@ export function KnowledgeContentSidebar({
                             </EmptyContent>
                           </AccordionContent>
                           {/* Create content button */}
-                          <CreateContentDropdownButton
-                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-
-                            // videoCreationUrl={`${pathname}/section/${section.id_section}/content/video/new`}
-                            // fileCreationUrl={`${pathname}/section/${section.id_section}/content/file/new`}
-                            // articleCreationUrl={`${pathname}/section/${section.id_section}/content/article/new`}
-                          />
+                          {canCreateContent ? (
+                            <CreateContentDropdownButton
+                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
+                            />
+                          ) : null}
                         </div>
                       </AccordionContent>
                     )}

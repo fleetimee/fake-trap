@@ -4,7 +4,6 @@ import { notFound, redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
 
 interface KnowledgeDetailPageProps {
   params: {
@@ -17,8 +16,6 @@ export default async function KnowledgeDetailPage({
 }: KnowledgeDetailPageProps) {
   const user = await getCurrentUser()
 
-  const tokenExtracted = extractToken(user?.token)
-
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -28,7 +25,7 @@ export default async function KnowledgeDetailPage({
     token: user?.token,
   })
 
-  if (knowledge.data.created_by !== tokenExtracted?.id) {
+  if (knowledge.data.status !== "0031") {
     return notFound()
   }
 

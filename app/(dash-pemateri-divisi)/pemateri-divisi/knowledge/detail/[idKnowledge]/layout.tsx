@@ -42,8 +42,6 @@ export default async function KnowledgeDetailLayout({
 }: KnowledgeDetailLayoutProps) {
   const user = await getCurrentUser()
 
-  const tokenExtracted = extractToken(user?.token)
-
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -52,12 +50,6 @@ export default async function KnowledgeDetailLayout({
     idKnowledge: params.idKnowledge,
     token: user?.token,
   })
-
-  const createdBy = knowledge.data?.created_by
-
-  if (createdBy !== tokenExtracted?.id) {
-    return notFound()
-  }
 
   return (
     <DashboardShell>
