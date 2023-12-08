@@ -60,7 +60,10 @@ export default async function PemateriDivisiExercisePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddTestForm references={references} />
+          <AddTestForm
+            references={references}
+            baseUrl="/pemateri-divisi/exercise"
+          />
         </CardContent>
       </Card>
     </DashboardShell>

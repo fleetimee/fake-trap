@@ -37,18 +37,16 @@ import {
 } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 
-
-
-import { Icons } from "../icons";
-
+import { Icons } from "../icons"
 
 type Inputs = z.infer<typeof testSchema>
 
 interface AddTestFormProps {
   references: ReferenceListRes
+  baseUrl?: string
 }
 
-export function AddTestForm({ references }: AddTestFormProps) {
+export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -81,13 +79,23 @@ export function AddTestForm({ references }: AddTestFormProps) {
         })
 
         if (response.ok) {
+          const responseData = await response.json()
+
+          const newExerciseId = responseData.data
+
           sonnerToast.success("Berhasil", {
             description: "Tes berhasil dibuat",
           })
 
-          router.back()
-          router.refresh()
-          form.reset()
+          if (baseUrl) {
+            router.push(`${baseUrl}/detail/${newExerciseId}`)
+            router.refresh()
+            form.reset()
+          } else {
+            router.back()
+            router.refresh()
+            form.reset()
+          }
         } else {
           sonnerToast.error("Gagal", {
             description: "Tes gagal dibuat",
