@@ -412,6 +412,65 @@ export async function getKnowledgeV2({
   return await res.json()
 }
 
+interface GetKnowledgeUser {
+  token: string | undefined
+  page: number
+  limit: number
+  searchQuery?: string
+  sortField?: string
+  sortOrder?: string
+  status?: string
+}
+
+export async function getKnowledgeUser({
+  token,
+  page,
+  limit,
+  searchQuery = "",
+  sortField = "created_at",
+  sortOrder = "desc",
+  status = "0052",
+}: GetKnowledgeUser): Promise<KnowledgeListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/user/`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (sortField) {
+    url.searchParams.append("sortField", sortField)
+  }
+
+  if (sortOrder) {
+    url.searchParams.append("sortOrder", sortOrder)
+  }
+
+  if (status) {
+    url.searchParams.append("status", status)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
 interface GetKnowledgeByCreatedBy {
   userUuid: string
   token: string

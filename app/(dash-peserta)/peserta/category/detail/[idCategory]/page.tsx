@@ -1,3 +1,4 @@
+import React from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
@@ -5,6 +6,7 @@ import { authOptions } from "@/lib/auth"
 import { getCategoryKnowledge, getOneCategory } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
+import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
 
 interface DetailCategoryProps {
   params: {
@@ -61,13 +63,19 @@ export default async function DetailCategory({ params }: DetailCategoryProps) {
       </h1>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {knowledges.data.map((knowledge) => (
-          <KnowledgeCard
-            key={knowledge.id_knowledge}
-            knowledge={knowledge}
-            link={`/public-knowledge/${knowledge.id_knowledge}`}
-          />
-        ))}
+        <React.Suspense
+          fallback={Array.from({ length: 10 }).map((_, i) => (
+            <KnowledgeCardSkeleton key={i} />
+          ))}
+        >
+          {knowledges.data.map((knowledge) => (
+            <KnowledgeCard
+              key={knowledge.id_knowledge}
+              knowledge={knowledge}
+              link={`/public-knowledge/${knowledge.id_knowledge}`}
+            />
+          ))}
+        </React.Suspense>
       </div>
     </div>
   )
