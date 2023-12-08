@@ -6,7 +6,7 @@ import { getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
-import SectionBanner from "@/components/create-section-banner"
+import { SectionBanner } from "@/components/create-section-banner"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 

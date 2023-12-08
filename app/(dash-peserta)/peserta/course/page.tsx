@@ -3,7 +3,11 @@ import { redirect } from "next/navigation"
 
 import { UserEnrolledCourseListRes } from "@/types/me/res"
 import { authOptions } from "@/lib/auth"
-import { getUserEnrolledCourseList } from "@/lib/fetcher"
+import {
+  getOneCourse,
+  getOneUser,
+  getUserEnrolledCourseList,
+} from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import Component from "@/components/course-card"
@@ -66,8 +70,9 @@ export default async function PesertaCoursePage() {
         {userCourse.data.map((course) => (
           <CourseCardV2
             key={course.id_course}
-            courseAuthor="Pak Budi"
-            courseDate="2021-08-01"
+            courseId={course.id_course.toString()}
+            courseAuthor={course.tutor_name}
+            courseDate={new Date(course.created_at).toLocaleDateString()}
             courseDescription={course.course_desc}
             courseImage={course.image}
             courseTitle={course.course_name}

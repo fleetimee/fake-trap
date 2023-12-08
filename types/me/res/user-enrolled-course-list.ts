@@ -25,4 +25,5 @@ export type UserEnrolledCourseListResData = {
   user_uuid_request: string
   user_approver: string
   user_request: string
+  tutor_name: string
 }

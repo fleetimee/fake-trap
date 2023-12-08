@@ -187,11 +187,16 @@ export function Editor({ id_threads }: EditorProps) {
           />
           <div id="editor" className="min-h-[500px]" />
           <p className="text-sm text-gray-500">
-            Use{" "}
+            Gunakan{" "}
             <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
               Tab
             </kbd>{" "}
-            to open the command menu.
+            untuk membuka command menu
+          </p>
+
+          <p className="text-sm text-gray-500">
+            Anda dapat menyisipkan gambar dengan menarik dan meletakkan gambar
+            ke dalam editor.
           </p>
         </div>
       </div>

@@ -24,7 +24,7 @@ export function ForumCard({ ...props }: ForumCardProps) {
             pathname: props.linkString,
           }}
         >
-          <CardTitle className="block -translate-x-2 -translate-y-2 rounded-md border-2 border-black bg-yellow-500 p-4 text-2xl font-bold hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
+          <CardTitle className="block -translate-x-2 -translate-y-2 rounded-md border-2 border-black bg-primary p-4 text-2xl font-bold text-white hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
             {props.title}
           </CardTitle>
         </Link>
@@ -36,12 +36,12 @@ export function ForumCard({ ...props }: ForumCardProps) {
 
           <div className="flex items-center justify-end">
             <div className="grid grid-cols-2 justify-between">
-              <div className="mr-2 inline-flex text-green-500">
+              <div className="mr-2 inline-flex">
                 <Icons.user className="mr-2 h-8 w-8" />
                 {props.numberOfUsers}
               </div>
 
-              <div className="inline-flex text-red-600">
+              <div className="inline-flex ">
                 <Icons.comment className="mr-2 h-8 w-8" />
                 {props.numberOfUsers}
               </div>

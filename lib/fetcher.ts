@@ -712,6 +712,40 @@ export async function getUserEnrolledCourseList({
   return await res.json()
 }
 
+interface CheckUserEnrolledProps {
+  token: string | undefined
+  idCourse: string
+  uuid: string
+}
+
+/**
+ * Checks if a user is enrolled in a course.
+ * @param {CheckUserEnrolledProps} options - The options for checking user enrollment.
+ * @param {string} options.token - The user's authentication token.
+ * @param {string} options.idCourse - The ID of the course to check enrollment for.
+ * @param {string} options.uuid - The UUID of the user.
+ * @returns {Promise<any>} - A promise that resolves to the JSON response from the server.
+ */
+export async function checkUserEnrolled({
+  token,
+  idCourse,
+  uuid,
+}: CheckUserEnrolledProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/checkIfUserEnrolled/${idCourse}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 interface GetOneCourseProps {
   token: string | undefined
   idCourse: string

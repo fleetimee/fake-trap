@@ -68,6 +68,7 @@ export function CourseCard({ link, courseResponse }: CourseCardProps) {
 }
 
 interface CourseCardV2Props {
+  courseId: string
   courseTitle: string
   courseDescription: string
   courseDate: string
@@ -111,13 +112,15 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
 
         <CardFooter className="flex items-center justify-between border-t border-gray-200 bg-gray-50 p-6">
           <div className="text-sm">
-            <p className="leading-none text-gray-900">{props.courseAuthor}</p>
+            <p className="font-semibold leading-none text-gray-900">
+              {props.courseAuthor}
+            </p>
             <p className="text-gray-600">{props.courseDate}</p>
           </div>
           <div className="flex items-center space-x-1">
-            <Popover>
+            {/* <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline">Reveal Answer</Button>
+                <Button variant="outline">Ke Pelatihan</Button>
               </PopoverTrigger>
               <PopoverContent className="w-80">
                 <div className="p-4">
@@ -126,7 +129,16 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
                   </p>
                 </div>
               </PopoverContent>
-            </Popover>
+            </Popover> */}
+
+            <Link
+              href={`/peserta/course/detail/${props.courseId}`}
+              className={buttonVariants({
+                variant: "outline",
+              })}
+            >
+              Ke Pelatihan
+            </Link>
           </div>
         </CardFooter>
       </Card>

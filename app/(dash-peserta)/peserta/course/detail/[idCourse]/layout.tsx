@@ -3,9 +3,11 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
+import { Course } from "@/types/course-res"
 import { authOptions } from "@/lib/auth"
-import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
+import { checkUserEnrolled, getOneCourse, getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { Content } from "@/components/content"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
@@ -44,21 +46,33 @@ export default async function CourseDetailLayout({
 }: CourseDetailLayoutProps) {
   const user = await getCurrentUser()
 
+  const tokenExtracted = extractToken(user?.token)
+
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
   const course = await getOneCourse({
-    token: user?.token,
     idCourse: params.idCourse,
+    token: user?.token,
   })
 
   const knowledge = await getOneKnowledge({
-    token: user?.token,
     idKnowledge: course?.data?.id_knowledge.toString(),
+    token: user?.token,
   })
 
-  if (course.code === 400) {
+  if (course.code === 404) {
+    return notFound()
+  }
+
+  const checkEnrolled = await checkUserEnrolled({
+    idCourse: params.idCourse,
+    token: user?.token,
+    uuid: tokenExtracted?.id,
+  })
+
+  if (checkEnrolled.code === 404) {
     return notFound()
   }
 
@@ -67,24 +81,25 @@ export default async function CourseDetailLayout({
       <BreadCrumbs
         segments={[
           {
-            href: "/pemateri-divisi",
+            href: "/peserta",
             title: "Dashboard",
           },
           {
-            href: "/pemateri-divisi/course",
+            href: "/peserta/course",
             title: "Pelatihan",
           },
           {
-            href: `/pemateri-divisi/course/detail/${params.idCourse}`,
-            title: course?.data?.course_name,
+            href: `/peserta/course/detail/${params.idCourse}`,
+            title: course.data.course_name,
           },
         ]}
       />
 
       <SectionBanner
-        description={course?.data?.course_desc}
-        title={course?.data?.course_name}
-        urlLink={`/pemateri-divisi/course/detail/${params.idCourse}/section/new`}
+        description={course.data.course_desc}
+        title={course.data.course_name}
+        urlLink={`/peserta/course/detail/${params.idCourse}`}
+        canCreateSection={false}
       />
 
       <MotionDiv
@@ -105,9 +120,9 @@ export default async function CourseDetailLayout({
 
       <div className="flex items-center justify-end">
         <VercelToolbar
-          homeButton={`/pemateri-divisi/course/detail/${params.idCourse}`}
-          forumButton={`/pemateri-divisi/course/detail/${params.idCourse}/threads`}
-          userButton={`/pemateri-divisi/course/detail/${params.idCourse}/people`}
+          homeButton={`/peserta/course/detail/${params.idCourse}`}
+          forumButton={`/peserta/course/detail/${params.idCourse}/threads`}
+          userButton={`/peserta/course/detail/${params.idCourse}/people`}
         />
       </div>
 
@@ -115,13 +130,12 @@ export default async function CourseDetailLayout({
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
         id="scrollTarget"
       >
-        {/* Content Section */}
-        <Content title={course?.data?.course_name}>{children}</Content>
+        <Content title={course.data.course_name}>{children}</Content>
 
-        {/* Sidebar Section */}
         <CourseContentSidebar
           course={course}
-          baseUrl={`/pemateri-divisi/course/detail/${params.idCourse}`}
+          baseUrl={`/peserta/course/detail/${params.idCourse}`}
+          canCreateContent={false}
         />
       </div>
     </DashboardShell>

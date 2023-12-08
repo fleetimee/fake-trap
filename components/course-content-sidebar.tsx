@@ -33,11 +33,13 @@ import { DeleteSection } from "./delete-section"
 interface CourseContentSidebarProps {
   course: CourseOneRes
   baseUrl: string
+  canCreateContent?: boolean
 }
 
 export function CourseContentSidebar({
   course,
   baseUrl,
+  canCreateContent = true,
 }: CourseContentSidebarProps) {
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
@@ -73,38 +75,42 @@ export function CourseContentSidebar({
                           {/* Trigger for Context Menu */}
                           {`Konten ${section.section_title}`}
                         </ContextMenuTrigger>
-                        <ContextMenuContent className="w-64">
-                          <ContextMenuItem inset disabled>
-                            Section
-                            <ContextMenuShortcut>Ctrl + S</ContextMenuShortcut>
-                          </ContextMenuItem>
-
-                          <ContextMenuSeparator />
-
-                          {/* Update Section */}
-                          <ContextMenuItem inset>
-                            <Link
-                              href={`${baseUrl}/section/update/${section.id_section}`}
-                              className="flex w-full cursor-pointer items-center justify-between"
-                            >
-                              Update
+                        {canCreateContent ? (
+                          <ContextMenuContent className="w-64">
+                            <ContextMenuItem inset disabled>
+                              Section
                               <ContextMenuShortcut>
-                                Ctrl + U
+                                Ctrl + S
                               </ContextMenuShortcut>
-                            </Link>
-                          </ContextMenuItem>
+                            </ContextMenuItem>
 
-                          {/* Delete Section */}
-                          <DeleteSection
-                            idSection={section.id_section.toString()}
-                          />
+                            <ContextMenuSeparator />
 
-                          {/* Section Name */}
-                          <ContextMenuItem inset disabled>
-                            {section.section_title}
-                            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
-                          </ContextMenuItem>
-                        </ContextMenuContent>
+                            {/* Update Section */}
+                            <ContextMenuItem inset>
+                              <Link
+                                href={`${baseUrl}/section/update/${section.id_section}`}
+                                className="flex w-full cursor-pointer items-center justify-between"
+                              >
+                                Update
+                                <ContextMenuShortcut>
+                                  Ctrl + U
+                                </ContextMenuShortcut>
+                              </Link>
+                            </ContextMenuItem>
+
+                            {/* Delete Section */}
+                            <DeleteSection
+                              idSection={section.id_section.toString()}
+                            />
+
+                            {/* Section Name */}
+                            <ContextMenuItem inset disabled>
+                              {section.section_title}
+                              <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                            </ContextMenuItem>
+                          </ContextMenuContent>
+                        ) : null}
                       </ContextMenu>
                     </AccordionTrigger>
 
@@ -132,14 +138,16 @@ export function CourseContentSidebar({
                             </ContextMenuContent>
                           </ContextMenu>
                         ))}
-                        <AccordionContent className="py-1">
-                          {/* Create content button */}
-                          <CreateContentDropdownButton
-                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-                          />
-                        </AccordionContent>
+                        {canCreateContent ? (
+                          <AccordionContent className="py-1">
+                            {/* Create content button */}
+                            <CreateContentDropdownButton
+                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
+                            />
+                          </AccordionContent>
+                        ) : null}
                       </>
                     ) : (
                       <AccordionContent className="py-4">
@@ -156,11 +164,13 @@ export function CourseContentSidebar({
                             </EmptyContent>
                           </AccordionContent>
                           {/* Create content button */}
-                          <CreateContentDropdownButton
-                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-                          />
+                          {canCreateContent ? (
+                            <CreateContentDropdownButton
+                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
+                            />
+                          ) : null}
                         </div>
                       </AccordionContent>
                     )}
@@ -198,38 +208,42 @@ export function CourseContentSidebar({
                     <AccordionTrigger className="font-heading text-base font-bold">
                       <ContextMenu>
                         <ContextMenuTrigger>{` Test ${section.section_title}`}</ContextMenuTrigger>
-                        <ContextMenuContent className="w-64">
-                          <ContextMenuItem inset disabled>
-                            Section
-                            <ContextMenuShortcut>Ctrl + S</ContextMenuShortcut>
-                          </ContextMenuItem>
-
-                          <ContextMenuSeparator />
-
-                          {/* Update Section */}
-                          <ContextMenuItem inset>
-                            <Link
-                              href={`${baseUrl}/section/update/${section.id_section}`}
-                              className="flex w-full cursor-pointer items-center justify-between"
-                            >
-                              Update
+                        {canCreateContent ? (
+                          <ContextMenuContent className="w-64">
+                            <ContextMenuItem inset disabled>
+                              Section
                               <ContextMenuShortcut>
-                                Ctrl + U
+                                Ctrl + S
                               </ContextMenuShortcut>
-                            </Link>
-                          </ContextMenuItem>
+                            </ContextMenuItem>
 
-                          {/* Delete Section */}
-                          <DeleteSection
-                            idSection={section.id_section.toString()}
-                          />
+                            <ContextMenuSeparator />
 
-                          {/* Section Name */}
-                          <ContextMenuItem inset disabled>
-                            {section.section_title}
-                            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
-                          </ContextMenuItem>
-                        </ContextMenuContent>
+                            {/* Update Section */}
+                            <ContextMenuItem inset>
+                              <Link
+                                href={`${baseUrl}/section/update/${section.id_section}`}
+                                className="flex w-full cursor-pointer items-center justify-between"
+                              >
+                                Update
+                                <ContextMenuShortcut>
+                                  Ctrl + U
+                                </ContextMenuShortcut>
+                              </Link>
+                            </ContextMenuItem>
+
+                            {/* Delete Section */}
+                            <DeleteSection
+                              idSection={section.id_section.toString()}
+                            />
+
+                            {/* Section Name */}
+                            <ContextMenuItem inset disabled>
+                              {section.section_title}
+                              <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                            </ContextMenuItem>
+                          </ContextMenuContent>
+                        ) : null}
                       </ContextMenu>
                     </AccordionTrigger>
 
@@ -250,14 +264,14 @@ export function CourseContentSidebar({
                             </Link>
                           </AccordionContent>
                         ))}
-                        <AccordionContent className="py-1">
-                          {/* Create quiz button */}
-                          <CreateQuizDropdownButton
-                            // quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
-
-                            quizCreationUrl={`${baseUrl}/section/${section.id_section}/quiz/multiple-choice/new`}
-                          />
-                        </AccordionContent>
+                        {canCreateContent ? (
+                          <AccordionContent className="py-1">
+                            {/* Create quiz button */}
+                            <CreateQuizDropdownButton
+                              quizCreationUrl={`${baseUrl}/section/${section.id_section}/quiz/multiple-choice/new`}
+                            />
+                          </AccordionContent>
+                        ) : null}
                       </>
                     ) : (
                       <AccordionContent className="py-4">
@@ -274,10 +288,12 @@ export function CourseContentSidebar({
                             </EmptyContent>
                           </AccordionContent>
                           {/* Create content button */}
-                          <CreateQuizDropdownButton
-                            // quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
-                            quizCreationUrl={`${baseUrl}/section/${section.id_section}/quiz/multiple-choice/new`}
-                          />
+                          {canCreateContent ? (
+                            <CreateQuizDropdownButton
+                              // quizCreationUrl={`${pathname}/section/${section.id_section}/quiz/multiple-choice/new`}
+                              quizCreationUrl={`${baseUrl}/section/${section.id_section}/quiz/multiple-choice/new`}
+                            />
+                          ) : null}
                         </div>
                       </AccordionContent>
                     )}

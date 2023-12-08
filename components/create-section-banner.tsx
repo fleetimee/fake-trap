@@ -7,7 +7,7 @@ interface SectionBannerProps {
   canCreateSection?: boolean
 }
 
-export default function SectionBanner({
+export function SectionBanner({
   canCreateSection = true,
   ...props
 }: SectionBannerProps) {
