@@ -23,6 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
   title: "Pelatihan Kamu",
@@ -63,8 +64,14 @@ export default async function PesertaCoursePage() {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
       >
-        <DashboardHeader heading="Pelatihan Kamu" />
+        <DashboardHeader
+          heading="Pelatihan Kamu"
+          description="Ini merupakan pelatihan yang kamu ikuti, jika tidak menemukan pelatihan yang kamu ikuti, silahkan hubungi admin.
+          "
+        />
       </MotionDiv>
+
+      <Separator />
 
       <div className="grid grid-cols-1 items-start justify-between gap-2 sm:grid-cols-2">
         {userCourse.data.map((course) => (

@@ -34,7 +34,7 @@ export default async function CourseQuizPageProps({
   return (
     <QuizAnnoucement
       quizName={quiz?.data?.quiz_title}
-      link={`/pemateri-divisi/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}/start`}
+      link={`/peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}/start`}
     />
   )
 }

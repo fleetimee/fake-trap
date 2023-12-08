@@ -5,7 +5,6 @@ import { authOptions } from "@/lib/auth"
 import { getOneThread, getPostsList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { ForumPost } from "@/components/app/course/detail/forum/ui"
-import { Editor } from "@/components/editor"
 import { Icons } from "@/components/icons"
 import { buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -47,8 +46,6 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
       </Card>
 
       <p className="font-heading text-2xl">Balasan</p>
-
-      {/* <Editor id_threads={parseInt(params.idThreads)} /> */}
 
       {posts.data?.map((post) => <ForumPost key={post.id_post} post={post} />)}
 

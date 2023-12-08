@@ -67,7 +67,6 @@ export function UserSubmittedAnswerFormProps({
         const res = await fetch(url, {
           method: "POST",
           headers: {
-            ContentType: "application/json",
             Authorization: `Bearer ${session?.user?.token}`,
           },
           body: JSON.stringify(values),
@@ -104,16 +103,18 @@ export function UserSubmittedAnswerFormProps({
           Belum ada soal untuk Tes ini silahkan tambahkan soal terlebih dahulu
         </EmptyContent.Description>
 
-        <Link
-          href={`${baseUrl}exercise/detail/${quiz.data.id_quiz}/soal`}
-          className={buttonVariants({
-            size: "sm",
-            className:
-              "mt-4 w-full bg-blue-500 text-center text-white hover:bg-blue-600",
-          })}
-        >
-          Tambah Soal
-        </Link>
+        {isPreviewOnly ? (
+          <Link
+            href={`${baseUrl}exercise/detail/${quiz.data.id_quiz}/soal`}
+            className={buttonVariants({
+              size: "sm",
+              className:
+                "mt-4 w-full bg-blue-500 text-center text-white hover:bg-blue-600",
+            })}
+          >
+            Tambah Soal
+          </Link>
+        ) : null}
       </EmptyContent>
     )
   }
@@ -158,10 +159,15 @@ export function UserSubmittedAnswerFormProps({
                               className="grid grid-cols-2 gap-4 xl:grid-cols-2"
                               // value={field.value.toString()}
                               onValueChange={(value) => {
-                                form.setValue(
-                                  `selected_answers.${question.id_question}`,
-                                  parseInt(value)
+                                const confirmBox = window.confirm(
+                                  "Are you sure you want to select this answer?"
                                 )
+                                if (confirmBox === true) {
+                                  form.setValue(
+                                    `selected_answers.${question.id_question}`,
+                                    parseInt(value)
+                                  )
+                                }
                               }}
                             >
                               {question.answers.map((answer, index) => (

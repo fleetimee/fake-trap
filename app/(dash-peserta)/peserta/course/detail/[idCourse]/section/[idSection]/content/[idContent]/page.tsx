@@ -125,7 +125,7 @@ export default async function CourseContentPage({
                       variant="outline"
                     >
                       <Link
-                        href={`/pemateri-divisi/course/detail/${
+                        href={`/peserta/course/detail/${
                           params.idCourse
                         }/section/${params.idSection}/content/${
                           params.idContent
