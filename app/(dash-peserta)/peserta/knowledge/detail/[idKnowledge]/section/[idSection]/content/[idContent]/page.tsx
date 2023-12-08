@@ -125,7 +125,7 @@ export default async function KnowledgeContentPage({
                       variant="outline"
                     >
                       <Link
-                        href={`/pemateri-divisi/knowledge/detail/${
+                        href={`/peserta/knowledge/detail/${
                           params.idKnowledge
                         }/section/${params.idSection}/content/${
                           params.idContent

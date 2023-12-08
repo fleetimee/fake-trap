@@ -6,6 +6,7 @@ import {
   CourseVacantUserListRes,
 } from "@/types/course/res"
 import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
+import { UserEnrolledCourseListRes } from "@/types/me/res"
 import { MenuListResNew } from "@/types/menu/res"
 import { PostsListRes } from "@/types/posts/res"
 import {
@@ -653,6 +654,59 @@ export async function getCourseByTutor({
       Authorization: `Bearer ${token}`,
     },
     cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetUserEnrolledCourseList {
+  token: string | undefined
+  uuid: string | undefined
+  limit: number
+  page: number
+  searchQuery?: string
+}
+
+/**
+ * Retrieves the list of enrolled courses for a user.
+ * @param {GetUserEnrolledCourseList} options - The options for fetching the enrolled course list.
+ * @param {string} options.token - The user's authentication token.
+ * @param {string} options.uuid - The user's UUID.
+ * @param {number} options.limit - The maximum number of courses to retrieve per page.
+ * @param {number} options.page - The page number of the courses to retrieve.
+ * @param {string} [options.searchQuery=""] - The search query to filter the courses.
+ * @returns {Promise<UserEnrolledCourseListRes>} - The promise that resolves to the enrolled course list response.
+ */
+export async function getUserEnrolledCourseList({
+  token,
+  uuid,
+  limit,
+  page,
+  searchQuery = "",
+}: GetUserEnrolledCourseList): Promise<UserEnrolledCourseListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getEnrolledCourse`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
   })
 
   return await res.json()

@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { CourseListResData } from "@/types/course/res"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardDescription,
@@ -12,9 +12,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
+import { Avatar } from "./ui/avatar"
+import { Badge } from "./ui/badge"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 
 interface CourseCardProps {
   courseResponse: CourseListResData
@@ -63,6 +63,73 @@ export function CourseCard({ link, courseResponse }: CourseCardProps) {
         </div>
       </Card>
       <span className="sr-only">{courseResponse.course_name}</span>
+    </>
+  )
+}
+
+interface CourseCardV2Props {
+  courseTitle: string
+  courseDescription: string
+  courseDate: string
+  courseImage: string
+  courseAuthor: string
+}
+
+export default function CourseCardV2({ ...props }: CourseCardV2Props) {
+  return (
+    <>
+      <Card className="m-4 mx-auto flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl bg-white shadow-md sm:w-[30rem] md:max-w-2xl xl:h-[300px]">
+        <div className="md:flex">
+          <div className="md:shrink-0">
+            <img
+              alt="Man looking at item at a store"
+              className="h-48 w-full object-cover md:h-full md:w-48"
+              height="48"
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${props.courseImage}`}
+              style={{
+                aspectRatio: "48/48",
+                objectFit: "cover",
+              }}
+              width="48"
+            />
+          </div>
+          <div className="p-8">
+            <Badge className="mb-4 inline-block rounded-full bg-indigo-100 px-2 text-sm text-indigo-800">
+              Quote of the day
+            </Badge>
+            <a
+              className="mt-1 line-clamp-2 block text-lg font-medium leading-tight text-black hover:underline"
+              href="#"
+            >
+              {props.courseTitle}
+            </a>
+            <p className="mt-2 line-clamp-2 text-gray-500">
+              {props.courseDescription}
+            </p>
+          </div>
+        </div>
+
+        <CardFooter className="flex items-center justify-between border-t border-gray-200 bg-gray-50 p-6">
+          <div className="text-sm">
+            <p className="leading-none text-gray-900">{props.courseAuthor}</p>
+            <p className="text-gray-600">{props.courseDate}</p>
+          </div>
+          <div className="flex items-center space-x-1">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline">Reveal Answer</Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80">
+                <div className="p-4">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    The answer to the quote is here.
+                  </p>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+        </CardFooter>
+      </Card>
     </>
   )
 }

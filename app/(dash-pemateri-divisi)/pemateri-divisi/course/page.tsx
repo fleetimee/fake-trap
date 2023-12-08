@@ -1,10 +1,9 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourse, getCourseByTutor, getKnowledgeV2 } from "@/lib/fetcher"
+import { getCourseByTutor, getKnowledgeV2 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
@@ -12,7 +11,6 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
-import { buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Pelatihan",
