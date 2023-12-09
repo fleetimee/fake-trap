@@ -32,54 +32,13 @@ export function QuizTableShell({
   const columns = React.useMemo<ColumnDef<QuizListResData, unknown>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_quiz)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_quiz]
-                  : prev.filter((id) => id !== row.original.id_quiz)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_quiz",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-      },
-      {
         accessorKey: "quiz_title",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Judul Kuis" />
         ),
         cell: ({ row }) => {
           return (
-            <div className="flex flex-col">
+            <div className="w-[200px]">
               <Link
                 href={`${pathname}/detail/${row.original.id_quiz}`}
                 className="text-sm font-semibold text-blue-600 hover:underline"
@@ -119,7 +78,11 @@ export function QuizTableShell({
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
+          return (
+            <div className="w-[200px]">
+              {convertDatetoString(row.original.created_at.toString())}
+            </div>
+          )
         },
       },
       {

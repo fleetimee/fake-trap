@@ -2,12 +2,7 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getCategoryByCreator,
-  getListCategory,
-  getReference,
-  getRule,
-} from "@/lib/fetcher"
+import { getCategoryByCreator, getReference, getRule } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { AddKnowledgeForm } from "@/components/forms/add-knowledge-form"

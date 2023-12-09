@@ -35,47 +35,6 @@ export function CategoryTableShell({
   const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_category)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_category]
-                  : prev.filter((id) => id !== row.original.id_category)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_category",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-      },
-      {
         accessorKey: "category_name",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama Kategori" />
@@ -115,8 +74,8 @@ export function CategoryTableShell({
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
             alt={row.original.image}
-            width={100}
-            height={100}
+            width={50}
+            height={50}
             className="rounded-xl  transition-all duration-300 ease-in-out "
           />
         ),

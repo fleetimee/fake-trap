@@ -144,6 +144,7 @@ interface KnowledgeOperationsProps {
   categoryRes: CategoryListRes
   referenceResp: ReferenceListRes
   updateRowLink?: string
+  isApproval?: boolean
 }
 
 export function KnowledgeOperations({
@@ -151,6 +152,7 @@ export function KnowledgeOperations({
   categoryRes,
   referenceResp,
   updateRowLink,
+  isApproval = false,
 }: KnowledgeOperationsProps) {
   const { data: session } = useSession()
   const router = useRouter()
@@ -159,6 +161,9 @@ export function KnowledgeOperations({
     React.useState<boolean>(false)
   const [openDeleteKnowledgeAlert, setOpenDeleteKnowledgeAlert] =
     React.useState<boolean>(false)
+
+  const isStatusCodeIn = (codes: string[]) =>
+    codes.includes(knowledgeData.status_code)
 
   const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false)
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
@@ -228,43 +233,41 @@ export function KnowledgeOperations({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-[160px]">
-                <DropdownMenuItem
-                  disabled={
-                    knowledgeData.status_code === "0051" ||
-                    knowledgeData.status_code === "0052" ||
-                    knowledgeData.status_code === "0053"
-                  }
-                >
-                  <Link
-                    href={`/dashboard/knowledge/request-form/${knowledgeData.id_knowledge}`}
-                    rel="noreferrer"
-                    className="flex w-full cursor-default items-center"
-                  >
-                    Ajukan
-                    <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  disabled={
-                    knowledgeData.status_code === "" ||
-                    knowledgeData.status_code === "0051" ||
-                    knowledgeData.status_code === "0052"
-                  }
-                  onSelect={() => {
-                    router.push(
-                      `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
-                    )
-                  }}
-                >
-                  <Link
-                    href={`/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`}
-                    rel="noreferrer"
-                    className="flex w-full cursor-default items-center"
-                  >
-                    Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                {isApproval && (
+                  <>
+                    <DropdownMenuItem
+                      disabled={isStatusCodeIn(["0051", "0052", "0053"])}
+                    >
+                      <Link
+                        href={`/dashboard/knowledge/request-form/${knowledgeData.id_knowledge}`}
+                        rel="noreferrer"
+                        className="flex w-full cursor-default items-center"
+                      >
+                        Ajukan
+                        <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                      disabled={isStatusCodeIn(["", "0051", "0052"])}
+                      onSelect={() => {
+                        router.push(
+                          `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
+                        )
+                      }}
+                    >
+                      <Link
+                        href={`/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`}
+                        rel="noreferrer"
+                        className="flex w-full cursor-default items-center"
+                      >
+                        Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuSeparator />
+                  </>
+                )}
                 <DropdownMenuItem
                   onClick={() => {
                     navigator.clipboard.writeText(

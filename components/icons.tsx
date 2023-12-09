@@ -22,6 +22,7 @@ import {
   FileSymlink,
   FileText,
   GraduationCap,
+  HeartHandshake,
   HelpCircle,
   Image,
   Laptop,
@@ -92,6 +93,7 @@ export const Icons = {
   check: Check,
   laptop: Laptop,
   logout: LogOut,
+  handShake: HeartHandshake,
 
   gitHub: ({ ...props }: LucideProps) => (
     <svg

@@ -55,47 +55,6 @@ export function KnowledgeTableShell({
   const columns = React.useMemo<ColumnDef<KnowledgeListResData, unknown>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_knowledge)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_knowledge]
-                  : prev.filter((id) => id !== row.original.id_knowledge)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_knowledge",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-      },
-      {
         accessorKey: "image",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Gambar" />
@@ -137,7 +96,7 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Judul" />
         ),
         cell: ({ row }) => (
-          <div className="flex flex-col ">
+          <div className="w-[300px] ">
             <Link
               href={`${pathname}/detail/${row.original.id_knowledge}`}
               className="text-sm font-semibold text-blue-600 hover:underline"
@@ -146,19 +105,8 @@ export function KnowledgeTableShell({
             </Link>
           </div>
         ),
-        size: 1000,
       },
-      {
-        accessorKey: "description",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Deskripsi" />
-        ),
-        cell: ({ row }) => (
-          <div className="flex flex-col ">
-            <p className="line-clamp-2 text-sm">{row.original.description}</p>
-          </div>
-        ),
-      },
+
       {
         accessorKey: "status",
         header: ({ column }) => (
@@ -243,64 +191,63 @@ export function KnowledgeTableShell({
               categoryRes={categoryResp}
               referenceResp={referenceResp}
               updateRowLink={`${pathname}/update/${knowledge.id_knowledge}`}
+              isApproval
             />
           )
         },
       },
     ],
-    [categoryResp, data, pathname, referenceResp]
+    [categoryResp, pathname, referenceResp]
   )
 
   return (
-    <ContextMenu>
-      <DataTable
-        columns={columns}
-        data={data}
-        filterableColumns={[
-          {
-            id: "id_category",
-            title: "Filter Kategori",
-            options: categoryResp.data.map((category) => ({
-              label: category.category_name,
-              value: category.id_category,
-            })) as any,
-          },
-          {
-            id: "status_text",
-            title: "Filter Status",
-            options: [
-              {
-                label: "Pending",
-                value: "0051",
-              },
-              {
-                label: "Approved",
-                value: "0052",
-              },
-              {
-                label: "Rejected",
-                value: "0053",
-              },
-            ],
-          },
-          {
-            id: "status",
-            title: "Filter Visibility",
-            options: referenceResp.data.map((reference) => ({
-              label: reference.value_ref1,
-              value: reference.code_ref2,
-            })) as any,
-          },
-        ]}
-        newRowLink={`${pathname}/new`}
-        pageCount={pageCount}
-        searchableColumns={[
-          {
-            id: "knowledge_title",
-            title: "Judul",
-          },
-        ]}
-      />
-    </ContextMenu>
+    <DataTable
+      columns={columns}
+      data={data}
+      filterableColumns={[
+        {
+          id: "id_category",
+          title: "Filter Kategori",
+          options: categoryResp.data.map((category) => ({
+            label: category.category_name,
+            value: category.id_category,
+          })) as any,
+        },
+        {
+          id: "status_text",
+          title: "Filter Status",
+          options: [
+            {
+              label: "Pending",
+              value: "0051",
+            },
+            {
+              label: "Approved",
+              value: "0052",
+            },
+            {
+              label: "Rejected",
+              value: "0053",
+            },
+          ],
+        },
+        {
+          id: "status",
+          title: "Filter Visibility",
+          options: referenceResp.data.map((reference) => ({
+            label: reference.value_ref1,
+            value: reference.code_ref2,
+          })) as any,
+        },
+      ]}
+      newRowLink={`${pathname}/new`}
+      pageCount={pageCount}
+      searchableColumns={[
+        {
+          id: "knowledge_title",
+          title: "Judul",
+        },
+      ]}
+    />
   )
 }
