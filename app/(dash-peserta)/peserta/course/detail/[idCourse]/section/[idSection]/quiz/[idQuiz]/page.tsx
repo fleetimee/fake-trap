@@ -5,6 +5,10 @@ import { getOneQuiz } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { QuizAnnoucement } from "@/components/quiz-staging"
 
+
+
+
+
 interface CourseQuizPageProps {
   params: {
     idCourse: string

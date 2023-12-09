@@ -1,6 +1,10 @@
 import { AddThreadForm } from "@/components/forms/add-thread-form"
 import { Separator } from "@/components/ui/separator"
 
+
+
+
+
 interface AddThreadsPageNewProps {
   params: {
     idCourse: string

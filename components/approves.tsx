@@ -3,17 +3,18 @@
 import * as React from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
-import { KnowledgeListResData } from "@/types/knowledge/res"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
-import { PaginationButton } from "@/components/pagers/pagination-button"
-import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
+import { AprovalRequestListData } from "@/types/approval/res"
+import { convertDatetoString } from "@/lib/utils"
 
-interface KnowledgesProps {
-  knowledges: KnowledgeListResData[]
+import { PaginationButton } from "./pagers/pagination-button"
+import { PengajuanCard } from "./pengajuan-card"
+
+interface ApprovesProps {
+  approvals: AprovalRequestListData[]
   pageCount: number
 }
 
-export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
+export function Approves({ approvals, pageCount }: ApprovesProps) {
   const id = React.useId()
   const router = useRouter()
   const pathname = usePathname()
@@ -24,7 +25,7 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
   const page = searchParams?.get("page") ?? "1"
   const sort = searchParams?.get("sort") ?? "createdAt.desc"
 
-  const per_page = searchParams?.get("per_page") ?? "8"
+  const per_page = searchParams?.get("per_page") ?? "6"
 
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
@@ -45,22 +46,21 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
 
   return (
     <section className="flex flex-col gap-6 space-y-6">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <React.Suspense
-          fallback={Array.from({ length: 10 }).map((_, i) => (
-            <KnowledgeCardSkeleton key={i} />
-          ))}
-        >
-          {knowledges.map((knowledge) => (
-            <KnowledgeCard
-              key={knowledge.id_knowledge}
-              knowledge={knowledge}
-              link={`/peserta/knowledge/detail/${knowledge.id_knowledge}`}
-            />
-          ))}
-        </React.Suspense>
+      <div className="mx-auto grid grid-cols-1 items-center justify-between gap-8 xl:grid-cols-2">
+        {approvals?.map((request) => (
+          <PengajuanCard
+            key={request.approver_id}
+            approverName={request.approver_name}
+            approverHandle={request.approver_id}
+            date={convertDatetoString(request.created_at.toString())}
+            status={request.status_text}
+            statusCode={request.status}
+            sender={request.requester_name}
+            knowledgeTitle={request.knowledge_title}
+          />
+        ))}
       </div>
-      {knowledges.length ? (
+      {approvals.length ? (
         <PaginationButton
           pageCount={pageCount}
           page={page}

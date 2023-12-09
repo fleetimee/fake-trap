@@ -7,6 +7,10 @@ import { CategoryListRes } from "@/types/category/res"
 import { CategoryCard } from "@/components/category-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 
+
+
+
+
 const parentVariant: Variants = {
   initial: {
     opacity: 0,

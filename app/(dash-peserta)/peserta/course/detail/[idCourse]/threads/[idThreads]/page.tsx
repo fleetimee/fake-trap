@@ -9,6 +9,10 @@ import { Icons } from "@/components/icons"
 import { buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
+
+
+
+
 interface ThreadPageProps {
   params: {
     idCourse: string

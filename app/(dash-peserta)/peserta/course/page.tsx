@@ -1,29 +1,20 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
-import { UserEnrolledCourseListRes } from "@/types/me/res"
 import { authOptions } from "@/lib/auth"
-import {
-  getOneCourse,
-  getOneUser,
-  getUserEnrolledCourseList,
-} from "@/lib/fetcher"
+import { getUserEnrolledCourseList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import Component from "@/components/course-card"
 import CourseCardV2 from "@/components/course-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+
+
+
+
 
 export const metadata: Metadata = {
   title: "Pelatihan Kamu",

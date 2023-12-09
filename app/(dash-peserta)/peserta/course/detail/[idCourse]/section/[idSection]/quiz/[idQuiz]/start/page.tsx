@@ -5,6 +5,10 @@ import { getOneQuiz } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UserSubmittedAnswerFormProps } from "@/components/forms/user-submmited-answer-form"
 
+
+
+
+
 interface CourseQuizStartPageProps {
   params: {
     idCourse: string

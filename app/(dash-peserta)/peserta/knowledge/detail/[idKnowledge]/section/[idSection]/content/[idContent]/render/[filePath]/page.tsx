@@ -1,5 +1,9 @@
 import { PdfRender } from "@/components/content-renderer"
 
+
+
+
+
 interface KnowledgeContentPdfRendererProps {
   params: {
     filePath: string

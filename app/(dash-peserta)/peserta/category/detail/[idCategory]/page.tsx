@@ -1,5 +1,4 @@
 import React from "react"
-import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -7,6 +6,10 @@ import { getCategoryKnowledge, getOneCategory } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
+
+
+
+
 
 interface DetailCategoryProps {
   params: {

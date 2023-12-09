@@ -2,40 +2,44 @@ import React from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
-import { KnowledgeListRes } from "@/types/knowledge/res"
 import { authOptions } from "@/lib/auth"
 import { getKnowledgeUser } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Knowledges } from "@/components/knowledges"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
   title: "Pengetahuan",
 }
 
-export default async function PesertaKnowledgePage() {
+interface PesertaKnowledgePageProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function PesertaKnowledgePage({
+  searchParams,
+}: PesertaKnowledgePageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
+  const { page, per_page, store_page } = searchParams
+
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
+
   const knowledges = await getKnowledgeUser({
     token: user?.token,
-    page: 1,
-    limit: 100,
+    page: pageInitial,
+    limit: limitInitial,
     searchQuery: "",
     sortField: "created_at",
     sortOrder: "desc",
@@ -67,21 +71,10 @@ export default async function PesertaKnowledgePage() {
 
       <Separator />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <React.Suspense
-          fallback={Array.from({ length: 10 }).map((_, i) => (
-            <KnowledgeCardSkeleton key={i} />
-          ))}
-        >
-          {knowledges.data.map((knowledge) => (
-            <KnowledgeCard
-              key={knowledge.id_knowledge}
-              knowledge={knowledge}
-              link={`/peserta/knowledge/detail/${knowledge.id_knowledge}`}
-            />
-          ))}
-        </React.Suspense>
-      </div>
+      <Knowledges
+        knowledges={knowledges.data}
+        pageCount={knowledges.totalPage}
+      />
     </DashboardShell>
   )
 }

@@ -2,17 +2,13 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { UserListResData } from "@/types/user/res/user-list"
-import { convertDatetoString } from "@/lib/utils"
+import { convertDatetoString, convertDatetoStringWithTime } from "@/lib/utils"
 import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
-import { Checkbox } from "@/components/ui/checkbox"
-
-
-
-
 
 interface UserTableShellProps {
   data: UserListResData[]
@@ -20,56 +16,32 @@ interface UserTableShellProps {
 }
 
 export function UserTableShell({ data, pageCount }: UserTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<string[]>([])
+  const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<UserListResData, unknown>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length ? [] : data.map((row) => row.uuid)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
+        accessorKey: "name",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Nama" />
         ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.uuid]
-                  : prev.filter((id) => id !== row.original.uuid)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
+        cell: ({ row }) => {
+          return (
+            <div className="w-[200px]">
+              <Link
+                href={`/dashboard/user/${row.original.uuid}`}
+                className="text-sm font-bold text-blue-500 hover:underline"
+              >
+                <p>{row.original.name}</p>
+              </Link>
+            </div>
+          )
+        },
       },
-      // {
-      //   accessorKey: "name",
-      //   header: ({ column }) => (
-      //     <DataTableColumnHeader column={column} title="Nama" />
-      //   ),
-      //   enableSorting: false,
-      //   enableHiding: true,
-      // },
       {
         accessorKey: "username",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Usernam" />
+          <DataTableColumnHeader column={column} title="Username" />
         ),
         cell: ({ row }) => {
           return (
@@ -93,13 +65,15 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
           const user = row.original
 
           return (
-            <p>
-              {user.roles === "Pemateri"
-                ? "Admin"
-                : user.roles === "Admin"
-                ? "Pemateri"
-                : user.roles}
-            </p>
+            <div className="w-[200px]">
+              <p>
+                {user.roles === "Pemateri"
+                  ? "Admin"
+                  : user.roles === "Admin"
+                  ? "Pemateri"
+                  : user.roles}
+              </p>
+            </div>
           )
         },
         enableSorting: false,
@@ -118,7 +92,11 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
+          return (
+            <div className="w-[200px]">
+              {convertDatetoString(row.original.created_at.toString())}
+            </div>
+          )
         },
       },
       {
@@ -129,7 +107,11 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         cell: ({ row }) => {
           convertDatetoString(row.original.updated_at.toString())
 
-          return <>{convertDatetoString(row.original.updated_at.toString())}</>
+          return (
+            <div className="w-[200px]">
+              {convertDatetoString(row.original.updated_at.toString())}
+            </div>
+          )
         },
       },
 
@@ -143,7 +125,11 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
             return <>-</>
           } else {
             return (
-              <>{convertDatetoString(row.original.last_login.toString())}</>
+              <div className="w-[200px]">
+                {convertDatetoStringWithTime(
+                  row.original.last_login.toString()
+                )}
+              </div>
             )
           }
         },
@@ -161,7 +147,7 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         },
       },
     ],
-    [data, setSelectedRowIds]
+    []
   )
 
   return (
@@ -169,6 +155,7 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
       columns={columns}
       data={data}
       isExportable
+      newRowLink={`${pathname}/new`}
       exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/users/xlsx`}
       pageCount={pageCount}
       searchableColumns={[

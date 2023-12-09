@@ -6,6 +6,10 @@ import { getOneThread } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Editor } from "@/components/editor"
 
+
+
+
+
 interface EditorPageProps {
   params: {
     idThreads: string

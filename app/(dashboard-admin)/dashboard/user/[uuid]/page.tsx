@@ -27,10 +27,6 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 
-
-
-
-
 interface GetUserPostCount {
   token: string | undefined
   uuid: string | undefined

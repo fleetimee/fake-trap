@@ -1,3 +1,4 @@
+import { ApprovalRequestList } from "@/types/approval/res"
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { ContentOneRes } from "@/types/content/res"
 import {
@@ -1554,6 +1555,61 @@ export async function getPostsList({
       cache: "no-store",
     }
   )
+
+  return await res.json()
+}
+
+interface GetApprovaRequestListProps {
+  idRequester: string
+  token: string | undefined
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+export async function getApprovalRequestList({
+  idRequester,
+  token,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetApprovaRequestListProps): Promise<ApprovalRequestList> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/requester/${idRequester}`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
 
   return await res.json()
 }

@@ -3,17 +3,18 @@
 import * as React from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
-import { KnowledgeListResData } from "@/types/knowledge/res"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
-import { PaginationButton } from "@/components/pagers/pagination-button"
-import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
+import { CategoryListResData } from "@/types/category/res"
 
-interface KnowledgesProps {
-  knowledges: KnowledgeListResData[]
+import { CategoryCard } from "./category-card"
+import { PaginationButton } from "./pagers/pagination-button"
+import { CategoryCardSkeleton } from "./skeletons/category-card-skeleton"
+
+interface CategoriesProps {
+  categories: CategoryListResData[]
   pageCount: number
 }
 
-export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
+export function Categories({ categories, pageCount }: CategoriesProps) {
   const id = React.useId()
   const router = useRouter()
   const pathname = usePathname()
@@ -24,7 +25,7 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
   const page = searchParams?.get("page") ?? "1"
   const sort = searchParams?.get("sort") ?? "createdAt.desc"
 
-  const per_page = searchParams?.get("per_page") ?? "8"
+  const per_page = searchParams?.get("per_page") ?? "9"
 
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
@@ -45,22 +46,22 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
 
   return (
     <section className="flex flex-col gap-6 space-y-6">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="xs:grid-cols-2 grid gap-4  lg:grid-cols-3">
         <React.Suspense
-          fallback={Array.from({ length: 10 }).map((_, i) => (
-            <KnowledgeCardSkeleton key={i} />
+          fallback={Array.from({ length: 8 }).map((_, i) => (
+            <CategoryCardSkeleton key={i} />
           ))}
         >
-          {knowledges.map((knowledge) => (
-            <KnowledgeCard
-              key={knowledge.id_knowledge}
-              knowledge={knowledge}
-              link={`/peserta/knowledge/detail/${knowledge.id_knowledge}`}
+          {categories.map((category) => (
+            <CategoryCard
+              category={category}
+              key={category.id_category}
+              link={`/peserta/category/detail/${category.id_category}`}
             />
           ))}
         </React.Suspense>
       </div>
-      {knowledges.length ? (
+      {categories.length ? (
         <PaginationButton
           pageCount={pageCount}
           page={page}

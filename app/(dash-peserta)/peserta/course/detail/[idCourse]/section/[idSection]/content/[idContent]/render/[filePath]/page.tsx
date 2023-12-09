@@ -1,5 +1,9 @@
 import { PdfRender } from "@/components/content-renderer"
 
+
+
+
+
 interface CourseContentPdfRendererProps {
   params: {
     filePath: string

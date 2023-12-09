@@ -3,7 +3,6 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
-import { Course } from "@/types/course-res"
 import { authOptions } from "@/lib/auth"
 import { checkUserEnrolled, getOneCourse, getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
@@ -16,6 +15,10 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { VercelToolbar } from "@/components/vercel-toolbar"
+
+
+
+
 
 interface CourseDetailLayoutProps {
   children: React.ReactNode

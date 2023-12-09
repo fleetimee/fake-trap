@@ -13,10 +13,6 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserTableShell } from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
 
-
-
-
-
 export const metadata: Metadata = {
   title: "Managemen User",
   description: "Managemen User",
@@ -84,7 +80,7 @@ export default async function OperatorLMSUsersPage({
             description="Kelola user yang dapat mengakses sistem"
           />
         </MotionDiv>
-        <MotionDiv
+        {/* <MotionDiv
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex xl:justify-end"
@@ -98,14 +94,12 @@ export default async function OperatorLMSUsersPage({
           >
             Buat User Baru
           </Link>
-        </MotionDiv>
+        </MotionDiv> */}
       </div>
 
-      <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
-          <UserTableShell data={userList.data} pageCount={userList.totalPage} />
-        </Suspense>
-      </MotionDiv>
+      <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
+        <UserTableShell data={userList.data} pageCount={userList.totalPage} />
+      </Suspense>
     </DashboardShell>
   )
 }

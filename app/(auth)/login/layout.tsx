@@ -1,9 +1,5 @@
 import { Command } from "lucide-react"
 
-
-
-
-
 interface LoginLayoutPageProps {
   children: React.ReactNode
 }
