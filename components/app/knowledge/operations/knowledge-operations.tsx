@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -157,6 +157,8 @@ export function KnowledgeOperations({
   const { data: session } = useSession()
   const router = useRouter()
 
+  const pathName = usePathname()
+
   const [openEditKnowledgeSheet, setOpenEditKnowledgeSheet] =
     React.useState<boolean>(false)
   const [openDeleteKnowledgeAlert, setOpenDeleteKnowledgeAlert] =
@@ -239,7 +241,7 @@ export function KnowledgeOperations({
                       disabled={isStatusCodeIn(["0051", "0052", "0053"])}
                     >
                       <Link
-                        href={`/dashboard/knowledge/request-form/${knowledgeData.id_knowledge}`}
+                        href={`${pathName}/request/${knowledgeData.id_knowledge}`}
                         rel="noreferrer"
                         className="flex w-full cursor-default items-center"
                       >

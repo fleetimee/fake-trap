@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getKnowledgeV2, getPemateriList } from "@/lib/fetcher"
+import { fetchUsersByGroupId, getKnowledgeV2 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddCourseForm } from "@/components/forms/add-course-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -14,10 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Tambah Pelatihan Baru",
@@ -37,7 +33,7 @@ export default async function OperatorLMSCoursePageNew() {
     limit: 1000,
   })
 
-  const tutors = await getPemateriList({
+  const tutors = await fetchUsersByGroupId({
     token: user?.token,
     idGroup: 1,
   })

@@ -555,6 +555,30 @@ export async function getOneKnowledge({
   return await res.json()
 }
 
+interface LookupKnowledgeProps {
+  token: string | undefined
+  idKnowledge: number
+}
+
+export async function lookupKnowledge({
+  token,
+  idKnowledge,
+}: LookupKnowledgeProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/lookup`,
+    {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
 interface GetOneSectionProps {
   token: string | undefined
   idSection: string
@@ -1079,7 +1103,7 @@ export async function getOneUser({
   return await res.json()
 }
 
-interface GetPemateriProps {
+interface GetUsersByGroupProps {
   token: string | undefined
   idGroup: number
 }
@@ -1092,10 +1116,10 @@ interface GetPemateriProps {
  * @param {string} options.idGroup - The ID of the group.
  * @returns {Promise<UserRoleListRes>} - A promise that resolves to the pemateri list response.
  */
-export async function getPemateriList({
+export async function fetchUsersByGroupId({
   token,
   idGroup,
-}: GetPemateriProps): Promise<UserRoleListRes> {
+}: GetUsersByGroupProps): Promise<UserRoleListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/group/${idGroup}/`
 
   const res = await fetch(url, {

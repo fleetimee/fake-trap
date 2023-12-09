@@ -2,7 +2,11 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getKnowledgeV2, getOneCourse, getPemateriList } from "@/lib/fetcher"
+import {
+  fetchUsersByGroupId,
+  getKnowledgeV2,
+  getOneCourse,
+} from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UpdateCourseForm } from "@/components/forms/update-course-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -14,10 +18,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Update Pelatihan",
@@ -50,7 +50,7 @@ export default async function OperatorLMSCoursePageUpdate({
     limit: 1000,
   })
 
-  const tutors = await getPemateriList({
+  const tutors = await fetchUsersByGroupId({
     token: user?.token,
     idGroup: 1,
   })
