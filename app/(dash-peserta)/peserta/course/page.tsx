@@ -10,19 +10,29 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import { Courses } from "@/components/ui/courses"
 import { Separator } from "@/components/ui/separator"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Pelatihan Kamu",
   description: "Pelatihan",
 }
 
-export default async function PesertaCoursePage() {
+interface PesertaCoursePageProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function PesertaCoursePage({
+  searchParams,
+}: PesertaCoursePageProps) {
   const user = await getCurrentUser()
+
+  const { page, per_page, store_page } = searchParams
+
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 6
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -64,19 +74,7 @@ export default async function PesertaCoursePage() {
 
       <Separator />
 
-      <div className="grid grid-cols-1 items-start justify-between gap-2 sm:grid-cols-2">
-        {userCourse.data.map((course) => (
-          <CourseCardV2
-            key={course.id_course}
-            courseId={course.id_course.toString()}
-            courseAuthor={course.tutor_name}
-            courseDate={new Date(course.created_at).toLocaleDateString()}
-            courseDescription={course.course_desc}
-            courseImage={course.image}
-            courseTitle={course.course_name}
-          />
-        ))}
-      </div>
+      <Courses courses={userCourse.data} pageCount={userCourse.totalPage} />
     </DashboardShell>
   )
 }
