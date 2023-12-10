@@ -13,15 +13,15 @@ import { SidebarNav } from "@/app/(dash-operator-lms)/operator-lms/setting/_comp
 const sidebarNavItem = [
   {
     title: "Profil",
-    href: "/pemateri-divisi/setting",
+    href: "/supervisor-pemateri-divisi/setting",
   },
   {
     title: "Akun",
-    href: "/pemateri-divisi/setting/account",
+    href: "/supervisor-pemateri-divisi/setting/account",
   },
   {
     title: "Keamanan",
-    href: "/pemateri-divisi/setting/security",
+    href: "/supervisor-pemateri-divisi/setting/security",
   },
 ]
 
@@ -43,11 +43,11 @@ export default async function PemateriDivisiSettingLayouy({
       <BreadCrumbs
         segments={[
           {
-            href: "/pemateri-divisi",
+            href: "/supervisor-pemateri-divisi",
             title: "Dashboard",
           },
           {
-            href: "/pemateri-divisi/setting",
+            href: "/supervisor-pemateri-divisi/setting",
             title: "Pengaturan",
           },
         ]}
@@ -60,7 +60,7 @@ export default async function PemateriDivisiSettingLayouy({
         >
           <DashboardHeader
             heading="Setting"
-            description="Pengaturan Akun Pemateri Divisi"
+            description="Pengaturan Akun Operator LMS"
           />
         </MotionDiv>
       </div>

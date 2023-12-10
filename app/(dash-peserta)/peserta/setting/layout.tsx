@@ -10,10 +10,6 @@ import { DashboardShell } from "@/components/shell"
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/app/(dash-operator-lms)/operator-lms/setting/_components/setting_sidebar"
 
-
-
-
-
 const sidebarNavItem = [
   {
     title: "Profil",
@@ -64,7 +60,7 @@ export default async function PemateriDivisiSettingLayouy({
         >
           <DashboardHeader
             heading="Setting"
-            description="Pengaturan Akun Operator LMS"
+            description="Pengaturan Akun Peserta"
           />
         </MotionDiv>
       </div>

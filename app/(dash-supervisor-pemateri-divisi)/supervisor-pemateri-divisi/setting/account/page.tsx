@@ -5,14 +5,15 @@ import { authOptions } from "@/lib/auth"
 import { getOneUser } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import { ProfileForm } from "@/components/forms/profile-form"
+import { AccountForm } from "@/components/forms/account-form"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
-  title: "Pengaturan",
+  title: "Akun",
+  description: "Pengaturan",
 }
 
-export default async function SupervisorDivisiSettingPage() {
+export default async function SupervisorDivisiAccountSettingPage() {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -29,14 +30,13 @@ export default async function SupervisorDivisiSettingPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">Profil</h3>
+        <h3 className="text-lg font-medium">Akun</h3>
         <p className="text-sm text-muted-foreground">
-          Informasi pribadi anda untuk mengelola akun Anda termasuk login
-          kedalam sistem.
+          Informasi pribadi anda yang akan ditampilkan secara publik.
         </p>
       </div>
       <Separator />
-      <ProfileForm person={person.data} />
+      <AccountForm person={person.data} />
     </div>
   )
 }

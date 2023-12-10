@@ -5,10 +5,6 @@ import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { DashboardNewNewNav } from "@/components/new-nav"
 
-
-
-
-
 interface DashboardLayoutProps {
   children: React.ReactNode
 }
@@ -22,7 +18,7 @@ export default async function SupervisorPemateriDivisiLayout({
 
   const menu = await getMenu({
     token: user?.token,
-    idRole: "4",
+    idRole: "2",
   })
 
   const userLogged = await getLoggedOnUser({
