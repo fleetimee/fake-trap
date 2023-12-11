@@ -10,7 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
-import { approverFormSchema } from "@/lib/validations/approver-form"
+import { approveFormSchema } from "@/lib/validations/approver-form"
 import {
   Select,
   SelectContent,
@@ -31,3 +31,28 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Textarea } from "../ui/textarea"
+
+type Inputs = z.infer<typeof approveFormSchema>
+
+interface RequesterRevisionFormProps {
+  idApproval: string
+}
+
+export function RequesterRevisionForm({
+  idApproval,
+}: RequesterRevisionFormProps) {
+  const { data: session } = useSession()
+
+  const router = useRouter()
+
+  const [isPending, startTransition] = useTransition()
+
+  const form = useForm<Inputs>({
+    resolver: zodResolver(approveFormSchema),
+    defaultValues: {
+      status: "0051",
+      comment: "",
+      user_uuid_approver: session?.expires?.id,
+    },
+  })
+}
