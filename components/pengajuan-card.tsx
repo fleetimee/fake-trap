@@ -1,6 +1,8 @@
+import Link from "next/link"
+
 import { Icons } from "./icons"
 import { Badge } from "./ui/badge"
-import { Button } from "./ui/button"
+import { Button, buttonVariants } from "./ui/button"
 import { Separator } from "./ui/separator"
 
 enum Status {
@@ -17,6 +19,7 @@ interface PengajuanCardProps {
   statusCode: string
   sender: string
   knowledgeTitle: string
+  baseeUrl: string
 }
 
 export function PengajuanCard({ ...props }: PengajuanCardProps) {
@@ -49,9 +52,15 @@ export function PengajuanCard({ ...props }: PengajuanCardProps) {
 
       <div className="flex flex-col items-end justify-between space-x-4 border-t border-gray-200 p-4 dark:border-gray-700">
         <div className="flex items-end justify-end space-x-4">
-          <Button className="rounded-md px-4 py-2 text-sm font-medium">
-            Options
-          </Button>
+          <Link
+            href={props.baseeUrl ? `${props.baseeUrl}` : "/"}
+            className={buttonVariants({
+              variant: "outline",
+              className: "rounded-md px-4 py-2 text-sm font-medium",
+            })}
+          >
+            Lihat Detail
+          </Link>
         </div>
       </div>
     </div>

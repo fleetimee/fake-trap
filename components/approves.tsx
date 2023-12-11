@@ -49,7 +49,7 @@ export function Approves({ approvals, pageCount }: ApprovesProps) {
       <div className="mx-auto grid grid-cols-1 items-center justify-between gap-8 xl:grid-cols-2">
         {approvals?.map((request) => (
           <PengajuanCard
-            key={request.approver_id}
+            key={request.id_approval}
             approverName={request.approver_name}
             approverHandle={request.approver_id}
             date={convertDatetoString(request.created_at.toString())}
@@ -57,6 +57,7 @@ export function Approves({ approvals, pageCount }: ApprovesProps) {
             statusCode={request.status}
             sender={request.requester_name}
             knowledgeTitle={request.knowledge_title}
+            baseeUrl={`${pathname}/revision/${request.id_approval}`}
           />
         ))}
       </div>

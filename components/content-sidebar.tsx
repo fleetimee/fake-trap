@@ -67,7 +67,7 @@ export function KnowledgeContentSidebar({
                     value={section.id_section.toString()}
                     className="text-sm"
                   >
-                    <AccordionTrigger className="font-heading text-base font-bold">
+                    <AccordionTrigger className="line-clamp-2 font-heading text-base font-bold">
                       <ContextMenu key={section.id_section}>
                         <ContextMenuTrigger>
                           {/* The Trigger is the Accordion Title */}
@@ -122,7 +122,9 @@ export function KnowledgeContentSidebar({
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
-                                    {content.content_title}
+                                    <p className="line-clamp-2">
+                                      {content.content_title}
+                                    </p>
                                   </Button>
                                 </Link>
                               </AccordionContent>

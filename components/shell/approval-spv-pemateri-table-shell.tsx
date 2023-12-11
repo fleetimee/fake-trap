@@ -3,8 +3,10 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"
+import { toast as sonnerToast } from "sonner"
 
 import {
   ApprovalSupervisorPemateriListRes,
@@ -17,6 +19,15 @@ import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
 import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface BadgeSwitchProps {
   approval: any
@@ -45,6 +56,7 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
   pageCount,
 }: KnowledgeSupervisorPemateriTableShellProps) {
   const pathname = usePathname()
+  const router = useRouter()
 
   const columns = React.useMemo<
     ColumnDef<ApprovalSupervisorPemateriListResData, unknown>[]
@@ -55,6 +67,52 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="#" />
         ),
+        cell: ({ row }) => {
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  aria-label="Open menu"
+                  variant="ghost"
+                  className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+                >
+                  <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[160px]">
+                <DropdownMenuItem
+                // disabled={isStatusCodeIn(["0051", "0052", "0053"])}
+                >
+                  <Link
+                    href={`${pathname}/detail/${row.original.id_approval}/knowledge/${row.original.id_knowledge}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Preview
+                    <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  // disabled={isStatusCodeIn(["", "0051", "0052"])}
+                  onSelect={() => {
+                    // router.push(
+                    //   `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
+                    // )
+                  }}
+                >
+                  <Link
+                    href={`${pathname}/confirmation/${row.original.id_approval}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Konfirmasi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )
+        },
       },
       {
         accessorKey: "knowledge_title",
@@ -62,7 +120,15 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
           <DataTableColumnHeader column={column} title="Judul Pengetahuan" />
         ),
         cell: ({ row }) => (
-          <div className="w-[250px]">{row.original.knowledge_title}</div>
+          <div className="w-[250px]">
+            <Link
+              href={`${pathname}/detail/${row.original.id_approval}/knowledge/${row.original.id_knowledge}`}
+              passHref
+              className="font-semibold text-blue-500 hover:underline"
+            >
+              {row.original.knowledge_title}
+            </Link>
+          </div>
         ),
       },
       {

@@ -8,11 +8,10 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { CourseListResData } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
-import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
+import { convertDatetoString } from "@/lib/utils"
 import { CourseOperations } from "@/components/app/course/operations/course-operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
 
 interface BadgeSwitchProps {
   approval: any
@@ -48,6 +47,20 @@ export function CourseTableShell({
 
   const columns = React.useMemo<ColumnDef<CourseListResData, unknown>[]>(
     () => [
+      {
+        id: "actions",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="#" />
+        ),
+        cell: ({ row }) => {
+          return isOperator ? (
+            <CourseOperations
+              courseResp={row.original}
+              knowledgeResp={knowledgeResp}
+            />
+          ) : null
+        },
+      },
       {
         accessorKey: "image",
         header: ({ column }) => (
@@ -193,20 +206,6 @@ export function CourseTableShell({
           } else {
             return <Badge className="text-center">{status[2].name}</Badge>
           }
-        },
-      },
-      {
-        id: "actions",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
-        ),
-        cell: ({ row }) => {
-          return isOperator ? (
-            <CourseOperations
-              courseResp={row.original}
-              knowledgeResp={knowledgeResp}
-            />
-          ) : null
         },
       },
     ],

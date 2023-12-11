@@ -1,4 +1,8 @@
-import { ApprovalRequestList } from "@/types/approval/res"
+import {
+  ApprovalRequestList,
+  ApprovalSupervisorPemateriListRes,
+  ApprovalSupervisorPemateriOneRes,
+} from "@/types/approval/res"
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { ContentOneRes } from "@/types/content/res"
 import {
@@ -1609,6 +1613,89 @@ export async function getApprovalRequestList({
       Authorization: `Bearer ${token}`,
     },
     cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetApprovalApproverListProps {
+  idApprover: string
+  token: string | undefined
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  status?: string
+}
+
+export async function getApprovalApproverList({
+  idApprover,
+  token,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+  status = "",
+}: GetApprovalApproverListProps): Promise<ApprovalSupervisorPemateriListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/approver/${idApprover}`
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (status) {
+    url.searchParams.append("status", status)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetSingleApprovalRequestProps {
+  idApproval: string
+  token: string | undefined
+}
+
+export async function getSingleApprovalRequest({
+  idApproval,
+  token,
+}: GetSingleApprovalRequestProps): Promise<ApprovalSupervisorPemateriOneRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/requester/detail/${idApproval}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
   })
 
   return await res.json()

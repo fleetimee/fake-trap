@@ -7,6 +7,15 @@ export type ApprovalSupervisorPemateriListRes = {
   totalPage: number
 }
 
+export type ApprovalSupervisorPemateriOneRes = {
+  code: number
+  message: string
+  data: ApprovalSupervisorPemateriListResData
+  count: number
+  page: number
+  totalPage: number
+}
+
 export type ApprovalSupervisorPemateriListResData = {
   id_approval: number
   id_knowledge: number

@@ -13,9 +13,6 @@ import { convertDatetoStringShort } from "@/lib/utils"
 import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
-
-import { ContextMenu } from "../ui/context-menu"
 
 interface BadgeSwitchProps {
   approval: any
@@ -47,13 +44,29 @@ export function KnowledgeTableShell({
   referenceResp,
   pageCount,
 }: KnowledgeTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
-
   const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<KnowledgeListResData, unknown>[]>(
     () => [
+      {
+        id: "actions",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="#" />
+        ),
+        cell: ({ row }) => {
+          const knowledge = row.original
+
+          return (
+            <KnowledgeOperations
+              knowledgeData={knowledge}
+              categoryRes={categoryResp}
+              referenceResp={referenceResp}
+              updateRowLink={`${pathname}/update/${knowledge.id_knowledge}`}
+              isApproval
+            />
+          )
+        },
+      },
       {
         accessorKey: "image",
         header: ({ column }) => (
@@ -174,25 +187,6 @@ export function KnowledgeTableShell({
         cell: ({ row }) => {
           return (
             <>{row.original.user_request ? row.original.user_request : "-"}</>
-          )
-        },
-      },
-      {
-        id: "actions",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
-        ),
-        cell: ({ row }) => {
-          const knowledge = row.original
-
-          return (
-            <KnowledgeOperations
-              knowledgeData={knowledge}
-              categoryRes={categoryResp}
-              referenceResp={referenceResp}
-              updateRowLink={`${pathname}/update/${knowledge.id_knowledge}`}
-              isApproval
-            />
           )
         },
       },

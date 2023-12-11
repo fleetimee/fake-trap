@@ -221,102 +221,77 @@ export function KnowledgeOperations({
 
   return (
     <>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  aria-label="Open menu"
-                  variant="ghost"
-                  className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            aria-label="Open menu"
+            variant="ghost"
+            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          >
+            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-[160px]">
+          {isApproval && (
+            <>
+              <DropdownMenuItem
+                disabled={isStatusCodeIn(["0051", "0052", "0053"])}
+              >
+                <Link
+                  href={`${pathName}/request/${knowledgeData.id_knowledge}`}
+                  rel="noreferrer"
+                  className="flex w-full cursor-default items-center"
                 >
-                  <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[160px]">
-                {isApproval && (
-                  <>
-                    <DropdownMenuItem
-                      disabled={isStatusCodeIn(["0051", "0052", "0053"])}
-                    >
-                      <Link
-                        href={`${pathName}/request/${knowledgeData.id_knowledge}`}
-                        rel="noreferrer"
-                        className="flex w-full cursor-default items-center"
-                      >
-                        Ajukan
-                        <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
-                      </Link>
-                    </DropdownMenuItem>
+                  Ajukan
+                  <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+                </Link>
+              </DropdownMenuItem>
 
-                    <DropdownMenuItem
-                      disabled={isStatusCodeIn(["", "0051", "0052"])}
-                      onSelect={() => {
-                        router.push(
-                          `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
-                        )
-                      }}
-                    >
-                      <Link
-                        href={`/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`}
-                        rel="noreferrer"
-                        className="flex w-full cursor-default items-center"
-                      >
-                        Revisi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
-                      </Link>
-                    </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          )}
+          <DropdownMenuItem
+            onClick={() => {
+              navigator.clipboard.writeText(
+                knowledgeData.id_knowledge.toString()
+              )
 
-                    <DropdownMenuSeparator />
-                  </>
-                )}
-                <DropdownMenuItem
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      knowledgeData.id_knowledge.toString()
-                    )
-
-                    sonnerToast.info("Berhasil", {
-                      description: "ID Pengetahuan berhasil dicopy",
-                    })
-                  }}
-                >
-                  Copy
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="flex items-center
+              sonnerToast.info("Berhasil", {
+                description: "ID Pengetahuan berhasil dicopy",
+              })
+            }}
+          >
+            Copy
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center
                   "
-                  // onSelect={() => setOpenEditKnowledgeSheet(true)}
-                >
-                  <Link
-                    href={
-                      updateRowLink
-                        ? updateRowLink
-                        : `/operator-lms/knowledge/update/${knowledgeData.id_knowledge}`
-                    }
-                    rel="noreferrer"
-                    className="flex w-full cursor-default items-center"
-                  >
-                    Update
-                    <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="flex  items-center "
-                  onSelect={() => setOpenDeleteKnowledgeAlert(true)}
-                >
-                  Hapus
-                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TooltipTrigger>
-          <TooltipContent>
-            <span className="text-sm">Kelola Pengetahuan</span>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+            // onSelect={() => setOpenEditKnowledgeSheet(true)}
+          >
+            <Link
+              href={
+                updateRowLink
+                  ? updateRowLink
+                  : `/operator-lms/knowledge/update/${knowledgeData.id_knowledge}`
+              }
+              rel="noreferrer"
+              className="flex w-full cursor-default items-center"
+            >
+              Update
+              <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="flex  items-center "
+            onSelect={() => setOpenDeleteKnowledgeAlert(true)}
+          >
+            Hapus
+            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
       <AlertDialog
         open={openDeleteKnowledgeAlert}
         onOpenChange={setOpenDeleteKnowledgeAlert}
