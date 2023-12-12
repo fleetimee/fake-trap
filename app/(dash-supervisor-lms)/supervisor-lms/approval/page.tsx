@@ -3,10 +3,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getApprovalApproverList,
-  getCourseApprovalApproverList,
-} from "@/lib/fetcher"
+import { getCourseApprovalApproverList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
@@ -15,7 +12,6 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { ApprovalCourseSupervisorTableShell } from "@/components/shell/approval-spv-course-table-shell"
-import { ApprovalKnowledgeSupervisorPemateriTableShell } from "@/components/shell/approval-spv-pemateri-table-shell"
 
 export const metadata: Metadata = {
   title: "Approve Pengetahuan",

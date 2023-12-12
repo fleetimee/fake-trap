@@ -113,8 +113,8 @@ export default async function CourseDetailLayout({
       <div className="flex items-center justify-end">
         <VercelToolbar
           homeButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`}
-          forumButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/forum`}
-          userButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/user`}
+          forumButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/threads`}
+          userButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/people`}
         />
       </div>
 

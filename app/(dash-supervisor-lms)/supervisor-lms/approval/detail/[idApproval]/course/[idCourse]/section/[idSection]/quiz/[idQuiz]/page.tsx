@@ -7,6 +7,7 @@ import { QuizAnnoucement } from "@/components/quiz-staging"
 
 interface CourseQuizPageProps {
   params: {
+    idApproval: string
     idCourse: string
     idSection: string
     idQuiz: string
@@ -34,7 +35,7 @@ export default async function CourseQuizPageProps({
   return (
     <QuizAnnoucement
       quizName={quiz?.data?.quiz_title}
-      link={`/supervisor-lms/approval/detail/${params.idCourse}/course/${params.idSection}/quiz/${params.idQuiz}/page`}
+      link={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}/start`}
     />
   )
 }

@@ -52,7 +52,7 @@ export default async function SupervisorPemateriConfirmationPage({
   const isApprovalStatusPending =
     approvalRequest.data.status === ApprovalStatus.PENDING
 
-  if (!isApprover && isApprovalExist) {
+  if (!isApprover || !isApprovalExist) {
     return notFound()
   }
 

@@ -9,17 +9,14 @@ import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 interface CourseUserTableShellProps {
   data: UserListResData[]
   pageCount: number
-  linkString: string
+  linkString?: string
 }
 
 export function CourseUserTableShell({
   data,
   pageCount,
-  linkString,
+  linkString = "",
 }: CourseUserTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
-
   const columns = React.useMemo<ColumnDef<UserListResData, unknown>[]>(
     () => [
       {
@@ -35,7 +32,7 @@ export function CourseUserTableShell({
         ),
       },
     ],
-    [data, setSelectedRowIds]
+    [data]
   )
 
   return (
@@ -49,7 +46,7 @@ export function CourseUserTableShell({
           title: "Nama",
         },
       ]}
-      newRowLink={linkString}
+      newRowLink={linkString === "" ? undefined : linkString}
     />
   )
 }

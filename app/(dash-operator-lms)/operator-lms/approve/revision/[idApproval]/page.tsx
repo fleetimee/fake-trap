@@ -10,6 +10,7 @@ import {
 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { cn, convertDatetoString, extractToken } from "@/lib/utils"
+import { RequesterCourseRevisionForm } from "@/components/forms/course-revision-form"
 import { RequesterRevisionForm } from "@/components/forms/requester-revision-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -58,8 +59,8 @@ export default async function ApproveCourseRevisionPage({
     approvalRequest?.data?.status === ApprovalStatus.REJECTED
   const isApprovalAvailable = approvalRequest?.code === 200
 
-  if (!isApprovalAvailable) {
-    notFound()
+  if (!isApprovalAvailable || !isUserRequester) {
+    return notFound()
   }
 
   return (
@@ -156,6 +157,25 @@ export default async function ApproveCourseRevisionPage({
                 </p>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        <Card
+          className={cn({
+            "border-2 hover:border-primary lg:w-1/2": isApprovalStatusRejected,
+            hidden: !isApprovalStatusRejected,
+          })}
+        >
+          <CardHeader>
+            <CardTitle>Revisi Pengajuan</CardTitle>
+            <CardDescription>
+              Form revisi pengajuan akan aktif jika pengajuan ditolak
+            </CardDescription>
+          </CardHeader>
+          <Separator />
+
+          <CardContent className="space-y-4 py-5">
+            <RequesterCourseRevisionForm idApproval={params.idApproval} />
           </CardContent>
         </Card>
       </div>

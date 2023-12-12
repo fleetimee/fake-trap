@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { CourseOneRes } from "@/types/course/res"
+import { cn } from "@/lib/utils"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import {
   Accordion,
@@ -41,6 +42,8 @@ export function CourseContentSidebar({
   baseUrl,
   canCreateContent = true,
 }: CourseContentSidebarProps) {
+  const pathname = usePathname()
+
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
@@ -126,7 +129,16 @@ export function CourseContentSidebar({
                                 <Link
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
-                                  <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
+                                  {/* <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"> */}
+                                  <Button
+                                    className={cn({
+                                      "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background":
+                                        true,
+                                      "bg-secondary-foreground text-background":
+                                        pathname !==
+                                        `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
+                                    })}
+                                  >
                                     {content.content_title}
                                   </Button>
                                 </Link>
@@ -258,7 +270,16 @@ export function CourseContentSidebar({
                               // href={`${pathname}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
                               href={`${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
                             >
-                              <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
+                              <Button
+                                className={cn(
+                                  "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                  {
+                                    "bg-secondary-foreground text-background":
+                                      pathname !==
+                                      `${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`,
+                                  }
+                                )}
+                              >
                                 {quiz.quiz_title}
                               </Button>
                             </Link>

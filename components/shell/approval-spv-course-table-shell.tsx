@@ -55,6 +55,58 @@ export function ApprovalCourseSupervisorTableShell({
   >(
     () => [
       {
+        id: "action",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="#" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  aria-label="Open menu"
+                  variant="ghost"
+                  className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+                >
+                  <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[160px]">
+                <DropdownMenuItem
+                // disabled={isStatusCodeIn(["0051", "0052", "0053"])}
+                >
+                  <Link
+                    href={`${pathname}/detail/${row.original.id_approval}/course/${row.original.id_course}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Preview
+                    <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  // disabled={isStatusCodeIn(["", "0051", "0052"])}
+                  onSelect={() => {
+                    // router.push(
+                    //   `/dashboard/knowledge/revision-form/${knowledgeData.id_knowledge}`
+                    // )
+                  }}
+                >
+                  <Link
+                    href={`${pathname}/confirmation/${row.original.id_approval}`}
+                    rel="noreferrer"
+                    className="flex w-full cursor-default items-center"
+                  >
+                    Konfirmasi <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )
+        },
+      },
+      {
         accessorKey: "course_name",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama Pelatihan" />
