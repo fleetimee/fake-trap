@@ -30,55 +30,55 @@ export default async function OperatorLMSRolePage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  return <Component />
+  return null
 }
 
-export function Component() {
-  return (
-    <Card className="m-4 mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
-      <CardHeader className="md:flex">
-        <div className="md:flex-shrink-0">
-          <img
-            alt="A role management logo"
-            className="h-48 w-full object-cover md:w-48"
-            height="48"
-            src="/images/placeholder.svg"
-            style={{
-              aspectRatio: "48/48",
-              objectFit: "cover",
-            }}
-            width="48"
-          />
-        </div>
-        <div className="p-8">
-          <CardTitle className="text-sm font-semibold uppercase tracking-wide text-indigo-500">
-            Role Management
-          </CardTitle>
-          <CardDescription className="mt-1 block text-lg font-medium leading-tight text-black">
-            Role Management Page
-          </CardDescription>
-          <CardContent className="mt-2 text-gray-500">
-            Disini kamu dapat mengatur kewenangan dari user yang ada di
-            platform.
-          </CardContent>
-        </div>
-      </CardHeader>
-      <CardFooter className="flex items-center justify-between p-2 leading-none md:p-4">
-        <Button className="mt-4 inline-flex items-center rounded border-0 bg-blue-500 px-3 py-1 text-white hover:bg-blue-700 focus:outline-none md:mt-0">
-          Get Started
-        </Button>
-        <Link href="#">
-          <Badge
-            className="text-blue-600 visited:text-purple-600 hover:bg-gray-100/50 hover:text-blue-800 dark:hover:bg-gray-800/50"
-            variant="secondary"
-          >
-            Learn More
-          </Badge>
-        </Link>
-      </CardFooter>
-    </Card>
-  )
-}
+// export function Component() {
+//   return (
+//     <Card className="m-4 mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
+//       <CardHeader className="md:flex">
+//         <div className="md:shrink-0">
+//           <img
+//             alt="A role management logo"
+//             className="h-48 w-full object-cover md:w-48"
+//             height="48"
+//             src="/images/placeholder.svg"
+//             style={{
+//               aspectRatio: "48/48",
+//               objectFit: "cover",
+//             }}
+//             width="48"
+//           />
+//         </div>
+//         <div className="p-8">
+//           <CardTitle className="text-sm font-semibold uppercase tracking-wide text-indigo-500">
+//             Role Management
+//           </CardTitle>
+//           <CardDescription className="mt-1 block text-lg font-medium leading-tight text-black">
+//             Role Management Page
+//           </CardDescription>
+//           <CardContent className="mt-2 text-gray-500">
+//             Disini kamu dapat mengatur kewenangan dari user yang ada di
+//             platform.
+//           </CardContent>
+//         </div>
+//       </CardHeader>
+//       <CardFooter className="flex items-center justify-between p-2 leading-none md:p-4">
+//         <Button className="mt-4 inline-flex items-center rounded border-0 bg-blue-500 px-3 py-1 text-white hover:bg-blue-700 focus:outline-none md:mt-0">
+//           Get Started
+//         </Button>
+//         <Link href="#">
+//           <Badge
+//             className="text-blue-600 visited:text-purple-600 hover:bg-gray-100/50 hover:text-blue-800 dark:hover:bg-gray-800/50"
+//             variant="secondary"
+//           >
+//             Learn More
+//           </Badge>
+//         </Link>
+//       </CardFooter>
+//     </Card>
+//   )
+// }
 
 function IconCookie(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
