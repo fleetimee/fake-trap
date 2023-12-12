@@ -7,7 +7,7 @@ import { CircleIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
-import * as z from "zod"
+import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { approveFormSchema } from "@/lib/validations/approver-form"

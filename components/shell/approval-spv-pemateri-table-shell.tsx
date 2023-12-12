@@ -1,22 +1,13 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"
-import { toast as sonnerToast } from "sonner"
 
-import {
-  ApprovalSupervisorPemateriListRes,
-  ApprovalSupervisorPemateriListResData,
-} from "@/types/approval/res"
-import { CategoryListRes } from "@/types/category/res"
-import { KnowledgeListResData } from "@/types/knowledge/res"
-import { ReferenceListRes } from "@/types/references/res"
-import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
-import { KnowledgeOperations } from "@/components/app/knowledge/operations"
+import { ApprovalSupervisorPemateriListResData } from "@/types/approval/res"
+import { convertDatetoString } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -24,7 +15,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -56,7 +46,6 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
   pageCount,
 }: KnowledgeSupervisorPemateriTableShellProps) {
   const pathname = usePathname()
-  const router = useRouter()
 
   const columns = React.useMemo<
     ColumnDef<ApprovalSupervisorPemateriListResData, unknown>[]
@@ -185,7 +174,7 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
         },
       },
     ],
-    []
+    [pathname]
   )
 
   return <DataTable columns={columns} data={data} pageCount={pageCount} />

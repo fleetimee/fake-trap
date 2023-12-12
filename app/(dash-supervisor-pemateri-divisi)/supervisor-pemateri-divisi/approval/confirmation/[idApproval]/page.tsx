@@ -1,12 +1,12 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { ApprovalStatus } from "@/lib/enums/status"
 import { getSingleApprovalRequest } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { cn, convertDatetoString } from "@/lib/utils"
+import { cn, convertDatetoString, extractToken } from "@/lib/utils"
 import { ApproverForm } from "@/components/forms/approver-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -36,6 +36,8 @@ export default async function SupervisorPemateriConfirmationPage({
 }: SupervisorPemateriConfirmationPageProps) {
   const user = await getCurrentUser()
 
+  const tokenExtracted = extractToken(user?.token)
+
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -44,6 +46,15 @@ export default async function SupervisorPemateriConfirmationPage({
     idApproval: params.idApproval,
     token: user?.token,
   })
+
+  const isApprover = approvalRequest.data.approver_id === tokenExtracted?.id
+  const isApprovalExist = approvalRequest.code === 200
+  const isApprovalStatusPending =
+    approvalRequest.data.status === ApprovalStatus.PENDING
+
+  if (!isApprover && isApprovalExist) {
+    return notFound()
+  }
 
   return (
     <DashboardShell>
@@ -136,7 +147,12 @@ export default async function SupervisorPemateriConfirmationPage({
           </CardContent>
         </Card>
 
-        <Card className="border-2 hover:border-primary lg:w-1/2">
+        <Card
+          className={cn({
+            "border-2 hover:border-primary lg:w-1/2": isApprovalStatusPending,
+            hidden: !isApprovalStatusPending,
+          })}
+        >
           <CardHeader>
             <CardTitle>Submit Pengajuan</CardTitle>
             <CardDescription>

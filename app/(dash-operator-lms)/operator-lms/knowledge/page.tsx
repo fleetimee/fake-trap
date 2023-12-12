@@ -18,10 +18,6 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
 import { Button, buttonVariants } from "@/components/ui/button"
 
-
-
-
-
 export const metadata: Metadata = {
   title: "Pengetahuan",
   description: "Operator LMS Knowledge Page",
@@ -112,27 +108,6 @@ export default async function OperatorLMSKnowledgePage({
             heading="Pengetahuan"
             description="Pengetahuan yang tersedia di e-learning"
           />
-        </MotionDiv>
-        <MotionDiv
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex xl:justify-end"
-        >
-          {rule.data.can_write_knowledge ? (
-            <Link
-              href="/operator-lms/knowledge/new"
-              className={buttonVariants({
-                size: "sm",
-                className: "ml-2",
-              })}
-            >
-              Buat Materi Baru
-            </Link>
-          ) : (
-            <Button className="ml-2" size="sm" disabled>
-              Buat Materi Baru
-            </Button>
-          )}
         </MotionDiv>
       </div>
 

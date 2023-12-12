@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
@@ -66,16 +66,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-
-
-
-
 
 const formSchema = z.object({
   course_name: z
@@ -151,6 +141,7 @@ export function CourseOperations({
   const { data: session } = useSession()
 
   const router = useRouter()
+  const pathname = usePathname()
 
   const [openEditCourse, setOpenEditCourse] = React.useState<boolean>(false)
   const [openDeleteCourse, setOpenDeleteCourse] = React.useState<boolean>(false)
@@ -208,83 +199,60 @@ export function CourseOperations({
 
   return (
     <>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  aria-label="Open menu"
-                  variant="ghost"
-                  className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-                >
-                  <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[160px]">
-                <DropdownMenuItem
-                  disabled={
-                    courseResp.status_code === "0051" ||
-                    courseResp.status_code === "0052" ||
-                    courseResp.status_code === "0053"
-                  }
-                >
-                  <Link
-                    href={`/dashboard/course/request-form/${courseResp.id_course}`}
-                    rel="noreferrer"
-                    className="flex w-full cursor-default items-center"
-                  >
-                    Ajukan
-                    <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
-                  </Link>
-                </DropdownMenuItem>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            aria-label="Open menu"
+            variant="ghost"
+            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          >
+            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-[160px]">
+          <DropdownMenuItem
+            disabled={
+              courseResp.status_code === "0051" ||
+              courseResp.status_code === "0052" ||
+              courseResp.status_code === "0053"
+            }
+          >
+            <Link
+              href={`${pathname}/request/${courseResp.id_course}`}
+              rel="noreferrer"
+              className="flex w-full cursor-default items-center"
+            >
+              Ajukan
+              <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
+            </Link>
+          </DropdownMenuItem>
 
-                <DropdownMenuItem
-                  disabled={
-                    courseResp.status_code === "" ||
-                    courseResp.status_code === "0051" ||
-                    courseResp.status_code === "0052"
-                  }
-                >
-                  <Link
-                    href={`/dashboard/course/revision-form/${courseResp.id_course}`}
-                    rel="noreferrer"
-                    className="flex w-full cursor-default items-center"
-                  >
-                    Revisi
-                    <DropdownMenuShortcut>⇧⌘R</DropdownMenuShortcut>
-                  </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="flex  items-center
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="flex  items-center
                   "
-                  // onSelect={() => setOpenEditCourse(true)}
-                >
-                  <Link
-                    href={`/operator-lms/course/update/${courseResp.id_course}`}
-                    rel="noreferrer"
-                    className="flex w-full cursor-default items-center"
-                  >
-                    Edit
-                    <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="flex  items-center "
-                  onSelect={() => setOpenDeleteCourse(true)}
-                >
-                  Hapus
-                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TooltipTrigger>
-          <TooltipContent>Kelola pelatihan ini</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+            // onSelect={() => setOpenEditCourse(true)}
+          >
+            <Link
+              href={`/operator-lms/course/update/${courseResp.id_course}`}
+              rel="noreferrer"
+              className="flex w-full cursor-default items-center"
+            >
+              Update
+              <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="flex  items-center "
+            onSelect={() => setOpenDeleteCourse(true)}
+          >
+            Hapus
+            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
       <AlertDialog open={openDeleteCourse} onOpenChange={setOpenDeleteCourse}>
         <AlertDialogContent>
           <AlertDialogHeader>

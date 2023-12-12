@@ -1,5 +1,8 @@
 import {
+  ApprovalOperatorLMSListRes,
   ApprovalRequestList,
+  ApprovalSupervisorCourseListRes,
+  ApprovalSupervisorCourseOneRes,
   ApprovalSupervisorPemateriListRes,
   ApprovalSupervisorPemateriOneRes,
 } from "@/types/approval/res"
@@ -575,6 +578,27 @@ export async function lookupKnowledge({
       method: "GET",
       headers: {
         ContentType: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  )
+
+  return await res.json()
+}
+
+interface LookupCourseProps {
+  token: string | undefined
+  idCourse: string
+}
+
+export async function lookupCourse({ token, idCourse }: LookupCourseProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/lookup`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
@@ -1688,6 +1712,144 @@ export async function getSingleApprovalRequest({
   token,
 }: GetSingleApprovalRequestProps): Promise<ApprovalSupervisorPemateriOneRes> {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/requester/detail/${idApproval}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetCourseApprovalRequestListProps {
+  token: string | undefined
+  idRequester: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+export async function getCourseApprovalRequestList({
+  token,
+  idRequester,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetCourseApprovalRequestListProps): Promise<ApprovalOperatorLMSListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/requester/${idRequester}`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetCourseApprovalApproverListProps {
+  token: string | undefined
+  idApprover: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  status?: string
+}
+
+export async function getCourseApprovalApproverList({
+  token,
+  idApprover,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+  status = "",
+}: GetCourseApprovalApproverListProps): Promise<ApprovalSupervisorCourseListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/approver/${idApprover}`
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (status) {
+    url.searchParams.append("status", status)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetSingleCourseApprovalRequestProps {
+  idApproval: string
+  token: string | undefined
+}
+
+export async function getSingleCourseApprovalRequest({
+  idApproval,
+  token,
+}: GetSingleCourseApprovalRequestProps): Promise<ApprovalSupervisorCourseOneRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/single/requester/${idApproval}`
 
   const res = await fetch(url, {
     method: "GET",

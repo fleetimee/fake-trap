@@ -180,7 +180,8 @@ export function RequestKnowledgeForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Supervisor yang dipilih akan menerima permintaan pengetahuan
+                Supervisor yang dipilih akan menerima permintaan pengajuan
+                pengetahuan
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -210,7 +211,7 @@ export function RequestKnowledgeForm({
           )}
         />
 
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" disabled={isPending} className="w-fit">
           {isPending && <Icons.spinner className="animate-spin" />}
           Kirim
         </Button>

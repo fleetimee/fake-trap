@@ -236,6 +236,7 @@ export function CourseTableShell({
           ],
         },
       ]}
+      newRowLink={`${pathname}/new`}
       pageCount={pageCount}
       searchableColumns={[
         {

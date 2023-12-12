@@ -1,19 +1,19 @@
-export type ApprovalSupervisorCourseList = {
+export type ApprovalSupervisorCourseListRes = {
   code: number
   message: string
-  data: ApprovalSupervisorCourseListData[]
+  data: ApprovalSupervisorCourseListResData[]
   count: number
   page: number
   totalPage: number
 }
 
-export type ApprovalSupervisorCourseOne = {
+export type ApprovalSupervisorCourseOneRes = {
   code: number
   message: string
-  data: ApprovalSupervisorCourseListData
+  data: ApprovalSupervisorCourseListResData
 }
 
-export type ApprovalSupervisorCourseListData = {
+export type ApprovalSupervisorCourseListResData = {
   id_approval: number
   id_course: number
   course_name: string

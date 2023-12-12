@@ -43,8 +43,8 @@ export default async function PesertaCoursePage({
   const userCourse = await getUserEnrolledCourseList({
     token: user?.token,
     uuid: tokenExtracted?.id,
-    limit: 100,
-    page: 1,
+    limit: limitInitial,
+    page: pageInitial,
     searchQuery: "",
   })
 

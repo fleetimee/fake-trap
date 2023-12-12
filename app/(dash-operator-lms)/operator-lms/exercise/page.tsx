@@ -85,27 +85,6 @@ export default async function OperatorLMSExercisePage({
             description="Buat Pre Test, Post Test, dan Latihan untuk peserta Anda."
           />
         </MotionDiv>
-        <MotionDiv
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex xl:justify-end"
-        >
-          {/* <Button className="ml-2" size="sm">
-            Buat Test Baru
-          </Button> */}
-
-          <Link
-            href="/operator-lms/exercise/new"
-            className={buttonVariants({
-              size: "sm",
-              className: "ml-2",
-            })}
-          >
-            Buat Tes Baru
-          </Link>
-
-          {/* <CreateQuizSheet referenceResp={referenceResp} /> */}
-        </MotionDiv>
       </div>
 
       <QuizTableShell

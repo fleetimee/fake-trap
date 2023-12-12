@@ -147,7 +147,8 @@ interface KnowledgeOperationsProps {
   isApproval?: boolean
 }
 
-export function KnowledgeOperations({
+export function
+KnowledgeOperations({
   knowledgeData,
   categoryRes,
   referenceResp,

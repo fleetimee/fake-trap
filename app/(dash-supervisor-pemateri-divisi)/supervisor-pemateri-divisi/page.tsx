@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Dashboard",
 }
 
-export default async function PesertaPage() {
+export default async function SupervisorPemateriDivisiPage() {
   const user = await getCurrentUser()
 
   if (!user) {

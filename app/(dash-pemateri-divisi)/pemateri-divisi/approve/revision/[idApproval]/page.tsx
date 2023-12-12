@@ -1,12 +1,13 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { ApprovalStatus } from "@/lib/enums/status"
 import { getSingleApprovalRequest } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { cn, convertDatetoString } from "@/lib/utils"
+import { cn, convertDatetoString, extractToken } from "@/lib/utils"
+import { RequesterRevisionForm } from "@/components/forms/requester-revision-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Badge } from "@/components/ui/badge"
@@ -35,6 +36,8 @@ export default async function ApproveKnowledgeRevisionPage({
 }: ApproveKnowledgeRevisionPageProps) {
   const user = await getCurrentUser()
 
+  const tokenExtracted = extractToken(user?.token)
+
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -43,6 +46,16 @@ export default async function ApproveKnowledgeRevisionPage({
     idApproval: params.idApproval,
     token: user?.token,
   })
+
+  const isUserRequester =
+    approvalRequest.data.requester_id === tokenExtracted.id
+  const isApprovalStatusRejected =
+    approvalRequest.data.status === ApprovalStatus.REJECTED
+  const isApprovalAvailable = approvalRequest.code === 200
+
+  if (!isApprovalAvailable && !isUserRequester) {
+    return notFound()
+  }
 
   return (
     <DashboardShell>
@@ -141,7 +154,12 @@ export default async function ApproveKnowledgeRevisionPage({
           </CardContent>
         </Card>
 
-        <Card className="border-2 hover:border-primary lg:w-1/2">
+        <Card
+          className={cn({
+            "border-2 hover:border-primary lg:w-1/2": isApprovalStatusRejected,
+            hidden: !isApprovalStatusRejected,
+          })}
+        >
           <CardHeader>
             <CardTitle>Revisi Pengajuan</CardTitle>
             <CardDescription>
@@ -150,8 +168,10 @@ export default async function ApproveKnowledgeRevisionPage({
           </CardHeader>
           <Separator />
 
-          <CardContent className="space-y-4">
-            {/*<ApproverForm idApproval={params.idApproval} />*/}
+          <CardContent className="space-y-4 py-5">
+            <RequesterRevisionForm
+              idApproval={approvalRequest.data.id_approval.toString()}
+            />
           </CardContent>
         </Card>
       </div>

@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -11,7 +10,6 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
-import { buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Pelatihan",
@@ -86,22 +84,6 @@ export default async function OperatorLMSCoursePage({
             heading="Pelatihan"
             description="Kelola pelatihan yang ada di platform lms."
           />
-        </MotionDiv>
-
-        <MotionDiv
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex xl:justify-end "
-        >
-          <Link
-            href="/operator-lms/course/new"
-            className={buttonVariants({
-              size: "sm",
-              className: "ml-2",
-            })}
-          >
-            Buat Pelatihan Baru
-          </Link>
         </MotionDiv>
       </div>
 
