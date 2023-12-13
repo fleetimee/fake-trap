@@ -394,7 +394,7 @@ export async function getKnowledgeV2({
   visibilityId = "",
   statusCode = "",
 }: GetKnowledgeV2Props): Promise<KnowledgeListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
 
   // If categoryIds is provided, add it to the URL
   if (categoryIds) {
@@ -412,7 +412,6 @@ export async function getKnowledgeV2({
   const res = await fetch(url, {
     method: "GET",
     headers: {
-      ContentType: "application/json",
       Authorization: `Bearer ${token}`,
     },
     cache: "no-store",
@@ -440,7 +439,7 @@ export async function getKnowledgeUser({
   sortOrder = "desc",
   status = "0052",
 }: GetKnowledgeUser): Promise<KnowledgeListRes> {
-  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/user/`
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/user`
 
   const url = new URL(baseUrl)
 
@@ -471,7 +470,6 @@ export async function getKnowledgeUser({
   const res = await fetch(url.toString(), {
     method: "GET",
     headers: {
-      ContentType: "application/json",
       Authorization: `Bearer ${token}`,
     },
     cache: "no-cache",

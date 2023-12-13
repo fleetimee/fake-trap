@@ -4,7 +4,6 @@ import { Shell } from "@/components/shell/lobby-shell"
 
 import { CategoryWrapper } from "./_components/category-wrapper"
 
-
 export const metadata = {
   title: "Semua Kategori",
   description: "Explore our products and services.",
@@ -37,10 +36,23 @@ async function getPublicCategories({
   return await res.json()
 }
 
-export default async function AllPublicCategories() {
+interface AllPublicCategoriesProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function AllPublicCategories({
+  searchParams,
+}: AllPublicCategoriesProps) {
+  const { page, per_page, store_page } = searchParams
+
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
+
   const publicCategoryResp = await getPublicCategories({
-    limit: 1000,
-    page: 1,
+    limit: limitInitial,
+    page: pageInitial,
   })
 
   return (
@@ -58,7 +70,10 @@ export default async function AllPublicCategories() {
         ]}
       />
 
-      <CategoryWrapper publicCategoryResp={publicCategoryResp} />
+      <CategoryWrapper
+        categories={publicCategoryResp.data}
+        pageCount={publicCategoryResp.totalPage}
+      />
     </Shell>
   )
 }

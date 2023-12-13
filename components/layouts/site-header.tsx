@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Icons } from "../icons"
-
+import { KnowledgeSearch } from "../knowledge-search"
 
 interface SiteHeaderProps {
   user:
@@ -48,7 +48,9 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             sidebarNavItems={dashboardConfig.sidebarNav}
           />
           <div className="flex flex-1 items-center justify-end space-x-4">
-            <nav className="flex items-center space-x-2"></nav>
+            <nav className="flex items-center space-x-2">
+              <KnowledgeSearch />
+            </nav>
 
             {props.user ? (
               <DropdownMenu>

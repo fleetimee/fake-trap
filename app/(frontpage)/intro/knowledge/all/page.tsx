@@ -4,7 +4,6 @@ import { Shell } from "@/components/shell/lobby-shell"
 
 import { KnowledgeWrapper } from "./_components/knowledge-wrapper"
 
-
 export const metadata = {
   title: "Semua Pengetahuan",
   description: "fleetime",
@@ -40,13 +39,24 @@ async function getPublicKnowledge({
   return await publicKnowledge.json()
 }
 
-export default async function AllPublicKnowledge() {
-  const publicKnowledgeResp = await getPublicKnowledge({
-    page: 1,
-    limit: 1000,
-  })
+interface AllPublicKnowledgeProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
 
-  console.log(publicKnowledgeResp)
+export default async function AllPublicKnowledge({
+  searchParams,
+}: AllPublicKnowledgeProps) {
+  const { page, per_page, store_page } = searchParams
+
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
+
+  const publicKnowledgeResp = await getPublicKnowledge({
+    page: pageInitial,
+    limit: limitInitial,
+  })
 
   return (
     <Shell>
@@ -63,7 +73,10 @@ export default async function AllPublicKnowledge() {
         ]}
       />
 
-      <KnowledgeWrapper publicKnowledgeResp={publicKnowledgeResp} />
+      <KnowledgeWrapper
+        knowledges={publicKnowledgeResp.data}
+        pageCount={publicKnowledgeResp.totalPage}
+      />
     </Shell>
   )
 }
