@@ -14,16 +14,16 @@ interface KnowledgeDetailLayoutProps {
   }
 }
 
-// export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
-//   const knowledge = await getOnePublicKnowledge({
-//     idKnowledge: Number(params.detail),
-//   })
+export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
+  const knowledge = await getOnePublicKnowledge({
+    idKnowledge: Number(params.detail),
+  })
 
-//   return {
-//     title: knowledge.data.knowledge_title,
-//     description: knowledge.data.description,
-//   }
-// }
+  return {
+    title: knowledge.data.knowledge_title,
+    description: knowledge.data.description,
+  }
+}
 
 export default async function KnowledgeDetail({
   children,
