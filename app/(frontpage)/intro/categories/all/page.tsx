@@ -45,14 +45,17 @@ interface AllPublicCategoriesProps {
 export default async function AllPublicCategories({
   searchParams,
 }: AllPublicCategoriesProps) {
-  const { page, per_page, store_page } = searchParams
+  const { page, per_page, store_page, search } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
 
+  const searchInitial = typeof search === "string" ? search : ""
+
   const publicCategoryResp = await getPublicCategories({
     limit: limitInitial,
     page: pageInitial,
+    searchQuery: searchInitial,
   })
 
   return (

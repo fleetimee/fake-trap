@@ -5,11 +5,25 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Variants } from "framer-motion"
 
 import { CategoryListRes, CategoryListResData } from "@/types/category/res"
+import { useDebounce } from "@/hooks/use-debounce"
 import { CategoryCard } from "@/components/category-card"
 import { HeaderIntro } from "@/components/category-header"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { PaginationButton } from "@/components/pagers/pagination-button"
 import { CategoryCardSkeleton } from "@/components/skeletons/category-card-skeleton"
+import { Button } from "@/components/ui/button"
+import { CardDescription } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 const parentVariant: Variants = {
   initial: {
@@ -55,12 +69,15 @@ export function CategoryWrapper({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
+  const [query, setQuery] = React.useState("")
+  const debouncedQuery = useDebounce(query, 500)
 
   // Search params
   const page = searchParams?.get("page") ?? "1"
   const sort = searchParams?.get("sort") ?? "createdAt.desc"
 
   const per_page = searchParams?.get("per_page") ?? "8"
+  const search = searchParams?.get("search") ?? ""
 
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
@@ -81,44 +98,92 @@ export function CategoryWrapper({
 
   return (
     <>
-      <MotionDiv
-        initial={{
-          opacity: 0,
-          y: -100,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-      >
-        <HeaderIntro
-          title="Semua Pengetahuan"
-          description="Temukan pengetahuan yang kamu butuhkan"
-          size="sm"
-        />
-      </MotionDiv>
+      <HeaderIntro
+        title="Semua Pengetahuan"
+        description="Temukan pengetahuan yang kamu butuhkan"
+        size="sm"
+      />
 
-      <MotionDiv
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-        variants={parentVariant}
-        initial="initial"
-        animate="animate"
-      >
-        {/* {publicCategoryResp.data.map((category) => (
-          <MotionDiv
-            variants={childrenVariant}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            key={category.id_category}
-            className="group relative overflow-hidden rounded-md border"
-          >
-            <CategoryCard
-              category={category}
-              link={`/intro/categories/${category.id_category}`}
-            />
-          </MotionDiv>
-        ))} */}
+      <div className="flex items-center space-x-2">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button aria-label="Filter products" size="sm" disabled={isPending}>
+              Filter
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="flex flex-col">
+            <SheetHeader className="px-1">
+              <SheetTitle>Filters</SheetTitle>
+            </SheetHeader>
+            <Separator />
+            <div className="flex max-w-xl flex-1 flex-col gap-5 overflow-hidden p-1 ">
+              <div className="flex flex-col items-start justify-between gap-5 rounded-lg border p-6 shadow-sm">
+                <div className="space-y-0.5">
+                  <Label>Cari Kategori</Label>
+                  <CardDescription>
+                    Cari kategori berdasarkan nama kategori
+                  </CardDescription>
+                </div>
 
+                <Input
+                  value={query}
+                  placeholder="Search something..."
+                  onChange={(e) => {
+                    setQuery(e.target.value)
+                  }}
+                />
+
+                <Button
+                  className="w-fit"
+                  onClick={() => {
+                    startTransition(() => {
+                      router.push(
+                        `${pathname}?${createQueryString({
+                          search: query,
+                          page: null,
+                        })}`
+                      )
+                    })
+                  }}
+                >
+                  Search
+                </Button>
+              </div>
+            </div>
+
+            <div>
+              <Separator className="my-4" />
+              <SheetFooter>
+                <Button
+                  aria-label="Clear filters"
+                  size="sm"
+                  className="w-full"
+                  onClick={() => {
+                    setQuery("")
+
+                    startTransition(() => {
+                      router.push(
+                        `${pathname}?${createQueryString({
+                          search: null,
+                          page: null,
+                        })}`
+                      ),
+                        {
+                          scroll: false,
+                        }
+                    })
+                  }}
+                  disabled={isPending}
+                >
+                  Clear Filters
+                </Button>
+              </SheetFooter>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <React.Suspense
           fallback={Array.from({ length: 8 }).map((_, i) => (
             <CategoryCardSkeleton key={i} />
@@ -139,7 +204,7 @@ export function CategoryWrapper({
             </MotionDiv>
           ))}
         </React.Suspense>
-      </MotionDiv>
+      </div>
 
       {categories.length ? (
         <PaginationButton
