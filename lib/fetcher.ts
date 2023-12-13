@@ -279,6 +279,26 @@ export async function getListCategory({
   return await categoryList.json()
 }
 
+interface GetOnePublicKnowledgeProps {
+  idKnowledge: number
+}
+
+export async function getOnePublicKnowledge({
+  idKnowledge,
+}: GetOnePublicKnowledgeProps): Promise<KnowledgeOneRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/${idKnowledge}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
 interface GetCategoryWithKnowledge {
   token: string | undefined
   page: number

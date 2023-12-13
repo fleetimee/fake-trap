@@ -1,24 +1,11 @@
 import React from "react"
-import { Metadata } from "next"
-import { notFound, redirect } from "next/navigation"
-import { PartyPopper } from "lucide-react"
 
-import { authOptions } from "@/lib/auth"
-import { checkUserEnrolled, getOneCourse, getOneKnowledge } from "@/lib/fetcher"
-import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
+import { getOnePublicKnowledge } from "@/lib/fetcher"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
-import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
-import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
 import { Shell } from "@/components/shell/lobby-shell"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { VercelToolbar } from "@/components/vercel-toolbar"
-
-import { getOnePublicKnowledge } from "./page"
 
 interface KnowledgeDetailLayoutProps {
   children: React.ReactNode
@@ -27,16 +14,16 @@ interface KnowledgeDetailLayoutProps {
   }
 }
 
-export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
-  const knowledge = await getOnePublicKnowledge({
-    idKnowledge: Number(params.detail),
-  })
+// export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
+//   const knowledge = await getOnePublicKnowledge({
+//     idKnowledge: Number(params.detail),
+//   })
 
-  return {
-    title: knowledge.data.knowledge_title,
-    description: knowledge.data.description,
-  }
-}
+//   return {
+//     title: knowledge.data.knowledge_title,
+//     description: knowledge.data.description,
+//   }
+// }
 
 export default async function KnowledgeDetail({
   children,
