@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import Image from "next/image"
 import { notFound } from "next/navigation"
 
 import { CategoryOneRes } from "@/types/category/res"
@@ -10,10 +11,6 @@ import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
-
-
-
 
 interface LookupKnowledgePublicProps {
   token: string | undefined
@@ -43,7 +40,7 @@ interface GetOnePublicKnowledgeProps {
   idKnowledge: number
 }
 
-async function getOnePublicKnowledge({
+export async function getOnePublicKnowledge({
   idKnowledge,
 }: GetOnePublicKnowledgeProps): Promise<KnowledgeOneRes> {
   const knowledgeOnePublic = await fetch(
@@ -85,24 +82,14 @@ type Props = {
   }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const detailKnowledgeData = await getOnePublicKnowledge({
-    idKnowledge: parseInt(params.detail),
-  })
-
-  return {
-    title: `Pengetahuan ${detailKnowledgeData.data.knowledge_title}`,
-  }
-}
-
 export default async function IntroDetailKnowledge({ params }: Props) {
   const user = await getCurrentUser()
 
-  const detailKnowledge = getOnePublicKnowledge({
+  const knowledge = await getOnePublicKnowledge({
     idKnowledge: parseInt(params.detail),
   })
 
-  const [detailKnowledgeResult] = await Promise.all([detailKnowledge])
+  const [detailKnowledgeResult] = await Promise.all([knowledge])
 
   const detailCategory = await getOnePublicCategory({
     idCategory: detailKnowledgeResult.data.id_category,
@@ -118,43 +105,12 @@ export default async function IntroDetailKnowledge({ params }: Props) {
   }
 
   return (
-    <Shell>
-      <BreadCrumbs
-        segments={[
-          {
-            href: "/intro",
-            title: "Explore",
-          },
-          {
-            title: toTitleCase(detailCategory.data.category_name),
-            href: `/intro/categories/${detailCategory.data.id_category}`,
-          },
-          {
-            title: toSentenceCase(detailKnowledgeResult.data.knowledge_title),
-            href: `/intro/knowledge/${detailKnowledgeResult.data.id_knowledge}`,
-          },
-        ]}
-      />
-      <div className="flex flex-row gap-4 px-2">
-        <Alert
-          className="basis-full"
-          variant={user ? "default" : "destructive"}
-        >
-          <Icons.course className="h-4 w-4" />
-          <AlertTitle>
-            {detailKnowledgeResult.data.course
-              ? `
-              Ada ${detailKnowledgeResult.data.course.length} pelatihan yang tersedia untuk pengetahuan ini`
-              : `Tidak ada pelatihan untuk pengetahuan ini`}
-          </AlertTitle>
-          <AlertDescription>
-            {user
-              ? `Pergi ke panel mu untuk melihat pelatihan ini`
-              : `Kamu harus login untuk mengakses pelatihan`}
-          </AlertDescription>
-        </Alert>
-      </div>
-      <PublicKnowledgeDetailShell detailKnowledge={detailKnowledgeResult} />
-    </Shell>
+    <Image
+      src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.data.image}`}
+      alt={knowledge.data.knowledge_title}
+      className="aspect-video rounded-lg object-cover shadow-md "
+      width={1280}
+      height={720}
+    />
   )
 }

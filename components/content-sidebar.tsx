@@ -2,8 +2,10 @@
 
 import React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { cn } from "@/lib/utils"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { KnowledgeDeleteContent } from "@/components/delete-content"
 import { DeleteSection } from "@/components/delete-section"
@@ -40,6 +42,8 @@ export function KnowledgeContentSidebar({
   baseUrl,
   canCreateContent = true,
 }: KnowledgeContentSidebarProps) {
+  const pathname = usePathname()
+
   return (
     <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
@@ -121,7 +125,15 @@ export function KnowledgeContentSidebar({
                                 <Link
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
-                                  <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background">
+                                  <Button
+                                    className={cn({
+                                      "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background":
+                                        true,
+                                      "bg-secondary-foreground text-background":
+                                        pathname !==
+                                        `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
+                                    })}
+                                  >
                                     <p className="line-clamp-2">
                                       {content.content_title}
                                     </p>

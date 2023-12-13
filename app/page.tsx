@@ -13,10 +13,6 @@ import { SiteHeader } from "@/components/layouts/site-header"
 import { MarketingCard } from "@/components/marketing-card"
 import { buttonVariants } from "@/components/ui/button"
 
-
-
-
-
 export const metadata = {
   title: "BPD E-learning: Pelajari apa saja, kapan saja, di mana saja",
   description: "fleetime",
@@ -85,8 +81,8 @@ export default async function IndexPage() {
     : false
 
   return (
-    <>
-      <div className="relative flex min-h-screen flex-col bg-background">
+    <section className="">
+      <div className="relative flex h-auto min-h-screen flex-col bg-[url(/hero_bg.svg)] bg-cover bg-bottom md:bg-left lg:min-h-[100svh]">
         <SiteHeader
           user={user}
           displayName={loggedOnUser?.data?.name ?? "No User"}
@@ -150,6 +146,6 @@ export default async function IndexPage() {
         </div>
       </div>
       <SiteFooter className="border-t" />
-    </>
+    </section>
   )
 }

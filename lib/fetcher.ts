@@ -95,6 +95,79 @@ export async function getExerciseUserSelectedAnswer({
   return await res.json()
 }
 
+interface GetNewExerciseResultProps {
+  token: string | undefined
+  idUser: string
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+  status?: string
+  idQuiz?: string
+}
+
+/**
+ * Fetches the exercise result for a user.
+ * @param {GetExerciseResultProps} options - The options for fetching the exercise result.
+ * @returns {Promise<any>} - The JSON response from the API.
+ */
+export async function getNewExerciseResult({
+  token,
+  idUser,
+  page,
+  limit,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+  status = "",
+  idQuiz = "",
+}: GetNewExerciseResultProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/fetchUserQuiz/${idUser}`
+
+  const urlObj = new URL(url)
+
+  if (page) {
+    urlObj.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    urlObj.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    urlObj.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    urlObj.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    urlObj.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (status) {
+    urlObj.searchParams.append("status", status)
+  }
+
+  if (idQuiz) {
+    urlObj.searchParams.append("idQuiz", idQuiz)
+  }
+
+  const res = await fetch(urlObj.toString(), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
 interface GetCategoryProps {
   token: string | undefined
   page: number
@@ -1595,6 +1668,17 @@ interface GetApprovaRequestListProps {
   searchQuery?: string
 }
 
+/**
+ * Retrieves a list of approval requests based on the provided parameters.
+ * @param idRequester - The ID of the requester.
+ * @param token - The authentication token.
+ * @param limit - The maximum number of approval requests to retrieve.
+ * @param page - The page number of the results.
+ * @param sortBy - The field to sort the approval requests by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the approval requests. Defaults to "desc".
+ * @param searchQuery - The search query to filter the approval requests.
+ * @returns A Promise that resolves to the list of approval requests.
+ */
 export async function getApprovalRequestList({
   idRequester,
   token,
@@ -1651,6 +1735,18 @@ interface GetApprovalApproverListProps {
   status?: string
 }
 
+/**
+ * Retrieves the list of approval approvers based on the provided parameters.
+ * @param idApprover - The ID of the approver.
+ * @param token - The authorization token.
+ * @param limit - The maximum number of results to retrieve per page.
+ * @param page - The page number of the results to retrieve.
+ * @param sortBy - The field to sort the results by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the results. Defaults to "desc".
+ * @param searchQuery - The search query to filter the results.
+ * @param status - The status of the approvals to filter the results.
+ * @returns A promise that resolves to the list of approval supervisors and pemateris.
+ */
 export async function getApprovalApproverList({
   idApprover,
   token,
@@ -1705,6 +1801,11 @@ interface GetSingleApprovalRequestProps {
   token: string | undefined
 }
 
+/**
+ * Retrieves a single approval request from the server.
+ * @param {GetSingleApprovalRequestProps} options - The options for retrieving the approval request.
+ * @returns {Promise<ApprovalSupervisorPemateriOneRes>} - A promise that resolves to the approval request data.
+ */
 export async function getSingleApprovalRequest({
   idApproval,
   token,
@@ -1733,6 +1834,18 @@ interface GetCourseApprovalRequestListProps {
   searchQuery?: string
 }
 
+/**
+ * Retrieves a list of course approval requests.
+ *
+ * @param token - The authentication token.
+ * @param idRequester - The ID of the requester.
+ * @param limit - The maximum number of results to return per page.
+ * @param page - The page number to retrieve.
+ * @param sortBy - The field to sort the results by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the results. Defaults to "desc".
+ * @param searchQuery - The search query to filter the results.
+ * @returns A promise that resolves to the list of course approval requests.
+ */
 export async function getCourseApprovalRequestList({
   token,
   idRequester,
@@ -1789,6 +1902,19 @@ interface GetCourseApprovalApproverListProps {
   status?: string
 }
 
+/**
+ * Retrieves the list of course approval approvers.
+ *
+ * @param token - The authentication token.
+ * @param idApprover - The ID of the approver.
+ * @param limit - The maximum number of results to return per page.
+ * @param page - The page number.
+ * @param sortBy - The field to sort the results by. Defaults to "created_at".
+ * @param orderBy - The order in which to sort the results. Defaults to "desc".
+ * @param searchQuery - The search query to filter the results.
+ * @param status - The status of the course approvals to filter by.
+ * @returns A promise that resolves to the list of course approval supervisors.
+ */
 export async function getCourseApprovalApproverList({
   token,
   idApprover,
@@ -1843,6 +1969,11 @@ interface GetSingleCourseApprovalRequestProps {
   token: string | undefined
 }
 
+/**
+ * Retrieves a single course approval request from the server.
+ * @param {GetSingleCourseApprovalRequestProps} options - The options for retrieving the approval request.
+ * @returns {Promise<ApprovalSupervisorCourseOneRes>} - A promise that resolves to the approval request data.
+ */
 export async function getSingleCourseApprovalRequest({
   idApproval,
   token,
