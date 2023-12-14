@@ -22,10 +22,16 @@ export default async function PesertaCategoryPage({
 }: PesertaCategoryPageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, store_page } = searchParams
+  const { page, per_page, sort, store_page } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 9
+
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -36,6 +42,8 @@ export default async function PesertaCategoryPage({
     limit: limitInitial,
     page: pageInitial,
     searchQuery: "",
+    orderBy: orderBy,
+    sortBy: sortBy,
   })
 
   return (
