@@ -18,15 +18,39 @@ interface GetPublicCategoryV2Props {
 }
 
 async function getPublicCategories({
-  page = 1,
-  limit = 1000,
+  page,
+  limit,
   sortField = "created_at",
   sortOrder = "desc",
   searchQuery = "",
 }: GetPublicCategoryV2Props): Promise<CategoryListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`
+  // let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`
 
-  const res = await fetch(url, {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category`
+
+  let url = new URL(baseUrl)
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (sortField) {
+    url.searchParams.append("sortBy", sortField.toString())
+  }
+
+  if (sortOrder) {
+    url.searchParams.append("orderBy", sortOrder.toString())
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery.toString())
+  }
+
+  const res = await fetch(url.toString(), {
     method: "GET",
     headers: {
       ContentType: "application/json",
@@ -57,6 +81,8 @@ export default async function AllPublicCategories({
     page: pageInitial,
     searchQuery: searchInitial,
   })
+
+  console.log("publicCategoryResp", publicCategoryResp)
 
   return (
     <Shell>

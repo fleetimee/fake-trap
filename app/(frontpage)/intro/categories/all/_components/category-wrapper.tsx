@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useId } from "react"
+import React from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Variants } from "framer-motion"
 
-import { CategoryListRes, CategoryListResData } from "@/types/category/res"
+import { CategoryListResData } from "@/types/category/res"
 import { useDebounce } from "@/hooks/use-debounce"
 import { CategoryCard } from "@/components/category-card"
 import { HeaderIntro } from "@/components/category-header"
@@ -24,20 +24,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-
-const parentVariant: Variants = {
-  initial: {
-    opacity: 0,
-    x: -100,
-  },
-  animate: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-}
 
 const childrenVariant: Variants = {
   initial: {
@@ -64,7 +50,6 @@ export function CategoryWrapper({
   categories,
   pageCount,
 }: GetPublicCategoriesProps) {
-  const id = React.useId()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -96,6 +81,10 @@ export function CategoryWrapper({
     [searchParams]
   )
 
+  React.useEffect(() => {
+    setQuery(debouncedQuery)
+  }, [debouncedQuery])
+
   return (
     <>
       <HeaderIntro
@@ -111,7 +100,7 @@ export function CategoryWrapper({
               Filter
             </Button>
           </SheetTrigger>
-          <SheetContent className="flex flex-col">
+          <SheetContent className="flex w-[400px] flex-col">
             <SheetHeader className="px-1">
               <SheetTitle>Filters</SheetTitle>
             </SheetHeader>
@@ -142,7 +131,10 @@ export function CategoryWrapper({
                           search: query,
                           page: null,
                         })}`
-                      )
+                      ),
+                        {
+                          scroll: false,
+                        }
                     })
                   }}
                 >
@@ -189,24 +181,25 @@ export function CategoryWrapper({
             <CategoryCardSkeleton key={i} />
           ))}
         >
-          {categories.map((category) => (
-            <MotionDiv
-              variants={childrenVariant}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              key={category.id_category}
-              className="group relative overflow-hidden rounded-md border"
-            >
-              <CategoryCard
-                category={category}
-                link={`/intro/categories/${category.id_category}`}
-              />
-            </MotionDiv>
-          ))}
+          {categories &&
+            categories.map((category) => (
+              <MotionDiv
+                variants={childrenVariant}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                key={category.id_category}
+                className="group relative overflow-hidden rounded-md border"
+              >
+                <CategoryCard
+                  category={category}
+                  link={`/intro/categories/${category.id_category}`}
+                />
+              </MotionDiv>
+            ))}
         </React.Suspense>
       </div>
 
-      {categories.length ? (
+      {categories && categories.length ? (
         <PaginationButton
           pageCount={pageCount}
           page={page}
