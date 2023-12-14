@@ -78,6 +78,7 @@ export function UserSubmittedAnswerFormProps({
           })
 
           router.back()
+          router.refresh()
           form.reset()
         } else {
           const errorResponse: ErrorResponse = await res.json()

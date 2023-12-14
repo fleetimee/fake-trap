@@ -18,6 +18,7 @@ import { UserEnrolledCourseListRes } from "@/types/me/res"
 import { MenuListResNew } from "@/types/menu/res"
 import { PostsListRes } from "@/types/posts/res"
 import {
+  FetchUserQuizListRes,
   QuizLinkedList,
   QuizListRes,
   QuizMemberListRes,
@@ -122,7 +123,7 @@ export async function getNewExerciseResult({
   searchQuery = "",
   status = "",
   idQuiz = "",
-}: GetNewExerciseResultProps) {
+}: GetNewExerciseResultProps): Promise<FetchUserQuizListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/fetchUserQuiz/${idUser}`
 
   const urlObj = new URL(url)
