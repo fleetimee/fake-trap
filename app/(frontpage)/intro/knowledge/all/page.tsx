@@ -26,16 +26,41 @@ async function getPublicKnowledge({
   sortOrder = "desc",
   status = "0052",
 }: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
-  const publicKnowledge = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}&status=${status}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    }
-  )
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortField) {
+    url.searchParams.append("sortBy", sortField.toString())
+  }
+
+  if (sortOrder) {
+    url.searchParams.append("orderBy", sortOrder.toString())
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery.toString())
+  }
+
+  if (status) {
+    url.searchParams.append("status", status.toString())
+  }
+
+  const publicKnowledge = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+    },
+    cache: "no-store",
+  })
   return await publicKnowledge.json()
 }
 
@@ -48,14 +73,22 @@ interface AllPublicKnowledgeProps {
 export default async function AllPublicKnowledge({
   searchParams,
 }: AllPublicKnowledgeProps) {
-  const { page, per_page, store_page } = searchParams
+  const { page, per_page, sort, store_page } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
 
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
+
   const publicKnowledgeResp = await getPublicKnowledge({
     page: pageInitial,
     limit: limitInitial,
+    sortField: sortBy,
+    sortOrder: orderBy,
   })
 
   return (
