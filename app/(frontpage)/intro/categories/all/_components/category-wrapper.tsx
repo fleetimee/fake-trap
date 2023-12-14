@@ -1,8 +1,9 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
+import { set } from "date-fns"
 import { Variants } from "framer-motion"
 
 import { CategoryListResData } from "@/types/category/res"
@@ -64,12 +65,13 @@ export function CategoryWrapper({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
-  const [query, setQuery] = React.useState("")
+
+  const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 500)
 
   // Search params
   const page = searchParams?.get("page") ?? "1"
-  const sort = searchParams?.get("sort") ?? "createdAt.desc"
+  const sort = searchParams?.get("sort") ?? "created_at.desc"
 
   const per_page = searchParams?.get("per_page") ?? "8"
   const search = searchParams?.get("search") ?? ""
@@ -91,6 +93,21 @@ export function CategoryWrapper({
     },
     [searchParams]
   )
+
+  useEffect(() => {
+    startTransition(() => {
+      router.push(
+        `${pathname}?${createQueryString({
+          search: debouncedQuery,
+          page: page,
+          sort: sort,
+        })}`,
+        {
+          scroll: false,
+        }
+      )
+    })
+  }, [createQueryString, debouncedQuery, page, pathname, router, sort]) // dependency on debouncedQuery
 
   return (
     <>
@@ -122,31 +139,12 @@ export function CategoryWrapper({
                 </div>
 
                 <Input
-                  value={query}
                   placeholder="Search something..."
+                  value={query}
                   onChange={(e) => {
                     setQuery(e.target.value)
                   }}
                 />
-
-                <Button
-                  className="w-fit"
-                  onClick={() => {
-                    startTransition(() => {
-                      router.push(
-                        `${pathname}?${createQueryString({
-                          search: query,
-                          page: null,
-                        })}`
-                      ),
-                        {
-                          scroll: false,
-                        }
-                    })
-                  }}
-                >
-                  Search
-                </Button>
               </div>
             </div>
 
@@ -163,8 +161,9 @@ export function CategoryWrapper({
                     startTransition(() => {
                       router.push(
                         `${pathname}?${createQueryString({
-                          search: null,
-                          page: null,
+                          search: search,
+                          page: page,
+                          sort: sort,
                         })}`
                       ),
                         {
@@ -243,6 +242,7 @@ export function CategoryWrapper({
           page={page}
           sort={sort}
           per_page={per_page}
+          search={search}
           createQueryString={createQueryString}
         />
       ) : null}

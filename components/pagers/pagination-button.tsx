@@ -15,6 +15,7 @@ interface PaginationButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   page?: string
   per_page?: string
   sort?: string
+  search?: string
   createQueryString: (params: Record<string, string | number | null>) => string
   siblingCount?: number
 }
@@ -23,6 +24,7 @@ export function PaginationButton({
   pageCount,
   page,
   per_page,
+  search,
   sort,
   createQueryString,
   siblingCount = 1,
@@ -81,6 +83,7 @@ export function PaginationButton({
                 page: 1,
                 per_page: per_page ?? null,
                 sort: sort ?? null,
+                search: search ?? null,
               })}`
             )
           })
@@ -101,6 +104,7 @@ export function PaginationButton({
                 page: Number(page) - 1,
                 per_page: per_page ?? null,
                 sort: sort ?? null,
+                search: search ?? null,
               })}`
             )
           })
@@ -135,6 +139,7 @@ export function PaginationButton({
                     page: pageNumber,
                     per_page: per_page ?? null,
                     sort: sort ?? null,
+                    search: search ?? null,
                   })}`
                 )
               })
@@ -157,6 +162,7 @@ export function PaginationButton({
                 page: Number(page) + 1,
                 per_page: per_page ?? null,
                 sort: sort ?? null,
+                search: search ?? null,
               })}`
             )
           })
@@ -176,6 +182,7 @@ export function PaginationButton({
               page: pageCount ?? 10,
               per_page: per_page ?? null,
               sort: sort ?? null,
+              search: search ?? null,
             })}`
           )
         }}

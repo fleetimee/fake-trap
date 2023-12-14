@@ -73,13 +73,15 @@ interface AllPublicKnowledgeProps {
 export default async function AllPublicKnowledge({
   searchParams,
 }: AllPublicKnowledgeProps) {
-  const { page, per_page, sort, store_page } = searchParams
+  const { page, per_page, sort, search, store_page } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
 
   const orderByInitial = typeof sort === "string" ? sort : "desc"
   const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const searchInitial = typeof search === "string" ? search : ""
 
   const sortBy = sortByInitial.split(".")[0]
   const orderBy = orderByInitial.split(".")[1]
@@ -89,6 +91,7 @@ export default async function AllPublicKnowledge({
     limit: limitInitial,
     sortField: sortBy,
     sortOrder: orderBy,
+    searchQuery: searchInitial,
   })
 
   return (
