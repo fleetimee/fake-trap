@@ -24,8 +24,6 @@ async function getPublicCategories({
   sortOrder = "desc",
   searchQuery = "",
 }: GetPublicCategoryV2Props): Promise<CategoryListRes> {
-  // let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`
-
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category`
 
   let url = new URL(baseUrl)
@@ -69,16 +67,24 @@ interface AllPublicCategoriesProps {
 export default async function AllPublicCategories({
   searchParams,
 }: AllPublicCategoriesProps) {
-  const { page, per_page, store_page, search } = searchParams
+  const { page, per_page, sort, store_page, search } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
 
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
   const searchInitial = typeof search === "string" ? search : ""
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
 
   const publicCategoryResp = await getPublicCategories({
     limit: limitInitial,
     page: pageInitial,
+    sortField: sortBy,
+    sortOrder: orderBy,
     searchQuery: searchInitial,
   })
 

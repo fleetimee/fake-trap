@@ -2,9 +2,12 @@
 
 import React from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { ChevronDownIcon } from "@radix-ui/react-icons"
 import { Variants } from "framer-motion"
 
 import { CategoryListResData } from "@/types/category/res"
+import { sortOptions } from "@/config/categories"
+import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
 import { CategoryCard } from "@/components/category-card"
 import { HeaderIntro } from "@/components/category-header"
@@ -13,6 +16,13 @@ import { PaginationButton } from "@/components/pagers/pagination-button"
 import { CategoryCardSkeleton } from "@/components/skeletons/category-card-skeleton"
 import { Button } from "@/components/ui/button"
 import { CardDescription } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -64,6 +74,7 @@ export function CategoryWrapper({
   const per_page = searchParams?.get("per_page") ?? "8"
   const search = searchParams?.get("search") ?? ""
 
+  // Create query string
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
       const newSearchParams = new URLSearchParams(searchParams?.toString())
@@ -80,10 +91,6 @@ export function CategoryWrapper({
     },
     [searchParams]
   )
-
-  React.useEffect(() => {
-    setQuery(debouncedQuery)
-  }, [debouncedQuery])
 
   return (
     <>
@@ -173,6 +180,37 @@ export function CategoryWrapper({
             </div>
           </SheetContent>
         </Sheet>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button aria-label="Sort products" size="sm" disabled={isPending}>
+              Sort
+              <ChevronDownIcon className="ml-2 h-4 w-4" aria-hidden="true" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-48">
+            <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+            {sortOptions.map((option) => (
+              <DropdownMenuItem
+                key={option.label}
+                className={cn(option.value === sort && "bg-accent font-bold")}
+                onClick={() => {
+                  startTransition(() => {
+                    router.push(
+                      `${pathname}?${createQueryString({
+                        sort: option.value,
+                      })}`,
+                      {
+                        scroll: false,
+                      }
+                    )
+                  })
+                }}
+              >
+                {option.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -203,6 +241,7 @@ export function CategoryWrapper({
         <PaginationButton
           pageCount={pageCount}
           page={page}
+          sort={sort}
           per_page={per_page}
           createQueryString={createQueryString}
         />
