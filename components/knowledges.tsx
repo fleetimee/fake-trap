@@ -76,18 +76,17 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
 
   useEffect(() => {
     startTransition(() => {
-      router.push(
-        `${pathname}?${createQueryString({
-          search: debouncedQuery,
-          page: page,
-          sort: sort,
-        })}`,
-        {
-          scroll: false,
-        }
-      )
+      const newSearchParams = {
+        search: debouncedQuery,
+        page: debouncedQuery !== search ? "1" : page,
+        sort: sort,
+      }
+
+      router.push(`${pathname}?${createQueryString(newSearchParams)}`, {
+        scroll: false,
+      })
     })
-  }, [createQueryString, debouncedQuery, page, pathname, router, sort]) //
+  }, [createQueryString, debouncedQuery, page, pathname, router, search, sort])
 
   return (
     <section className="flex flex-col gap-6 space-y-6">
@@ -135,7 +134,9 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
                     startTransition(() => {
                       router.push(
                         `${pathname}?${createQueryString({
-                          search: search,
+                          search: "",
+                          sort: "created_at.desc",
+                          page: "1",
                         })}`
                       ),
                         {

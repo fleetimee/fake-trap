@@ -4,6 +4,7 @@ import * as React from "react"
 import { useEffect, useId, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
+import { XIcon } from "lucide-react"
 
 import { CategoryListResData } from "@/types/category/res"
 import { sortOptions } from "@/config/categories"
@@ -76,18 +77,20 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
 
   useEffect(() => {
     startTransition(() => {
-      router.push(
-        `${pathname}?${createQueryString({
-          search: debouncedQuery,
-          page: page,
-          sort: sort,
-        })}`,
-        {
-          scroll: false,
-        }
-      )
+      const newSearchParams = {
+        search: debouncedQuery,
+        page: debouncedQuery !== search ? "1" : page,
+        sort: sort,
+      }
+
+      router.push(`${pathname}?${createQueryString(newSearchParams)}`, {
+        scroll: false,
+      })
     })
-  }, [createQueryString, debouncedQuery, page, pathname, router, sort]) // dependency on debouncedQuery
+  }, [createQueryString, debouncedQuery, page, pathname, router, search, sort])
+
+  const isQueryModified =
+    debouncedQuery !== "" || sort !== "created_at.desc" || page !== "1"
 
   return (
     <section className="flex flex-col gap-6 space-y-6">
@@ -132,7 +135,9 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
                     startTransition(() => {
                       router.push(
                         `${pathname}?${createQueryString({
-                          search: search,
+                          search: "",
+                          page: "1",
+                          sort: "created_at.desc",
                         })}`
                       ),
                         {
@@ -180,6 +185,36 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {
+          // If it not the default query, show the reset button
+          isQueryModified && (
+            <Button
+              aria-label="Reset filters"
+              size="icon"
+              variant="outline"
+              className="flex items-center justify-center"
+              onClick={() => {
+                setQuery("")
+                startTransition(() => {
+                  router.push(
+                    `${pathname}?${createQueryString({
+                      search: "",
+                      page: "1",
+                      sort: "created_at.desc",
+                    })}`,
+                    {
+                      scroll: false,
+                    }
+                  )
+                })
+              }}
+              disabled={isPending}
+            >
+              <XIcon className=" h-4 w-4" aria-hidden="true" />
+            </Button>
+          )
+        }
       </div>
       <div className="xs:grid-cols-2 grid gap-4  lg:grid-cols-3">
         <React.Suspense
