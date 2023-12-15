@@ -809,6 +809,8 @@ interface GetUserEnrolledCourseList {
   uuid: string | undefined
   limit: number
   page: number
+  sortBy?: string
+  orderBy?: string
   searchQuery?: string
 }
 
@@ -827,6 +829,8 @@ export async function getUserEnrolledCourseList({
   uuid,
   limit,
   page,
+  sortBy = "created_at",
+  orderBy = "desc",
   searchQuery = "",
 }: GetUserEnrolledCourseList): Promise<UserEnrolledCourseListRes> {
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getEnrolledCourse`
@@ -839,6 +843,14 @@ export async function getUserEnrolledCourseList({
 
   if (limit) {
     url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
   }
 
   if (searchQuery) {

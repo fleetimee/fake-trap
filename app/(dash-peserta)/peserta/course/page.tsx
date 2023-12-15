@@ -29,10 +29,18 @@ export default async function PesertaCoursePage({
 }: PesertaCoursePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, store_page } = searchParams
+  const { page, per_page, sort, search, store_page } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 6
+
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const sortBy = sortByInitial.split(".")[1]
+  const orderBy = orderByInitial.split(".")[0]
+
+  const searchInitial = typeof search === "string" ? search : ""
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -45,10 +53,10 @@ export default async function PesertaCoursePage({
     uuid: tokenExtracted?.id,
     limit: limitInitial,
     page: pageInitial,
-    searchQuery: "",
+    orderBy: orderBy,
+    sortBy: sortBy,
+    searchQuery: searchInitial,
   })
-
-  console.log(userCourse)
 
   return (
     <DashboardShell>
