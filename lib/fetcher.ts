@@ -550,11 +550,11 @@ export async function getKnowledgeUser({
   }
 
   if (sortField) {
-    url.searchParams.append("sortField", sortField)
+    url.searchParams.append("sortBy", sortField)
   }
 
   if (sortOrder) {
-    url.searchParams.append("sortOrder", sortOrder)
+    url.searchParams.append("orderBy", sortOrder)
   }
 
   if (status) {

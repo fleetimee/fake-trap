@@ -1,12 +1,14 @@
 "use client"
 
 import * as React from "react"
+import { useEffect, useId, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
 
 import { CategoryListResData } from "@/types/category/res"
 import { sortOptions } from "@/config/categories"
 import { cn } from "@/lib/utils"
+import { useDebounce } from "@/hooks/use-debounce"
 
 import { CategoryCard } from "./category-card"
 import { PaginationButton } from "./pagers/pagination-button"
@@ -20,6 +22,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
+import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Separator } from "./ui/separator"
 import {
@@ -37,15 +40,20 @@ interface CategoriesProps {
 }
 
 export function Categories({ categories, pageCount }: CategoriesProps) {
-  const id = React.useId()
+  const id = useId()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
 
+  const [query, setQuery] = useState("")
+  const debouncedQuery = useDebounce(query, 500)
+
   // Search params
   const page = searchParams?.get("page") ?? "1"
-  const sort = searchParams?.get("sort") ?? "createdAt.desc"
+  const sort = searchParams?.get("sort") ?? "created_at.desc"
+
+  const search = searchParams?.get("search") ?? ""
 
   const per_page = searchParams?.get("per_page") ?? "9"
 
@@ -66,6 +74,21 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
     [searchParams]
   )
 
+  useEffect(() => {
+    startTransition(() => {
+      router.push(
+        `${pathname}?${createQueryString({
+          search: debouncedQuery,
+          page: page,
+          sort: sort,
+        })}`,
+        {
+          scroll: false,
+        }
+      )
+    })
+  }, [createQueryString, debouncedQuery, page, pathname, router, sort]) // dependency on debouncedQuery
+
   return (
     <section className="flex flex-col gap-6 space-y-6">
       <div className="flex items-center space-x-2">
@@ -83,44 +106,44 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
             <div className="flex max-w-xl flex-1 flex-col gap-5 overflow-hidden p-1 ">
               <div className="flex flex-col items-start justify-between gap-5 rounded-lg border p-6 shadow-sm">
                 <div className="space-y-0.5">
-                  <Label>Cari Materi</Label>
+                  <Label>Cari Kategori</Label>
                   <CardDescription>
-                    Temukan materi yang kamu butuhkan
+                    Temukan kategori yang kamu butuhkan
                   </CardDescription>
                 </div>
-                {/* <Input
-                    placeholder="Search something..."
-                    value={query}
-                    onChange={(e) => {
-                      setQuery(e.target.value)
-                    }}
-                  /> */}
+                <Input
+                  placeholder="Search something..."
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value)
+                  }}
+                />
               </div>
             </div>
             <div>
               <Separator className="my-4" />
               <SheetFooter>
-                {/* <Button
-                    aria-label="Clear filters"
-                    size="sm"
-                    className="w-full"
-                    onClick={() => {
-                      setQuery("")
-                      startTransition(() => {
-                        router.push(
-                          `${pathname}?${createQueryString({
-                            search: search,
-                          })}`
-                        ),
-                          {
-                            scroll: false,
-                          }
-                      })
-                    }}
-                    disabled={isPending}
-                  >
-                    Clear Filters
-                  </Button> */}
+                <Button
+                  aria-label="Clear filters"
+                  size="sm"
+                  className="w-full"
+                  onClick={() => {
+                    setQuery("")
+                    startTransition(() => {
+                      router.push(
+                        `${pathname}?${createQueryString({
+                          search: search,
+                        })}`
+                      ),
+                        {
+                          scroll: false,
+                        }
+                    })
+                  }}
+                  disabled={isPending}
+                >
+                  Clear Filters
+                </Button>
               </SheetFooter>
             </div>
           </SheetContent>
@@ -178,6 +201,7 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
           pageCount={pageCount}
           page={page}
           sort={sort}
+          search={search}
           per_page={per_page}
           createQueryString={createQueryString}
         />
