@@ -104,9 +104,9 @@ export function Courses({ courses, pageCount }: CoursesProps) {
             <div className="flex max-w-xl flex-1 flex-col gap-5 overflow-hidden p-1 ">
               <div className="flex flex-col items-start justify-between gap-5 rounded-lg border p-6 shadow-sm">
                 <div className="space-y-0.5">
-                  <Label>Cari Materi</Label>
+                  <Label>Cari Pelatihanmu</Label>
                   <CardDescription>
-                    Temukan materi yang kamu butuhkan
+                    Temukan pelatihan yang kamu butuhkan
                   </CardDescription>
                 </div>
 

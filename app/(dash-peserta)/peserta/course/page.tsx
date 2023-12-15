@@ -66,6 +66,10 @@ export default async function PesertaCoursePage({
             href: "/peserta",
             title: "Dashboard",
           },
+          {
+            href: "/peserta/course",
+            title: "Pelatihan",
+          },
         ]}
       />
 

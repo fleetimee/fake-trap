@@ -1598,6 +1598,9 @@ interface GetThreadsListProps {
   token: string | undefined
   limit: number
   page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
 }
 
 /**
@@ -1613,10 +1616,36 @@ export async function getThreadList({
   token,
   limit,
   page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
 }: GetThreadsListProps): Promise<ThreadListRes> {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/threads?page=${page}&limit=${limit}`
+  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/threads`
+  const url = new URL(baseUrl)
 
-  const res = await fetch(url, {
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/threads?page=${page}&limit=${limit}`
+
+  const res = await fetch(url.toString(), {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
