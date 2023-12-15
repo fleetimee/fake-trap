@@ -4,7 +4,6 @@ import { Shell } from "@/components/shell/lobby-shell"
 
 import { KnowledgeWrapper } from "./_components/knowledge-wrapper"
 
-
 export const metadata = {
   title: "Semua Pengetahuan",
   description: "fleetime",
@@ -27,26 +26,73 @@ async function getPublicKnowledge({
   sortOrder = "desc",
   status = "0052",
 }: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
-  const publicKnowledge = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}&status=${status}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    }
-  )
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortField) {
+    url.searchParams.append("sortBy", sortField.toString())
+  }
+
+  if (sortOrder) {
+    url.searchParams.append("orderBy", sortOrder.toString())
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery.toString())
+  }
+
+  if (status) {
+    url.searchParams.append("status", status.toString())
+  }
+
+  const publicKnowledge = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+    },
+    cache: "no-store",
+  })
   return await publicKnowledge.json()
 }
 
-export default async function AllPublicKnowledge() {
-  const publicKnowledgeResp = await getPublicKnowledge({
-    page: 1,
-    limit: 1000,
-  })
+interface AllPublicKnowledgeProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
 
-  console.log(publicKnowledgeResp)
+export default async function AllPublicKnowledge({
+  searchParams,
+}: AllPublicKnowledgeProps) {
+  const { page, per_page, sort, search, store_page } = searchParams
+
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
+
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const searchInitial = typeof search === "string" ? search : ""
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
+
+  const publicKnowledgeResp = await getPublicKnowledge({
+    page: pageInitial,
+    limit: limitInitial,
+    sortField: sortBy,
+    sortOrder: orderBy,
+    searchQuery: searchInitial,
+  })
 
   return (
     <Shell>
@@ -63,7 +109,10 @@ export default async function AllPublicKnowledge() {
         ]}
       />
 
-      <KnowledgeWrapper publicKnowledgeResp={publicKnowledgeResp} />
+      <KnowledgeWrapper
+        knowledges={publicKnowledgeResp.data}
+        pageCount={publicKnowledgeResp.totalPage}
+      />
     </Shell>
   )
 }

@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
+import { toast as sonnerToast } from "sonner"
 import { twMerge } from "tailwind-merge"
+import * as z from "zod"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -161,4 +163,23 @@ export function formatBytes(
   return `${(bytes / Math.pow(1024, i)).toFixed(decimals)} ${
     sizeType === "accurate" ? accurateSizes[i] ?? "Bytest" : sizes[i] ?? "Bytes"
   }`
+}
+
+export function catchError(err: unknown) {
+  if (err instanceof z.ZodError) {
+    const errors = err.issues.map((issue) => {
+      return issue.message
+    })
+    return sonnerToast(errors.join("\n"))
+  } else if (err instanceof Error) {
+    return sonnerToast(err.message)
+  } else {
+    return sonnerToast("Something went wrong, please try again later.")
+  }
+}
+
+export function isMacOs() {
+  if (typeof window === "undefined") return false
+
+  return window.navigator.userAgent.includes("Mac")
 }

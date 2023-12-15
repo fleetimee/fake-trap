@@ -79,7 +79,7 @@ interface CourseCardV2Props {
 export default function CourseCardV2({ ...props }: CourseCardV2Props) {
   return (
     <>
-      <Card className="m-4 mx-auto flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary sm:w-[30rem] md:max-w-2xl xl:h-[300px]">
+      <Card className=" flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary sm:w-[30rem] md:max-w-2xl xl:h-[300px]">
         <div className="md:flex">
           <div className="md:shrink-0">
             <img

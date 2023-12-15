@@ -5,10 +5,6 @@ import { authOptions } from "@/lib/auth"
 import { getOneKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 
-
-
-
-
 interface KnowledgeDetailPageProps {
   params: {
     idKnowledge: string

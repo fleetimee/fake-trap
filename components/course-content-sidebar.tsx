@@ -129,7 +129,6 @@ export function CourseContentSidebar({
                                 <Link
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
-                                  {/* <Button className="flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background"> */}
                                   <Button
                                     className={cn({
                                       "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background":

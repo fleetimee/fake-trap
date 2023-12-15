@@ -9,10 +9,6 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { Shell } from "@/components/shell/lobby-shell"
 
-
-
-
-
 type Props = {
   params: {
     detail: string
@@ -55,7 +51,7 @@ export default async function DetailIntroCategory({ params }: Props) {
   })
 
   return (
-    <Shell>
+    <Shell className="bg-[url(/hero_bg.svg)] bg-cover bg-no-repeat lg:bg-bottom">
       <BreadCrumbs
         segments={[
           {
