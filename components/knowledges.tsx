@@ -4,6 +4,7 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
+import { XIcon } from "lucide-react"
 
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { sortOptions } from "@/config/knowledges"
@@ -88,6 +89,9 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
     })
   }, [createQueryString, debouncedQuery, page, pathname, router, search, sort])
 
+  const isQueryModified =
+    debouncedQuery !== "" || sort !== "created_at.desc" || page !== "1"
+
   return (
     <section className="flex flex-col gap-6 space-y-6">
       <div className="flex items-center space-x-2">
@@ -113,6 +117,7 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
 
                 <Input
                   placeholder="Search something..."
+                  disabled={isPending}
                   value={query}
                   onChange={(e) => {
                     setQuery(e.target.value)
@@ -184,6 +189,36 @@ export function Knowledges({ knowledges, pageCount }: KnowledgesProps) {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {
+          // If it not the default query, show the reset button
+          isQueryModified && (
+            <Button
+              aria-label="Reset filters"
+              size="icon"
+              variant="outline"
+              className="flex items-center justify-center"
+              onClick={() => {
+                setQuery("")
+                startTransition(() => {
+                  router.push(
+                    `${pathname}?${createQueryString({
+                      search: "",
+                      page: "1",
+                      sort: "created_at.desc",
+                    })}`,
+                    {
+                      scroll: false,
+                    }
+                  )
+                })
+              }}
+              disabled={isPending}
+            >
+              <XIcon className=" h-4 w-4" aria-hidden="true" />
+            </Button>
+          )
+        }
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

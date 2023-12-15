@@ -88,7 +88,6 @@ export default async function AllPublicCategories({
     searchQuery: searchInitial,
   })
 
-  console.log("publicCategoryResp", publicCategoryResp)
 
   return (
     <Shell>

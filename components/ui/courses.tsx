@@ -4,6 +4,7 @@ import * as React from "react"
 import { useEffect } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
+import { XIcon } from "lucide-react"
 
 import { UserEnrolledCourseListResData } from "@/types/me/res"
 import { sortOptions } from "@/config/coruses"
@@ -74,18 +75,20 @@ export function Courses({ courses, pageCount }: CoursesProps) {
 
   useEffect(() => {
     startTransition(() => {
-      router.push(
-        `${pathname}?${createQueryString({
-          search: debouncedQuery,
-          page: page,
-          sort: sort,
-        })}`,
-        {
-          scroll: false,
-        }
-      )
+      const newSearchParams = {
+        search: debouncedQuery,
+        page: debouncedQuery !== search ? "1" : page,
+        sort: sort,
+      }
+
+      router.push(`${pathname}?${createQueryString(newSearchParams)}`, {
+        scroll: false,
+      })
     })
-  }, [createQueryString, debouncedQuery, page, pathname, router, sort]) //
+  }, [createQueryString, debouncedQuery, page, pathname, router, search, sort])
+
+  const isQueryModified =
+    debouncedQuery !== "" || sort !== "created_at.desc" || page !== "1"
 
   return (
     <section className="flex flex-col gap-6 space-y-2">
@@ -112,6 +115,7 @@ export function Courses({ courses, pageCount }: CoursesProps) {
 
                 <Input
                   placeholder="Search something..."
+                  disabled={isPending}
                   value={query}
                   onChange={(e) => {
                     setQuery(e.target.value)
@@ -129,11 +133,12 @@ export function Courses({ courses, pageCount }: CoursesProps) {
                   className="w-full"
                   onClick={() => {
                     setQuery("")
-
                     startTransition(() => {
                       router.push(
                         `${pathname}?${createQueryString({
-                          search: search,
+                          search: "",
+                          page: "1",
+                          sort: "created_at.desc",
                         })}`
                       ),
                         {
@@ -181,6 +186,36 @@ export function Courses({ courses, pageCount }: CoursesProps) {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {
+          // If it not the default query, show the reset button
+          isQueryModified && (
+            <Button
+              aria-label="Reset filters"
+              size="icon"
+              variant="outline"
+              className="flex items-center justify-center"
+              onClick={() => {
+                setQuery("")
+                startTransition(() => {
+                  router.push(
+                    `${pathname}?${createQueryString({
+                      search: "",
+                      page: "1",
+                      sort: "created_at.desc",
+                    })}`,
+                    {
+                      scroll: false,
+                    }
+                  )
+                })
+              }}
+              disabled={isPending}
+            >
+              <XIcon className=" h-4 w-4" aria-hidden="true" />
+            </Button>
+          )
+        }
       </div>
 
       <div className="grid grid-cols-1 gap-6  xl:grid-cols-2">

@@ -115,6 +115,7 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
                   </CardDescription>
                 </div>
                 <Input
+                  disabled={isPending}
                   placeholder="Search something..."
                   value={query}
                   onChange={(e) => {
