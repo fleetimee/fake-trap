@@ -4,25 +4,36 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getThreadList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { ForumCard } from "@/components/forum-card"
+import { Threads } from "@/components/threads"
 import { buttonVariants } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
-
-
-
-
 interface CourseThreadPageProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
   params: {
     idCourse: string
   }
 }
 
 export default async function CourseThreadPage({
+  searchParams,
   params,
 }: CourseThreadPageProps) {
   const user = await getCurrentUser()
+
+  const { page, per_page, sort, search, store_page } = searchParams
+
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
+  const searchInitial = typeof search === "string" ? search : ""
+
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -31,8 +42,11 @@ export default async function CourseThreadPage({
   const threads = await getThreadList({
     token: user?.token,
     idCourse: params.idCourse,
-    limit: 1000,
-    page: 1,
+    limit: limitInitial,
+    page: pageInitial,
+    orderBy: orderBy,
+    sortBy: sortBy,
+    searchQuery: searchInitial,
   })
 
   return (
@@ -58,30 +72,11 @@ export default async function CourseThreadPage({
         </Link>
       </div>
 
-      {threads && threads.data && threads.data.length > 0 ? (
-        <ScrollArea className="h-[700px] w-full">
-          <div className="flex flex-col gap-4">
-            {threads.data.map((thread) => (
-              <ForumCard
-                idCourse={params.idCourse}
-                idThreads={thread.id_threads.toString()}
-                title={thread.threads_title}
-                createdAt={thread.created_at.toString()}
-                numberOfPosts={thread.number_of_posts}
-                numberOfUsers={thread.number_of_users}
-                linkString={`/peserta/course/detail/${params.idCourse}/threads/${thread.id_threads}`}
-              />
-            ))}
-          </div>
-        </ScrollArea>
-      ) : (
-        <div className="mt-9 flex flex-col items-center justify-center gap-4">
-          <h1 className="text-2xl font-semibold">Belum ada thread</h1>
-          <p className="text-sm text-muted-foreground">
-            Buat thread baru untuk memulai diskusi
-          </p>
-        </div>
-      )}
+      <Threads
+        data={threads.data}
+        pageCount={threads.totalPage}
+        idCourse={params.idCourse}
+      />
     </div>
   )
 }

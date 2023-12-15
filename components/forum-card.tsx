@@ -24,12 +24,12 @@ export function ForumCard({ ...props }: ForumCardProps) {
             pathname: props.linkString,
           }}
         >
-          <CardTitle className="block -translate-x-2 -translate-y-2 rounded-md border-2 border-black bg-primary p-4 text-2xl font-bold text-white hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
+          <CardTitle className="block -translate-x-2 -translate-y-2 rounded-md border-2 border-black bg-primary p-4 font-bold text-white hover:-translate-y-3 active:translate-x-0 active:translate-y-0 dark:text-black 2xl:text-2xl">
             {props.title}
           </CardTitle>
         </Link>
         <CardDescription className="grid grid-cols-2 justify-between text-sm text-muted-foreground">
-          <div className="inline-flex items-center text-xl font-semibold text-primary">
+          <div className="inline-flex items-center text-xs font-semibold text-primary 2xl:text-xl">
             <Icons.clock className="mr-2 h-4 w-4" />
             {convertDatetoString(new Date(props.createdAt).toString())}
           </div>
@@ -37,12 +37,12 @@ export function ForumCard({ ...props }: ForumCardProps) {
           <div className="flex items-center justify-end">
             <div className="grid grid-cols-2 justify-between">
               <div className="mr-2 inline-flex">
-                <Icons.user className="mr-2 h-8 w-8" />
+                <Icons.user className="mr-2 h-4 w-4 2xl:h-8 2xl:w-8" />
                 {props.numberOfUsers}
               </div>
 
               <div className="inline-flex ">
-                <Icons.comment className="mr-2 h-8 w-8" />
+                <Icons.comment className="mr-2 h-4 w-4 2xl:h-8 2xl:w-8" />
                 {props.numberOfUsers}
               </div>
             </div>

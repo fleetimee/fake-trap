@@ -12,10 +12,6 @@ import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { Shell } from "@/components/shell/lobby-shell"
 import { Button, buttonVariants } from "@/components/ui/button"
 
-
-
-
-
 export const metadata = {
   title: "Explore",
   description: "Explore our products and services.",
@@ -110,11 +106,14 @@ export default async function IntroductionPage() {
     animate: { opacity: 1, x: 0 },
   }
   return (
-    <Shell as="div" className="grid gap-60 ">
+    <Shell
+      as="div"
+      className="grid gap-60 bg-[url(/hero_bg.svg)] bg-contain bg-no-repeat lg:bg-bottom"
+    >
       <section
         id="categories"
         aria-labelledby="categories-heading"
-        className="space-y-6 py-6 md:pt-10 lg:pt-32"
+        className="space-y-6 bg-[url(/second_bg.svg)] bg-cover py-6 md:pt-10 lg:pt-32 "
       >
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <MotionDiv
@@ -174,7 +173,7 @@ export default async function IntroductionPage() {
       <section
         id="parallax-text"
         aria-labelledby="parallax-text-heading"
-        className="mx-auto hidden space-y-6 px-4 2xl:container sm:px-6 lg:px-8 2xl:block"
+        className="mx-auto hidden space-y-6 px-4 2xl:container sm:px-6 lg:px-8 2xl:block "
       >
         <VelocityScroll />
       </section>

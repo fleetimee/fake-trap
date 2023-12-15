@@ -6,10 +6,6 @@ import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 
-
-
-
-
 interface GetUserProps {
   token: string | undefined
   uuid: string
@@ -55,8 +51,6 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
     )
   }
 
-  console.log(user)
-
   const tokenExtracted = extractToken(user?.token)
 
   const loggedOnUser = await getLoggedOnUser({
@@ -67,7 +61,7 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
   const isMoreThanOneRole = tokenExtracted.role.some((role) => role.id_role > 1)
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-background">
+    <div className="relative flex min-h-screen flex-col bg-[url(/hero_bg.svg)] bg-cover lg:bg-bottom">
       <SiteHeader
         user={user}
         displayName={loggedOnUser?.data?.name}

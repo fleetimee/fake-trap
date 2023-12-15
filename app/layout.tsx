@@ -1,6 +1,3 @@
-
-
-
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
@@ -13,10 +10,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { SonnerToaster } from "@/components/ui/sonner-toaster"
 import { Toaster } from "@/components/ui/toaster"
 import { NextAuthProvider } from "@/app/providers"
-
-
-
-
 
 export const metadata: Metadata = {
   title: {

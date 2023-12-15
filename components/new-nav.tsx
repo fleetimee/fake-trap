@@ -2,20 +2,19 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-
-
-
-
 
 interface DashboardNavNewProps {
   items: MenuListResNewData[]
 }
 
 export function DashboardNewNewNav({ items }: DashboardNavNewProps) {
+  const { data: session } = useSession()
+
   const path = usePathname()
 
   if (!items?.length) {
@@ -29,7 +28,14 @@ export function DashboardNewNewNav({ items }: DashboardNavNewProps) {
           const Icon = Icons[item.menu_icon || "arrowRight"]
           return (
             item.menu_url && (
-              <Link key={index} href={item.menu_url}>
+              <Link
+                key={index}
+                href={
+                  item.menu_url.includes("/person/profile")
+                    ? `${item.menu_url}/${session?.expires?.id}`
+                    : item.menu_url
+                }
+              >
                 <span
                   className={cn(
                     "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground ",

@@ -31,21 +31,26 @@ export default async function PesertaKnowledgePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const { page, per_page, store_page } = searchParams
+  const { page, per_page, search, sort, store_page } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
+  const searchInitial = typeof search === "string" ? search : ""
+
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
 
   const knowledges = await getKnowledgeUser({
     token: user?.token,
     page: pageInitial,
     limit: limitInitial,
-    searchQuery: "",
-    sortField: "created_at",
-    sortOrder: "desc",
+    searchQuery: searchInitial,
+    sortOrder: orderBy,
+    sortField: sortBy,
   })
-
-  console.log(knowledges)
 
   return (
     <DashboardShell>
