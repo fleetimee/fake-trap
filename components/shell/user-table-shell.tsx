@@ -21,6 +21,17 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
   const columns = React.useMemo<ColumnDef<UserListResData, unknown>[]>(
     () => [
       {
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="#" />
+        ),
+        id: "action",
+        cell: ({ row }) => {
+          const user = row.original
+
+          return <UserOperationsAdmin user={user} />
+        },
+      },
+      {
         accessorKey: "name",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama" />
@@ -132,18 +143,6 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
               </div>
             )
           }
-        },
-      },
-
-      {
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
-        ),
-        id: "actions",
-        cell: ({ row }) => {
-          const user = row.original
-
-          return <UserOperationsAdmin user={user} />
         },
       },
     ],

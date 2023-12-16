@@ -80,21 +80,6 @@ export default async function OperatorLMSUsersPage({
             description="Kelola user yang dapat mengakses sistem"
           />
         </MotionDiv>
-        {/* <MotionDiv
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex xl:justify-end"
-        >
-          <Link
-            href="/operator-lms/users/new"
-            className={buttonVariants({
-              size: "sm",
-              className: "ml-2",
-            })}
-          >
-            Buat User Baru
-          </Link>
-        </MotionDiv> */}
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

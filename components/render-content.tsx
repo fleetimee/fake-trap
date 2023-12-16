@@ -2,12 +2,9 @@ import React from "react"
 
 import { CourseOneRes, CourseOneResQuiz } from "@/types/course/res"
 import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
-import { QuestionListRes } from "@/types/question/res"
 import { UserListRes } from "@/types/user/res"
-import { QuizFormTemp } from "@/components/app/course/detail/quiz/ui/quiz-form-temp"
 import {
   BookmarkButton,
-  GenericRender,
   LinkButton,
   PdfDownloadButton,
   VideoDownloadButton,
@@ -18,10 +15,6 @@ import {
   PdfRender,
   YoutubeRender,
 } from "@/components/content-renderer"
-
-
-
-
 
 interface RenderContentProps {
   detailKnowledge: KnowledgeOneRes
@@ -57,15 +50,6 @@ export function renderContent({
           alt={detailKnowledge.data.knowledge_title}
         />
       )
-
-    case "0016":
-      return <GenericRender link={contentData.link} />
-
-    case "0017":
-      return <GenericRender link={contentData.link} />
-
-    case "0018":
-      return <GenericRender link={contentData.link} />
 
     default:
       return null
@@ -136,41 +120,7 @@ export function renderContentCourse({ ...props }: RenderContentCourseProps) {
         />
       )
 
-    case "0016":
-      return <GenericRender link={props.contentData.link} />
-
-    case "0017":
-      return <GenericRender link={props.contentData.link} />
-
-    case "0018":
-      return <GenericRender link={props.contentData.link} />
-
     default:
       return null
-  }
-}
-
-interface RenderQuizProps {
-  questionResp: QuestionListRes
-  contentQuiz: CourseOneResQuiz
-  quizIdInitial: string
-  idQUiz: string
-}
-
-export function renderQuiz({
-  idQUiz,
-  quizIdInitial,
-  contentQuiz,
-  questionResp,
-}: RenderQuizProps) {
-  switch (idQUiz) {
-    case idQUiz:
-      return (
-        <QuizFormTemp
-          questionResp={questionResp}
-          contentQuiz={contentQuiz}
-          quizIdInitial={quizIdInitial}
-        />
-      )
   }
 }

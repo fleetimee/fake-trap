@@ -7,6 +7,4 @@ export enum ApprovalStatus {
 export enum QuizType {
   PRETEST = "0021",
   POSTTEST = "0022",
-  LATIHAN = "0023",
-  EVALUASI = "0024",
 }

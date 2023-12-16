@@ -3,12 +3,9 @@
 import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
-import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
-import { z } from "zod"
 
 import { CategoryListResData } from "@/types/category/res"
 import { RuleOneResData } from "@/types/rule/res"
@@ -32,28 +29,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet"
-
-const formSchema = z.object({
-  category_name: z.string().nonempty().min(3).max(36),
-  image: z.string().url().optional(),
-})
 
 interface DeleteCategoryProps {
   idKategori: number
@@ -102,68 +77,15 @@ export function CategoryOperations({
 
   const router = useRouter()
 
-  const [openEditCategorySheet, setOpenEditCategorySheet] =
-    React.useState<boolean>(false)
-
   const [openDeleteAlert, setOpenDeleteAlert] = React.useState<boolean>(false)
 
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
-
-  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false)
-
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      category_name: kategori.category_name,
-      image: kategori.image,
-    },
-  })
 
   const buildEditRowLink = () => {
     if (editRowLink) {
       return `${editRowLink}update/${kategori.id_category}`
     } else {
       return `/operator-lms/category/update/${kategori.id_category}`
-    }
-  }
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsEditLoading(true)
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${kategori.id_category}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
-          body: JSON.stringify(values),
-        }
-      )
-
-      if (response.ok) {
-        sonnerToast.success("Berhasil", {
-          description: "Kategori berhasil diubah",
-        })
-
-        router.refresh()
-        form.reset()
-        setOpenEditCategorySheet(false)
-      } else {
-        sonnerToast.error("Gagal", {
-          description: "Kategori gagal diubah",
-        })
-      }
-    } catch (error) {
-      sonnerToast.error("Gagal", {
-        description: `${error}`,
-      })
-
-      console.error(error)
-    } finally {
-      setIsEditLoading(false)
     }
   }
 
@@ -188,9 +110,14 @@ export function CategoryOperations({
 
           <DropdownMenuItem
             onClick={() => {
-              navigator.clipboard.writeText(kategori.id_category.toString())
-
-              sonnerToast.info("ID Kategori berhasil dicopy")
+              navigator.clipboard
+                .writeText(kategori.id_category.toString())
+                .then(() => {
+                  sonnerToast.info("ID Kategori berhasil dicopy")
+                })
+                .catch((error) => {
+                  console.error("Failed to copy text: ", error)
+                })
             }}
           >
             Copy
@@ -267,78 +194,6 @@ export function CategoryOperations({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <Sheet
-        open={openEditCategorySheet}
-        onOpenChange={setOpenEditCategorySheet}
-      >
-        <SheetContent size="content">
-          <SheetHeader>
-            <SheetTitle>Perbarui Kategori</SheetTitle>
-            <SheetDescription>
-              Perbarui kategori yang sudah ada
-            </SheetDescription>
-          </SheetHeader>
-
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col space-y-8 py-8"
-            >
-              <FormField
-                control={form.control}
-                name="category_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Nama Kategori <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Nama Kategori"
-                        {...field}
-                        disabled={isEditLoading}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Nama Kategori yang akan ditambahkan
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Gambar</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Gambar"
-                        {...field}
-                        disabled={isEditLoading}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Gambar yang akan ditambahkan
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button type="submit" className="self-end">
-                {isEditLoading ? (
-                  <Icons.spinner className="h-5 w-5 animate-spin" />
-                ) : (
-                  "Update"
-                )}
-              </Button>
-            </form>
-          </Form>
-        </SheetContent>
-      </Sheet>
     </>
   )
 }

@@ -11,6 +11,7 @@ import { z } from "zod"
 
 import { RoleListResData } from "@/types/role/res"
 import { UserOneResData } from "@/types/user/res"
+import { updateUserByUuid } from "@/lib/fetcher"
 import { cn } from "@/lib/utils"
 import { usersSchema } from "@/lib/validations/users"
 import { Button } from "@/components/ui/button"
@@ -37,11 +38,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-
-
-import { Icons } from "../icons";
-import { Badge } from "../ui/badge";
-
+import { Icons } from "../icons"
+import { Badge } from "../ui/badge"
 
 interface ErrorResponseProps {
   message: string
@@ -77,17 +75,11 @@ export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
   const [selectedRole, setSelectedRole] = React.useState<RoleNovian>(user.role)
 
   async function onSubmit(data: Inputs) {
-    console.log(data)
-
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${user.uuid}`
-
-        const response = await fetch(url, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await updateUserByUuid({
+          token: session?.user.token,
+          uuid: user.uuid,
           body: JSON.stringify(data),
         })
 

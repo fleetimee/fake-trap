@@ -1236,6 +1236,67 @@ export async function getOneUser({
   return await res.json()
 }
 
+interface UpdateUserProps {
+  token: string | undefined
+  uuid: string
+  body: BodyInit
+}
+
+/**
+ * Updates a user by UUID.
+ * @param {UpdateUserProps} options - The options for updating the user.
+ * @param {string} options.token - The token for authorization.
+ * @param {string} options.uuid - The UUID of the user to update.
+ * @returns {Promise<any>} - A promise that resolves to the updated user data.
+ */
+export async function updateUserByUuid({
+  token,
+  uuid,
+  body,
+}: UpdateUserProps): Promise<Response> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
+
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+    cache: "no-store",
+  })
+
+  return res
+}
+
+interface DeleteUserProps {
+  token: string | undefined
+  uuid: string
+}
+
+/**
+ * Deletes a user by their UUID.
+ * @param {DeleteUserProps} options - The options for deleting a user.
+ * @param {string} options.token - The authentication token.
+ * @param {string} options.uuid - The UUID of the user to delete.
+ * @returns {Promise<Response>} A promise that resolves to the response of the delete request.
+ */
+export async function deleteUserByUuid({
+  token,
+  uuid,
+}: DeleteUserProps): Promise<Response> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return res
+}
+
 interface GetUsersByGroupProps {
   token: string | undefined
   idGroup: number

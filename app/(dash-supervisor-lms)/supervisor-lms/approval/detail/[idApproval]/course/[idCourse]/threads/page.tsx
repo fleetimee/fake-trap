@@ -5,7 +5,6 @@ import { authOptions } from "@/lib/auth"
 import { getThreadList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { ForumCard } from "@/components/forum-card"
-import { buttonVariants } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
