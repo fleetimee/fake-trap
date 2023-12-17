@@ -8,11 +8,8 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { CategoryListResData } from "@/types/category/res"
 import { RuleOneResData } from "@/types/rule/res"
 import { convertDatetoString } from "@/lib/utils"
-import { CategoryOperations } from "@/components/app/category/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
-import { Checkbox } from "@/components/ui/checkbox"
-
-import { AspectRatio } from "../ui/aspect-ratio"
+import { CategoryOperations } from "@/components/hamburger-operations/category-operations"
 
 interface CategoryTableShellProps {
   data: CategoryListResData[]
@@ -29,9 +26,6 @@ export function CategoryTableShell({
   newRowLink,
   editRowLink,
 }: CategoryTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
-
   const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
       {

@@ -10,8 +10,8 @@ import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { convertDatetoStringShort } from "@/lib/utils"
-import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+import { KnowledgeOperations } from "@/components/hamburger-operations/knowledge-operations"
 import { Badge } from "@/components/ui/badge"
 
 interface BadgeSwitchProps {

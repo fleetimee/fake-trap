@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { KnowledgeDeleteContent } from "@/components/delete-content"
 import { DeleteSection } from "@/components/delete-section"
+import { EmptyContent } from "@/components/empty"
 import {
   Accordion,
   AccordionContent,
@@ -28,8 +29,6 @@ import {
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-import { EmptyContent } from "./app/knowledge/detail/ui"
 
 interface KnowledgeContentSidebarProps {
   knowledge: KnowledgeOneRes

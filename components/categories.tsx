@@ -10,22 +10,19 @@ import { CategoryListResData } from "@/types/category/res"
 import { sortOptions } from "@/config/categories"
 import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
-
-import { CategoryCard } from "./category-card"
-import { PaginationButton } from "./pagers/pagination-button"
-import { CategoryCardSkeleton } from "./skeletons/category-card-skeleton"
-import { Button } from "./ui/button"
-import { CardDescription } from "./ui/card"
+import { CategoryCard } from "@/components/cards/category-card"
+import { Button } from "@/components/ui/button"
+import { CardDescription } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import { Separator } from "./ui/separator"
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
 import {
   Sheet,
   SheetContent,
@@ -33,7 +30,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet"
+} from "@/components/ui/sheet"
+
+import { PaginationButton } from "./pagers/pagination-button"
+import { CategoryCardSkeleton } from "./skeletons/category-card-skeleton"
 
 interface CategoriesProps {
   categories: CategoryListResData[]

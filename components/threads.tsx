@@ -10,7 +10,7 @@ import { sortOptions } from "@/config/threads"
 import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
 
-import { ForumCard } from "./forum-card"
+import { ForumCard } from "./cards/forum-card"
 import { PaginationButton } from "./pagers/pagination-button"
 import { Button } from "./ui/button"
 import { CardDescription } from "./ui/card"

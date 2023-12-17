@@ -1,9 +1,13 @@
 import Link from "next/link"
 
 import { convertDatetoString } from "@/lib/utils"
-
-import { Icons } from "./icons"
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import { Icons } from "@/components/icons"
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 interface ForumCardProps {
   idCourse: string

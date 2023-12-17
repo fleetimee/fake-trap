@@ -9,8 +9,8 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { CourseListResData } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { convertDatetoString } from "@/lib/utils"
-import { CourseOperations } from "@/components/app/course/operations/course-operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+import { CourseOperations } from "@/components/hamburger-operations/course-operations"
 import { Badge } from "@/components/ui/badge"
 
 interface BadgeSwitchProps {

@@ -2,12 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { CategoryListResData } from "@/types/category/res"
-import { cn, convertDatetoString } from "@/lib/utils"
+import { convertDatetoString } from "@/lib/utils"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { buttonVariants } from "@/components/ui/button"
-
-import { Icons } from "./icons"
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 interface CategoryCardProps {
   category: CategoryListResData

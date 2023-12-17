@@ -1,21 +1,19 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
-import { set } from "date-fns"
 import { Variants } from "framer-motion"
-import { XIcon } from "lucide-react"
 
-import { CategoryListResData } from "@/types/category/res"
-import { sortOptions } from "@/config/categories"
+import { KnowledgeListResData } from "@/types/knowledge/res"
+import { sortOptions } from "@/config/knowledges"
 import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
-import { CategoryCard } from "@/components/category-card"
+import { KnowledgeCard } from "@/components/cards/knowledge-card"
 import { HeaderIntro } from "@/components/category-header"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { PaginationButton } from "@/components/pagers/pagination-button"
-import { CategoryCardSkeleton } from "@/components/skeletons/category-card-skeleton"
+import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
 import { Button } from "@/components/ui/button"
 import { CardDescription } from "@/components/ui/card"
 import {
@@ -37,6 +35,20 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
+const parentVariant: Variants = {
+  initial: {
+    opacity: 0,
+    x: -100,
+  },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+}
+
 const childrenVariant: Variants = {
   initial: {
     opacity: 0,
@@ -53,31 +65,31 @@ const childrenVariant: Variants = {
   },
 }
 
-interface GetPublicCategoriesProps {
-  categories: CategoryListResData[]
+interface GetPublicKnowledgeProps {
+  knowledges: KnowledgeListResData[]
   pageCount: number
 }
 
-export function CategoryWrapper({
-  categories,
+export function PublicKnowledges({
+  knowledges,
   pageCount,
-}: GetPublicCategoriesProps) {
+}: GetPublicKnowledgeProps) {
+  const id = React.useId()
   const router = useRouter()
+  const [query, setQuery] = React.useState("")
+  const debouncedQuery = useDebounce(query, 500)
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
-
-  const [query, setQuery] = useState("")
-  const debouncedQuery = useDebounce(query, 500)
 
   // Search params
   const page = searchParams?.get("page") ?? "1"
   const sort = searchParams?.get("sort") ?? "created_at.desc"
 
-  const per_page = searchParams?.get("per_page") ?? "8"
   const search = searchParams?.get("search") ?? ""
 
-  // Create query string
+  const per_page = searchParams?.get("per_page") ?? "8"
+
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
       const newSearchParams = new URLSearchParams(searchParams?.toString())
@@ -97,28 +109,37 @@ export function CategoryWrapper({
 
   useEffect(() => {
     startTransition(() => {
-      const newSearchParams = {
-        search: debouncedQuery,
-        page: debouncedQuery !== search ? "1" : page,
-        sort: sort,
-      }
-
-      router.push(`${pathname}?${createQueryString(newSearchParams)}`, {
-        scroll: false,
-      })
+      router.push(
+        `${pathname}?${createQueryString({
+          search: debouncedQuery,
+          page: page,
+          sort: sort,
+        })}`,
+        {
+          scroll: false,
+        }
+      )
     })
-  }, [createQueryString, debouncedQuery, page, pathname, router, search, sort])
-
-  const isQueryModified =
-    debouncedQuery !== "" || sort !== "created_at.desc" || page !== "1"
+  }, [createQueryString, debouncedQuery, page, pathname, router, sort]) //
 
   return (
     <>
-      <HeaderIntro
-        title="Semua Pengetahuan"
-        description="Temukan pengetahuan yang kamu butuhkan"
-        size="sm"
-      />
+      <MotionDiv
+        initial={{
+          opacity: 0,
+          y: -100,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+      >
+        <HeaderIntro
+          title="Semua Pengetahuan"
+          description="Temukan pengetahuan yang kamu butuhkan"
+          size="sm"
+        />
+      </MotionDiv>
 
       <div className="flex items-center space-x-2">
         <Sheet>
@@ -135,9 +156,9 @@ export function CategoryWrapper({
             <div className="flex max-w-xl flex-1 flex-col gap-5 overflow-hidden p-1 ">
               <div className="flex flex-col items-start justify-between gap-5 rounded-lg border p-6 shadow-sm">
                 <div className="space-y-0.5">
-                  <Label>Cari Kategori</Label>
+                  <Label>Cari Materi</Label>
                   <CardDescription>
-                    Cari kategori berdasarkan nama kategori
+                    Temukan materi yang kamu butuhkan
                   </CardDescription>
                 </div>
 
@@ -164,9 +185,7 @@ export function CategoryWrapper({
                     startTransition(() => {
                       router.push(
                         `${pathname}?${createQueryString({
-                          search: "",
-                          page: "1",
-                          sort: "created_at.desc",
+                          search: search,
                         })}`
                       ),
                         {
@@ -182,6 +201,7 @@ export function CategoryWrapper({
             </div>
           </SheetContent>
         </Sheet>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button aria-label="Sort products" size="sm" disabled={isPending}>
@@ -213,68 +233,44 @@ export function CategoryWrapper({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        {
-          // If it not the default query, show the reset button
-          isQueryModified && (
-            <Button
-              aria-label="Reset filters"
-              size="icon"
-              variant="outline"
-              className="flex items-center justify-center"
-              onClick={() => {
-                setQuery("")
-                startTransition(() => {
-                  router.push(
-                    `${pathname}?${createQueryString({
-                      search: "",
-                      page: "1",
-                      sort: "created_at.desc",
-                    })}`,
-                    {
-                      scroll: false,
-                    }
-                  )
-                })
-              }}
-              disabled={isPending}
-            >
-              <XIcon className=" h-4 w-4" aria-hidden="true" />
-            </Button>
-          )
-        }
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <MotionDiv
+        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        variants={parentVariant}
+        initial="initial"
+        animate="animate"
+      >
         <React.Suspense
-          fallback={Array.from({ length: 8 }).map((_, i) => (
-            <CategoryCardSkeleton key={i} />
+          fallback={Array.from({ length: 10 }).map((_, i) => (
+            <KnowledgeCardSkeleton key={i} />
           ))}
         >
-          {categories &&
-            categories.map((category) => (
-              <MotionDiv
-                variants={childrenVariant}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                key={category.id_category}
-                className="group relative overflow-hidden rounded-md border"
-              >
-                <CategoryCard
-                  category={category}
-                  link={`/intro/categories/${category.id_category}`}
-                />
-              </MotionDiv>
-            ))}
+          {knowledges?.map((knowledge) => (
+            <MotionDiv
+              variants={childrenVariant}
+              className="child"
+              whileHover={{
+                scale: 1.05,
+              }}
+            >
+              <KnowledgeCard
+                key={knowledge.id_knowledge}
+                knowledge={knowledge}
+                link={`/intro/knowledge/${knowledge.id_knowledge}`}
+              />
+            </MotionDiv>
+          ))}
         </React.Suspense>
-      </div>
+      </MotionDiv>
 
-      {categories && categories.length ? (
+      {knowledges.length ? (
         <PaginationButton
           pageCount={pageCount}
           page={page}
           sort={sort}
-          per_page={per_page}
           search={search}
+          per_page={per_page}
           createQueryString={createQueryString}
         />
       ) : null}

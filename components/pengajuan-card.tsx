@@ -2,7 +2,7 @@ import Link from "next/link"
 
 import { Icons } from "./icons"
 import { Badge } from "./ui/badge"
-import { Button, buttonVariants } from "./ui/button"
+import { buttonVariants } from "./ui/button"
 import { Separator } from "./ui/separator"
 
 enum Status {

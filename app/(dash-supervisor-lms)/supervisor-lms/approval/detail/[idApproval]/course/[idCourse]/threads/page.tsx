@@ -1,10 +1,9 @@
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { getThreadList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { ForumCard } from "@/components/forum-card"
+import { ForumCard } from "@/components/cards/forum-card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 

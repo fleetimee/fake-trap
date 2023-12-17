@@ -7,6 +7,9 @@ import { usePathname } from "next/navigation"
 import { CourseOneRes } from "@/types/course/res"
 import { cn } from "@/lib/utils"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
+import { CreateQuizDropdownButton } from "@/components/create-quiz-dropwdown"
+import { DeleteSection } from "@/components/delete-section"
+import { EmptyContent } from "@/components/empty"
 import {
   Accordion,
   AccordionContent,
@@ -26,10 +29,6 @@ import {
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-import { EmptyContent } from "./app/knowledge/detail/ui"
-import { CreateQuizDropdownButton } from "./create-quiz-dropwdown"
-import { DeleteSection } from "./delete-section"
 
 interface CourseContentSidebarProps {
   course: CourseOneRes

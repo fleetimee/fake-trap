@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-import { EmptyContent } from "@/components/app/knowledge/detail/ui"
+import { EmptyContent } from "@/components/empty"
 import {
   AlertDialog,
   AlertDialogAction,

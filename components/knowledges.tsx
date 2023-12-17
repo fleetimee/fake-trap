@@ -10,7 +10,7 @@ import { KnowledgeListResData } from "@/types/knowledge/res"
 import { sortOptions } from "@/config/knowledges"
 import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
+import { KnowledgeCard } from "@/components/cards/knowledge-card"
 import { PaginationButton } from "@/components/pagers/pagination-button"
 import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
 

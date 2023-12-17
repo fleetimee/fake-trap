@@ -1,8 +1,7 @@
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { PublicKnowledges } from "@/components/public-knowledges"
 import { Shell } from "@/components/shell/lobby-shell"
-
-import { KnowledgeWrapper } from "./_components/knowledge-wrapper"
 
 export const metadata = {
   title: "Semua Pengetahuan",
@@ -109,7 +108,7 @@ export default async function AllPublicKnowledge({
         ]}
       />
 
-      <KnowledgeWrapper
+      <PublicKnowledges
         knowledges={publicKnowledgeResp.data}
         pageCount={publicKnowledgeResp.totalPage}
       />

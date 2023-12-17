@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,6 +12,7 @@ import { z } from "zod"
 import { ErrorResponse } from "@/types/error-res"
 import { QuizOneRes, QuizOneResQuestion } from "@/types/quiz/res"
 import { userSubmittedAnswerSchema } from "@/lib/validations/user-submitted-answer"
+import { EmptyContent } from "@/components/empty"
 import { Icons } from "@/components/icons"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
@@ -31,9 +32,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-import { EmptyContent } from "../app/knowledge/detail/ui"
-import { Separator } from "../ui/separator"
+import { Separator } from "@/components/ui/separator"
 
 interface UserSubmittedAnswerFormProps {
   question: QuizOneResQuestion[]

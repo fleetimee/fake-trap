@@ -1,8 +1,7 @@
 import { CategoryListRes } from "@/types/category/res"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { PublicCategories } from "@/components/public-categories"
 import { Shell } from "@/components/shell/lobby-shell"
-
-import { CategoryWrapper } from "./_components/category-wrapper"
 
 export const metadata = {
   title: "Semua Kategori",
@@ -88,7 +87,6 @@ export default async function AllPublicCategories({
     searchQuery: searchInitial,
   })
 
-
   return (
     <Shell>
       <BreadCrumbs
@@ -104,7 +102,7 @@ export default async function AllPublicCategories({
         ]}
       />
 
-      <CategoryWrapper
+      <PublicCategories
         categories={publicCategoryResp.data}
         pageCount={publicCategoryResp.totalPage}
       />
