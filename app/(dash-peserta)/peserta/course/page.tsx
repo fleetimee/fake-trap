@@ -5,7 +5,6 @@ import { authOptions } from "@/lib/auth"
 import { getUserEnrolledCourseList } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import CourseCardV2 from "@/components/course-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -29,7 +28,7 @@ export default async function PesertaCoursePage({
 }: PesertaCoursePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, search, store_page } = searchParams
+  const { page, per_page, sort, search } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 6

@@ -1,9 +1,8 @@
 import Link from "next/link"
 
+import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardFooter } from "@/components/ui/card"
-
-import { Badge } from "./ui/badge"
 
 interface CourseCardV2Props {
   courseId: string

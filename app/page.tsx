@@ -10,7 +10,7 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { MarketingCard } from "@/components/marketing-card"
+import { MarketingCard } from "@/components/cards/marketing-card"
 import { buttonVariants } from "@/components/ui/button"
 
 export const metadata = {

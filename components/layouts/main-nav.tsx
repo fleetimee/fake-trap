@@ -30,7 +30,7 @@ export function MainNav({ items, children }: MainNavProps) {
 
   return (
     <div className="hidden gap-6 lg:flex">
-      <Link href="/" className="hidden items-center space-x-2 md:flex">
+      <Link href="/public" className="hidden items-center space-x-2 md:flex">
         <Icons.logo className="text-primary" />
         <span className="hidden font-bold text-primary sm:inline-block">
           {siteConfig.name}
@@ -50,7 +50,7 @@ export function MainNav({ items, children }: MainNavProps) {
                       <a
                         aria-label="Home"
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
+                        href="/public"
                       >
                         <Icons.logo className="h-6 w-6" aria-hidden="true" />
                         <div className="mb-2 mt-4 text-lg font-medium">

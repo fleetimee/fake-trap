@@ -10,21 +10,20 @@ import { UserEnrolledCourseListResData } from "@/types/me/res"
 import { sortOptions } from "@/config/coruses"
 import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
-import CourseCardV2 from "@/components/course-card"
+import CourseCardV2 from "@/components/cards/course-card"
 import { PaginationButton } from "@/components/pagers/pagination-button"
-
-import { Button } from "./button"
-import { CardDescription } from "./card"
+import { Button } from "@/components/ui/button"
+import { CardDescription } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
-import { Input } from "./input"
-import { Label } from "./label"
-import { Separator } from "./separator"
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
 import {
   Sheet,
   SheetContent,
@@ -32,7 +31,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./sheet"
+} from "@/components/ui/sheet"
 
 interface CoursesProps {
   courses: UserEnrolledCourseListResData[]

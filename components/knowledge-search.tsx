@@ -2,11 +2,11 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { CircleIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 
 import { KnowledgeListResData } from "@/types/knowledge/res"
-import { getKnowledgeUser, getKnowledgeV2 } from "@/lib/fetcher"
+import { getKnowledgeUser } from "@/lib/fetcher"
 import { catchError, cn, isMacOs } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"

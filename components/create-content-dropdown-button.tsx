@@ -5,7 +5,7 @@ import Link from "next/link"
 import { CursorTextIcon, FileIcon, VideoIcon } from "@radix-ui/react-icons"
 
 import { Icons } from "@/components/icons"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,

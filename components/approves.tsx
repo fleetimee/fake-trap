@@ -5,9 +5,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 import { AprovalRequestListData } from "@/types/approval/res"
 import { convertDatetoString } from "@/lib/utils"
-
-import { PaginationButton } from "./pagers/pagination-button"
-import { PengajuanCard } from "./pengajuan-card"
+import { PengajuanCard } from "@/components/cards/pengajuan-card"
+import { PaginationButton } from "@/components/pagers/pagination-button"
 
 interface ApprovesProps {
   approvals: AprovalRequestListData[]

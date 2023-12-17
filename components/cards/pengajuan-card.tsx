@@ -1,9 +1,9 @@
 import Link from "next/link"
 
-import { Icons } from "./icons"
-import { Badge } from "./ui/badge"
-import { buttonVariants } from "./ui/button"
-import { Separator } from "./ui/separator"
+import { Icons } from "@/components/icons"
+import { Badge } from "@/components/ui/badge"
+import { buttonVariants } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 
 enum Status {
   Pending = "PENDING",

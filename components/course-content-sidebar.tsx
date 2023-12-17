@@ -55,7 +55,6 @@ export function CourseContentSidebar({
           </TabsTrigger>
         </TabsList>
 
-        {/* Course Content Section */}
         <TabsContent value="knowledge">
           <ScrollArea className="h-700px w-full">
             {course?.data?.section ? (
@@ -101,12 +100,10 @@ export function CourseContentSidebar({
                               </Link>
                             </ContextMenuItem>
 
-                            {/* Delete Section */}
                             <DeleteSection
                               idSection={section.id_section.toString()}
                             />
 
-                            {/* Section Name */}
                             <ContextMenuItem inset disabled>
                               {section.section_title}
                               <ContextMenuShortcut>⌘]</ContextMenuShortcut>

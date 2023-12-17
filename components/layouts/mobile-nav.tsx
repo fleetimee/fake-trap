@@ -51,7 +51,7 @@ export function MobileNav({
         <div className="px-7">
           <Link
             aria-label="Home"
-            href="/"
+            href="/public"
             className="flex items-center"
             onClick={() => setIsOpen(false)}
           >

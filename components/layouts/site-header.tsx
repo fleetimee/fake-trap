@@ -6,8 +6,10 @@ import { signOut } from "next-auth/react"
 
 import { dashboardConfig } from "@/config/dashboard"
 import { siteConfig } from "@/config/site"
-import { MainNav } from "@/components/main-nav"
-import { MobileNav } from "@/components/mobile-nav"
+import { Icons } from "@/components/icons"
+import { KnowledgeSearch } from "@/components/knowledge-search"
+import { MainNav } from "@/components/layouts/main-nav"
+import { MobileNav } from "@/components/layouts/mobile-nav"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -20,9 +22,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-import { Icons } from "../icons"
-import { KnowledgeSearch } from "../knowledge-search"
 
 interface SiteHeaderProps {
   user:

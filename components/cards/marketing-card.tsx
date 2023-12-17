@@ -6,14 +6,14 @@ import { Variants } from "framer-motion"
 import { marketingFeatures } from "@/config/marketing-feature"
 import { cn } from "@/lib/utils"
 
-import { MotionDiv } from "./framer-wrapper"
+import { MotionDiv } from "../framer-wrapper"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card"
+} from "../ui/card"
 
 interface MarketingCardProps {
   parentVariant: Variants
