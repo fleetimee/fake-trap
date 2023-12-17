@@ -21,8 +21,8 @@ import {
 } from "@tanstack/react-table"
 
 import { useDebounce } from "@/hooks/use-debounce"
-import { DataTablePagination, DataTableToolbar } from "@/components/data-table/"
-import { Card } from "@/components/ui/card"
+import { DataTablePagination } from "@/components/data-table/data-table-pagination"
+import { DataTableToolbar } from "@/components/data-table/data-table-toolbar"
 import {
   Table,
   TableBody,
@@ -32,7 +32,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { MotionDiv } from "../framer-wrapper"
+
+
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -42,6 +44,8 @@ interface DataTableProps<TData, TValue> {
   searchableColumns?: DataTableSearchableColumn<TData>[]
   newRowLink?: string
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
+  isExportable?: boolean
+  exportAction?: string
 }
 
 export function DataTable<TData, TValue>({
@@ -52,6 +56,8 @@ export function DataTable<TData, TValue>({
   searchableColumns = [],
   newRowLink,
   deleteRowsAction,
+  isExportable,
+  exportAction,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter()
   const pathname = usePathname()
@@ -59,7 +65,12 @@ export function DataTable<TData, TValue>({
 
   // Search params
   const page = searchParams?.get("page") ?? "1"
+  const pageAsNumber = Number(page)
+  const fallbackPage =
+    isNaN(pageAsNumber) || pageAsNumber < 1 ? 1 : pageAsNumber
   const per_page = searchParams?.get("per_page") ?? "10"
+  const perPageAsNumber = Number(per_page)
+  const fallbackPerPage = isNaN(perPageAsNumber) ? 10 : perPageAsNumber
   const sort = searchParams?.get("sort")
   const [column, order] = sort?.split(".") ?? []
 
@@ -92,8 +103,8 @@ export function DataTable<TData, TValue>({
   // Handle server-side pagination
   const [{ pageIndex, pageSize }, setPagination] =
     React.useState<PaginationState>({
-      pageIndex: Number(page) - 1,
-      pageSize: Number(per_page),
+      pageIndex: fallbackPage - 1,
+      pageSize: fallbackPerPage,
     })
 
   const pagination = React.useMemo(
@@ -106,10 +117,10 @@ export function DataTable<TData, TValue>({
 
   React.useEffect(() => {
     setPagination({
-      pageIndex: Number(page) - 1,
-      pageSize: Number(per_page),
+      pageIndex: fallbackPage - 1,
+      pageSize: fallbackPerPage,
     })
-  }, [page, per_page])
+  }, [fallbackPage, fallbackPerPage])
 
   React.useEffect(() => {
     router.push(
@@ -269,8 +280,10 @@ export function DataTable<TData, TValue>({
         searchableColumns={searchableColumns}
         newRowLink={newRowLink}
         deleteRowsAction={deleteRowsAction}
+        exportAction={exportAction}
+        isExportable={isExportable}
       />
-      <Card className="rounded-md border">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -319,7 +332,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </Card>
+      </div>
       <DataTablePagination table={table} />
     </div>
   )

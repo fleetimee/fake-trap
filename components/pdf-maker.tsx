@@ -1,13 +1,5 @@
 import React from "react"
-import {
-  Document,
-  Font,
-  Image,
-  Page,
-  StyleSheet,
-  Text,
-  View,
-} from "@react-pdf/renderer"
+import { Document, Font, Page, Text, View } from "@react-pdf/renderer"
 import { createTw } from "react-pdf-tailwind"
 
 import {
@@ -15,6 +7,10 @@ import {
   QuizQuestionListResData,
   QuizUserResultListResData,
 } from "@/types/quiz/res"
+
+
+
+
 
 Font.register({
   family: "Oswald",

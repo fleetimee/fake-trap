@@ -3,11 +3,12 @@
 import { Variants } from "framer-motion"
 import { CheckCircle2 } from "lucide-react"
 
-import { UserAreaFeature, userAreaRole } from "@/config/dashboard"
+import { UserAreaFeature } from "@/config/dashboard"
 import { cn } from "@/lib/utils"
 
 import { MotionDiv } from "./framer-wrapper"
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card"
+
 
 const parentVariant: Variants = {
   initial: { opacity: 0 },

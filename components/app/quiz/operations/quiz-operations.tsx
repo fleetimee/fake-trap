@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog"
@@ -123,9 +124,14 @@ async function deleteQuiz({ id, token }: DeleteQuizProps) {
 interface QuizOperationsProps {
   quiz: QuizListResData
   referenceResp: ReferenceListRes
+  linkString: string
 }
 
-export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
+export function QuizOperations({
+  quiz,
+  referenceResp,
+  linkString,
+}: QuizOperationsProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -205,10 +211,15 @@ export function QuizOperations({ quiz, referenceResp }: QuizOperationsProps) {
           <DropdownMenuItem
             className="flex items-center
             "
-            onSelect={() => setOpenEditQuizSheet(true)}
+            // onSelect={() => setOpenEditQuizSheet(true)}
           >
-            Edit
-            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+            <Link
+              href={`${linkString}/update/${quiz.id_quiz}`}
+              className="flex w-full cursor-default items-center"
+            >
+              Update
+              <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />

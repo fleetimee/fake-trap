@@ -6,7 +6,6 @@ import { signOut } from "next-auth/react"
 
 import { dashboardConfig } from "@/config/dashboard"
 import { siteConfig } from "@/config/site"
-import { extractToken } from "@/lib/utils"
 import { MainNav } from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -23,8 +22,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Icons } from "../icons"
+import { KnowledgeSearch } from "../knowledge-search"
 
-export function SiteHeader(props: {
+interface SiteHeaderProps {
   user:
     | {
         code: number
@@ -32,16 +32,15 @@ export function SiteHeader(props: {
         token: string
       }
     | undefined
-}) {
+  isMoreThanOneRole: boolean
+  displayName: string
+  emailName: string
+}
+
+export function SiteHeader({ ...props }: SiteHeaderProps) {
   if (props.user) {
-    const userExtracted = extractToken(props.user.token)
-
-    const initial = `${userExtracted.username
-      .charAt(0)
-      .toUpperCase()}${userExtracted.username.charAt(1).toUpperCase()}`
-
     return (
-      <header className="sticky top-0 z-40 border-b bg-background">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center">
           <MainNav items={siteConfig.mainNav} />
           <MobileNav
@@ -49,7 +48,9 @@ export function SiteHeader(props: {
             sidebarNavItems={dashboardConfig.sidebarNav}
           />
           <div className="flex flex-1 items-center justify-end space-x-4">
-            <nav className="flex items-center space-x-2"></nav>
+            <nav className="flex items-center space-x-2">
+              <KnowledgeSearch />
+            </nav>
 
             {props.user ? (
               <DropdownMenu>
@@ -57,7 +58,7 @@ export function SiteHeader(props: {
                   <Avatar className="h-8 w-8">
                     <AvatarImage
                       src={`data:image/svg+xml;utf8,${generateFromString(
-                        userExtracted.username
+                        props.displayName
                       )}`}
                     />
                     <AvatarFallback />
@@ -67,44 +68,27 @@ export function SiteHeader(props: {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {userExtracted.username}
+                        {props.displayName}
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        {userExtracted.email}
+                        {props.emailName}
                       </p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
                   <DropdownMenuGroup>
-                    <DropdownMenuItem asChild>
-                      <Link href="/dashboard/me">
-                        <Icons.user
+                    <DropdownMenuItem
+                      asChild
+                      disabled={!props.isMoreThanOneRole}
+                    >
+                      <Link href={"/panel-selector"}>
+                        <Icons.empty
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Account
+                        Panel Selector
                         <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/dashboard/">
-                        <Icons.gitHub
-                          className="mr-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                        Dashboard
-                        <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild disabled>
-                      <Link href="/dashboard/settings">
-                        <Icons.settings
-                          className="mr-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                        Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>

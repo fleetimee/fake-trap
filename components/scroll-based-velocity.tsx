@@ -3,7 +3,6 @@
 import React from "react"
 import { wrap } from "@motionone/utils"
 import {
-  AnimatePresence,
   motion,
   useAnimationFrame,
   useMotionValue,

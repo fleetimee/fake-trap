@@ -4,301 +4,188 @@ import { withAuth } from "next-auth/middleware"
 
 import { extractTokenMiddleware } from "./lib/utils"
 
+/**
+ * Middleware function that handles authentication and authorization for different user roles.
+ * @param req - The request object.
+ * @returns A NextResponse object or null.
+ */
 export default withAuth(
   async function middleware(req) {
     const token = await getToken({ req })
-
     const isAuth = !!token
+
     const isAuthPage = req.nextUrl.pathname.startsWith("/login")
 
-    const isDashboardPage = req.nextUrl.pathname.startsWith("/dashboard")
-    const isMeAdminPage = req.nextUrl.pathname.startsWith("/dashboard/me")
-    const isMeRecentQuizAdminPage = req.nextUrl.pathname.startsWith(
-      "/dashboard/me/recent-quiz"
-    )
-    const isMeAllCoursesAdminPage = req.nextUrl.pathname.startsWith(
-      "/dashboard/me/course"
-    )
-    const isMeGroupedQuizAdminPage = req.nextUrl.pathname.startsWith(
-      "/dashboard/me/averaged-quiz"
-    )
-
-    const isCourseDetailAdminPage =
-      req.nextUrl.pathname.startsWith("/dashboard/course/")
-
-    const isMemberAreaPage = req.nextUrl.pathname.startsWith("/member-area")
-
-    const isMemberAreaCoursePageDetail = req.nextUrl.pathname.startsWith(
-      "/member-area/course/:path*"
-    )
-
-    const isForumThreadAdminPage = req.nextUrl.pathname.startsWith(
-      "/dashboard/forum/thread/:path*/forum/:path*"
-    )
-
-    const isSupervisorAreaPage =
-      req.nextUrl.pathname.startsWith("/supervisor-area")
-
-    const isPemateriAreaPage = req.nextUrl.pathname.startsWith("/pemateri-area")
-
+    // If user attempts to access login page
     if (isAuthPage) {
+      // While user is authenticated
       if (isAuth) {
         const extractToken = extractTokenMiddleware(token?.token)
-        const adminRole = "Admin"
-        const superVisorRole = "Supervisor"
-        const pemateriRole = "Pemateri"
-        const normalRole = "User"
 
         const userRoles = extractToken.role
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return NextResponse.redirect(new URL("/dashboard", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === normalRole)
-        ) {
-          return NextResponse.redirect(new URL("/member-area", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === superVisorRole)
-        ) {
-          return NextResponse.redirect(new URL("/supervisor-area", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === pemateriRole)
-        ) {
-          return NextResponse.redirect(new URL("/pemateri-area", req.url))
+        console.log(userRoles.length)
+
+        // if userRoles contains more than 1 role
+        // redirect to panel selector page
+        if (userRoles.length > 1) {
+          return NextResponse.redirect(new URL("/panel-selector", req.url))
+        } else {
+          // if userRoles contains only 1 role
+          // redirect to the respective panel
+          const isRolePemateriDivisi = userRoles.some(
+            (role) => role.id_role === 1
+          )
+          const isRoleSpvPemateriDivisi = userRoles.some(
+            (role) => role.id_role === 2
+          )
+          const isRoleOperatorLMS = userRoles.some((role) => role.id_role === 3)
+
+          const isRoleSpvOperatorLMS = userRoles.some(
+            (role) => role.id_role === 4
+          )
+
+          const isRolePeserta = userRoles.some((role) => role.id_role === 5)
+
+          const isRoleExecutive = userRoles.some((role) => role.id_role === 6)
+
+          if (isRolePemateriDivisi) {
+            return NextResponse.redirect(new URL("/pemateri-divisi", req.url))
+          }
+
+          if (isRoleSpvPemateriDivisi) {
+            return NextResponse.redirect(
+              new URL("/supervisor-pemateri-divisi", req.url)
+            )
+          }
+
+          if (isRoleOperatorLMS) {
+            return NextResponse.redirect(new URL("/operator-lms", req.url))
+          }
+
+          if (isRoleSpvOperatorLMS) {
+            return NextResponse.redirect(new URL("/supervisor-lms", req.url))
+          }
+
+          if (isRolePeserta) {
+            return NextResponse.redirect(new URL("/peserta", req.url))
+          }
+
+          if (isRoleExecutive) {
+            return NextResponse.redirect(new URL("/executive", req.url))
+          }
         }
       }
-
       return null
     }
 
+    // Check if user is authenticated
+    // if user is not authenticated, redirect to login page
     if (!isAuth) {
       let from = req.nextUrl.pathname
       if (req.nextUrl.search) {
         from += req.nextUrl.search
       }
-
       return NextResponse.redirect(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       )
     }
 
-    if (isCourseDetailAdminPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
-        const adminRole = "Admin"
-        const superVisorRole = "Supervisor"
-        const normalRole = "User"
-        const userRoles = extractToken.role
+    // Protect Panel Selector Route
+    // If user has less than 2 roles, redirect to 404
+    if (req.nextUrl.pathname.startsWith("/panel-selector")) {
+      const extractToken = extractTokenMiddleware(token?.token)
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return null
-        } else {
-          // get course id from url
-          const courseId = req.nextUrl.pathname.split("/")[3]
+      const userRoles = extractToken.role
 
-          return NextResponse.redirect(
-            new URL(`/member-area/course/${courseId}`, req.url)
-          )
-        }
+      if (userRoles.length < 2) {
+        return NextResponse.redirect(new URL("/404", req.url))
       }
+    }
 
-    if (isMeAllCoursesAdminPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
-        const adminRole = "Admin"
-        const userRoles = extractToken.role
+    // Protect Pemateri Divisi Route
+    // if user is not Pemateri Divisi, redirect to 404
+    if (req.nextUrl.pathname.startsWith("/pemateri-divisi")) {
+      const extractToken = extractTokenMiddleware(token?.token)
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return null
-        } else {
-          return NextResponse.redirect(new URL("/member-area/course", req.url))
-        }
+      const userRoles = extractToken.role
+
+      const isRoleAdmin = userRoles.some((role) => role.id_role === 1)
+
+      if (!isRoleAdmin) {
+        return NextResponse.redirect(new URL("/404", req.url))
       }
+    }
 
-    if (isMeGroupedQuizAdminPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
-        const adminRole = "Admin"
-        const userRoles = extractToken.role
+    // Protect Supervisor Pemateri Divisi Route
+    // if user is not Supervisor Pemateri Divisi, redirect to 404
+    if (req.nextUrl.pathname.startsWith("/supervisor-pemateri-divisi")) {
+      const extractToken = extractTokenMiddleware(token?.token)
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return null
-        } else {
-          return NextResponse.redirect(
-            new URL("/member-area/me/averaged-quiz", req.url)
-          )
-        }
+      const userRoles = extractToken.role
+
+      const isRoleAdmin = userRoles.some((role) => role.id_role === 2)
+
+      if (!isRoleAdmin) {
+        return NextResponse.redirect(new URL("/404", req.url))
       }
+    }
 
-    if (isMeRecentQuizAdminPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
-        const adminRole = "Admin"
-        const userRoles = extractToken.role
+    // Protect Operator LMS Route
+    // if user is not Operator LMS, redirect to 404
+    if (req.nextUrl.pathname.startsWith("/operator-lms")) {
+      const extractToken = extractTokenMiddleware(token?.token)
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return null
-        } else {
-          return NextResponse.redirect(
-            new URL("/member-area/me/recent-quiz", req.url)
-          )
-        }
+      const userRoles = extractToken.role
+
+      const isRoleAdmin = userRoles.some((role) => role.id_role === 3)
+
+      if (!isRoleAdmin) {
+        return NextResponse.redirect(new URL("/404", req.url))
       }
+    }
 
-    if (isMeAdminPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
-        const adminRole = "Admin"
-        const userRoles = extractToken.role
+    // Protect Supervisor LMS Route
+    // if user is not Supervisor LMS, redirect to 404
+    if (req.nextUrl.pathname.startsWith("/supervisor-lms")) {
+      const extractToken = extractTokenMiddleware(token?.token)
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return null
-        } else {
-          return NextResponse.redirect(new URL("/member-area/me", req.url))
-        }
+      const userRoles = extractToken.role
+
+      const isRoleAdmin = userRoles.some((role) => role.id_role === 4)
+
+      if (!isRoleAdmin) {
+        return NextResponse.redirect(new URL("/404", req.url))
       }
+    }
 
-    if (isDashboardPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
+    // Protect Peserta Route
+    // if user is not Peserta, redirect to 404
+    if (req.nextUrl.pathname.startsWith("/peserta")) {
+      const extractToken = extractTokenMiddleware(token?.token)
 
-        const adminRole = "Admin"
-        const superVisorRole = "Supervisor"
-        const pemateriRole = "Pemateri"
+      const userRoles = extractToken.role
 
-        const userRoles = extractToken.role
+      const isRoleAdmin = userRoles.some((role) => role.id_role === 5)
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return null
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === superVisorRole)
-        ) {
-          return NextResponse.redirect(new URL("/supervisor-area", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === pemateriRole)
-        ) {
-          return NextResponse.redirect(new URL("/pemateri-area", req.url))
-        } else {
-          return NextResponse.redirect(new URL("/member-area", req.url))
-        }
+      if (!isRoleAdmin) {
+        return NextResponse.redirect(new URL("/404", req.url))
       }
+    }
 
-    if (isSupervisorAreaPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
+    // Protect Executive Route
+    // if user is not Executive, redirect to 404
+    if (req.nextUrl.pathname.startsWith("/executive")) {
+      const extractToken = extractTokenMiddleware(token?.token)
 
-        const adminRole = "Admin"
-        const normalRole = "User"
-        const pematerRole = "Pemateri"
+      const userRoles = extractToken.role
 
-        const userRoles = extractToken.role
+      const isRoleAdmin = userRoles.some((role) => role.id_role === 6)
 
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return NextResponse.redirect(new URL("/dashboard", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === normalRole)
-        ) {
-          return NextResponse.redirect(new URL("/member-area", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === pematerRole)
-        ) {
-          return NextResponse.redirect(new URL("/pemateri-area", req.url))
-        } else {
-          return null
-        }
+      if (!isRoleAdmin) {
+        return NextResponse.redirect(new URL("/404", req.url))
       }
-
-    if (isPemateriAreaPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
-
-        const adminRole = "Admin"
-        const normalRole = "User"
-        const superVisorRole = "Supervisor"
-
-        const userRoles = extractToken.role
-
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return NextResponse.redirect(new URL("/dashboard", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === normalRole)
-        ) {
-          return NextResponse.redirect(new URL("/member-area", req.url))
-        }
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === superVisorRole)
-        ) {
-          return NextResponse.redirect(new URL("/supervisor-area", req.url))
-        } else {
-          return null
-        }
-      }
-
-    if (isMemberAreaPage)
-      if (isAuth) {
-        const extractToken = extractTokenMiddleware(token?.token)
-
-        const adminRole = "Admin"
-        const superVisorRole = "Supervisor"
-        const pemateriRole = "Pemateri"
-
-        const userRoles = extractToken.role
-
-        if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === adminRole)
-        ) {
-          return NextResponse.redirect(new URL("/dashboard", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === superVisorRole)
-        ) {
-          return NextResponse.redirect(new URL("/supervisor-area", req.url))
-        } else if (
-          userRoles &&
-          userRoles.some((role) => role.role_name === pemateriRole)
-        ) {
-          return NextResponse.redirect(new URL("/pemateri-area", req.url))
-        } else {
-          return null
-        }
-      }
+    }
   },
   {
     callbacks: {
@@ -320,5 +207,12 @@ export const config = {
     "/pemateri-area/:path*",
     "/intro/knowledge/:path*",
     "/intro/categories/:path*",
+    "/panel-selector/:path*",
+    "/pemateri-divisi/:path*",
+    "/supervisor-pemateri-divisi/:path*",
+    "/operator-lms/:path*",
+    "/supervisor-lms/:path*",
+    "/peserta/:path*",
+    "/executive/:path*",
   ],
 }

@@ -2,14 +2,15 @@ import Link from "next/link"
 import { Variants } from "framer-motion"
 import Balancer from "react-wrap-balancer"
 
+import { UserOneRes } from "@/types/user/res"
 import { siteConfig } from "@/config/site"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { MarketingCard } from "@/components/marketing-card"
-import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { buttonVariants } from "@/components/ui/button"
 
 export const metadata = {
@@ -42,13 +43,52 @@ const childVariant: Variants = {
   },
 }
 
+interface GetUserProps {
+  token: string | undefined
+  uuid: string
+}
+
+async function getLoggedOnUser({
+  token,
+  uuid,
+}: GetUserProps): Promise<UserOneRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return res.json()
+}
+
 export default async function IndexPage() {
   const user = await getCurrentUser()
 
+  const tokenExtracted = extractToken(user?.token)
+
+  const loggedOnUser = await getLoggedOnUser({
+    token: user?.token,
+    uuid: tokenExtracted.id,
+  })
+
+  const isMoreThanOneRole = tokenExtracted
+    ? tokenExtracted.role.length > 1
+    : false
+
   return (
-    <>
-      <div className="relative flex min-h-screen flex-col bg-background">
-        <SiteHeader user={user} />
+    <section className="">
+      <div className="relative flex h-auto min-h-screen flex-col bg-[url(/hero_bg.svg)] bg-cover bg-bottom md:bg-left lg:min-h-[100svh]">
+        <SiteHeader
+          user={user}
+          displayName={loggedOnUser?.data?.name ?? "No User"}
+          emailName={loggedOnUser?.data?.email ?? "No Email"}
+          isMoreThanOneRole={isMoreThanOneRole ?? false}
+        />
         <div className="gap-12  ">
           <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
             <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center py-2 text-center">
@@ -83,7 +123,7 @@ export default async function IndexPage() {
                   className="mt-4 space-y-2 py-2"
                 >
                   <Link
-                    href="/dashboard"
+                    href="/login"
                     className={buttonVariants({
                       size: "lg",
                       variant: "default",
@@ -92,7 +132,7 @@ export default async function IndexPage() {
                     <span className="mr-2">
                       <Icons.arrowRight className="h-4 w-4" />
                     </span>
-                    ENTER APP
+                    Masuk ke Dashboard
                   </Link>
                 </MotionDiv>
               ) : null}
@@ -106,6 +146,6 @@ export default async function IndexPage() {
         </div>
       </div>
       <SiteFooter className="border-t" />
-    </>
+    </section>
   )
 }

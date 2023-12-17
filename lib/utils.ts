@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
+import { toast as sonnerToast } from "sonner"
 import { twMerge } from "tailwind-merge"
-
-import { KnowledgeOneRes, KnowledgeOneResContent } from "@/types/knowledge/res"
+import * as z from "zod"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -17,6 +17,19 @@ export function convertDatetoString(date: string): string {
   })
 }
 
+export function convertDatetoStringWithTime(date: string): string {
+  const dateObj = new Date(date)
+  return dateObj.toLocaleDateString("id-ID", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  })
+}
+
 export function convertDatetoStringShort(date: string): string {
   const dateObj = new Date(date)
   return dateObj.toLocaleDateString("id-ID", {
@@ -28,6 +41,19 @@ export function convertDatetoStringShort(date: string): string {
 
 export function extractToken(token: string | undefined): UserExtracted {
   const tokenParts = token?.split(".")
+
+  if (!tokenParts) {
+    return {
+      email: "",
+      exp: 0,
+      id: "",
+      orig_iat: 0,
+      role: [],
+      username: "",
+      group: 0,
+      name: "",
+    }
+  }
 
   const encodedPayload = tokenParts?.[1]
 
@@ -53,6 +79,8 @@ export interface UserExtracted {
   orig_iat: number
   role: Role[]
   username: string
+  group: number
+  name: string
 }
 
 export interface Role {
@@ -102,10 +130,10 @@ export function isArrayOfFile(files: unknown): files is File[] {
   return files.every((file) => file instanceof File)
 }
 
-export function getYoutubeLastId(url: string) {
+export function getYoutubeLastId(url: string | undefined) {
   const regex =
     /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/
-  const match = url.match(regex)
+  const match = url?.match(regex)
   return match ? match[1] : url
 }
 
@@ -115,4 +143,43 @@ export function swrFetcher<T>(url: string, token: string) {
       Authorization: `Bearer ${token}`,
     },
   }).then((res) => res.json()) as Promise<T>
+}
+
+export const dateNow = convertDatetoString(new Date().toString())
+
+export const getDayWithText = new Date().toLocaleString("en", {
+  weekday: "long",
+})
+
+export function formatBytes(
+  bytes: number,
+  decimals = 0,
+  sizeType: "accurate" | "normal" = "normal"
+) {
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+  const accurateSizes = ["Bytes", "KiB", "MiB", "GiB", "TiB"]
+  if (bytes === 0) return "0 Byte"
+  const i = Math.floor(Math.log(bytes) / Math.log(1024))
+  return `${(bytes / Math.pow(1024, i)).toFixed(decimals)} ${
+    sizeType === "accurate" ? accurateSizes[i] ?? "Bytest" : sizes[i] ?? "Bytes"
+  }`
+}
+
+export function catchError(err: unknown) {
+  if (err instanceof z.ZodError) {
+    const errors = err.issues.map((issue) => {
+      return issue.message
+    })
+    return sonnerToast(errors.join("\n"))
+  } else if (err instanceof Error) {
+    return sonnerToast(err.message)
+  } else {
+    return sonnerToast("Something went wrong, please try again later.")
+  }
+}
+
+export function isMacOs() {
+  if (typeof window === "undefined") return false
+
+  return window.navigator.userAgent.includes("Mac")
 }

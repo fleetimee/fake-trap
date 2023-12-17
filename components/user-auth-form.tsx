@@ -11,6 +11,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+
+
+
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
@@ -75,7 +79,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 } else {
                   setIsLoading(false)
 
-                  router.push("/")
+                  router.push("/login")
 
                   router.refresh()
 

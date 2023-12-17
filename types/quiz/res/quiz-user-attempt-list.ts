@@ -11,6 +11,7 @@ export type QuizUserAttemptListData = {
   id_quiz: number
   id_user_quiz: number
   user_uuid: string
+  name: string
   username: string
   quiz_type: string
   is_correct: boolean

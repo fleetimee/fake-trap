@@ -4,12 +4,22 @@ const nextConfig = {
   publicRuntimeConfig: {
     basePath: "",
   },
+  // logging: {
+  //   fetches: {
+  //     fullUrl: true,
+  //   },
+  // },
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "**",
+      },
+
+      {
+        protocol: "http",
+        hostname: "localhost",
       },
     ],
   },

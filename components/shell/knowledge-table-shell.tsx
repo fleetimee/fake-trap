@@ -3,16 +3,16 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { convertDatetoStringShort } from "@/lib/utils"
-import { KnowledgeOperations } from "@/components/app/knowledge/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+import { KnowledgeOperations } from "@/components/hamburger-operations/knowledge-operations"
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
 
 interface BadgeSwitchProps {
   approval: any
@@ -44,51 +44,28 @@ export function KnowledgeTableShell({
   referenceResp,
   pageCount,
 }: KnowledgeTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
+  const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<KnowledgeListResData, unknown>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_knowledge)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_knowledge]
-                  : prev.filter((id) => id !== row.original.id_knowledge)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_knowledge",
+        id: "actions",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
+          <DataTableColumnHeader column={column} title="#" />
         ),
+        cell: ({ row }) => {
+          const knowledge = row.original
+
+          return (
+            <KnowledgeOperations
+              knowledgeData={knowledge}
+              categoryRes={categoryResp}
+              referenceResp={referenceResp}
+              updateRowLink={`${pathname}/update/${knowledge.id_knowledge}`}
+              isApproval
+            />
+          )
+        },
       },
       {
         accessorKey: "image",
@@ -97,13 +74,13 @@ export function KnowledgeTableShell({
         ),
         cell: ({ row }) => (
           // <AspectRatio ratio={16 / 9}>
-          <Link href={`/dashboard/knowledge/${row.original.id_knowledge}`}>
+          <Link href={`${pathname}/detail/${row.original.id_knowledge}`}>
             <Image
-              src={row.original.image}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
               alt={row.original.knowledge_title}
               width={300}
               height={300}
-              className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
+              className="rounded-xl transition-all duration-300 ease-in-out "
             />
           </Link>
           // </AspectRatio>
@@ -132,28 +109,17 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Judul" />
         ),
         cell: ({ row }) => (
-          <div className="flex flex-col ">
+          <div className="w-[300px] ">
             <Link
-              href={`/dashboard/knowledge/${row.original.id_knowledge}`}
+              href={`${pathname}/detail/${row.original.id_knowledge}`}
               className="text-sm font-semibold text-blue-600 hover:underline"
             >
               {row.original.knowledge_title}
             </Link>
           </div>
         ),
-        size: 1000,
       },
-      {
-        accessorKey: "description",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Deskripsi" />
-        ),
-        cell: ({ row }) => (
-          <div className="flex flex-col ">
-            <p className="line-clamp-2 text-sm">{row.original.description}</p>
-          </div>
-        ),
-      },
+
       {
         accessorKey: "status",
         header: ({ column }) => (
@@ -224,25 +190,8 @@ export function KnowledgeTableShell({
           )
         },
       },
-      {
-        id: "actions",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
-        ),
-        cell: ({ row }) => {
-          const knowledge = row.original
-
-          return (
-            <KnowledgeOperations
-              knowledgeData={knowledge}
-              categoryRes={categoryResp}
-              referenceResp={referenceResp}
-            />
-          )
-        },
-      },
     ],
-    [categoryResp, data, referenceResp]
+    [categoryResp, pathname, referenceResp]
   )
 
   return (
@@ -285,6 +234,7 @@ export function KnowledgeTableShell({
           })) as any,
         },
       ]}
+      newRowLink={`${pathname}/new`}
       pageCount={pageCount}
       searchableColumns={[
         {

@@ -3,8 +3,6 @@
 import React from "react"
 
 export function BGGrid({ children }: { children?: React.ReactNode }) {
-  // State can be: radial (linear-gradient), background-size
-  // useReducer instead. And pass property down
   return (
     <div className="relative min-h-screen w-full">
       {children}
@@ -25,16 +23,6 @@ export function BGGrid({ children }: { children?: React.ReactNode }) {
         />
       </div>
     </div>
-
-    //     <div className="relative min-h-screen w-full">
-    //   {children}
-    //   <div
-    //     className="fixed inset-0 z-[-1] h-screen w-screen bg-transparent"
-    //     style={{
-    //       backgroundImage: "linear-gradient(to bottom, #1a237e, #2196f3)",
-    //     }}
-    //   />
-    // </div>
   )
 }
 

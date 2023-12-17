@@ -1,8 +1,5 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import { useInView, useMotionValue, useSpring } from "framer-motion"
-
 import { MotionDiv } from "@/components/framer-wrapper"
 import {
   Card,
@@ -11,6 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+
+
+
 
 interface QuizUserCountCardProps {
   userCount: number

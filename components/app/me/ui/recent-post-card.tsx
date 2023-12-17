@@ -6,6 +6,10 @@ import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
+
+
+
+
 interface RecentPostCardProps {
   recentPostList: UserRecentPostListRes
   isMember?: boolean

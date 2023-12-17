@@ -6,19 +6,30 @@ import type {
   DataTableFilterableColumn,
   DataTableSearchableColumn,
 } from "@/types"
-import { Cross2Icon, PlusCircledIcon, TrashIcon } from "@radix-ui/react-icons"
+import {
+  Cross2Icon,
+  FileIcon,
+  PlusCircledIcon,
+  TrashIcon,
+} from "@radix-ui/react-icons"
 import type { Table } from "@tanstack/react-table"
 
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+
+
+
+
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
   filterableColumns?: DataTableFilterableColumn<TData>[]
   searchableColumns?: DataTableSearchableColumn<TData>[]
+  isExportable?: boolean
+  exportAction?: string
   newRowLink?: string
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
 }
@@ -29,6 +40,8 @@ export function DataTableToolbar<TData>({
   searchableColumns = [],
   newRowLink,
   deleteRowsAction,
+  isExportable,
+  exportAction,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
   const [isPending, startTransition] = React.useTransition()
@@ -115,6 +128,24 @@ export function DataTableToolbar<TData>({
             </div>
           </Link>
         ) : null}
+
+        {isExportable && exportAction ? (
+          <Link aria-label="Export" href={exportAction}>
+            <div
+              className={cn(
+                buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                  className: "h-8",
+                })
+              )}
+            >
+              <FileIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              Export
+            </div>
+          </Link>
+        ) : null}
+
         <DataTableViewOptions table={table} />
       </div>
     </div>

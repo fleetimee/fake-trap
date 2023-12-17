@@ -8,6 +8,7 @@ export type QuizMemberListRes = {
 }
 
 export type QuizMemberListResData = {
+  name: string
   username: string
   user_uuid: string
   attemps: number

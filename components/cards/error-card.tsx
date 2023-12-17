@@ -14,6 +14,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+
+
+
+
 interface ErrorCardProps extends React.ComponentPropsWithoutRef<typeof Card> {
   icon?: keyof typeof Icons
   title: string

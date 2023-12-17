@@ -42,13 +42,29 @@ export function MarketingCard({
               href={feature.link}
               className={cn("flex h-full flex-col items-center justify-center")}
             >
-              <Card key={feature.title} className={cn("p-2")}>
+              <Card key={feature.title} className="relative overflow-hidden">
+                <div
+                  className="absolute inset-0  bg-[length:300px_200px] bg-clip-content bg-right-bottom bg-no-repeat bg-blend-darken"
+                  style={{
+                    transform: "scale(1.1)",
+                    backgroundImage: `linear-gradient(to right, white, transparent), url(${feature.image})`,
+                  }}
+                ></div>
                 <CardHeader className="text-primary">{feature.icon}</CardHeader>
-                <CardContent className="space-y-2">
-                  <CardTitle className="font-heading text-primary">
+                <CardContent
+                  className="relative space-y-2"
+                  style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
+                >
+                  <CardTitle
+                    className="font-sans text-primary"
+                    style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                  >
                     {feature.title}
                   </CardTitle>
-                  <CardDescription className="mt-2">
+                  <CardDescription
+                    className="mt-2 max-w-md "
+                    style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                  >
                     {feature.body}
                   </CardDescription>
                 </CardContent>

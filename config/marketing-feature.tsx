@@ -1,4 +1,4 @@
-import { Component, CreditCard, Globe } from "lucide-react"
+import { Globe } from "lucide-react"
 
 import { Icons } from "@/components/icons"
 
@@ -13,6 +13,7 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#categories",
+    image: `http://localhost:3000/images/category.jpg`,
   },
   {
     icon: <Icons.knowledge className="h-10 w-10" />,
@@ -24,6 +25,7 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#featured-knowledge",
+    image: `http://localhost:3000/images/knowledge.jpg`,
   },
   {
     icon: <Icons.course className="h-10 w-10" />,
@@ -35,6 +37,7 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#featured-courses",
+    image: `http://localhost:3000/images/course.jpg`,
   },
 
   {
@@ -47,5 +50,6 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#forum",
+    image: `http://localhost:3000/images/forum.jpg`,
   },
 ]

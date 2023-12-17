@@ -6,66 +6,28 @@ import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
+import { RuleOneResData } from "@/types/rule/res"
 import { convertDatetoString } from "@/lib/utils"
-import { CategoryOperations } from "@/components/app/category/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
-import { Checkbox } from "@/components/ui/checkbox"
+import { CategoryOperations } from "@/components/hamburger-operations/category-operations"
 
 interface CategoryTableShellProps {
   data: CategoryListResData[]
   pageCount: number
+  rule: RuleOneResData
+  newRowLink?: string
+  editRowLink?: string
 }
 
 export function CategoryTableShell({
   data,
   pageCount,
+  rule,
+  newRowLink,
+  editRowLink,
 }: CategoryTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
-
   const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
-      {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_category)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_category]
-                  : prev.filter((id) => id !== row.original.id_category)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_category",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-      },
       {
         accessorKey: "category_name",
         header: ({ column }) => (
@@ -104,11 +66,11 @@ export function CategoryTableShell({
         ),
         cell: ({ row }) => (
           <Image
-            src={row.original.image}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
             alt={row.original.image}
-            width={100}
-            height={100}
-            className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
+            width={50}
+            height={50}
+            className="rounded-xl  transition-all duration-300 ease-in-out "
           />
         ),
         enableSorting: false,
@@ -149,11 +111,17 @@ export function CategoryTableShell({
         cell: ({ row }) => {
           const kategori = row.original
 
-          return <CategoryOperations kategori={kategori} />
+          return (
+            <CategoryOperations
+              kategori={kategori}
+              rule={rule}
+              editRowLink={editRowLink}
+            />
+          )
         },
       },
     ],
-    [data, setSelectedRowIds]
+    [data, editRowLink, rule]
   )
 
   return (
@@ -161,6 +129,7 @@ export function CategoryTableShell({
       columns={columns}
       data={data}
       pageCount={pageCount}
+      newRowLink={newRowLink ? newRowLink : undefined}
       searchableColumns={[
         {
           id: "category_name",

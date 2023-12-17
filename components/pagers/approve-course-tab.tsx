@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 
 import { MotionDiv } from "../framer-wrapper"
 
+
 interface ApproveCourseTabs
   extends React.ComponentPropsWithoutRef<typeof Tabs> {}
 

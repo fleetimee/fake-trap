@@ -12,4 +12,5 @@ export type QuizListResData = {
   quiz_type: string
   created_at: Date
   id_section: number | null
+  created_by: string
 }

@@ -2,6 +2,10 @@
 
 import { Cell, Pie, PieChart, Tooltip } from "recharts"
 
+
+
+
+
 const data = [
   { name: "Group A", value: 400 },
   { name: "Group B", value: 300 },

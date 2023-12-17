@@ -12,6 +12,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { UserListResData } from "@/types/user/res"
+import { deleteUserByUuid } from "@/lib/fetcher"
 import { Icons } from "@/components/icons"
 import { AlertDescription } from "@/components/ui/alert"
 import {
@@ -59,16 +60,10 @@ interface DeleteUserProps {
 }
 
 async function deleteUser({ uuid, token }: DeleteUserProps) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
+  const response = await deleteUserByUuid({
+    uuid,
+    token,
+  })
 
   if (response.ok) {
     sonnerToast.success("Berhasil", {
@@ -195,7 +190,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-auto">
+        <DropdownMenuContent align="end" className="w-[200px]">
           <DropdownMenuItem className="flex items-center">
             <Link
               className="flex w-full cursor-default items-center"
@@ -207,30 +202,12 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="flex items-center" disabled>
+          <DropdownMenuItem className="flex items-center">
             <Link
               className="flex w-full cursor-default items-center"
-              href={`/dashboard/user/promote-supervisor/${user.uuid}`}
+              href={`/operator-lms/users/reset-password/${user.uuid}`}
             >
-              Promosikan Sebagai Supervisor
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="flex items-center" disabled>
-            <Link
-              className="flex w-full cursor-default items-center"
-              href={`/dashboard/user/promote-pemateri/${user.uuid}`}
-            >
-              Promosikan Sebagai Pemateri
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="flex items-center" disabled>
-            <Link
-              className="flex w-full cursor-default items-center"
-              href={`/dashboard/user/promote-admin/${user.uuid}`}
-            >
-              Promosikan Sebagai Admin
+              Reset Password
             </Link>
           </DropdownMenuItem>
 
@@ -238,11 +215,17 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
 
           <DropdownMenuItem
             className="flex items-center"
-            onSelect={() => setOpenEditUserSheet(true)}
+            // onSelect={() => setOpenEditUserSheet(true)}
             asChild
-            disabled
+            // disabled
           >
-            <p>Edit</p>
+            <Link
+              href={`/operator-lms/users/update/${user.uuid}`}
+              className="flex w-full cursor-default items-center"
+            >
+              <p>Update</p>
+              <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
@@ -250,7 +233,6 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
           <DropdownMenuItem
             className="flex  items-center hover:bg-red-600 hover:text-white"
             onSelect={() => setOpenDeleteUserSheet(true)}
-            disabled
           >
             Hapus
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

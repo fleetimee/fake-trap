@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { CategoryOneRes } from "@/types/category/res"
 import { getPublicCategoriesDataById } from "@/lib/datasource"
 import { toTitleCase } from "@/lib/utils"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui/public-knowledge-card"
+import { KnowledgeCard } from "@/components/cards/knowledge-card"
 import { HeaderIntro } from "@/components/category-header"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -51,7 +51,7 @@ export default async function DetailIntroCategory({ params }: Props) {
   })
 
   return (
-    <Shell>
+    <Shell className="bg-[url(/hero_bg.svg)] bg-cover bg-no-repeat lg:bg-bottom">
       <BreadCrumbs
         segments={[
           {

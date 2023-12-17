@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { QuizListResData } from "@/types/quiz/res"
@@ -26,49 +27,10 @@ export function QuizTableShell({
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
 
+  const pathname = usePathname()
+
   const columns = React.useMemo<ColumnDef<QuizListResData, unknown>[]>(
     () => [
-      {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_quiz)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_quiz]
-                  : prev.filter((id) => id !== row.original.id_quiz)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_quiz",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-      },
       {
         accessorKey: "quiz_title",
         header: ({ column }) => (
@@ -76,9 +38,9 @@ export function QuizTableShell({
         ),
         cell: ({ row }) => {
           return (
-            <div className="flex flex-col">
+            <div className="w-[200px]">
               <Link
-                href={`/dashboard/quiz/${row.original.id_quiz}`}
+                href={`${pathname}/detail/${row.original.id_quiz}`}
                 className="text-sm font-semibold text-blue-600 hover:underline"
               >
                 {row.original.quiz_title}
@@ -116,7 +78,11 @@ export function QuizTableShell({
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
+          return (
+            <div className="w-[200px]">
+              {convertDatetoString(row.original.created_at.toString())}
+            </div>
+          )
         },
       },
       {
@@ -144,11 +110,17 @@ export function QuizTableShell({
         cell: ({ row }) => {
           const quiz = row.original
 
-          return <QuizOperations quiz={quiz} referenceResp={referenceResp} />
+          return (
+            <QuizOperations
+              quiz={quiz}
+              referenceResp={referenceResp}
+              linkString={`${pathname}`}
+            />
+          )
         },
       },
     ],
-    [data, setSelectedRowIds]
+    [data, pathname, referenceResp]
   )
 
   return (
@@ -172,6 +144,7 @@ export function QuizTableShell({
           title: "Judul Kuis",
         },
       ]}
+      newRowLink={`${pathname}/new`}
     />
   )
 }

@@ -1,4 +1,6 @@
 export type QuizOneRes = {
+  code: number
+  message: string
   data: QuizOneResData
 }
 
@@ -10,6 +12,8 @@ export type QuizOneResData = {
   created_at: Date
   questions: QuizOneResQuestion[]
   id_section: number
+  created_by: string
+  updated_by: string
 }
 
 export type QuizOneResQuestion = {

@@ -16,6 +16,8 @@ export type CourseOneResData = {
   section: CourseOneResSection[]
   created_at: Date
   updated_at: Date
+  tutor_uuid: string
+  created_by: string
 }
 
 export type CourseOneResSection = {

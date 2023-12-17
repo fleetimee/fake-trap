@@ -9,6 +9,7 @@ export type UserListRes = {
 
 export type UserListResData = {
   uuid: string
+  name: string
   created_at: Date
   updated_at: Date
   deleted_at: null

@@ -2,9 +2,13 @@ import { CategoryByID, CategoryResponse } from "@/types/category-res"
 import { Course, CourseByIdResponse } from "@/types/course-res"
 import { Knowledge, KnowledgeByIdResponse } from "@/types/knowledge-res"
 import { UserByQuizIDCount, UsersByQuizID } from "@/types/quiz-by-id-res"
-import { QuizData, QuizRes, UsersByQuizId } from "@/types/quiz-res"
+import { QuizRes, UsersByQuizId } from "@/types/quiz-res"
 import { QuizSectionResp } from "@/types/quiz-section-res"
 import { UserResponse } from "@/types/user-res"
+
+
+
+
 
 async function getPaginatedKnowledgeData(props: {
   limit: number

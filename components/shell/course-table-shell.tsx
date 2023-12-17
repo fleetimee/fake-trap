@@ -3,15 +3,15 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CourseListResData } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
-import { convertDatetoString, convertDatetoStringShort } from "@/lib/utils"
-import { CourseOperations } from "@/components/app/course/operations/course-operations"
+import { convertDatetoString } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+import { CourseOperations } from "@/components/hamburger-operations/course-operations"
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
 
 interface BadgeSwitchProps {
   approval: any
@@ -34,58 +34,32 @@ interface CourseTableShell {
   data: CourseListResData[]
   knowledgeResp: KnowledgeListRes
   pageCount: number
+  isOperator?: boolean
 }
 
 export function CourseTableShell({
   data,
   knowledgeResp,
   pageCount,
+  isOperator = true,
 }: CourseTableShell) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
+  const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<CourseListResData, unknown>[]>(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={table.getIsAllPageRowsSelected()}
-            onCheckedChange={(value) => {
-              table.toggleAllPageRowsSelected(!!value)
-              setSelectedRowIds((prev) =>
-                prev.length === data.length
-                  ? []
-                  : data.map((row) => row.id_course)
-              )
-            }}
-            aria-label="Select all"
-            className="translate-y-[2px]"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => {
-              row.toggleSelected(!!value)
-              setSelectedRowIds((prev) =>
-                value
-                  ? [...prev, row.original.id_course]
-                  : prev.filter((id) => id !== row.original.id_course)
-              )
-            }}
-            aria-label="Select row"
-            className="translate-y-[2px]"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "id_course",
+        id: "actions",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
+          <DataTableColumnHeader column={column} title="#" />
         ),
+        cell: ({ row }) => {
+          return isOperator ? (
+            <CourseOperations
+              courseResp={row.original}
+              knowledgeResp={knowledgeResp}
+            />
+          ) : null
+        },
       },
       {
         accessorKey: "image",
@@ -96,7 +70,7 @@ export function CourseTableShell({
           // <AspectRatio ratio={16 / 9}>
           <Link href={`/dashboard/course/${row.original.id_course}`}>
             <Image
-              src={row.original.image}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
               alt={row.original.course_name}
               width={300}
               height={300}
@@ -115,9 +89,9 @@ export function CourseTableShell({
         ),
         cell: ({ row }) => {
           return (
-            <div className="flex flex-col">
+            <div className="flex w-[200px] flex-col">
               <Link
-                href={`/dashboard/course/${row.original.id_course}`}
+                href={`${pathname}/detail/${row.original.id_course}`}
                 className="text-sm font-semibold text-blue-600 hover:underline"
               >
                 {row.original.course_name}
@@ -151,8 +125,13 @@ export function CourseTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Pengetahuan" />
         ),
-
-        minSize: 3000,
+        cell: ({ row }) => (
+          <div className="w-[300px]">
+            <p className="text-sm">
+              {row.original.knowledge_title as React.ReactNode}
+            </p>
+          </div>
+        ),
       },
       {
         accessorKey: "date_start",
@@ -160,10 +139,16 @@ export function CourseTableShell({
           <DataTableColumnHeader column={column} title="Tanggal Mulai" />
         ),
         cell: ({ row }) => {
-          convertDatetoString(row.original.created_at.toString())
+          convertDatetoString(row.original.date_start.toString())
 
           return (
-            <>{convertDatetoStringShort(row.original.created_at.toString())}</>
+            <div className="w-[200px]">
+              {
+                convertDatetoString(
+                  row.original.date_start.toString()
+                ) as React.ReactNode
+              }
+            </div>
           )
         },
         size: 400,
@@ -174,10 +159,16 @@ export function CourseTableShell({
           <DataTableColumnHeader column={column} title="Tanggal Selesai" />
         ),
         cell: ({ row }) => {
-          convertDatetoString(row.original.created_at.toString())
+          convertDatetoString(row.original.date_end.toString())
 
           return (
-            <>{convertDatetoStringShort(row.original.created_at.toString())}</>
+            <div className="w-[200px]">
+              {
+                convertDatetoString(
+                  row.original.date_end.toString()
+                ) as React.ReactNode
+              }
+            </div>
           )
         },
         size: 400,
@@ -217,20 +208,8 @@ export function CourseTableShell({
           }
         },
       },
-      {
-        id: "actions",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
-        ),
-        cell: ({ row }) => (
-          <CourseOperations
-            courseResp={row.original}
-            knowledgeResp={knowledgeResp}
-          />
-        ),
-      },
     ],
-    [data, setSelectedRowIds]
+    [data, isOperator, knowledgeResp, pathname]
   )
 
   return (
@@ -257,6 +236,7 @@ export function CourseTableShell({
           ],
         },
       ]}
+      newRowLink={`${pathname}/new`}
       pageCount={pageCount}
       searchableColumns={[
         {

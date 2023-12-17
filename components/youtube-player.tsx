@@ -5,6 +5,10 @@ import Youtube, { YouTubeProps } from "react-youtube"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Card } from "@/components/ui/card"
 
+
+
+
+
 export function YoutubePlayer({ videoId }: YouTubeProps) {
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     // access to player in all event handlers via event.target
@@ -28,7 +32,7 @@ export function YoutubePlayer({ videoId }: YouTubeProps) {
           videoId={videoId}
           opts={opts}
           onReady={onPlayerReady}
-          className="aspect-video h-full w-full rounded-lg object-cover shadow-md grayscale hover:grayscale-0"
+          className="aspect-video h-full w-full rounded-lg object-cover shadow-md "
         />
       </Card>
     </AspectRatio>

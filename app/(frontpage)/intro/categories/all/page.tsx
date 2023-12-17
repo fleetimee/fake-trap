@@ -1,19 +1,7 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Variants } from "framer-motion"
-
 import { CategoryListRes } from "@/types/category/res"
-import { cn } from "@/lib/utils"
-import { KnowledgeCard } from "@/components/app/public-knowledge/ui"
-import { HeaderIntro } from "@/components/category-header"
-import { MotionDiv } from "@/components/framer-wrapper"
-import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { PublicCategories } from "@/components/public-categories"
 import { Shell } from "@/components/shell/lobby-shell"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { buttonVariants } from "@/components/ui/button"
-
-import { CategoryWrapper } from "./_components/category-wrapper"
 
 export const metadata = {
   title: "Semua Kategori",
@@ -29,15 +17,37 @@ interface GetPublicCategoryV2Props {
 }
 
 async function getPublicCategories({
-  page = 1,
-  limit = 1000,
+  page,
+  limit,
   sortField = "created_at",
   sortOrder = "desc",
   searchQuery = "",
 }: GetPublicCategoryV2Props): Promise<CategoryListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?limit=${limit}&page=${page}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}`
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category`
 
-  const res = await fetch(url, {
+  let url = new URL(baseUrl)
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (sortField) {
+    url.searchParams.append("sortBy", sortField.toString())
+  }
+
+  if (sortOrder) {
+    url.searchParams.append("orderBy", sortOrder.toString())
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery.toString())
+  }
+
+  const res = await fetch(url.toString(), {
     method: "GET",
     headers: {
       ContentType: "application/json",
@@ -47,10 +57,34 @@ async function getPublicCategories({
   return await res.json()
 }
 
-export default async function AllPublicCategories() {
+interface AllPublicCategoriesProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function AllPublicCategories({
+  searchParams,
+}: AllPublicCategoriesProps) {
+  const { page, per_page, sort, store_page, search } = searchParams
+
+  const pageInitial = typeof page === "string" ? parseInt(page) : 1
+  const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8
+
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+
+  const searchInitial = typeof search === "string" ? search : ""
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
+
   const publicCategoryResp = await getPublicCategories({
-    limit: 1000,
-    page: 1,
+    limit: limitInitial,
+    page: pageInitial,
+    sortField: sortBy,
+    sortOrder: orderBy,
+    searchQuery: searchInitial,
   })
 
   return (
@@ -68,7 +102,10 @@ export default async function AllPublicCategories() {
         ]}
       />
 
-      <CategoryWrapper publicCategoryResp={publicCategoryResp} />
+      <PublicCategories
+        categories={publicCategoryResp.data}
+        pageCount={publicCategoryResp.totalPage}
+      />
     </Shell>
   )
 }

@@ -5,8 +5,6 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { fontHeading, fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import { BGGrid } from "@/components/bg-grid"
-import Providers from "@/components/progress-bar"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SonnerToaster } from "@/components/ui/sonner-toaster"
@@ -62,10 +60,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             {/*<NextTopLoader />*/}
             <div className="relative flex min-h-screen flex-col">
-              <BGGrid>
-                <Providers>{children}</Providers>
-                {/*{children}*/}
-              </BGGrid>
+              {/* <BGGrid> */}
+              {/* <Providers>{children}</Providers> */}
+
+              {children}
+
+              {/*{children}*/}
+              {/* </BGGrid> */}
               <Toaster />
               <TailwindIndicator />
             </div>

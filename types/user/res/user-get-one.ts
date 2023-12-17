@@ -9,11 +9,13 @@ export type UserOneResData = {
   created_at: Date
   updated_at: Date
   deleted_at: null
+  name: string
   username: string
   email: string
   password: string
   last_login: Date
   role: UserOneResRole[]
+  created_by: string
 }
 
 export type UserOneResRole = {

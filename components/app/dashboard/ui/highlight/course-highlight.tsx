@@ -1,6 +1,10 @@
 import { CourseGetNewRes } from "@/types/course/res/course-get-new"
 import { CardDashboard } from "@/components/app/dashboard/ui"
 
+
+
+
+
 interface GetNewCourseProps {
   token: string | undefined
 }
