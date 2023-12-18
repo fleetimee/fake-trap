@@ -74,10 +74,10 @@ export default async function CourseDetailLayout({
     idCourse: params.idCourse,
   })
 
-  const knowledge = await getOneKnowledge({
-    token: user?.token,
-    idKnowledge: course?.data?.id_knowledge.toString(),
-  })
+  // const knowledge = await getOneKnowledge({
+  //   token: user?.token,
+  //   idKnowledge: course?.data?.id_knowledge.toString(),
+  // })
 
   if (course.code === 400) {
     return notFound()
@@ -128,7 +128,7 @@ export default async function CourseDetailLayout({
         canCreateSection={false}
       />
 
-      <MotionDiv
+      {/* <MotionDiv
         className="flex flex-row gap-4 px-2"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -142,10 +142,11 @@ export default async function CourseDetailLayout({
             <span className="font-bold">{knowledge.data.knowledge_title}</span>
           </AlertDescription>
         </Alert>
-      </MotionDiv>
+      </MotionDiv> */}
 
       <div className="flex items-center justify-end">
         <VercelToolbar
+          materiButton={`/operator-lms/course/detail/${params.idCourse}/knowledge`}
           homeButton={`/operator-lms/course/detail/${params.idCourse}`}
           forumButton={`/operator-lms/course/detail/${params.idCourse}/threads`}
           userButton={`/operator-lms/course/detail/${params.idCourse}/people`}

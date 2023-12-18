@@ -102,17 +102,7 @@ export function CourseTableShell({
         enableResizing: true,
         size: 1000,
       },
-      {
-        accessorKey: "course_desc",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Deskripsi" />
-        ),
-        cell: ({ row }) => (
-          <div className="flex flex-col ">
-            <p className="line-clamp-2 text-sm">{row.original.course_desc}</p>
-          </div>
-        ),
-      },
+
       {
         accessorKey: "status_text",
         header: ({ column }) => (
@@ -120,19 +110,7 @@ export function CourseTableShell({
         ),
         cell: ({ row }) => badgeSwitch({ approval: row.original }),
       },
-      {
-        accessorKey: "knowledge_title",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Pengetahuan" />
-        ),
-        cell: ({ row }) => (
-          <div className="w-[300px]">
-            <p className="text-sm">
-              {row.original.knowledge_title as React.ReactNode}
-            </p>
-          </div>
-        ),
-      },
+
       {
         accessorKey: "date_start",
         header: ({ column }) => (

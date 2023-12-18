@@ -40,9 +40,8 @@ import {
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { ScrollArea } from "../ui/scroll-area"
-import { Textarea } from "../ui/textarea";
-import { Zoom } from "../zoom-image";
-
+import { Textarea } from "../ui/textarea"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof courseSchema>
 
@@ -70,8 +69,6 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
       DateStart: new Date(),
       DateEnd: new Date(),
       image: new File([], ""),
-      TutorUUID: "",
-      IdKnowledge: 0,
       CreatedBy: session?.expires.id,
     },
   })
@@ -150,7 +147,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="IdKnowledge"
           render={({ field }) => (
@@ -226,9 +223,9 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="TutorUUID"
           render={({ field }) => (
@@ -300,7 +297,7 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}

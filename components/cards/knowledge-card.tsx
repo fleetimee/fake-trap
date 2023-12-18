@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { CategoryOneResKnowledge } from "@/types/category/res"
+import { CourseKnowledgeListResData } from "@/types/course/res"
 import { cn } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
@@ -26,7 +27,7 @@ import {
 
 interface PublicKnowledgeCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  knowledge: CategoryOneResKnowledge
+  knowledge: CategoryOneResKnowledge | CourseKnowledgeListResData
   link: string
 }
 

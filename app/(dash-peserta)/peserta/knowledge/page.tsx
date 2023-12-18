@@ -31,7 +31,7 @@ export default async function PesertaKnowledgePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const { page, per_page, search, sort, store_page } = searchParams
+  const { page, per_page, search, sort } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 8

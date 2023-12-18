@@ -5,7 +5,6 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import format from "date-fns/format"
-import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -21,14 +20,6 @@ import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import { Calendar } from "../ui/calendar"
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "../ui/command"
-import {
   Form,
   FormControl,
   FormDescription,
@@ -39,10 +30,8 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { ScrollArea } from "../ui/scroll-area"
-import { Textarea } from "../ui/textarea";
-import { Zoom } from "../zoom-image";
-
+import { Textarea } from "../ui/textarea"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof updateCourseSchema>
 
@@ -74,8 +63,6 @@ export function UpdateCourseForm({
     defaultValues: {
       CourseName: course.course_name,
       CourseDesc: course.course_desc,
-      IdKnowledge: course.id_knowledge,
-      TutorUUID: course.tutor_uuid,
       DateStart: new Date(course.date_start),
       DateEnd: new Date(course.date_end),
       CreatedBy: course.created_by,
@@ -160,7 +147,7 @@ export function UpdateCourseForm({
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="IdKnowledge"
           render={({ field }) => (
@@ -236,9 +223,9 @@ export function UpdateCourseForm({
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="TutorUUID"
           render={({ field }) => (
@@ -310,7 +297,7 @@ export function UpdateCourseForm({
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}

@@ -8,3 +8,8 @@ export enum QuizType {
   PRETEST = "0021",
   POSTTEST = "0022",
 }
+
+export enum Visibility {
+  PUBLIC = "0031",
+  PRIVATE = "0032",
+}

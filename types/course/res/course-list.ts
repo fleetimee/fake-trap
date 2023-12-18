@@ -9,7 +9,6 @@ export type CourseListRes = {
 
 export type CourseListResData = {
   id_course: number
-  id_knowledge: number
   course_name: string
   course_desc: string
   image: string
@@ -17,7 +16,6 @@ export type CourseListResData = {
   date_end: Date
   created_at: Date
   updated_at: Date
-  knowledge_title: string
   status_code: string
   status_text: string
   comment: string
@@ -25,4 +23,21 @@ export type CourseListResData = {
   user_uuid_request: string
   user_approver: string
   user_request: string
+}
+
+export type CourseKnowledgeListRes = {
+  code: number
+  message: string
+  data: CourseKnowledgeListResData[]
+  count: number
+  page: number
+  totalPage: number
+}
+
+export type CourseKnowledgeListResData = {
+  id_course: number
+  id_knowledge: number
+  image: string
+  description: string
+  knowledge_title: string
 }

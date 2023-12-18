@@ -9,6 +9,7 @@ import {
 import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { ContentOneRes } from "@/types/content/res"
 import {
+  CourseKnowledgeListRes,
   CourseListRes,
   CourseOneRes,
   CourseVacantUserListRes,
@@ -422,6 +423,30 @@ export async function getCategoryKnowledge({
   })
 
   return await res.json()
+}
+
+interface PatchCourseWithKnowledgeProps {
+  token: string | undefined
+  idCourse: string
+  body: BodyInit
+}
+
+export async function assignKnowledgeToCourse({
+  token,
+  idCourse,
+  body,
+}: PatchCourseWithKnowledgeProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/knowledges`
+
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
 }
 
 interface GetOneCategoryProps {
@@ -1004,6 +1029,61 @@ export async function getVacantUser({
       cache: "no-store",
     }
   )
+
+  return await res.json()
+}
+
+interface GetCourseKnowledges {
+  token: string | undefined
+  idCourse: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+export async function getCourseKnowledges({
+  token,
+  idCourse,
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetCourseKnowledges): Promise<CourseKnowledgeListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/getKnowledge`
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
+  })
 
   return await res.json()
 }

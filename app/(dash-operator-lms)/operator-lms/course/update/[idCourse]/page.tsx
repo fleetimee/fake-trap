@@ -55,8 +55,6 @@ export default async function OperatorLMSCoursePageUpdate({
     idGroup: 1,
   })
 
-  console.log(course)
-
   if (course.code === 400) {
     return notFound()
   }
