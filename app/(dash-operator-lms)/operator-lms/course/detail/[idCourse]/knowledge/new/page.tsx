@@ -2,10 +2,9 @@ import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { Visibility } from "@/lib/enums/status"
-import { getKnowledgeV2, getVacantUser } from "@/lib/fetcher"
+import { getKnowledgeV2 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddCourseKnowledgeForm } from "@/components/forms/add-course-knowledge-form"
-import { AddCourseUserForm } from "@/components/forms/add-course-user-form"
 import { Separator } from "@/components/ui/separator"
 
 interface CourseKnowledgePageProps {
