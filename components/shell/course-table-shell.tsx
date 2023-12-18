@@ -74,7 +74,7 @@ export function CourseTableShell({
               alt={row.original.course_name}
               width={300}
               height={300}
-              className="rounded-xl grayscale transition-all duration-300 ease-in-out hover:grayscale-0"
+              className="rounded-xl duration-300 ease-in-out "
             />
           </Link>
           // </AspectRatio>
@@ -209,7 +209,7 @@ export function CourseTableShell({
         },
       },
     ],
-    [data, isOperator, knowledgeResp, pathname]
+    [isOperator, knowledgeResp, pathname]
   )
 
   return (

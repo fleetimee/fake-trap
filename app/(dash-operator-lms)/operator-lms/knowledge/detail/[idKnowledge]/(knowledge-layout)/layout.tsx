@@ -73,6 +73,7 @@ export default async function KnowledgeDetailLayout({
         title={knowledge.data?.knowledge_title}
         description={knowledge.data?.description}
         urlLink={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/new`}
+        image={knowledge.data?.image}
       />
 
       <div

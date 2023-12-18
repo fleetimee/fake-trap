@@ -51,8 +51,6 @@ export default async function ApproveCourseRevisionPage({
     token: user?.token,
   })
 
-  console.log(approvalRequest)
-
   const isUserRequester =
     approvalRequest?.data?.requester_id === tokenExtracted?.id
   const isApprovalStatusRejected =
@@ -96,7 +94,7 @@ export default async function ApproveCourseRevisionPage({
               <Label className="font-bold">Judul Pelatihan</Label>
               <div>
                 <Link
-                  href={`/operator-lms/course/${approvalRequest.data.id_course}`}
+                  href={`/operator-lms/course/detail/${approvalRequest.data.id_course}`}
                   className="text-blue-500 hover:underline"
                 >
                   {approvalRequest.data.course_name}
