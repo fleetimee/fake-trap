@@ -72,6 +72,7 @@ export default async function ExerciseDetailPesertaPage({
         <QuizMemberTableShell
           data={exerciseMember.data}
           pageCount={exerciseMember.totalPage}
+          idExercise={params.idExercise}
         />
       </Suspense>
     </DashboardShell>
