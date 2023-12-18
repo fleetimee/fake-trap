@@ -4,6 +4,7 @@ import React, { useEffect } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
 import { Variants } from "framer-motion"
+import { XIcon } from "lucide-react"
 
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { sortOptions } from "@/config/knowledges"
@@ -74,7 +75,6 @@ export function PublicKnowledges({
   knowledges,
   pageCount,
 }: GetPublicKnowledgeProps) {
-  const id = React.useId()
   const router = useRouter()
   const [query, setQuery] = React.useState("")
   const debouncedQuery = useDebounce(query, 500)
@@ -120,7 +120,24 @@ export function PublicKnowledges({
         }
       )
     })
-  }, [createQueryString, debouncedQuery, page, pathname, router, sort]) //
+  }, [createQueryString, debouncedQuery, page, pathname, router, sort])
+
+  useEffect(() => {
+    startTransition(() => {
+      const newSearchParams = {
+        search: debouncedQuery,
+        page: debouncedQuery !== search ? "1" : page,
+        sort: sort,
+      }
+
+      router.push(`${pathname}?${createQueryString(newSearchParams)}`, {
+        scroll: false,
+      })
+    })
+  }, [createQueryString, debouncedQuery, page, pathname, router, search, sort])
+
+  const isQueryModified =
+    debouncedQuery !== "" || sort !== "created_at.desc" || page !== "1"
 
   return (
     <>
@@ -185,7 +202,9 @@ export function PublicKnowledges({
                     startTransition(() => {
                       router.push(
                         `${pathname}?${createQueryString({
-                          search: search,
+                          search: "",
+                          page: "1",
+                          sort: "created_at.desc",
                         })}`
                       ),
                         {
@@ -233,6 +252,36 @@ export function PublicKnowledges({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {
+          // If it not the default query, show the reset button
+          isQueryModified && (
+            <Button
+              aria-label="Reset filters"
+              size="icon"
+              variant="outline"
+              className="flex items-center justify-center"
+              onClick={() => {
+                setQuery("")
+                startTransition(() => {
+                  router.push(
+                    `${pathname}?${createQueryString({
+                      search: "",
+                      page: "1",
+                      sort: "created_at.desc",
+                    })}`,
+                    {
+                      scroll: false,
+                    }
+                  )
+                })
+              }}
+              disabled={isPending}
+            >
+              <XIcon className=" h-4 w-4" aria-hidden="true" />
+            </Button>
+          )
+        }
       </div>
 
       <MotionDiv
