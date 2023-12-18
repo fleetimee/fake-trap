@@ -74,6 +74,10 @@ export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
 
   const [selectedRole, setSelectedRole] = React.useState<RoleNovian>(user.role)
 
+  React.useEffect(() => {
+    form.setValue("role", selectedRole)
+  }, [form, selectedRole])
+
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {

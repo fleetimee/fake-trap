@@ -16,10 +16,6 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 
-
-
-
-
 interface MainNavProps {
   items?: MainNavItem[]
   children?: React.ReactNode
@@ -30,7 +26,7 @@ export function MainNav({ items, children }: MainNavProps) {
 
   return (
     <div className="hidden gap-6 lg:flex">
-      <Link href="/public" className="hidden items-center space-x-2 md:flex">
+      <Link href="/" className="hidden items-center space-x-2 md:flex">
         <Icons.logo className="text-primary" />
         <span className="hidden font-bold text-primary sm:inline-block">
           {siteConfig.name}
