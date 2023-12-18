@@ -8,24 +8,19 @@ import { QuizUserAttemptListData } from "@/types/quiz/res"
 import { convertDatetoString } from "@/lib/utils"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 
-
-
-
-
 interface UserQuizResultTableShellProps {
   data: QuizUserAttemptListData[]
   pageCount: number
+  idQuiz: string
   linkString?: string
 }
 
 export function UserQuizResultTableShell({
   data,
   pageCount,
+  idQuiz,
   linkString,
 }: UserQuizResultTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
-
   const columns = React.useMemo<ColumnDef<QuizUserAttemptListData, unknown>[]>(
     () => [
       {
@@ -76,8 +71,16 @@ export function UserQuizResultTableShell({
         },
       },
     ],
-    [setSelectedRowIds, data]
+    [linkString]
   )
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      pageCount={pageCount}
+      isExportable
+      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${idQuiz}/getUserAttempt`}
+    />
+  )
 }

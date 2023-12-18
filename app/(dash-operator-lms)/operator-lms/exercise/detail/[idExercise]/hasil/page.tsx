@@ -10,10 +10,6 @@ import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DashboardShell, UserQuizResultTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-
-
-
-
 export const metadata: Metadata = {
   title: "Hasil Tes",
   description: "Hasil Tes",
@@ -38,7 +34,7 @@ export default async function ExerciseDetailHasilPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort } = searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
@@ -74,6 +70,7 @@ export default async function ExerciseDetailHasilPage({
         <UserQuizResultTableShell
           data={exerciseResult.data}
           pageCount={exerciseResult.totalPage}
+          idQuiz={params.idExercise}
           linkString={`/operator-lms/exercise/detail`}
         />
       </Suspense>

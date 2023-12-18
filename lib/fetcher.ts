@@ -1599,9 +1599,27 @@ export async function getListExerciseMember({
   sortBy = "attempts",
   orderBy = "desc",
 }: GetExerciseListMemberProps): Promise<QuizMemberListRes> {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getMember?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getMember`
 
-  const res = await fetch(url, {
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  const res = await fetch(url.toString(), {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -1640,9 +1658,27 @@ export async function getListExerciseResult({
   sortBy = "created_at",
   orderBy = "desc",
 }: GetExerciseResultProps): Promise<QuizUserAttemptList> {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getUserAttempt?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getUserAttempt`
 
-  const res = await fetch(url, {
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  const res = await fetch(url.toString(), {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

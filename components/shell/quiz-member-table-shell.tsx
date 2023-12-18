@@ -7,18 +7,16 @@ import { QuizMemberListResData } from "@/types/quiz/res"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 
-
-
-
-
 interface QuizMemberTableShellProps {
   data: QuizMemberListResData[]
   pageCount: number
+  idExercise: string
 }
 
 export function QuizMemberTableShell({
   data,
   pageCount,
+  idExercise,
 }: QuizMemberTableShellProps) {
   const [isPending, startTransition] = React.useTransition()
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -54,5 +52,13 @@ export function QuizMemberTableShell({
     []
   )
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      pageCount={pageCount}
+      isExportable
+      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${idExercise}/getQuizMember`}
+    />
+  )
 }

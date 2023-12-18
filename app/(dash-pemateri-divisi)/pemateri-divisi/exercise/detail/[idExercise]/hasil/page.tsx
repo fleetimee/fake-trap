@@ -71,6 +71,7 @@ export default async function ExerciseDetailHasilPage({
           data={exerciseResult.data}
           pageCount={exerciseResult.totalPage}
           linkString={`/operator-lms/exercise/detail`}
+          idQuiz={params.idExercise}
         />
       </Suspense>
     </DashboardShell>
