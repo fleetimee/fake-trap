@@ -29,7 +29,7 @@ export default async function OperatorLMSApprovePage({
 }: OperatorLMSApprovePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, store_page } = searchParams
+  const { page, per_page, statuses } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 6
@@ -41,9 +41,8 @@ export default async function OperatorLMSApprovePage({
     page: pageInitial,
     limit: limitInitial,
     idRequester: tokenExtracted?.id,
+    status: statuses,
   })
-
-  console.log(requests)
 
   return (
     <DashboardShell>

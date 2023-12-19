@@ -2,11 +2,25 @@
 
 import * as React from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Cross2Icon } from "@radix-ui/react-icons"
+import { ChevronDownIcon } from "lucide-react"
 
 import { ApprovalOperatorLMSListResData } from "@/types/approval/res"
-import { convertDatetoString } from "@/lib/utils"
+import { approvalOptions, approvalStatusOptions } from "@/config/approval"
+import { cn, convertDatetoString } from "@/lib/utils"
 import { PengajuanCard } from "@/components/cards/pengajuan-card"
 import { PaginationButton } from "@/components/pagers/pagination-button"
+
+import { FacetedFilter } from "./faceted-filter"
+import { Button } from "./ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
 
 interface ApprovesProps {
   approvals: ApprovalOperatorLMSListResData[]
@@ -19,6 +33,8 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
+
+  const statuses = searchParams?.get("statuses")
 
   // Search params
   const page = searchParams?.get("page") ?? "1"
@@ -43,8 +59,79 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
     [searchParams]
   )
 
+  const [filterValues, setFilterValues] = React.useState<string[]>(
+    statuses ? statuses?.split(".") : []
+  )
+
+  React.useEffect(() => {
+    startTransition(() => {
+      const newQueryString = createQueryString({
+        statuses: filterValues?.length ? filterValues.join(".") : null,
+      })
+
+      router.push(`${pathname}?${newQueryString}`, {
+        scroll: false,
+      })
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterValues])
+
   return (
     <section className="flex flex-col gap-6 space-y-6">
+      <div className="flex items-center space-x-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button aria-label="Sort stores" size="sm" disabled={isPending}>
+              Sort
+              <ChevronDownIcon className="ml-2 h-4 w-4" aria-hidden="true" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-48">
+            <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {approvalOptions.map((option) => (
+              <DropdownMenuItem
+                key={option.label}
+                className={cn(option.value === sort && "font-bold")}
+                onClick={() => {
+                  startTransition(() => {
+                    router.push(
+                      `${pathname}?${createQueryString({
+                        sort: option.value,
+                      })}`,
+                      {
+                        scroll: false,
+                      }
+                    )
+                  })
+                }}
+              >
+                {option.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <div className="flex flex-1 items-center space-x-2">
+          <FacetedFilter
+            title="Status"
+            filterValues={filterValues}
+            setFilterValues={setFilterValues}
+            options={approvalStatusOptions}
+          />
+          {filterValues.length > 0 && (
+            <Button
+              aria-label="Reset filters"
+              variant="ghost"
+              className="h-8 px-2 lg:px-3"
+              onClick={() => setFilterValues([])}
+            >
+              Reset
+              <Cross2Icon className="ml-2 h-4 w-4" aria-hidden="true" />
+            </Button>
+          )}
+        </div>
+      </div>
+
       <div className="mx-auto grid grid-cols-1 items-center justify-between gap-8 xl:grid-cols-2">
         {approvals?.map((request) => (
           <PengajuanCard

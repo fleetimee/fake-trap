@@ -2096,6 +2096,7 @@ interface GetCourseApprovalRequestListProps {
   sortBy?: string
   orderBy?: string
   searchQuery?: string
+  status?: string | string[] | undefined
 }
 
 /**
@@ -2118,10 +2119,11 @@ export async function getCourseApprovalRequestList({
   sortBy = "created_at",
   orderBy = "desc",
   searchQuery = "",
+  status = "",
 }: GetCourseApprovalRequestListProps): Promise<ApprovalOperatorLMSListRes> {
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/requester/${idRequester}`
 
-  const url = new URL(baseUrl)
+  let url = new URL(baseUrl)
 
   if (page) {
     url.searchParams.append("page", page.toString())
@@ -2141,6 +2143,14 @@ export async function getCourseApprovalRequestList({
 
   if (searchQuery) {
     url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (status) {
+    if (Array.isArray(status)) {
+      url.searchParams.append("status", status.join("."))
+    } else {
+      url.searchParams.append("status", status)
+    }
   }
 
   const res = await fetch(url.toString(), {
