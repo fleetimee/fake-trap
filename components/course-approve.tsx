@@ -42,6 +42,25 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
 
   const per_page = searchParams?.get("per_page") ?? "6"
 
+  // Make a array of approver name and approver uuid
+  // and then make it into a object
+  const approverOptions = React.useMemo(() => {
+    const approverOptions = approvals.reduce<
+      { label: string; value: string }[]
+    >((unique, approval) => {
+      if (!unique.find((item) => item.value === approval.approver_id)) {
+        unique.push({
+          label: approval.approver_name,
+          value: approval.approver_id,
+        })
+      }
+      return unique
+    }, [])
+    return approverOptions
+  }, [approvals])
+
+  console.log(approverOptions)
+
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
       const newSearchParams = new URLSearchParams(searchParams?.toString())
@@ -132,7 +151,7 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
         </div>
       </div>
 
-      <div className="mx-auto grid grid-cols-1 items-center justify-between gap-8 xl:grid-cols-2">
+      <div className="mx-auto grid grid-cols-1 items-center justify-between gap-8 xl:grid-cols-3">
         {approvals?.map((request) => (
           <PengajuanCard
             key={request.id_approval}

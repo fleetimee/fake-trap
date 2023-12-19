@@ -29,10 +29,16 @@ export default async function OperatorLMSApprovePage({
 }: OperatorLMSApprovePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, statuses } = searchParams
+  const { page, per_page, statuses, sort } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 6
+
+  const sortByInitial = typeof sort === "string" ? sort : "created_at"
+  const orderByInitial = typeof sort === "string" ? sort : "desc"
+
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
 
   const tokenExtracted = extractToken(user?.token)
 
@@ -42,6 +48,8 @@ export default async function OperatorLMSApprovePage({
     limit: limitInitial,
     idRequester: tokenExtracted?.id,
     status: statuses,
+    sortBy: sortBy,
+    orderBy: orderBy,
   })
 
   return (

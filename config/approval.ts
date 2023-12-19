@@ -2,25 +2,20 @@ import { ApprovalStatus } from "@/lib/enums/status"
 
 export const approvalOptions = [
   {
-    label: "Item count: Low to high",
-    value: "productCount.asc",
+    label: "Date: Old to new",
+    value: "created_at.asc",
   },
-  {
-    label: "Item count: High to low",
-    value: "productCount.desc",
-  },
-  { label: "Date: Old to new", value: "createdAt.asc" },
   {
     label: "Date: New to old",
-    value: "createdAt.desc",
+    value: "created_at.desc",
   },
   {
     label: "Alphabetical: A to Z",
-    value: "name.asc",
+    value: "course_name.asc",
   },
   {
     label: "Alphabetical: Z to A",
-    value: "name.desc",
+    value: "course_name.desc",
   },
 ]
 
