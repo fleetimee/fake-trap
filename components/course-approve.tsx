@@ -9,10 +9,9 @@ import { ApprovalOperatorLMSListResData } from "@/types/approval/res"
 import { approvalOptions, approvalStatusOptions } from "@/config/approval"
 import { cn, convertDatetoString } from "@/lib/utils"
 import { PengajuanCard } from "@/components/cards/pengajuan-card"
+import { FacetedFilter } from "@/components/faceted-filter"
 import { PaginationButton } from "@/components/pagers/pagination-button"
-
-import { FacetedFilter } from "./faceted-filter"
-import { Button } from "./ui/button"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,7 +19,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 
 interface ApprovesProps {
   approvals: ApprovalOperatorLMSListResData[]
@@ -45,6 +44,10 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
   // Make a array of approver name and approver uuid
   // and then make it into a object
   const approverOptions = React.useMemo(() => {
+    if (!approvals || approvals.length === 0) {
+      return []
+    }
+
     const approverOptions = approvals.reduce<
       { label: string; value: string }[]
     >((unique, approval) => {
@@ -58,7 +61,6 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
     }, [])
     return approverOptions
   }, [approvals])
-
   console.log(approverOptions)
 
   const createQueryString = React.useCallback(
