@@ -63,11 +63,6 @@ export default async function CourseDetailLayout({
     idCourse: params.idCourse,
   })
 
-  const knowledge = await getOneKnowledge({
-    token: user?.token,
-    idKnowledge: course.data?.id_knowledge.toString(),
-  })
-
   const knowledgeSection = await getCourseKnowledgeSection({
     idCourse: params.idCourse,
     token: user?.token,
@@ -103,7 +98,7 @@ export default async function CourseDetailLayout({
         canCreateSection={false}
       />
 
-      <MotionDiv
+      {/* <MotionDiv
         className="flex flex-row gap-4 px-2"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -117,7 +112,7 @@ export default async function CourseDetailLayout({
             <span className="font-bold">{knowledge.data.knowledge_title}</span>
           </AlertDescription>
         </Alert>
-      </MotionDiv>
+      </MotionDiv> */}
 
       <div className="flex items-center justify-end">
         <VercelToolbar

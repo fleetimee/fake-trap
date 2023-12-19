@@ -29,8 +29,6 @@ export default async function CourseKnowledgePage({
     visibilityId: Visibility.PRIVATE,
   })
 
-  console.log(knowledges)
-
   return (
     <div className="space-y-6">
       <div>

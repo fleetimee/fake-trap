@@ -1,15 +1,13 @@
 import React from "react"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { getCourseKnowledges } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { CoursesKnowledges } from "@/components/course-knowledges"
-import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
-interface CourseKnowledgePageProps {
+interface PesertaCourseKnowledgePageProps {
   searchParams: {
     [key: string]: string | string[] | undefined
   }
@@ -18,10 +16,10 @@ interface CourseKnowledgePageProps {
   }
 }
 
-export default async function CourseKnowledgePage({
+export default async function PesertaCourseKnowledgePageProps({
   searchParams,
   params,
-}: CourseKnowledgePageProps) {
+}: PesertaCourseKnowledgePageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -56,18 +54,6 @@ export default async function CourseKnowledgePage({
         </p>
       </div>
       <Separator />
-
-      <div className="flex justify-end">
-        <Link
-          href={`/operator-lms/course/detail/${params.idCourse}/knowledge/new`}
-          className={buttonVariants({
-            size: "sm",
-            className: "flex h-8 w-fit justify-end",
-          })}
-        >
-          <span className=" text-sm font-medium">Tambah Materi</span>
-        </Link>
-      </div>
 
       <CoursesKnowledges
         courseKnowledges={knowledges.data}

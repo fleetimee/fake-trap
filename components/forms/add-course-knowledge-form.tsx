@@ -119,7 +119,7 @@ export function AddCourseKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Pilih Peserta <span className="text-red-500">*</span>
+                Pilih Materi <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Popover>
@@ -265,7 +265,7 @@ export function AddCourseKnowledgeForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Pilih peserta yang akan ditambahkan ke dalam pelatihan ini.
+                Pilih materi yang akan ditambahkan ke dalam pelatihan
               </FormDescription>
               <FormMessage />
             </FormItem>

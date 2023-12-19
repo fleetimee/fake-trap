@@ -1,7 +1,6 @@
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
-import { KnowledgeOneRes } from "@/types/knowledge/res"
 import { getOnePublicKnowledge } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 

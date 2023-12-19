@@ -124,6 +124,7 @@ export default async function CourseDetailLayout({
 
       <div className="flex items-center justify-end">
         <VercelToolbar
+          materiButton={`/peserta/course/detail/${params.idCourse}/knowledge`}
           homeButton={`/peserta/course/detail/${params.idCourse}`}
           forumButton={`/peserta/course/detail/${params.idCourse}/threads`}
           userButton={`/peserta/course/detail/${params.idCourse}/people`}
