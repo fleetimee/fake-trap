@@ -1,39 +1,15 @@
 import React from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
-import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
+import { getCourseKnowledgeSection, getOneCourse } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
-import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
-import { CreateQuizDropdownButton } from "@/components/create-quiz-dropwdown"
 import { SectionBanner } from "@/components/create-section-banner"
-import { MotionDiv } from "@/components/framer-wrapper"
-import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuLabel,
-  ContextMenuSeparator,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VercelToolbar } from "@/components/vercel-toolbar"
 
 interface CourseDetailLayoutProps {
@@ -78,6 +54,11 @@ export default async function CourseDetailLayout({
   //   token: user?.token,
   //   idKnowledge: course?.data?.id_knowledge.toString(),
   // })
+
+  const knowledgeSection = await getCourseKnowledgeSection({
+    idCourse: params.idCourse,
+    token: user?.token,
+  })
 
   if (course.code === 400) {
     return notFound()
@@ -125,7 +106,7 @@ export default async function CourseDetailLayout({
         title={course.data?.course_name}
         description={course?.data?.course_desc}
         urlLink={`/operator-lms/course/detail/${params.idCourse}/section/new`}
-        canCreateSection={false}
+        canCreateSection
       />
 
       {/* <MotionDiv
@@ -162,9 +143,10 @@ export default async function CourseDetailLayout({
 
         {/* Sidebar Section */}
         <CourseContentSidebar
+          knowledgeSection={knowledgeSection.data}
           course={course}
           baseUrl={`/operator-lms/course/detail/${params.idCourse}`}
-          canCreateContent={false}
+          canCreateContent
         />
       </div>
     </DashboardShell>

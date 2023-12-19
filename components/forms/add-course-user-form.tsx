@@ -88,7 +88,6 @@ export function AddCourseUserForm({
             description: "Peserta berhasil ditambahkan",
           })
 
-          router.back()
           router.refresh()
           form.reset()
         } else {

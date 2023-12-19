@@ -1,20 +1,13 @@
 import React from "react"
-import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourseKnowledges, getKnowledgeUser } from "@/lib/fetcher"
+import { getCourseKnowledges } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
-import { MotionDiv } from "@/components/framer-wrapper"
-import { DashboardHeader } from "@/components/header"
-import { Knowledges } from "@/components/knowledges"
-import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { DashboardShell } from "@/components/shell"
 import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
 interface CourseKnowledgePageProps {
@@ -49,7 +42,7 @@ export default async function CourseKnowledgePage({
     token: user?.token,
     idCourse: params.idCourse,
     page: pageInitial,
-    limit: limitInitial,
+    limit: 999,
     searchQuery: searchInitial,
     orderBy: orderByInitial,
     sortBy: sortByInitial,
@@ -83,7 +76,7 @@ export default async function CourseKnowledgePage({
             <KnowledgeCardSkeleton key={i} />
           ))}
         >
-          {knowledges.data.map((knowledge) => (
+          {knowledges?.data.map((knowledge) => (
             <KnowledgeCard
               key={knowledge.id_knowledge}
               knowledge={knowledge}

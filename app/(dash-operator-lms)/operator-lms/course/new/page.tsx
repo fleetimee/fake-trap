@@ -66,7 +66,11 @@ export default async function OperatorLMSCoursePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddCourseForm knowledge={knowledge.data} tutors={tutors.data} />
+          <AddCourseForm
+            knowledge={knowledge.data}
+            tutors={tutors.data}
+            baseUrl={"/operator-lms/course"}
+          />
         </CardContent>
       </Card>
     </DashboardShell>

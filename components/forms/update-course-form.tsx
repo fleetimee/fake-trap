@@ -19,6 +19,7 @@ import { updateCourseSchema } from "@/lib/validations/course"
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import { Calendar } from "../ui/calendar"
+import { DateTimePicker } from "../ui/datetimepicker"
 import {
   Form,
   FormControl,
@@ -367,41 +368,13 @@ export function UpdateCourseForm({
                 Tanggal Mulai <span className="text-red-500">*</span>
               </FormLabel>
 
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      disabled={isPending}
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-full justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pilih tanggal mulai</span>
-                      )}
-                      <Icons.calendar className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0" align="start">
-                  <Calendar
-                    className="w-full"
-                    mode="single"
-                    onSelect={(day: Date | undefined) => {
-                      if (day) {
-                        field.onChange(day)
-                      }
-                    }}
-                    selected={field.value}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateTimePicker
+                disabled={isPending}
+                date={field.value as Date}
+                setDate={(date) => {
+                  field.onChange(date)
+                }}
+              />
               <FormDescription>
                 Tanggal mulai pelatihan yang ingin dibuat.
               </FormDescription>
@@ -419,41 +392,13 @@ export function UpdateCourseForm({
                 Tanggal Selesai <span className="text-red-500">*</span>
               </FormLabel>
 
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      disabled={isPending}
-                      className={cn(
-                        "w-full justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pilih tanggal selesai</span>
-                      )}
-                      <Icons.calendar className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0" align="start">
-                  <Calendar
-                    className="w-full"
-                    mode="single"
-                    onSelect={(day: Date | undefined) => {
-                      if (day) {
-                        field.onChange(day)
-                      }
-                    }}
-                    selected={field.value}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateTimePicker
+                disabled={isPending}
+                date={field.value as Date}
+                setDate={(date) => {
+                  field.onChange(date)
+                }}
+              />
               <FormDescription>
                 Tanggal selesai pelatihan yang ingin dibuat.
               </FormDescription>

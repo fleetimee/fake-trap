@@ -3,7 +3,11 @@ import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
+import {
+  getCourseKnowledgeSection,
+  getOneCourse,
+  getOneKnowledge,
+} from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
@@ -64,6 +68,11 @@ export default async function CourseDetailLayout({
     idKnowledge: course.data?.id_knowledge.toString(),
   })
 
+  const knowledgeSection = await getCourseKnowledgeSection({
+    idCourse: params.idCourse,
+    token: user?.token,
+  })
+
   if (course.code !== 200) {
     return notFound()
   }
@@ -112,6 +121,7 @@ export default async function CourseDetailLayout({
 
       <div className="flex items-center justify-end">
         <VercelToolbar
+          materiButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/knowledge`}
           homeButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`}
           forumButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/threads`}
           userButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/people`}
@@ -130,6 +140,7 @@ export default async function CourseDetailLayout({
           course={course}
           baseUrl={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`}
           canCreateContent={false}
+          knowledgeSection={knowledgeSection.data}
         />
       </div>
     </DashboardShell>

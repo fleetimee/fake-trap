@@ -125,13 +125,14 @@ export function KnowledgeContentSidebar({
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button
-                                    className={cn({
-                                      "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background":
-                                        true,
-                                      "bg-secondary-foreground text-background":
-                                        pathname !==
-                                        `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
-                                    })}
+                                    className={cn(
+                                      "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                      {
+                                        "border border-primary bg-primary-foreground text-primary":
+                                          pathname !==
+                                          `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
+                                      }
+                                    )}
                                   >
                                     <p className="line-clamp-2">
                                       {content.content_title}

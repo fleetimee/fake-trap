@@ -5,7 +5,6 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import format from "date-fns/format"
-import { Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -20,14 +19,7 @@ import { courseSchema } from "@/lib/validations/course"
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import { Calendar } from "../ui/calendar"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "../ui/command"
+import { DateTimePicker } from "../ui/datetimepicker"
 import {
   Form,
   FormControl,
@@ -39,7 +31,6 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { ScrollArea } from "../ui/scroll-area"
 import { Textarea } from "../ui/textarea"
 import { Zoom } from "../zoom-image"
 
@@ -50,9 +41,14 @@ type InputsWithIndexSignature = Inputs & { [key: string]: any }
 interface AddCourseFormProps {
   knowledge: KnowledgeListResData[]
   tutors: UserRoleListResData[]
+  baseUrl?: string
 }
 
-export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
+export function AddCourseForm({
+  knowledge,
+  tutors,
+  baseUrl,
+}: AddCourseFormProps) {
   const { data: session } = useSession()
 
   const [preview, setPreview] = React.useState<string | null>(null)
@@ -99,13 +95,23 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
         )
 
         if (response.ok) {
+          const responseData = await response.json()
+
+          const newCourseId = responseData.data
+
           sonnerToast.success("Berhasil", {
             description: "Pelatihan berhasil dibuat",
           })
 
-          router.back()
-          router.refresh()
-          form.reset()
+          if (baseUrl) {
+            router.push(`${baseUrl}/detail/${newCourseId}/people/new`)
+            router.refresh()
+            form.reset()
+          } else {
+            router.back()
+            router.refresh()
+            form.reset()
+          }
         } else {
           const errorResponse: ErrorResponse = await response.json()
 
@@ -373,41 +379,13 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                 Tanggal Mulai <span className="text-red-500">*</span>
               </FormLabel>
 
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      disabled={isLoading}
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-full justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pilih tanggal mulai</span>
-                      )}
-                      <Icons.calendar className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0" align="start">
-                  <Calendar
-                    className="w-full"
-                    mode="single"
-                    onSelect={(day: Date | undefined) => {
-                      if (day) {
-                        field.onChange(day)
-                      }
-                    }}
-                    selected={field.value}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateTimePicker
+                disabled={isLoading}
+                date={field.value}
+                setDate={(date) => {
+                  field.onChange(date)
+                }}
+              />
               <FormDescription>
                 Tanggal mulai pelatihan yang ingin dibuat.
               </FormDescription>
@@ -425,41 +403,15 @@ export function AddCourseForm({ knowledge, tutors }: AddCourseFormProps) {
                 Tanggal Selesai <span className="text-red-500">*</span>
               </FormLabel>
 
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      disabled={isLoading}
-                      className={cn(
-                        "w-full justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pilih tanggal selesai</span>
-                      )}
-                      <Icons.calendar className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0" align="start">
-                  <Calendar
-                    className="w-full"
-                    mode="single"
-                    onSelect={(day: Date | undefined) => {
-                      if (day) {
-                        field.onChange(day)
-                      }
-                    }}
-                    selected={field.value}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateTimePicker
+                disabled={isLoading}
+                date={field.value}
+                setDate={(date) => {
+                  console.log(date)
+
+                  field.onChange(date)
+                }}
+              />
               <FormDescription>
                 Tanggal selesai pelatihan yang ingin dibuat.
               </FormDescription>

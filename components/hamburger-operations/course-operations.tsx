@@ -155,7 +155,6 @@ export function CourseOperations({
       course_name: courseResp.course_name,
       course_desc: courseResp.course_desc,
       image: courseResp.image,
-      id_knowledge: courseResp.id_knowledge,
       date_start: new Date(courseResp.date_start),
       date_end: new Date(courseResp.date_end),
     },
@@ -466,87 +465,6 @@ export function CourseOperations({
                       Tanggal selesai pelatihan yang ingin dibuat.
                     </FormDescription>
                     <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="id_knowledge"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Pengetahuan Terkait{" "}
-                      <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value
-                                ? knowledgeResp.data.find(
-                                    (knowledge) =>
-                                      knowledge.id_knowledge === field.value
-                                  )?.knowledge_title
-                                : "Pilih Pengetahuan"}
-                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
-                          <Command>
-                            <CommandInput placeholder="Pengetahuan" />
-                            <CommandEmpty>
-                              Kategori tidak ditemukan
-                            </CommandEmpty>
-                            <CommandGroup>
-                              {knowledgeResp.data.map((knowledge) => (
-                                <CommandItem
-                                  value={knowledge.knowledge_title}
-                                  key={knowledge.id_knowledge}
-                                  onSelect={() => {
-                                    form.clearErrors("id_knowledge")
-                                    form.setValue(
-                                      "id_knowledge",
-                                      knowledge.id_knowledge
-                                    )
-                                  }}
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      knowledge.id_knowledge === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {knowledge.knowledge_title}
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormDescription>
-                      Pengetahuan yang ingin dikaitkan dengan pelatihan yang
-                      ingin dibuat. jika belum ada silahkan tambahkan{" "}
-                      <Link
-                        href="/dashboard/knowledge"
-                        rel="noreferrer"
-                        className="font-medium underline underline-offset-8"
-                      >
-                        disini
-                      </Link>
-                    </FormDescription>
                   </FormItem>
                 )}
               />

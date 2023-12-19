@@ -4,7 +4,11 @@ import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
+import {
+  getCourseKnowledgeSection,
+  getOneCourse,
+  getOneKnowledge,
+} from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
@@ -58,6 +62,11 @@ export default async function CourseDetailLayout({
     idKnowledge: course?.data?.id_knowledge.toString(),
   })
 
+  const knowledgeSection = await getCourseKnowledgeSection({
+    idCourse: params.idCourse,
+    token: user?.token,
+  })
+
   if (course.code === 400) {
     return notFound()
   }
@@ -105,6 +114,7 @@ export default async function CourseDetailLayout({
 
       <div className="flex items-center justify-end">
         <VercelToolbar
+          materiButton={`/pemateri-divisi/course/detail/${params.idCourse}/knowledge`}
           homeButton={`/pemateri-divisi/course/detail/${params.idCourse}`}
           forumButton={`/pemateri-divisi/course/detail/${params.idCourse}/threads`}
           userButton={`/pemateri-divisi/course/detail/${params.idCourse}/people`}
@@ -122,6 +132,7 @@ export default async function CourseDetailLayout({
         <CourseContentSidebar
           course={course}
           baseUrl={`/pemateri-divisi/course/detail/${params.idCourse}`}
+          knowledgeSection={knowledgeSection.data}
         />
       </div>
     </DashboardShell>

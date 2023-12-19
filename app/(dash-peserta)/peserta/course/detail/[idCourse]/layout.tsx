@@ -4,7 +4,12 @@ import { notFound, redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { checkUserEnrolled, getOneCourse, getOneKnowledge } from "@/lib/fetcher"
+import {
+  checkUserEnrolled,
+  getCourseKnowledgeSection,
+  getOneCourse,
+  getOneKnowledge,
+} from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Content } from "@/components/content"
@@ -15,10 +20,6 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { VercelToolbar } from "@/components/vercel-toolbar"
-
-
-
-
 
 interface CourseDetailLayoutProps {
   children: React.ReactNode
@@ -60,11 +61,6 @@ export default async function CourseDetailLayout({
     token: user?.token,
   })
 
-  const knowledge = await getOneKnowledge({
-    idKnowledge: course?.data?.id_knowledge.toString(),
-    token: user?.token,
-  })
-
   if (course.code === 404) {
     return notFound()
   }
@@ -73,6 +69,11 @@ export default async function CourseDetailLayout({
     idCourse: params.idCourse,
     token: user?.token,
     uuid: tokenExtracted?.id,
+  })
+
+  const knowledgeSection = await getCourseKnowledgeSection({
+    idCourse: params.idCourse,
+    token: user?.token,
   })
 
   if (checkEnrolled.code === 404) {
@@ -105,7 +106,7 @@ export default async function CourseDetailLayout({
         canCreateSection={false}
       />
 
-      <MotionDiv
+      {/* <MotionDiv
         className="flex flex-row gap-4 px-2"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -119,7 +120,7 @@ export default async function CourseDetailLayout({
             <span className="font-bold">{knowledge.data.knowledge_title}</span>
           </AlertDescription>
         </Alert>
-      </MotionDiv>
+      </MotionDiv> */}
 
       <div className="flex items-center justify-end">
         <VercelToolbar
@@ -139,6 +140,7 @@ export default async function CourseDetailLayout({
           course={course}
           baseUrl={`/peserta/course/detail/${params.idCourse}`}
           canCreateContent={false}
+          knowledgeSection={knowledgeSection.data}
         />
       </div>
     </DashboardShell>

@@ -10,6 +10,7 @@ import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
 import { ContentOneRes } from "@/types/content/res"
 import {
   CourseKnowledgeListRes,
+  CourseKnowledgeSectionListRes,
   CourseListRes,
   CourseOneRes,
   CourseVacantUserListRes,
@@ -439,7 +440,7 @@ export async function assignKnowledgeToCourse({
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/knowledges`
 
   const res = await fetch(url, {
-    method: "PATCH",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -1076,6 +1077,30 @@ export async function getCourseKnowledges({
   }
 
   const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetCourseKnowledgeSectionProps {
+  token: string | undefined
+  idCourse: string
+}
+
+export async function getCourseKnowledgeSection({
+  token,
+  idCourse,
+}: GetCourseKnowledgeSectionProps): Promise<CourseKnowledgeSectionListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/section`
+
+  const res = await fetch(baseUrl, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
