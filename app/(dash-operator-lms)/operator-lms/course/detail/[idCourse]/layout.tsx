@@ -107,6 +107,7 @@ export default async function CourseDetailLayout({
         description={course?.data?.course_desc}
         urlLink={`/operator-lms/course/detail/${params.idCourse}/section/new`}
         canCreateSection
+        image={course?.data?.image}
       />
 
       {/* <MotionDiv

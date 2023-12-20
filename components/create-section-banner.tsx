@@ -17,8 +17,17 @@ export function SectionBanner({
     <div className="px-2">
       <section
         // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-        className=" relative min-h-[300px] rounded-md bg-gray-800 bg-opacity-5 bg-[url('/images/course.jpg')] from-cyan-500 to-blue-500 bg-cover bg-center bg-no-repeat   py-14 md:block
-      "
+        className=" relative min-h-[300px] rounded-md   py-14 md:block"
+        style={
+          props.image
+            ? {
+                backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}${props.image})`,
+                backgroundSize: "cover",
+                backdropFilter: "blur(20px)",
+                filter: "grayscale(0.1)",
+              }
+            : {}
+        }
       >
         <div className="mx-auto max-w-screen-xl justify-between  gap-x-12 px-4 md:flex md:px-8">
           <div className="max-w-xl rounded-md border-b border-white bg-background/95 p-4 text-black backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:text-white">
