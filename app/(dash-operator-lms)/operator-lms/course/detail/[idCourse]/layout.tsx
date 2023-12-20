@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth"
 import { getCourseKnowledgeSection, getOneCourse } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
+import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -50,15 +51,12 @@ export default async function CourseDetailLayout({
     idCourse: params.idCourse,
   })
 
-  // const knowledge = await getOneKnowledge({
-  //   token: user?.token,
-  //   idKnowledge: course?.data?.id_knowledge.toString(),
-  // })
-
   const knowledgeSection = await getCourseKnowledgeSection({
     idCourse: params.idCourse,
     token: user?.token,
   })
+
+  console.log(knowledgeSection)
 
   if (course.code === 400) {
     return notFound()
@@ -83,25 +81,6 @@ export default async function CourseDetailLayout({
         ]}
       />
 
-      {/* <section className="hidden rounded-md bg-gray-800 py-14 md:block">
-        <div className="mx-auto max-w-screen-xl justify-between  gap-x-12 px-4 md:flex md:px-8">
-          <div className="max-w-xl">
-            <h3 className="text-3xl font-semibold text-white sm:text-4xl">
-              {course.data?.course_name}
-            </h3>
-            <p className="mt-3 text-gray-300">{course?.data?.course_desc}</p>
-          </div>
-          <div className="mt-4 flex-none md:mt-0">
-            <Link
-              href={`/operator-lms/course/detail/${params.idCourse}/section/new`}
-              className="inline-block rounded-lg bg-white px-4 py-2 font-medium text-gray-800 shadow-md duration-150 hover:bg-gray-100 hover:shadow-none active:bg-gray-200"
-            >
-              Tambah Section
-            </Link>
-          </div>
-        </div>
-      </section> */}
-
       <SectionBanner
         title={course.data?.course_name}
         description={course?.data?.course_desc}
@@ -109,22 +88,6 @@ export default async function CourseDetailLayout({
         canCreateSection
         image={course?.data?.image}
       />
-
-      {/* <MotionDiv
-        className="flex flex-row gap-4 px-2"
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Alert className="basis-full">
-          <PartyPopper className="h-5 w-5" />
-          <AlertTitle>Informasi!</AlertTitle>
-          <AlertDescription>
-            Pelatihan ini berdasarkan pada pengetahuan{" "}
-            <span className="font-bold">{knowledge.data.knowledge_title}</span>
-          </AlertDescription>
-        </Alert>
-      </MotionDiv> */}
 
       <div className="flex items-center justify-end">
         <VercelToolbar
@@ -134,6 +97,10 @@ export default async function CourseDetailLayout({
           userButton={`/operator-lms/course/detail/${params.idCourse}/people`}
         />
       </div>
+
+      {knowledgeSection.data && knowledgeSection.data.length > 0 && (
+        <CourseAlert knowledgeSection={knowledgeSection} />
+      )}
 
       <div
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"

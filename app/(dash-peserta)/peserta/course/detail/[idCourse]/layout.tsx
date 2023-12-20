@@ -13,6 +13,7 @@ import {
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Content } from "@/components/content"
+import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -104,23 +105,8 @@ export default async function CourseDetailLayout({
         title={course.data.course_name}
         urlLink={`/peserta/course/detail/${params.idCourse}`}
         canCreateSection={false}
+        image={course.data.image}
       />
-
-      {/* <MotionDiv
-        className="flex flex-row gap-4 px-2"
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Alert className="basis-full">
-          <PartyPopper className="h-5 w-5" />
-          <AlertTitle>Informasi!</AlertTitle>
-          <AlertDescription>
-            Pelatihan ini berdasarkan pada pengetahuan{" "}
-            <span className="font-bold">{knowledge.data.knowledge_title}</span>
-          </AlertDescription>
-        </Alert>
-      </MotionDiv> */}
 
       <div className="flex items-center justify-end">
         <VercelToolbar
@@ -130,6 +116,10 @@ export default async function CourseDetailLayout({
           userButton={`/peserta/course/detail/${params.idCourse}/people`}
         />
       </div>
+
+      {knowledgeSection.data && knowledgeSection.data.length > 0 && (
+        <CourseAlert knowledgeSection={knowledgeSection} />
+      )}
 
       <div
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"

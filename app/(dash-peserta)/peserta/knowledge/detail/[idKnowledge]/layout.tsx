@@ -9,10 +9,6 @@ import { SectionBanner } from "@/components/create-section-banner"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 
-
-
-
-
 interface KnowledgeDetailLayoutProps {
   children: React.ReactNode
   params: {
@@ -77,6 +73,7 @@ export default async function KnowledgeDetailLayout({
         description={knowledge.data.description}
         urlLink="/peserta/knowledge"
         canCreateSection={false}
+        image={knowledge.data.image}
       />
 
       <div

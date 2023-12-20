@@ -39,7 +39,10 @@ export function DashboardNewNewNav({ items }: DashboardNavNewProps) {
                 <span
                   className={cn(
                     "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground ",
-                    path === item.menu_url ? "bg-accent" : "transparent"
+                    path === item.menu_url ||
+                      path.startsWith(`${item.menu_url}/`)
+                      ? "bg-accent"
+                      : "transparent"
                   )}
                 >
                   <Icon className="mr-2 h-6 w-6" />
