@@ -21,6 +21,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { DateRangePicker } from "./date-range-picker"
+
 interface ApprovesProps {
   approvals: ApprovalOperatorLMSListResData[]
   pageCount: number
@@ -31,9 +33,15 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [approverOptions, setApproverOptions] = React.useState<
+    { label: string; value: string }[]
+  >([])
+
   const [isPending, startTransition] = React.useTransition()
 
   const statuses = searchParams?.get("statuses")
+
+  const approverId = searchParams?.get("approverId")
 
   // Search params
   const page = searchParams?.get("page") ?? "1"
@@ -43,12 +51,13 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
 
   // Make a array of approver name and approver uuid
   // and then make it into a object
-  const approverOptions = React.useMemo(() => {
-    if (!approvals || approvals.length === 0) {
-      return []
-    }
+  React.useEffect(() => {
+    // if (!approvals || approvals.length === 0) {
+    //   setApproverOptions([])
+    //   return
+    // }
 
-    const approverOptions = approvals.reduce<
+    const uniqueApproverOptions = approvals.reduce<
       { label: string; value: string }[]
     >((unique, approval) => {
       if (!unique.find((item) => item.value === approval.approver_id)) {
@@ -59,9 +68,9 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
       }
       return unique
     }, [])
-    return approverOptions
+
+    setApproverOptions(uniqueApproverOptions)
   }, [approvals])
-  console.log(approverOptions)
 
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
@@ -84,6 +93,10 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
     statuses ? statuses?.split(".") : []
   )
 
+  const [approverValues, setApproverValues] = React.useState<string[]>(
+    approverId ? approverId?.split(".") : []
+  )
+
   React.useEffect(() => {
     startTransition(() => {
       const newQueryString = createQueryString({
@@ -96,6 +109,19 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterValues])
+
+  React.useEffect(() => {
+    startTransition(() => {
+      const newQueryString = createQueryString({
+        approverId: approverValues?.length ? approverValues.join(".") : null,
+      })
+
+      router.push(`${pathname}?${newQueryString}`, {
+        scroll: false,
+      })
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [approverValues])
 
   return (
     <section className="flex flex-col gap-6 space-y-6">
@@ -139,18 +165,31 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
             setFilterValues={setFilterValues}
             options={approvalStatusOptions}
           />
-          {filterValues.length > 0 && (
-            <Button
-              aria-label="Reset filters"
-              variant="ghost"
-              className="h-8 px-2 lg:px-3"
-              onClick={() => setFilterValues([])}
-            >
-              Reset
-              <Cross2Icon className="ml-2 h-4 w-4" aria-hidden="true" />
-            </Button>
-          )}
+
+          <FacetedFilter
+            title="Approver"
+            filterValues={approverValues}
+            setFilterValues={setApproverValues}
+            options={approverOptions}
+          />
+
+          {filterValues.length ||
+            (approverValues.length > 0 && (
+              <Button
+                aria-label="Reset filters"
+                variant="ghost"
+                className="h-8 px-2 lg:px-3"
+                onClick={() => {
+                  setFilterValues([])
+                  setApproverValues([])
+                }}
+              >
+                Reset
+                <Cross2Icon className="ml-2 h-4 w-4" aria-hidden="true" />
+              </Button>
+            ))}
         </div>
+        <DateRangePicker />
       </div>
 
       <div className="mx-auto grid grid-cols-1 items-center justify-between gap-8 xl:grid-cols-3">

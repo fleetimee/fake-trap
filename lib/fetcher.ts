@@ -2097,6 +2097,9 @@ interface GetCourseApprovalRequestListProps {
   orderBy?: string
   searchQuery?: string
   status?: string | string[] | undefined
+  approverId?: string
+  from?: string
+  to?: string
 }
 
 /**
@@ -2120,6 +2123,9 @@ export async function getCourseApprovalRequestList({
   orderBy = "desc",
   searchQuery = "",
   status = "",
+  approverId,
+  from,
+  to,
 }: GetCourseApprovalRequestListProps): Promise<ApprovalOperatorLMSListRes> {
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/requester/${idRequester}`
 
@@ -2151,6 +2157,18 @@ export async function getCourseApprovalRequestList({
     } else {
       url.searchParams.append("status", status)
     }
+  }
+
+  if (approverId) {
+    url.searchParams.append("approverId", approverId)
+  }
+
+  if (from) {
+    url.searchParams.append("from", from)
+  }
+
+  if (to) {
+    url.searchParams.append("to", to)
   }
 
   const res = await fetch(url.toString(), {

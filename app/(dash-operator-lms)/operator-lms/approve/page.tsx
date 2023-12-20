@@ -29,13 +29,18 @@ export default async function OperatorLMSApprovePage({
 }: OperatorLMSApprovePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, statuses, sort } = searchParams
+  const { page, per_page, statuses, approverId, sort, from, to } = searchParams
+
+  const approverIdInitial = typeof approverId === "string" ? approverId : ""
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 6
 
   const sortByInitial = typeof sort === "string" ? sort : "created_at"
   const orderByInitial = typeof sort === "string" ? sort : "desc"
+
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
 
   const sortBy = sortByInitial.split(".")[0]
   const orderBy = orderByInitial.split(".")[1]
@@ -50,6 +55,9 @@ export default async function OperatorLMSApprovePage({
     status: statuses,
     sortBy: sortBy,
     orderBy: orderBy,
+    approverId: approverIdInitial,
+    from: fromInitial,
+    to: toInitial,
   })
 
   return (
