@@ -488,6 +488,8 @@ interface GetKnowledgeV2Props {
   visibilityId?: string | string[] | undefined
   categoryIds?: string | string[] | undefined
   statusCode?: string | string[] | undefined
+  from?: string
+  to?: string
 }
 
 /**
@@ -513,23 +515,68 @@ export async function getKnowledgeV2({
   categoryIds = "",
   visibilityId = "",
   statusCode = "",
+  from = "",
+  to = "",
 }: GetKnowledgeV2Props): Promise<KnowledgeListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
+  // let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${orderBy}&searchQuery=${searchQuery}`
 
-  // If categoryIds is provided, add it to the URL
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2`
+
+  const urlObj = new URL(url)
+
+  if (page) {
+    urlObj.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    urlObj.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortField) {
+    urlObj.searchParams.append("sortBy", sortField)
+  }
+
+  if (orderBy) {
+    urlObj.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    urlObj.searchParams.append("searchQuery", searchQuery)
+  }
+
   if (categoryIds) {
-    url += `&categoryIds=${categoryIds}`
+    if (Array.isArray(categoryIds)) {
+      urlObj.searchParams.append("categoryIds", categoryIds.join("."))
+    } else {
+      urlObj.searchParams.append("categoryIds", categoryIds)
+    }
   }
 
   if (visibilityId) {
-    url += `&visibility=${visibilityId}`
+    if (Array.isArray(visibilityId)) {
+      urlObj.searchParams.append("visibility", visibilityId.join("."))
+    } else {
+      urlObj.searchParams.append("visibility", visibilityId)
+    }
   }
 
   if (statusCode) {
-    url += `&statusCodes=${statusCode}`
+    if (Array.isArray(statusCode)) {
+      urlObj.searchParams.append("statusCodes", statusCode.join("."))
+    } else {
+      urlObj.searchParams.append("statusCodes", statusCode)
+    }
   }
 
-  const res = await fetch(url, {
+  if (from) {
+    urlObj.searchParams.append("from", from)
+  }
+
+  if (to) {
+    urlObj.searchParams.append("to", to)
+  }
+
+  const res = await fetch(urlObj.toString(), {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

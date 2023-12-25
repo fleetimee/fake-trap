@@ -32,13 +32,31 @@ export function QuizTableShell({
   const columns = React.useMemo<ColumnDef<QuizListResData, unknown>[]>(
     () => [
       {
+        id: "actions",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="#" />
+        ),
+
+        cell: ({ row }) => {
+          const quiz = row.original
+
+          return (
+            <QuizOperations
+              quiz={quiz}
+              referenceResp={referenceResp}
+              linkString={`${pathname}`}
+            />
+          )
+        },
+      },
+      {
         accessorKey: "quiz_title",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Judul Kuis" />
+          <DataTableColumnHeader column={column} title="Judul Tes" />
         ),
         cell: ({ row }) => {
           return (
-            <div className="w-[200px]">
+            <div className="w-[300px]">
               <Link
                 href={`${pathname}/detail/${row.original.id_quiz}`}
                 className="text-sm font-semibold text-blue-600 hover:underline"
@@ -49,12 +67,7 @@ export function QuizTableShell({
           )
         },
       },
-      {
-        accessorKey: "quiz_desc",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Deskripsi Kuis" />
-        ),
-      },
+
       {
         accessorKey: "quiz_type",
         header: ({ column }) => (
@@ -88,7 +101,10 @@ export function QuizTableShell({
       {
         accessorKey: "id_section",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Terhubung ?" />
+          <DataTableColumnHeader
+            column={column}
+            title="Terhubung dengan Pelatihan?"
+          />
         ),
         cell: ({ row }) => {
           return (
@@ -101,26 +117,8 @@ export function QuizTableShell({
           )
         },
       },
-      {
-        id: "actions",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
-        ),
-
-        cell: ({ row }) => {
-          const quiz = row.original
-
-          return (
-            <QuizOperations
-              quiz={quiz}
-              referenceResp={referenceResp}
-              linkString={`${pathname}`}
-            />
-          )
-        },
-      },
     ],
-    [data, pathname, referenceResp]
+    [pathname, referenceResp]
   )
 
   return (

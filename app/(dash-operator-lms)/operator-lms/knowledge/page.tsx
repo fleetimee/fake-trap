@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -12,11 +11,11 @@ import {
 } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
-import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Pengetahuan",
@@ -42,6 +41,8 @@ export default async function OperatorLMSKnowledgePage({
     id_category,
     status_text,
     status,
+    from,
+    to,
   } = searchParams ?? {}
 
   // Initial value
@@ -51,6 +52,9 @@ export default async function OperatorLMSKnowledgePage({
   const sortOrderInitial = typeof sort === "string" ? sort : "asc"
   const searchQueryInitial =
     typeof knowledge_title === "string" ? knowledge_title : ""
+
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
 
   // Split sort into sortField and sortOrder
   const sortField = sortFieldInitial.split(".")[0]
@@ -73,9 +77,11 @@ export default async function OperatorLMSKnowledgePage({
       searchQuery: searchQueryInitial,
       sortField: sortField,
       orderBy: sortOrder,
-      categoryIds: id_category, // Add this line
-      statusCode: status_text, // Add this line
-      visibilityId: status, // Add this line
+      categoryIds: id_category,
+      statusCode: status_text,
+      visibilityId: status,
+      from: fromInitial,
+      to: toInitial,
     }),
     getListCategory({ token: user?.token, page: 1, limit: 100 }),
     getReference({
@@ -109,6 +115,12 @@ export default async function OperatorLMSKnowledgePage({
             description="Pengetahuan yang tersedia di e-learning"
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex  place-items-end items-end justify-self-end"
+          dayCount={360}
+        />
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

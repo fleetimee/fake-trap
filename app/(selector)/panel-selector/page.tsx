@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 
 import { ButtonSelector } from "./_components/button_selector"
 
-
 export const metadata: Metadata = {
   title: "Choose your path",
   description: "Choose your path",
@@ -27,10 +26,6 @@ export default async function PanelSelector() {
   const isSpvOperatorLMS = role.some((item) => item.id_role === 4)
   const isPeserta = role.some((item) => item.id_role === 5)
   const isExecutive = role.some((item) => item.id_role === 6)
-
-  console.log(isPemateriDivisi)
-
-  console.log(role)
 
   return (
     <section
@@ -51,51 +46,63 @@ export default async function PanelSelector() {
       </div>
 
       <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
-        <ButtonSelector
-          title="Pemateri Divisi"
-          description="Pemateri divisi dapat mengelola materi yang ada di divisi masing-masing."
-          link="/pemateri-divisi"
-          disabled={!isPemateriDivisi}
-          isTextMuted
-        />
+        {isPemateriDivisi && (
+          <ButtonSelector
+            title="Pemateri Divisi"
+            description="Pemateri divisi dapat mengelola materi yang ada di divisi masing-masing."
+            link="/pemateri-divisi"
+            disabled={!isPemateriDivisi}
+            isTextMuted
+          />
+        )}
 
-        <ButtonSelector
-          title="Spv Divisi"
-          description="Spv divisi dapat menapprove materi yang ada di divisi masing-masing."
-          link="/supervisor-pemateri-divisi"
-          disabled={!isSpvPematerDivisi}
-        />
+        {isSpvPematerDivisi && (
+          <ButtonSelector
+            title="Spv Divisi"
+            description="Spv divisi dapat menapprove materi yang ada di divisi masing-masing."
+            link="/supervisor-pemateri-divisi"
+            disabled={!isSpvPematerDivisi}
+          />
+        )}
 
-        <ButtonSelector
-          title="Operator LMS"
-          description="Operator LMS dapat mengelola semua yang ada di LMS."
-          link="/operator-lms"
-          disabled={!isOperatorLMS}
-          isTextMuted
-        />
+        {isOperatorLMS && (
+          <ButtonSelector
+            title="Operator LMS"
+            description="Operator LMS dapat mengelola semua yang ada di LMS."
+            link="/operator-lms"
+            disabled={!isOperatorLMS}
+            isTextMuted
+          />
+        )}
 
-        <ButtonSelector
-          title="Spv Operator LMS"
-          description="Spv Operator LMS dapat menapprove pelatihan yang ada di LMS."
-          link="/supervisor-lms"
-          disabled={!isSpvOperatorLMS}
-          isTextMuted
-        />
+        {isSpvOperatorLMS && (
+          <ButtonSelector
+            title="Spv Operator LMS"
+            description="Spv Operator LMS dapat menapprove pelatihan yang ada di LMS."
+            link="/supervisor-lms"
+            disabled={!isSpvOperatorLMS}
+            isTextMuted
+          />
+        )}
 
-        <ButtonSelector
-          title="Peserta"
-          description="Peserta dapat mengikuti pelatihan yang ada di LMS."
-          link="/peserta"
-          disabled={!isPeserta}
-        />
+        {isPeserta && (
+          <ButtonSelector
+            title="Peserta"
+            description="Peserta dapat mengikuti pelatihan yang ada di LMS."
+            link="/peserta"
+            disabled={!isPeserta}
+          />
+        )}
 
-        <ButtonSelector
-          title="Executive"
-          description="Executive dapat melihat laporan yang ada di LMS."
-          link="/executive"
-          disabled={!isExecutive}
-          isTextMuted
-        />
+        {isExecutive && (
+          <ButtonSelector
+            title="Executive"
+            description="Executive dapat melihat laporan yang ada di LMS."
+            link="/executive"
+            disabled={!isExecutive}
+            isTextMuted
+          />
+        )}
       </div>
       <div className="mx-auto text-center md:max-w-[58rem]">
         <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
