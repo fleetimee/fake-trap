@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
-import { getOnePublicKnowledge } from "@/lib/fetcher"
+import { getOnePublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 
 interface LookupKnowledgePublicProps {

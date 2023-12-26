@@ -12,6 +12,7 @@ import { z } from "zod"
 
 import { CategoryListRes } from "@/types/category/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { createKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { knowledgeSchema } from "@/lib/validations/knowledge"
 import { Button } from "@/components/ui/button"
@@ -41,9 +42,8 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 
 import { Icons } from "../icons"
-import { ScrollArea } from "../ui/scroll-area";
-import { Zoom } from "../zoom-image";
-
+import { ScrollArea } from "../ui/scroll-area"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof knowledgeSchema>
 
@@ -93,11 +93,8 @@ export function AddKnowledgeForm({
           formData.append(key, data[key])
         })
 
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await createKnowledge({
+          token: session?.user.token,
           body: formData,
         })
 

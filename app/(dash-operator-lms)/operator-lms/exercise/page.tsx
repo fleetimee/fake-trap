@@ -1,15 +1,14 @@
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOperatorQuiz, getReference } from "@/lib/fetcher"
+import { getReference } from "@/lib/fetcher"
+import { getOperatorQuiz } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, QuizTableShell } from "@/components/shell"
-import { buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Test dan Latihan",

@@ -1,8 +1,8 @@
 import Image from "next/image"
-import { notFound, redirect } from "next/navigation"
+import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
+import { getOneCourse } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 
@@ -16,9 +16,7 @@ export default async function CourseDetailPage({
   params,
 }: CourseDetailPageProps) {
   const user = await getCurrentUser()
-
-  const tokenExtracted = extractToken(user?.token)
-
+  extractToken(user?.token)
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -27,10 +25,6 @@ export default async function CourseDetailPage({
     token: user?.token,
     idCourse: params.idCourse,
   })
-
-  // if (course.code === 400 || course.data.tutor_uuid !== tokenExtracted?.id) {
-  //   return notFound()
-  // }
 
   return (
     <Image

@@ -11,7 +11,6 @@ import { convertDatetoString } from "@/lib/utils"
 import { QuizOperations } from "@/components/app/quiz/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
 
 interface QuizTableShellProps {
   data: QuizListResData[]
@@ -24,9 +23,6 @@ export function QuizTableShell({
   pageCount,
   referenceResp,
 }: QuizTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
-
   const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<QuizListResData, unknown>[]>(

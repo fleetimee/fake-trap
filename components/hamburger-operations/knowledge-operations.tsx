@@ -15,6 +15,7 @@ import { CategoryListRes } from "@/types/category/res"
 import { ErrorResponse } from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { deleteKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import {
@@ -105,40 +106,6 @@ const formSchema = z.object({
     }),
 })
 
-interface DeleteKnowledgeProps {
-  idKnowledge: number
-  token: string | undefined
-}
-
-async function deleteKnowledge({ idKnowledge, token }: DeleteKnowledgeProps) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-
-  if (response.ok) {
-    sonnerToast.success("Berhasil", {
-      description: "Pengetahuan berhasil dihapus",
-    })
-
-    return true
-  } else {
-    const errorResponse: ErrorResponse = await response.json()
-
-    sonnerToast.error("Gagal", {
-      description: errorResponse.error,
-    })
-
-    return false
-  }
-}
-
 interface KnowledgeOperationsProps {
   knowledgeData: KnowledgeListResData
   categoryRes: CategoryListRes
@@ -147,8 +114,7 @@ interface KnowledgeOperationsProps {
   isApproval?: boolean
 }
 
-export function
-KnowledgeOperations({
+export function KnowledgeOperations({
   knowledgeData,
   categoryRes,
   referenceResp,
@@ -313,15 +279,23 @@ KnowledgeOperations({
                 event.preventDefault()
                 setIsDeleteLoading(true)
                 const deleted = await deleteKnowledge({
-                  idKnowledge: knowledgeData.id_knowledge,
+                  idKnowledge: knowledgeData.id_knowledge.toString(),
                   token: session?.user.token,
                 })
 
                 if (deleted) {
+                  sonnerToast.success("Berhasil", {
+                    description: "Pengetahuan berhasil dihapus",
+                  })
+
                   setIsDeleteLoading(false)
                   setOpenDeleteKnowledgeAlert(false)
                   router.refresh()
                 } else {
+                  sonnerToast.error("Gagal", {
+                    description: "Pengetahuan gagal dihapus",
+                  })
+
                   setIsDeleteLoading(false)
                 }
               }}

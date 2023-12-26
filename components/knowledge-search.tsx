@@ -6,7 +6,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 
 import { KnowledgeListResData } from "@/types/knowledge/res"
-import { getKnowledgeUser } from "@/lib/fetcher"
+import { getKnowledgeUser } from "@/lib/fetcher/knowledge-fetcher"
 import { catchError, cn, isMacOs } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"

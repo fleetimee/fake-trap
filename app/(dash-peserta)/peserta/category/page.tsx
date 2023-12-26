@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCategoriesWithKnowledge } from "@/lib/fetcher"
+import { getCategoriesWithKnowledge } from "@/lib/fetcher/category-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Categories } from "@/components/categories"
 

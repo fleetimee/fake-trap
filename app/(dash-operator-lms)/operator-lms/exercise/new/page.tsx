@@ -15,10 +15,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 export const metadata: Metadata = {
   title: "Tambah Test dan Latihan",
   description: "Tambah Test dan Latihan",
@@ -64,7 +60,10 @@ export default async function OperatorLMSExercisePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddTestForm references={references} />
+          <AddTestForm
+            references={references}
+            baseUrl="/operator-lms/exercise"
+          />
         </CardContent>
       </Card>
     </DashboardShell>

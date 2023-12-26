@@ -3,12 +3,9 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getKnowledgeByCreatedBy,
-  getListCategory,
-  getReference,
-  getRule,
-} from "@/lib/fetcher"
+import { getReference, getRule } from "@/lib/fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
+import { getKnowledgeByCreatedByUser } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
@@ -67,7 +64,7 @@ export default async function PemateriDivisiKnowledgePage({
   })
 
   const [knowledge, category, reference] = await Promise.all([
-    getKnowledgeByCreatedBy({
+    getKnowledgeByCreatedByUser({
       token: user?.token,
       page: pageInitial,
       limit: limitInitial,
@@ -79,7 +76,7 @@ export default async function PemateriDivisiKnowledgePage({
       visibilityId: status, // Add this line
       userUuid: tokenExtracted.id,
     }),
-    getListCategory({ token: user?.token, page: 1, limit: 100 }),
+    getOperatorCategory({ token: user?.token, page: 1, limit: 100 }),
     getReference({
       token: user?.token,
       refCode: "003",

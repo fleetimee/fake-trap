@@ -1,23 +1,14 @@
 import React from "react"
 import { notFound, redirect } from "next/navigation"
-import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getCourseKnowledgeSection,
-  getOneCourse,
-  getOneKnowledge,
-} from "@/lib/fetcher"
+import { getCourseKnowledgeSection, getOneCourse } from "@/lib/fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
-import { KnowledgeContentSidebar } from "@/components/content-sidebar"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
-import { MotionDiv } from "@/components/framer-wrapper"
-import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { VercelToolbar } from "@/components/vercel-toolbar"
 
 interface ApprovalDetailKnowledgePageProps {

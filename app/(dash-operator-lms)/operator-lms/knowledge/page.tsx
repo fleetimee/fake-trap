@@ -3,12 +3,9 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getKnowledgeV2,
-  getListCategory,
-  getReference,
-  getRule,
-} from "@/lib/fetcher"
+import { getReference, getRule } from "@/lib/fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
+import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/date-range-picker"
@@ -70,7 +67,7 @@ export default async function OperatorLMSKnowledgePage({
   })
 
   const [knowledgeResp, categoryResp, referenceResp] = await Promise.all([
-    getKnowledgeV2({
+    getOperatorKnowledge({
       token: user?.token,
       page: pageInitial,
       limit: limitInitial,
@@ -83,7 +80,7 @@ export default async function OperatorLMSKnowledgePage({
       from: fromInitial,
       to: toInitial,
     }),
-    getListCategory({ token: user?.token, page: 1, limit: 100 }),
+    getOperatorCategory({ token: user?.token, page: 1, limit: 100 }),
     getReference({
       token: user?.token,
       refCode: "003",
@@ -119,7 +116,6 @@ export default async function OperatorLMSKnowledgePage({
         <DateRangePicker
           align="end"
           className="flex  place-items-end items-end justify-self-end"
-          dayCount={360}
         />
       </div>
 

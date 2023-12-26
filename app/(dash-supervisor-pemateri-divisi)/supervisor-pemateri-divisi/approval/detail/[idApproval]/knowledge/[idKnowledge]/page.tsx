@@ -2,7 +2,7 @@ import Image from "next/image"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneKnowledge } from "@/lib/fetcher"
+import { getOneKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 
 interface ApprovalDetailKnowledgePageProps {

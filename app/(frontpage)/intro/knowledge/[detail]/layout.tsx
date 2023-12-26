@@ -1,6 +1,6 @@
 import React from "react"
 
-import { getOnePublicKnowledge } from "@/lib/fetcher"
+import { getOnePublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"

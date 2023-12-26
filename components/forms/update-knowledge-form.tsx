@@ -13,6 +13,7 @@ import { z } from "zod"
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeOneResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { updateKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { updateKnowledgeSchema } from "@/lib/validations/knowledge"
 import {
@@ -42,9 +43,8 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 import { ScrollArea } from "../ui/scroll-area"
-import { Textarea } from "../ui/textarea";
-import { Zoom } from "../zoom-image";
-
+import { Textarea } from "../ui/textarea"
+import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof updateKnowledgeSchema>
 
@@ -86,8 +86,6 @@ export function UpdateKnowledgeForm({
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${knowledge.id_knowledge}`
-
         const formData = new FormData()
 
         // append data
@@ -100,11 +98,9 @@ export function UpdateKnowledgeForm({
           formData.append("image", data.image)
         }
 
-        const response = await fetch(url, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await updateKnowledge({
+          token: session?.user?.token,
+          idKnowledge: knowledge.id_knowledge.toString(),
           body: formData,
         })
 

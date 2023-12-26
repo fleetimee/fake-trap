@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneQuiz } from "@/lib/fetcher"
+import { getOneQuiz } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { QuizAnnoucement } from "@/components/quiz-staging"
 

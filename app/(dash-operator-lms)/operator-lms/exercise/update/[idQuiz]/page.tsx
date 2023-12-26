@@ -2,7 +2,8 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneQuiz, getReference } from "@/lib/fetcher"
+import { getReference } from "@/lib/fetcher"
+import { getOneQuiz } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UpdateTestForm } from "@/components/forms/update-test-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -14,10 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Update Test dan Latihan",

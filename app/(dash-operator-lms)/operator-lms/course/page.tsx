@@ -3,7 +3,8 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourse, getKnowledgeV2 } from "@/lib/fetcher"
+import { getCourse } from "@/lib/fetcher"
+import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -54,7 +55,7 @@ export default async function OperatorLMSCoursePage({
     statusText: status_text,
   })
 
-  const knowledge = await getKnowledgeV2({
+  const knowledge = await getOperatorKnowledge({
     token: user?.token,
     page: 1,
     limit: 1000,

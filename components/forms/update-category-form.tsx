@@ -11,10 +11,10 @@ import { z } from "zod"
 
 import { CategoryOneResData } from "@/types/category/res"
 import { ErrorResponse } from "@/types/error-res"
+import { updateCategory } from "@/lib/fetcher/category-fetcher"
 import { updateCategorySchema } from "@/lib/validations/category"
-
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
+import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -22,10 +22,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
-import { Zoom } from "../zoom-image";
-
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Zoom } from "@/components/zoom-image"
 
 interface UpdateCategoryFormProps {
   category: CategoryOneResData
@@ -59,19 +58,15 @@ export default function UpdateCategoryForm({
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${category.id_category}`
-
         const formData = new FormData()
 
         Object.keys(data).forEach((key) => {
           formData.append(key, data[key])
         })
 
-        const response = await fetch(url, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await updateCategory({
+          token: session?.user?.token,
+          idCategory: category.id_category.toString(),
           body: formData,
         })
 

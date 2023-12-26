@@ -2,7 +2,8 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { fetchUsersByGroupId, getKnowledgeV2 } from "@/lib/fetcher"
+import { fetchUsersByGroupId } from "@/lib/fetcher"
+import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddCourseForm } from "@/components/forms/add-course-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -27,7 +28,7 @@ export default async function OperatorLMSCoursePageNew() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const knowledge = await getKnowledgeV2({
+  const knowledge = await getOperatorKnowledge({
     token: user?.token,
     page: 1,
     limit: 1000,

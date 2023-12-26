@@ -2,7 +2,10 @@ import React from "react"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCategoryKnowledge, getOneCategory } from "@/lib/fetcher"
+import {
+  getCategoryKnowledge,
+  getOneCategory,
+} from "@/lib/fetcher/category-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
 import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-skeleton"

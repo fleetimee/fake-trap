@@ -2,12 +2,9 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getListCategory,
-  getOneKnowledge,
-  getReference,
-  getRule,
-} from "@/lib/fetcher"
+import { getReference, getRule } from "@/lib/fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
+import { getOneKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UpdateKnowledgeForm } from "@/components/forms/update-knowledge-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -19,10 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Update Pengetahuan",
@@ -54,7 +47,7 @@ export default async function OperatorLMSUpdateKnowledgePage({
     refCode: "003",
   })
 
-  const category = await getListCategory({
+  const category = await getOperatorCategory({
     token: user?.token,
     limit: 999,
     page: 1,
