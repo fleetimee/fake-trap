@@ -4,7 +4,6 @@ import React, { useTransition } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import format from "date-fns/format"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -13,12 +12,10 @@ import { z } from "zod"
 import { ErrorResponse } from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
-import { cn } from "@/lib/utils"
 import { courseSchema } from "@/lib/validations/course"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
-import { Calendar } from "../ui/calendar"
 import { DateTimePicker } from "../ui/datetimepicker"
 import {
   Form,
@@ -30,7 +27,6 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Textarea } from "../ui/textarea"
 import { Zoom } from "../zoom-image"
 
@@ -44,11 +40,7 @@ interface AddCourseFormProps {
   baseUrl?: string
 }
 
-export function AddCourseForm({
-  knowledge,
-  tutors,
-  baseUrl,
-}: AddCourseFormProps) {
+export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
   const { data: session } = useSession()
 
   const [preview, setPreview] = React.useState<string | null>(null)
