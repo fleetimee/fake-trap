@@ -3,11 +3,8 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  checkUserEnrolled,
-  getCourseKnowledgeSection,
-  getOneCourse,
-} from "@/lib/fetcher"
+import { checkUserEnrolled, getCourseKnowledgeSection } from "@/lib/fetcher"
+import { getOneCourse } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Content } from "@/components/content"

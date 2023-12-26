@@ -243,80 +243,6 @@ export async function getOneSection({
   return await response.json()
 }
 
-interface GetCourseProps {
-  token: string | undefined
-  page: number
-  limit: number
-  sortBy?: string
-  orderBy?: string
-  searchQuery?: string
-  statusText?: string | string[] | undefined // Add this line
-}
-
-export async function getCourse({
-  token,
-  page,
-  limit,
-  sortBy = "id_course",
-  orderBy = "asc",
-  searchQuery = "",
-  statusText = "", // Add this line
-}: GetCourseProps): Promise<CourseListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
-
-  if (statusText) {
-    url = `${url}&status=${statusText}`
-  }
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  })
-
-  return await res.json()
-}
-
-interface GetCourseByTutorProps {
-  token: string | undefined
-  tutorUuid: string
-  page: number
-  limit: number
-  sortBy?: string
-  orderBy?: string
-  searchQuery?: string
-  statusText?: string | string[] | undefined
-}
-
-export async function getCourseByTutor({
-  token,
-  tutorUuid,
-  page,
-  limit,
-  sortBy = "id_course",
-  orderBy = "asc",
-  searchQuery = "",
-  statusText = "",
-}: GetCourseByTutorProps): Promise<CourseListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2/by/${tutorUuid}?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
-
-  if (statusText) {
-    url = `${url}&status=${statusText}`
-  }
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  })
-
-  return await res.json()
-}
-
 interface GetUserEnrolledCourseList {
   token: string | undefined
   uuid: string | undefined
@@ -327,16 +253,6 @@ interface GetUserEnrolledCourseList {
   searchQuery?: string
 }
 
-/**
- * Retrieves the list of enrolled courses for a user.
- * @param {GetUserEnrolledCourseList} options - The options for fetching the enrolled course list.
- * @param {string} options.token - The user's authentication token.
- * @param {string} options.uuid - The user's UUID.
- * @param {number} options.limit - The maximum number of courses to retrieve per page.
- * @param {number} options.page - The page number of the courses to retrieve.
- * @param {string} [options.searchQuery=""] - The search query to filter the courses.
- * @returns {Promise<UserEnrolledCourseListRes>} - The promise that resolves to the enrolled course list response.
- */
 export async function getUserEnrolledCourseList({
   token,
   uuid,
@@ -388,14 +304,6 @@ interface CheckUserEnrolledProps {
   uuid: string
 }
 
-/**
- * Checks if a user is enrolled in a course.
- * @param {CheckUserEnrolledProps} options - The options for checking user enrollment.
- * @param {string} options.token - The user's authentication token.
- * @param {string} options.idCourse - The ID of the course to check enrollment for.
- * @param {string} options.uuid - The UUID of the user.
- * @returns {Promise<any>} - A promise that resolves to the JSON response from the server.
- */
 export async function checkUserEnrolled({
   token,
   idCourse,
@@ -403,37 +311,6 @@ export async function checkUserEnrolled({
 }: CheckUserEnrolledProps) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/checkIfUserEnrolled/${idCourse}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await res.json()
-}
-
-interface GetOneCourseProps {
-  token: string | undefined
-  idCourse: string
-}
-
-/**
- * Retrieves information about a specific course.
- * @param {GetOneCourseProps} options - The options for retrieving the course.
- * @param {string} options.token - The authentication token.
- * @param {string} options.idCourse - The ID of the course to retrieve.
- * @returns {Promise<CourseOneRes>} - A promise that resolves to the course information.
- */
-export async function getOneCourse({
-  token,
-  idCourse,
-}: GetOneCourseProps): Promise<CourseOneRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}`,
     {
       method: "GET",
       headers: {
@@ -457,17 +334,6 @@ interface GetCourseUser {
   searchQuery?: string
 }
 
-/**
- * Retrieves a list of users enrolled in a course.
- * @param token - The authentication token.
- * @param idCourse - The ID of the course.
- * @param limit - The maximum number of users to retrieve per page.
- * @param page - The page number of the users to retrieve.
- * @param sortBy - The field to sort the users by. Defaults to "created_at".
- * @param orderBy - The order in which to sort the users. Defaults to "desc".
- * @param searchQuery - The search query to filter the users by. Defaults to an empty string.
- * @returns A promise that resolves to the list of users.
- */
 export async function getCourseUser({
   token,
   idCourse,

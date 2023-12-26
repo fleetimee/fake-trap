@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourse } from "@/lib/fetcher"
+import { getCourse } from "@/lib/fetcher/course-fetcher"
 import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
