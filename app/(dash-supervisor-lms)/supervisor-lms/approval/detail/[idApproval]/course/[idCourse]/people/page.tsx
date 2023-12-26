@@ -2,7 +2,7 @@ import React from "react"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourseUser } from "@/lib/fetcher"
+import { getCourseUsers } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { CourseUserTableShell } from "@/components/shell/course-user-table-shell"
@@ -38,7 +38,7 @@ export default async function CoursePeoplePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const users = await getCourseUser({
+  const users = await getCourseUsers({
     token: user?.token,
     idCourse: params.idCourse,
     page: pageInitial,

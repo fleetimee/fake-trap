@@ -3,8 +3,11 @@ import Image from "next/image"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { fetchUsersByGroupId, lookupCourse } from "@/lib/fetcher"
-import { getOneCourse } from "@/lib/fetcher/course-fetcher"
+import { fetchUsersByGroupId } from "@/lib/fetcher"
+import {
+  getLookupCourseDetails,
+  getOneCourse,
+} from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { RequestCourseForm } from "@/components/forms/request-course-form"
@@ -45,7 +48,7 @@ export default async function OperatorLmsCourseRequestPage({
       idCourse: params.idCourse,
       token: user?.token,
     }),
-    lookupCourse({
+    getLookupCourseDetails({
       idCourse: params.idCourse,
       token: user?.token,
     }),

@@ -3,8 +3,11 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { checkUserEnrolled, getCourseKnowledgeSection } from "@/lib/fetcher"
-import { getOneCourse } from "@/lib/fetcher/course-fetcher"
+import {
+  getCheckUserCourseEnrollmentStatus,
+  getCourseKnowledgeSection,
+  getOneCourse,
+} from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Content } from "@/components/content"
@@ -59,7 +62,7 @@ export default async function CourseDetailLayout({
     return notFound()
   }
 
-  const checkEnrolled = await checkUserEnrolled({
+  const checkEnrolled = await getCheckUserCourseEnrollmentStatus({
     idCourse: params.idCourse,
     token: user?.token,
     uuid: tokenExtracted?.id,

@@ -2,8 +2,10 @@ import React from "react"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourseKnowledgeSection } from "@/lib/fetcher"
-import { getOneCourse } from "@/lib/fetcher/course-fetcher"
+import {
+  getCourseKnowledgeSection,
+  getOneCourse,
+} from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"

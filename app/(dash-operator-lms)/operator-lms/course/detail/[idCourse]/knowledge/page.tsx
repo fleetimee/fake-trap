@@ -3,7 +3,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourseKnowledges } from "@/lib/fetcher"
+import { getCourseKnowledges } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { CoursesKnowledges } from "@/components/course-knowledges"
 import { buttonVariants } from "@/components/ui/button"

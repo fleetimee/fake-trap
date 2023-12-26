@@ -11,7 +11,7 @@ import { z } from "zod"
 
 import { CourseVacantUserListResData } from "@/types/course/res"
 import { ErrorResponse } from "@/types/error-res"
-import { UserListResData } from "@/types/user/res"
+import { updateCoursePeserta } from "@/lib/fetcher/course-fetcher"
 import { cn } from "@/lib/utils"
 import { addCourseUserSchema } from "@/lib/validations/course"
 
@@ -73,14 +73,20 @@ export function AddCourseUserForm({
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/users`
+        // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/users`
+        //
+        // const res = await fetch(url, {
+        //   method: "PUT",
+        //   headers: {
+        //     Authorization: `Bearer ${session?.user?.token}`,
+        //   },
+        //   body: JSON.stringify(data),
+        // })
 
-        const res = await fetch(url, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const res = await updateCoursePeserta({
+          idCourse: idCourse.toString(),
           body: JSON.stringify(data),
+          token: session?.user?.token,
         })
 
         if (res.ok) {

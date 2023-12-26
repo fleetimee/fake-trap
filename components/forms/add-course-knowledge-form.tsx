@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState, useTransition } from "react"
+import React, { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CheckIcon, ChevronDown, X } from "lucide-react"
@@ -9,16 +9,11 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
-import { CourseVacantUserListResData } from "@/types/course/res"
 import { ErrorResponse } from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
-import { UserListResData } from "@/types/user/res"
-import { assignKnowledgeToCourse } from "@/lib/fetcher"
+import { updateCourseKnowledges } from "@/lib/fetcher/course-fetcher"
 import { cn } from "@/lib/utils"
-import {
-  addCourseKnowledgeSchema,
-  addCourseUserSchema,
-} from "@/lib/validations/course"
+import { addCourseKnowledgeSchema } from "@/lib/validations/course"
 
 import { Icons } from "../icons"
 import { Badge } from "../ui/badge"
@@ -78,7 +73,7 @@ export function AddCourseKnowledgeForm({
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const res = await assignKnowledgeToCourse({
+        const res = await updateCourseKnowledges({
           token: session?.user.token,
           idCourse: idCourse.toString(),
           body: JSON.stringify(data),
