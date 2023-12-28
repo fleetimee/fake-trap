@@ -70,9 +70,9 @@ export async function getCourse({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch course")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch course")
+    // }
 
     return await res.json()
   } catch (err) {
@@ -134,9 +134,9 @@ export async function getCourseUsers({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch course")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch course")
+    // }
 
     return await res.json()
   } catch (err) {
@@ -166,9 +166,9 @@ export async function getCourseVacantUser({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch course")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch course")
+    // }
 
     return await res.json()
   } catch (err) {
@@ -309,9 +309,9 @@ export async function getPesertaEnrolledCourses({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch course")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch course")
+    // }
 
     return await res.json()
   } catch (err) {
@@ -343,9 +343,9 @@ export async function getCheckUserCourseEnrollmentStatus({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch course")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch course")
+    // }
 
     return await res.json()
   } catch (err) {
@@ -375,9 +375,9 @@ export async function getOneCourse({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch course")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch course")
+    // }
 
     return await res.json()
   } catch (err) {
@@ -407,9 +407,9 @@ export async function getLookupCourseDetails({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch course")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch course")
+    // }
 
     return await res.json()
   } catch (err) {

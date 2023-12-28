@@ -62,8 +62,6 @@ export default async function PemateriDivisiCategoryPage({
     searchQuery: searchQueryInitial,
   })
 
-  console.log(categoryData)
-
   return (
     <DashboardShell>
       <BreadCrumbs

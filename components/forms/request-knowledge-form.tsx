@@ -115,7 +115,7 @@ export function RequestKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Pemateri <span className="text-red-500">*</span>
+                Supervisor <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Popover>

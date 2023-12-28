@@ -53,9 +53,9 @@ export async function getOperatorCategory({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch category")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch category")
+    // }
 
     return await res.json()
   } catch (error) {
@@ -119,9 +119,9 @@ export async function getCategoryByCreator({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch category")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch category")
+    // }
 
     return await res.json()
   } catch (error) {
@@ -180,9 +180,9 @@ export async function getCategoriesWithKnowledge({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch category")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch category")
+    // }
 
     return await res.json()
   } catch (error) {
@@ -244,9 +244,9 @@ export async function getCategoryKnowledge({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch category")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch category")
+    // }
 
     return await res.json()
   } catch (error) {
@@ -276,9 +276,9 @@ export async function getOneCategory({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`)
-    }
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
 
     return await res.json()
   } catch (error) {
@@ -305,9 +305,9 @@ export async function createCategory({ token, body }: CreateCategoryProps) {
       body: body,
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to create category")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to create category")
+    // }
 
     return res
   } catch (error) {
@@ -339,9 +339,9 @@ export async function updateCategory({
       body: body,
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to update category")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to update category")
+    // }
 
     return res
   } catch (error) {
@@ -370,9 +370,9 @@ export async function deleteCategory({
       },
     })
 
-    if (!res.ok) {
-      return false
-    }
+    // if (!res.ok) {
+    //   return false
+    // }
 
     return true
   } catch (error) {

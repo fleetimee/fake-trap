@@ -92,9 +92,9 @@ export async function getOperatorKnowledge({
       cache: "no-store",
     })
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`)
-    }
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
 
     return await res.json()
   } catch (error) {
@@ -185,9 +185,9 @@ export async function getKnowledgeByCreatedByUser({
       cache: "no-store",
     })
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`)
-    }
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
 
     return await res.json()
   } catch (error) {
@@ -252,9 +252,9 @@ export async function getKnowledgeUser({
       cache: "no-store",
     })
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`)
-    }
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
 
     return await res.json()
   } catch (error) {
@@ -283,9 +283,9 @@ export async function getOneKnowledge({
       cache: "no-store",
     })
 
-    if (!res.ok) {
-      throw new Error(`Fetch request failed with status ${res.status}`)
-    }
+    // if (!res.ok) {
+    //   throw new Error(`Fetch request failed with status ${res.status}`)
+    // }
 
     return await res.json()
   } catch (error) {
@@ -312,7 +312,7 @@ export async function getOnePublicKnowledge({
       cache: "no-store",
     })
 
-    if (!res.ok) {
+    {
       throw new Error(`Fetch request failed with status ${res.status}`)
     }
 
@@ -364,9 +364,9 @@ export async function createKnowledge({ token, body }: CreateKnowledgeProps) {
       body,
     })
 
-    if (!res.ok) {
-      throw new Error(`Fetch request failed with status ${res.status}`)
-    }
+    // if (!res.ok) {
+    //   throw new Error(`Fetch request failed with status ${res.status}`)
+    // }
 
     return res
   } catch (error) {
@@ -397,9 +397,9 @@ export async function updateKnowledge({
       body,
     })
 
-    if (!res.ok) {
-      throw new Error(`Fetch request failed with status ${res.status}`)
-    }
+    // if (!res.ok) {
+    //   throw new Error(`Fetch request failed with status ${res.status}`)
+    // }
 
     return res
   } catch (error) {

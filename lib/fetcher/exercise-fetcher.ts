@@ -68,9 +68,9 @@ export async function getOperatorQuiz({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch quiz")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch quiz")
+    // }
 
     return await res.json()
   } catch (error) {
@@ -144,9 +144,9 @@ export async function getQuizCreatedByUser({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch quiz")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch quiz")
+    // }
 
     return await res.json()
   } catch (error) {
@@ -176,9 +176,9 @@ export async function getOneQuiz({
       cache: "no-cache",
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch quiz")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch quiz")
+    // }
 
     return await res.json()
   } catch (error) {
@@ -206,9 +206,9 @@ export async function createExercise({ token, body }: CreateExerciseProps) {
       body: body,
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to create quiz")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to create quiz")
+    // }
 
     return res
   } catch (error) {
@@ -241,9 +241,9 @@ export async function updateExercise({
       body: body,
     })
 
-    if (!res.ok) {
-      throw new Error("Failed to update quiz")
-    }
+    // if (!res.ok) {
+    //   throw new Error("Failed to update quiz")
+    // }
 
     return res
   } catch (error) {
