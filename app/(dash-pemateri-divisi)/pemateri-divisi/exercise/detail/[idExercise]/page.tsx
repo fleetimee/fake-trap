@@ -7,8 +7,8 @@ import {
   getOneExercise,
   getOneExerciseLinkedCourse,
   getOneExerciseUserCount,
-  getReference,
 } from "@/lib/fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import {

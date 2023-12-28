@@ -10,6 +10,7 @@ import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { SectionOneResData } from "@/types/section/res"
+import { updateSectionKnowledge } from "@/lib/fetcher/section-fetcher"
 import { updateKnowledgeSectionSchema } from "@/lib/validations/section"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,10 +23,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-
-
-import { Icons } from "../icons";
-
+import { Icons } from "../icons"
 
 type Inputs = z.infer<typeof updateKnowledgeSectionSchema>
 
@@ -54,17 +52,11 @@ export function UpdateSectionForm({
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${idSection}`
-
-        const response = await fetch(url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const response = await updateSectionKnowledge({
+          token: session?.user.token,
+          idSection: idSection,
           body: JSON.stringify(data),
         })
-
         if (response.ok) {
           sonnerToast.success("Berhasil", {
             description: "Section berhasil diperbarui",

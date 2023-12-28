@@ -10,6 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
+import { createSectionCourse } from "@/lib/fetcher/section-fetcher"
 import { courseSectionSchema } from "@/lib/validations/section"
 import { Button } from "@/components/ui/button"
 import {
@@ -50,12 +51,18 @@ export function AddCourseSectionForm({ idCourse }: AddSectionFormProps) {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/section`
 
-        const res = await fetch(url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        // const res = await fetch(url, {
+        //   method: "PUT",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Bearer ${session?.user.token}`,
+        //   },
+        //   body: JSON.stringify(values),
+        // })
+
+        const res = await createSectionCourse({
+          token: session?.user?.token,
+          idCourse: idCourse,
           body: JSON.stringify(values),
         })
 

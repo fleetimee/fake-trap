@@ -4,8 +4,9 @@ import { PrinterIcon } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { QuizType } from "@/lib/enums/status"
-import { getNewExerciseResult, getReference } from "@/lib/fetcher"
+import { getNewExerciseResult } from "@/lib/fetcher"
 import { getOneQuiz } from "@/lib/fetcher/exercise-fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import {
   convertDatetoString,

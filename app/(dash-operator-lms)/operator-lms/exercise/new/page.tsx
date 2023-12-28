@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getReference } from "@/lib/fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddTestForm } from "@/components/forms/add-test-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"

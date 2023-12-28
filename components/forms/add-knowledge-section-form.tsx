@@ -9,6 +9,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
+import { createSectionKnowledge } from "@/lib/fetcher/section-fetcher"
 import { knowledgeSectionSchema } from "@/lib/validations/section"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,10 +22,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-
-
-import { Icons } from "../icons";
-
+import { Icons } from "../icons"
 
 type Inputs = z.infer<typeof knowledgeSectionSchema>
 
@@ -54,14 +52,8 @@ export function AddKnowledgeSectionForm({ idKnowledge }: AddSectionFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section`
-
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const response = await createSectionKnowledge({
+          token: session?.user?.token,
           body: JSON.stringify(data),
         })
 

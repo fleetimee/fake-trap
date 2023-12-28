@@ -17,10 +17,8 @@ import {
   QuizUserAttemptList,
   QuizUserResultListRes,
 } from "@/types/quiz/res"
-import { ReferenceListRes } from "@/types/references/res"
 import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
-import { SectionOneRes } from "@/types/section/res"
 import { UserRoleListRes } from "@/types/user/res"
 
 interface GetExerciseUserSelectedAnswerProps {
@@ -127,36 +125,6 @@ export async function getNewExerciseResult({
   return await res.json()
 }
 
-interface GetOneSectionProps {
-  token: string | undefined
-  idSection: string
-}
-
-/**
- * Retrieves a single section from the server.
- * @param {GetOneSectionProps} options - The options for retrieving the section.
- * @param {string} options.token - The authentication token.
- * @param {string} options.idSection - The ID of the section to retrieve.
- * @returns {Promise<any>} - A promise that resolves to the JSON response from the server.
- */
-export async function getOneSection({
-  token,
-  idSection,
-}: GetOneSectionProps): Promise<SectionOneRes> {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${idSection}`
-
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache",
-  })
-
-  return await response.json()
-}
-
 interface GetUsersByGroupProps {
   token: string | undefined
   idGroup: number
@@ -232,37 +200,6 @@ export async function getRule({
     },
     cache: "no-cache",
   })
-
-  return await res.json()
-}
-
-interface GetReferenceProps {
-  refCode: string
-  token: string | undefined
-}
-
-/**
- * Retrieves a reference list from the server.
- * @param {Object} props - The properties object.
- * @param {string} props.token - The authentication token.
- * @param {string} props.refCode - The reference code.
- * @returns {Promise<ReferenceListRes>} - The reference list response.
- */
-export async function getReference({
-  token,
-  refCode,
-}: GetReferenceProps): Promise<ReferenceListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/references/${refCode}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
 
   return await res.json()
 }

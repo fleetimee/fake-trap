@@ -1,8 +1,8 @@
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneSection } from "@/lib/fetcher"
 import { getOperatorQuiz } from "@/lib/fetcher/exercise-fetcher"
+import { getOneSection } from "@/lib/fetcher/section-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddQuizMultipleChoiceQuiz } from "@/components/forms/add-quiz-multiple"
 import { Separator } from "@/components/ui/separator"
