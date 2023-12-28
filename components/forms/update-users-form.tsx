@@ -11,7 +11,7 @@ import { z } from "zod"
 
 import { RoleListResData } from "@/types/role/res"
 import { UserOneResData } from "@/types/user/res"
-import { updateUserByUuid } from "@/lib/fetcher"
+import { updateUser } from "@/lib/fetcher/users-fetcher"
 import { cn } from "@/lib/utils"
 import { usersSchema } from "@/lib/validations/users"
 import { Button } from "@/components/ui/button"
@@ -81,7 +81,7 @@ export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const response = await updateUserByUuid({
+        const response = await updateUser({
           token: session?.user.token,
           uuid: user.uuid,
           body: JSON.stringify(data),

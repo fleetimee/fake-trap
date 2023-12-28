@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneUser } from "@/lib/fetcher"
+import { getOneUser } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { AccountForm } from "@/components/forms/account-form"

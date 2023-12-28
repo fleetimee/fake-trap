@@ -2,13 +2,9 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneThread } from "@/lib/fetcher"
+import { getOneThread } from "@/lib/fetcher/threads-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Editor } from "@/components/editor"
-
-
-
-
 
 interface EditorPageProps {
   params: {

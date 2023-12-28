@@ -12,7 +12,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { UserListResData } from "@/types/user/res"
-import { deleteUserByUuid } from "@/lib/fetcher"
+import { deleteUser } from "@/lib/fetcher/users-fetcher"
 import { Icons } from "@/components/icons"
 import { AlertDescription } from "@/components/ui/alert"
 import {
@@ -52,32 +52,6 @@ import {
 
 interface ErrorResponseProps {
   error: string
-}
-
-interface DeleteUserProps {
-  uuid: string
-  token: string | undefined
-}
-
-async function deleteUser({ uuid, token }: DeleteUserProps) {
-  const response = await deleteUserByUuid({
-    uuid,
-    token,
-  })
-
-  if (response.ok) {
-    sonnerToast.success("Berhasil", {
-      description: "User berhasil dihapus",
-    })
-
-    return true
-  } else {
-    sonnerToast.error("Gagal", {
-      description: "User gagal dihapus",
-    })
-
-    return false
-  }
 }
 
 const formSchema = z.object({
@@ -266,10 +240,18 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
                 })
 
                 if (deleted) {
+                  sonnerToast.success("Berhasil", {
+                    description: "User berhasil dihapus",
+                  })
+
                   setIsDeleteLoading(false)
                   setOpenDeleteUserSheet(false)
                   router.refresh()
                 } else {
+                  sonnerToast.error("Gagal", {
+                    description: "User gagal dihapus",
+                  })
+
                   setIsDeleteLoading(false)
                 }
               }}

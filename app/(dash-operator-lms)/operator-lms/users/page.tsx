@@ -1,17 +1,15 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getUserV2 } from "@/lib/fetcher"
+import { getUserV2 } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, UserTableShell } from "@/components/shell"
-import { buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Managemen User",
@@ -27,7 +25,7 @@ interface OperatorLMSUsersPageProps {
 export default async function OperatorLMSUsersPage({
   searchParams,
 }: OperatorLMSUsersPageProps) {
-  const { page, per_page, sort, username, category } = searchParams ?? {}
+  const { page, per_page, sort, username } = searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1

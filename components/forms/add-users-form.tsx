@@ -38,6 +38,7 @@ import {
 
 import { Icons } from "../icons"
 import { Badge } from "../ui/badge";
+import {createUser} from "@/lib/fetcher/users-fetcher";
 
 
 interface ErrorResponseProps {
@@ -95,11 +96,16 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/`
 
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        // const response = await fetch(url, {
+        //   method: "POST",
+        //   headers: {
+        //     Authorization: `Bearer ${session?.user?.token}`,
+        //   },
+        //   body: JSON.stringify(data),
+        // })
+
+        const response = await createUser({
+          token: session?.user?.token,
           body: JSON.stringify(data),
         })
 

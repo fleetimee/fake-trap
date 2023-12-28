@@ -5,8 +5,8 @@ import { authOptions } from "@/lib/auth"
 import {
   getExerciseUserSelectedAnswer,
   getOneExerciseLesson,
-  getOneUser,
 } from "@/lib/fetcher"
+import { getOneUser } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { PdfViewer } from "@/components/pdf-viewer"
 import { PrintButton } from "@/components/print-button"

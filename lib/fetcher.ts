@@ -7,8 +7,6 @@ import {
   ApprovalSupervisorPemateriOneRes,
 } from "@/types/approval/res"
 import { ContentOneRes } from "@/types/content/res"
-import { MenuListResNew } from "@/types/menu/res"
-import { PostsListRes } from "@/types/posts/res"
 import {
   FetchUserQuizListRes,
   QuizLinkedList,
@@ -23,38 +21,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { RoleListRes } from "@/types/role/res"
 import { RuleOneRes } from "@/types/rule/res"
 import { SectionOneRes } from "@/types/section/res"
-import { ThreadListRes, ThreadOneRes } from "@/types/threads/res"
-import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
-
-interface GetUserProps {
-  token: string | undefined
-  uuid: string
-}
-
-/**
- * Retrieves a logged on user.
- * @param {GetUserProps} props - The properties needed to retrieve the user.
- * @param {string} props.token - The user's token.
- * @param {string} props.uuid - The user's UUID.
- * @returns {Promise<UserOneRes>} - A promise that resolves to the user's data.
- */
-export async function getLoggedOnUser({
-  token,
-  uuid,
-}: GetUserProps): Promise<UserOneRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache",
-  })
-
-  return res.json()
-}
+import { UserRoleListRes } from "@/types/user/res"
 
 interface GetExerciseUserSelectedAnswerProps {
   token: string | undefined
@@ -190,145 +157,6 @@ export async function getOneSection({
   return await response.json()
 }
 
-interface GetMenuProps {
-  token: string | undefined
-  idRole: string
-}
-
-interface GetUserV2Props {
-  token: string | undefined
-  page: number
-  limit: number
-  sortBy?: string
-  orderBy?: string
-  searchQuery?: string
-}
-
-/**
- * Retrieves a list of users based on the provided parameters.
- *
- * @param token - The authentication token.
- * @param page - The page number.
- * @param limit - The maximum number of users to retrieve per page.
- * @param sortBy - The field to sort the users by. Defaults to "created_at".
- * @param orderBy - The order in which to sort the users. Defaults to "desc".
- * @param searchQuery - The search query to filter the users.
- * @returns A promise that resolves to the list of users.
- */
-export async function getUserV2({
-  token,
-  page,
-  limit,
-  sortBy = "created_at",
-  orderBy = "desc",
-  searchQuery = "",
-}: GetUserV2Props): Promise<UserListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/v2?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await res.json()
-}
-
-interface GetOneUserProps {
-  token: string | undefined
-  uuid: string
-}
-
-/**
- * Retrieves information about a single user.
- * @param {GetOneUserProps} options - The options for retrieving the user.
- * @param {string} options.token - The authentication token.
- * @param {string} options.uuid - The UUID of the user.
- * @returns {Promise<UserOneRes>} - A promise that resolves to the user information.
- */
-export async function getOneUser({
-  token,
-  uuid,
-}: GetOneUserProps): Promise<UserOneRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-  return await res.json()
-}
-
-interface UpdateUserProps {
-  token: string | undefined
-  uuid: string
-  body: BodyInit
-}
-
-/**
- * Updates a user by UUID.
- * @param {UpdateUserProps} options - The options for updating the user.
- * @param {string} options.token - The token for authorization.
- * @param {string} options.uuid - The UUID of the user to update.
- * @returns {Promise<any>} - A promise that resolves to the updated user data.
- */
-export async function updateUserByUuid({
-  token,
-  uuid,
-  body,
-}: UpdateUserProps): Promise<Response> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
-
-  const res = await fetch(url, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: body,
-    cache: "no-store",
-  })
-
-  return res
-}
-
-interface DeleteUserProps {
-  token: string | undefined
-  uuid: string
-}
-
-/**
- * Deletes a user by their UUID.
- * @param {DeleteUserProps} options - The options for deleting a user.
- * @param {string} options.token - The authentication token.
- * @param {string} options.uuid - The UUID of the user to delete.
- * @returns {Promise<Response>} A promise that resolves to the response of the delete request.
- */
-export async function deleteUserByUuid({
-  token,
-  uuid,
-}: DeleteUserProps): Promise<Response> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
-
-  const res = await fetch(url, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  })
-
-  return res
-}
-
 interface GetUsersByGroupProps {
   token: string | undefined
   idGroup: number
@@ -376,31 +204,6 @@ export async function getRole({ token }: GetRoleProps): Promise<RoleListRes> {
   })
 
   return await res.json()
-}
-
-/**
- * Retrieves the menu list for a given role ID.
- * @param {Object} props - The properties object.
- * @param {string} props.token - The authentication token.
- * @param {string} props.idRole - The role ID.
- * @returns {Promise<MenuListResNew>} - The menu list response.
- */
-export async function getMenu({
-  token,
-  idRole,
-}: GetMenuProps): Promise<MenuListResNew> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/menu/role/${idRole}`
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache",
-  })
-
-  return res.json()
 }
 
 interface GetRuleProps {
@@ -718,125 +521,6 @@ export async function getListExerciseResult({
     },
     cache: "no-cache",
   })
-
-  return await res.json()
-}
-
-interface GetThreadsListProps {
-  idCourse: string
-  token: string | undefined
-  limit: number
-  page: number
-  sortBy?: string
-  orderBy?: string
-  searchQuery?: string
-}
-
-export async function getThreadList({
-  idCourse,
-  token,
-  limit,
-  page,
-  sortBy = "created_at",
-  orderBy = "desc",
-  searchQuery = "",
-}: GetThreadsListProps): Promise<ThreadListRes> {
-  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/threads`
-  const url = new URL(baseUrl)
-
-  if (page) {
-    url.searchParams.append("page", page.toString())
-  }
-
-  if (limit) {
-    url.searchParams.append("limit", limit.toString())
-  }
-
-  if (sortBy) {
-    url.searchParams.append("sortBy", sortBy)
-  }
-
-  if (orderBy) {
-    url.searchParams.append("orderBy", orderBy)
-  }
-
-  if (searchQuery) {
-    url.searchParams.append("searchQuery", searchQuery)
-  }
-
-  // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/threads?page=${page}&limit=${limit}`
-
-  const res = await fetch(url.toString(), {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      ContentType: "application/json",
-    },
-    cache: "no-cache",
-  })
-
-  return await res.json()
-}
-
-interface GetOneThreadProps {
-  token: string | undefined
-  idThreads: string
-}
-
-/**
- * Retrieves a single thread from the server.
- * @param token - The authentication token.
- * @param idThreads - The ID of the thread to retrieve.
- * @returns A promise that resolves to the response containing the thread.
- */
-export async function getOneThread({
-  token,
-  idThreads,
-}: GetOneThreadProps): Promise<ThreadOneRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/threads/${idThreads}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await res.json()
-}
-
-interface GetPostsListProps {
-  token: string | undefined
-  idThreads: string
-  limit: number
-  page: number
-}
-
-/**
- * Retrieves a list of posts based on the provided parameters.
- * @param {GetPostsListProps} options - The options for fetching the posts list.
- * @returns {Promise<PostsListRes>} - A promise that resolves to the posts list response.
- */
-export async function getPostsList({
-  token,
-  idThreads,
-  limit,
-  page,
-}: GetPostsListProps): Promise<PostsListRes> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/threads/${idThreads}/posts/?limit=${limit}&page=${page}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
 
   return await res.json()
 }

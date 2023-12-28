@@ -2,7 +2,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getThreadList } from "@/lib/fetcher"
+import { getThreadList } from "@/lib/fetcher/threads-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Threads } from "@/components/threads"
 import { buttonVariants } from "@/components/ui/button"

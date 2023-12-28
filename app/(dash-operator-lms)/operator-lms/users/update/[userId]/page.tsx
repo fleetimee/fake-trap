@@ -1,7 +1,8 @@
 import { Metadata } from "next"
 import { Shield } from "lucide-react"
 
-import { getOneUser, getRole } from "@/lib/fetcher"
+import { getRole } from "@/lib/fetcher"
+import { getOneUser } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UpdateUserForm } from "@/components/forms/update-users-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -14,10 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Update User",

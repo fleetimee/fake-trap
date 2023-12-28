@@ -1,4 +1,5 @@
-import { getLoggedOnUser, getMenu } from "@/lib/fetcher"
+import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
+import { getMenu } from "@/lib/fetcher/menu-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
