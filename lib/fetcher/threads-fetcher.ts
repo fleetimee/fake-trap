@@ -76,3 +76,22 @@ export async function getOneThread({
 
   return await res.json()
 }
+
+interface CreateThreadProps {
+  token: string | undefined
+  body: BodyInit
+}
+
+export async function createThread({ token, body }: CreateThreadProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/threads/`
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}

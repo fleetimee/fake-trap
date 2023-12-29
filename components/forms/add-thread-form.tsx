@@ -9,6 +9,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
+import { createThread } from "@/lib/fetcher/threads-fetcher"
 import { addThreadSchema } from "@/lib/validations/thread"
 
 import { Icons } from "../icons"
@@ -48,13 +49,8 @@ export function AddThreadForm({ idCourse }: AddThreadFormProps) {
   async function onSubmit(data: Inputs) {
     startTransaction(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/threads/`
-
-        const res = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const res = await createThread({
+          token: session?.user?.token,
           body: JSON.stringify(data),
         })
 

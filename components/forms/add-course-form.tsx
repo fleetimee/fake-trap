@@ -12,6 +12,7 @@ import { z } from "zod"
 import { ErrorResponse } from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
+import { createCourse } from "@/lib/fetcher/course-fetcher"
 import { courseSchema } from "@/lib/validations/course"
 
 import { Icons } from "../icons"
@@ -75,16 +76,10 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           }
         })
 
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${session?.user.token}`,
-            },
-            body: formData,
-          }
-        )
+        const response = await createCourse({
+          token: session?.user.token,
+          body: formData,
+        })
 
         if (response.ok) {
           const responseData = await response.json()

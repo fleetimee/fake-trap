@@ -36,3 +36,23 @@ export async function getPostsList({
 
   return await res.json()
 }
+
+interface CreatePostProps {
+  token: string | undefined
+  body: BodyInit
+}
+
+export async function createPost({ token, body }: CreatePostProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/threads/posts/`
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}

@@ -46,18 +46,6 @@ export function SoalShell(props: {
     setIsLoading(true)
 
     try {
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_BASE_URL}/secure/question/bulk`,
-      //   {
-      //     method: "POST",
-      //     body: JSON.stringify(values),
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${props.token}`,
-      //     },
-      //   }
-      // )
-
       const response = await createExerciseQuestion({
         token: props.token,
         body: JSON.stringify(values),

@@ -76,14 +76,6 @@ export function AddContentFileForm({ idSection }: AddContentFileFormProps) {
           })
         }
 
-        // const res = await fetch(url, {
-        //   method: "POST",
-        //   headers: {
-        //     Authorization: `Bearer ${session?.user.token}`,
-        //   },
-        //   body: formData,
-        // })
-
         const res = await createContentFile({
           token: session?.user.token,
           body: formData,

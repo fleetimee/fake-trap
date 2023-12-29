@@ -10,8 +10,11 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { RoleListResData } from "@/types/role/res"
+import { createUser } from "@/lib/fetcher/users-fetcher"
 import { cn } from "@/lib/utils"
 import { usersSchema } from "@/lib/validations/users"
+import { Icons } from "@/components/icons"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -35,11 +38,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-
-import { Icons } from "../icons"
-import { Badge } from "../ui/badge";
-import {createUser} from "@/lib/fetcher/users-fetcher";
-
 
 interface ErrorResponseProps {
   error: string
@@ -95,14 +93,6 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
     startTransition(async () => {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/`
-
-        // const response = await fetch(url, {
-        //   method: "POST",
-        //   headers: {
-        //     Authorization: `Bearer ${session?.user?.token}`,
-        //   },
-        //   body: JSON.stringify(data),
-        // })
 
         const response = await createUser({
           token: session?.user?.token,

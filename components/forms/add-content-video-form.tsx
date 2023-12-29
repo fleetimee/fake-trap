@@ -57,17 +57,6 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
   async function onSubmit(data: Inputs) {
     startTransaction(async () => {
       try {
-        // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/youtube`
-        //
-        // const response = await fetch(url, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     Authorization: `Bearer ${session?.user?.token}`,
-        //   },
-        //   body: JSON.stringify(data),
-        // })
-
         const response = await createContentVideo({
           token: session?.user?.token,
           body: JSON.stringify(data),

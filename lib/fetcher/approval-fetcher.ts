@@ -337,3 +337,26 @@ export async function getDetailCourseApproval({
 
   return await res.json()
 }
+
+interface CreateKnowledgeApprovalProps {
+  token: string | undefined
+  body: BodyInit
+}
+
+export async function createKnowledgeApproval({
+  token,
+  body,
+}: CreateKnowledgeApprovalProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge`
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}

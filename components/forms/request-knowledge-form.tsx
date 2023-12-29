@@ -11,6 +11,7 @@ import * as z from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { UserRoleListResData } from "@/types/user/res"
+import { createKnowledgeApproval } from "@/lib/fetcher/approval-fetcher"
 import { cn } from "@/lib/utils"
 import { requestKnowledgeSchema } from "@/lib/validations/request"
 
@@ -73,12 +74,8 @@ export function RequestKnowledgeForm({
 
     startTransition(async () => {
       try {
-        const res = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const res = await createKnowledgeApproval({
+          token: session?.user.token,
           body: JSON.stringify(data),
         })
 

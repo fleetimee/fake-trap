@@ -419,6 +419,25 @@ export async function getLookupCourseDetails({
   }
 }
 
+interface CreateCourseProps {
+  token: string | undefined
+  body: BodyInit
+}
+
+export async function createCourse({ token, body }: CreateCourseProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course`
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return response
+}
+
 interface UpdateCoursePesertaProps {
   token: string | undefined
   idCourse: string

@@ -118,17 +118,6 @@ export function AddContentArticleForm({ idSection }: AddArticleFormProps) {
     try {
       const block = await ref.current?.save()
 
-      // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/article`
-      //
-      // const response = await fetch(url, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${session?.user.token}`,
-      //   },
-      //   body: JSON.stringify({ ...data, body: JSON.stringify(block) }),
-      // })
-
       const response = await createContentArticle({
         token: session?.user.token,
         body: JSON.stringify({
