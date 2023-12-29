@@ -4,16 +4,12 @@ import { redirect } from "next/navigation"
 import Blocks from "editorjs-blocks-react-renderer"
 
 import { authOptions } from "@/lib/auth"
-import { getOneContent } from "@/lib/fetcher"
+import { getOneContent } from "@/lib/fetcher/content-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { YoutubeRender } from "@/components/content-renderer"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-
-
-
-
 
 interface CourseContentPageProps {
   params: {

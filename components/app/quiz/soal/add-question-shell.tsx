@@ -6,6 +6,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { createExerciseQuestion } from "@/lib/fetcher/exercise-fetcher"
 import { QuestionForm } from "@/components/app/quiz/soal/add-question"
 import { LottieAnimationQuiz } from "@/components/app/quiz/soal/quiz-lottie-animation"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -13,10 +14,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-
-
-
-
 
 export function SoalShell(props: {
   idQuiz: string
@@ -49,17 +46,22 @@ export function SoalShell(props: {
     setIsLoading(true)
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/secure/question/bulk`,
-        {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
+      // const response = await fetch(
+      //   `${process.env.NEXT_PUBLIC_BASE_URL}/secure/question/bulk`,
+      //   {
+      //     method: "POST",
+      //     body: JSON.stringify(values),
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${props.token}`,
+      //     },
+      //   }
+      // )
+
+      const response = await createExerciseQuestion({
+        token: props.token,
+        body: JSON.stringify(values),
+      })
 
       if (response.ok) {
         sonnerToast.success("Berhasil", {

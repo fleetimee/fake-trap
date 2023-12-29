@@ -4,13 +4,9 @@ import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { ApprovalStatus } from "@/lib/enums/status"
-import {
-  getSingleApprovalRequest,
-  getSingleCourseApprovalRequest,
-} from "@/lib/fetcher"
+import { getDetailCourseApproval } from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { cn, convertDatetoString, extractToken } from "@/lib/utils"
-import { ApproverForm } from "@/components/forms/approver-form"
 import { ApproverCourseForm } from "@/components/forms/course-approver-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -46,7 +42,7 @@ export default async function SupervisorLmsConfirmationPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const approvalRequest = await getSingleCourseApprovalRequest({
+  const approvalRequest = await getDetailCourseApproval({
     idApproval: params.idApproval,
     token: user?.token,
   })

@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { ApprovalStatus } from "@/lib/enums/status"
-import { getSingleApprovalRequest } from "@/lib/fetcher"
+import { getDetailKnowledgeApproval } from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { cn, convertDatetoString, extractToken } from "@/lib/utils"
 import { ApproverForm } from "@/components/forms/approver-form"
@@ -42,7 +42,7 @@ export default async function SupervisorPemateriConfirmationPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const approvalRequest = await getSingleApprovalRequest({
+  const approvalRequest = await getDetailKnowledgeApproval({
     idApproval: params.idApproval,
     token: user?.token,
   })

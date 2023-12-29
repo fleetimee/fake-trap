@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneExercise } from "@/lib/fetcher"
+import { getOneQuiz } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { HeaderSubMenu } from "@/components/header-submenu"
@@ -26,9 +26,9 @@ export default async function ExerciseDetailLayout({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const exercise = await getOneExercise({
+  const exercise = await getOneQuiz({
     token: user?.token,
-    idExercise: params.idExercise,
+    id: params.idExercise,
   })
 
   return (

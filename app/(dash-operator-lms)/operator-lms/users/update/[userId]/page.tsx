@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { Shield } from "lucide-react"
 
-import { getRole } from "@/lib/fetcher"
+import { getRole } from "@/lib/fetcher/role-fetcher"
 import { getOneUser } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UpdateUserForm } from "@/components/forms/update-users-form"

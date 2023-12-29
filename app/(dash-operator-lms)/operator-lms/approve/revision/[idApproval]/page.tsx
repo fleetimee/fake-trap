@@ -4,14 +4,10 @@ import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { ApprovalStatus } from "@/lib/enums/status"
-import {
-  getSingleApprovalRequest,
-  getSingleCourseApprovalRequest,
-} from "@/lib/fetcher"
+import { getDetailCourseApproval } from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { cn, convertDatetoString, extractToken } from "@/lib/utils"
 import { RequesterCourseRevisionForm } from "@/components/forms/course-revision-form"
-import { RequesterRevisionForm } from "@/components/forms/requester-revision-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Badge } from "@/components/ui/badge"
@@ -46,7 +42,7 @@ export default async function ApproveCourseRevisionPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const approvalRequest = await getSingleCourseApprovalRequest({
+  const approvalRequest = await getDetailCourseApproval({
     idApproval: params.idApproval,
     token: user?.token,
   })

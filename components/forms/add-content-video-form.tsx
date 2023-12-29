@@ -10,6 +10,7 @@ import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { SectionOneResData } from "@/types/section/res"
+import { createContentVideo } from "@/lib/fetcher/content-fetcher"
 import { contentVideoSchema } from "@/lib/validations/content-video"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,8 +25,7 @@ import {
 
 import { Icons } from "../icons"
 import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea";
-
+import { Textarea } from "../ui/textarea"
 
 type Inputs = z.infer<typeof contentVideoSchema>
 
@@ -34,10 +34,7 @@ interface AddContentVideoFormProps {
   section: SectionOneResData
 }
 
-export function AddContentVideoForm({
-  idSection,
-  section,
-}: AddContentVideoFormProps) {
+export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -60,14 +57,19 @@ export function AddContentVideoForm({
   async function onSubmit(data: Inputs) {
     startTransaction(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/youtube`
+        // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/youtube`
+        //
+        // const response = await fetch(url, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Bearer ${session?.user?.token}`,
+        //   },
+        //   body: JSON.stringify(data),
+        // })
 
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const response = await createContentVideo({
+          token: session?.user?.token,
           body: JSON.stringify(data),
         })
 

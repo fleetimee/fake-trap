@@ -1,4 +1,5 @@
-import { UserListRes, UserOneRes } from "@/types/user/res"
+import { QuizUserResultListRes } from "@/types/quiz/res"
+import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
 
 interface GetUserV2Props {
   token: string | undefined
@@ -53,6 +54,28 @@ export async function getUserV2({
   return await res.json()
 }
 
+interface GetUsersByGroupIdProps {
+  token: string | undefined
+  idGroup: number
+}
+
+export async function getUsersByGroupId({
+  token,
+  idGroup,
+}: GetUsersByGroupIdProps): Promise<UserRoleListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/group/${idGroup}/`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
 interface GetOneUserProps {
   token: string | undefined
   uuid: string
@@ -73,6 +96,30 @@ export async function getOneUser({
       cache: "no-store",
     }
   )
+  return await res.json()
+}
+
+interface GetUserAnswerProps {
+  token: string | undefined
+  idAttempt: string
+  userUuid: string
+}
+
+export async function getUserAnswer({
+  token,
+  idAttempt,
+  userUuid,
+}: GetUserAnswerProps): Promise<QuizUserResultListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/getSelectedAnswer/${idAttempt}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
   return await res.json()
 }
 

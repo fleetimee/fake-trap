@@ -2,8 +2,8 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { fetchUsersByGroupId } from "@/lib/fetcher"
 import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import { getUsersByGroupId } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddCourseForm } from "@/components/forms/add-course-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -34,7 +34,7 @@ export default async function OperatorLMSCoursePageNew() {
     limit: 1000,
   })
 
-  const tutors = await fetchUsersByGroupId({
+  const tutors = await getUsersByGroupId({
     token: user?.token,
     idGroup: 1,
   })

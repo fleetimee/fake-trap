@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 
 import { authOptions } from "@/lib/auth"
-import { getOneExerciseLesson } from "@/lib/fetcher"
+import { getQuizLesson } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardShell } from "@/components/shell"
@@ -36,7 +36,7 @@ export default async function ExerciseDetailQuestionPreview({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const exerciseLesson = await getOneExerciseLesson({
+  const exerciseLesson = await getQuizLesson({
     token: user?.token,
     idExercise: params.idExercise,
   })

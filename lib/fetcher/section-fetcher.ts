@@ -70,31 +70,6 @@ export async function updateSectionKnowledge({
   })
 }
 
-interface DeleteSectionKnowledgeProps {
-  token: string | undefined
-  idSection: string
-}
-
-export async function deleteSectionKnowledge({
-  token,
-  idSection,
-}: DeleteSectionKnowledgeProps) {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${idSection}`
-
-  const res = await fetch(url, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-
-  if (!res.ok) {
-    return false
-  }
-
-  return true
-}
-
 interface CreateSectionCourseProps {
   token: string | undefined
   idCourse: number
@@ -111,10 +86,31 @@ export async function createSectionCourse({
   return await fetch(url, {
     method: "PUT",
     headers: {
-      ContentType: "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: body,
     cache: "no-store",
   })
+}
+
+interface DeleteSectionProps {
+  token: string | undefined
+  idSection: string
+}
+
+export async function deleteSection({ token, idSection }: DeleteSectionProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${idSection}`
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!res.ok) {
+    return false
+  }
+
+  return true
 }

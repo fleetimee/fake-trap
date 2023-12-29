@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import { getApprovalRequestList } from "@/lib/fetcher"
+import { getPemateriApprovalRequests } from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Approves } from "@/components/approves"
@@ -25,14 +25,14 @@ export default async function PemateriDivisiApprovePage({
 }: PemateriDivisiApprovePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, store_page } = searchParams
+  const { page, per_page } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 6
 
   const tokenExtracted = extractToken(user?.token)
 
-  const requests = await getApprovalRequestList({
+  const requests = await getPemateriApprovalRequests({
     limit: limitInitial,
     page: pageInitial,
     token: user?.token,

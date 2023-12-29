@@ -11,6 +11,7 @@ import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { SectionOneResData } from "@/types/section/res"
+import { createContentFile } from "@/lib/fetcher/content-fetcher"
 import { isArrayOfFile } from "@/lib/utils"
 import { contentFileSchema } from "@/lib/validations/content-file"
 import { Button } from "@/components/ui/button"
@@ -26,8 +27,7 @@ import {
 
 import { FileDialog, FileWithPreview } from "../file-dialog"
 import { Icons } from "../icons"
-import { Input } from "../ui/input";
-
+import { Input } from "../ui/input"
 
 type Inputs = z.infer<typeof contentFileSchema>
 
@@ -38,10 +38,7 @@ interface AddContentFileFormProps {
   section: SectionOneResData
 }
 
-export function AddContentFileForm({
-  idSection,
-  section,
-}: AddContentFileFormProps) {
+export function AddContentFileForm({ idSection }: AddContentFileFormProps) {
   const [files, setFiles] = React.useState<FileWithPreview[] | null>(null)
 
   const { data: session } = useSession()
@@ -79,11 +76,16 @@ export function AddContentFileForm({
           })
         }
 
-        const res = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        // const res = await fetch(url, {
+        //   method: "POST",
+        //   headers: {
+        //     Authorization: `Bearer ${session?.user.token}`,
+        //   },
+        //   body: formData,
+        // })
+
+        const res = await createContentFile({
+          token: session?.user.token,
           body: formData,
         })
 

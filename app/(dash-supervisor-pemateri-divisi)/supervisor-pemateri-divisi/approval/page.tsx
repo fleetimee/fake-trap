@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getApprovalApproverList } from "@/lib/fetcher"
+import { getSupervisorPemateriApprovalRequests } from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
@@ -17,15 +17,15 @@ export const metadata: Metadata = {
   title: "Approve Pengetahuan",
 }
 
-interface PemateriDivisiApproveCoursePageProps {
+interface SpvPemateriDivisiApproveCoursePageProps {
   searchParams: {
     [key: string]: string | string[] | undefined
   }
 }
 
-export default async function PemateriDivisiApproveCoursePage({
+export default async function SpvPemateriDivisiApproveKnowledgePage({
   searchParams,
-}: PemateriDivisiApproveCoursePageProps) {
+}: SpvPemateriDivisiApproveCoursePageProps) {
   const user = await getCurrentUser()
 
   const { page, per_page, sort, status, knowledge_title } = searchParams ?? {}
@@ -47,7 +47,7 @@ export default async function PemateriDivisiApproveCoursePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const approvals = await getApprovalApproverList({
+  const approvals = await getSupervisorPemateriApprovalRequests({
     idApprover: tokenExtracted?.id,
     token: user?.token,
     page: pageInitial,

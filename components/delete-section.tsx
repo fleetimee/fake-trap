@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
-import { deleteSectionKnowledge } from "@/lib/fetcher/section-fetcher"
+import { deleteSection } from "@/lib/fetcher/section-fetcher"
 import {
   ContextMenuItem,
   ContextMenuShortcut,
@@ -30,7 +30,7 @@ export function DeleteSection({ idSection }: KnowledgeDeleteSectionProps) {
         event.preventDefault()
 
         startTransition(async () => {
-          const res = await deleteSectionKnowledge({
+          const res = await deleteSection({
             token: session?.user?.token,
             idSection: idSection,
           })

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { Shield } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getRole } from "@/lib/fetcher"
+import { getRole } from "@/lib/fetcher/role-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddUserForm } from "@/components/forms/add-users-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -16,10 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Tambah User Baru",

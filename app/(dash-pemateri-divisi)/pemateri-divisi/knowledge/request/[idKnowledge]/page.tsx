@@ -3,11 +3,11 @@ import Image from "next/image"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { fetchUsersByGroupId } from "@/lib/fetcher"
 import {
   getOneKnowledge,
   lookupKnowledge,
 } from "@/lib/fetcher/knowledge-fetcher"
+import { getUsersByGroupId } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { RequestKnowledgeForm } from "@/components/forms/request-knowledge-form"
@@ -52,7 +52,7 @@ export default async function PemateriDivisiRequestKnowledgeNew({
       idKnowledge: Number(params.idKnowledge),
       token: user?.token,
     }),
-    fetchUsersByGroupId({
+    getUsersByGroupId({
       token: user?.token,
       idGroup: 2,
     }),

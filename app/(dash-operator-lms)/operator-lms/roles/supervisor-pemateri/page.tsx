@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getRule } from "@/lib/fetcher"
+import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { RuleForm } from "@/components/forms/role-form"
 import { Separator } from "@/components/ui/separator"

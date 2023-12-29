@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import { DiscordLogoIcon } from "@radix-ui/react-icons"
 
 import { authOptions } from "@/lib/auth"
-import { getListExerciseResult } from "@/lib/fetcher"
+import { getQuizAttempts } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DashboardShell, UserQuizResultTableShell } from "@/components/shell"
@@ -34,7 +34,7 @@ export default async function ExerciseDetailHasilPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort } = searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
@@ -46,7 +46,7 @@ export default async function ExerciseDetailHasilPage({
   const sortBy = sortByInitial.split(".")[0]
   const orderBy = orderByInitial.split(".")[1]
 
-  const exerciseResult = await getListExerciseResult({
+  const exerciseResult = await getQuizAttempts({
     token: user?.token,
     idExercise: params.idExercise,
     limit: limitInitial,

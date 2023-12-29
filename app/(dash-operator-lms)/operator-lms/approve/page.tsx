@@ -1,12 +1,8 @@
 import { Metadata } from "next"
 
-import {
-  getApprovalRequestList,
-  getCourseApprovalRequestList,
-} from "@/lib/fetcher"
+import { getOperatorApprovalRequests } from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import { Approves } from "@/components/approves"
 import { CourseApproves } from "@/components/course-approve"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
@@ -47,7 +43,7 @@ export default async function OperatorLMSApprovePage({
 
   const tokenExtracted = extractToken(user?.token)
 
-  const requests = await getCourseApprovalRequestList({
+  const requests = await getOperatorApprovalRequests({
     token: user?.token,
     page: pageInitial,
     limit: limitInitial,

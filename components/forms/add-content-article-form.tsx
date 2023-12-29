@@ -14,12 +14,12 @@ import "@/styles/editor.css"
 import { useSession } from "next-auth/react"
 
 import { ErrorResponse } from "@/types/error-res"
+import { createContentArticle } from "@/lib/fetcher/content-fetcher"
 import { cn } from "@/lib/utils"
 import { articleSchema } from "@/lib/validations/article"
 import { Icons } from "@/components/icons"
 import { buttonVariants } from "@/components/ui/button"
-
-import { Label } from "../ui/label"
+import { Label } from "@/components/ui/label"
 
 type Inputs = z.infer<typeof articleSchema>
 
@@ -118,15 +118,23 @@ export function AddContentArticleForm({ idSection }: AddArticleFormProps) {
     try {
       const block = await ref.current?.save()
 
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/article`
+      // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/article`
+      //
+      // const response = await fetch(url, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${session?.user.token}`,
+      //   },
+      //   body: JSON.stringify({ ...data, body: JSON.stringify(block) }),
+      // })
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.user.token}`,
-        },
-        body: JSON.stringify({ ...data, body: JSON.stringify(block) }),
+      const response = await createContentArticle({
+        token: session?.user.token,
+        body: JSON.stringify({
+          ...data,
+          body: JSON.stringify(block),
+        }),
       })
 
       if (response.ok) {
