@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { forgotPassword } from "@/lib/fetcher/password-fetcher"
 import { forgotPasswordSchema } from "@/lib/validations/forgot-password"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -21,7 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-
 
 interface ErrorResponseProps {
   error: string
@@ -44,13 +44,8 @@ export function ForgotPasswordForm() {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/reset-password/${data.email}`
-
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const response = await forgotPassword({
+          email: data.email,
         })
 
         if (response.ok) {

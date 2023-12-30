@@ -1,4 +1,8 @@
-import { KnowledgeListRes, KnowledgeOneRes } from "@/types/knowledge/res"
+import {
+  KnowledgeGetNewRes,
+  KnowledgeListRes,
+  KnowledgeOneRes,
+} from "@/types/knowledge/res"
 
 interface GetOperatorKnowledgeProps {
   token: string
@@ -88,6 +92,71 @@ export async function getOperatorKnowledge({
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    })
+
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+    throw error
+  }
+}
+
+interface GetPublicKnowledgeProps {
+  page: number
+  limit: number
+  searchQuery?: string
+  sortField?: string
+  sortOrder?: string
+  status?: string
+}
+
+export async function getPublicKnowledge({
+  page,
+  limit,
+  searchQuery = "",
+  sortField = "created_at",
+  sortOrder = "desc",
+  status = "0052",
+}: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge?`
+
+  const urlObj = new URL(url)
+
+  if (page) {
+    urlObj.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    urlObj.searchParams.append("limit", limit.toString())
+  }
+
+  if (searchQuery) {
+    urlObj.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (sortField) {
+    urlObj.searchParams.append("sortBy", sortField)
+  }
+
+  if (sortOrder) {
+    urlObj.searchParams.append("orderBy", sortOrder)
+  }
+
+  if (status) {
+    urlObj.searchParams.append("status", status)
+  }
+
+  try {
+    const res = await fetch(urlObj.toString(), {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
       },
       cache: "no-store",
     })
@@ -303,24 +372,36 @@ export async function getOnePublicKnowledge({
 }: GetOnePublicKnowledgeProps): Promise<KnowledgeOneRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/${idKnowledge}`
 
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    })
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+    },
+    cache: "no-store",
+  })
 
-    {
-      throw new Error(`Fetch request failed with status ${res.status}`)
-    }
+  return await res.json()
+}
 
-    return await res.json()
-  } catch (error) {
-    console.error(`Fetch request failed: ${error}`)
-    throw error
-  }
+interface GetNewKnowledgeProps {
+  token: string | undefined
+}
+
+export async function getNewKnowledge({
+  token,
+}: GetNewKnowledgeProps): Promise<KnowledgeGetNewRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/newest`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
 }
 
 interface LookupKnowledgeProps {
@@ -345,6 +426,51 @@ export async function lookupKnowledge({
   )
 
   return await res.json()
+}
+
+interface LookupKnowledgePublicProps {
+  token: string | undefined
+  idKnowledge: number
+}
+
+export async function lookupKnowledgePublic({
+  token,
+  idKnowledge,
+}: LookupKnowledgePublicProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/public`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    })
+
+    // if (!res.ok) {
+    //   throw new Error(`Fetch request failed with status ${res.status}`)
+    // }
+
+    return await res.json()
+  } catch (e) {
+    console.error(`Fetch request failed: ${e}`)
+    throw e
+  }
+
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/public`,
+  //   {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       ContentType: "application/json",
+  //     },
+  //     cache: "no-store",
+  //   }
+  // )
+  //
+  // return await res.json()
 }
 
 interface CreateKnowledgeProps {

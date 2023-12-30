@@ -1,31 +1,5 @@
-import { KnowledgeGetNewRes } from "@/types/knowledge/res"
+import { getNewKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { CardDashboard } from "@/components/app/dashboard/ui"
-
-
-
-
-
-interface GetNewKnowledgeProps {
-  token: string | undefined
-}
-
-async function getNewKnowledge({
-  token,
-}: GetNewKnowledgeProps): Promise<KnowledgeGetNewRes> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/newest`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return response.json()
-}
 
 interface DashboardKnowledgeHighlightProps {
   token: string | undefined

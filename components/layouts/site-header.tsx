@@ -100,7 +100,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                     onSelect={(event) => {
                       event.preventDefault()
                       signOut({
-                        callbackUrl: `${window.location.origin}`,
+                        callbackUrl: "/login",
                       }).then(() => {
                         localStorage.clear()
                         sessionStorage.clear()

@@ -1,11 +1,8 @@
 import type { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
+import { login } from "@/lib/fetcher/auth-fetcher"
 import { extractToken } from "@/lib/utils"
-
-
-
-
 
 /**
  * Configuration options for NextAuth authentication.
@@ -25,19 +22,12 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/login`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                username: credentials?.username,
-                password: credentials?.password,
-              }),
-            }
-          )
+          const response = await login({
+            body: JSON.stringify({
+              username: credentials?.username,
+              password: credentials?.password,
+            }),
+          })
 
           const user = await response.json()
 

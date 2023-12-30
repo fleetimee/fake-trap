@@ -9,6 +9,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { UserOneResData } from "@/types/user/res"
+import { forgotPassword } from "@/lib/fetcher/password-fetcher"
 import { resetPasswordSchema } from "@/lib/validations/reset-password"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,10 +23,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-
-
-import { Icons } from "../icons";
-
+import { Icons } from "../icons"
 
 type Inputs = z.infer<typeof resetPasswordSchema>
 
@@ -52,13 +50,8 @@ export function ResetPasswordOperatorForm({
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/reset-password/${person?.email}`
-
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const response = await forgotPassword({
+          email: data.email,
         })
 
         if (response.ok) {

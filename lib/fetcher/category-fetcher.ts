@@ -65,6 +65,62 @@ export async function getOperatorCategory({
   }
 }
 
+interface GetPublicCategoriesProps {
+  page: number
+  limit: number
+  sortBy?: string
+  orderBy?: string
+  searchQuery?: string
+}
+
+export async function getPublicCategories({
+  limit,
+  page,
+  sortBy = "created_at",
+  orderBy = "desc",
+  searchQuery = "",
+}: GetPublicCategoriesProps): Promise<CategoryListRes> {
+  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  if (searchQuery) {
+    url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  try {
+    const res = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+
+    throw error
+  }
+}
+
 interface GetCategoryByCreatorProps {
   token: string | undefined
   page: number
@@ -274,6 +330,36 @@ export async function getOneCategory({
         Authorization: `Bearer ${token}`,
       },
       cache: "no-cache",
+    })
+
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+
+    throw error
+  }
+}
+
+interface GetOnePublicCategoryProps {
+  idCategory: number
+}
+
+export async function getOnePublicCategory({
+  idCategory,
+}: GetOnePublicCategoryProps): Promise<CategoryOneRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/${idCategory}`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
     })
 
     // if (!res.ok) {

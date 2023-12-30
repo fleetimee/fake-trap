@@ -9,6 +9,7 @@ import { KnowledgeListResData } from "@/types/knowledge/res"
 import { getKnowledgeUser } from "@/lib/fetcher/knowledge-fetcher"
 import { catchError, cn, isMacOs } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   CommandDialog,
@@ -154,11 +155,7 @@ export function KnowledgeSearch() {
             </div>
           ) : (
             data?.map((group) => (
-              <CommandGroup
-                key={group.category}
-                className="capitalize"
-                heading={group.category}
-              >
+              <CommandGroup key={group.category} className="capitalize">
                 {group.knowledge.map((item) => {
                   return (
                     <CommandItem
@@ -170,6 +167,7 @@ export function KnowledgeSearch() {
                         )
                       }
                     >
+                      <Icons.knowledge className="mr-2.5 h-3 w-3 text-muted-foreground" />
                       <span className="truncate">{item.knowledge_title}</span>
                     </CommandItem>
                   )

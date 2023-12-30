@@ -4,13 +4,14 @@ import Balancer from "react-wrap-balancer"
 
 import { UserOneRes } from "@/types/user/res"
 import { siteConfig } from "@/config/site"
+import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
+import { MarketingCard } from "@/components/cards/marketing-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { MarketingCard } from "@/components/cards/marketing-card"
 import { buttonVariants } from "@/components/ui/button"
 
 export const metadata = {
@@ -41,29 +42,6 @@ const childVariant: Variants = {
     opacity: 1,
     x: 0,
   },
-}
-
-interface GetUserProps {
-  token: string | undefined
-  uuid: string
-}
-
-async function getLoggedOnUser({
-  token,
-  uuid,
-}: GetUserProps): Promise<UserOneRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache",
-  })
-
-  return res.json()
 }
 
 export default async function IndexPage() {

@@ -160,6 +160,29 @@ export async function getDetailKnowledgeApproval({
   return await res.json()
 }
 
+interface CreateKnowledgeApprovalProps {
+  token: string | undefined
+  body: BodyInit
+}
+
+export async function createKnowledgeApproval({
+  token,
+  body,
+}: CreateKnowledgeApprovalProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge`
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}
+
 /*
   .--.      .--.    ___  ___   ___ .-.        .--.      .--.       .--.
  /    \    /    \  (   )(   ) (   )   \     /  _  \    /    \    /  _  \
@@ -338,16 +361,16 @@ export async function getDetailCourseApproval({
   return await res.json()
 }
 
-interface CreateKnowledgeApprovalProps {
+interface CreateCourseApprovalProps {
   token: string | undefined
   body: BodyInit
 }
 
-export async function createKnowledgeApproval({
+export async function createCourseApproval({
   token,
   body,
-}: CreateKnowledgeApprovalProps) {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge`
+}: CreateCourseApprovalProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course`
 
   const res = await fetch(url, {
     method: "POST",

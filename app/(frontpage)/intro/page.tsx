@@ -3,7 +3,8 @@ import { Variants } from "framer-motion"
 import Balance from "react-wrap-balancer"
 
 import { CategoryListRes } from "@/types/category/res"
-import { KnowledgeListRes } from "@/types/knowledge/res"
+import { getPublicCategories } from "@/lib/fetcher/category-fetcher"
+import { getPublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
@@ -15,63 +16,6 @@ import { Button, buttonVariants } from "@/components/ui/button"
 export const metadata = {
   title: "Explore",
   description: "Explore our products and services.",
-}
-
-interface GetPublicKnowledgeProps {
-  page: number
-  limit: number
-  searchQuery?: string
-  sortField?: string
-  sortOrder?: string
-  status?: string
-}
-
-async function getPublicKnowledge({
-  page,
-  limit,
-  searchQuery = "",
-  sortField = "created_at",
-  sortOrder = "desc",
-  status = "0052",
-}: GetPublicKnowledgeProps): Promise<KnowledgeListRes> {
-  const publicKnowledge = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/?page=${page}&limit=${limit}&sortBy=${sortField}&orderBy=${sortOrder}&searchQuery=${searchQuery}&status=${status}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    }
-  )
-  return await publicKnowledge.json()
-}
-
-interface GetPublicCategoriesProps {
-  page: number
-  limit: number
-  sortBy?: string
-  orderBy?: string
-  searchQuery?: string
-}
-
-async function getPublicCategories({
-  limit,
-  page,
-  sortBy = "created_at",
-  orderBy = "desc",
-  searchQuery = "",
-}: GetPublicCategoriesProps): Promise<CategoryListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/?page=${page}&limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}&searchQuery=${searchQuery}`
-
-  const publicCategories = await fetch(url, {
-    method: "GET",
-    headers: {
-      ContentType: "application/json",
-    },
-    cache: "no-store",
-  })
-  return await publicCategories.json()
 }
 
 export default async function IntroductionPage() {

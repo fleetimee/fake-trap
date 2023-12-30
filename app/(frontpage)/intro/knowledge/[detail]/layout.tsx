@@ -61,6 +61,7 @@ export default async function KnowledgeDetail({
         description={knowledge.data.description}
         urlLink="/intro/knowledge"
         canCreateSection={false}
+        image={knowledge.data.image}
       />
 
       <div

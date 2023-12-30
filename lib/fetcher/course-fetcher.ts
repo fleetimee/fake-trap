@@ -1,4 +1,5 @@
 import {
+  CourseGetNewRes,
   CourseKnowledgeListRes,
   CourseKnowledgeSectionListRes,
   CourseListRes,
@@ -385,6 +386,28 @@ export async function getOneCourse({
 
     throw err
   }
+}
+
+interface GetNewCourseProps {
+  token: string | undefined
+}
+
+export async function getNewestCourse({
+  token,
+}: GetNewCourseProps): Promise<CourseGetNewRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/new`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
+  })
+
+  return await res.json()
 }
 
 interface LookupCourseProps {

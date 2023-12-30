@@ -100,16 +100,6 @@ export function UserSubmittedAnswerFormProps({
     async (values: Inputs) => {
       startTransition(async () => {
         try {
-          // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/user-answer`
-          //
-          // const res = await fetch(url, {
-          //   method: "POST",
-          //   headers: {
-          //     Authorization: `Bearer ${session?.user?.token}`,
-          //   },
-          //   body: JSON.stringify(values),
-          // })
-
           const res = await createUserAnswer({
             token: session?.user?.token,
             body: JSON.stringify(values),

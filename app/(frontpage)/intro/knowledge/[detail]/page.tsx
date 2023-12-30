@@ -1,32 +1,11 @@
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
-import { getOnePublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import {
+  getOnePublicKnowledge,
+  lookupKnowledgePublic,
+} from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
-
-interface LookupKnowledgePublicProps {
-  token: string | undefined
-  idKnowledge: number
-}
-
-async function lookupKnowledgePublic({
-  token,
-  idKnowledge,
-}: LookupKnowledgePublicProps) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/public`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await res.json()
-}
 
 type Props = {
   params: {

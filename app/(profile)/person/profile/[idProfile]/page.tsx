@@ -24,7 +24,6 @@ import {
 } from "@/components/app/me/ui"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
-import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 
 interface GetUserPostCount {

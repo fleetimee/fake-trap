@@ -1,31 +1,5 @@
-import { CourseGetNewRes } from "@/types/course/res/course-get-new"
+import { getNewestCourse } from "@/lib/fetcher/course-fetcher"
 import { CardDashboard } from "@/components/app/dashboard/ui"
-
-
-
-
-
-interface GetNewCourseProps {
-  token: string | undefined
-}
-
-async function getNewestCourse({
-  token,
-}: GetNewCourseProps): Promise<CourseGetNewRes> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/new`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return response.json()
-}
 
 interface DashboardCourseHighlightProps {
   token: string | undefined
