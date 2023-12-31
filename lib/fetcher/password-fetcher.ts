@@ -31,7 +31,7 @@ export async function forgotPassword({ email }: ForgotPasswordProps) {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/reset-password/${email}`
 
   const res = await fetch(url, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
