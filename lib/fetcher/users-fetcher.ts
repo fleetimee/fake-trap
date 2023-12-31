@@ -148,6 +148,34 @@ export async function getUsersByGroupId({
   return await res.json()
 }
 
+interface GetUsersSupervisorProps {
+  token: string | undefined
+  email: string
+}
+
+export async function getUsersSupervisor({
+  token,
+  email,
+}: GetUsersSupervisorProps): Promise<UserListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/supervisor/`
+
+  const urlObj = new URL(url)
+
+  if (email) {
+    urlObj.searchParams.append("email", email)
+  }
+
+  const res = await fetch(urlObj.toString(), {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
 interface GetOneUserProps {
   token: string | undefined
   uuid: string

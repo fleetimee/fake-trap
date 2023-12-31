@@ -2,11 +2,10 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCategoryByCreator } from "@/lib/fetcher/category-fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
 import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
 import { AddKnowledgeForm } from "@/components/forms/add-knowledge-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -26,8 +25,6 @@ export const metadata: Metadata = {
 export default async function PemateriDivisiKnowledgePageNew() {
   const user = await getCurrentUser()
 
-  const tokenExtracted = extractToken(user?.token)
-
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -37,8 +34,7 @@ export default async function PemateriDivisiKnowledgePageNew() {
     refCode: "003",
   })
 
-  const category = await getCategoryByCreator({
-    createdBy: tokenExtracted?.id,
+  const category = await getOperatorCategory({
     token: user?.token,
     page: 1,
     limit: 999,

@@ -7,7 +7,7 @@ import {
   getOneKnowledge,
   lookupKnowledge,
 } from "@/lib/fetcher/knowledge-fetcher"
-import { getUsersByGroupId } from "@/lib/fetcher/users-fetcher"
+import { getUsersSupervisor } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { RequestKnowledgeForm } from "@/components/forms/request-knowledge-form"
@@ -52,9 +52,9 @@ export default async function PemateriDivisiRequestKnowledgeNew({
       idKnowledge: Number(params.idKnowledge),
       token: user?.token,
     }),
-    getUsersByGroupId({
+    getUsersSupervisor({
       token: user?.token,
-      idGroup: 2,
+      email: tokenExtracted?.email,
     }),
   ])
 

@@ -10,13 +10,12 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
-import { UserRoleListResData } from "@/types/user/res"
+import { UserListResData } from "@/types/user/res"
 import { createKnowledgeApproval } from "@/lib/fetcher/approval-fetcher"
 import { cn } from "@/lib/utils"
 import { requestKnowledgeSchema } from "@/lib/validations/request"
-
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
+import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -24,7 +23,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../ui/command"
+} from "@/components/ui/command"
 import {
   Form,
   FormControl,
@@ -33,17 +32,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { ScrollArea } from "../ui/scroll-area"
-import { Textarea } from "../ui/textarea"
+} from "@/components/ui/form"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Textarea } from "@/components/ui/textarea"
 
 type Inputs = z.infer<typeof requestKnowledgeSchema>
 
 interface RequestKnowledgeFormProps {
   idKnowledge: string
   requestUuid: string
-  supervisors: UserRoleListResData[]
+  supervisors: UserListResData[]
   baseUrl: string
 }
 
@@ -70,8 +73,6 @@ export function RequestKnowledgeForm({
   })
 
   async function onSubmit(data: Inputs) {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge`
-
     startTransition(async () => {
       try {
         const res = await createKnowledgeApproval({
@@ -129,8 +130,7 @@ export function RequestKnowledgeForm({
                       >
                         {field.value
                           ? supervisors.find(
-                              (supervisor) =>
-                                supervisor.user_uuid === field.value
+                              (supervisor) => supervisor.uuid === field.value
                             )?.name
                           : "Pilih Supervisor"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -149,19 +149,19 @@ export function RequestKnowledgeForm({
                             {supervisors.map((supervisor) => (
                               <CommandItem
                                 value={supervisor.name}
-                                key={supervisor.user_uuid}
+                                key={supervisor.uuid}
                                 onSelect={(value) => {
                                   form.clearErrors("user_uuid_approver")
                                   form.setValue(
                                     "user_uuid_approver",
-                                    supervisor.user_uuid
+                                    supervisor.uuid
                                   )
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    supervisor.user_uuid === field.value
+                                    supervisor.uuid === field.value
                                       ? "opacity-100"
                                       : "opacity-0"
                                   )}

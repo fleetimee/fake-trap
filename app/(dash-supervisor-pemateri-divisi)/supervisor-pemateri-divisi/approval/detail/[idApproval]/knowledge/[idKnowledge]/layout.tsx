@@ -81,6 +81,7 @@ export default async function KnowledgeDetailLayout({
         description={knowledge.data?.description}
         urlLink={`/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}/edit`}
         canCreateSection={false}
+        image={knowledge.data?.image}
       />
 
       <div
