@@ -9,6 +9,7 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { UserOneResData } from "@/types/user/res"
+import { updateUser } from "@/lib/fetcher/users-fetcher"
 import { profileSchema } from "@/lib/validations/profile"
 
 import { Icons } from "../icons"
@@ -48,14 +49,9 @@ export function ProfileForm({ person }: ProfileFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${person.uuid}`
-
-        const response = await fetch(url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await updateUser({
+          token: session?.user.token,
+          uuid: person.uuid,
           body: JSON.stringify(data),
         })
 

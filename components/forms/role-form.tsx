@@ -11,6 +11,7 @@ import * as z from "zod"
 import { ErrorResponse } from "@/types/error-res"
 import { RuleOneResData } from "@/types/rule/res"
 import { UserOneResData } from "@/types/user/res"
+import { updateRule } from "@/lib/fetcher/rule-fetcher"
 import { profileSchema } from "@/lib/validations/profile"
 import { ruleSchema } from "@/lib/validations/role"
 
@@ -61,14 +62,9 @@ export function RuleForm({ rule }: RuleFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/rule/role/${rule.id_role}`
-
-        const res = await fetch(url, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const res = await updateRule({
+          token: session?.user?.token,
+          idRole: rule.id_role,
           body: JSON.stringify(data),
         })
 

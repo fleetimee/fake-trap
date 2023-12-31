@@ -10,6 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
+import { revisionKnowledgeApproval } from "@/lib/fetcher/approval-fetcher"
 import {
   approveFormSchema,
   revisionFormSchema,
@@ -73,16 +74,10 @@ export function RequesterRevisionForm({
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/revision/${idApproval}`
-
-        const res = await fetch(url, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const res = await revisionKnowledgeApproval({
+          token: session?.user?.token,
+          idApproval: idApproval,
           body: JSON.stringify(data),
-          cache: "no-cache",
         })
 
         if (res.ok) {

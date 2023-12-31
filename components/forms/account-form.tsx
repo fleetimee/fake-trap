@@ -9,10 +9,10 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { UserOneResData } from "@/types/user/res"
+import { updateUser } from "@/lib/fetcher/users-fetcher"
 import { accountSchema } from "@/lib/validations/account"
-
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
+import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -21,9 +21,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input";
-
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
 type Inputs = z.infer<typeof accountSchema>
 
@@ -48,14 +47,9 @@ export function AccountForm({ person }: AccountFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${person.uuid}`
-
-        const response = await fetch(url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await updateUser({
+          token: session?.user.token,
+          uuid: person.uuid,
           body: JSON.stringify(data),
         })
 

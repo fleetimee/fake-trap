@@ -11,6 +11,7 @@ import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { QuizListResData } from "@/types/quiz/res"
+import { createQuizMultipleChoice } from "@/lib/fetcher/quiz-fetcher"
 import { cn } from "@/lib/utils"
 import { multipleChoiceQuizSchema } from "@/lib/validations/quiz"
 import { Icons } from "@/components/icons"
@@ -70,14 +71,9 @@ export function AddQuizMultipleChoiceQuiz({
   async function onSubmit(values: Inputs): Promise<void> {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/${idSection}/quiz`
-
-        const res = await fetch(url, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const res = await createQuizMultipleChoice({
+          token: session?.user?.token,
+          idSection: idSection,
           body: JSON.stringify(values),
         })
 

@@ -10,14 +10,10 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
-import {
-  approveFormSchema,
-  courseRevisionFormSchema,
-  revisionFormSchema,
-} from "@/lib/validations/approver-form"
+import { revisionCourseApproval } from "@/lib/fetcher/approval-fetcher"
+import { courseRevisionFormSchema } from "@/lib/validations/approver-form"
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -72,16 +68,11 @@ export function RequesterCourseRevisionForm({
   })
 
   async function onSubmit(data: Inputs) {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/revision/${idApproval}`
-
     startTransition(async () => {
       try {
-        const res = await fetch(url, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const res = await revisionCourseApproval({
+          token: session?.user?.token,
+          idApproval: idApproval,
           body: JSON.stringify(data),
         })
 

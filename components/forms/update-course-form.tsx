@@ -4,7 +4,6 @@ import { useState, useTransition } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import format from "date-fns/format"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -13,12 +12,11 @@ import { z } from "zod"
 import { CourseOneResData } from "@/types/course/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
-import { cn } from "@/lib/utils"
+import { updateCourse } from "@/lib/fetcher/course-fetcher"
 import { updateCourseSchema } from "@/lib/validations/course"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
-import { Calendar } from "../ui/calendar"
 import { DateTimePicker } from "../ui/datetimepicker"
 import {
   Form,
@@ -30,7 +28,6 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Textarea } from "../ui/textarea"
 import { Zoom } from "../zoom-image"
 
@@ -44,11 +41,7 @@ interface UpdateCourseFormProps {
   tutors: UserRoleListResData[]
 }
 
-export function UpdateCourseForm({
-  course,
-  knowledge,
-  tutors,
-}: UpdateCourseFormProps) {
+export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
   const { data: session } = useSession()
 
   const [selectedImage, setSelectedImage] = useState(
@@ -73,8 +66,6 @@ export function UpdateCourseForm({
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${course.id_course}`
-
         const formData = new FormData()
 
         Object.keys(data).forEach((key) => {
@@ -93,11 +84,9 @@ export function UpdateCourseForm({
           formData.append("image", data.image)
         }
 
-        const res = await fetch(url, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const res = await updateCourse({
+          token: session?.user?.token,
+          idCourse: course.id_course,
           body: formData,
         })
 
@@ -147,158 +136,6 @@ export function UpdateCourseForm({
             </FormItem>
           )}
         />
-
-        {/* <FormField
-          control={form.control}
-          name="IdKnowledge"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Pengetahuan Terkait <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        disabled={isPending}
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "w-full justify-between",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? knowledge.find(
-                              (knowledge) =>
-                                knowledge.id_knowledge === field.value
-                            )?.knowledge_title
-                          : "Pilih Pengetahuan"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[400px] p-0 xl:w-[620px]">
-                    <Command>
-                      <CommandInput placeholder="Cari Pengetahuan" />
-
-                      <CommandList>
-                        <CommandEmpty>Pengetahuan tidak ditemukan</CommandEmpty>
-
-                        <CommandGroup>
-                          <ScrollArea className="h-full">
-                            {knowledge.map((knowledge) => (
-                              <CommandItem
-                                value={knowledge.knowledge_title}
-                                key={knowledge.id_knowledge}
-                                onSelect={(value) => {
-                                  form.clearErrors("IdKnowledge")
-                                  form.setValue(
-                                    "IdKnowledge",
-                                    knowledge.id_knowledge
-                                  )
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    knowledge.id_knowledge === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {knowledge.knowledge_title}
-                              </CommandItem>
-                            ))}
-                          </ScrollArea>
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormControl>
-              <FormDescription>
-                Pengetahuan terkait yang ingin dibuat pelatihan ini
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        {/* <FormField
-          control={form.control}
-          name="TutorUUID"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Pemateri <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        disabled
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "w-full justify-between",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? tutors.find(
-                              (tutor) => tutor.user_uuid === field.value
-                            )?.name
-                          : "Pilih Pemateri"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[400px] p-0 xl:w-[620px]">
-                    <Command>
-                      <CommandInput placeholder="Cari Pemateri" />
-
-                      <CommandList>
-                        <CommandEmpty>Pemateri tidak ditemukan</CommandEmpty>
-
-                        <CommandGroup>
-                          <ScrollArea className="h-full">
-                            {tutors.map((tutor) => (
-                              <CommandItem
-                                value={tutor.name}
-                                key={tutor.user_uuid}
-                                onSelect={(value) => {
-                                  form.clearErrors("TutorUUID")
-                                  form.setValue("TutorUUID", tutor.user_uuid)
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    tutor.user_uuid === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {tutor.name}
-                              </CommandItem>
-                            ))}
-                          </ScrollArea>
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormControl>
-              <FormDescription>
-                Pemateri yang akan mengajar pelatihan ini
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
 
         <FormField
           control={form.control}

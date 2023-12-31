@@ -183,6 +183,56 @@ export async function createKnowledgeApproval({
   return res
 }
 
+interface RevisionKnowledgeApprovalProps {
+  token: string | undefined
+  idApproval: string
+  body: BodyInit
+}
+
+export async function revisionKnowledgeApproval({
+  token,
+  idApproval,
+  body,
+}: RevisionKnowledgeApprovalProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/revision/${idApproval}`
+
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}
+
+interface UpdateKnowledgeApprovalProps {
+  token: string | undefined
+  body: BodyInit
+  idApproval: string
+}
+
+export async function updateKnowledgeApproval({
+  token,
+  body,
+  idApproval,
+}: UpdateKnowledgeApprovalProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/${idApproval}`
+
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}
+
 /*
   .--.      .--.    ___  ___   ___ .-.        .--.      .--.       .--.
  /    \    /    \  (   )(   ) (   )   \     /  _  \    /    \    /  _  \
@@ -374,6 +424,56 @@ export async function createCourseApproval({
 
   const res = await fetch(url, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}
+
+interface RevisionCourseApprovalProps {
+  token: string | undefined
+  idApproval: string
+  body: BodyInit
+}
+
+export async function revisionCourseApproval({
+  token,
+  idApproval,
+  body,
+}: RevisionCourseApprovalProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/revision/${idApproval}`
+
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}
+
+interface UpdateCourseApprovalProps {
+  token: string | undefined
+  idApproval: string
+  body: BodyInit
+}
+
+export async function updateCourseApproval({
+  token,
+  idApproval,
+  body,
+}: UpdateCourseApprovalProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/${idApproval}`
+
+  const res = await fetch(url, {
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

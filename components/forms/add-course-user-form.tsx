@@ -73,16 +73,6 @@ export function AddCourseUserForm({
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/users`
-        //
-        // const res = await fetch(url, {
-        //   method: "PUT",
-        //   headers: {
-        //     Authorization: `Bearer ${session?.user?.token}`,
-        //   },
-        //   body: JSON.stringify(data),
-        // })
-
         const res = await updateCoursePeserta({
           idCourse: idCourse.toString(),
           body: JSON.stringify(data),

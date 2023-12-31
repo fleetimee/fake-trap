@@ -22,3 +22,25 @@ export async function getRule({
 
   return await res.json()
 }
+
+interface UpdateRuleProps {
+  token: string | undefined
+  idRole: number
+  body: BodyInit
+}
+
+export async function updateRule({ token, idRole, body }: UpdateRuleProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/rule/role/${idRole}`
+
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+    cache: "no-cache",
+  })
+
+  return res
+}

@@ -49,17 +49,6 @@ export function AddCourseSectionForm({ idCourse }: AddSectionFormProps) {
   async function onSubmit(values: Inputs): Promise<void> {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}/section`
-
-        // const res = await fetch(url, {
-        //   method: "PUT",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     Authorization: `Bearer ${session?.user.token}`,
-        //   },
-        //   body: JSON.stringify(values),
-        // })
-
         const res = await createSectionCourse({
           token: session?.user?.token,
           idCourse: idCourse,

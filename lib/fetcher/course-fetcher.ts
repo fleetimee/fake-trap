@@ -258,104 +258,6 @@ export async function getCourseKnowledgeSection({
   return await res.json()
 }
 
-interface GetUserEnrolledCourseList {
-  token: string | undefined
-  uuid: string | undefined
-  limit: number
-  page: number
-  sortBy?: string
-  orderBy?: string
-  searchQuery?: string
-}
-
-export async function getPesertaEnrolledCourses({
-  token,
-  uuid,
-  limit,
-  page,
-  sortBy = "created_at",
-  orderBy = "desc",
-  searchQuery = "",
-}: GetUserEnrolledCourseList): Promise<UserEnrolledCourseListRes> {
-  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getEnrolledCourse`
-
-  const url = new URL(baseUrl)
-
-  if (page) {
-    url.searchParams.append("page", page.toString())
-  }
-
-  if (limit) {
-    url.searchParams.append("limit", limit.toString())
-  }
-
-  if (sortBy) {
-    url.searchParams.append("sortBy", sortBy)
-  }
-
-  if (orderBy) {
-    url.searchParams.append("orderBy", orderBy)
-  }
-
-  if (searchQuery) {
-    url.searchParams.append("searchQuery", searchQuery)
-  }
-
-  try {
-    const res = await fetch(url.toString(), {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-cache",
-    })
-
-    // if (!res.ok) {
-    //   throw new Error("Failed to fetch course")
-    // }
-
-    return await res.json()
-  } catch (err) {
-    console.error(`Fetch request failed: ${err}`)
-
-    throw err
-  }
-}
-
-interface CheckUserEnrolledProps {
-  token: string | undefined
-  idCourse: string
-  uuid: string
-}
-
-export async function getCheckUserCourseEnrollmentStatus({
-  token,
-  idCourse,
-  uuid,
-}: CheckUserEnrolledProps) {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/checkIfUserEnrolled/${idCourse}`
-
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-cache",
-    })
-
-    // if (!res.ok) {
-    //   throw new Error("Failed to fetch course")
-    // }
-
-    return await res.json()
-  } catch (err) {
-    console.error(`Fetch request failed: ${err}`)
-
-    throw err
-  }
-}
-
 interface GetOneCourseProps {
   token: string | undefined
   idCourse: string
@@ -375,10 +277,6 @@ export async function getOneCourse({
       },
       cache: "no-cache",
     })
-
-    // if (!res.ok) {
-    //   throw new Error("Failed to fetch course")
-    // }
 
     return await res.json()
   } catch (err) {
@@ -452,6 +350,30 @@ export async function createCourse({ token, body }: CreateCourseProps) {
 
   const response = await fetch(url, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return response
+}
+
+interface UpdateCourseProps {
+  token: string | undefined
+  idCourse: number
+  body: BodyInit
+}
+
+export async function updateCourse({
+  token,
+  idCourse,
+  body,
+}: UpdateCourseProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/${idCourse}`
+
+  const response = await fetch(url, {
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
     },

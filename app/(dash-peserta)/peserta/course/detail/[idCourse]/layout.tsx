@@ -4,10 +4,10 @@ import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import {
-  getCheckUserCourseEnrollmentStatus,
   getCourseKnowledgeSection,
   getOneCourse,
 } from "@/lib/fetcher/course-fetcher"
+import { getCheckUserCourseEnrollmentStatus } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Content } from "@/components/content"
