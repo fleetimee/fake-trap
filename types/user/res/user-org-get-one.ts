@@ -16,4 +16,5 @@ export interface UserOrgOneResData {
   uuid_atasan2: string
   unit_kerja: string
   jabatan: string
+  kd_kantor: string
 }

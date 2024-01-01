@@ -12,10 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 interface CardProps {
   title: string
   name: string
@@ -60,7 +56,7 @@ export function CardDashboard({
               alt={`Pic ${name}`}
               width={500}
               height={500}
-              className="aspect-video flex-none rounded-md object-cover grayscale transition-all hover:scale-105 hover:grayscale-0"
+              className="aspect-video flex-none rounded-md object-cover transition-all duration-500 ease-in-out hover:scale-105"
             />
           </MotionDiv>
         </Link>

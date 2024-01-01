@@ -1,10 +1,6 @@
 import { Icons } from "@/components/icons"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-
-
-
-
 interface CardDashboardIndicatorProps {
   title: string
   icon: keyof typeof Icons

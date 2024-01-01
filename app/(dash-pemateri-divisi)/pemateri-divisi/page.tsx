@@ -6,6 +6,8 @@ import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
+import { DashboardCourseHighlight } from "@/components/app/dashboard/ui/highlight"
+import { DashboardKnowledgeHighlight } from "@/components/app/dashboard/ui/highlight/knowledge-highlight"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -41,31 +43,29 @@ export default async function PemateriDivisiDashboardPage() {
         ]}
       />
 
-      <MotionDiv
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <DashboardHeader heading="Pemateri Divisi" description={dateNow} />
-      </MotionDiv>
+      <DashboardHeader heading="Pemateri Divisi" description={dateNow} />
 
-      <MotionDiv
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
-      >
-        <Alert>
-          <PartyPopper className="h-5 w-5" />
-          <AlertTitle>
-            Halo,{" "}
-            <span className="font-heading uppercase text-primary">
-              {loggedOnUser.data?.name}
-            </span>
-          </AlertTitle>
-          <AlertDescription>
-            Have a Nice{" "}
-            <span className="font-heading uppercase">{getDayWithText}</span> !
-          </AlertDescription>
-        </Alert>
-      </MotionDiv>
+      <Alert>
+        <PartyPopper className="h-5 w-5" />
+        <AlertTitle>
+          Halo,{" "}
+          <span className="font-heading uppercase text-primary">
+            {loggedOnUser.data?.name}
+          </span>
+        </AlertTitle>
+        <AlertDescription>
+          Have a Nice{" "}
+          <span className="font-heading uppercase">{getDayWithText}</span> !
+        </AlertDescription>
+      </Alert>
+
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <DashboardKnowledgeHighlight
+          token={user?.token}
+          userUuid={tokenExtracted.id}
+          baseUrl="/pemateri-divisi/knowledge/detail"
+        />
+      </div>
     </DashboardShell>
   )
 }

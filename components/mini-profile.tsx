@@ -1,4 +1,8 @@
+import { generateFromString } from "generate-avatar"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+import { Separator } from "./ui/separator"
 
 interface MiniProfileProps {
   name?: string
@@ -10,19 +14,35 @@ interface MiniProfileProps {
 export default function MiniProfile({ ...props }: MiniProfileProps) {
   return (
     <>
-      <aside className="h-full w-fit rounded-lg border border-primary bg-gray-100 p-6">
+      <aside className="h-full w-full rounded-lg border border-primary bg-primary p-6 transition-all">
         <div className="flex flex-col items-center">
           <Avatar className="h-24 w-24">
             <AvatarImage
               alt="User name"
-              src="/placeholder.svg?height=96&width=96"
+              src={`data:image/svg+xml;utf8,${generateFromString(
+                props.name ? props.name : "Nama"
+              )}`}
             />
             <AvatarFallback>UN</AvatarFallback>
           </Avatar>
-          <h2 className="mt-4 text-center font-heading text-lg font-semibold">
-            {props.name ? props.name : "User Name"}
+
+          <h2 className="mt-4 text-center font-heading text-lg font-semibold text-primary-foreground">
+            {props.name ? props.name : "Nama"}
           </h2>
-          <p className="mt-2  uppercase italic text-gray-600">
+
+          <Separator />
+
+          <p className="mt-2 font-heading text-lg uppercase  text-primary-foreground">
+            {props.kdKantor ? props.kdKantor : "Kode Kantor"}
+          </p>
+
+          <p className="mt-2 text-center text-sm font-semibold uppercase  text-primary-foreground">
+            {props.jabatan ? props.jabatan : "Jabatan"}
+          </p>
+
+          <Separator className="my-2" />
+
+          <p className="mt-2  text-center text-xs   text-primary-foreground">
             {props.unitKerja ? props.unitKerja : "Unit Kerja"}
           </p>
         </div>

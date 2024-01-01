@@ -385,14 +385,22 @@ export async function getOnePublicKnowledge({
 
 interface GetNewKnowledgeProps {
   token: string | undefined
+  userUuid?: string
 }
 
 export async function getNewKnowledge({
   token,
+  userUuid,
 }: GetNewKnowledgeProps): Promise<KnowledgeGetNewRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/newest`
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/newest?`
 
-  const res = await fetch(url, {
+  const urlObj = new URL(url)
+
+  if (userUuid) {
+    urlObj.searchParams.append("userUuid", userUuid)
+  }
+
+  const res = await fetch(urlObj.toString(), {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

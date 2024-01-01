@@ -24,12 +24,12 @@ interface PengajuanCardProps {
 
 export function PengajuanCard({ ...props }: PengajuanCardProps) {
   return (
-    <div className="flex max-h-full min-h-[400px] w-full max-w-2xl flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary dark:bg-gray-800">
+    <div className="flex max-h-full min-h-[400px] w-full max-w-2xl flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md transition-all hover:border-primary dark:bg-gray-800">
       <div>
         <div className="flex items-center justify-between px-6 py-4">
           <div className="flex space-x-4">
             <div>
-              <Icons.gitHub className="h-12 w-12 text-gray-500 dark:text-gray-200" />
+              <Icons.send className="h-12 w-12 text-gray-500 dark:text-gray-200" />
             </div>
             <div>
               <div className="text-lg font-bold dark:text-white">

@@ -3,7 +3,10 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCategoryByCreator } from "@/lib/fetcher/category-fetcher"
+import {
+  getCategoryByCreator,
+  getOperatorCategory,
+} from "@/lib/fetcher/category-fetcher"
 import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
@@ -15,7 +18,7 @@ import { CategoryTableShell, DashboardShell } from "@/components/shell"
 
 export const metadata: Metadata = {
   title: "Kategori",
-  description: "Operator LMS Category Page",
+  description: "Kategori yang tersedia di LMS",
 }
 
 interface CategoryPageProps {
@@ -28,8 +31,6 @@ export default async function PemateriDivisiCategoryPage({
   searchParams,
 }: CategoryPageProps) {
   const user = await getCurrentUser()
-
-  const tokenExtracted = extractToken(user?.token)
 
   const { page, per_page, sort, category_name } = searchParams ?? {}
 
@@ -52,9 +53,8 @@ export default async function PemateriDivisiCategoryPage({
     token: user?.token,
   })
 
-  const categoryData = await getCategoryByCreator({
+  const categoryData = await getOperatorCategory({
     token: user?.token,
-    createdBy: tokenExtracted.id,
     page: pageInitial,
     limit: limitInitial,
     sortBy: sortField,
@@ -84,7 +84,7 @@ export default async function PemateriDivisiCategoryPage({
         >
           <DashboardHeader
             heading="Kategori"
-            description="Kategori yang anda buat"
+            description="Kategori yang tersedia di LMS"
           />
         </MotionDiv>
       </div>

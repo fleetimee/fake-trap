@@ -33,6 +33,7 @@ export function DashboardNewNewNav({ items, org }: DashboardNavNewProps) {
             name={org.nama}
             unitKerja={org.unit_kerja}
             jabatan={org.jabatan}
+            kdKantor={org.kd_kantor}
           />
         )}
 

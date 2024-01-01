@@ -36,6 +36,7 @@ import {
   MoreVertical,
   Pizza,
   Plus,
+  Send,
   Settings,
   SunMedium,
   Tags,
@@ -49,6 +50,7 @@ import {
 export type Icon = LucideProps
 
 export const Icons = {
+  send: Send,
   pending: CircleEllipsis,
   outsideLink: FileSymlink,
   download: Download,

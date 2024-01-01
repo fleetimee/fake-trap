@@ -33,17 +33,17 @@ export function CategoryTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama Kategori" />
         ),
-        cell: ({ row }) => {
-          return (
-            <Link
-              href={`/dashboard/category/${row.original.id_category}`}
-              passHref
-              className="cursor-pointer text-blue-500 hover:text-blue-600 hover:underline"
-            >
-              <p className="text-sm font-bold">{row.original.category_name}</p>
-            </Link>
-          )
-        },
+        // cell: ({ row }) => {
+        //   return (
+        //     <Link
+        //       href={`/dashboard/category/${row.original.id_category}`}
+        //       passHref
+        //       className="cursor-pointer text-blue-500 hover:text-blue-600 hover:underline"
+        //     >
+        //       <p className="text-sm font-bold">{row.original.category_name}</p>
+        //     </Link>
+        //   )
+        // },
         enableSorting: true,
         enableHiding: true,
       },
@@ -121,7 +121,7 @@ export function CategoryTableShell({
         },
       },
     ],
-    [data, editRowLink, rule]
+    [editRowLink, rule]
   )
 
   return (
