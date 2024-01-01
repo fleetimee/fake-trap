@@ -46,6 +46,8 @@ export default async function PemateriDivisiKnowledgePage({
     id_category,
     status_text,
     status,
+    from,
+    to,
   } = searchParams ?? {}
 
   // Initial value
@@ -60,10 +62,8 @@ export default async function PemateriDivisiKnowledgePage({
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
 
-  const rule = await getRule({
-    idRole: "1",
-    token: user?.token,
-  })
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
 
   const [knowledge, category, reference] = await Promise.all([
     getKnowledgeByCreatedByUser({
@@ -77,6 +77,8 @@ export default async function PemateriDivisiKnowledgePage({
       statusCode: status_text, // Add this line
       visibilityId: status, // Add this line
       userUuid: tokenExtracted.id,
+      from: fromInitial,
+      to: toInitial,
     }),
     getOperatorCategory({ token: user?.token, page: 1, limit: 100 }),
     getReference({

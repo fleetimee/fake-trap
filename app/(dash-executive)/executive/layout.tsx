@@ -42,6 +42,7 @@ export default async function ExecutiveLayout({
         displayName={userLogged.data.name}
         emailName={userLogged.data.email}
         isMoreThanOneRole={isUserHasMoreThanOneRole}
+        sidebarNavItems={menu?.data}
       />
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
         <aside className="hidden w-[200px] flex-col border-r md:flex">

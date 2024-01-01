@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { MainNavItem } from "@/types"
 
+import { MenuListResNewData } from "@/types/menu/res"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -18,13 +19,9 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
-
-
-
-
 interface MobileNavProps {
   mainNavItems?: MainNavItem[]
-  sidebarNavItems: MainNavItem[]
+  sidebarNavItems: MenuListResNewData[]
   children?: React.ReactNode
 }
 
@@ -100,22 +97,21 @@ export function MobileNav({
                 <AccordionContent>
                   <div className="flex flex-col space-y-2">
                     {sidebarNavItems?.map((item, index) =>
-                      item.href ? (
+                      item.menu_url ? (
                         <MobileLink
                           key={index}
-                          href={String(item.href)}
+                          href={String(item.menu_url)}
                           pathname={pathname}
                           setIsOpen={setIsOpen}
-                          disabled={item.disabled}
                         >
-                          {item.title}
+                          {item.menu_name}
                         </MobileLink>
                       ) : (
                         <div
                           key={index}
                           className="text-foreground/70 transition-colors"
                         >
-                          {item.title}
+                          {item.menu_name}
                         </div>
                       )
                     )}

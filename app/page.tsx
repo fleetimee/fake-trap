@@ -66,6 +66,7 @@ export default async function IndexPage() {
           displayName={loggedOnUser?.data?.name ?? "No User"}
           emailName={loggedOnUser?.data?.email ?? "No Email"}
           isMoreThanOneRole={isMoreThanOneRole ?? false}
+          sidebarNavItems={[]}
         />
         <div className="gap-12  ">
           <section className="space-y-6  py-12 md:pt-10 lg:pt-24">

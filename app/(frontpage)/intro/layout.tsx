@@ -22,6 +22,7 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
           displayName="No"
           emailName="User"
           isMoreThanOneRole={false}
+          sidebarNavItems={[]}
         />
         <main className="flex-1">{children}</main>
         <SiteFooter className="border-t" />
@@ -45,6 +46,7 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
         displayName={loggedOnUser?.data?.name}
         emailName={loggedOnUser?.data?.email}
         isMoreThanOneRole={isMoreThanOneRole}
+        sidebarNavItems={[]}
       />
       <main className="flex-1">{children}</main>
       <SiteFooter className="border-t" />

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { generateFromString } from "generate-avatar"
 import { signOut } from "next-auth/react"
 
+import { MenuListResNewData } from "@/types/menu/res"
 import { dashboardConfig } from "@/config/dashboard"
 import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
@@ -34,6 +35,7 @@ interface SiteHeaderProps {
   isMoreThanOneRole: boolean
   displayName: string
   emailName: string
+  sidebarNavItems: MenuListResNewData[]
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
@@ -44,7 +46,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
           <MainNav items={siteConfig.mainNav} />
           <MobileNav
             mainNavItems={siteConfig.mainNav}
-            sidebarNavItems={dashboardConfig.sidebarNav}
+            sidebarNavItems={props.sidebarNavItems}
           />
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-2">
@@ -150,7 +152,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
           <MainNav items={siteConfig.mainNav} />
           <MobileNav
             mainNavItems={siteConfig.mainNav}
-            sidebarNavItems={dashboardConfig.sidebarNav}
+            sidebarNavItems={props.sidebarNavItems}
           />
           {props.user ? (
             <DropdownMenu>

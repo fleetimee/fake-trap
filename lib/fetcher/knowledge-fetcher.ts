@@ -183,6 +183,8 @@ interface GetKnowledgeByCreatedByUser {
   visibilityId?: string | string[] | undefined
   categoryIds?: string | string[] | undefined
   statusCode?: string | string[] | undefined
+  from?: string
+  to?: string
 }
 
 export async function getKnowledgeByCreatedByUser({
@@ -196,6 +198,8 @@ export async function getKnowledgeByCreatedByUser({
   categoryIds = "",
   visibilityId = "",
   statusCode = "",
+  from = "",
+  to = "",
 }: GetKnowledgeByCreatedByUser): Promise<KnowledgeListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/v2/by/${userUuid}`
 
@@ -243,6 +247,14 @@ export async function getKnowledgeByCreatedByUser({
     } else {
       urlObj.searchParams.append("statusCodes", statusCode)
     }
+  }
+
+  if (from) {
+    urlObj.searchParams.append("from", from)
+  }
+
+  if (to) {
+    urlObj.searchParams.append("to", to)
   }
 
   try {
