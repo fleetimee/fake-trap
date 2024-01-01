@@ -62,11 +62,6 @@ export default async function OperatorLMSKnowledgePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const rule = await getRule({
-    idRole: "3",
-    token: user?.token,
-  })
-
   const [knowledgeResp, categoryResp, referenceResp] = await Promise.all([
     getOperatorKnowledge({
       token: user?.token,

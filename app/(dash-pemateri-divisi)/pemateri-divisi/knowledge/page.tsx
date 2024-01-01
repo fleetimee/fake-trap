@@ -10,6 +10,7 @@ import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -109,6 +110,11 @@ export default async function PemateriDivisiKnowledgePage({
             description="Materi dan Pengetahuan yang anda buat"
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex  place-items-end items-end justify-self-end"
+        />
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

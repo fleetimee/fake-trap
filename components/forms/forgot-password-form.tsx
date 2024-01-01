@@ -98,7 +98,7 @@ export function ForgotPasswordForm() {
 
         <Button type="submit" disabled={isPending}>
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Reset Password
+          Continue
         </Button>
       </form>
     </Form>
