@@ -12,6 +12,7 @@ import {
 } from "@/types/me/res"
 import { QuizUserResultListRes } from "@/types/quiz/res"
 import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
+import { UserOrgOneRes } from "@/types/user/res/user-org-get-one"
 
 interface GetUserV2Props {
   token: string | undefined
@@ -434,6 +435,35 @@ export async function getUserQuizResultsGroupedByCourse({
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetUserOrgProps {
+  token: string | undefined
+  email: string
+}
+
+export async function getUserOrg({
+  token,
+  email,
+}: GetUserOrgProps): Promise<UserOrgOneRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/org?`
+
+  const urlObj = new URL(url)
+
+  if (email) {
+    urlObj.searchParams.append("email", email)
+  }
+
+  const res = await fetch(urlObj.toString(), {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
       Authorization: `Bearer ${token}`,
     },
     cache: "no-store",

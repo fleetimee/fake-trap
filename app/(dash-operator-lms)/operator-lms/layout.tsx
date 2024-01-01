@@ -1,5 +1,6 @@
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getMenu } from "@/lib/fetcher/menu-fetcher"
+import { getUserOrg } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
@@ -27,6 +28,13 @@ export default async function OperatorLMSLayout({
     uuid: tokenExtracted.id,
   })
 
+  const userOrg = await getUserOrg({
+    token: user?.token,
+    email: tokenExtracted?.email,
+  })
+
+  console.log(userOrg)
+
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
 
   return (
@@ -39,7 +47,7 @@ export default async function OperatorLMSLayout({
       />
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
         <aside className="hidden w-[200px] flex-col border-r md:flex">
-          <DashboardNewNewNav items={menu?.data} />
+          <DashboardNewNewNav org={userOrg.data} items={menu?.data} />
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-auto">
           {children}

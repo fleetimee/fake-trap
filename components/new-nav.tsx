@@ -5,14 +5,18 @@ import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
+import { UserOrgOneResData } from "@/types/user/res/user-org-get-one"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
+import MiniProfile from "./mini-profile"
+
 interface DashboardNavNewProps {
   items: MenuListResNewData[]
+  org: UserOrgOneResData
 }
 
-export function DashboardNewNewNav({ items }: DashboardNavNewProps) {
+export function DashboardNewNewNav({ items, org }: DashboardNavNewProps) {
   const { data: session } = useSession()
 
   const path = usePathname()
@@ -24,6 +28,14 @@ export function DashboardNewNewNav({ items }: DashboardNavNewProps) {
   return (
     <div className="sticky top-20 grid min-h-[20rem]   grid-cols-1 items-start justify-between gap-60 rounded-md bg-background p-4">
       <nav className="sticky top-20 grid items-start gap-3">
+        {org && (
+          <MiniProfile
+            name={org.nama}
+            unitKerja={org.unit_kerja}
+            jabatan={org.jabatan}
+          />
+        )}
+
         {items.map((item, index) => {
           const Icon = Icons[item.menu_icon || "arrowRight"]
           return (

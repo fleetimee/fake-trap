@@ -1,6 +1,5 @@
 import React from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -12,7 +11,6 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CategoryTableShell, DashboardShell } from "@/components/shell"
-import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Kategori",
@@ -85,28 +83,6 @@ export default async function OperatorLmsCategoryPage({
             description="Kategori Pengetahuan yang tersedia"
           />
         </MotionDiv>
-
-        <MotionDiv
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex xl:justify-end "
-        >
-          {rule.data.can_write_knowledge ? (
-            <Link
-              href="/operator-lms/category/new"
-              className={buttonVariants({
-                size: "sm",
-                className: "ml-2",
-              })}
-            >
-              Buat Kategori Baru
-            </Link>
-          ) : (
-            <Button className="ml-2" size="sm" disabled>
-              Buat Kategori Baru
-            </Button>
-          )}
-        </MotionDiv>
       </div>
 
       <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
@@ -114,6 +90,7 @@ export default async function OperatorLmsCategoryPage({
           data={categoryData.data}
           pageCount={categoryData.totalPage}
           rule={rule.data}
+          newRowLink="/operator-lms/category/new"
         />
       </React.Suspense>
     </DashboardShell>
