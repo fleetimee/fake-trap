@@ -1,3 +1,4 @@
+import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -12,29 +13,6 @@ interface LoginLayoutPageProps {
 export default function LoginLayoutPage({ children }: LoginLayoutPageProps) {
   return (
     <div className="grid min-h-screen grid-cols-1 overflow-hidden md:grid-cols-3 lg:grid-cols-2">
-      {/* <div className="relative hidden h-screen flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div
-          className="absolute inset-0 bg-cover"
-          style={{
-            backgroundImage: "url(/images/bg-login.jpg)",
-          }}
-        />
-        <div className="relative z-20 flex items-center text-lg font-medium">
-          <Command className="mr-2 h-6 w-6" /> E Learning BPD - Otorisasi
-        </div>
-        <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-lg">
-              &ldquo;Elearning BPD DIY adalah platform yang inovatif dan
-              berkualitas tinggi dalam memberikan pendidikan online yang
-              memungkinkan akses yang mudah, interaktif, dan berkelanjutan bagi
-              semua peserta didik!&rdquo;
-            </p>
-            <footer className="text-sm">Admin</footer>
-          </blockquote>
-        </div>
-      </div> */}
-
       <AspectRatio ratio={16 / 9}>
         <Image
           src="/images/bg-login2.jpg"

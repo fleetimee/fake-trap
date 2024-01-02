@@ -52,11 +52,13 @@ type InputsWithIndexSignature = Inputs & { [key: string]: any }
 interface AddKnowledgeFormProps {
   reference: ReferenceListRes
   category: CategoryListRes
+  baseUrl?: string
 }
 
 export function AddKnowledgeForm({
   reference,
   category,
+  baseUrl,
 }: AddKnowledgeFormProps) {
   const [preview, setPreview] = React.useState<string | null>(null)
 
@@ -84,8 +86,6 @@ export function AddKnowledgeForm({
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge`
-
         const formData = new FormData()
 
         //append data
@@ -99,13 +99,23 @@ export function AddKnowledgeForm({
         })
 
         if (response.ok) {
+          const responseData = await response.json()
+
+          const newKnowledgeId = responseData.data
+
           sonnerToast.success("Berhasil", {
             description: "Pengetahuan berhasil ditambahkan",
           })
 
-          router.back()
-          router.refresh()
-          form.reset()
+          if (baseUrl) {
+            router.push(`${baseUrl}/detail/${newKnowledgeId}`)
+            router.refresh()
+            form.reset()
+          } else {
+            router.back()
+            router.refresh()
+            form.reset()
+          }
         } else {
           sonnerToast.error("Gagal", {
             description: "Pengetahuan gagal ditambahkan",

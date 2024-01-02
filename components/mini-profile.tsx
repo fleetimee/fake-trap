@@ -1,8 +1,7 @@
 import { generateFromString } from "generate-avatar"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-import { Separator } from "./ui/separator"
+import { Separator } from "@/components/ui/separator"
 
 interface MiniProfileProps {
   name?: string

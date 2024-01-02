@@ -75,7 +75,11 @@ export default async function OperatorLMSKnowledgePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddKnowledgeForm reference={reference} category={category} />
+          <AddKnowledgeForm
+            reference={reference}
+            category={category}
+            baseUrl="/operator-lms/knowledge"
+          />
         </CardContent>
       </Card>
     </DashboardShell>

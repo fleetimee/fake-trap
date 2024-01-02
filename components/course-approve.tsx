@@ -29,7 +29,6 @@ interface ApprovesProps {
 }
 
 export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
-  const id = React.useId()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -52,11 +51,6 @@ export function CourseApproves({ approvals, pageCount }: ApprovesProps) {
   // Make a array of approver name and approver uuid
   // and then make it into a object
   React.useEffect(() => {
-    // if (!approvals || approvals.length === 0) {
-    //   setApproverOptions([])
-    //   return
-    // }
-
     const uniqueApproverOptions = approvals.reduce<
       { label: string; value: string }[]
     >((unique, approval) => {

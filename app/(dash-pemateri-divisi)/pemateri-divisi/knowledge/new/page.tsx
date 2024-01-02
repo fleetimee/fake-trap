@@ -75,7 +75,11 @@ export default async function PemateriDivisiKnowledgePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddKnowledgeForm reference={reference} category={category} />
+          <AddKnowledgeForm
+            reference={reference}
+            category={category}
+            baseUrl="/pemateri-divisi/knowledge"
+          />
         </CardContent>
       </Card>
     </DashboardShell>

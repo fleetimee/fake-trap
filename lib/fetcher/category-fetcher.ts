@@ -8,6 +8,8 @@ interface GetCategoryProps {
   sortBy?: string
   orderBy?: string
   searchQuery?: string
+  from?: string
+  to?: string
 }
 
 export async function getOperatorCategory({
@@ -17,6 +19,8 @@ export async function getOperatorCategory({
   sortBy = "created_at",
   orderBy = "desc",
   searchQuery = "",
+  from,
+  to,
 }: GetCategoryProps): Promise<CategoryListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category`
 
@@ -40,6 +44,14 @@ export async function getOperatorCategory({
 
   if (searchQuery) {
     urlObj.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (from) {
+    urlObj.searchParams.append("from", from)
+  }
+
+  if (to) {
+    urlObj.searchParams.append("to", to)
   }
 
   url = urlObj.toString()

@@ -84,11 +84,11 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                       disabled={!props.isMoreThanOneRole}
                     >
                       <Link href={"/panel-selector"}>
-                        <Icons.empty
+                        <Icons.menu
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Panel Selector
+                        Kewenangan
                         <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>

@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -19,6 +19,7 @@ interface CardProps {
   url?: string
   buttonText?: string
   icon?: keyof typeof Icons
+  disableButton?: boolean
 }
 
 export function CardDashboard({
@@ -28,6 +29,7 @@ export function CardDashboard({
   url,
   buttonText,
   icon,
+  disableButton,
 }: CardProps) {
   const Icon = Icons[icon || "arrowRight"]
 
@@ -62,8 +64,27 @@ export function CardDashboard({
         </Link>
       </CardContent>
       <CardFooter className="text-center">
-        <Link href={url || "#"} className="w-full">
-          <Button className="w-full">{buttonText || "Wtf is this?"}</Button>
+        {/*<Link href={url || "#"} className="w-full">*/}
+        {/*  <Button className="w-full">{buttonText || "Wtf is this?"}</Button>*/}
+        {/*</Link>*/}
+
+        <Link
+          href={url || "#"}
+          className={buttonVariants({
+            variant: "default",
+            className: "w-full",
+
+          })}
+        >
+          {/*{disableButton ? (*/}
+          {/*  <Button className="w-full" disabled>*/}
+          {/*    {buttonText || "Wtf is this?"}*/}
+          {/*  </Button>*/}
+          {/*) : (*/}
+          {/*  <Button className="w-full">{buttonText || "Wtf is this?"}</Button>*/}
+          {/*)}*/}
+
+          {buttonText ? buttonText : "Wtf is this?"}
         </Link>
       </CardFooter>
     </Card>

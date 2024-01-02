@@ -30,6 +30,10 @@ interface GetPemateriApprovalRequestProps {
   sortBy?: string
   orderBy?: string
   searchQuery?: string
+  status?: string | string[] | undefined
+  approverId?: string
+  from?: string
+  to?: string
 }
 
 export async function getPemateriApprovalRequests({
@@ -40,6 +44,10 @@ export async function getPemateriApprovalRequests({
   sortBy = "created_at",
   orderBy = "desc",
   searchQuery = "",
+  status = "",
+  approverId,
+  from,
+  to,
 }: GetPemateriApprovalRequestProps): Promise<ApprovalRequestList> {
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/requester/${idRequester}`
 
@@ -63,6 +71,26 @@ export async function getPemateriApprovalRequests({
 
   if (searchQuery) {
     url.searchParams.append("searchQuery", searchQuery)
+  }
+
+  if (status) {
+    if (Array.isArray(status)) {
+      url.searchParams.append("status", status.join("."))
+    } else {
+      url.searchParams.append("status", status)
+    }
+  }
+
+  if (approverId) {
+    url.searchParams.append("approverId", approverId)
+  }
+
+  if (from) {
+    url.searchParams.append("from", from)
+  }
+
+  if (to) {
+    url.searchParams.append("to", to)
   }
 
   const res = await fetch(url.toString(), {

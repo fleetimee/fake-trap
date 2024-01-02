@@ -3,14 +3,11 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getCategoryByCreator,
-  getOperatorCategory,
-} from "@/lib/fetcher/category-fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
 import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -32,7 +29,7 @@ export default async function PemateriDivisiCategoryPage({
 }: CategoryPageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, category_name } = searchParams ?? {}
+  const { page, per_page, sort, category_name, from, to } = searchParams ?? {}
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
@@ -43,6 +40,9 @@ export default async function PemateriDivisiCategoryPage({
 
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
+
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -60,6 +60,8 @@ export default async function PemateriDivisiCategoryPage({
     sortBy: sortField,
     orderBy: sortOrder,
     searchQuery: searchQueryInitial,
+    from: fromInitial,
+    to: toInitial,
   })
 
   return (
@@ -87,6 +89,11 @@ export default async function PemateriDivisiCategoryPage({
             description="Kategori yang tersedia di LMS"
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex  place-items-end items-end justify-self-end"
+        />
       </div>
 
       <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
