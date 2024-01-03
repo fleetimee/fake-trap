@@ -13,7 +13,7 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#categories",
-    image: `http://localhost:3000/images/category.jpg`,
+    image: `${process.env.NEXTAUTH_URL}/images/category.jpg`,
   },
   {
     icon: <Icons.knowledge className="h-10 w-10" />,
@@ -25,7 +25,7 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#featured-knowledge",
-    image: `http://localhost:3000/images/knowledge.jpg`,
+    image: `${process.env.NEXTAUTH_URL}/images/knowledge.jpg`,
   },
   {
     icon: <Icons.course className="h-10 w-10" />,
@@ -37,7 +37,7 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#featured-courses",
-    image: `http://localhost:3000/images/course.jpg`,
+    image: `${process.env.NEXTAUTH_URL}/images/course.jpg`,
   },
 
   {
@@ -50,6 +50,6 @@ export const marketingFeatures = [
       </>
     ),
     link: "/intro/#forum",
-    image: `http://localhost:3000/images/forum.jpg`,
+    image: `${process.env.NEXTAUTH_URL}/images/forum.jpg`,
   },
 ]
