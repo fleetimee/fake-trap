@@ -10,6 +10,7 @@ import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { SectionOneResData } from "@/types/section/res"
+import { ContentType } from "@/lib/enums/status"
 import { createContentVideo } from "@/lib/fetcher/content-fetcher"
 import { contentVideoSchema } from "@/lib/validations/content-video"
 import { Button } from "@/components/ui/button"
@@ -45,9 +46,7 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
     resolver: zodResolver(contentVideoSchema),
     defaultValues: {
       content_title: "",
-      content_type: "0012",
-      image: "",
-      link: "",
+      content_type: ContentType.VIDEO,
       id_section: idSection,
       video_url: "",
       flavor_text: "",

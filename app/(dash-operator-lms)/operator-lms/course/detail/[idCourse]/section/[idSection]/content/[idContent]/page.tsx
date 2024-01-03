@@ -1,11 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { ClockIcon } from "@radix-ui/react-icons"
 import Blocks from "editorjs-blocks-react-renderer"
+import Balancer from "react-wrap-balancer"
 
 import { authOptions } from "@/lib/auth"
 import { getOneContent } from "@/lib/fetcher/content-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { convertDatetoString } from "@/lib/utils"
 import { YoutubeRender } from "@/components/content-renderer"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -43,8 +46,10 @@ export default async function CourseContentPage({
 
   if (article) {
     return (
-      <div className="whatever-you-want flex w-fit flex-col items-start justify-center p-4">
+      <div className="whatever-you-want mx-auto flex w-fit flex-col items-start justify-center p-4">
         <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
+
+        <p>{convertDatetoString(content.data.created_at.toString())}</p>
 
         <Separator />
 
@@ -56,7 +61,14 @@ export default async function CourseContentPage({
   if (video) {
     return (
       <div className="flex flex-col items-start justify-center gap-3">
-        <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
+        <h1 className="text-4xl font-bold  ">
+          <Balancer>{content.data.content_title}</Balancer>
+        </h1>
+
+        <span className="inline-flex">
+          <ClockIcon className="mr-2 h-6 w-6 text-gray-500" />
+          <p>{convertDatetoString(content.data.created_at.toString())}</p>
+        </span>
 
         <Separator />
 
@@ -70,7 +82,15 @@ export default async function CourseContentPage({
   if (file) {
     return (
       <div className="flex flex-col items-start justify-center gap-6">
-        <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
+        <h1 className="text-4xl font-bold  ">
+          <Balancer>{content.data.content_title}</Balancer>
+        </h1>
+
+        <span className="inline-flex">
+          <ClockIcon className="mr-2 h-6 w-6 text-gray-500" />
+          <p>{convertDatetoString(content.data.created_at.toString())}</p>
+        </span>
+
         <Separator />
 
         <p className="text-xl italic ">

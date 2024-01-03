@@ -58,6 +58,7 @@ export default async function SpvLMSCourseKnowledgePageProps({
       <CoursesKnowledges
         courseKnowledges={knowledges.data}
         pageCount={knowledges.totalPage}
+        link={`/intro/knowledge`}
       />
     </div>
   )

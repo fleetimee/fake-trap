@@ -13,11 +13,13 @@ import { KnowledgeCardSkeleton } from "@/components/skeletons/knowledge-card-ske
 interface CourseKnowledgesProps {
   courseKnowledges: CourseKnowledgeListResData[]
   pageCount: number
+  link?: string
 }
 
 export function CoursesKnowledges({
   courseKnowledges,
   pageCount,
+  link,
 }: CourseKnowledgesProps) {
   const router = useRouter()
   const [query, setQuery] = React.useState("")
@@ -64,7 +66,7 @@ export function CoursesKnowledges({
               <KnowledgeCard
                 key={knowledge.id_knowledge}
                 knowledge={knowledge}
-                link={`/operator-lms/knowledge/detail/${knowledge.id_knowledge}`}
+                link={link ? `${link}/${knowledge.id_knowledge}` : `#`}
               />
             ))
           ) : (

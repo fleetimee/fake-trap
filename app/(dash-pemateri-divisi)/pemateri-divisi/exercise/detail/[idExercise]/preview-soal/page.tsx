@@ -1,11 +1,13 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import NotFoundLottie from "@/public/lottie/not-found.json"
 import { Variants } from "framer-motion"
 
 import { authOptions } from "@/lib/auth"
 import { getQuizLesson } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
+import { NotFoundAnim } from "@/components/not-found-anim"
 import { DashboardShell } from "@/components/shell"
 import {
   Card,
@@ -92,36 +94,46 @@ export default async function ExerciseDetailQuestionPreview({
           initial="initial"
           animate="animate"
         >
-          {exerciseLesson?.data?.map((item, index) => {
-            return (
-              <MotionDiv
-                key={item.id_question}
-                className="child flex flex-col items-start justify-between gap-6 p-6"
-                variants={childVariants}
-              >
-                <p className="font-heading leading-8 ">
-                  {index + 1}. {item.question_text}
-                </p>
-                <div className="grid grid-cols-2 gap-6">
-                  {item?.answers?.map((answer, index) => {
-                    return (
-                      <RadioGroup
-                        key={answer.id_answer}
-                        className="flex items-center space-x-3 space-y-0"
-                      >
-                        <RadioGroupItem
-                          checked={answer.is_correct}
-                          value={answer.id_answer.toString()}
-                          disabled
-                        />
-                        <Label>{answer.answer_text}</Label>
-                      </RadioGroup>
-                    )
-                  })}
-                </div>
-              </MotionDiv>
-            )
-          })}
+          {exerciseLesson?.data?.length > 0 ? (
+            exerciseLesson.data.map((item, index) => {
+              return (
+                <MotionDiv
+                  key={item.id_question}
+                  className="child flex flex-col items-start justify-between gap-6 p-6"
+                  variants={childVariants}
+                >
+                  <p className="font-heading leading-8 ">
+                    {index + 1}. {item.question_text}
+                  </p>
+                  <div className="grid grid-cols-2 gap-6">
+                    {item?.answers?.map((answer) => {
+                      return (
+                        <RadioGroup
+                          key={answer.id_answer}
+                          className="flex items-center space-x-3 space-y-0"
+                        >
+                          <RadioGroupItem
+                            checked={answer.is_correct}
+                            value={answer.id_answer.toString()}
+                            disabled
+                          />
+                          <Label>{answer.answer_text}</Label>
+                        </RadioGroup>
+                      )
+                    })}
+                  </div>
+                </MotionDiv>
+              )
+            })
+          ) : (
+            <NotFoundAnim
+              animationData={NotFoundLottie}
+              title="Belum ada soal"
+              description="Soal belum ada atau belum dibuat"
+              backButtonUrl={`/pemateri-divisi/exercise/detail/${params.idExercise}/soal`}
+              buttonLabel="Buat Soal"
+            />
+          )}
         </MotionDiv>
       </Card>
     </DashboardShell>

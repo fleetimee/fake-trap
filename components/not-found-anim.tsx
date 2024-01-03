@@ -10,6 +10,7 @@ interface NotFoundAnimProps {
   animationData: any
   title: string
   description: string
+  buttonLabel?: string
   backButtonUrl: string
 }
 
@@ -17,6 +18,7 @@ export function NotFoundAnim({
   animationData,
   title,
   description,
+  buttonLabel,
   backButtonUrl,
 }: NotFoundAnimProps) {
   return (
@@ -43,7 +45,7 @@ export function NotFoundAnim({
           className: "max-w-lg",
         })}
       >
-        Kembali
+        {buttonLabel ? buttonLabel : "Kembali"}
       </Link>
     </div>
   )

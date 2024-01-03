@@ -17,11 +17,14 @@ import {
 
 interface CourseAlertProps {
   knowledgeSection: CourseKnowledgeSectionListRes
-  singleLink?: boolean
+  singleLink?: string
   multipleLink?: boolean
 }
 
-export function CourseAlert({ knowledgeSection }: CourseAlertProps) {
+export function CourseAlert({
+  knowledgeSection,
+  singleLink,
+}: CourseAlertProps) {
   return (
     <Collapsible className="space-y-4">
       <div className="flex items-center justify-between space-x-4  px-4">
@@ -50,7 +53,11 @@ export function CourseAlert({ knowledgeSection }: CourseAlertProps) {
               Pelatihan ini berdasarkan pada pengetahuan{" "}
               <span className="font-bold">
                 <Link
-                  href={`/operator-lms/knowledge/detail/${knowledgeSection.data[0].id_knowledge}`}
+                  href={
+                    singleLink
+                      ? `${singleLink}/${knowledgeSection.data[0].id_knowledge}`
+                      : `#`
+                  }
                   className="text-blue-500 hover:underline"
                 >
                   {knowledgeSection.data[0].knowledge_title}
@@ -70,7 +77,16 @@ export function CourseAlert({ knowledgeSection }: CourseAlertProps) {
               </AlertTitle>
               <AlertDescription>
                 Pelatihan ini berdasarkan pada pengetahuan{" "}
-                <span className="font-bold">{section.knowledge_title}</span>
+                <span className="font-bold">
+                  <Link
+                    href={
+                      singleLink ? `${singleLink}/${section.id_knowledge}` : `#`
+                    }
+                    className="text-blue-500 hover:underline"
+                  >
+                    {section.knowledge_title}
+                  </Link>
+                </span>
               </AlertDescription>
             </Alert>
           </div>

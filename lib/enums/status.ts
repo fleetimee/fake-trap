@@ -13,3 +13,9 @@ export enum Visibility {
   PUBLIC = "0031",
   PRIVATE = "0032",
 }
+
+export enum ContentType {
+  VIDEO = "0012",
+  DOCUMENT = "0013",
+  ARTICLE = "0014",
+}

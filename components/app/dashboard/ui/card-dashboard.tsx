@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -34,7 +34,7 @@ export function CardDashboard({
   const Icon = Icons[icon || "arrowRight"]
 
   return (
-    <Card className="space-y-2 shadow-md hover:bg-accent hover:text-accent-foreground">
+    <Card className="h-fit space-y-2 shadow-md hover:bg-accent hover:text-accent-foreground">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
           <CardTitle className="text-sm font-medium">{title}</CardTitle>
@@ -73,7 +73,6 @@ export function CardDashboard({
           className={buttonVariants({
             variant: "default",
             className: "w-full",
-
           })}
         >
           {/*{disableButton ? (*/}

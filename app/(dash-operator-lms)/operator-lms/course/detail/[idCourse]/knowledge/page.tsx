@@ -72,6 +72,7 @@ export default async function CourseKnowledgePage({
       <CoursesKnowledges
         courseKnowledges={knowledges.data}
         pageCount={knowledges.totalPage}
+        link={`/operator-lms/knowledge`}
       />
     </div>
   )

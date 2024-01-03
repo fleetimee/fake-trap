@@ -102,7 +102,10 @@ export default async function CourseDetailLayout({
       </div>
 
       {knowledgeSection.data && knowledgeSection.data.length > 0 && (
-        <CourseAlert knowledgeSection={knowledgeSection} />
+        <CourseAlert
+          knowledgeSection={knowledgeSection}
+          singleLink={`/operator-lms/knowledge/detail`}
+        />
       )}
 
       <div

@@ -8,6 +8,7 @@ import {
 } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
+import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -90,6 +91,7 @@ export default async function CourseDetailLayout({
         title={course?.data?.course_name}
         urlLink={`/pemateri-divisi/course/detail/${params.idCourse}/section/new`}
         canCreateSection={false}
+        image={course?.data?.image}
       />
 
       {/* <MotionDiv
@@ -116,6 +118,13 @@ export default async function CourseDetailLayout({
           userButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/people`}
         />
       </div>
+
+      {knowledgeSection.data && knowledgeSection.data.length > 0 && (
+        <CourseAlert
+          knowledgeSection={knowledgeSection}
+          singleLink={`/intro/knowledge`}
+        />
+      )}
 
       <div
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"

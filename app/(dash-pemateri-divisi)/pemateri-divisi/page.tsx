@@ -1,15 +1,15 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import HelloLottie from "@/public/lottie/hello.json"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
-import { DashboardCourseHighlight } from "@/components/app/dashboard/ui/highlight"
 import { DashboardKnowledgeHighlight } from "@/components/app/dashboard/ui/highlight/knowledge-highlight"
-import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { LottieClient } from "@/components/lottie-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -65,6 +65,8 @@ export default async function PemateriDivisiDashboardPage() {
           userUuid={tokenExtracted.id}
           baseUrl="/pemateri-divisi/knowledge/detail"
         />
+
+        <LottieClient className="hidden lg:block" animationData={HelloLottie} />
       </div>
     </DashboardShell>
   )
