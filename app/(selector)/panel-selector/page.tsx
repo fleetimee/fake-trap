@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { ButtonSelector } from "./_components/button_selector"
 
 export const metadata: Metadata = {
-  title: "Choose your path",
+  title: "Kewenangan",
   description: "Choose your path",
 }
 

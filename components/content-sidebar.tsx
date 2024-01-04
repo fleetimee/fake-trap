@@ -34,23 +34,28 @@ interface KnowledgeContentSidebarProps {
   knowledge: KnowledgeOneRes
   baseUrl: string
   canCreateContent?: boolean
+  newSection?: boolean
 }
 
 export function KnowledgeContentSidebar({
   knowledge,
   baseUrl,
   canCreateContent = true,
+  newSection = false,
 }: KnowledgeContentSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
+    <Card className="flex h-full basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="knowledge" className="w-full font-semibold">
             Pengetahuan
           </TabsTrigger>
         </TabsList>
+        <div className="flex justify-end px-2 py-4">
+          <Button size="sm">Tambah Section</Button>
+        </div>
 
         <TabsContent value="knowledge">
           <ScrollArea className="h-[700px] w-full">
@@ -195,7 +200,7 @@ export function KnowledgeContentSidebar({
                 ))}
               </Accordion>
             ) : (
-              <EmptyContent className="flex h-[50px] items-center justify-center">
+              <EmptyContent className="flex h-full flex-col items-center justify-center">
                 <EmptyContent.Icon name="empty" />
                 <EmptyContent.Title>Belum ada section</EmptyContent.Title>
                 <EmptyContent.Description>
