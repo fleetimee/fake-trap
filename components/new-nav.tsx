@@ -27,7 +27,7 @@ export function DashboardNewNewNav({ items, org }: DashboardNavNewProps) {
 
   return (
     <div className="sticky top-20 grid min-h-[20rem]   grid-cols-1 items-start justify-between gap-60 rounded-md bg-background p-4">
-      <nav className="sticky top-20 grid items-start gap-3">
+      <nav className="sticky top-20 grid  items-start gap-3">
         {org && (
           <MiniProfile
             name={org.nama}

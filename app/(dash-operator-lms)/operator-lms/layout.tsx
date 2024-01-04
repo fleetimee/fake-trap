@@ -33,8 +33,6 @@ export default async function OperatorLMSLayout({
     email: tokenExtracted?.email,
   })
 
-  console.log(userOrg)
-
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
 
   return (
