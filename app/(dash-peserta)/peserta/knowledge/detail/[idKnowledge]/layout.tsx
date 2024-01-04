@@ -72,7 +72,6 @@ export default async function KnowledgeDetailLayout({
         title={knowledge.data.knowledge_title}
         description={knowledge.data.description}
         urlLink="/peserta/knowledge"
-        canCreateSection={false}
         image={knowledge.data.image}
       />
 
@@ -88,6 +87,7 @@ export default async function KnowledgeDetailLayout({
           baseUrl={`/peserta/knowledge/detail/${params.idKnowledge}`}
           knowledge={knowledge}
           canCreateContent={false}
+          newSection={false}
         />
       </div>
     </DashboardShell>

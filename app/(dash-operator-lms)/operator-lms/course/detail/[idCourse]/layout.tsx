@@ -88,7 +88,6 @@ export default async function CourseDetailLayout({
         title={course.data?.course_name}
         description={course?.data?.course_desc}
         urlLink={`/operator-lms/course/detail/${params.idCourse}/section/new`}
-        canCreateSection
         image={course?.data?.image}
       />
 

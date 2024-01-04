@@ -90,7 +90,6 @@ export default async function CourseDetailLayout({
         description={course?.data?.course_desc}
         title={course?.data?.course_name}
         urlLink={`/pemateri-divisi/course/detail/${params.idCourse}/section/new`}
-        canCreateSection={false}
         image={course?.data?.image}
       />
 

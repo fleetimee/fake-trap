@@ -30,6 +30,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import { Icons } from "./icons"
+
 interface KnowledgeContentSidebarProps {
   knowledge: KnowledgeOneRes
   baseUrl: string
@@ -46,15 +48,27 @@ export function KnowledgeContentSidebar({
   const pathname = usePathname()
 
   return (
-    <Card className="flex h-full basis-1/4 flex-col items-center justify-start">
+    <Card className="flex  h-full basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
-          <TabsTrigger value="knowledge" className="w-full font-semibold">
-            Pengetahuan
+          <TabsTrigger
+            value="knowledge"
+            className="font-lg w-full  font-semibold"
+          >
+            <div className="inline-flex items-center">
+              <span className="ml-2">Materi</span>
+            </div>
           </TabsTrigger>
         </TabsList>
-        <div className="flex justify-end px-2 py-4">
-          <Button size="sm">Tambah Section</Button>
+        <div className="flex justify-end px-3 py-6">
+          {newSection && (
+            <Link href={`${baseUrl}/section/new`}>
+              <Button size="sm" variant="outline">
+                <Icons.add className="h-4 w-4" />
+                <span className="ml-2">Tambah Section</span>
+              </Button>
+            </Link>
+          )}
         </div>
 
         <TabsContent value="knowledge">
@@ -200,13 +214,17 @@ export function KnowledgeContentSidebar({
                 ))}
               </Accordion>
             ) : (
-              <EmptyContent className="flex h-full flex-col items-center justify-center">
-                <EmptyContent.Icon name="empty" />
-                <EmptyContent.Title>Belum ada section</EmptyContent.Title>
-                <EmptyContent.Description>
-                  Silahkan tambahkan section pada tombol diatas
-                </EmptyContent.Description>
-              </EmptyContent>
+              <div className="flex items-center justify-center">
+                <EmptyContent className="flex h-full flex-col items-center justify-center">
+                  <EmptyContent.Icon name="empty" />
+                  <EmptyContent.Title className="text-center">
+                    Belum ada section
+                  </EmptyContent.Title>
+                  <EmptyContent.Description className="text-center">
+                    Silahkan tambahkan section pada tombol diatas
+                  </EmptyContent.Description>
+                </EmptyContent>
+              </div>
             )}
           </ScrollArea>
         </TabsContent>

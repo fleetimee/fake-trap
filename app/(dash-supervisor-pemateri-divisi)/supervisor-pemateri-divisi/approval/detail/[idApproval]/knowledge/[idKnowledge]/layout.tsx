@@ -80,7 +80,6 @@ export default async function KnowledgeDetailLayout({
         title={knowledge.data?.knowledge_title}
         description={knowledge.data?.description}
         urlLink={`/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}/edit`}
-        canCreateSection={false}
         image={knowledge.data?.image}
       />
 
@@ -94,6 +93,7 @@ export default async function KnowledgeDetailLayout({
           knowledge={knowledge}
           baseUrl={`/supervisor-pemateri-divisi/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}`}
           canCreateContent={false}
+          newSection={false}
         />
       </div>
     </DashboardShell>

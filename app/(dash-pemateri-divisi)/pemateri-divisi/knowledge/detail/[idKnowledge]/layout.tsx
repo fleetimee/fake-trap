@@ -87,6 +87,7 @@ export default async function KnowledgeDetailLayout({
         <KnowledgeContentSidebar
           baseUrl={`/pemateri-divisi/knowledge/detail/${params.idKnowledge}`}
           knowledge={knowledge}
+          newSection
         />
       </div>
     </DashboardShell>

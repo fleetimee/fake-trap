@@ -100,7 +100,6 @@ export default async function CourseDetailLayout({
         description={course.data.course_desc}
         title={course.data.course_name}
         urlLink={`/peserta/course/detail/${params.idCourse}`}
-        canCreateSection={false}
         image={course.data.image}
       />
 
