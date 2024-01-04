@@ -9,7 +9,7 @@ const nextConfig = {
   //     fullUrl: true,
   //   },
   // },
-  output: "standalone",
+  // output: "standalone",
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
