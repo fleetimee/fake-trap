@@ -7,7 +7,6 @@ import {
   QuizOneUserCountRes,
   QuizQuestionListRes,
   QuizUserAttemptList,
-  QuizUserResultListRes,
 } from "@/types/quiz/res"
 
 interface GetQuizProps {

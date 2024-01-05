@@ -94,7 +94,7 @@ export default async function PemateriDivisiExercisePage({
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
         <QuizTableShell
           data={quiz.data}
-          pageCount={quiz.totalPage}
+          pageCount={quiz.totalPage ?? 0}
           referenceResp={reference}
         />
       </Suspense>

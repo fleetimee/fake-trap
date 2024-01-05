@@ -25,7 +25,7 @@ export default function MiniProfile({ ...props }: MiniProfileProps) {
             <AvatarFallback>UN</AvatarFallback>
           </Avatar>
 
-          <h2 className="mt-4 text-center font-heading text-lg font-semibold text-primary-foreground">
+          <h2 className="mx-auto  my-3 text-center font-heading text-sm font-semibold text-primary-foreground">
             {props.name ? props.name : "Nama"}
           </h2>
 

@@ -1,19 +1,17 @@
 "use client"
 
+import { error } from "console"
 import { SyntheticEvent, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
+import { ErrorResponse } from "@/types/error-res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-
-
-
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -24,7 +22,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const router = useRouter()
 
-  const userName = useRef("")
+  const email = useRef("")
   const password = useRef("")
 
   async function onSubmit(event: SyntheticEvent) {
@@ -37,14 +35,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-4 pb-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
-              id="username"
+              id="email"
               type="text"
               autoCapitalize="none"
               disabled={isLoading}
               onChange={(e) => {
-                userName.current = e.target.value
+                email.current = e.target.value
               }}
             />
           </div>
@@ -65,16 +63,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             disabled={isLoading}
             onClick={() =>
               signIn("credentials", {
-                username: userName.current,
+                email: email.current,
                 password: password.current,
                 callbackUrl: searchParams.get("from") || "/",
                 redirect: false,
               }).then((res) => {
-                if (res?.error === "Login failed") {
+                console.log(res)
+
+                if (!res?.ok) {
                   setIsLoading(false)
 
-                  sonnerToast.warning("Perhatian", {
-                    description: "Username atau password salah",
+                  sonnerToast.error("Perhatian", {
+                    description: `${res?.error}`,
                   })
                 } else {
                   setIsLoading(false)
