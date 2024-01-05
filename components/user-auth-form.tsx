@@ -33,7 +33,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
+        <div className="grid gap-2 space-y-3">
           <div className="grid gap-4 pb-2">
             <Label htmlFor="email">Email</Label>
             <Input

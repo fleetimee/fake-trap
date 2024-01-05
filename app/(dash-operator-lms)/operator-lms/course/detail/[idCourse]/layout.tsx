@@ -120,6 +120,7 @@ export default async function CourseDetailLayout({
           course={course}
           baseUrl={`/operator-lms/course/detail/${params.idCourse}`}
           canCreateContent
+          canCreateSection
         />
       </div>
     </DashboardShell>

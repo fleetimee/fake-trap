@@ -35,6 +35,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import { Icons } from "./icons"
 import {
   Collapsible,
   CollapsibleContent,
@@ -46,6 +47,7 @@ interface CourseContentSidebarProps {
   knowledgeSection: CourseKnowledgeSectionListResData[]
   baseUrl: string
   canCreateContent?: boolean
+  canCreateSection?: boolean
 }
 
 export function CourseContentSidebar({
@@ -53,11 +55,12 @@ export function CourseContentSidebar({
   course,
   baseUrl,
   canCreateContent = true,
+  canCreateSection = false,
 }: CourseContentSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
+    <Card className="flex h-full basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="knowledge" className="w-full font-semibold">
@@ -198,6 +201,17 @@ export function CourseContentSidebar({
 
         {/* Course Test Section */}
         <TabsContent value="course">
+          <div className="flex justify-end px-3 py-6">
+            {canCreateSection && (
+              <Link href={`${baseUrl}/section/new`}>
+                <Button size="sm" variant="outline">
+                  <Icons.add className="h-4 w-4" />
+                  <span className="ml-2">Tambah Section</span>
+                </Button>
+              </Link>
+            )}
+          </div>
+
           <ScrollArea className="h-[700px] w-full">
             {course?.data?.section ? (
               <Accordion
@@ -214,7 +228,7 @@ export function CourseContentSidebar({
                   >
                     <AccordionTrigger className="font-heading text-base font-bold">
                       <ContextMenu>
-                        <ContextMenuTrigger>{` Test ${section.section_title}`}</ContextMenuTrigger>
+                        <ContextMenuTrigger>{`${section.section_title}`}</ContextMenuTrigger>
                         {canCreateContent ? (
                           <ContextMenuContent className="w-64">
                             <ContextMenuItem inset disabled>

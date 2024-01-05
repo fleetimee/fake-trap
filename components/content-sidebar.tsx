@@ -60,6 +60,7 @@ export function KnowledgeContentSidebar({
             </div>
           </TabsTrigger>
         </TabsList>
+
         <div className="flex justify-end px-3 py-6">
           {newSection && (
             <Link href={`${baseUrl}/section/new`}>

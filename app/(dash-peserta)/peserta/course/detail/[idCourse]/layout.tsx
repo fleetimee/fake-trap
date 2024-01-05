@@ -126,6 +126,7 @@ export default async function CourseDetailLayout({
           course={course}
           baseUrl={`/peserta/course/detail/${params.idCourse}`}
           canCreateContent={false}
+          canCreateSection={false}
           knowledgeSection={knowledgeSection.data}
         />
       </div>

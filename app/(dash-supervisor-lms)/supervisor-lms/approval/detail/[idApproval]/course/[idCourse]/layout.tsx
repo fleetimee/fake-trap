@@ -137,6 +137,7 @@ export default async function CourseDetailLayout({
           course={course}
           baseUrl={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`}
           canCreateContent={false}
+          canCreateSection={false}
           knowledgeSection={knowledgeSection.data}
         />
       </div>
