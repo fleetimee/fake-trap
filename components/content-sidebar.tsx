@@ -32,7 +32,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Icons } from "./icons"
 
-interface KnowledgeContentSidebarProps {
+interface KnowledgeContentSidebarProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   knowledge: KnowledgeOneRes
   baseUrl: string
   canCreateContent?: boolean
@@ -44,11 +45,13 @@ export function KnowledgeContentSidebar({
   baseUrl,
   canCreateContent = true,
   newSection = false,
+  className,
+  ...props
 }: KnowledgeContentSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Card className="flex  h-full basis-1/4 flex-col items-center justify-start">
+    <Card className="flex  h-full basis-1/4 flex-col items-center justify-start ">
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger
@@ -61,16 +64,16 @@ export function KnowledgeContentSidebar({
           </TabsTrigger>
         </TabsList>
 
-        <div className="flex justify-end px-3 py-6">
-          {newSection && (
+        {newSection && (
+          <div className="flex justify-end px-3 py-6">
             <Link href={`${baseUrl}/section/new`}>
               <Button size="sm" variant="outline">
                 <Icons.add className="h-4 w-4" />
                 <span className="ml-2">Tambah Section</span>
               </Button>
             </Link>
-          )}
-        </div>
+          </div>
+        )}
 
         <TabsContent value="knowledge">
           <ScrollArea className="h-[700px] w-full">

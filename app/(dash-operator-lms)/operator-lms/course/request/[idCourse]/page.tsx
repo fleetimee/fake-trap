@@ -7,7 +7,10 @@ import {
   getLookupCourseDetails,
   getOneCourse,
 } from "@/lib/fetcher/course-fetcher"
-import { getUsersByGroupId } from "@/lib/fetcher/users-fetcher"
+import {
+  getUsersByGroupId,
+  getUsersSupervisor,
+} from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { RequestCourseForm } from "@/components/forms/request-course-form"
@@ -43,23 +46,17 @@ export default async function OperatorLmsCourseRequestPage({
     redirect(authOptions?.pages?.signIn || "/")
   }
 
-  const [course, courseLookup, supervisors] = await Promise.all([
+  const [course, supervisors] = await Promise.all([
     getOneCourse({
       idCourse: params.idCourse,
       token: user?.token,
     }),
-    getLookupCourseDetails({
-      idCourse: params.idCourse,
+
+    getUsersSupervisor({
       token: user?.token,
-    }),
-    getUsersByGroupId({
-      token: user?.token,
-      idGroup: 4,
+      email: tokenExtracted?.email,
     }),
   ])
-
-  console.log(supervisors)
-  console.log(courseLookup)
 
   return (
     <DashboardShell>

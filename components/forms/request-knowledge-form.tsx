@@ -61,6 +61,10 @@ export function RequestKnowledgeForm({
 
   const [isPending, startTransition] = useTransition()
 
+  const firstSupervisor = supervisors.find(
+    (supervisor) => supervisor.atasan === "1"
+  )
+
   const form = useForm<Inputs>({
     resolver: zodResolver(requestKnowledgeSchema),
     defaultValues: {
@@ -68,7 +72,7 @@ export function RequestKnowledgeForm({
       status: "0051",
       comment: "",
       user_uuid_request: requestUuid,
-      user_uuid_approver: "",
+      user_uuid_approver: firstSupervisor?.uuid || "",
     },
   })
 
@@ -113,7 +117,7 @@ export function RequestKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Supervisor <span className="text-red-500">*</span>
+                Atasan <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Popover>
@@ -177,7 +181,7 @@ export function RequestKnowledgeForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Supervisor yang dipilih akan menerima permintaan pengajuan
+                Atasan yang dipilih akan menerima permintaan pengajuan
                 pengetahuan
               </FormDescription>
               <FormMessage />

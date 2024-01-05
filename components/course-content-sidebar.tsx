@@ -201,16 +201,16 @@ export function CourseContentSidebar({
 
         {/* Course Test Section */}
         <TabsContent value="course">
-          <div className="flex justify-end px-3 py-6">
-            {canCreateSection && (
+          {canCreateSection && (
+            <div className="flex justify-end px-3 py-6">
               <Link href={`${baseUrl}/section/new`}>
                 <Button size="sm" variant="outline">
                   <Icons.add className="h-4 w-4" />
                   <span className="ml-2">Tambah Section</span>
                 </Button>
               </Link>
-            )}
-          </div>
+            </div>
+          )}
 
           <ScrollArea className="h-[700px] w-full">
             {course?.data?.section ? (

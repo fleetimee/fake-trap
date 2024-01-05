@@ -1,14 +1,16 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
+import { generateFromString } from "generate-avatar"
 
 import { UserListResData } from "@/types/user/res/user-list"
 import { convertDatetoString, convertDatetoStringWithTime } from "@/lib/utils"
 import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 interface UserTableShellProps {
   data: UserListResData[]
@@ -32,6 +34,21 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         },
       },
       {
+        id: "avatar",
+        cell: ({ row }) => {
+          const user = row.original
+
+          return (
+            <Avatar className="h-12 w-12  bg-white">
+              <AvatarImage
+                src={`data:image/svg+xml;utf8,${generateFromString(user.name)}`}
+              />
+              <AvatarFallback />
+            </Avatar>
+          )
+        },
+      },
+      {
         accessorKey: "name",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Nama" />
@@ -39,12 +56,14 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         cell: ({ row }) => {
           return (
             <div className="w-[200px]">
-              <Link
+              {/* <Link
                 href={`/dashboard/user/${row.original.uuid}`}
                 className="text-sm font-bold text-blue-500 hover:underline"
               >
                 <p>{row.original.name}</p>
-              </Link>
+              </Link> */}
+
+              <p>{row.original.name}</p>
             </div>
           )
         },
@@ -54,16 +73,16 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Username" />
         ),
-        cell: ({ row }) => {
-          return (
-            <Link
-              href={`/dashboard/user/${row.original.uuid}`}
-              className="text-sm font-bold text-blue-500 hover:underline"
-            >
-              <p>{row.original.username}</p>
-            </Link>
-          )
-        },
+        // cell: ({ row }) => {
+        //   return (
+        //     <Link
+        //       href={`/dashboard/user/${row.original.uuid}`}
+        //       className="text-sm font-bold text-blue-500 hover:underline"
+        //     >
+        //       <p>{row.original.username}</p>
+        //     </Link>
+        //   )
+        // },
         enableSorting: true,
         enableHiding: true,
       },

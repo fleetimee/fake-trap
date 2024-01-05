@@ -52,7 +52,11 @@ interface AddUserFormProps {
 export function AddUserForm({ roleOptions }: AddUserFormProps) {
   type RoleNovian = z.infer<typeof usersSchema.shape.role>
 
-  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>([])
+  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>([
+    {
+      id_role: 5,
+    },
+  ])
 
   const { data: session } = useSession()
 
@@ -67,6 +71,7 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
       username: "",
       email: "",
       created_by: session?.expires.id,
+      // Default roke to 1 (peserta)
     },
   })
 

@@ -2,7 +2,6 @@
 
 import * as process from "process"
 import { useTransition } from "react"
-import { router } from "next/client"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -12,16 +11,12 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
-import { UserRoleListResData } from "@/types/user/res"
+import { UserListResData } from "@/types/user/res"
 import { createCourseApproval } from "@/lib/fetcher/approval-fetcher"
 import { cn } from "@/lib/utils"
-import {
-  requestCourseSchema,
-  requestKnowledgeSchema,
-} from "@/lib/validations/request"
-
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
+import { requestCourseSchema } from "@/lib/validations/request"
+import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -29,7 +24,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../ui/command"
+} from "@/components/ui/command"
 import {
   Form,
   FormControl,
@@ -38,16 +33,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { ScrollArea } from "../ui/scroll-area"
-import { Textarea } from "../ui/textarea"
+} from "@/components/ui/form"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Textarea } from "@/components/ui/textarea"
 
 type Inputs = z.infer<typeof requestCourseSchema>
 
 interface RequestCourseFormProps {
   idCourse: string
-  supervisors: UserRoleListResData[]
+  supervisors: UserListResData[]
   requestUuid: string
   baseUrl: string
 }
@@ -62,6 +61,10 @@ export function RequestCourseForm({
 
   const [isPending, startTransition] = useTransition()
 
+  const firstSupervisor = supervisors.find(
+    (supervisor) => supervisor.atasan === "1"
+  )
+
   const router = useRouter()
 
   const form = useForm<Inputs>({
@@ -71,7 +74,7 @@ export function RequestCourseForm({
       status: "0051",
       comment: "",
       user_uuid_request: requestUuid,
-      user_uuid_approver: "",
+      user_uuid_approver: firstSupervisor?.uuid || "",
     },
   })
 
@@ -120,7 +123,7 @@ export function RequestCourseForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Pemateri <span className="text-red-500">*</span>
+                Atasan <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Popover>
@@ -137,8 +140,7 @@ export function RequestCourseForm({
                       >
                         {field.value
                           ? supervisors.find(
-                              (supervisor) =>
-                                supervisor.user_uuid === field.value
+                              (supervisor) => supervisor.uuid === field.value
                             )?.name
                           : "Pilih Supervisor"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -157,19 +159,19 @@ export function RequestCourseForm({
                             {supervisors.map((supervisor) => (
                               <CommandItem
                                 value={supervisor.name}
-                                key={supervisor.user_uuid}
+                                key={supervisor.uuid}
                                 onSelect={(value) => {
                                   form.clearErrors("user_uuid_approver")
                                   form.setValue(
                                     "user_uuid_approver",
-                                    supervisor.user_uuid
+                                    supervisor.uuid
                                   )
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    supervisor.user_uuid === field.value
+                                    supervisor.uuid === field.value
                                       ? "opacity-100"
                                       : "opacity-0"
                                   )}
@@ -185,8 +187,7 @@ export function RequestCourseForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Supervisor yang dipilih akan menerima permintaan pengajuan
-                pelatihan
+                Atasan yang dipilih akan menerima permintaan pengajuan pelatihan
               </FormDescription>
               <FormMessage />
             </FormItem>

@@ -81,14 +81,15 @@ export default async function KnowledgeDetailLayout({
       >
         {/* Content */}
         <Content title={knowledge.data?.knowledge_title}>{children}</Content>
-
         {/* Knowledge Sidebar Section */}
         <KnowledgeContentSidebar
+          className="fixed right-0 top-0 h-screen overflow-y-auto"
           baseUrl={`/peserta/knowledge/detail/${params.idKnowledge}`}
           knowledge={knowledge}
           canCreateContent={false}
           newSection={false}
         />
+        Kno
       </div>
     </DashboardShell>
   )

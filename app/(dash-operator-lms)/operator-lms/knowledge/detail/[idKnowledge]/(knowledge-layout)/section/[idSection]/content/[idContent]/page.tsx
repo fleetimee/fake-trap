@@ -78,7 +78,7 @@ export default async function KnowledgeContentPage({
 
   if (file) {
     return (
-      <div className="flex flex-col items-start justify-center gap-6">
+      <div className="flex flex-col items-start justify-center gap-2">
         <h1 className="text-4xl font-bold  ">
           <Balancer>{content.data.content_title}</Balancer>
         </h1>

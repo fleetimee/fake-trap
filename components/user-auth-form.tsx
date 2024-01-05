@@ -1,12 +1,10 @@
 "use client"
 
-import { error } from "console"
 import { SyntheticEvent, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
-import { ErrorResponse } from "@/types/error-res"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
