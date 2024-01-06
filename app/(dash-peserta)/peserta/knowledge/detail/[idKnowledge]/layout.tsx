@@ -89,7 +89,6 @@ export default async function KnowledgeDetailLayout({
           canCreateContent={false}
           newSection={false}
         />
-        Kno
       </div>
     </DashboardShell>
   )
