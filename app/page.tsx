@@ -13,7 +13,8 @@ import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { buttonVariants } from "@/components/ui/button"
+import { ScrollIntoViewButton } from "@/components/scroll-into-view"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata = {
   title: "BPD E-learning: Pelajari apa saja, kapan saja, di mana saja",
@@ -107,25 +108,43 @@ export default async function IndexPage() {
                 sukses dengan BPD DIY Learning Management System
               </p>
               <div className="items-center justify-center space-y-3 pt-10 sm:flex sm:space-x-6 sm:space-y-0 lg:justify-start">
-                <a
+                {/* <a
                   href="javascript:void(0)"
                   className="block w-full rounded-md bg-white px-7 py-3 text-center text-gray-800 shadow-md sm:w-auto"
                 >
                   Pelajari Lebih Lanjut
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  className="block w-full rounded-md bg-gray-700 px-7 py-3 text-center text-gray-200 sm:w-auto"
+                </a> */}
+
+                <Link
+                  href="/login"
+                  className="block w-full rounded-md bg-white px-7 py-3 text-center text-gray-800 shadow-md sm:w-auto"
                 >
-                  Fitur
-                </a>
+                  Get Started
+                </Link>
+
+                <ScrollIntoViewButton selector="#feature">
+                  <Button
+                    className={buttonVariants({
+                      size: "lg",
+                      variant: "default",
+                    })}
+                  >
+                    <span className="mr-2">
+                      <Icons.arrowRight className="h-4 w-4" />
+                    </span>
+                    Fitur
+                  </Button>
+                </ScrollIntoViewButton>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="relative flex h-auto min-h-screen flex-col  lg:min-h-[100svh]">
+      <section
+        className="relative flex h-auto min-h-screen flex-col  lg:min-h-[100svh]"
+        id="feature"
+      >
         <div className="gap-12  ">
           <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
             <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center py-2 text-center">
@@ -175,7 +194,7 @@ export default async function IndexPage() {
             />
           </section>
         </div>
-      </div>
+      </section>
 
       <section
         className="relative mx-auto  p-4 md:px-8"

@@ -5,6 +5,7 @@ import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
+import { getKnowledgeStatusCount } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { DashboardKnowledgeHighlight } from "@/components/app/dashboard/ui/highlight/knowledge-highlight"
@@ -13,6 +14,16 @@ import { LottieClient } from "@/components/lottie-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+import { KnowledgeStatusCount } from "./component/timeline"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -30,6 +41,11 @@ export default async function PemateriDivisiDashboardPage() {
   const loggedOnUser = await getLoggedOnUser({
     token: user?.token,
     uuid: tokenExtracted.id,
+  })
+
+  const knowledgeGraph = await getKnowledgeStatusCount({
+    token: user?.token,
+    userUuid: tokenExtracted.id,
   })
 
   return (
@@ -68,6 +84,28 @@ export default async function PemateriDivisiDashboardPage() {
 
         <LottieClient className="hidden lg:block" animationData={HelloLottie} />
       </div>
+
+      <Card>
+        <CardHeader>
+          <div className="flex-col md:flex md:flex-row md:items-center md:justify-between">
+            <div className="space-y-2">
+              <CardTitle>Overview Pengajuan</CardTitle>
+              <CardDescription>
+                Berikut adalah overview pengajuan materi yang sudah kamu ajukan
+              </CardDescription>
+            </div>
+
+            <div className="flex justify-end">
+              <Button>
+                <span>Lihat Semua</span>
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="pl-2">
+          <KnowledgeStatusCount data={knowledgeGraph.data} />
+        </CardContent>
+      </Card>
     </DashboardShell>
   )
 }

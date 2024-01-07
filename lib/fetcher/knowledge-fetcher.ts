@@ -2,6 +2,7 @@ import {
   KnowledgeGetNewRes,
   KnowledgeListRes,
   KnowledgeOneRes,
+  KnowledgeStatusCount,
 } from "@/types/knowledge/res"
 
 interface GetOperatorKnowledgeProps {
@@ -336,6 +337,33 @@ export async function getKnowledgeUser({
     // if (!res.ok) {
     //   throw new Error(`HTTP error! status: ${res.status}`)
     // }
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+    throw error
+  }
+}
+
+interface GetKnowledgeStatusCountProps {
+  token: string
+  userUuid: string
+}
+
+export async function getKnowledgeStatusCount({
+  token,
+  userUuid,
+}: GetKnowledgeStatusCountProps): Promise<KnowledgeStatusCount> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/count/${userUuid}`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    })
 
     return await res.json()
   } catch (error) {
