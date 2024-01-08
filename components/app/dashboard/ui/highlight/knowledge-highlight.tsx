@@ -17,12 +17,10 @@ export async function DashboardKnowledgeHighlight({
     userUuid: userUuid,
   })
 
-  console.log(knowledgeResp)
-
   if (knowledgeResp.code != 200) {
     return (
       <CardDashboard
-        title="Pengeahuan Terbaru"
+        title="Pengetahuan Terbaru"
         icon="knowledge"
         name="-"
         image="/images/placeholder.svg"

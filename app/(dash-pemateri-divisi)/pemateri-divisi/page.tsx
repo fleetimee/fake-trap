@@ -5,11 +5,16 @@ import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
-import { getKnowledgeStatusCount } from "@/lib/fetcher/knowledge-fetcher"
+import { getQuizCreatedByUser } from "@/lib/fetcher/exercise-fetcher"
+import {
+  getKnowledgeByCreatedByUser,
+  getKnowledgeStatusCount,
+} from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { DashboardKnowledgeHighlight } from "@/components/app/dashboard/ui/highlight/knowledge-highlight"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { LottieClient } from "@/components/lottie-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -22,6 +27,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import Widget from "@/components/widget"
 
 import { KnowledgeStatusCount } from "./component/timeline"
 
@@ -43,6 +50,20 @@ export default async function PemateriDivisiDashboardPage() {
     uuid: tokenExtracted.id,
   })
 
+  const { count: KnowledgeCount } = await getKnowledgeByCreatedByUser({
+    token: user?.token,
+    userUuid: tokenExtracted.id,
+    limit: 1,
+    page: 1,
+  })
+
+  const { count: TestCount } = await getQuizCreatedByUser({
+    token: user?.token,
+    createdBy: tokenExtracted.id,
+    limit: 1,
+    page: 1,
+  })
+
   const knowledgeGraph = await getKnowledgeStatusCount({
     token: user?.token,
     userUuid: tokenExtracted.id,
@@ -61,6 +82,8 @@ export default async function PemateriDivisiDashboardPage() {
 
       <DashboardHeader heading="Pemateri Divisi" description={dateNow} />
 
+      <Separator />
+
       <Alert>
         <PartyPopper className="h-5 w-5" />
         <AlertTitle>
@@ -74,6 +97,22 @@ export default async function PemateriDivisiDashboardPage() {
           <span className="font-heading uppercase">{getDayWithText}</span> !
         </AlertDescription>
       </Alert>
+
+      <div
+        className="grid grid-cols-1 gap-4 xl:grid-cols-2"
+        style={{ marginTop: "1rem" }}
+      >
+        <Widget
+          icon={<Icons.gitHub />}
+          title={"Pengetahuan"}
+          subtitle={KnowledgeCount.toString()}
+        />
+        <Widget
+          icon={<Icons.gitHub />}
+          title={"Test"}
+          subtitle={TestCount.toString()}
+        />
+      </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <DashboardKnowledgeHighlight
