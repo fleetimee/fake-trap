@@ -10,8 +10,10 @@ import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CategoryTableShell, DashboardShell } from "@/components/shell"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Kategori",
@@ -93,6 +95,29 @@ export default async function PemateriDivisiCategoryPage({
         <DateRangePicker
           align="end"
           className="flex  place-items-end items-end justify-self-end"
+        />
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+        <Widget
+          icon={<Icons.category />}
+          title="Kategori"
+          subtitle={categoryData.count.toString()}
+        />
+        <Widget
+          icon={<Icons.category />}
+          title="Kategori"
+          subtitle={categoryData.count.toString()}
+        />
+        <Widget
+          icon={<Icons.category />}
+          title="Kategori"
+          subtitle={categoryData.count.toString()}
+        />
+        <Widget
+          icon={<Icons.category />}
+          title="Kategori"
+          subtitle={categoryData.count.toString()}
         />
       </div>
 

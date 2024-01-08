@@ -28,7 +28,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import Widget from "@/components/widget"
+import { Widget } from "@/components/widget"
 
 import { KnowledgeStatusCount } from "./component/timeline"
 
@@ -103,12 +103,12 @@ export default async function PemateriDivisiDashboardPage() {
         style={{ marginTop: "1rem" }}
       >
         <Widget
-          icon={<Icons.gitHub />}
+          icon={<Icons.knowledge />}
           title={"Pengetahuan"}
           subtitle={KnowledgeCount.toString()}
         />
         <Widget
-          icon={<Icons.gitHub />}
+          icon={<Icons.quiz />}
           title={"Test"}
           subtitle={TestCount.toString()}
         />

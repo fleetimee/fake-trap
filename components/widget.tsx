@@ -1,14 +1,15 @@
-export function Card(props: {
+interface CardProps {
   variant?: string
   extra?: string
   children?: JSX.Element | any[]
   [x: string]: any
-}) {
-  const { variant, extra, children, ...rest } = props
+}
+
+function Card({ variant, extra, children, ...rest }: CardProps) {
   return (
     <div
       className={`!z-5 shadow-3xl relative flex flex-col rounded-[20px] bg-white bg-clip-border ${
-        props.default
+        rest.default
           ? "shadow-shadow-500 dark:shadow-none"
           : "shadow-shadow-100 dark:shadow-none"
       }  dark:!bg-navy-800 dark:text-white  ${extra}`}
@@ -19,12 +20,13 @@ export function Card(props: {
   )
 }
 
-const Widget = (props: {
+interface WidgetProps {
   icon: JSX.Element
   title: string
   subtitle: string
-}) => {
-  const { icon, title, subtitle } = props
+}
+
+export function Widget({ icon, title, subtitle }: WidgetProps) {
   return (
     <Card extra="!flex-row flex-grow items-center rounded-[20px]">
       <div className="me-4 flex h-[90px] w-auto flex-row items-center">
@@ -44,5 +46,3 @@ const Widget = (props: {
     </Card>
   )
 }
-
-export default Widget
