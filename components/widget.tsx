@@ -28,7 +28,7 @@ interface WidgetProps {
 
 export function Widget({ icon, title, subtitle }: WidgetProps) {
   return (
-    <Card extra="!flex-row flex-grow items-center rounded-[20px]">
+    <Card extra="!flex-row flex-grow items-center rounded-[20px] dark:bg-gray-800 dark:text-white">
       <div className="me-4 flex h-[90px] w-auto flex-row items-center">
         <div className="bg-lightPrimary dark:bg-navy-700 rounded-full p-3">
           <span className="text-brand-500 flex items-center dark:text-white">
@@ -38,7 +38,9 @@ export function Widget({ icon, title, subtitle }: WidgetProps) {
       </div>
 
       <div className="h-50 me-4 flex w-auto flex-col justify-center">
-        <p className="font-dm text-sm font-medium text-gray-600">{title}</p>
+        <p className="font-dm text-sm font-medium text-gray-600 dark:text-white">
+          {title}
+        </p>
         <h4 className="text-navy-700 text-xl font-bold dark:text-white">
           {subtitle}
         </h4>

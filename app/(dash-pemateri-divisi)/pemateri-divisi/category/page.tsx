@@ -3,7 +3,10 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
+import {
+  getCategoryHighlight,
+  getOperatorCategory,
+} from "@/lib/fetcher/category-fetcher"
 import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
@@ -30,6 +33,16 @@ export default async function PemateriDivisiCategoryPage({
   searchParams,
 }: CategoryPageProps) {
   const user = await getCurrentUser()
+
+  const getCurrentMonth = () => {
+    const date = new Date()
+    const month = date.getMonth() + 1
+    return month.toString()
+  }
+
+  const getMonth = (date: Date) => {
+    return date.getMonth() + 1 // getMonth returns a 0-based month, so we add 1
+  }
 
   const { page, per_page, sort, category_name, from, to } = searchParams ?? {}
 
@@ -66,6 +79,18 @@ export default async function PemateriDivisiCategoryPage({
     to: toInitial,
   })
 
+  const selectedDate = new Date(fromInitial)
+
+  const selectedMonth = getMonth(selectedDate)
+
+  console.log(selectedMonth)
+  console.log(getCurrentMonth())
+
+  const categoryHighlight = await getCategoryHighlight({
+    token: user?.token,
+    month: isNaN(selectedMonth) ? getCurrentMonth() : selectedMonth.toString(),
+  })
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -98,28 +123,41 @@ export default async function PemateriDivisiCategoryPage({
         />
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
-        <Widget
-          icon={<Icons.category />}
-          title="Kategori"
-          subtitle={categoryData.count.toString()}
-        />
-        <Widget
-          icon={<Icons.category />}
-          title="Kategori"
-          subtitle={categoryData.count.toString()}
-        />
-        <Widget
-          icon={<Icons.category />}
-          title="Kategori"
-          subtitle={categoryData.count.toString()}
-        />
-        <Widget
-          icon={<Icons.category />}
-          title="Kategori"
-          subtitle={categoryData.count.toString()}
-        />
-      </div>
+      {categoryHighlight.code === 200 ? (
+        <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+          <Widget
+            icon={<Icons.category className="text-blue-500" />}
+            title="Kategori"
+            subtitle={categoryHighlight.data.total_category_count.toString()}
+          />
+
+          <Widget
+            icon={<Icons.average className="text-green-500" />}
+            title="Avg / Bulan"
+            subtitle={categoryHighlight.data.avg_categories_per_month.toString()}
+          />
+
+          <Widget
+            icon={<Icons.user className="text-yellow-500" />}
+            title="Paling Aktif"
+            subtitle={categoryHighlight.data.most_active_creator_name}
+          />
+
+          <Widget
+            icon={<Icons.percent className="text-red-500" />}
+            title="Persentase"
+            subtitle={categoryHighlight.data.latest_month_percent_increase.toString()}
+          />
+        </div>
+      ) : (
+        <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+          <Widget
+            icon={<Icons.category />}
+            title="Kategori"
+            subtitle={categoryData.count.toString()}
+          />
+        </div>
+      )}
 
       <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
         <CategoryTableShell

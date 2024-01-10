@@ -1,4 +1,8 @@
-import { CategoryListRes, CategoryOneRes } from "@/types/category/res"
+import {
+  CategoryHighlight,
+  CategoryListRes,
+  CategoryOneRes,
+} from "@/types/category/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 
 interface GetCategoryProps {
@@ -372,6 +376,44 @@ export async function getOnePublicCategory({
         ContentType: "application/json",
       },
       cache: "no-store",
+    })
+
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+
+    throw error
+  }
+}
+
+interface GetCategoryHighlightProps {
+  token: string | undefined
+  month: string
+}
+
+export async function getCategoryHighlight({
+  token,
+  month,
+}: GetCategoryHighlightProps): Promise<CategoryHighlight> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/highlight?`
+
+  const urlObj = new URL(url)
+
+  if (month) {
+    urlObj.searchParams.append("month", month)
+  }
+
+  try {
+    const res = await fetch(urlObj, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-cache",
     })
 
     // if (!res.ok) {

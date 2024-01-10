@@ -15,6 +15,7 @@ import {
   Clock,
   Copy,
   CreditCard,
+  DivideCircle,
   Download,
   Edit,
   ExternalLink,
@@ -36,6 +37,7 @@ import {
   Moon,
   MoreHorizontal,
   MoreVertical,
+  Percent,
   Pizza,
   Plus,
   Send,
@@ -99,7 +101,8 @@ export const Icons = {
   logout: LogOut,
   handShake: HeartHandshake,
   bird: Bird,
-
+  percent: Percent,
+  average: DivideCircle,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
