@@ -85,7 +85,7 @@ export default async function PemateriDivisiDashboardPage() {
       <Separator />
 
       <Alert>
-        <PartyPopper className="h-5 w-5" />
+        <PartyPopper className="text-orange-500" />
         <AlertTitle>
           Halo,{" "}
           <span className="font-heading uppercase text-primary">
@@ -103,12 +103,12 @@ export default async function PemateriDivisiDashboardPage() {
         style={{ marginTop: "1rem" }}
       >
         <Widget
-          icon={<Icons.knowledge />}
+          icon={<Icons.knowledge className="text-green-500" />}
           title={"Pengetahuan"}
           subtitle={KnowledgeCount.toString()}
         />
         <Widget
-          icon={<Icons.quiz />}
+          icon={<Icons.quiz className="text-blue-600" />}
           title={"Test"}
           subtitle={TestCount.toString()}
         />

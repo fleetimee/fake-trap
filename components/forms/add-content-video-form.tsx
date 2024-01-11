@@ -13,6 +13,7 @@ import { SectionOneResData } from "@/types/section/res"
 import { ContentType } from "@/lib/enums/status"
 import { createContentVideo } from "@/lib/fetcher/content-fetcher"
 import { contentVideoSchema } from "@/lib/validations/content-video"
+import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -24,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
+import { YoutubeRender } from "../content-renderer"
 import { Icons } from "../icons"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
@@ -37,6 +39,11 @@ interface AddContentVideoFormProps {
 
 export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
   const { data: session } = useSession()
+
+  const [youtubeUrl, setYoutubeUrl] = React.useState<string>("")
+  const debouncedYoutubeUrl = useDebounce(youtubeUrl, 500)
+
+  console.log(debouncedYoutubeUrl)
 
   const router = useRouter()
 
@@ -84,6 +91,16 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
     })
   }
 
+  function checkYoutubeUrl(url: string) {
+    const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/g
+
+    if (youtubeRegex.test(url)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
     <Form {...form}>
       <form
@@ -111,28 +128,6 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
 
         <FormField
           control={form.control}
-          name="video_url"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>URL Video</FormLabel>
-              <FormControl>
-                <Input
-                  disabled={isPending}
-                  id="video_url"
-                  placeholder="URL Video"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Ini harus berupa URL video youtube
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name="flavor_text"
           render={({ field }) => (
             <FormItem>
@@ -149,6 +144,48 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="video_url"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>URL Video</FormLabel>
+              <FormControl>
+                <Input
+                  disabled={isPending}
+                  id="video_url"
+                  placeholder="URL Video"
+                  {...field}
+                  onChange={(e) => {
+                    setYoutubeUrl(e.target.value)
+                    field.onChange(e)
+                  }}
+                />
+              </FormControl>
+              <FormDescription>
+                Ini harus berupa URL video youtube
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormItem>
+          <FormLabel>Preview</FormLabel>
+
+          {youtubeUrl && checkYoutubeUrl(debouncedYoutubeUrl) ? (
+            <YoutubeRender link={debouncedYoutubeUrl} />
+          ) : (
+            <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800">
+              <img
+                alt="Video thumbnail"
+                className="h-full w-full object-cover"
+                src="/images/placeholder.svg"
+              />
+            </div>
+          )}
+        </FormItem>
 
         <Button type="submit" className="w-fit" disabled={isPending}>
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
