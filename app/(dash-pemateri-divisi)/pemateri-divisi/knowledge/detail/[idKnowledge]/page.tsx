@@ -34,6 +34,7 @@ export default async function KnowledgeDetailPage({
 
   return (
     <Image
+      priority
       src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.data.image}`}
       alt={knowledge.data.knowledge_title}
       className="aspect-video rounded-lg object-cover shadow-md "

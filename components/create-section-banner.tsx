@@ -6,6 +6,8 @@ interface SectionBannerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function SectionBanner({ className, ...props }: SectionBannerProps) {
+  console.log(props.image)
+
   return (
     <div className="px-2">
       <section

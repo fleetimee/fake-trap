@@ -204,9 +204,10 @@ export function UpdateKnowledgeForm({
               <Image
                 src={selectedImage}
                 alt={knowledge.knowledge_title}
-                width={200}
-                height={200}
-                className="rounded-md"
+                width="0"
+                height="0"
+                sizes="100vw"
+                className="h-auto w-full rounded-lg"
               />
             </Zoom>
           </FormControl>
