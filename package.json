@@ -27,6 +27,7 @@
     "@editorjs/table": "^2.3.0",
     "@formkit/auto-animate": "^0.8.1",
     "@hookform/resolvers": "^3.3.2",
+    "@marsidev/react-turnstile": "^0.4.1",
     "@mobtakr/editorjs-parser": "^0.2.1",
     "@motionone/utils": "^10.16.3",
     "@radix-ui/react-accordion": "^1.1.2",

@@ -2,6 +2,7 @@
 
 import { SyntheticEvent, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { Turnstile } from "@marsidev/react-turnstile"
 import { signIn } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
@@ -15,6 +16,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const [isCaptchaVerified, setCaptchaVerified] = useState(false)
 
   const searchParams = useSearchParams()
 
@@ -57,8 +59,35 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               }}
             />
           </div>
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+            className="h-12 w-full"
+            onSuccess={async (token) => {
+              const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/verifyTurnstile`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    token: token,
+                  }),
+                }
+              )
+
+              if (response.ok) {
+                setCaptchaVerified(true)
+              } else {
+                sonnerToast.error("Perhatian", {
+                  description: "Captcha tidak valid",
+                })
+              }
+            }}
+          />
+
           <Button
-            disabled={isLoading}
+            disabled={isLoading || !isCaptchaVerified} // Disable button if loading or captcha not verified
             onClick={() =>
               signIn("credentials", {
                 email: email.current,
