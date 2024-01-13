@@ -18,4 +18,5 @@ export enum ContentType {
   VIDEO = "0012",
   DOCUMENT = "0013",
   ARTICLE = "0014",
+  LOCAL_FILE = "0015",
 }

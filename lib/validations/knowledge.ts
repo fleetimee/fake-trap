@@ -1,9 +1,5 @@
 import { z } from "zod"
 
-
-
-
-
 export const knowledgeSchema = z.object({
   KnowledgeTitle: z
     .string()

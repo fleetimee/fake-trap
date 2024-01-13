@@ -70,6 +70,8 @@ export async function createContentVideo({
   return response
 }
 
+export async function createContentVideoWithFile({}) {}
+
 interface CreateContentFileProps {
   token: string | undefined
   body: BodyInit

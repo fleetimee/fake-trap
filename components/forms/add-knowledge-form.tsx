@@ -15,6 +15,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { createKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { knowledgeSchema } from "@/lib/validations/knowledge"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -39,11 +40,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
-
-import { Icons } from "../icons"
-import { ScrollArea } from "../ui/scroll-area"
-import { Zoom } from "../zoom-image"
+import { Zoom } from "@/components/zoom-image"
 
 type Inputs = z.infer<typeof knowledgeSchema>
 
