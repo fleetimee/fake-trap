@@ -6,6 +6,7 @@ import Blocks from "editorjs-blocks-react-renderer"
 import Balancer from "react-wrap-balancer"
 
 import { authOptions } from "@/lib/auth"
+import { ContentType } from "@/lib/enums/status"
 import { getOneContent } from "@/lib/fetcher/content-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString } from "@/lib/utils"
@@ -38,9 +39,10 @@ export default async function KnowledgeContentPage({
 
   const contentParsed = JSON.parse(content?.data?.article?.body || "{}")
 
-  const article = content?.data?.content_type === "0014"
-  const video = content?.data?.content_type === "0012"
-  const file = content?.data?.content_type === "0013"
+  const article = content?.data?.content_type === ContentType.ARTICLE
+  const video = content?.data?.content_type === ContentType.VIDEO
+  const file = content?.data?.content_type === ContentType.DOCUMENT
+  const localVideo = content?.data?.content_type === ContentType.LOCAL_FILE
 
   if (article) {
     return (
@@ -161,6 +163,9 @@ export default async function KnowledgeContentPage({
         </div>
       </div>
     )
+  }
+
+  if (localVideo) {
   }
 
   return null

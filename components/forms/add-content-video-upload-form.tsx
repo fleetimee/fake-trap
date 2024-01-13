@@ -9,7 +9,9 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { ErrorResponse } from "@/types/error-res"
 import { ContentType } from "@/lib/enums/status"
+import { createContentVideoWithFile } from "@/lib/fetcher/content-fetcher"
 import { contentVideoUploadSchema } from "@/lib/validations/content-video"
 import { Icons } from "@/components/icons"
 import { LocalVideoPlayer } from "@/components/local-video-player"
@@ -52,6 +54,7 @@ export function AddContentVideoUploadForm({
       ContentType: ContentType.LOCAL_FILE,
       IdSection: idSection,
       FlavorText: "",
+      video_path: new File([], ""),
     },
   })
 
@@ -66,60 +69,38 @@ export function AddContentVideoUploadForm({
         formData.append("FlavorText", data.FlavorText)
         formData.append("video_path", data.video_path)
 
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/video`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${session?.user?.token}`,
-            },
-            onUploadProgress: (progressEvent) => {
-              if (progressEvent.total) {
-                const percentCompleted = Math.round(
-                  (progressEvent.loaded * 100) / progressEvent.total
-                )
-
-                setUploadProgress(percentCompleted)
-              }
-            },
-          }
-        )
+        const response = await createContentVideoWithFile({
+          token: session?.user?.token,
+          body: formData,
+          setUploadProgress: setUploadProgress,
+        })
 
         console.log(response)
 
         if (response.status === 201) {
-          sonnerToast.success("Konten berhasil ditambahkan")
+          sonnerToast.success("Berhasil", {
+            description: "Konten berhasil ditambahkan",
+          })
 
+          router.back()
           router.refresh()
-
           form.reset()
+          // Clear the video path
+          setPreview(null)
+          form.setValue("video_path", new File([], ""))
         } else {
-          sonnerToast.error("Konten gagal ditambahkan")
+          const errorResponse: ErrorResponse = await response.data
+
+          sonnerToast.error("Gagal", {
+            description: errorResponse.error,
+          })
         }
-
-        // const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/video`
-
-        // const response = await fetch(url, {
-        //   method: "POST",
-        //   headers: {
-        //     Authorization: `Bearer ${session?.user?.token}`,
-        //   },
-        //   body: formData,
-        // })
-
-        // if (response.ok) {
-        //   sonnerToast.success("Konten berhasil ditambahkan")
-
-        //   router.refresh()
-
-        //   form.reset()
-        // } else {
-        //   sonnerToast.error("Konten gagal ditambahkan")
-        // }
       } catch (error) {
         console.log(error)
 
-        sonnerToast.error("Konten gagal ditambahkan")
+        sonnerToast.error("Gagal", {
+          description: `${error}`,
+        })
       } finally {
       }
     })
@@ -132,6 +113,7 @@ export function AddContentVideoUploadForm({
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
+          disabled={isPending}
           control={form.control}
           name="ContentTitle"
           render={({ field }) => (
@@ -139,7 +121,6 @@ export function AddContentVideoUploadForm({
               <FormLabel>Judul Konten</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isPending}
                   id="content_title"
                   placeholder="Judul Konten"
                   {...field}
@@ -151,6 +132,7 @@ export function AddContentVideoUploadForm({
         />
 
         <FormField
+          disabled={isPending}
           control={form.control}
           name="FlavorText"
           render={({ field }) => (
@@ -158,7 +140,6 @@ export function AddContentVideoUploadForm({
               <FormLabel>Deskripsi</FormLabel>
               <FormControl>
                 <Textarea
-                  disabled={isPending}
                   placeholder="Deskripsi"
                   {...field}
                   className="h-20 resize-none"
@@ -203,25 +184,31 @@ export function AddContentVideoUploadForm({
           )}
         />
 
-        <FormItem>
-          <FormLabel>Progress</FormLabel>
-          <Progress value={uploadProgress} />
-        </FormItem>
+        {isPending && (
+          <FormItem>
+            <FormLabel>Progress</FormLabel>
+            <FormControl>
+              <Progress value={uploadProgress} />
+            </FormControl>
+          </FormItem>
+        )}
 
-        <FormItem>
-          <FormLabel>Preview</FormLabel>
-          <div className="aspect-[16/9] w-full rounded-lg bg-gray-200 dark:bg-gray-800">
-            {isPending ? null : preview ? (
-              <LocalVideoPlayer url={preview} />
-            ) : (
-              <img
-                alt="Video thumbnail"
-                className="h-full w-full rounded-lg object-cover"
-                src="/images/placeholder.svg"
-              />
-            )}
-          </div>
-        </FormItem>
+        {isPending ? null : (
+          <FormItem>
+            <FormLabel>Preview</FormLabel>
+            <div className="aspect-[16/9] w-full rounded-lg bg-gray-200 dark:bg-gray-800">
+              {preview ? (
+                <LocalVideoPlayer url={preview} />
+              ) : (
+                <img
+                  alt="Video thumbnail"
+                  className="h-full w-full rounded-lg object-cover"
+                  src="/images/placeholder.svg"
+                />
+              )}
+            </div>
+          </FormItem>
+        )}
 
         <Button type="submit" className="w-fit" disabled={isPending}>
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}

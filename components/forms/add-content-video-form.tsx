@@ -109,13 +109,13 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
       >
         <FormField
           control={form.control}
+          disabled={isPending}
           name="content_title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Judul Konten</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isPending}
                   id="content_title"
                   placeholder="Judul Konten"
                   {...field}
@@ -129,12 +129,12 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
         <FormField
           control={form.control}
           name="flavor_text"
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Deskripsi</FormLabel>
               <FormControl>
                 <Textarea
-                  disabled={isPending}
                   placeholder="Deskripsi"
                   {...field}
                   className="h-20 resize-none"

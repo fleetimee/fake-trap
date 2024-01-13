@@ -14,6 +14,8 @@ import { SectionOneResData } from "@/types/section/res"
 import { createContentFile } from "@/lib/fetcher/content-fetcher"
 import { isArrayOfFile } from "@/lib/utils"
 import { contentFileSchema } from "@/lib/validations/content-file"
+import { FileDialog, FileWithPreview } from "@/components/file-dialog"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -24,10 +26,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-
-import { FileDialog, FileWithPreview } from "../file-dialog"
-import { Icons } from "../icons"
-import { Input } from "../ui/input"
+import { Input } from "@/components/ui/input"
 
 type Inputs = z.infer<typeof contentFileSchema>
 

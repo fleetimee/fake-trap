@@ -1,3 +1,5 @@
+import axios from "axios"
+
 import { ContentOneRes } from "@/types/content/res"
 
 interface GetOneContentProps {
@@ -70,7 +72,36 @@ export async function createContentVideo({
   return response
 }
 
-export async function createContentVideoWithFile({}) {}
+interface CreateContentVideoWithFileProps {
+  token: string | undefined
+  body: BodyInit
+  setUploadProgress: React.Dispatch<React.SetStateAction<number>>
+}
+
+export async function createContentVideoWithFile({
+  token,
+  body,
+  setUploadProgress,
+}: CreateContentVideoWithFileProps) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/video`
+
+  const response = await axios.post(url, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    onUploadProgress: (progressEvent) => {
+      if (progressEvent.total) {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        )
+
+        setUploadProgress(percentCompleted)
+      }
+    },
+  })
+
+  return response
+}
 
 interface CreateContentFileProps {
   token: string | undefined
