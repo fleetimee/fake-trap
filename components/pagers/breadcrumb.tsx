@@ -6,25 +6,29 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
-
-
-
-
 interface BreadcrumbsProps {
   segments: {
     title: string
     href: string
   }[]
   separator?: keyof typeof Icons
+  isWhiteText?: boolean
 }
 
-export function BreadCrumbs({ segments, separator }: BreadcrumbsProps) {
+export function BreadCrumbs({
+  segments,
+  separator,
+  isWhiteText = false,
+}: BreadcrumbsProps) {
   const SeparatorIcon = Icons[separator ?? "chevronRight"]
 
   return (
     <nav
       aria-label="breadcrumbs"
-      className=" hidden items-center  px-2 text-sm font-medium text-muted-foreground xl:flex "
+      className={cn(
+        "flex items-center text-sm font-medium",
+        isWhiteText ? "text-white" : "text-foreground"
+      )}
     >
       {segments.map((segment, index) => {
         const isLastSegment = index === segments.length - 1
@@ -36,9 +40,8 @@ export function BreadCrumbs({ segments, separator }: BreadcrumbsProps) {
               href={segment.href}
               className={cn(
                 "truncate transition-colors hover:text-muted-foreground",
-                isLastSegment
-                  ? "pointer-events-none text-muted-foreground"
-                  : "text-foreground"
+                isLastSegment ? "font-bold" : undefined,
+                isWhiteText ? "text-white" : "text-foreground"
               )}
             >
               {segment.title}

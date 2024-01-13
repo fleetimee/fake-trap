@@ -10,15 +10,24 @@ interface LocalVideoPlayerProps {
 export function LocalVideoPlayer({ url }: LocalVideoPlayerProps) {
   return (
     <div>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }} className="h-full w-full">
         <ReactPlayer
+          pip={true}
           url={url}
+          controls
           width="100%"
           height="100%"
-          playing={true}
-          controls={true}
           muted={true}
           loop={true}
+          config={{
+            file: {
+              attributes: {
+                onContextMenu: (e: { preventDefault: () => any }) =>
+                  e.preventDefault(),
+                controlsList: "nodownload",
+              },
+            },
+          }}
         />
         {/* <div
           style={{

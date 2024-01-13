@@ -36,6 +36,7 @@ export default async function KnowledgeDetail({
   return (
     <Shell>
       <BreadCrumbs
+        isWhiteText={true}
         segments={[
           {
             href: "/",
