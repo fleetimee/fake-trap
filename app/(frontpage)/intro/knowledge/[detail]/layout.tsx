@@ -65,7 +65,15 @@ export default async function KnowledgeDetail({
       />
 
       <div
-        className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
+        className="
+        flex 
+        flex-col
+        gap-4
+        px-2
+        md:flex-row
+        lg:flex-row
+        
+        "
         id="scrollTarget"
       >
         <Content title={knowledge?.data?.knowledge_title}>{children}</Content>

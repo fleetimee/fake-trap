@@ -26,7 +26,7 @@ export function BreadCrumbs({
     <nav
       aria-label="breadcrumbs"
       className={cn(
-        "flex items-center text-sm font-medium",
+        "flex items-center overflow-x-auto whitespace-nowrap text-sm font-medium",
         isWhiteText ? "text-white" : "text-foreground"
       )}
     >

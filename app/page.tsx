@@ -114,7 +114,11 @@ export default async function IndexPage() {
 
                 <Link
                   href="/login"
-                  className="block w-full rounded-md bg-white px-7 py-3 text-center text-gray-800 shadow-md sm:w-auto"
+                  className={buttonVariants({
+                    size: "lg",
+                    variant: "outline",
+                    className: "w-full sm:w-auto",
+                  })}
                 >
                   Get Started
                 </Link>
@@ -124,6 +128,7 @@ export default async function IndexPage() {
                     className={buttonVariants({
                       size: "lg",
                       variant: "default",
+                      className: "w-full sm:w-auto",
                     })}
                   >
                     <span className="mr-2">
