@@ -11,6 +11,7 @@ import { CreateContentDropdownButton } from "@/components/create-content-dropdow
 import { KnowledgeDeleteContent } from "@/components/delete-content"
 import { DeleteSection } from "@/components/delete-section"
 import { EmptyContent } from "@/components/empty"
+import { Icons } from "@/components/icons"
 import {
   Accordion,
   AccordionContent,
@@ -30,8 +31,6 @@ import {
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-import { Icons } from "./icons"
 
 interface KnowledgeContentSidebarProps
   extends React.HTMLAttributes<HTMLDivElement> {
