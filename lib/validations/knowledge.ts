@@ -74,6 +74,5 @@ export const updateKnowledgeSchema = z.object({
     )
     .optional(),
   IdCategory: z.number().optional(),
-  CreatedBy: z.string().optional(),
   UpdatedBy: z.string().optional(),
 })

@@ -79,7 +79,6 @@ export function UpdateKnowledgeForm({
       Status: knowledge.status,
       IdCategory: knowledge.id_category,
       UpdatedBy: session?.expires.id,
-      CreatedBy: session?.expires.id,
     },
   })
 
