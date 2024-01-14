@@ -149,7 +149,7 @@ export function KnowledgeContentSidebar({
                                 >
                                   <Button
                                     className={cn(
-                                      "flex h-16 w-full items-center justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                      "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
                                       {
                                         "border border-primary bg-primary-foreground text-primary":
                                           pathname !==
@@ -157,8 +157,6 @@ export function KnowledgeContentSidebar({
                                       }
                                     )}
                                   >
-                                    {/* <Icons.empty className="mr-2 h-4 w-4" /> */}
-
                                     {content.content_type ===
                                     ContentType.LOCAL_FILE ? (
                                       <Icons.video className="mr-2 h-4 w-4 text-orange-500" />
@@ -172,7 +170,7 @@ export function KnowledgeContentSidebar({
                                       <Icons.paperClip className="mr-2 h-4 w-4 text-blue-500" />
                                     )}
 
-                                    <p className="line-clamp-2">
+                                    <p className="line-clamp-2 ">
                                       {content.content_title}
                                     </p>
                                   </Button>
