@@ -37,6 +37,7 @@ import {
   Moon,
   MoreHorizontal,
   MoreVertical,
+  Paperclip,
   Percent,
   Pizza,
   Plus,
@@ -47,7 +48,9 @@ import {
   Trash,
   Twitter,
   User,
+  Video,
   X,
+  Youtube,
   type LucideProps,
 } from "lucide-react"
 
@@ -101,8 +104,11 @@ export const Icons = {
   logout: LogOut,
   handShake: HeartHandshake,
   bird: Bird,
+  youtube: Youtube,
+  video: Video,
   percent: Percent,
   average: DivideCircle,
+  paperClip: Paperclip,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

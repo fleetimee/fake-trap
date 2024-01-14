@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { ContentType } from "@/lib/enums/status"
 import { cn } from "@/lib/utils"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { KnowledgeDeleteContent } from "@/components/delete-content"
@@ -149,7 +150,7 @@ export function KnowledgeContentSidebar({
                                 >
                                   <Button
                                     className={cn(
-                                      "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                      "flex h-16 w-full items-center justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
                                       {
                                         "border border-primary bg-primary-foreground text-primary":
                                           pathname !==
@@ -157,6 +158,21 @@ export function KnowledgeContentSidebar({
                                       }
                                     )}
                                   >
+                                    {/* <Icons.empty className="mr-2 h-4 w-4" /> */}
+
+                                    {content.content_type ===
+                                    ContentType.LOCAL_FILE ? (
+                                      <Icons.video className="mr-2 h-4 w-4 text-orange-500" />
+                                    ) : content.content_type ===
+                                      ContentType.VIDEO ? (
+                                      <Icons.youtube className="mr-2 h-4 w-4 text-red-500" />
+                                    ) : content.content_type ===
+                                      ContentType.ARTICLE ? (
+                                      <Icons.post className="mr-2 h-4 w-4 text-green-500" />
+                                    ) : (
+                                      <Icons.paperClip className="mr-2 h-4 w-4 text-blue-500" />
+                                    )}
+
                                     <p className="line-clamp-2">
                                       {content.content_title}
                                     </p>
