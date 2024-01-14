@@ -6,6 +6,7 @@ import { EnterFullScreenIcon, ExitFullScreenIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
 import { Pause, Play, Rewind } from "lucide-react"
 import ReactPlayer from "react-player"
+import { toast as sonnerToast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 
@@ -83,25 +84,25 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
     }, 2000) // Hide button after 2 seconds
   }
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(mouseLeaveTimeout)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     clearTimeout(mouseLeaveTimeout)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(
-        typeof window !== "undefined" ? window.innerWidth < 768 : false
-      )
-    }
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsMobile(
+  //       typeof window !== "undefined" ? window.innerWidth < 768 : false
+  //     )
+  //   }
 
-    window.addEventListener("resize", handleResize)
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
+  //   window.addEventListener("resize", handleResize)
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize)
+  //   }
+  // }, [])
 
   return (
     <div
@@ -123,21 +124,11 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
       }
     >
       <ReactPlayer
-        ref={playerRef}
         pip={true}
         url={url}
         light={light}
-        playing={playing}
-        onBuffer={() => {
-          console.log("buffering")
-        }}
-        playIcon={<div></div>}
-        controls={isMobile}
-        onDuration={(duration) => setDuration(duration)}
-        onProgress={({ played, playedSeconds }) => {
-          setPlayed(played)
-          setPlayedSeconds(playedSeconds)
-        }}
+        playing
+        controls
         width="100%"
         height="100%"
         style={{ position: "absolute", top: 0, left: 0 }}
@@ -145,8 +136,13 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
         config={{
           file: {
             attributes: {
-              onContextMenu: (e: { preventDefault: () => any }) =>
-                e.preventDefault(),
+              onContextMenu: (e: { preventDefault: () => any }) => {
+                e.preventDefault()
+                sonnerToast.error("Error", {
+                  description: "Klik kanan tidak tersedia",
+                })
+              },
+
               controlsList: "nodownload",
             },
           },
@@ -168,7 +164,7 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
         />
       </div>
 
-      {showButton && (
+      {/* {showButton && (
         <div className="absolute inset-x-4 bottom-4 rounded-md bg-black p-2 opacity-80">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <div className="flex space-x-4">
@@ -229,7 +225,7 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
             className="mt-2 h-2 w-full rounded-full bg-white"
           />
         </div>
-      )}
+      )} */}
     </div>
   )
 }
