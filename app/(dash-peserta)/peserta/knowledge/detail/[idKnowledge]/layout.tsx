@@ -1,17 +1,13 @@
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneKnowledge } from "@/lib/fetcher"
+import { getOneKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-
-
-
-
 
 interface KnowledgeDetailLayoutProps {
   children: React.ReactNode
@@ -76,7 +72,7 @@ export default async function KnowledgeDetailLayout({
         title={knowledge.data.knowledge_title}
         description={knowledge.data.description}
         urlLink="/peserta/knowledge"
-        canCreateSection={false}
+        image={knowledge.data.image}
       />
 
       <div
@@ -85,12 +81,13 @@ export default async function KnowledgeDetailLayout({
       >
         {/* Content */}
         <Content title={knowledge.data?.knowledge_title}>{children}</Content>
-
         {/* Knowledge Sidebar Section */}
         <KnowledgeContentSidebar
+          className="fixed right-0 top-0 h-screen overflow-y-auto"
           baseUrl={`/peserta/knowledge/detail/${params.idKnowledge}`}
           knowledge={knowledge}
           canCreateContent={false}
+          newSection={false}
         />
       </div>
     </DashboardShell>

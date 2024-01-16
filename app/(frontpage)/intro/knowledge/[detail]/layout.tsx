@@ -1,6 +1,6 @@
 import React from "react"
 
-import { getOnePublicKnowledge } from "@/lib/fetcher"
+import { getOnePublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
@@ -36,6 +36,7 @@ export default async function KnowledgeDetail({
   return (
     <Shell>
       <BreadCrumbs
+        isWhiteText={true}
         segments={[
           {
             href: "/",
@@ -60,11 +61,19 @@ export default async function KnowledgeDetail({
         title={knowledge.data.knowledge_title}
         description={knowledge.data.description}
         urlLink="/intro/knowledge"
-        canCreateSection={false}
+        image={knowledge.data.image}
       />
 
       <div
-        className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
+        className="
+        flex 
+        flex-col
+        gap-4
+        px-2
+        md:flex-row
+        lg:flex-row
+        
+        "
         id="scrollTarget"
       >
         <Content title={knowledge?.data?.knowledge_title}>{children}</Content>
@@ -73,6 +82,7 @@ export default async function KnowledgeDetail({
           baseUrl={`/intro/knowledge/${params.detail}`}
           knowledge={knowledge}
           canCreateContent={false}
+          newSection={false}
         />
       </div>
     </Shell>

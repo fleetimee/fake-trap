@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getRole } from "@/lib/fetcher"
+import { getRole } from "@/lib/fetcher/role-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
@@ -10,10 +10,7 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Separator } from "@/components/ui/separator"
 
-import {
-  SidebarNav,
-  SidebarNavRole,
-} from "../setting/_components/setting_sidebar"
+import { SidebarNavRole } from "../setting/_components/setting_sidebar"
 
 export const metadata: Metadata = {
   title: "Managemen Kewenangan",

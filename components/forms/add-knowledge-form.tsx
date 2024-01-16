@@ -12,8 +12,10 @@ import { z } from "zod"
 
 import { CategoryListRes } from "@/types/category/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { createKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
 import { knowledgeSchema } from "@/lib/validations/knowledge"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -38,12 +40,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
-
-import { Icons } from "../icons"
-import { ScrollArea } from "../ui/scroll-area";
-import { Zoom } from "../zoom-image";
-
+import { Zoom } from "@/components/zoom-image"
 
 type Inputs = z.infer<typeof knowledgeSchema>
 
@@ -52,11 +51,13 @@ type InputsWithIndexSignature = Inputs & { [key: string]: any }
 interface AddKnowledgeFormProps {
   reference: ReferenceListRes
   category: CategoryListRes
+  baseUrl?: string
 }
 
 export function AddKnowledgeForm({
   reference,
   category,
+  baseUrl,
 }: AddKnowledgeFormProps) {
   const [preview, setPreview] = React.useState<string | null>(null)
 
@@ -84,8 +85,6 @@ export function AddKnowledgeForm({
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge`
-
         const formData = new FormData()
 
         //append data
@@ -93,22 +92,29 @@ export function AddKnowledgeForm({
           formData.append(key, data[key])
         })
 
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await createKnowledge({
+          token: session?.user.token,
           body: formData,
         })
 
         if (response.ok) {
+          const responseData = await response.json()
+
+          const newKnowledgeId = responseData.data
+
           sonnerToast.success("Berhasil", {
             description: "Pengetahuan berhasil ditambahkan",
           })
 
-          router.back()
-          router.refresh()
-          form.reset()
+          if (baseUrl) {
+            router.push(`${baseUrl}/detail/${newKnowledgeId}`)
+            router.refresh()
+            form.reset()
+          } else {
+            router.back()
+            router.refresh()
+            form.reset()
+          }
         } else {
           sonnerToast.error("Gagal", {
             description: "Pengetahuan gagal ditambahkan",

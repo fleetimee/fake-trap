@@ -2,7 +2,7 @@ import React from "react"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneKnowledge } from "@/lib/fetcher"
+import { getOneKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
@@ -73,6 +73,7 @@ export default async function KnowledgeDetailLayout({
         title={knowledge.data?.knowledge_title}
         description={knowledge.data?.description}
         urlLink={`/pemateri-divisi/knowledge/detail/${params.idKnowledge}/section/new`}
+        image={knowledge.data?.image}
       />
 
       <div
@@ -86,6 +87,7 @@ export default async function KnowledgeDetailLayout({
         <KnowledgeContentSidebar
           baseUrl={`/pemateri-divisi/knowledge/detail/${params.idKnowledge}`}
           knowledge={knowledge}
+          newSection
         />
       </div>
     </DashboardShell>

@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getUserEnrolledCourseList } from "@/lib/fetcher"
+import { getPesertaEnrolledCourses } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -47,7 +47,7 @@ export default async function PesertaCoursePage({
 
   const tokenExtracted = extractToken(user?.token)
 
-  const userCourse = await getUserEnrolledCourseList({
+  const userCourse = await getPesertaEnrolledCourses({
     token: user?.token,
     uuid: tokenExtracted?.id,
     limit: limitInitial,

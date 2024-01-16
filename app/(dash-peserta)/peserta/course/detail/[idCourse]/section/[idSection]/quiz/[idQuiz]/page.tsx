@@ -4,11 +4,11 @@ import { PrinterIcon } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { QuizType } from "@/lib/enums/status"
-import { getNewExerciseResult, getOneQuiz, getReference } from "@/lib/fetcher"
+import { getOneQuiz, getUserQuizResults } from "@/lib/fetcher/exercise-fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import {
   convertDatetoString,
-  convertDatetoStringShort,
   convertDatetoStringWithTime,
   extractToken,
 } from "@/lib/utils"
@@ -36,9 +36,7 @@ import { Separator } from "@/components/ui/separator"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -74,7 +72,7 @@ export default async function CourseQuizPageProps({
     token: user?.token,
   })
 
-  const userQuiz = await getNewExerciseResult({
+  const userQuiz = await getUserQuizResults({
     token: user?.token,
     idUser: tokenExtracted.id,
     limit: 10,

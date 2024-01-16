@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getLoggedOnUser } from "@/lib/fetcher"
+import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"

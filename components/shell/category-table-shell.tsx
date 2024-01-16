@@ -29,35 +29,21 @@ export function CategoryTableShell({
   const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
       {
-        accessorKey: "category_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Kategori" />
+          <DataTableColumnHeader column={column} title="#" />
         ),
+        id: "actions",
         cell: ({ row }) => {
+          const kategori = row.original
+
           return (
-            <Link
-              href={`/dashboard/category/${row.original.id_category}`}
-              passHref
-              className="cursor-pointer text-blue-500 hover:text-blue-600 hover:underline"
-            >
-              <p className="text-sm font-bold">{row.original.category_name}</p>
-            </Link>
+            <CategoryOperations
+              kategori={kategori}
+              rule={rule}
+              editRowLink={editRowLink}
+            />
           )
         },
-        enableSorting: true,
-        enableHiding: true,
-      },
-      {
-        accessorKey: "total_knowledge",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Total Pengetahuan" />
-        ),
-        cell: ({ row }) => {
-          return (
-            <p className="text-sm font-bold">{row.original.total_knowledge}</p>
-          )
-        },
-        enableSorting: false,
       },
       {
         accessorKey: "image",
@@ -76,6 +62,27 @@ export function CategoryTableShell({
         enableSorting: false,
         enableHiding: false,
       },
+      {
+        accessorKey: "category_name",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Nama Kategori" />
+        ),
+        enableSorting: true,
+        enableHiding: true,
+      },
+      {
+        accessorKey: "total_knowledge",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Total Pengetahuan" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <p className="text-sm font-bold">{row.original.total_knowledge}</p>
+          )
+        },
+        enableSorting: false,
+      },
+
       {
         accessorKey: "created_at",
         header: ({ column }) => (
@@ -104,24 +111,13 @@ export function CategoryTableShell({
         enableHiding: true,
       },
       {
+        accessorKey: "created_by",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Aksi" />
+          <DataTableColumnHeader column={column} title="Dibuat oleh" />
         ),
-        id: "actions",
-        cell: ({ row }) => {
-          const kategori = row.original
-
-          return (
-            <CategoryOperations
-              kategori={kategori}
-              rule={rule}
-              editRowLink={editRowLink}
-            />
-          )
-        },
       },
     ],
-    [data, editRowLink, rule]
+    [editRowLink, rule]
   )
 
   return (

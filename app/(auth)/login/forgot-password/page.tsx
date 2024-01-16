@@ -2,10 +2,15 @@ import { Suspense } from "react"
 import Link from "next/link"
 
 import { ForgotPasswordForm } from "@/components/forms/forgot-password-form"
-
-
-
-
+import { Shell } from "@/components/shell/lobby-shell"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export const metadata = {
   title: "Lupa Password",
@@ -14,24 +19,29 @@ export const metadata = {
 
 export default async function LoginPage() {
   return (
-    <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] ">
-      <div className="flex flex-col space-y-2 text-center">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Lupa Password
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Masukkan email anda untuk mengatur ulang password, password baru akan
-          dikirim ke email anda.
-        </p>
-      </div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ForgotPasswordForm />
-      </Suspense>
-      <Link href="/login">
-        <p className="text-end text-sm text-muted-foreground hover:text-blue-500 hover:underline">
-          Kembali
-        </p>
-      </Link>
-    </div>
+    <Shell className="max-w-lg">
+      <Card>
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Reset password</CardTitle>
+          <CardDescription>
+            Enter your email address and we will send you a verification code
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ForgotPasswordForm />
+          </Suspense>{" "}
+        </CardContent>
+        <CardFooter className="flex flex-wrap items-center justify-end gap-2">
+          <Link
+            aria-label="Reset password"
+            href="/login"
+            className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
+          >
+            Kembali
+          </Link>
+        </CardFooter>
+      </Card>
+    </Shell>
   )
 }

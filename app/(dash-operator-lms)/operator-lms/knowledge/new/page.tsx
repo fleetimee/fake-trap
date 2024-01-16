@@ -2,7 +2,9 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getListCategory, getReference, getRule } from "@/lib/fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
+import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddKnowledgeForm } from "@/components/forms/add-knowledge-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -14,10 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Tambah Pengetahuan Baru",
@@ -36,7 +34,7 @@ export default async function OperatorLMSKnowledgePageNew() {
     refCode: "003",
   })
 
-  const category = await getListCategory({
+  const category = await getOperatorCategory({
     token: user?.token,
     page: 1,
     limit: 999,
@@ -77,7 +75,11 @@ export default async function OperatorLMSKnowledgePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddKnowledgeForm reference={reference} category={category} />
+          <AddKnowledgeForm
+            reference={reference}
+            category={category}
+            baseUrl="/operator-lms/knowledge"
+          />
         </CardContent>
       </Card>
     </DashboardShell>

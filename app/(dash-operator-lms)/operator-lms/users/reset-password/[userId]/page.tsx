@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import { getOneUser } from "@/lib/fetcher"
+import { getOneUser } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { ResetPasswordOperatorForm } from "@/components/forms/reset-password-operator-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -12,10 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Reset Password",

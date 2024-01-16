@@ -1,19 +1,18 @@
 import React from "react"
 import { notFound, redirect } from "next/navigation"
-import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCourse, getOneKnowledge } from "@/lib/fetcher"
+import {
+  getCourseKnowledgeSection,
+  getOneCourse,
+} from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
-import { KnowledgeContentSidebar } from "@/components/content-sidebar"
+import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
-import { MotionDiv } from "@/components/framer-wrapper"
-import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { VercelToolbar } from "@/components/vercel-toolbar"
 
 interface ApprovalDetailKnowledgePageProps {
@@ -59,9 +58,9 @@ export default async function CourseDetailLayout({
     idCourse: params.idCourse,
   })
 
-  const knowledge = await getOneKnowledge({
+  const knowledgeSection = await getCourseKnowledgeSection({
+    idCourse: params.idCourse,
     token: user?.token,
-    idKnowledge: course.data?.id_knowledge.toString(),
   })
 
   if (course.code !== 200) {
@@ -91,10 +90,10 @@ export default async function CourseDetailLayout({
         description={course?.data?.course_desc}
         title={course?.data?.course_name}
         urlLink={`/pemateri-divisi/course/detail/${params.idCourse}/section/new`}
-        canCreateSection={false}
+        image={course?.data?.image}
       />
 
-      <MotionDiv
+      {/* <MotionDiv
         className="flex flex-row gap-4 px-2"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -108,15 +107,23 @@ export default async function CourseDetailLayout({
             <span className="font-bold">{knowledge.data.knowledge_title}</span>
           </AlertDescription>
         </Alert>
-      </MotionDiv>
+      </MotionDiv> */}
 
       <div className="flex items-center justify-end">
         <VercelToolbar
+          materiButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/knowledge`}
           homeButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`}
           forumButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/threads`}
           userButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/people`}
         />
       </div>
+
+      {knowledgeSection.data && knowledgeSection.data.length > 0 && (
+        <CourseAlert
+          knowledgeSection={knowledgeSection}
+          singleLink={`/intro/knowledge`}
+        />
+      )}
 
       <div
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
@@ -130,6 +137,8 @@ export default async function CourseDetailLayout({
           course={course}
           baseUrl={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`}
           canCreateContent={false}
+          canCreateSection={false}
+          knowledgeSection={knowledgeSection.data}
         />
       </div>
     </DashboardShell>

@@ -1,33 +1,11 @@
 import React from "react"
 
 import { UserOneRes } from "@/types/user/res"
+import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-
-interface GetUserProps {
-  token: string | undefined
-  uuid: string
-}
-
-async function getLoggedOnUser({
-  token,
-  uuid,
-}: GetUserProps): Promise<UserOneRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}`
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache",
-  })
-
-  return res.json()
-}
 
 interface IntroLayoutProps {
   children: React.ReactNode
@@ -44,6 +22,7 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
           displayName="No"
           emailName="User"
           isMoreThanOneRole={false}
+          sidebarNavItems={[]}
         />
         <main className="flex-1">{children}</main>
         <SiteFooter className="border-t" />
@@ -67,6 +46,7 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
         displayName={loggedOnUser?.data?.name}
         emailName={loggedOnUser?.data?.email}
         isMoreThanOneRole={isMoreThanOneRole}
+        sidebarNavItems={[]}
       />
       <main className="flex-1">{children}</main>
       <SiteFooter className="border-t" />

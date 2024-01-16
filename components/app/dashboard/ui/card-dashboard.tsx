@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -12,10 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 interface CardProps {
   title: string
   name: string
@@ -23,6 +19,7 @@ interface CardProps {
   url?: string
   buttonText?: string
   icon?: keyof typeof Icons
+  disableButton?: boolean
 }
 
 export function CardDashboard({
@@ -32,11 +29,12 @@ export function CardDashboard({
   url,
   buttonText,
   icon,
+  disableButton,
 }: CardProps) {
   const Icon = Icons[icon || "arrowRight"]
 
   return (
-    <Card className="space-y-2 shadow-md hover:bg-accent hover:text-accent-foreground">
+    <Card className="h-fit space-y-2 shadow-md hover:bg-accent hover:text-accent-foreground">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
           <CardTitle className="text-sm font-medium">{title}</CardTitle>
@@ -60,14 +58,32 @@ export function CardDashboard({
               alt={`Pic ${name}`}
               width={500}
               height={500}
-              className="aspect-video flex-none rounded-md object-cover grayscale transition-all hover:scale-105 hover:grayscale-0"
+              className="aspect-video flex-none rounded-md object-cover transition-all duration-500 ease-in-out hover:scale-105"
             />
           </MotionDiv>
         </Link>
       </CardContent>
       <CardFooter className="text-center">
-        <Link href={url || "#"} className="w-full">
-          <Button className="w-full">{buttonText || "Wtf is this?"}</Button>
+        {/*<Link href={url || "#"} className="w-full">*/}
+        {/*  <Button className="w-full">{buttonText || "Wtf is this?"}</Button>*/}
+        {/*</Link>*/}
+
+        <Link
+          href={url || "#"}
+          className={buttonVariants({
+            variant: "default",
+            className: "w-full",
+          })}
+        >
+          {/*{disableButton ? (*/}
+          {/*  <Button className="w-full" disabled>*/}
+          {/*    {buttonText || "Wtf is this?"}*/}
+          {/*  </Button>*/}
+          {/*) : (*/}
+          {/*  <Button className="w-full">{buttonText || "Wtf is this?"}</Button>*/}
+          {/*)}*/}
+
+          {buttonText ? buttonText : "Wtf is this?"}
         </Link>
       </CardFooter>
     </Card>

@@ -9,7 +9,6 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css"
 import { Card } from "./ui/card"
 import { ScrollArea } from "./ui/scroll-area"
 
-
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
   import.meta.url

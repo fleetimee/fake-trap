@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneSection } from "@/lib/fetcher"
+import { getOneSection } from "@/lib/fetcher/section-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UpdateSectionForm } from "@/components/forms/update-knowledge-section-form"
 import { Separator } from "@/components/ui/separator"

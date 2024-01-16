@@ -1,30 +1,5 @@
-import { UserListRes } from "@/types/user/res"
+import { getUserV2 } from "@/lib/fetcher/users-fetcher"
 import { CardDashboardIndicator } from "@/components/app/dashboard/ui/"
-
-
-
-
-
-interface GetUserCountProps {
-  token: string | undefined
-}
-
-async function getUserCount({
-  token,
-}: GetUserCountProps): Promise<UserListRes> {
-  const userCountRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await userCountRes.json()
-}
 
 interface DashboardUserCardCountProps {
   token: string | undefined
@@ -33,15 +8,17 @@ interface DashboardUserCardCountProps {
 export async function DashboardUserCardCount({
   token,
 }: DashboardUserCardCountProps) {
-  const res = await getUserCount({
+  const { count } = await getUserV2({
     token: token,
+    limit: 1,
+    page: 1,
   })
 
   return (
     <CardDashboardIndicator
       title="User"
       icon="user"
-      content={res.count}
+      content={count}
       description="User yang terdaftar"
     />
   )

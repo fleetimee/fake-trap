@@ -2,7 +2,7 @@ import Image from "next/image"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneKnowledge } from "@/lib/fetcher"
+import { getOneKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 
@@ -34,6 +34,7 @@ export default async function KnowledgeDetailPage({
 
   return (
     <Image
+      priority
       src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.data.image}`}
       alt={knowledge.data.knowledge_title}
       className="aspect-video rounded-lg object-cover shadow-md "

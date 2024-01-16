@@ -10,6 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ReferenceListRes } from "@/types/references/res"
+import { createExercise } from "@/lib/fetcher/exercise-fetcher"
 import { cn } from "@/lib/utils"
 import { testSchema } from "@/lib/validations/test"
 import { Button } from "@/components/ui/button"
@@ -67,14 +68,8 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz`
-
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const response = await createExercise({
+          token: session?.user?.token,
           body: JSON.stringify(data),
         })
 

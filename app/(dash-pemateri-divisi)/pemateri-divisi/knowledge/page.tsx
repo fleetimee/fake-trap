@@ -3,19 +3,22 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
 import {
-  getKnowledgeByCreatedBy,
-  getListCategory,
-  getReference,
-  getRule,
-} from "@/lib/fetcher"
+  getKnowledgeByCreatedByUser,
+  getKnowledgeDashboardCount,
+} from "@/lib/fetcher/knowledge-fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Pengetahuan",
@@ -47,6 +50,8 @@ export default async function PemateriDivisiKnowledgePage({
     id_category,
     status_text,
     status,
+    from,
+    to,
   } = searchParams ?? {}
 
   // Initial value
@@ -61,13 +66,11 @@ export default async function PemateriDivisiKnowledgePage({
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
 
-  const rule = await getRule({
-    idRole: "1",
-    token: user?.token,
-  })
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
 
-  const [knowledge, category, reference] = await Promise.all([
-    getKnowledgeByCreatedBy({
+  const [knowledge, category, reference, knowledgeStatus] = await Promise.all([
+    getKnowledgeByCreatedByUser({
       token: user?.token,
       page: pageInitial,
       limit: limitInitial,
@@ -78,11 +81,17 @@ export default async function PemateriDivisiKnowledgePage({
       statusCode: status_text, // Add this line
       visibilityId: status, // Add this line
       userUuid: tokenExtracted.id,
+      from: fromInitial,
+      to: toInitial,
     }),
-    getListCategory({ token: user?.token, page: 1, limit: 100 }),
+    getOperatorCategory({ token: user?.token, page: 1, limit: 100 }),
     getReference({
       token: user?.token,
       refCode: "003",
+    }),
+    getKnowledgeDashboardCount({
+      token: user?.token,
+      userUuid: tokenExtracted.id,
     }),
   ])
 
@@ -111,6 +120,37 @@ export default async function PemateriDivisiKnowledgePage({
             description="Materi dan Pengetahuan yang anda buat"
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex  place-items-end items-end justify-self-end"
+        />
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+        <Widget
+          icon={<Icons.category className="text-blue-500" />}
+          title="Materi"
+          subtitle={knowledgeStatus.data.total_knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.average className="text-green-500" />}
+          title="Private"
+          subtitle={knowledgeStatus.data.private_knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.user className="text-yellow-500" />}
+          title="Publik"
+          subtitle={knowledgeStatus.data.public_knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.percent className="text-red-500" />}
+          title="Terbaru"
+          subtitle={knowledgeStatus.data.recent_knowledge_title.toString()}
+        />
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

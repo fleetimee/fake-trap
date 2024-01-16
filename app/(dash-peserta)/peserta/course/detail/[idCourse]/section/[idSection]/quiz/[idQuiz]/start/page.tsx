@@ -1,13 +1,9 @@
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneQuiz } from "@/lib/fetcher"
+import { getOneQuiz } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UserSubmittedAnswerFormProps } from "@/components/forms/user-submmited-answer-form"
-
-
-
-
 
 interface CourseQuizStartPageProps {
   params: {

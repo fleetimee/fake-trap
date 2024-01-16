@@ -1,12 +1,14 @@
 "use client"
 
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Turnstile } from "@marsidev/react-turnstile"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { forgotPassword } from "@/lib/fetcher/password-fetcher"
 import { forgotPasswordSchema } from "@/lib/validations/forgot-password"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -22,7 +24,6 @@ import {
   FormMessage,
 } from "../ui/form"
 
-
 interface ErrorResponseProps {
   error: string
 }
@@ -31,6 +32,8 @@ type Inputs = z.infer<typeof forgotPasswordSchema>
 
 export function ForgotPasswordForm() {
   const router = useRouter()
+
+  const [isCaptchaVerified, setCaptchaVerified] = useState(false)
 
   const [isPending, startTransition] = useTransition()
 
@@ -44,13 +47,8 @@ export function ForgotPasswordForm() {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/reset-password/${data.email}`
-
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const response = await forgotPassword({
+          email: data.email,
         })
 
         if (response.ok) {
@@ -101,9 +99,40 @@ export function ForgotPasswordForm() {
           )}
         />
 
-        <Button type="submit" disabled={isPending}>
+        <Turnstile
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+          className="h-12 w-full"
+          onSuccess={async (token) => {
+            console.log(token)
+
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_BASE_URL}/verifyTurnstile`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  token: token,
+                }),
+              }
+            )
+
+            console.log(response)
+
+            if (response.ok) {
+              setCaptchaVerified(true)
+            } else {
+              sonnerToast.error("Perhatian", {
+                description: "Captcha tidak valid",
+              })
+            }
+          }}
+        />
+
+        <Button type="submit" disabled={isPending || !isCaptchaVerified}>
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Reset Password
+          Continue
         </Button>
       </form>
     </Form>

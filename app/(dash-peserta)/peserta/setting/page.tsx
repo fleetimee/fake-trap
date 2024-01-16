@@ -2,15 +2,11 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneUser } from "@/lib/fetcher"
+import { getOneUser } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { ProfileForm } from "@/components/forms/profile-form"
 import { Separator } from "@/components/ui/separator"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Pengaturan",

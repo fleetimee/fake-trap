@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
 import { ErrorResponse } from "@/types/error-res"
+import { createPost } from "@/lib/fetcher/post-fetcher"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -115,21 +116,14 @@ export function Editor({ id_threads }: EditorProps) {
 
     const block = await ref.current?.save()
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/secure/threads/posts/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.user.token}`,
-        },
-        body: JSON.stringify({
-          id_threads: id_threads,
-          content: JSON.stringify(block),
-          user_uuid: session?.expires.id,
-        }),
-      }
-    )
+    const res = await createPost({
+      token: session?.user.token,
+      body: JSON.stringify({
+        id_threads: id_threads,
+        content: JSON.stringify(block),
+        user_uuid: session?.expires.id,
+      }),
+    })
 
     setIsSaving(false)
 

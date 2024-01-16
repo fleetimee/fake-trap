@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import { PersonIcon } from "@radix-ui/react-icons"
 
 import { authOptions } from "@/lib/auth"
-import { getListExerciseMember } from "@/lib/fetcher"
+import { getQuizMembers } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -31,7 +31,7 @@ export default async function ExerciseDetailPesertaPage({
 }: ExerciseDetailPesertaPageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, course_name, category } = searchParams ?? {}
+  const { page, per_page, sort } = searchParams ?? {}
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -47,7 +47,7 @@ export default async function ExerciseDetailPesertaPage({
   const sortBy = sortByInitial.split(".")[0]
   const orderBy = orderByInitial.split(".")[1]
 
-  const exerciseMember = await getListExerciseMember({
+  const exerciseMember = await getQuizMembers({
     token: user?.token,
     idExercise: params.idExercise,
     page: pageInitial,

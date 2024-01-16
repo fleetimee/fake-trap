@@ -1,11 +1,16 @@
 import { Suspense } from "react"
 import Link from "next/link"
 
+import { Shell } from "@/components/shell/lobby-shell"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { UserAuthForm } from "@/components/user-auth-form"
-
-
-
-
 
 export const metadata = {
   title: "Login",
@@ -14,26 +19,27 @@ export const metadata = {
 
 export default async function LoginPage() {
   return (
-    <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] ">
-      <div className="flex flex-col space-y-2 text-center">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Masuk ke E Learning BPD
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Masukkan username dan password anda untuk mengakses E Learning BPD
-        </p>
-      </div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <UserAuthForm />
-      </Suspense>
-      <Link href="/login/forgot-password">
-        {" "}
-        {/* Step 2: Add a new Link element */}
-        <p className="text-end text-sm text-muted-foreground hover:text-blue-500 hover:underline">
-          Lupa password ?
-        </p>{" "}
-        {/* Step 3 and 4: Add the text and style the Link element */}
-      </Link>
-    </div>
+    <Shell className="max-w-lg">
+      <Card>
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Sign in</CardTitle>
+          <CardDescription>
+            Enter your credentials to access your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <UserAuthForm />
+        </CardContent>
+        <CardFooter className="flex flex-wrap items-center justify-end gap-2">
+          <Link
+            aria-label="Reset password"
+            href="/login/forgot-password"
+            className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
+          >
+            Reset password
+          </Link>
+        </CardFooter>
+      </Card>
+    </Shell>
   )
 }

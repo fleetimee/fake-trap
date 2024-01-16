@@ -9,6 +9,7 @@ import { toast as sonnerToast } from "sonner"
 
 import { CategoryListResData } from "@/types/category/res"
 import { RuleOneResData } from "@/types/rule/res"
+import { deleteCategory } from "@/lib/fetcher/category-fetcher"
 import { Icons } from "@/components/icons"
 import {
   AlertDialog,
@@ -29,38 +30,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-interface DeleteCategoryProps {
-  idKategori: number
-  token: string | undefined
-}
-
-async function deleteCategory({ idKategori, token }: DeleteCategoryProps) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/${idKategori}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-
-  if (response.ok) {
-    sonnerToast.success("Berhasil", {
-      description: "Kategori berhasil dihapus",
-    })
-
-    return true
-  } else {
-    sonnerToast.error("Gagal", {
-      description: "Kategori gagal dihapus",
-    })
-
-    return false
-  }
-}
 
 interface CategoryOperationsProps {
   kategori: CategoryListResData
@@ -170,15 +139,22 @@ export function CategoryOperations({
                 event.preventDefault()
                 setIsDeleteLoading(true)
                 const deleted = await deleteCategory({
-                  idKategori: kategori.id_category,
-                  token: session?.user.token,
+                  token: session?.user?.token,
+                  idCategory: kategori.id_category.toString(),
                 })
 
                 if (deleted) {
+                  sonnerToast.success("Berhasil", {
+                    description: "Kategori berhasil dihapus",
+                  })
+
                   setIsDeleteLoading(false)
                   setOpenDeleteAlert(false)
                   router.refresh()
                 } else {
+                  sonnerToast.error("Gagal", {
+                    description: "Kategori gagal dihapus",
+                  })
                   setIsDeleteLoading(false)
                 }
               }}

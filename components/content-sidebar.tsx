@@ -5,11 +5,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { KnowledgeOneRes } from "@/types/knowledge/res"
+import { ContentType } from "@/lib/enums/status"
 import { cn } from "@/lib/utils"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { KnowledgeDeleteContent } from "@/components/delete-content"
 import { DeleteSection } from "@/components/delete-section"
 import { EmptyContent } from "@/components/empty"
+import { Icons } from "@/components/icons"
 import {
   Accordion,
   AccordionContent,
@@ -30,27 +32,48 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-interface KnowledgeContentSidebarProps {
+interface KnowledgeContentSidebarProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   knowledge: KnowledgeOneRes
   baseUrl: string
   canCreateContent?: boolean
+  newSection?: boolean
 }
 
 export function KnowledgeContentSidebar({
   knowledge,
   baseUrl,
   canCreateContent = true,
+  newSection = false,
+  className,
+  ...props
 }: KnowledgeContentSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
+    <Card className="flex  h-full basis-1/4 flex-col items-center justify-start ">
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
-          <TabsTrigger value="knowledge" className="w-full font-semibold">
-            Pengetahuan
+          <TabsTrigger
+            value="knowledge"
+            className="font-lg w-full  font-semibold"
+          >
+            <div className="inline-flex items-center">
+              <span className="ml-2">Materi</span>
+            </div>
           </TabsTrigger>
         </TabsList>
+
+        {newSection && (
+          <div className="flex justify-end px-3 py-6">
+            <Link href={`${baseUrl}/section/new`}>
+              <Button size="sm" variant="outline">
+                <Icons.add className="h-4 w-4" />
+                <span className="ml-2">Tambah Section</span>
+              </Button>
+            </Link>
+          </div>
+        )}
 
         <TabsContent value="knowledge">
           <ScrollArea className="h-[700px] w-full">
@@ -125,15 +148,29 @@ export function KnowledgeContentSidebar({
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button
-                                    className={cn({
-                                      "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-secondary-foreground hover:text-background":
-                                        true,
-                                      "bg-secondary-foreground text-background":
-                                        pathname !==
-                                        `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
-                                    })}
+                                    className={cn(
+                                      "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                      {
+                                        "border border-primary bg-primary-foreground text-primary":
+                                          pathname !==
+                                          `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
+                                      }
+                                    )}
                                   >
-                                    <p className="line-clamp-2">
+                                    {content.content_type ===
+                                    ContentType.LOCAL_FILE ? (
+                                      <Icons.video className="mr-2 h-4 w-4 text-orange-500" />
+                                    ) : content.content_type ===
+                                      ContentType.VIDEO ? (
+                                      <Icons.youtube className="mr-2 h-4 w-4 text-red-500" />
+                                    ) : content.content_type ===
+                                      ContentType.ARTICLE ? (
+                                      <Icons.post className="mr-2 h-4 w-4 text-green-500" />
+                                    ) : (
+                                      <Icons.paperClip className="mr-2 h-4 w-4 text-blue-500" />
+                                    )}
+
+                                    <p className="line-clamp-2 ">
                                       {content.content_title}
                                     </p>
                                   </Button>
@@ -194,13 +231,17 @@ export function KnowledgeContentSidebar({
                 ))}
               </Accordion>
             ) : (
-              <EmptyContent className="flex h-[50px] items-center justify-center">
-                <EmptyContent.Icon name="empty" />
-                <EmptyContent.Title>Belum ada section</EmptyContent.Title>
-                <EmptyContent.Description>
-                  Silahkan tambahkan section pada tombol diatas
-                </EmptyContent.Description>
-              </EmptyContent>
+              <div className="flex items-center justify-center">
+                <EmptyContent className="flex h-full flex-col items-center justify-center">
+                  <EmptyContent.Icon name="empty" />
+                  <EmptyContent.Title className="text-center">
+                    Belum ada section
+                  </EmptyContent.Title>
+                  <EmptyContent.Description className="text-center">
+                    Silahkan tambahkan section pada tombol diatas
+                  </EmptyContent.Description>
+                </EmptyContent>
+              </div>
             )}
           </ScrollArea>
         </TabsContent>

@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 
-import { CategoryOneRes } from "@/types/category/res"
-import { getPublicCategoriesDataById } from "@/lib/datasource"
+import { getOnePublicCategory } from "@/lib/fetcher/category-fetcher"
 import { toTitleCase } from "@/lib/utils"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
 import { HeaderIntro } from "@/components/category-header"
@@ -16,33 +15,13 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const detailCategoryData = await getPublicCategoriesDataById({
-    id: parseInt(params.detail),
+  const detailCategoryData = await getOnePublicCategory({
+    idCategory: parseInt(params.detail),
   })
 
   return {
     title: `Kategori - ${detailCategoryData.data.category_name}`,
   }
-}
-
-interface GetOnePublicCategoryProps {
-  idCategory: number
-}
-
-async function getOnePublicCategory({
-  idCategory,
-}: GetOnePublicCategoryProps): Promise<CategoryOneRes> {
-  const categoryOnePublic = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/${idCategory}`,
-    {
-      method: "GET",
-      headers: {
-        ContentType: "application/json",
-      },
-      cache: "no-store",
-    }
-  )
-  return await categoryOnePublic.json()
 }
 
 export default async function DetailIntroCategory({ params }: Props) {

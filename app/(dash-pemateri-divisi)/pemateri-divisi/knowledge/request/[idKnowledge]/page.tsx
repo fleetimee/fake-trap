@@ -4,10 +4,10 @@ import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import {
-  fetchUsersByGroupId,
   getOneKnowledge,
   lookupKnowledge,
-} from "@/lib/fetcher"
+} from "@/lib/fetcher/knowledge-fetcher"
+import { getUsersSupervisor } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { RequestKnowledgeForm } from "@/components/forms/request-knowledge-form"
@@ -52,9 +52,9 @@ export default async function PemateriDivisiRequestKnowledgeNew({
       idKnowledge: Number(params.idKnowledge),
       token: user?.token,
     }),
-    fetchUsersByGroupId({
+    getUsersSupervisor({
       token: user?.token,
-      idGroup: 2,
+      email: tokenExtracted?.email,
     }),
   ])
 

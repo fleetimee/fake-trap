@@ -4,6 +4,7 @@ import Link from "next/link"
 import { generateFromString } from "generate-avatar"
 import { signOut } from "next-auth/react"
 
+import { MenuListResNewData } from "@/types/menu/res"
 import { dashboardConfig } from "@/config/dashboard"
 import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
@@ -34,6 +35,7 @@ interface SiteHeaderProps {
   isMoreThanOneRole: boolean
   displayName: string
   emailName: string
+  sidebarNavItems: MenuListResNewData[]
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
@@ -44,7 +46,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
           <MainNav items={siteConfig.mainNav} />
           <MobileNav
             mainNavItems={siteConfig.mainNav}
-            sidebarNavItems={dashboardConfig.sidebarNav}
+            sidebarNavItems={props.sidebarNavItems}
           />
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-2">
@@ -82,11 +84,11 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                       disabled={!props.isMoreThanOneRole}
                     >
                       <Link href={"/panel-selector"}>
-                        <Icons.empty
+                        <Icons.menu
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Panel Selector
+                        Kewenangan
                         <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
@@ -100,7 +102,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                     onSelect={(event) => {
                       event.preventDefault()
                       signOut({
-                        callbackUrl: `${window.location.origin}`,
+                        callbackUrl: "/login",
                       }).then(() => {
                         localStorage.clear()
                         sessionStorage.clear()
@@ -150,7 +152,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
           <MainNav items={siteConfig.mainNav} />
           <MobileNav
             mainNavItems={siteConfig.mainNav}
-            sidebarNavItems={dashboardConfig.sidebarNav}
+            sidebarNavItems={props.sidebarNavItems}
           />
           {props.user ? (
             <DropdownMenu>

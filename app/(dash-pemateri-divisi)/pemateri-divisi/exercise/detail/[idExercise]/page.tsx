@@ -4,11 +4,11 @@ import { Variants } from "framer-motion"
 
 import { authOptions } from "@/lib/auth"
 import {
-  getOneExercise,
-  getOneExerciseLinkedCourse,
-  getOneExerciseUserCount,
-  getReference,
-} from "@/lib/fetcher"
+  getLinkedCourse,
+  getOneQuiz,
+  getQuizUserCount,
+} from "@/lib/fetcher/exercise-fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import {
@@ -32,9 +32,9 @@ export async function generateMetadata({
 }: ExerciseDetailPageProps): Promise<Metadata> {
   const user = await getCurrentUser()
 
-  const exercise = await getOneExercise({
+  const exercise = await getOneQuiz({
     token: user?.token,
-    idExercise: params.idExercise,
+    id: params.idExercise,
   })
 
   return {
@@ -57,11 +57,11 @@ export default async function ExerciseDetailPage({
 
   const [exercise, exerciseUserCount, exerciseType, exerciseLinked] =
     await Promise.all([
-      getOneExercise({
+      getOneQuiz({
         token: user?.token,
-        idExercise: params.idExercise,
+        id: params.idExercise,
       }),
-      getOneExerciseUserCount({
+      getQuizUserCount({
         token: user?.token,
         idExercise: params.idExercise,
       }),
@@ -69,7 +69,7 @@ export default async function ExerciseDetailPage({
         refCode: "002",
         token: user?.token,
       }),
-      getOneExerciseLinkedCourse({
+      getLinkedCourse({
         token: user?.token,
         idExercise: params.idExercise,
       }),

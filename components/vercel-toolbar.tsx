@@ -3,6 +3,7 @@
 import { JSX, SVGProps } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import {
+  ArchiveIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
   ChatBubbleIcon,
@@ -21,6 +22,7 @@ import {
 
 interface VercelToolbarProps {
   homeButton?: string
+  materiButton?: string
   userButton?: string
   forumButton?: string
 }
@@ -65,6 +67,16 @@ export function VercelToolbar({ ...props }: VercelToolbarProps) {
         </TooltipButton>
       </div>
       <div className="flex space-x-2  border-zinc-600 px-3">
+        <TooltipButton
+          tooltipText="Materi"
+          onClick={() => {
+            router.push(props.materiButton || "/")
+          }}
+        >
+          <ArchiveIcon className="h-6 w-6 stroke-1" />
+          <span className="sr-only">Materi</span>
+        </TooltipButton>
+
         <TooltipButton
           tooltipText="Peserta"
           onClick={() => {

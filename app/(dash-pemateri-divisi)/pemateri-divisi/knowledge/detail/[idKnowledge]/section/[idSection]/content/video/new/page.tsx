@@ -1,10 +1,9 @@
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneSection } from "@/lib/fetcher"
+import { getOneSection } from "@/lib/fetcher/section-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddContentVideoForm } from "@/components/forms/add-content-video-form"
-import { Separator } from "@/components/ui/separator"
 
 interface KnowledgeContentVideoNewPageProps {
   params: {
@@ -32,19 +31,9 @@ export default async function KnowledgeContentVideoNewPage({
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium">Konten Video</h3>
-        <p className="text-sm text-muted-foreground">
-          Tambahkan konten video untuk section {section.data.section_title}
-        </p>
-      </div>
-      <Separator />
-
-      <AddContentVideoForm
-        idSection={Number(params.idSection)}
-        section={section.data}
-      />
-    </div>
+    <AddContentVideoForm
+      idSection={Number(params.idSection)}
+      section={section.data}
+    />
   )
 }

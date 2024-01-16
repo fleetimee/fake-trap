@@ -3,8 +3,13 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { ChevronsUpDown } from "lucide-react"
 
-import { CourseOneRes } from "@/types/course/res"
+import {
+  CourseKnowledgeListResData,
+  CourseKnowledgeSectionListResData,
+  CourseOneRes,
+} from "@/types/course/res"
 import { cn } from "@/lib/utils"
 import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { CreateQuizDropdownButton } from "@/components/create-quiz-dropwdown"
@@ -30,25 +35,36 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import { Icons } from "./icons"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible"
+
 interface CourseContentSidebarProps {
   course: CourseOneRes
+  knowledgeSection: CourseKnowledgeSectionListResData[]
   baseUrl: string
   canCreateContent?: boolean
+  canCreateSection?: boolean
 }
 
 export function CourseContentSidebar({
+  knowledgeSection,
   course,
   baseUrl,
   canCreateContent = true,
+  canCreateSection = false,
 }: CourseContentSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Card className="flex h-[750px] basis-1/4 flex-col items-center justify-start">
+    <Card className="flex h-full basis-1/4 flex-col items-center justify-start">
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="knowledge" className="w-full font-semibold">
-            Konten
+            Materi
           </TabsTrigger>
           <TabsTrigger value="course" className="w-full font-semibold">
             Pelatihan
@@ -56,26 +72,23 @@ export function CourseContentSidebar({
         </TabsList>
 
         <TabsContent value="knowledge">
-          <ScrollArea className="h-700px w-full">
-            {course?.data?.section ? (
+          <ScrollArea className="h-[700px] w-full">
+            {knowledgeSection.length > 0 ? (
               <Accordion
                 type="single"
                 collapsible
                 className="px-4"
-                key={course.data.section[0].id_section.toString()}
-                defaultValue={course.data.section[0].id_section.toString()}
+                key={knowledgeSection[0].id_knowledge.toString()}
+                defaultValue={knowledgeSection[0].id_knowledge.toString()}
               >
-                {course.data.section.map((section) => (
+                {knowledgeSection.map((section) => (
                   <AccordionItem
-                    key={section.id_section.toString()}
-                    value={section.id_section.toString()}
+                    key={section.id_knowledge.toString()}
+                    value={section.id_knowledge.toString()}
                   >
-                    <AccordionTrigger className="font-heading text-base font-bold">
+                    <AccordionTrigger className=" text-base font-semibold">
                       <ContextMenu>
-                        <ContextMenuTrigger>
-                          {/* Trigger for Context Menu */}
-                          {`Konten ${section.section_title}`}
-                        </ContextMenuTrigger>
+                        <ContextMenuTrigger className="text-left">{`${section.knowledge_title}`}</ContextMenuTrigger>
                         {canCreateContent ? (
                           <ContextMenuContent className="w-64">
                             <ContextMenuItem inset disabled>
@@ -90,7 +103,7 @@ export function CourseContentSidebar({
                             {/* Update Section */}
                             <ContextMenuItem inset>
                               <Link
-                                href={`${baseUrl}/section/update/${section.id_section}`}
+                                href={`${baseUrl}/section/update/${section.id_knowledge}`}
                                 className="flex w-full cursor-pointer items-center justify-between"
                               >
                                 Update
@@ -100,12 +113,14 @@ export function CourseContentSidebar({
                               </Link>
                             </ContextMenuItem>
 
+                            {/* Delete Section */}
                             <DeleteSection
-                              idSection={section.id_section.toString()}
+                              idSection={section.id_knowledge.toString()}
                             />
 
+                            {/* Section Name */}
                             <ContextMenuItem inset disabled>
-                              {section.section_title}
+                              {section.knowledge_title}
                               <ContextMenuShortcut>⌘]</ContextMenuShortcut>
                             </ContextMenuItem>
                           </ContextMenuContent>
@@ -113,79 +128,67 @@ export function CourseContentSidebar({
                       </ContextMenu>
                     </AccordionTrigger>
 
-                    {section?.content ? (
-                      <>
-                        {section.content.map((content) => (
-                          <ContextMenu key={content.id_content.toString()}>
-                            <ContextMenuTrigger>
-                              <AccordionContent
-                                key={content.id_content.toString()}
-                                className="py-1"
-                              >
-                                <Link
-                                  href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
+                    <AccordionContent>
+                      {section?.section ? (
+                        section.section.map((section) => (
+                          <Collapsible className="space-y-6 py-2">
+                            <div className="flex items-center justify-between space-x-4 px-4">
+                              <h4 className="text-sm font-semibold">
+                                {section.section_title}
+                              </h4>
+
+                              <CollapsibleTrigger className="" asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="w-9 p-0"
                                 >
-                                  <Button
-                                    className={cn({
-                                      "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background":
-                                        true,
-                                      "bg-secondary-foreground text-background":
-                                        pathname !==
-                                        `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
-                                    })}
+                                  <ChevronsUpDown className="h-4 w-4" />
+                                  <span className="sr-only">Toggle</span>
+                                </Button>
+                              </CollapsibleTrigger>
+                            </div>
+
+                            <CollapsibleContent className="space-y-6">
+                              {section?.content ? (
+                                section.content.map((content) => (
+                                  <Link
+                                    href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
+                                    className="flex w-full cursor-pointer items-center justify-between"
                                   >
-                                    {content.content_title}
-                                  </Button>
-                                </Link>
-                              </AccordionContent>
-                            </ContextMenuTrigger>
-                            <ContextMenuContent className="w-64">
-                              <ContextMenuLabel inset>Options</ContextMenuLabel>
-                              <ContextMenuSeparator />
-                            </ContextMenuContent>
-                          </ContextMenu>
-                        ))}
-                        {canCreateContent ? (
-                          <AccordionContent className="py-1">
-                            {/* Create content button */}
-                            <CreateContentDropdownButton
-                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-                            />
-                          </AccordionContent>
-                        ) : null}
-                      </>
-                    ) : (
-                      <AccordionContent className="py-4">
-                        <div className="flex flex-col gap-4">
-                          <AccordionContent className="py-4">
-                            <EmptyContent className="h-[50px]">
-                              <EmptyContent.Icon name="empty" />
-                              <EmptyContent.Title>
-                                Tidak ada konten
-                              </EmptyContent.Title>
-                              <EmptyContent.Description>
-                                Belum ada konten untuk bagian ini
-                              </EmptyContent.Description>
-                            </EmptyContent>
-                          </AccordionContent>
-                          {/* Create content button */}
-                          {canCreateContent ? (
-                            <CreateContentDropdownButton
-                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-                            />
-                          ) : null}
-                        </div>
-                      </AccordionContent>
-                    )}
+                                    <Button
+                                      className={cn(
+                                        "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                        {
+                                          "border border-primary bg-primary-foreground text-primary":
+                                            pathname !==
+                                            `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
+                                        }
+                                      )}
+                                    >
+                                      {content.content_title}
+                                    </Button>
+                                  </Link>
+                                ))
+                              ) : (
+                                <p className="text-sm text-muted-foreground">
+                                  Belum ada content
+                                </p>
+                              )}
+                            </CollapsibleContent>
+                          </Collapsible>
+                        ))
+                      ) : (
+                        <p className="text-sm text-muted-foreground">
+                          Belum ada section
+                        </p>
+                      )}
+                    </AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
             ) : (
-              <EmptyContent className="flex h-[50px] items-center justify-center">
+              <EmptyContent className="h-[50px]">
                 <EmptyContent.Icon name="empty" />
                 <EmptyContent.Title>Belum ada section</EmptyContent.Title>
                 <EmptyContent.Description>
@@ -198,6 +201,17 @@ export function CourseContentSidebar({
 
         {/* Course Test Section */}
         <TabsContent value="course">
+          {canCreateSection && (
+            <div className="flex justify-end px-3 py-6">
+              <Link href={`${baseUrl}/section/new`}>
+                <Button size="sm" variant="outline">
+                  <Icons.add className="h-4 w-4" />
+                  <span className="ml-2">Tambah Section</span>
+                </Button>
+              </Link>
+            </div>
+          )}
+
           <ScrollArea className="h-[700px] w-full">
             {course?.data?.section ? (
               <Accordion
@@ -214,7 +228,7 @@ export function CourseContentSidebar({
                   >
                     <AccordionTrigger className="font-heading text-base font-bold">
                       <ContextMenu>
-                        <ContextMenuTrigger>{` Test ${section.section_title}`}</ContextMenuTrigger>
+                        <ContextMenuTrigger>{`${section.section_title}`}</ContextMenuTrigger>
                         {canCreateContent ? (
                           <ContextMenuContent className="w-64">
                             <ContextMenuItem inset disabled>
@@ -269,7 +283,7 @@ export function CourseContentSidebar({
                                 className={cn(
                                   "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
                                   {
-                                    "bg-secondary-foreground text-background":
+                                    "border border-primary bg-primary-foreground text-primary":
                                       pathname !==
                                       `${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`,
                                   }

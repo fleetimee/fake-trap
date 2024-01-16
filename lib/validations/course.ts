@@ -31,12 +31,7 @@ export const courseSchema = z.object({
           "Ukuran file tidak boleh lebih dari 1MB dan harus berformat jpg, png, bmp, atau jpeg",
       }
     ),
-  IdKnowledge: z.number({
-    required_error: "Materi harus dipilih",
-  }),
-  TutorUUID: z.string().min(1, {
-    message: "Tutor harus dipilih",
-  }),
+
   CreatedBy: z.string().min(1, {
     message: "Pembuat harus dipilih",
   }),
@@ -70,8 +65,6 @@ export const updateCourseSchema = z.object({
       }
     )
     .optional(),
-  IdKnowledge: z.number().optional(),
-  TutorUUID: z.string().optional(),
   CreatedBy: z.string().optional(),
 })
 
@@ -86,5 +79,19 @@ export const addCourseUserSchema = z.object({
     )
     .min(1, {
       message: "User harus dipilih",
+    }),
+})
+
+export const addCourseKnowledgeSchema = z.object({
+  knowledge: z
+    .array(
+      z.object({
+        id_knowledge: z.number().min(1, {
+          message: "Knowledge harus dipilih",
+        }),
+      })
+    )
+    .min(1, {
+      message: "Knowledge harus dipilih",
     }),
 })

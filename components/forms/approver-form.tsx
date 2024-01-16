@@ -10,6 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
+import { updateKnowledgeApproval } from "@/lib/fetcher/approval-fetcher"
 import { approveFormSchema } from "@/lib/validations/approver-form"
 import {
   Select,
@@ -57,16 +58,10 @@ export function ApproverForm({ idApproval }: ApproverFormProps) {
   async function onSubmit(data: Inputs) {
     setTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/${idApproval}`
-
-        const res = await fetch(url, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const res = await updateKnowledgeApproval({
+          token: session?.user?.token,
+          idApproval: idApproval,
           body: JSON.stringify(data),
-          cache: "no-cache",
         })
 
         if (res.ok) {

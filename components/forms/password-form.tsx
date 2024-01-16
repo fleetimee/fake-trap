@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
+import { changePassword } from "@/lib/fetcher/password-fetcher"
 import { changePasswordSchema } from "@/lib/validations/change-password"
 
 import { Icons } from "../icons"
@@ -21,8 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { Input } from "../ui/input";
-
+import { Input } from "../ui/input"
 
 type Inputs = z.infer<typeof changePasswordSchema>
 
@@ -48,14 +48,9 @@ export function ChangePasswordForm() {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/${session?.expires.id}/change-password`
-
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const response = await changePassword({
+          token: session?.user.token,
+          uuid: session?.expires.id,
           body: JSON.stringify(data),
         })
 

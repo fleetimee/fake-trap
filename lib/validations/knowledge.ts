@@ -1,9 +1,5 @@
 import { z } from "zod"
 
-
-
-
-
 export const knowledgeSchema = z.object({
   KnowledgeTitle: z
     .string()
@@ -78,6 +74,5 @@ export const updateKnowledgeSchema = z.object({
     )
     .optional(),
   IdCategory: z.number().optional(),
-  CreatedBy: z.string().optional(),
   UpdatedBy: z.string().optional(),
 })

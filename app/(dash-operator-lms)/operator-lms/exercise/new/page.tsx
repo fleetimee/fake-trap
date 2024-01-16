@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getReference } from "@/lib/fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddTestForm } from "@/components/forms/add-test-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -14,10 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Tambah Test dan Latihan",
@@ -64,7 +60,10 @@ export default async function OperatorLMSExercisePageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddTestForm references={references} />
+          <AddTestForm
+            references={references}
+            baseUrl="/operator-lms/exercise"
+          />
         </CardContent>
       </Card>
     </DashboardShell>

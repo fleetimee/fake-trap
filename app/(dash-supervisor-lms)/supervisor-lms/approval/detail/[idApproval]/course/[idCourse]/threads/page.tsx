@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getThreadList } from "@/lib/fetcher"
+import { getThreadList } from "@/lib/fetcher/threads-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { ForumCard } from "@/components/cards/forum-card"
 import { ScrollArea } from "@/components/ui/scroll-area"

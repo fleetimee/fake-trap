@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getRule } from "@/lib/fetcher"
+import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddCategoryForm } from "@/components/forms/add-category-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"

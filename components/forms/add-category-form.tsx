@@ -9,10 +9,10 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { createCategory } from "@/lib/fetcher/category-fetcher"
 import { categorySchema } from "@/lib/validations/category"
-
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
+import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -21,9 +21,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
-import { Zoom } from "../zoom-image"
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Zoom } from "@/components/zoom-image"
 
 type Inputs = z.infer<typeof categorySchema>
 
@@ -51,26 +51,14 @@ export function AddCategoryForm() {
     setIsloading(true)
 
     try {
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category`
-
       const formData = new FormData()
-
-      //append data
-      // Object.keys(data).forEach((key) => {
-      //   if (key !== "image") {
-      //     formData.append(key, data[key])
-      //   }
-      // })
 
       Object.keys(data).forEach((key) => {
         formData.append(key, data[key])
       })
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${session?.user.token}`,
-        },
+      const response = await createCategory({
+        token: session?.user?.token,
         body: formData,
       })
 

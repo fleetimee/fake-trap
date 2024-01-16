@@ -11,6 +11,7 @@ import { z } from "zod"
 
 import { QuizOneResData } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { updateExercise } from "@/lib/fetcher/exercise-fetcher"
 import { cn } from "@/lib/utils"
 import { testSchema } from "@/lib/validations/test"
 import { Button } from "@/components/ui/button"
@@ -38,10 +39,7 @@ import {
 } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 
-
-
-import { Icons } from "../icons";
-
+import { Icons } from "../icons"
 
 type Inputs = z.infer<typeof testSchema>
 
@@ -71,16 +69,10 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${quiz.id_quiz}`
-
-        const res = await fetch(url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user.token}`,
-          },
+        const res = await updateExercise({
+          token: session?.user?.token,
+          idExercise: quiz.id_quiz.toString(),
           body: JSON.stringify(data),
-          cache: "no-cache",
         })
 
         if (res.ok) {

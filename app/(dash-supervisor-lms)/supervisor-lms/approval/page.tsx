@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourseApprovalApproverList } from "@/lib/fetcher"
+import { getSupervisorLmsApprovalRequests } from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
@@ -47,7 +47,7 @@ export default async function SupervisorLmsApprovalPage({
 
   const tokenExtracted = extractToken(user?.token)
 
-  const approvals = await getCourseApprovalApproverList({
+  const approvals = await getSupervisorLmsApprovalRequests({
     idApprover: tokenExtracted?.id,
     token: user?.token,
     page: pageInitial,

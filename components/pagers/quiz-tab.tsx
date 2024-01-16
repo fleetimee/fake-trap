@@ -6,10 +6,8 @@ import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs"
 import { Variants } from "framer-motion"
 
 import { cn } from "@/lib/utils"
+import { MotionDiv } from "@/components/framer-wrapper"
 import { Separator } from "@/components/ui/separator"
-
-import { MotionDiv } from "../framer-wrapper"
-
 
 interface QuizTabProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
   quizId: string

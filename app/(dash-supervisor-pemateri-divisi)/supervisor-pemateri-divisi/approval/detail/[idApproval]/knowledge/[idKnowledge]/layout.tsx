@@ -2,7 +2,7 @@ import React from "react"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneKnowledge } from "@/lib/fetcher"
+import { getOneKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
@@ -80,7 +80,7 @@ export default async function KnowledgeDetailLayout({
         title={knowledge.data?.knowledge_title}
         description={knowledge.data?.description}
         urlLink={`/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}/edit`}
-        canCreateSection={false}
+        image={knowledge.data?.image}
       />
 
       <div
@@ -93,6 +93,7 @@ export default async function KnowledgeDetailLayout({
           knowledge={knowledge}
           baseUrl={`/supervisor-pemateri-divisi/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}`}
           canCreateContent={false}
+          newSection={false}
         />
       </div>
     </DashboardShell>

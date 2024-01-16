@@ -1,7 +1,8 @@
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneSection, getQuizListWithNullSection } from "@/lib/fetcher"
+import { getOperatorQuiz } from "@/lib/fetcher/exercise-fetcher"
+import { getOneSection } from "@/lib/fetcher/section-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddQuizMultipleChoiceQuiz } from "@/components/forms/add-quiz-multiple"
 import { Separator } from "@/components/ui/separator"
@@ -27,9 +28,11 @@ export default async function CourseQuizMultipleChoicePage({
     idSection: params.idSection,
   })
 
-  const quizNull = await getQuizListWithNullSection({
+  const quizNull = await getOperatorQuiz({
+    isNullSection: true,
+    page: 1,
+    limit: 100,
     token: user.token,
-    isNull: true,
   })
 
   if (section.code === 400) {

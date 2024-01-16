@@ -11,6 +11,7 @@ import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { QuizOneRes, QuizOneResQuestion } from "@/types/quiz/res"
+import { createUserAnswer } from "@/lib/fetcher/users-submission-fetcher"
 import { userSubmittedAnswerSchema } from "@/lib/validations/user-submitted-answer"
 import { EmptyContent } from "@/components/empty"
 import { Icons } from "@/components/icons"
@@ -99,13 +100,8 @@ export function UserSubmittedAnswerFormProps({
     async (values: Inputs) => {
       startTransition(async () => {
         try {
-          const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/user-answer`
-
-          const res = await fetch(url, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${session?.user?.token}`,
-            },
+          const res = await createUserAnswer({
+            token: session?.user?.token,
             body: JSON.stringify(values),
           })
 

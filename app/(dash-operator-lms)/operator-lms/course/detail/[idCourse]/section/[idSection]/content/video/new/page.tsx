@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneSection } from "@/lib/fetcher"
+import { getOneSection } from "@/lib/fetcher/section-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddContentVideoForm } from "@/components/forms/add-content-video-form"
 import { Separator } from "@/components/ui/separator"

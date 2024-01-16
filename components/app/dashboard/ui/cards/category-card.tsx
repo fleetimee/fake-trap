@@ -1,30 +1,5 @@
-import { CategoryListRes } from "@/types/category/res"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
 import { CardDashboardIndicator } from "@/components/app/dashboard/ui/"
-
-
-
-
-
-interface GetCategoryCountProps {
-  token: string | undefined
-}
-
-async function getCategoryCount({
-  token,
-}: GetCategoryCountProps): Promise<CategoryListRes> {
-  const categoryCountRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category?limit=1`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return await categoryCountRes.json()
-}
 
 interface DashboardCategoryCardCountProps {
   token: string | undefined
@@ -33,8 +8,10 @@ interface DashboardCategoryCardCountProps {
 export async function DashboardCategoryCardCount({
   token,
 }: DashboardCategoryCardCountProps) {
-  const categoryResp = await getCategoryCount({
+  const categoryResp = await getOperatorCategory({
     token: token,
+    limit: 1,
+    page: 1,
   })
 
   return (

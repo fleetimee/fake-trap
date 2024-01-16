@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { Variants } from "framer-motion"
 
 import { authOptions } from "@/lib/auth"
-import { getOneExerciseLesson } from "@/lib/fetcher"
+import { getQuizLesson } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardShell } from "@/components/shell"
@@ -15,10 +15,6 @@ import {
 } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Preview Soal",
@@ -40,7 +36,7 @@ export default async function ExerciseDetailQuestionPreview({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const exerciseLesson = await getOneExerciseLesson({
+  const exerciseLesson = await getQuizLesson({
     token: user?.token,
     idExercise: params.idExercise,
   })

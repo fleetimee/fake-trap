@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getVacantUser } from "@/lib/fetcher"
+import { getCourseVacantUser } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddCourseUserForm } from "@/components/forms/add-course-user-form"
 import { Separator } from "@/components/ui/separator"
@@ -21,7 +21,7 @@ export default async function CourseUserNewPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const vacantUsers = await getVacantUser({
+  const vacantUsers = await getCourseVacantUser({
     token: user?.token,
     idCourse: params.idCourse,
   })

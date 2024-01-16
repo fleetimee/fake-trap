@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getLoggedOnUser } from "@/lib/fetcher"
+import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -11,10 +11,6 @@ import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Dashboard",

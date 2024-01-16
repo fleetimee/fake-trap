@@ -1,4 +1,4 @@
-import { CategoryListRes } from "@/types/category/res"
+import { getPublicCategories } from "@/lib/fetcher/category-fetcher"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { PublicCategories } from "@/components/public-categories"
 import { Shell } from "@/components/shell/lobby-shell"
@@ -6,55 +6,6 @@ import { Shell } from "@/components/shell/lobby-shell"
 export const metadata = {
   title: "Semua Kategori",
   description: "Explore our products and services.",
-}
-
-interface GetPublicCategoryV2Props {
-  page: number
-  limit: number
-  searchQuery?: string
-  sortField?: string
-  sortOrder?: string
-}
-
-async function getPublicCategories({
-  page,
-  limit,
-  sortField = "created_at",
-  sortOrder = "desc",
-  searchQuery = "",
-}: GetPublicCategoryV2Props): Promise<CategoryListRes> {
-  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category`
-
-  let url = new URL(baseUrl)
-
-  if (limit) {
-    url.searchParams.append("limit", limit.toString())
-  }
-
-  if (page) {
-    url.searchParams.append("page", page.toString())
-  }
-
-  if (sortField) {
-    url.searchParams.append("sortBy", sortField.toString())
-  }
-
-  if (sortOrder) {
-    url.searchParams.append("orderBy", sortOrder.toString())
-  }
-
-  if (searchQuery) {
-    url.searchParams.append("searchQuery", searchQuery.toString())
-  }
-
-  const res = await fetch(url.toString(), {
-    method: "GET",
-    headers: {
-      ContentType: "application/json",
-    },
-    cache: "no-store",
-  })
-  return await res.json()
 }
 
 interface AllPublicCategoriesProps {
@@ -82,8 +33,8 @@ export default async function AllPublicCategories({
   const publicCategoryResp = await getPublicCategories({
     limit: limitInitial,
     page: pageInitial,
-    sortField: sortBy,
-    sortOrder: orderBy,
+    sortBy: sortBy,
+    orderBy: orderBy,
     searchQuery: searchInitial,
   })
 

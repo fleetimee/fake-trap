@@ -5,10 +5,6 @@ import React from "react"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
-
-
-
-
 interface DetailEmptyContent extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function EmptyContent({
@@ -19,7 +15,7 @@ export function EmptyContent({
   return (
     <div
       className={cn(
-        "flex h-auto min-h-[350px] flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50",
+        "flex h-auto min-h-[350px] flex-col items-center justify-center  text-center animate-in fade-in-50",
         className
       )}
       {...props}

@@ -1,22 +1,18 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getKnowledgeV2,
-  getListCategory,
-  getReference,
-  getRule,
-} from "@/lib/fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
+import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
-import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Pengetahuan",
@@ -42,6 +38,8 @@ export default async function OperatorLMSKnowledgePage({
     id_category,
     status_text,
     status,
+    from,
+    to,
   } = searchParams ?? {}
 
   // Initial value
@@ -52,6 +50,9 @@ export default async function OperatorLMSKnowledgePage({
   const searchQueryInitial =
     typeof knowledge_title === "string" ? knowledge_title : ""
 
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
+
   // Split sort into sortField and sortOrder
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
@@ -60,24 +61,21 @@ export default async function OperatorLMSKnowledgePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const rule = await getRule({
-    idRole: "3",
-    token: user?.token,
-  })
-
   const [knowledgeResp, categoryResp, referenceResp] = await Promise.all([
-    getKnowledgeV2({
+    getOperatorKnowledge({
       token: user?.token,
       page: pageInitial,
       limit: limitInitial,
       searchQuery: searchQueryInitial,
       sortField: sortField,
       orderBy: sortOrder,
-      categoryIds: id_category, // Add this line
-      statusCode: status_text, // Add this line
-      visibilityId: status, // Add this line
+      categoryIds: id_category,
+      statusCode: status_text,
+      visibilityId: status,
+      from: fromInitial,
+      to: toInitial,
     }),
-    getListCategory({ token: user?.token, page: 1, limit: 100 }),
+    getOperatorCategory({ token: user?.token, page: 1, limit: 100 }),
     getReference({
       token: user?.token,
       refCode: "003",
@@ -109,6 +107,11 @@ export default async function OperatorLMSKnowledgePage({
             description="Pengetahuan yang tersedia di e-learning"
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex  place-items-end items-end justify-self-end"
+        />
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

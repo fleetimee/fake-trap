@@ -37,3 +37,14 @@ yarn-error.log*
 .rar
 .zip
 
+
+# next-video
+videos/*
+!videos/*.json
+!videos/*.js
+!videos/*.ts
+public/_next-video
+
+
+# env
+.env

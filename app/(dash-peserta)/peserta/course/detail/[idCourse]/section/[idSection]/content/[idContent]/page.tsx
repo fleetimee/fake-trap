@@ -2,18 +2,20 @@ import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import Blocks from "editorjs-blocks-react-renderer"
+import { ClockIcon } from "lucide-react"
+import Balancer from "react-wrap-balancer"
 
 import { authOptions } from "@/lib/auth"
-import { getOneContent } from "@/lib/fetcher"
+import { ContentType } from "@/lib/enums/status"
+import { getOneContent } from "@/lib/fetcher/content-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { convertDatetoString } from "@/lib/utils"
 import { YoutubeRender } from "@/components/content-renderer"
+import { LocalVideoPlayer } from "@/components/local-video-player"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-
-
-
-
 
 interface CourseContentPageProps {
   params: {
@@ -39,9 +41,10 @@ export default async function CourseContentPage({
 
   const contentParsed = JSON.parse(content?.data?.article?.body || "{}")
 
-  const article = content?.data?.content_type === "0014"
-  const video = content?.data?.content_type === "0012"
-  const file = content?.data?.content_type === "0013"
+  const article = content?.data?.content_type === ContentType.ARTICLE
+  const video = content?.data?.content_type === ContentType.VIDEO
+  const file = content?.data?.content_type === ContentType.DOCUMENT
+  const localVideo = content?.data?.content_type === ContentType.LOCAL_FILE
 
   if (article) {
     return (
@@ -65,6 +68,29 @@ export default async function CourseContentPage({
         <p className="text-sm italic ">{content.data.video?.flavor_text}</p>
 
         <YoutubeRender link={content.data.video?.video_url} />
+      </div>
+    )
+  }
+
+  if (localVideo) {
+    return (
+      <div className="flex flex-col items-start justify-center gap-3">
+        <h1 className="text-4xl font-bold  ">
+          <Balancer>{content.data.content_title}</Balancer>
+        </h1>
+        <span className="inline-flex">
+          <ClockIcon className="mr-2 h-6 w-6 text-gray-500" />
+          <p>{convertDatetoString(content.data.created_at.toString())}</p>
+        </span>
+        <Separator />
+        <p className="py-2 text-sm italic">
+          {content.data.video_upload?.flavor_text}
+        </p>
+        <AspectRatio ratio={16 / 9}>
+          <LocalVideoPlayer
+            url={`${process.env.NEXT_PUBLIC_BASE_URL}${content.data.video_upload?.video_path}`}
+          />
+        </AspectRatio>
       </div>
     )
   }

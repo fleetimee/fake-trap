@@ -10,7 +10,10 @@ import { z } from "zod"
 
 import { ErrorResponse } from "@/types/error-res"
 import { SectionOneResData } from "@/types/section/res"
+import { ContentType } from "@/lib/enums/status"
+import { createContentVideo } from "@/lib/fetcher/content-fetcher"
 import { contentVideoSchema } from "@/lib/validations/content-video"
+import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -22,10 +25,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
+import { YoutubeRender } from "../content-renderer"
 import { Icons } from "../icons"
 import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea";
-
+import { Textarea } from "../ui/textarea"
 
 type Inputs = z.infer<typeof contentVideoSchema>
 
@@ -34,11 +37,13 @@ interface AddContentVideoFormProps {
   section: SectionOneResData
 }
 
-export function AddContentVideoForm({
-  idSection,
-  section,
-}: AddContentVideoFormProps) {
+export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
   const { data: session } = useSession()
+
+  const [youtubeUrl, setYoutubeUrl] = React.useState<string>("")
+  const debouncedYoutubeUrl = useDebounce(youtubeUrl, 500)
+
+  console.log(debouncedYoutubeUrl)
 
   const router = useRouter()
 
@@ -48,9 +53,7 @@ export function AddContentVideoForm({
     resolver: zodResolver(contentVideoSchema),
     defaultValues: {
       content_title: "",
-      content_type: "0012",
-      image: "",
-      link: "",
+      content_type: ContentType.VIDEO,
       id_section: idSection,
       video_url: "",
       flavor_text: "",
@@ -60,14 +63,8 @@ export function AddContentVideoForm({
   async function onSubmit(data: Inputs) {
     startTransaction(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/youtube`
-
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const response = await createContentVideo({
+          token: session?.user?.token,
           body: JSON.stringify(data),
         })
 
@@ -94,6 +91,16 @@ export function AddContentVideoForm({
     })
   }
 
+  function checkYoutubeUrl(url: string) {
+    const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/g
+
+    if (youtubeRegex.test(url)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
     <Form {...form}>
       <form
@@ -102,16 +109,35 @@ export function AddContentVideoForm({
       >
         <FormField
           control={form.control}
+          disabled={isPending}
           name="content_title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Judul Konten</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isPending}
                   id="content_title"
                   placeholder="Judul Konten"
                   {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="flavor_text"
+          disabled={isPending}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Deskripsi</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Deskripsi"
+                  {...field}
+                  className="h-20 resize-none"
                 />
               </FormControl>
               <FormMessage />
@@ -131,6 +157,10 @@ export function AddContentVideoForm({
                   id="video_url"
                   placeholder="URL Video"
                   {...field}
+                  onChange={(e) => {
+                    setYoutubeUrl(e.target.value)
+                    field.onChange(e)
+                  }}
                 />
               </FormControl>
               <FormDescription>
@@ -141,24 +171,21 @@ export function AddContentVideoForm({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="flavor_text"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Deskripsi</FormLabel>
-              <FormControl>
-                <Textarea
-                  disabled={isPending}
-                  placeholder="Deskripsi"
-                  {...field}
-                  className="h-20 resize-none"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+        <FormItem>
+          <FormLabel>Preview</FormLabel>
+
+          {youtubeUrl && checkYoutubeUrl(debouncedYoutubeUrl) ? (
+            <YoutubeRender link={debouncedYoutubeUrl} />
+          ) : (
+            <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800">
+              <img
+                alt="Video thumbnail"
+                className="h-full w-full object-cover"
+                src="/images/placeholder.svg"
+              />
+            </div>
           )}
-        />
+        </FormItem>
 
         <Button type="submit" className="w-fit" disabled={isPending}>
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}

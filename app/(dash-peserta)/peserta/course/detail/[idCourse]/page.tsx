@@ -2,12 +2,8 @@ import Image from "next/image"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getOneCourse } from "@/lib/fetcher"
+import { getOneCourse } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
-
-
-
-
 
 interface CourseDetailPageProps {
   params: {

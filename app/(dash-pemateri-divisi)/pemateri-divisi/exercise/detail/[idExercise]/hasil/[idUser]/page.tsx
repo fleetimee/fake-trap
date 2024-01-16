@@ -2,11 +2,8 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getExerciseUserSelectedAnswer,
-  getOneExerciseLesson,
-  getOneUser,
-} from "@/lib/fetcher"
+import { getQuizLesson } from "@/lib/fetcher/exercise-fetcher"
+import { getOneUser, getUserAnswer } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { PdfViewer } from "@/components/pdf-viewer"
 import { PrintButton } from "@/components/print-button"
@@ -49,12 +46,12 @@ export default async function ExerciseResultDetailPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const exerciseLesson = await getOneExerciseLesson({
+  const exerciseLesson = await getQuizLesson({
     idExercise: params.idExercise,
     token: user?.token,
   })
 
-  const exerciseUserAnswer = await getExerciseUserSelectedAnswer({
+  const exerciseUserAnswer = await getUserAnswer({
     token: user?.token,
     idAttempt: searchParams.idAttempt,
     userUuid: params.idUser,

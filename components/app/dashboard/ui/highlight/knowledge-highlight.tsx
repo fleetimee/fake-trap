@@ -1,49 +1,43 @@
-import { KnowledgeGetNewRes } from "@/types/knowledge/res"
+import { getNewKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { CardDashboard } from "@/components/app/dashboard/ui"
-
-
-
-
-
-interface GetNewKnowledgeProps {
-  token: string | undefined
-}
-
-async function getNewKnowledge({
-  token,
-}: GetNewKnowledgeProps): Promise<KnowledgeGetNewRes> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/newest`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  )
-
-  return response.json()
-}
 
 interface DashboardKnowledgeHighlightProps {
   token: string | undefined
+  userUuid?: string
+  baseUrl: string
 }
 
 export async function DashboardKnowledgeHighlight({
   token,
+  userUuid = "",
+  baseUrl,
 }: DashboardKnowledgeHighlightProps) {
-  const knowledgeResp = await getNewKnowledge({ token })
+  const knowledgeResp = await getNewKnowledge({
+    token: token,
+    userUuid: userUuid,
+  })
 
-  return (
-    <CardDashboard
-      title="Pengetahuan Terbaru"
-      icon="knowledge"
-      name={knowledgeResp.data.knowledge_title}
-      image={knowledgeResp.data.image}
-      buttonText={`Lihat Pengetahuan`}
-      url={`/dashboard/knowledge/${knowledgeResp.data.id_knowledge}`}
-    />
-  )
+  if (knowledgeResp.code != 200) {
+    return (
+      <CardDashboard
+        title="Pengetahuan Terbaru"
+        icon="knowledge"
+        name="-"
+        image="/images/placeholder.svg"
+        buttonText={`Lihat Pengetahuan`}
+        disableButton
+      />
+    )
+  } else {
+    return (
+      <CardDashboard
+        title="Pengetahuan Terbaru"
+        icon="knowledge"
+        name={knowledgeResp.data.knowledge_title}
+        image={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledgeResp.data.image}`}
+        buttonText={`Lihat Pengetahuan`}
+        url={`${baseUrl}/${knowledgeResp.data.id_knowledge}`}
+      />
+    )
+  }
 }

@@ -2,11 +2,9 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  fetchUsersByGroupId,
-  getKnowledgeV2,
-  getOneCourse,
-} from "@/lib/fetcher"
+import { getOneCourse } from "@/lib/fetcher/course-fetcher"
+import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import { getUsersByGroupId } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { UpdateCourseForm } from "@/components/forms/update-course-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -44,18 +42,16 @@ export default async function OperatorLMSCoursePageUpdate({
     token: user?.token,
   })
 
-  const knowledge = await getKnowledgeV2({
+  const knowledge = await getOperatorKnowledge({
     token: user?.token,
     page: 1,
     limit: 1000,
   })
 
-  const tutors = await fetchUsersByGroupId({
+  const tutors = await getUsersByGroupId({
     token: user?.token,
     idGroup: 1,
   })
-
-  console.log(course)
 
   if (course.code === 400) {
     return notFound()

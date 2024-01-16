@@ -10,8 +10,11 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { RoleListResData } from "@/types/role/res"
+import { createUser } from "@/lib/fetcher/users-fetcher"
 import { cn } from "@/lib/utils"
 import { usersSchema } from "@/lib/validations/users"
+import { Icons } from "@/components/icons"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -36,10 +39,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import { Icons } from "../icons"
-import { Badge } from "../ui/badge";
-
-
 interface ErrorResponseProps {
   error: string
 }
@@ -53,7 +52,11 @@ interface AddUserFormProps {
 export function AddUserForm({ roleOptions }: AddUserFormProps) {
   type RoleNovian = z.infer<typeof usersSchema.shape.role>
 
-  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>([])
+  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>([
+    {
+      id_role: 5,
+    },
+  ])
 
   const { data: session } = useSession()
 
@@ -68,6 +71,7 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
       username: "",
       email: "",
       created_by: session?.expires.id,
+      // Default roke to 1 (peserta)
     },
   })
 
@@ -95,11 +99,8 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
       try {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/`
 
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session?.user?.token}`,
-          },
+        const response = await createUser({
+          token: session?.user?.token,
           body: JSON.stringify(data),
         })
 

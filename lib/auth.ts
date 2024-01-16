@@ -1,11 +1,8 @@
 import type { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
+import { login } from "@/lib/fetcher/auth-fetcher"
 import { extractToken } from "@/lib/utils"
-
-
-
-
 
 /**
  * Configuration options for NextAuth authentication.
@@ -18,37 +15,29 @@ export const authOptions: NextAuthOptions = {
     Credentials({
       name: "Sign in",
       credentials: {
-        username: {
-          label: "Username",
+        email: {
+          label: "Email",
         },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/login`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                username: credentials?.username,
-                password: credentials?.password,
-              }),
-            }
-          )
+        const response = await login({
+          body: JSON.stringify({
+            email: credentials?.email,
+            password: credentials?.password,
+          }),
+        })
 
-          const user = await response.json()
+        const user = await response.json()
 
-          if (user && response.ok) {
-            // Any object returned will be saved in `user` property of the JWT
-            return user
-          } else {
-            throw new Error("Login failed", user)
-          }
-        } catch (error) {
-          throw new Error("Login failed")
+        console.log(user)
+
+        if (user && response.ok) {
+          // Any object returned will be saved in `user` property of the JWT
+          return user
+        } else {
+          // Throw the whole response object on error
+          throw new Error(user?.message || response.statusText)
         }
       },
     }),

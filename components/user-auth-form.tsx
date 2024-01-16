@@ -2,6 +2,7 @@
 
 import { SyntheticEvent, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { Turnstile } from "@marsidev/react-turnstile"
 import { signIn } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
@@ -11,20 +12,17 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-
-
-
-
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const [isCaptchaVerified, setCaptchaVerified] = useState(false)
 
   const searchParams = useSearchParams()
 
   const router = useRouter()
 
-  const userName = useRef("")
+  const email = useRef("")
   const password = useRef("")
 
   async function onSubmit(event: SyntheticEvent) {
@@ -35,16 +33,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
+        <div className="grid gap-2 space-y-3">
           <div className="grid gap-4 pb-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
-              id="username"
+              id="email"
               type="text"
               autoCapitalize="none"
               disabled={isLoading}
               onChange={(e) => {
-                userName.current = e.target.value
+                email.current = e.target.value
               }}
             />
           </div>
@@ -61,20 +59,49 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               }}
             />
           </div>
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+            className="h-12 w-full"
+            onSuccess={async (token) => {
+              const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/verifyTurnstile`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    token: token,
+                  }),
+                }
+              )
+
+              if (response.ok) {
+                setCaptchaVerified(true)
+              } else {
+                sonnerToast.error("Perhatian", {
+                  description: "Captcha tidak valid",
+                })
+              }
+            }}
+          />
+
           <Button
-            disabled={isLoading}
+            disabled={isLoading || !isCaptchaVerified} // Disable button if loading or captcha not verified
             onClick={() =>
               signIn("credentials", {
-                username: userName.current,
+                email: email.current,
                 password: password.current,
                 callbackUrl: searchParams.get("from") || "/",
                 redirect: false,
               }).then((res) => {
-                if (res?.error === "Login failed") {
+                console.log(res)
+
+                if (!res?.ok) {
                   setIsLoading(false)
 
-                  sonnerToast.warning("Perhatian", {
-                    description: "Username atau password salah",
+                  sonnerToast.error("Perhatian", {
+                    description: `${res?.error}`,
                   })
                 } else {
                   setIsLoading(false)

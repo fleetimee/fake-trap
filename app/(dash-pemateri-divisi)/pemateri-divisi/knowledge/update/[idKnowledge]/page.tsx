@@ -2,12 +2,10 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getCategoryByCreator,
-  getOneKnowledge,
-  getReference,
-  getRule,
-} from "@/lib/fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
+import { getOneKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import { getReference } from "@/lib/fetcher/reference-fetcher"
+import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { UpdateKnowledgeForm } from "@/components/forms/update-knowledge-form"
@@ -53,8 +51,7 @@ export default async function PemateriDivisiUpdateKnowledgePage({
     refCode: "003",
   })
 
-  const category = await getCategoryByCreator({
-    createdBy: tokenExtracted?.id,
+  const category = await getOperatorCategory({
     token: user?.token,
     limit: 999,
     page: 1,
