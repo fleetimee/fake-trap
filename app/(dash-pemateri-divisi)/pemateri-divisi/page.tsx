@@ -99,7 +99,7 @@ export default async function PemateriDivisiDashboardPage() {
       </Alert>
 
       <div
-        className="grid grid-cols-1 gap-4 xl:grid-cols-2"
+        className="grid grid-cols-2 gap-4 xl:grid-cols-4"
         style={{ marginTop: "1rem" }}
       >
         <Widget
