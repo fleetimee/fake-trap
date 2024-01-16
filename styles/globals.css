@@ -136,3 +136,8 @@
     @apply px-4;
   }
 }
+
+.theater-mode {
+  width: 100%;
+  background-color: black;
+}

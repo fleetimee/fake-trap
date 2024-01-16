@@ -154,13 +154,9 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
         <Image
           alt="Logo"
           className="ml-2 inline-block"
-          height={
-            isMobile ? (isFullscreen ? 75 : 100) : isFullscreen ? 200 : 150
-          }
+          height={100}
           src="/images/logo.png"
-          width={
-            isMobile ? (isFullscreen ? 75 : 100) : isFullscreen ? 200 : 150
-          }
+          width={100}
         />
       </div>
 

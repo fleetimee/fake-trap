@@ -4,6 +4,7 @@ import {
   KnowledgeOneRes,
   KnowledgeStatusCount,
 } from "@/types/knowledge/res"
+import { KnowledgeDashboardCount } from "@/types/knowledge/res/knowledge-dashboard-count-list"
 
 interface GetOperatorKnowledgeProps {
   token: string
@@ -355,6 +356,33 @@ export async function getKnowledgeStatusCount({
   userUuid,
 }: GetKnowledgeStatusCountProps): Promise<KnowledgeStatusCount> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/count/${userUuid}`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+    throw error
+  }
+}
+
+interface GetKnowledgeDashboardCountProps {
+  token: string
+  userUuid: string
+}
+
+export async function getKnowledgeDashboardCount({
+  token,
+  userUuid,
+}: GetKnowledgeDashboardCountProps): Promise<KnowledgeDashboardCount> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/dashboard-count/${userUuid}`
 
   try {
     const res = await fetch(url, {

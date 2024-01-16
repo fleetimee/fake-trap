@@ -41,7 +41,7 @@ export function Widget({ icon, title, subtitle }: WidgetProps) {
         <p className="font-dm text-sm font-medium text-gray-600 dark:text-white">
           {title}
         </p>
-        <h4 className="text-navy-700 text-xl font-bold dark:text-white">
+        <h4 className="text-navy-700 line-clamp-1 text-xl font-bold dark:text-white">
           {subtitle}
         </h4>
       </div>

@@ -4,17 +4,21 @@ import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
-import { getKnowledgeByCreatedByUser } from "@/lib/fetcher/knowledge-fetcher"
+import {
+  getKnowledgeByCreatedByUser,
+  getKnowledgeDashboardCount,
+} from "@/lib/fetcher/knowledge-fetcher"
 import { getReference } from "@/lib/fetcher/reference-fetcher"
-import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Pengetahuan",
@@ -65,7 +69,7 @@ export default async function PemateriDivisiKnowledgePage({
   const fromInitial = typeof from === "string" ? from : ""
   const toInitial = typeof to === "string" ? to : ""
 
-  const [knowledge, category, reference] = await Promise.all([
+  const [knowledge, category, reference, knowledgeStatus] = await Promise.all([
     getKnowledgeByCreatedByUser({
       token: user?.token,
       page: pageInitial,
@@ -84,6 +88,10 @@ export default async function PemateriDivisiKnowledgePage({
     getReference({
       token: user?.token,
       refCode: "003",
+    }),
+    getKnowledgeDashboardCount({
+      token: user?.token,
+      userUuid: tokenExtracted.id,
     }),
   ])
 
@@ -116,6 +124,32 @@ export default async function PemateriDivisiKnowledgePage({
         <DateRangePicker
           align="end"
           className="flex  place-items-end items-end justify-self-end"
+        />
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+        <Widget
+          icon={<Icons.category className="text-blue-500" />}
+          title="Materi"
+          subtitle={knowledgeStatus.data.total_knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.average className="text-green-500" />}
+          title="Private"
+          subtitle={knowledgeStatus.data.private_knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.user className="text-yellow-500" />}
+          title="Publik"
+          subtitle={knowledgeStatus.data.public_knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.percent className="text-red-500" />}
+          title="Terbaru"
+          subtitle={knowledgeStatus.data.recent_knowledge_title.toString()}
         />
       </div>
 
