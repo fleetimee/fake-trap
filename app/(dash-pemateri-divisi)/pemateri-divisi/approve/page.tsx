@@ -1,16 +1,21 @@
 import { Metadata } from "next"
 import NotFoundLottie from "@/public/lottie/not-found.json"
 
-import { getPemateriApprovalRequests } from "@/lib/fetcher/approval-fetcher"
+import {
+  getApprovalKnowledgeCount,
+  getPemateriApprovalRequests,
+} from "@/lib/fetcher/approval-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { Approves } from "@/components/approves"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { NotFoundAnim } from "@/components/not-found-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Separator } from "@/components/ui/separator"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Approve Request",
@@ -58,6 +63,12 @@ export default async function PemateriDivisiApprovePage({
     to: toInitial,
   })
 
+  const count = await getApprovalKnowledgeCount({
+    token: user?.token,
+    userUuid: tokenExtracted?.id,
+    isSupervisor: false,
+  })
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -86,8 +97,6 @@ export default async function PemateriDivisiApprovePage({
         </MotionDiv>
       </div>
 
-      <Separator />
-
       {requests.data.length === 0 ? (
         <NotFoundAnim
           animationData={NotFoundLottie}
@@ -96,7 +105,38 @@ export default async function PemateriDivisiApprovePage({
           backButtonUrl="/pemateri-divisi"
         />
       ) : (
-        <Approves approvals={requests.data} pageCount={requests.totalPage} />
+        <div
+          className="mt-4 grid grid-cols-1 gap-4"
+          style={{ gridTemplateRows: "auto 1fr" }}
+        >
+          <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+            <Widget
+              icon={<Icons.mailCheck className="text-blue-500" />}
+              title="Approved"
+              subtitle={count.data.approved.toString()}
+            />
+
+            <Widget
+              icon={<Icons.mailQuestion className="text-green-500" />}
+              title="Pending"
+              subtitle={count.data.pending.toString()}
+            />
+
+            <Widget
+              icon={<Icons.mailWarning className="text-yellow-500" />}
+              title="Rejected"
+              subtitle={count.data.rejected.toString()}
+            />
+
+            <Widget
+              icon={<Icons.mailX className="text-red-500" />}
+              title="Draft"
+              subtitle={count.data.draft.toString()}
+            />
+          </div>
+
+          <Approves approvals={requests.data} pageCount={requests.totalPage} />
+        </div>
       )}
     </DashboardShell>
   )

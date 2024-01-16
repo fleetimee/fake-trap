@@ -33,6 +33,10 @@ import {
   Library,
   Loader2,
   LogOut,
+  MailCheck,
+  MailQuestion,
+  MailWarning,
+  MailX,
   Menu,
   MessageCircle,
   Moon,
@@ -115,6 +119,10 @@ export const Icons = {
   ban: Ban,
   packageOpen: Package,
   packagePlus: PackagePlus,
+  mailCheck: MailCheck,
+  mailQuestion: MailQuestion,
+  mailWarning: MailWarning,
+  mailX: MailX,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
