@@ -129,25 +129,25 @@ export default async function PemateriDivisiKnowledgePage({
 
       <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
         <Widget
-          icon={<Icons.category className="text-blue-500" />}
+          icon={<Icons.knowledge className="text-blue-500" />}
           title="Materi"
           subtitle={knowledgeStatus.data.total_knowledge_count.toString()}
         />
 
         <Widget
-          icon={<Icons.average className="text-green-500" />}
+          icon={<Icons.ban className="text-green-500" />}
           title="Private"
           subtitle={knowledgeStatus.data.private_knowledge_count.toString()}
         />
 
         <Widget
-          icon={<Icons.user className="text-yellow-500" />}
+          icon={<Icons.packageOpen className="text-yellow-500" />}
           title="Publik"
           subtitle={knowledgeStatus.data.public_knowledge_count.toString()}
         />
 
         <Widget
-          icon={<Icons.percent className="text-red-500" />}
+          icon={<Icons.packagePlus className="text-red-500" />}
           title="Terbaru"
           subtitle={knowledgeStatus.data.recent_knowledge_title.toString()}
         />

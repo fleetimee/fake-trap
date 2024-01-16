@@ -3,6 +3,7 @@ import {
   AlertTriangle,
   ArrowRight,
   ArrowUpDown,
+  Ban,
   Bird,
   Bookmark,
   Calendar,
@@ -37,6 +38,8 @@ import {
   Moon,
   MoreHorizontal,
   MoreVertical,
+  Package,
+  PackagePlus,
   Paperclip,
   Percent,
   Pizza,
@@ -109,6 +112,9 @@ export const Icons = {
   percent: Percent,
   average: DivideCircle,
   paperClip: Paperclip,
+  ban: Ban,
+  packageOpen: Package,
+  packagePlus: PackagePlus,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
