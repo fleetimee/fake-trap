@@ -6,6 +6,7 @@ import {
   ApprovalSupervisorPemateriListRes,
   ApprovalSupervisorPemateriOneRes,
 } from "@/types/approval/res"
+import { ApprovalKnowledgeCountResData } from "@/types/approval/res/approval-knowledge-count-list"
 
 /*
  ___                                             ___                ___
@@ -259,6 +260,37 @@ export async function updateKnowledgeApproval({
   })
 
   return res
+}
+
+interface GetApprovalKnowledgeCountProps {
+  token: string | undefined
+  userUuid: string
+  isSupervisor: boolean
+}
+
+async function getApprovalKnowledge({
+  token,
+  userUuid,
+  isSupervisor,
+}: GetApprovalKnowledgeCountProps): Promise<ApprovalKnowledgeCountResData> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/count/${userUuid}`
+
+  const urlObj = new URL(url)
+
+  if (isSupervisor) {
+    urlObj.searchParams.append("isSupervisor", isSupervisor.toString())
+  }
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return await res.json()
 }
 
 /*
