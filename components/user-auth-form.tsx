@@ -1,21 +1,38 @@
 "use client"
 
-import { SyntheticEvent, useRef, useState } from "react"
+import { SyntheticEvent, useRef, useState, useTransition } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Turnstile } from "@marsidev/react-turnstile"
 import { signIn } from "next-auth/react"
+import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
+import { z } from "zod"
 
 import { cn } from "@/lib/utils"
+import { authSchema } from "@/lib/validations/auth"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+type Inputs = z.infer<typeof authSchema>
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+
+  const [isPending, startTranstion] = useTransition()
+
+  const form = useForm<Inputs>({
+    resolver: zodResolver(authSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
+
   const [isCaptchaVerified, setCaptchaVerified] = useState(false)
 
   const searchParams = useSearchParams()
