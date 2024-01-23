@@ -8,6 +8,7 @@ import {
   QuizQuestionListRes,
   QuizUserAttemptList,
 } from "@/types/quiz/res"
+import { QuizDashboardCountRes } from "@/types/quiz/res/quiz-get-dashboard-count"
 
 interface GetQuizProps {
   token: string | undefined
@@ -426,6 +427,28 @@ export async function getUserQuizResults({
     },
 
     cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetQuizDashboardCountProps {
+  token: string | undefined
+  idUser: string
+}
+
+export async function getQuizDashboardCount({
+  token,
+  idUser,
+}: GetQuizDashboardCountProps): Promise<QuizDashboardCountRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/quiz-count/${idUser}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
 
   return await res.json()

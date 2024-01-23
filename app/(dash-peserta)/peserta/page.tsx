@@ -4,13 +4,16 @@ import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
+import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -30,6 +33,10 @@ export default async function PesertaPage() {
     uuid: tokenExtracted?.id,
   })
 
+  const globalCount = await getGlobalCount({
+    token: user?.token,
+  })
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -41,31 +48,50 @@ export default async function PesertaPage() {
         ]}
       />
 
-      <MotionDiv
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <DashboardHeader heading="Peserta" description={dateNow} />
-      </MotionDiv>
+      <DashboardHeader heading="Peserta" description={dateNow} />
 
-      <MotionDiv
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
+      <Alert>
+        <PartyPopper className="h-5 w-5" />
+        <AlertTitle>
+          Halo,{" "}
+          <span className="font-heading uppercase text-primary">
+            {loggedOnUser.data?.name}
+          </span>
+        </AlertTitle>
+        <AlertDescription>
+          Have a Nice{" "}
+          <span className="font-heading uppercase">{getDayWithText}</span> !
+        </AlertDescription>
+      </Alert>
+
+      <div
+        className="grid grid-cols-2 gap-4 xl:grid-cols-4"
+        style={{ marginTop: "1rem" }}
       >
-        <Alert>
-          <PartyPopper className="h-5 w-5" />
-          <AlertTitle>
-            Halo,{" "}
-            <span className="font-heading uppercase text-primary">
-              {loggedOnUser.data?.name}
-            </span>
-          </AlertTitle>
-          <AlertDescription>
-            Have a Nice{" "}
-            <span className="font-heading uppercase">{getDayWithText}</span> !
-          </AlertDescription>
-        </Alert>
-      </MotionDiv>
+        <Widget
+          icon={<Icons.knowledge className="text-green-500" />}
+          title="Pengetahuan"
+          subtitle={globalCount.data?.knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.category className="text-blue-500" />}
+          title="Kategori"
+          subtitle={globalCount.data?.category_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.quiz className="text-yellow-500" />}
+          title="Test dan Latihan"
+          subtitle={globalCount.data?.quiz_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.course className="text-red-500" />}
+          title="Pelatihan"
+          subtitle={globalCount.data?.course_count.toString()}
+        />
+      </div>
     </DashboardShell>
   )
 }

@@ -3,15 +3,20 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getQuizCreatedByUser } from "@/lib/fetcher/exercise-fetcher"
+import {
+  getQuizCreatedByUser,
+  getQuizDashboardCount,
+} from "@/lib/fetcher/exercise-fetcher"
 import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, QuizTableShell } from "@/components/shell"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Test dan Latihan",
@@ -48,7 +53,7 @@ export default async function PemateriDivisiExercisePage({
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
 
-  const [quiz, reference] = await Promise.all([
+  const [quiz, reference, count] = await Promise.all([
     getQuizCreatedByUser({
       token: user?.token,
       page: pageInitial,
@@ -62,6 +67,10 @@ export default async function PemateriDivisiExercisePage({
     getReference({
       token: user?.token,
       refCode: "002",
+    }),
+    getQuizDashboardCount({
+      token: user?.token,
+      idUser: tokenExtracted?.id,
     }),
   ])
 
@@ -91,6 +100,33 @@ export default async function PemateriDivisiExercisePage({
           />
         </MotionDiv>
       </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+        <Widget
+          icon={<Icons.quiz className="text-blue-500" />}
+          title="Total"
+          subtitle={count.data.total_quiz_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.quiz className="text-green-500" />}
+          title="Pre Test"
+          subtitle={count.data.pretest_quiz_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.quiz className="text-yellow-500" />}
+          title="Post Test"
+          subtitle={count.data.posttest_quiz_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.quiz className="text-red-500" />}
+          title="Terbaru"
+          subtitle={count.data.recent_quiz.toString()}
+        />
+      </div>
+
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
         <QuizTableShell
           data={quiz.data}
