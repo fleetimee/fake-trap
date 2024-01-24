@@ -61,7 +61,7 @@ export function VelocityScroll() {
     return (
       <div className="parallax">
         <motion.div
-          className="scroller font-display text-center font-heading text-4xl font-bold tracking-[-0.02em] text-primary drop-shadow-sm md:text-7xl md:leading-[5rem]"
+          className="scroller font-display text-center  text-4xl font-bold tracking-[-0.02em] text-primary drop-shadow-sm md:text-7xl md:leading-[5rem]"
           style={{ x }}
         >
           <span>{children} </span>

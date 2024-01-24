@@ -12,7 +12,7 @@ export const marketingFeatures = [
         diinginkan.
       </>
     ),
-    link: "/intro/#categories",
+    link: "#categories",
     image: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/category.jpg`,
   },
   {
@@ -24,7 +24,7 @@ export const marketingFeatures = [
         relevan.
       </>
     ),
-    link: "/intro/#featured-knowledge",
+    link: "#featured-knowledge",
     image: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/knowledge.jpg`,
   },
   {

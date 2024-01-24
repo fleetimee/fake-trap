@@ -2,7 +2,6 @@ import Link from "next/link"
 import { Variants } from "framer-motion"
 import Balance from "react-wrap-balancer"
 
-import { CategoryListRes } from "@/types/category/res"
 import { getPublicCategories } from "@/lib/fetcher/category-fetcher"
 import { getPublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
