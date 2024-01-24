@@ -69,11 +69,13 @@ const childrenVariant: Variants = {
 interface GetPublicKnowledgeProps {
   knowledges: KnowledgeListResData[]
   pageCount: number
+  isWhiteText?: boolean
 }
 
 export function PublicKnowledges({
   knowledges,
   pageCount,
+  isWhiteText,
 }: GetPublicKnowledgeProps) {
   const router = useRouter()
   const [query, setQuery] = React.useState("")
@@ -155,6 +157,7 @@ export function PublicKnowledges({
           title="Semua Pengetahuan"
           description="Temukan pengetahuan yang kamu butuhkan"
           size="sm"
+          isWhiteText={isWhiteText}
         />
       </MotionDiv>
 

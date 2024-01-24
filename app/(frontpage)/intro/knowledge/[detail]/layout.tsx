@@ -43,11 +43,11 @@ export default async function KnowledgeDetail({
             title: "Home",
           },
           {
-            href: "/intro",
-            title: "Intro",
+            href: "/intro/knowledge/all",
+            title: "Semua Pengetahuan",
           },
           {
-            href: "/intro/knowledge",
+            href: "#",
             title: "Knowledge",
           },
           {

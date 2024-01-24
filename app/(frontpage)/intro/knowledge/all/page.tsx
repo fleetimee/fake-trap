@@ -41,6 +41,7 @@ export default async function AllPublicKnowledge({
   return (
     <Shell>
       <BreadCrumbs
+        isWhiteText
         segments={[
           {
             href: "/intro",
@@ -56,6 +57,7 @@ export default async function AllPublicKnowledge({
       <PublicKnowledges
         knowledges={publicKnowledgeResp.data}
         pageCount={publicKnowledgeResp.totalPage}
+        isWhiteText
       />
     </Shell>
   )

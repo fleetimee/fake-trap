@@ -1,13 +1,10 @@
 import { cn } from "@/lib/utils"
 
-
-
-
-
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   description?: string | null
   size?: "default" | "sm"
+  isWhiteText?: boolean
 }
 
 export function HeaderIntro({
@@ -15,6 +12,7 @@ export function HeaderIntro({
   description,
   size = "default",
   className,
+  isWhiteText = false,
   ...props
 }: HeaderProps) {
   return (
@@ -22,7 +20,8 @@ export function HeaderIntro({
       <h1
         className={cn(
           "line-clamp-1 text-3xl font-bold tracking-tight",
-          size === "default" && "md:text-4xl"
+          size === "default" && "md:text-4xl",
+          isWhiteText ? "text-white" : ""
         )}
       >
         {title}
@@ -31,7 +30,8 @@ export function HeaderIntro({
         <p
           className={cn(
             "line-clamp-2 text-muted-foreground",
-            size === "default" && "text-lg"
+            size === "default" && "text-lg",
+            isWhiteText ? "text-white" : ""
           )}
         >
           {description}
