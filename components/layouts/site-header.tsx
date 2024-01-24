@@ -99,26 +99,26 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                   <DropdownMenuItem
                     asChild
                     className="cursor-pointer"
-                    onSelect={(event) => {
-                      event.preventDefault()
-                      signOut({
-                        callbackUrl: "/login",
-                      }).then(() => {
-                        localStorage.clear()
-                        sessionStorage.clear()
+                    // onSelect={(event) => {
+                    //   event.preventDefault()
+                    //   signOut({
+                    //     callbackUrl: "/login",
+                    //   }).then(() => {
+                    //     localStorage.clear()
+                    //     sessionStorage.clear()
 
-                        document.cookie.split(";").forEach((c) => {
-                          document.cookie = c
-                            .replace(/^ +/, "")
-                            .replace(
-                              /=.*/,
-                              `=;expires=${new Date().toUTCString()};path=/`
-                            )
-                        })
-                      })
-                    }}
+                    //     document.cookie.split(";").forEach((c) => {
+                    //       document.cookie = c
+                    //         .replace(/^ +/, "")
+                    //         .replace(
+                    //           /=.*/,
+                    //           `=;expires=${new Date().toUTCString()};path=/`
+                    //         )
+                    //     })
+                    //   })
+                    // }}
                   >
-                    <Link href="#">
+                    <Link href="/login/signout">
                       <Icons.logout
                         className="mr-2 h-4 w-4"
                         aria-hidden="true"
