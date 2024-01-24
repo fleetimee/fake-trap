@@ -28,7 +28,15 @@ export default async function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <UserAuthForm />
+          <Suspense
+            fallback={
+              <div className="flex h-32 items-center justify-center">
+                Loading...
+              </div>
+            }
+          >
+            <UserAuthForm />
+          </Suspense>
         </CardContent>
         <CardFooter className="flex flex-wrap items-center justify-end gap-2">
           <Link
