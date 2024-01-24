@@ -1,11 +1,11 @@
 "use client"
 
 import Link from "next/link"
+import { DashboardIcon } from "@radix-ui/react-icons"
 import { generateFromString } from "generate-avatar"
 import { signOut } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
-import { dashboardConfig } from "@/config/dashboard"
 import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
 import { KnowledgeSearch } from "@/components/knowledge-search"
@@ -79,6 +79,17 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                   <DropdownMenuSeparator />
 
                   <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                      <Link href="/login">
+                        <DashboardIcon
+                          className="size-4 mr-2"
+                          aria-hidden="true"
+                        />
+                        Dashboard
+                        <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+
                     <DropdownMenuItem
                       asChild
                       disabled={!props.isMoreThanOneRole}
