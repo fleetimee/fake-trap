@@ -55,11 +55,13 @@ const childrenVariant: Variants = {
 interface GetPublicCategoriesProps {
   categories: CategoryListResData[]
   pageCount: number
+  isWhiteText?: boolean
 }
 
 export function PublicCategories({
   categories,
   pageCount,
+  isWhiteText = false,
 }: GetPublicCategoriesProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -114,9 +116,10 @@ export function PublicCategories({
   return (
     <>
       <HeaderIntro
-        title="Semua Pengetahuan"
-        description="Temukan pengetahuan yang kamu butuhkan"
+        title="Semua Kategori"
+        description="Semua kategori yang tersedia"
         size="sm"
+        isWhiteText={isWhiteText}
       />
 
       <div className="flex items-center space-x-2">

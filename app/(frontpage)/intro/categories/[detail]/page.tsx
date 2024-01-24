@@ -32,10 +32,11 @@ export default async function DetailIntroCategory({ params }: Props) {
   return (
     <Shell className="bg-[url(/hero_bg.svg)] bg-cover bg-no-repeat lg:bg-bottom">
       <BreadCrumbs
+        isWhiteText
         segments={[
           {
-            href: "/intro",
-            title: "Explore",
+            href: "/",
+            title: "Frontpage",
           },
           {
             title: toTitleCase(detailCategoryData.data.category_name),
@@ -49,6 +50,7 @@ export default async function DetailIntroCategory({ params }: Props) {
         animate={{ opacity: 1, y: 0 }}
       >
         <HeaderIntro
+          isWhiteText
           title={toTitleCase(detailCategoryData.data.category_name)}
           description={`Jelajahi pengetahuan ${detailCategoryData.data.category_name} yang ada di E-learning`}
           size="sm"

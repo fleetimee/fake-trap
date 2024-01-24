@@ -44,8 +44,8 @@ export default async function AllPublicKnowledge({
         isWhiteText
         segments={[
           {
-            href: "/intro",
-            title: "Explore",
+            href: "/",
+            title: "Frontpage",
           },
           {
             title: "Semua Pengetahuan",

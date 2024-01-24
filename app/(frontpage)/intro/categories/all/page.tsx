@@ -41,10 +41,11 @@ export default async function AllPublicCategories({
   return (
     <Shell>
       <BreadCrumbs
+        isWhiteText
         segments={[
           {
-            href: "/intro",
-            title: "Explore",
+            href: "/",
+            title: "Frontpage",
           },
           {
             title: "Semua Kategori",
@@ -54,6 +55,7 @@ export default async function AllPublicCategories({
       />
 
       <PublicCategories
+        isWhiteText
         categories={publicCategoryResp.data}
         pageCount={publicCategoryResp.totalPage}
       />
