@@ -69,8 +69,6 @@ export default async function PesertaPage() {
     uuid: tokenExtracted?.id,
     limit: 5,
     page: 1,
-    orderBy: "created_at",
-    sortBy: "desc",
   })
 
   const recentPost = await getUserRecentPostList({

@@ -38,8 +38,8 @@ export default async function PesertaCoursePage({
   const orderByInitial = typeof sort === "string" ? sort : "desc"
   const sortByInitial = typeof sort === "string" ? sort : "created_at"
 
-  const sortBy = sortByInitial.split(".")[1]
-  const orderBy = orderByInitial.split(".")[0]
+  const sortBy = sortByInitial.split(".")[0]
+  const orderBy = orderByInitial.split(".")[1]
 
   const searchInitial = typeof search === "string" ? search : ""
 

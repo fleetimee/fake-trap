@@ -110,6 +110,8 @@ export async function getPesertaEnrolledCourses({
     url.searchParams.append("searchQuery", searchQuery)
   }
 
+  console.log(url.toString())
+
   try {
     const res = await fetch(url.toString(), {
       method: "GET",
