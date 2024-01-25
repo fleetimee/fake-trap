@@ -59,8 +59,6 @@ export default async function PesertaCoursePage({
     searchQuery: searchInitial,
   })
 
-  console.log(userCourse)
-
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -82,8 +80,7 @@ export default async function PesertaCoursePage({
       >
         <DashboardHeader
           heading="Pelatihan Kamu"
-          description="Ini merupakan pelatihan yang kamu ikuti,
-          "
+          description="Ini merupakan pelatihan yang kamu ikuti"
         />
       </MotionDiv>
 

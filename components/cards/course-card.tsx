@@ -50,7 +50,7 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
         <CardFooter className="flex items-center justify-between border-t border-gray-200 bg-gray-50 p-6">
           <div className="text-sm">
             <p className="font-semibold leading-none text-gray-900">
-              {props.courseAuthor}
+              Tanggal Pembuatan
             </p>
             <p className="text-gray-600">{props.courseDate}</p>
           </div>

@@ -8,7 +8,7 @@ import { XIcon } from "lucide-react"
 
 import { UserEnrolledCourseListResData } from "@/types/me/res"
 import { sortOptions } from "@/config/coruses"
-import { cn } from "@/lib/utils"
+import { cn, convertDatetoString } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
 import CourseCardV2 from "@/components/cards/course-card"
 import { PaginationButton } from "@/components/pagers/pagination-button"
@@ -223,7 +223,7 @@ export function Courses({ courses, pageCount }: CoursesProps) {
             key={course.id_course}
             courseId={course.id_course.toString()}
             courseAuthor={course.tutor_name}
-            courseDate={new Date(course.created_at).toLocaleDateString()}
+            courseDate={convertDatetoString(course.created_at.toString())}
             courseDescription={course.course_desc}
             courseImage={course.image}
             courseTitle={course.course_name}
