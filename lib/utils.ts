@@ -188,15 +188,23 @@ export function isMacOs() {
   return window.navigator.userAgent.includes("Mac")
 }
 
-export function getCourseStatus(course: CourseCardV2Props): CourseAvailability {
+interface GetCourseStatusProps {
+  dateStart: Date
+  dateEnd: Date
+}
+
+export function getCourseStatus({
+  dateStart,
+  dateEnd,
+}: GetCourseStatusProps): CourseAvailability {
   const currentDate = new Date()
 
-  if (!course.startDate || !course.endDate) {
+  if (!dateStart || !dateEnd) {
     return CourseAvailability.SOON
   }
 
-  const startDate = new Date(course.startDate)
-  const endDate = new Date(course.endDate)
+  const startDate = new Date(dateStart)
+  const endDate = new Date(dateEnd)
 
   const currentDateInUserTimezone = new Date(
     currentDate.toLocaleString("en-US", {

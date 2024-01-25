@@ -3,13 +3,14 @@ import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
+import { CourseAvailability } from "@/lib/enums/status"
 import {
   getCourseKnowledgeSection,
   getOneCourse,
 } from "@/lib/fetcher/course-fetcher"
 import { getCheckUserCourseEnrollmentStatus } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken } from "@/lib/utils"
+import { extractToken, getCourseStatus } from "@/lib/utils"
 import { Content } from "@/components/content"
 import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
@@ -58,7 +59,20 @@ export default async function CourseDetailLayout({
     token: user?.token,
   })
 
+  console.log(course)
+
+  const courseStatus = getCourseStatus({
+    dateEnd: course.data.date_end,
+    dateStart: course.data.date_start,
+  })
+
+  console.log(courseStatus)
+
   if (course.code === 404) {
+    return notFound()
+  }
+
+  if (courseStatus !== CourseAvailability.ACTIVE) {
     return notFound()
   }
 

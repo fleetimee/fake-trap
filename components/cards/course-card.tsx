@@ -13,12 +13,15 @@ export interface CourseCardV2Props {
   courseDate: string
   courseImage: string
   courseAuthor: string
-  startDate?: Date
-  endDate?: Date
+  startDate: Date
+  endDate: Date
 }
 
 export default function CourseCardV2({ ...props }: CourseCardV2Props) {
-  const courseStatus = getCourseStatus(props)
+  const courseStatus = getCourseStatus({
+    dateStart: props.startDate,
+    dateEnd: props.endDate,
+  })
 
   return (
     <>
