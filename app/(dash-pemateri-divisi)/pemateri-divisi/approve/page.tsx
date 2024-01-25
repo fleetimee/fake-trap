@@ -14,7 +14,6 @@ import { Icons } from "@/components/icons"
 import { NotFoundAnim } from "@/components/not-found-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import { Separator } from "@/components/ui/separator"
 import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {

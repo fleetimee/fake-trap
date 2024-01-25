@@ -13,20 +13,14 @@ export const siteConfig = {
       title: "Explore",
       items: [
         {
-          title: "Panel",
-          href: "/login",
-          description: "Masuk ke Panel",
-          items: [],
-        },
-        {
           title: "Kategori",
-          href: "/intro/#categories",
+          href: "/#categories",
           description: "Jelajahi kategori pengetahuan yang tersedia",
           items: [],
         },
         {
           title: "Pengetahuan",
-          href: "/intro/#featured-knowledge",
+          href: "/#featured-knowledge",
           description: "Baca dan pahami pengetahuan yang tersedia",
           items: [],
         },

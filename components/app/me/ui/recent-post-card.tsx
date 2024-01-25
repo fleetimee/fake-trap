@@ -6,10 +6,6 @@ import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
-
-
-
-
 interface RecentPostCardProps {
   recentPostList: UserRecentPostListRes
   isMember?: boolean
@@ -49,7 +45,7 @@ export function RecentPostCard({
                     </Link>
                   </span>{" "}
                 </div>
-                <p className="col-span-1 place-items-end text-xs font-light">
+                <p className="col-span-1 place-items-end text-xs font-light ">
                   {convertDatetoStringShort(
                     new Date(post.created_at).toString()
                   )}

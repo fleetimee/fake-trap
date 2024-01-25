@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import NotFoundLottie from "@/public/lottie/not-found.json"
 
 import { authOptions } from "@/lib/auth"
 import { getPesertaEnrolledCourses } from "@/lib/fetcher/users-fetcher"
@@ -7,6 +8,7 @@ import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { NotFoundAnim } from "@/components/not-found-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Courses } from "@/components/ui/courses"
@@ -57,6 +59,8 @@ export default async function PesertaCoursePage({
     searchQuery: searchInitial,
   })
 
+  console.log(userCourse)
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -78,14 +82,23 @@ export default async function PesertaCoursePage({
       >
         <DashboardHeader
           heading="Pelatihan Kamu"
-          description="Ini merupakan pelatihan yang kamu ikuti, jika tidak menemukan pelatihan yang kamu ikuti, silahkan hubungi admin.
+          description="Ini merupakan pelatihan yang kamu ikuti,
           "
         />
       </MotionDiv>
 
       <Separator />
 
-      <Courses courses={userCourse.data} pageCount={userCourse.totalPage} />
+      {userCourse.data.length === 0 ? (
+        <NotFoundAnim
+          animationData={NotFoundLottie}
+          title="Belum ada Pelatihan"
+          description="Maaf anda belum di assign pelatihan oleh administrator"
+          backButtonUrl="/peserta"
+        />
+      ) : (
+        <Courses courses={userCourse.data} pageCount={userCourse.totalPage} />
+      )}
     </DashboardShell>
   )
 }

@@ -6,9 +6,17 @@ import { ArrowRightIcon, PartyPopper } from "lucide-react"
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
-import { getPesertaEnrolledCourses } from "@/lib/fetcher/users-fetcher"
+import {
+  getPesertaEnrolledCourses,
+  getUserRecentPostList,
+} from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
+import {
+  convertDatetoString,
+  dateNow,
+  extractToken,
+  getDayWithText,
+} from "@/lib/utils"
 import { DashboardHeader } from "@/components/header"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -22,12 +30,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -37,51 +45,6 @@ import { Widget } from "@/components/widget"
 export const metadata: Metadata = {
   title: "Dashboard",
 }
-
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-]
 
 export default async function PesertaPage() {
   const user = await getCurrentUser()
@@ -110,7 +73,10 @@ export default async function PesertaPage() {
     sortBy: "desc",
   })
 
-  console.log(course)
+  const recentPost = await getUserRecentPostList({
+    token: user?.token,
+    uuid: tokenExtracted?.id,
+  })
 
   return (
     <DashboardShell>
@@ -208,7 +174,7 @@ export default async function PesertaPage() {
                 </Link>
               </div>
             ) : (
-              <div className="mx-auto flex flex-col items-center justify-center py-6">
+              <div className="mx-auto flex flex-col items-center justify-center gap-4 py-16">
                 <Icons.course className="h-20 w-20 text-gray-400" />
                 <p className="text-gray-400">
                   Belum ada pelatihan yang diikuti
@@ -220,44 +186,50 @@ export default async function PesertaPage() {
 
         <Card className="h-fit lg:col-span-4">
           <CardHeader>
-            <CardTitle>Threads Activity</CardTitle>
+            <CardTitle>Post Activity</CardTitle>
             <CardDescription>
-              Here is a list of recent threads activity
+              Berikut adalah post terbaru yang kamu buat
             </CardDescription>
           </CardHeader>
 
           <CardContent>
-            <Table>
-              <TableCaption>A list of your recent invoices.</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Invoice</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invoices.map((invoice) => (
-                  <TableRow key={invoice.invoice}>
-                    <TableCell className="font-medium">
-                      {invoice.invoice}
-                    </TableCell>
-                    <TableCell>{invoice.paymentStatus}</TableCell>
-                    <TableCell>{invoice.paymentMethod}</TableCell>
-                    <TableCell className="text-right">
-                      {invoice.totalAmount}
-                    </TableCell>
-                  </TableRow>
+            {recentPost.data ? (
+              <ScrollArea className="h-[400px] w-full space-y-3 rounded-md border">
+                {recentPost.data.map((post) => (
+                  <div
+                    key={post.id_post}
+                    className="grid grid-cols-6 items-center justify-between space-y-6 p-4 "
+                  >
+                    <div className="col-span-4 text-sm">
+                      <span className="font-heading uppercase">
+                        {post.username}
+                      </span>{" "}
+                      baru saja membuat post baru pada forum{" "}
+                      <span className="font-semibold underline hover:text-blue-600">
+                        <Link
+                          href={`/peserta/course/${post.id_course}/forum/${post.id_threads}`}
+                          target={"_blank"}
+                        >
+                          {post.threads_title}
+                        </Link>
+                      </span>{" "}
+                    </div>
+                    <p className="col-span-2  text-right text-xs font-light">
+                      {convertDatetoString(
+                        new Date(post.created_at).toString()
+                      )}
+                    </p>
+
+                    <Separator className="col-span-6 " />
+                  </div>
                 ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell className="text-right">$2,500.00</TableCell>
-                </TableRow>
-              </TableFooter>
-            </Table>
+              </ScrollArea>
+            ) : (
+              <div className="mx-auto flex flex-col items-center justify-center gap-4 py-16">
+                <Icons.post className="h-20 w-20 text-gray-400" />
+                <p className="text-gray-400">Belum ada post yang kamu buat</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

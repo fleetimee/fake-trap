@@ -134,7 +134,7 @@ export function Editor({ id_threads }: EditorProps) {
 
       ref.current?.clear()
       router.refresh()
-      router.back()
+      // router.back()
     } else {
       const errorResponse: ErrorResponse = await res.json()
 
