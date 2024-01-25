@@ -1,19 +1,25 @@
 import Link from "next/link"
 
+import { CourseAvailability } from "@/lib/enums/status"
+import { cn, getCourseStatus } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardFooter } from "@/components/ui/card"
 
-interface CourseCardV2Props {
+export interface CourseCardV2Props {
   courseId: string
   courseTitle: string
   courseDescription: string
   courseDate: string
   courseImage: string
   courseAuthor: string
+  startDate?: Date
+  endDate?: Date
 }
 
 export default function CourseCardV2({ ...props }: CourseCardV2Props) {
+  const courseStatus = getCourseStatus(props)
+
   return (
     <>
       <Card className=" flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary sm:w-[30rem] md:max-w-2xl xl:h-[300px]">
@@ -32,8 +38,18 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
             />
           </div>
           <div className="p-8">
-            <Badge className="mb-4 inline-block rounded-full bg-indigo-100 px-2 text-sm text-indigo-800">
-              Quote of the day
+            {/* <Badge className="mb-4 inline-block rounded-full bg-indigo-100 px-2 text-sm text-indigo-800"> */}
+            <Badge
+              className={cn({
+                "mb-4 inline-block rounded-full bg-indigo-100 px-2 text-sm text-indigo-800":
+                  courseStatus === CourseAvailability.ACTIVE,
+                "mb-4 inline-block rounded-full bg-green-100 px-2 text-sm text-green-800":
+                  courseStatus === CourseAvailability.SOON,
+                "mb-4 inline-block rounded-full bg-red-100 px-2 text-sm text-red-800":
+                  courseStatus === CourseAvailability.OVER,
+              })}
+            >
+              {courseStatus}
             </Badge>
             <a
               className="mt-1 line-clamp-2 block text-lg font-medium leading-tight text-black hover:underline"

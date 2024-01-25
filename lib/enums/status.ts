@@ -20,3 +20,9 @@ export enum ContentType {
   ARTICLE = "0014",
   LOCAL_FILE = "0015",
 }
+
+export enum CourseAvailability {
+  SOON = "Upcoming",
+  ACTIVE = "Active",
+  OVER = "Over",
+}

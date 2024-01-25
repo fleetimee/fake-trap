@@ -1,7 +1,11 @@
 import { clsx, type ClassValue } from "clsx"
+import { isAfter, isBefore, isWithinInterval } from "date-fns"
 import { toast as sonnerToast } from "sonner"
 import { twMerge } from "tailwind-merge"
 import * as z from "zod"
+
+import { CourseAvailability } from "@/lib/enums/status"
+import { CourseCardV2Props } from "@/components/cards/course-card"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -182,4 +186,44 @@ export function isMacOs() {
   if (typeof window === "undefined") return false
 
   return window.navigator.userAgent.includes("Mac")
+}
+
+export function getCourseStatus(course: CourseCardV2Props): CourseAvailability {
+  const currentDate = new Date()
+
+  if (!course.startDate || !course.endDate) {
+    return CourseAvailability.SOON
+  }
+
+  const startDate = new Date(course.startDate)
+  const endDate = new Date(course.endDate)
+
+  const currentDateInUserTimezone = new Date(
+    currentDate.toLocaleString("en-US", {
+      timeZone: "Asia/Jakarta",
+    })
+  )
+
+  if (isAfter(startDate, endDate)) {
+    throw new Error("Start date cannot be after end date")
+  }
+
+  if (
+    isWithinInterval(currentDateInUserTimezone, {
+      start: startDate,
+      end: endDate,
+    })
+  ) {
+    return CourseAvailability.ACTIVE
+  }
+
+  if (isAfter(currentDateInUserTimezone, endDate)) {
+    return CourseAvailability.OVER
+  }
+
+  if (isBefore(currentDateInUserTimezone, startDate)) {
+    return CourseAvailability.SOON
+  }
+
+  return CourseAvailability.SOON
 }

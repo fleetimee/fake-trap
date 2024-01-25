@@ -227,6 +227,8 @@ export function Courses({ courses, pageCount }: CoursesProps) {
             courseDescription={course.course_desc}
             courseImage={course.image}
             courseTitle={course.course_name}
+            endDate={course.date_end}
+            startDate={course.date_start}
           />
         ))}
       </div>
