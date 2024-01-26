@@ -1,5 +1,6 @@
 import { Metadata } from "next"
-import NotFoundTwo from "@/public/lottie/not_found_global.json"
+
+// import NotFoundTwo from "@/public/lottie/not_found_global.json"
 
 import { LottieClient } from "@/components/lottie-anim"
 
@@ -25,10 +26,10 @@ export default function NotFound() {
           </div>
 
           <div className="flex justify-center">
-            <LottieClient
+            {/* <LottieClient
               animationData={NotFoundTwo}
               className="w-full max-w-lg"
-            />
+            /> */}
           </div>
         </div>
       </div>
