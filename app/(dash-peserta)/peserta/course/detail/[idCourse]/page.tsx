@@ -1,9 +1,11 @@
 import Image from "next/image"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
+import { CourseAvailability } from "@/lib/enums/status"
 import { getOneCourse } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { getCourseStatus } from "@/lib/utils"
 
 interface CourseDetailPageProps {
   params: {
@@ -24,6 +26,15 @@ export default async function CourseDetailPage({
     token: user?.token,
     idCourse: params.idCourse,
   })
+
+  const courseStatus = getCourseStatus({
+    dateEnd: course.data.date_end,
+    dateStart: course.data.date_start,
+  })
+
+  if (courseStatus !== CourseAvailability.ACTIVE) {
+    return notFound()
+  }
 
   return (
     <Image

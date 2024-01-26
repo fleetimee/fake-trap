@@ -59,20 +59,7 @@ export default async function CourseDetailLayout({
     token: user?.token,
   })
 
-  console.log(course)
-
-  const courseStatus = getCourseStatus({
-    dateEnd: course.data.date_end,
-    dateStart: course.data.date_start,
-  })
-
-  console.log(courseStatus)
-
   if (course.code === 404) {
-    return notFound()
-  }
-
-  if (courseStatus !== CourseAvailability.ACTIVE) {
     return notFound()
   }
 
@@ -90,6 +77,13 @@ export default async function CourseDetailLayout({
   if (checkEnrolled.code === 404) {
     return notFound()
   }
+
+  const courseStatus = getCourseStatus({
+    dateEnd: course.data.date_end,
+    dateStart: course.data.date_start,
+  })
+
+  const notAvailable = courseStatus !== CourseAvailability.ACTIVE
 
   return (
     <DashboardShell>
@@ -134,15 +128,21 @@ export default async function CourseDetailLayout({
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
         id="scrollTarget"
       >
-        <Content title={course.data.course_name}>{children}</Content>
-
-        <CourseContentSidebar
-          course={course}
-          baseUrl={`/peserta/course/detail/${params.idCourse}`}
-          canCreateContent={false}
-          canCreateSection={false}
-          knowledgeSection={knowledgeSection.data}
-        />
+        <Content
+          title={course.data.course_name}
+          className={notAvailable ? "basis-full" : undefined}
+        >
+          {children}
+        </Content>
+        {notAvailable ? null : (
+          <CourseContentSidebar
+            course={course}
+            baseUrl={`/peserta/course/detail/${params.idCourse}`}
+            canCreateContent={false}
+            canCreateSection={false}
+            knowledgeSection={knowledgeSection.data}
+          />
+        )}
       </div>
     </DashboardShell>
   )
