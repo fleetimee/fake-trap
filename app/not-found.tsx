@@ -2,10 +2,9 @@
 
 import { Metadata } from "next"
 import { useRouter } from "next/navigation"
+import NotFoundTwo from "@/public/lottie/not_found_global.json"
 
-
-
-
+import { LottieClient } from "@/components/lottie-anim"
 
 export const metadata: Metadata = {
   title: "What are you looking for?",
@@ -113,14 +112,22 @@ export default function NotFound() {
           <div className="space-y-3 text-center">
             <h3 className="font-semibold text-indigo-600">404 Error</h3>
             <p className="text-4xl font-semibold text-gray-800 sm:text-5xl">
-              Page not found
+              Not Found
             </p>
             <p>
-              Sorry, the page you are looking for could not be found or has been
-              removed.
+              Sepertinya halaman yang anda cari tidak ditemukan. Silahkan
+              kembali ke halaman sebelumnya.
             </p>
           </div>
-          <div className="mt-12">
+
+          <div className="flex justify-center">
+            <LottieClient
+              animationData={NotFoundTwo}
+              className="w-full max-w-lg"
+            />
+          </div>
+
+          {/* <div className="mt-12">
             <ul className="divide-y">
               {navigations.map((item, idx) => (
                 <li key={idx} className="flex gap-x-4 py-6">
@@ -152,7 +159,7 @@ export default function NotFound() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

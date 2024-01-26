@@ -1,9 +1,16 @@
 import { Metadata } from "next"
 import Link from "next/link"
+import Confetti from "@/public/lottie/confetti.json"
+import ExecutiveLottie from "@/public/lottie/role_executive.json"
+import OperatorLottie from "@/public/lottie/role_operator.json"
+import PemateriLottie from "@/public/lottie/role_pemateri_divisi.json"
+import PesertaLottie from "@/public/lottie/role_peserta.json"
+import SupervisorLottie from "@/public/lottie/role_supervisor.json"
 import Balancer from "react-wrap-balancer"
 
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
+import { LottieClient } from "@/components/lottie-anim"
 import { Button } from "@/components/ui/button"
 
 import { ButtonSelector } from "./_components/button_selector"
@@ -35,7 +42,16 @@ export default async function PanelSelector() {
       <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
         <Balancer>
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Halo, {tokenExtracted.name} 👋
+            Halo, {tokenExtracted.name}
+            <span
+              className="ml-4 inline-block"
+              style={{ transform: "translateY(-0.1em)" }}
+            >
+              <LottieClient
+                animationData={Confetti}
+                className="inline-block h-14 w-14"
+              />
+            </span>
           </h2>
         </Balancer>
 
@@ -45,7 +61,7 @@ export default async function PanelSelector() {
         </p>
       </div>
 
-      <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
+      <div className="mx-auto grid items-center justify-items-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
         {isPemateriDivisi && (
           <ButtonSelector
             title="Pemateri Divisi"
@@ -53,6 +69,7 @@ export default async function PanelSelector() {
             link="/pemateri-divisi"
             disabled={!isPemateriDivisi}
             isTextMuted
+            animationData={PemateriLottie}
           />
         )}
 
@@ -62,6 +79,7 @@ export default async function PanelSelector() {
             description="Spv divisi dapat menapprove materi yang ada di divisi masing-masing."
             link="/supervisor-pemateri-divisi"
             disabled={!isSpvPematerDivisi}
+            animationData={SupervisorLottie}
           />
         )}
 
@@ -72,6 +90,7 @@ export default async function PanelSelector() {
             link="/operator-lms"
             disabled={!isOperatorLMS}
             isTextMuted
+            animationData={OperatorLottie}
           />
         )}
 
@@ -82,6 +101,7 @@ export default async function PanelSelector() {
             link="/supervisor-lms"
             disabled={!isSpvOperatorLMS}
             isTextMuted
+            animationData={SupervisorLottie}
           />
         )}
 
@@ -91,6 +111,7 @@ export default async function PanelSelector() {
             description="Peserta dapat mengikuti pelatihan yang ada di LMS."
             link="/peserta"
             disabled={!isPeserta}
+            animationData={PesertaLottie}
           />
         )}
 
@@ -101,9 +122,11 @@ export default async function PanelSelector() {
             link="/executive"
             disabled={!isExecutive}
             isTextMuted
+            animationData={ExecutiveLottie}
           />
         )}
       </div>
+
       <div className="mx-auto text-center md:max-w-[58rem]">
         <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
           Panel yang tidak bisa diakses berarti anda tidak memiliki hak akses

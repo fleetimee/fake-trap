@@ -1,9 +1,11 @@
 import React from "react"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourseUsers } from "@/lib/fetcher/course-fetcher"
+import { CourseAvailability } from "@/lib/enums/status"
+import { getCourseUsers, getOneCourse } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { getCourseStatus } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { CourseUserTableShell } from "@/components/shell/course-user-table-shell"
 import { Separator } from "@/components/ui/separator"
@@ -47,6 +49,20 @@ export default async function CoursePeoplePage({
     orderBy: sortOrder,
     searchQuery: searchQueryInitial,
   })
+
+  const course = await getOneCourse({
+    token: user?.token,
+    idCourse: params.idCourse,
+  })
+
+  const courseStatus = getCourseStatus({
+    dateEnd: course.data.date_end,
+    dateStart: course.data.date_start,
+  })
+
+  if (courseStatus !== CourseAvailability.ACTIVE) {
+    return notFound()
+  }
 
   return (
     <div className="space-y-6">

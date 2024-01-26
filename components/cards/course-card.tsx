@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 
 import { CourseAvailability } from "@/lib/enums/status"
@@ -30,7 +31,10 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
           <div className="md:shrink-0">
             <img
               alt="Man looking at item at a store"
-              className="h-48 w-full object-cover md:h-full md:w-48"
+              className={cn({
+                "h-48 w-full object-cover md:h-full md:w-48": true,
+                grayscale: courseStatus !== CourseAvailability.ACTIVE,
+              })}
               height="48"
               src={`${process.env.NEXT_PUBLIC_BASE_URL}${props.courseImage}`}
               style={{

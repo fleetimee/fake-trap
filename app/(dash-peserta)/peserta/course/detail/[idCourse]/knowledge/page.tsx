@@ -1,9 +1,11 @@
 import React from "react"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import { getCourseKnowledges } from "@/lib/fetcher/course-fetcher"
+import { CourseAvailability } from "@/lib/enums/status"
+import { getCourseKnowledges, getOneCourse } from "@/lib/fetcher/course-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { getCourseStatus } from "@/lib/utils"
 import { CoursesKnowledges } from "@/components/course-knowledges"
 import { Separator } from "@/components/ui/separator"
 
@@ -44,6 +46,20 @@ export default async function PesertaCourseKnowledgePageProps({
     orderBy: orderByInitial,
     sortBy: sortByInitial,
   })
+
+  const course = await getOneCourse({
+    token: user?.token,
+    idCourse: params.idCourse,
+  })
+
+  const courseStatus = getCourseStatus({
+    dateEnd: course.data.date_end,
+    dateStart: course.data.date_start,
+  })
+
+  if (courseStatus !== CourseAvailability.ACTIVE) {
+    return notFound()
+  }
 
   return (
     <div className="space-y-6">

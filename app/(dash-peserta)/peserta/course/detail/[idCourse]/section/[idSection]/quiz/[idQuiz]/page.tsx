@@ -3,7 +3,8 @@ import { notFound, redirect } from "next/navigation"
 import { PrinterIcon } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { QuizType } from "@/lib/enums/status"
+import { CourseAvailability, QuizType } from "@/lib/enums/status"
+import { getOneCourse } from "@/lib/fetcher/course-fetcher"
 import { getOneQuiz, getUserQuizResults } from "@/lib/fetcher/exercise-fetcher"
 import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
@@ -11,6 +12,7 @@ import {
   convertDatetoString,
   convertDatetoStringWithTime,
   extractToken,
+  getCourseStatus,
 } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import {
@@ -79,6 +81,20 @@ export default async function CourseQuizPageProps({
     page: 1,
     idQuiz: params.idQuiz,
   })
+
+  const course = await getOneCourse({
+    token: user?.token,
+    idCourse: params.idCourse,
+  })
+
+  const courseStatus = getCourseStatus({
+    dateEnd: course.data.date_end,
+    dateStart: course.data.date_start,
+  })
+
+  if (courseStatus !== CourseAvailability.ACTIVE) {
+    return notFound()
+  }
 
   console.log(userQuiz)
 

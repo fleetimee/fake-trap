@@ -55,6 +55,7 @@ import {
   Trash,
   Twitter,
   User,
+  UserCircle2,
   Video,
   X,
   Youtube,
@@ -123,6 +124,7 @@ export const Icons = {
   mailQuestion: MailQuestion,
   mailWarning: MailWarning,
   mailX: MailX,
+  circleUser: UserCircle2,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
