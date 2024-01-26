@@ -3,18 +3,12 @@ import { Metadata } from "next"
 import { ErrorCard } from "@/components/cards/error-card"
 import { Shell } from "@/components/shell/lobby-shell"
 
-interface CourseNotFoundProps {
-  params: {
-    idCourse: string
-  }
-}
-
 export const metadata: Metadata = {
   title: "What are you looking for?",
   description: "404",
 }
 
-export default async function CourseNotFound({ params }: CourseNotFoundProps) {
+export default async function CourseNotFound() {
   return (
     <Shell variant="centered" className="max-w-md">
       <ErrorCard

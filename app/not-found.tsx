@@ -1,5 +1,3 @@
-"use client"
-
 import { Metadata } from "next"
 import NotFoundTwo from "@/public/lottie/not_found_global.json"
 
