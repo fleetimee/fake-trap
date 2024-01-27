@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   publicRuntimeConfig: {
     basePath: "",
   },
@@ -28,13 +28,13 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config, options) => {
+  webpack: (config) => {
+    /**
+     * Critical: prevents " ⨯ ./node_modules/canvas/build/Release/canvas.node
+     * Module parse failed: Unexpected character '�' (1:0)" error
+     */
     config.resolve.alias.canvas = false
 
-    config.module.rules.push({
-      test: /\.node/,
-      use: "raw-loader",
-    })
     return config
   },
   // webpack: (config) => {
