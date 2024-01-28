@@ -19,8 +19,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     idCategory: parseInt(params.detail),
   })
 
+  console.log(detailCategoryData)
+
   return {
-    title: `Kategori - ${detailCategoryData.data.category_name}`,
+    title: `Kategori`,
   }
 }
 
@@ -28,6 +30,8 @@ export default async function DetailIntroCategory({ params }: Props) {
   const detailCategoryData = await getOnePublicCategory({
     idCategory: parseInt(params.detail),
   })
+
+  console.log(detailCategoryData)
 
   return (
     <Shell className="bg-[url(/hero_bg.svg)] bg-cover bg-no-repeat lg:bg-bottom">
@@ -38,10 +42,10 @@ export default async function DetailIntroCategory({ params }: Props) {
             href: "/",
             title: "Frontpage",
           },
-          {
-            title: toTitleCase(detailCategoryData.data.category_name),
-            href: `/intro/categories/${detailCategoryData.data.id_category}`,
-          },
+          // {
+          //   title: toTitleCase(detailCategoryData.data.category_name),
+          //   href: `/intro/categories/${detailCategoryData.data.id_category}`,
+          // },
         ]}
       />
 
@@ -49,18 +53,18 @@ export default async function DetailIntroCategory({ params }: Props) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <HeaderIntro
+        {/* <HeaderIntro
           isWhiteText
           title={toTitleCase(detailCategoryData.data.category_name)}
           description={`Jelajahi pengetahuan ${detailCategoryData.data.category_name} yang ada di E-learning`}
           size="sm"
-        />
+        /> */}
       </MotionDiv>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {!detailCategoryData.data.knowledge
+        {!detailCategoryData.data
           ? null
-          : detailCategoryData.data.knowledge.map((knowledge) => (
+          : detailCategoryData.data.map((knowledge) => (
               <KnowledgeCard
                 key={knowledge.id_knowledge}
                 knowledge={knowledge}

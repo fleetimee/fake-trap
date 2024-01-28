@@ -366,7 +366,7 @@ interface GetOnePublicCategoryProps {
 
 export async function getOnePublicCategory({
   idCategory,
-}: GetOnePublicCategoryProps): Promise<CategoryOneRes> {
+}: GetOnePublicCategoryProps): Promise<KnowledgeListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/${idCategory}`
 
   try {
