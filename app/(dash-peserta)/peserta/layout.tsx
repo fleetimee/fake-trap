@@ -2,6 +2,7 @@ import React from "react"
 
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getMenu } from "@/lib/fetcher/menu-fetcher"
+import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
 import { getUserOrg } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
@@ -35,6 +36,8 @@ export default async function PesertaLayout({
     email: tokenExtracted.email,
   })
 
+  const categoryNav = await getNavbar()
+
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
 
   return (
@@ -45,6 +48,7 @@ export default async function PesertaLayout({
         emailName={userLogged.data.email}
         isMoreThanOneRole={isUserHasMoreThanOneRole}
         sidebarNavItems={menu?.data}
+        topNavItems={categoryNav.data}
       />
       <div className="bg-[url(/bg_main.svg)] bg-cover bg-top bg-no-repeat  py-4 dark:bg-none md:bg-left lg:min-h-[100svh]">
         <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">

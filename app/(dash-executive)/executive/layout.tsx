@@ -1,5 +1,6 @@
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getMenu } from "@/lib/fetcher/menu-fetcher"
+import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
 import { getUserOrg } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
@@ -33,6 +34,8 @@ export default async function ExecutiveLayout({
     email: tokenExtracted.email,
   })
 
+  const categoryNav = await getNavbar()
+
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
 
   return (
@@ -43,6 +46,7 @@ export default async function ExecutiveLayout({
         emailName={userLogged.data.email}
         isMoreThanOneRole={isUserHasMoreThanOneRole}
         sidebarNavItems={menu?.data}
+        topNavItems={categoryNav.data}
       />
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
         <aside className="hidden w-[200px] flex-col border-r md:flex">

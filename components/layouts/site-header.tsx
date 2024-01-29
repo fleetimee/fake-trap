@@ -6,6 +6,7 @@ import { generateFromString } from "generate-avatar"
 import { signOut } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
+import { CategoryNavDataListRes } from "@/types/navbar/res/navbar-list"
 import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
 import { KnowledgeSearch } from "@/components/knowledge-search"
@@ -36,14 +37,16 @@ interface SiteHeaderProps {
   displayName: string
   emailName: string
   sidebarNavItems: MenuListResNewData[]
+  topNavItems?: CategoryNavDataListRes[]
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
   if (props.user) {
     return (
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      // <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 w-full border-b bg-background">
         <div className="container flex h-16 items-center">
-          <MainNav items={siteConfig.mainNav} />
+          <MainNav items={siteConfig.mainNav} topNavItems={props.topNavItems} />
           <MobileNav
             mainNavItems={siteConfig.mainNav}
             sidebarNavItems={props.sidebarNavItems}
@@ -160,7 +163,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
     return (
       <header className="sticky top-0 z-40 border-b bg-background">
         <div className="container flex h-16 items-center justify-between py-4">
-          <MainNav items={siteConfig.mainNav} />
+          <MainNav items={siteConfig.mainNav} topNavItems={props.topNavItems} />
           <MobileNav
             mainNavItems={siteConfig.mainNav}
             sidebarNavItems={props.sidebarNavItems}

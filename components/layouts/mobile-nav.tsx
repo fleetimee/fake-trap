@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { MainNavItem } from "@/types"
 
 import { MenuListResNewData } from "@/types/menu/res"
+import { CategoryNavDataListRes } from "@/types/navbar/res/navbar-list"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -22,6 +23,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 interface MobileNavProps {
   mainNavItems?: MainNavItem[]
   sidebarNavItems: MenuListResNewData[]
+  topNavItems?: CategoryNavDataListRes[]
   children?: React.ReactNode
 }
 

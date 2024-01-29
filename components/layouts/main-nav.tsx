@@ -4,6 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { MainNavItem } from "@/types"
 
+import { CategoryNavDataListRes } from "@/types/navbar/res/navbar-list"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -19,9 +20,10 @@ import {
 interface MainNavProps {
   items?: MainNavItem[]
   children?: React.ReactNode
+  topNavItems?: CategoryNavDataListRes[]
 }
 
-export function MainNav({ items, children }: MainNavProps) {
+export function MainNav({ items, children, topNavItems }: MainNavProps) {
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
 
   return (
@@ -71,6 +73,29 @@ export function MainNav({ items, children }: MainNavProps) {
               </NavigationMenuContent>
             </NavigationMenuItem>
           ) : null}
+
+          {topNavItems?.map((item) =>
+            item?.category_name ? (
+              <NavigationMenuItem key={item.category_name}>
+                <NavigationMenuTrigger className="h-auto capitalize">
+                  {item.category_name}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {item.knowledge.map((item) => (
+                      <ListItem
+                        key={item.id_knowledge}
+                        title={item.knowledge_title}
+                        href={`/intro/knowledge/${item.id_knowledge}`}
+                      >
+                        {item.description}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            ) : null
+          )}
         </NavigationMenuList>
       </NavigationMenu>
       {/* <button

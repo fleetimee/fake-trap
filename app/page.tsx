@@ -7,6 +7,7 @@ import Balancer from "react-wrap-balancer"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getPublicCategories } from "@/lib/fetcher/category-fetcher"
 import { getPublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { CategoryCard } from "@/components/cards/category-card"
@@ -74,6 +75,8 @@ const childVariant: Variants = {
 export default async function IndexPage() {
   const user = await getCurrentUser()
 
+  const categoryNav = await getNavbar()
+
   const tokenExtracted = extractToken(user?.token)
 
   const loggedOnUser = await getLoggedOnUser({
@@ -93,6 +96,7 @@ export default async function IndexPage() {
         emailName={loggedOnUser?.data?.email ?? "No Email"}
         isMoreThanOneRole={isMoreThanOneRole ?? false}
         sidebarNavItems={[]}
+        topNavItems={categoryNav.data}
       />
 
       <section className="bg-[url(/hero_bg.svg)] bg-cover bg-bottom py-14 md:bg-left lg:min-h-[100svh]">
