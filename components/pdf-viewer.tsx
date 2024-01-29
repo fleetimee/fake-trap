@@ -61,7 +61,7 @@ export function PdfViewer({ link }: PdfViewerProps) {
       <embed
         src={link}
         type="application/pdf"
-        height={2000}
+        height={900}
         width={500}
         style={{
           width: "100%",

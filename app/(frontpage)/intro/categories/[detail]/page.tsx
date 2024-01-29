@@ -1,6 +1,9 @@
 import { Metadata } from "next"
 
-import { getOnePublicCategory } from "@/lib/fetcher/category-fetcher"
+import {
+  getOnePublicCategory,
+  getOnePublicCategoryDetail,
+} from "@/lib/fetcher/category-fetcher"
 import { toTitleCase } from "@/lib/utils"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
 import { HeaderIntro } from "@/components/category-header"
@@ -15,23 +18,29 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const detailCategoryData = await getOnePublicCategory({
+  const publicCategories = await getOnePublicCategory({
     idCategory: parseInt(params.detail),
   })
 
-  console.log(detailCategoryData)
+  const category = await getOnePublicCategoryDetail({
+    idCategory: parseInt(params.detail),
+  })
+
+  console.log(publicCategories)
 
   return {
-    title: `Kategori`,
+    title: `${toTitleCase(category.data.category_name)}`,
   }
 }
 
 export default async function DetailIntroCategory({ params }: Props) {
-  const detailCategoryData = await getOnePublicCategory({
+  const publicCategories = await getOnePublicCategory({
     idCategory: parseInt(params.detail),
   })
 
-  console.log(detailCategoryData)
+  const category = await getOnePublicCategoryDetail({
+    idCategory: parseInt(params.detail),
+  })
 
   return (
     <Shell className="bg-[url(/hero_bg.svg)] bg-cover bg-no-repeat lg:bg-bottom">
@@ -42,10 +51,10 @@ export default async function DetailIntroCategory({ params }: Props) {
             href: "/",
             title: "Frontpage",
           },
-          // {
-          //   title: toTitleCase(detailCategoryData.data.category_name),
-          //   href: `/intro/categories/${detailCategoryData.data.id_category}`,
-          // },
+          {
+            title: toTitleCase(category.data.category_name),
+            href: `/intro/categories/${category.data.id_category}`,
+          },
         ]}
       />
 
@@ -53,18 +62,18 @@ export default async function DetailIntroCategory({ params }: Props) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        {/* <HeaderIntro
+        <HeaderIntro
           isWhiteText
-          title={toTitleCase(detailCategoryData.data.category_name)}
-          description={`Jelajahi pengetahuan ${detailCategoryData.data.category_name} yang ada di E-learning`}
+          title={toTitleCase(category.data.category_name)}
+          description={`Jelajahi pengetahuan ${category.data.category_name} yang ada di E-learning`}
           size="sm"
-        /> */}
+        />
       </MotionDiv>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {!detailCategoryData.data
+        {!publicCategories.data
           ? null
-          : detailCategoryData.data.map((knowledge) => (
+          : publicCategories.data.map((knowledge) => (
               <KnowledgeCard
                 key={knowledge.id_knowledge}
                 knowledge={knowledge}

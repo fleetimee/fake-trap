@@ -390,6 +390,36 @@ export async function getOnePublicCategory({
   }
 }
 
+interface GetOnePublicCategoryDetailProps {
+  idCategory: number
+}
+
+export async function getOnePublicCategoryDetail({
+  idCategory,
+}: GetOnePublicCategoryDetailProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category/detail/${idCategory}`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        ContentType: "application/json",
+      },
+      cache: "no-store",
+    })
+
+    // if (!res.ok) {
+    //   throw new Error(`HTTP error! status: ${res.status}`)
+    // }
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+
+    throw error
+  }
+}
+
 interface GetCategoryHighlightProps {
   token: string | undefined
   month: string
