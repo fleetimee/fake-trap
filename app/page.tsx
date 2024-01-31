@@ -26,27 +26,6 @@ export const metadata = {
   description: "fleetime",
 }
 
-const PUBLIC_CATEGORY_LIMIT = 8
-const PUBLIC_CATEGORY_PAGE_SIZE = 1
-
-const PUBLIC_KNOWLEDGE_LIMIT = 8
-const PUBLIC_KNOWLEDGE_PAGE_SIZE = 1
-
-const publicKnowledge = getPublicKnowledge({
-  limit: PUBLIC_KNOWLEDGE_LIMIT,
-  page: PUBLIC_KNOWLEDGE_PAGE_SIZE,
-})
-
-const publicCategory = getPublicCategories({
-  limit: PUBLIC_CATEGORY_LIMIT,
-  page: PUBLIC_CATEGORY_PAGE_SIZE,
-})
-
-const [publicCategoryResp, publicKnowledgeResp] = await Promise.all([
-  publicCategory,
-  publicKnowledge,
-])
-
 const parentVariant: Variants = {
   initial: {
     opacity: 0,
@@ -76,6 +55,27 @@ export default async function IndexPage() {
   const user = await getCurrentUser()
 
   const categoryNav = await getNavbar()
+
+  const PUBLIC_CATEGORY_LIMIT = 8
+  const PUBLIC_CATEGORY_PAGE_SIZE = 1
+
+  const PUBLIC_KNOWLEDGE_LIMIT = 8
+  const PUBLIC_KNOWLEDGE_PAGE_SIZE = 1
+
+  const publicKnowledge = getPublicKnowledge({
+    limit: PUBLIC_KNOWLEDGE_LIMIT,
+    page: PUBLIC_KNOWLEDGE_PAGE_SIZE,
+  })
+
+  const publicCategory = getPublicCategories({
+    limit: PUBLIC_CATEGORY_LIMIT,
+    page: PUBLIC_CATEGORY_PAGE_SIZE,
+  })
+
+  const [publicCategoryResp, publicKnowledgeResp] = await Promise.all([
+    publicCategory,
+    publicKnowledge,
+  ])
 
   const tokenExtracted = extractToken(user?.token)
 
