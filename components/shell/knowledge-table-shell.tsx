@@ -4,12 +4,14 @@ import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { convertDatetoStringShort } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { KnowledgeOperations } from "@/components/hamburger-operations/knowledge-operations"
 import { Badge } from "@/components/ui/badge"
@@ -73,7 +75,6 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Gambar" />
         ),
         cell: ({ row }) => (
-          // <AspectRatio ratio={16 / 9}>
           <Link href={`${pathname}/detail/${row.original.id_knowledge}`}>
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
@@ -195,54 +196,65 @@ export function KnowledgeTableShell({
     []
   )
 
+  const searchableColumns: DataTableSearchableColumn<KnowledgeListResData>[] = [
+    {
+      id: "knowledge_title",
+      title: "Judul",
+    },
+  ]
+
+  const filterableColumns: DataTableFilterableColumn<KnowledgeListResData>[] = [
+    {
+      id: "id_category",
+      title: "Filter Kategori",
+      options: categoryResp.data.map((category) => ({
+        label: category.category_name,
+        value: category.id_category,
+      })) as any,
+    },
+    {
+      id: "status_text",
+      title: "Filter Status",
+      options: [
+        {
+          label: "Pending",
+          value: "0051",
+        },
+        {
+          label: "Approved",
+          value: "0052",
+        },
+        {
+          label: "Rejected",
+          value: "0053",
+        },
+      ],
+    },
+    {
+      id: "status",
+      title: "Filter Visibility",
+      options: referenceResp.data.map((reference) => ({
+        label: reference.value_ref1,
+        value: reference.code_ref2,
+      })) as any,
+    },
+  ]
+
+  const { dataTable } = useDataTable({
+    data,
+    columns,
+    pageCount,
+    searchableColumns,
+    filterableColumns,
+  })
+
   return (
     <DataTable
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      filterableColumns={[
-        {
-          id: "id_category",
-          title: "Filter Kategori",
-          options: categoryResp.data.map((category) => ({
-            label: category.category_name,
-            value: category.id_category,
-          })) as any,
-        },
-        {
-          id: "status_text",
-          title: "Filter Status",
-          options: [
-            {
-              label: "Pending",
-              value: "0051",
-            },
-            {
-              label: "Approved",
-              value: "0052",
-            },
-            {
-              label: "Rejected",
-              value: "0053",
-            },
-          ],
-        },
-        {
-          id: "status",
-          title: "Filter Visibility",
-          options: referenceResp.data.map((reference) => ({
-            label: reference.value_ref1,
-            value: reference.code_ref2,
-          })) as any,
-        },
-      ]}
       newRowLink={`${pathname}/new`}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "knowledge_title",
-          title: "Judul",
-        },
-      ]}
+      searchableColumns={searchableColumns}
+      filterableColumns={filterableColumns}
     />
   )
 }
