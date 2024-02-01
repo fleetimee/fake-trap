@@ -42,6 +42,8 @@ export default async function OperatorLMSKnowledgePage({
     to,
   } = searchParams ?? {}
 
+  console.log(page)
+
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10

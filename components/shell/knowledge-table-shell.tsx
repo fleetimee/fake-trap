@@ -191,7 +191,8 @@ export function KnowledgeTableShell({
         },
       },
     ],
-    [categoryResp, pathname, referenceResp]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
 
   return (
