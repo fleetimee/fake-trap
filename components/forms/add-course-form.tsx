@@ -394,8 +394,6 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
                 disabled={isLoading}
                 date={field.value}
                 setDate={(date) => {
-                  console.log(date)
-
                   field.onChange(date)
                 }}
               />

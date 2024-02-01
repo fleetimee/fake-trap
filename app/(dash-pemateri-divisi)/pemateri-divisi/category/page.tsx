@@ -83,9 +83,6 @@ export default async function PemateriDivisiCategoryPage({
 
   const selectedMonth = getMonth(selectedDate)
 
-  console.log(selectedMonth)
-  console.log(getCurrentMonth())
-
   const categoryHighlight = await getCategoryHighlight({
     token: user?.token,
     month: isNaN(selectedMonth) ? getCurrentMonth() : selectedMonth.toString(),

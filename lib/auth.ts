@@ -30,7 +30,6 @@ export const authOptions: NextAuthOptions = {
 
         const user = await response.json()
 
-        console.log(user)
 
         if (user && response.ok) {
           // Any object returned will be saved in `user` property of the JWT

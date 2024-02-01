@@ -26,8 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     idCategory: parseInt(params.detail),
   })
 
-  console.log(publicCategories)
-
   return {
     title: `${toTitleCase(category.data.category_name)}`,
   }

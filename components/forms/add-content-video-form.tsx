@@ -43,8 +43,6 @@ export function AddContentVideoForm({ idSection }: AddContentVideoFormProps) {
   const [youtubeUrl, setYoutubeUrl] = React.useState<string>("")
   const debouncedYoutubeUrl = useDebounce(youtubeUrl, 500)
 
-  console.log(debouncedYoutubeUrl)
-
   const router = useRouter()
 
   const [isPending, startTransaction] = useTransition()

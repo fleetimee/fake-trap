@@ -69,10 +69,6 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
         const formData = new FormData()
 
         Object.keys(data).forEach((key) => {
-          if (key === "TutorUUID") {
-            console.log("TutorUUID:", data[key])
-          }
-
           if (data[key] instanceof Date) {
             formData.append(key, data[key].toISOString())
           } else {

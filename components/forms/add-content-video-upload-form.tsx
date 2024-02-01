@@ -74,8 +74,6 @@ export function AddContentVideoUploadForm({
           setUploadProgress: setUploadProgress,
         })
 
-        console.log(response)
-
         if (response.status === 201) {
           sonnerToast.success("Berhasil", {
             description: "Konten berhasil ditambahkan",
@@ -95,8 +93,6 @@ export function AddContentVideoUploadForm({
           })
         }
       } catch (error) {
-        console.log(error)
-
         sonnerToast.error("Gagal", {
           description: `${error}`,
         })
@@ -165,8 +161,6 @@ export function AddContentVideoUploadForm({
                   onChange={(e) => {
                     if (e.target.files) {
                       form.setValue("video_path", e.target.files[0])
-
-                      console.log(e.target.files[0])
 
                       const reader = new FileReader()
                       reader.onloadend = () => {

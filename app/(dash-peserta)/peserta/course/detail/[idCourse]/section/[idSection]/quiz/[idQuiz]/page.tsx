@@ -96,8 +96,6 @@ export default async function CourseQuizPageProps({
     return notFound()
   }
 
-  console.log(userQuiz)
-
   const isPretest = quiz.data.quiz_type === QuizType.PRETEST
   const isPosttest = quiz.data.quiz_type === QuizType.POSTTEST
 
@@ -114,8 +112,6 @@ export default async function CourseQuizPageProps({
   const quizType = reference.data.find(
     (item) => item.code_ref2 === quiz.data.quiz_type
   )
-
-  console.log(quizType?.value_ref1)
 
   const percentageScore = (userScore / maximumScore) * 100
   // if (isPretest && userQuiz.data.length > 0) {
