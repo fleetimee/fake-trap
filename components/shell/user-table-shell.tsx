@@ -2,11 +2,13 @@
 
 import * as React from "react"
 import { usePathname } from "next/navigation"
+import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 import { generateFromString } from "generate-avatar"
 
 import { UserListResData } from "@/types/user/res/user-list"
 import { convertDatetoString, convertDatetoStringWithTime } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 
@@ -168,20 +170,28 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
     []
   )
 
+  const searchableColumns: DataTableSearchableColumn<UserListResData>[] = [
+    {
+      id: "username",
+      title: "username",
+    },
+  ]
+
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+    searchableColumns,
+  })
+
   return (
     <DataTable
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      isExportable
+      searchableColumns={searchableColumns}
       newRowLink={`${pathname}/new`}
+      isExportable
       exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/users/xlsx`}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "username",
-          title: "username",
-        },
-      ]}
     />
   )
 }

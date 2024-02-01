@@ -136,27 +136,6 @@ export function QuizTableShell({
 
   return (
     <DataTable
-      // columns={columns}
-      // data={data}
-      // pageCount={pageCount}
-      // filterableColumns={[
-      //   {
-      //     id: "quiz_type",
-      //     title: "Tipe Kuis",
-      //     options: referenceResp.data.map((reference) => ({
-      //       value: reference.code_ref2,
-      //       label: reference.value_ref1,
-      //     })),
-      //   },
-      // ]}
-      // searchableColumns={[
-      //   {
-      //     id: "quiz_title",
-      //     title: "Judul Kuis",
-      //   },
-      // ]}
-      // newRowLink={`${pathname}/new`}
-
       dataTable={dataTable}
       columns={columns}
       searchableColumns={searchableColumns}
