@@ -107,8 +107,6 @@ export function ApproverForm({ idApproval }: ApproverFormProps) {
                   if (value === "0052") {
                     form.setValue("approved_at", new Date())
                   }
-
-                  console.log("value", value)
                 }}
                 value={field.value}
               >

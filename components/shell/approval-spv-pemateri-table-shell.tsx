@@ -8,6 +8,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { ApprovalSupervisorPemateriListResData } from "@/types/approval/res"
 import { convertDatetoString } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -174,8 +175,15 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
         },
       },
     ],
-    [pathname]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />
+  const { dataTable } = useDataTable({
+    data,
+    columns,
+    pageCount,
+  })
+
+  return <DataTable dataTable={dataTable} columns={columns} />
 }

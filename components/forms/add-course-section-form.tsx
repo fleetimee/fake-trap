@@ -76,8 +76,6 @@ export function AddCourseSectionForm({ idCourse }: AddSectionFormProps) {
         })
       }
     })
-
-    console.log(values)
   }
 
   return (

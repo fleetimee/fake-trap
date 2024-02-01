@@ -4,6 +4,7 @@ import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { QuizMemberListResData } from "@/types/quiz/res"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 
@@ -52,11 +53,16 @@ export function QuizMemberTableShell({
     []
   )
 
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+  })
+
   return (
     <DataTable
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      pageCount={pageCount}
       isExportable
       exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${idExercise}/getQuizMember`}
     />

@@ -24,8 +24,6 @@ export default withAuth(
 
         const userRoles = extractToken.role
 
-        console.log(userRoles.length)
-
         // if userRoles contains more than 1 role
         // redirect to panel selector page
         if (userRoles.length > 1) {

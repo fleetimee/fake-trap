@@ -3,11 +3,13 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { QuizListResData } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { convertDatetoString } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { QuizOperations } from "@/components/app/quiz/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -114,30 +116,29 @@ export function QuizTableShell({
         },
       },
     ],
-    [pathname, referenceResp]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
+
+  const searchableColumns: DataTableSearchableColumn<QuizListResData>[] = [
+    {
+      id: "quiz_title",
+      title: "Judul Kuis",
+    },
+  ]
+
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+    searchableColumns,
+  })
 
   return (
     <DataTable
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      pageCount={pageCount}
-      filterableColumns={[
-        {
-          id: "quiz_type",
-          title: "Tipe Kuis",
-          options: referenceResp.data.map((reference) => ({
-            value: reference.code_ref2,
-            label: reference.value_ref1,
-          })),
-        },
-      ]}
-      searchableColumns={[
-        {
-          id: "quiz_title",
-          title: "Judul Kuis",
-        },
-      ]}
+      searchableColumns={searchableColumns}
       newRowLink={`${pathname}/new`}
     />
   )

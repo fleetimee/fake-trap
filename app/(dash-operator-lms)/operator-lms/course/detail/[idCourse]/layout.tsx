@@ -59,8 +59,6 @@ export default async function CourseDetailLayout({
     token: user?.token,
   })
 
-  console.log(knowledgeSection)
-
   if (course.code === 400) {
     return notFound()
   }

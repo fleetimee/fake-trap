@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { QuizUserAttemptListData } from "@/types/quiz/res"
 import { convertDatetoString } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 
 interface UserQuizResultTableShellProps {
@@ -74,11 +75,16 @@ export function UserQuizResultTableShell({
     [linkString]
   )
 
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+  })
+
   return (
     <DataTable
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      pageCount={pageCount}
       isExportable
       exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${idQuiz}/getUserAttempt`}
     />

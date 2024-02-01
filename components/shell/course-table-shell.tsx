@@ -4,11 +4,13 @@ import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CourseListResData } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
 import { convertDatetoString } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { CourseOperations } from "@/components/hamburger-operations/course-operations"
 import { Badge } from "@/components/ui/badge"
@@ -187,41 +189,84 @@ export function CourseTableShell({
         },
       },
     ],
-    [isOperator, knowledgeResp, pathname]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
+
+  const searchableColumns: DataTableSearchableColumn<CourseListResData>[] = [
+    {
+      id: "course_name",
+      title: "Nama Pelatihan",
+    },
+  ]
+
+  const filterableColumns: DataTableFilterableColumn<CourseListResData>[] = [
+    {
+      id: "status_text",
+      title: "Filter Status",
+      options: [
+        {
+          label: "Pending",
+          value: "0051",
+        },
+        {
+          label: "Approved",
+          value: "0052",
+        },
+        {
+          label: "Rejected",
+          value: "0053",
+        },
+      ],
+    },
+  ]
+
+  const { dataTable } = useDataTable({
+    data,
+    columns,
+    pageCount,
+    searchableColumns,
+    filterableColumns,
+  })
 
   return (
     <DataTable
+      // columns={columns}
+      // data={data}
+      // filterableColumns={[
+      //   {
+      //     id: "status_text",
+      //     title: "Filter Status",
+      //     options: [
+      //       {
+      //         label: "Pending",
+      //         value: "0051",
+      //       },
+      //       {
+      //         label: "Approved",
+      //         value: "0052",
+      //       },
+      //       {
+      //         label: "Rejected",
+      //         value: "0053",
+      //       },
+      //     ],
+      //   },
+      // ]}
+      // newRowLink={`${pathname}/new`}
+      // pageCount={pageCount}
+      // searchableColumns={[
+      //   {
+      //     id: "course_name",
+      //     title: "Nama Pelatihan",
+      //   },
+      // ]}
+
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      filterableColumns={[
-        {
-          id: "status_text",
-          title: "Filter Status",
-          options: [
-            {
-              label: "Pending",
-              value: "0051",
-            },
-            {
-              label: "Approved",
-              value: "0052",
-            },
-            {
-              label: "Rejected",
-              value: "0053",
-            },
-          ],
-        },
-      ]}
       newRowLink={`${pathname}/new`}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "course_name",
-          title: "Nama Pelatihan",
-        },
-      ]}
+      searchableColumns={searchableColumns}
+      filterableColumns={filterableColumns}
     />
   )
 }

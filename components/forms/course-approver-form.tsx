@@ -101,8 +101,6 @@ export function ApproverCourseForm({ idApproval }: ApproverCourseFormProps) {
                   if (value === "0052") {
                     form.setValue("approved_at", new Date())
                   }
-
-                  console.log("value", value)
                 }}
                 value={field.value}
               >

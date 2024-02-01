@@ -148,8 +148,6 @@ export function AddContentArticleForm({ idSection }: AddArticleFormProps) {
     } finally {
       setIsSaving(false)
     }
-
-    console.log(data)
   }
 
   return (

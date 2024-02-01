@@ -103,8 +103,6 @@ export function ForgotPasswordForm() {
           siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
           className="h-12 w-full"
           onSuccess={async (token) => {
-            console.log(token)
-
             const response = await fetch(
               `${process.env.NEXT_PUBLIC_BASE_URL}/verifyTurnstile`,
               {
@@ -117,8 +115,6 @@ export function ForgotPasswordForm() {
                 }),
               }
             )
-
-            console.log(response)
 
             if (response.ok) {
               setCaptchaVerified(true)

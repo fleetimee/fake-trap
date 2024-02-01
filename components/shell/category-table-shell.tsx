@@ -3,11 +3,13 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
 import { RuleOneResData } from "@/types/rule/res"
 import { convertDatetoString } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 import { CategoryOperations } from "@/components/hamburger-operations/category-operations"
 
@@ -117,21 +119,41 @@ export function CategoryTableShell({
         ),
       },
     ],
-    [editRowLink, rule]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
+
+  const searchableColumns: DataTableSearchableColumn<CategoryListResData>[] = [
+    {
+      id: "category_name",
+      title: "Kategori",
+    },
+  ]
+
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+    searchableColumns,
+  })
 
   return (
     <DataTable
+      // columns={columns}
+      // data={data}
+      // pageCount={pageCount}
+      // newRowLink={newRowLink ? newRowLink : undefined}
+      // searchableColumns={[
+      //   {
+      //     id: "category_name",
+      //     title: "Kategori",
+      //   },
+      // ]}
+
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      pageCount={pageCount}
+      searchableColumns={searchableColumns}
       newRowLink={newRowLink ? newRowLink : undefined}
-      searchableColumns={[
-        {
-          id: "category_name",
-          title: "Kategori",
-        },
-      ]}
     />
   )
 }

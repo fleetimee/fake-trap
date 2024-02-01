@@ -56,8 +56,6 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
         callbackUrl: searchParams.get("from") || "/",
         redirect: false,
       }).then((res) => {
-        console.log(res)
-
         if (!res?.ok) {
           setIsLoading(false)
 

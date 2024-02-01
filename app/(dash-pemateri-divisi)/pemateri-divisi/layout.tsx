@@ -48,7 +48,7 @@ export default async function PemateriDivisiLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
       />
-      <div className="bg-[url(/bg_main.svg)] bg-cover bg-top bg-no-repeat  py-4 dark:bg-none md:bg-left lg:min-h-[100svh]">
+      <div className="bg-background bg-cover bg-top bg-no-repeat  py-4 dark:bg-none md:bg-left lg:min-h-[100svh]">
         <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr] ">
           <aside className="hidden w-[200px] flex-col border-r md:flex">
             <DashboardNewNewNav items={menu?.data} org={userOrg.data} />
