@@ -2,17 +2,15 @@
 
 import React from "react"
 import Link from "next/link"
+import { DataTableSearchableColumn } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { UserEnrolledCourseListResData } from "@/types/me/res"
 import { convertDatetoString } from "@/lib/utils"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-
-
-
-
 
 interface UserEnrolledCourseTableShellProps {
   data: UserEnrolledCourseListResData[]
@@ -164,17 +162,20 @@ export function UserEnrolledCourseTableShell({
     [data, setSelectedRowIds]
   )
 
-  return (
-    <DataTable
-      columns={columns}
-      data={data}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "course_name",
-          title: "Nama Pelatihan",
-        },
-      ]}
-    />
-  )
+  const searchableColumns: DataTableSearchableColumn<UserEnrolledCourseListResData>[] =
+    [
+      {
+        id: "course_name",
+        title: "Nama Pelatihan",
+      },
+    ]
+
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+    searchableColumns,
+  })
+
+  return <DataTable dataTable={dataTable} columns={columns} />
 }

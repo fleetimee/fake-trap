@@ -2,17 +2,15 @@
 
 import React from "react"
 import Link from "next/link"
+import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { UserQuizTakenListResData } from "@/types/me/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-
-
-
-
 
 interface UserEnrolledCourseTableShellProps {
   data: UserQuizTakenListResData[]
@@ -124,30 +122,62 @@ export function UserRecentQuizTableShell({
         ),
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
+  const searchableColumns: DataTableSearchableColumn<UserQuizTakenListResData>[] =
+    [
+      {
+        id: "quiz_title",
+        title: "Judul",
+      },
+    ]
+
+  const filterableColumns: DataTableFilterableColumn<UserQuizTakenListResData>[] =
+    [
+      {
+        id: "quiz_type",
+        title: "Filter Tipe Quiz",
+        options: referenceResp.data.map((reference) => ({
+          value: reference.code_ref2,
+          label: reference.value_ref1,
+        })),
+      },
+    ]
+
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+    searchableColumns,
+    filterableColumns,
+  })
+
   return (
     <DataTable
+      // columns={columns}
+      // data={data}
+      // pageCount={pageCount}
+      // searchableColumns={[
+      //   {
+      //     id: "quiz_title",
+      //     title: "Judul",
+      //   },
+      // ]}
+      // filterableColumns={[
+      //   {
+      //     id: "quiz_type",
+      //     title: "Filter Tipe Quiz",
+      //     options: referenceResp.data.map((reference) => ({
+      //       value: reference.code_ref2,
+      //       label: reference.value_ref1,
+      //     })),
+      //   },
+      // ]}
+
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "quiz_title",
-          title: "Judul",
-        },
-      ]}
-      filterableColumns={[
-        {
-          id: "quiz_type",
-          title: "Filter Tipe Quiz",
-          options: referenceResp.data.map((reference) => ({
-            value: reference.code_ref2,
-            label: reference.value_ref1,
-          })),
-        },
-      ]}
     />
   )
 }

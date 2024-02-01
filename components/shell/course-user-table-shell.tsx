@@ -1,9 +1,11 @@
 "use client"
 
 import * as React from "react"
+import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { UserListResData } from "@/types/user/res"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 
 interface CourseUserTableShellProps {
@@ -32,20 +34,38 @@ export function CourseUserTableShell({
         ),
       },
     ],
-    [data]
+    []
   )
+
+  const searchableColumns: DataTableSearchableColumn<UserListResData>[] = [
+    {
+      id: "name",
+      title: "Nama",
+    },
+  ]
+
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+    searchableColumns,
+  })
 
   return (
     <DataTable
+      // columns={columns}
+      // data={data}
+      // pageCount={pageCount}
+      // searchableColumns={[
+      //   {
+      //     id: "name",
+      //     title: "Nama",
+      //   },
+      // ]}
+      // newRowLink={linkString === "" ? undefined : linkString}
+
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "name",
-          title: "Nama",
-        },
-      ]}
       newRowLink={linkString === "" ? undefined : linkString}
     />
   )

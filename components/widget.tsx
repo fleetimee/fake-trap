@@ -8,7 +8,7 @@ interface CardProps {
 function Card({ variant, extra, children, ...rest }: CardProps) {
   return (
     <div
-      className={`!z-5 shadow-3xl relative flex flex-col rounded-[20px] bg-white bg-clip-border ${
+      className={`!z-5 relative flex flex-col rounded-lg border border-card bg-white bg-clip-border shadow-sm ${
         rest.default
           ? "shadow-shadow-500 dark:shadow-none"
           : "shadow-shadow-100 dark:shadow-none"

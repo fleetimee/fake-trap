@@ -1,17 +1,15 @@
 "use client"
 
 import React from "react"
+import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { UserQuizGroupedResData } from "@/types/me/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-
-
-
-
 
 interface UserQuizGroupedTableShellProps {
   data: UserQuizGroupedResData[]
@@ -117,27 +115,59 @@ export function UserQuizGroupedTableShell({
     [setSelectedRowIds, data]
   )
 
+  const searchableColumns: DataTableSearchableColumn<UserQuizGroupedResData>[] =
+    [
+      {
+        id: "quiz_title",
+        title: "Judul",
+      },
+    ]
+
+  const filterableColumns: DataTableFilterableColumn<UserQuizGroupedResData>[] =
+    [
+      {
+        id: "quiz_type",
+        title: "Filter Tipe Quiz",
+        options: referenceResp.data.map((reference) => ({
+          value: reference.code_ref2,
+          label: reference.value_ref1,
+        })),
+      },
+    ]
+
+  const { dataTable } = useDataTable({
+    columns,
+    data,
+    pageCount,
+    searchableColumns,
+    filterableColumns,
+  })
+
   return (
     <DataTable
+      // columns={columns}
+      // data={data}
+      // pageCount={pageCount}
+      // searchableColumns={[
+      //   {
+      //     id: "quiz_title",
+      //     title: "Judul",
+      //   },
+      // ]}
+      // filterableColumns={[
+      //   {
+      //     id: "quiz_type",
+      //     title: "Filter Tipe Quiz",
+      //     options: referenceResp.data.map((reference) => ({
+      //       value: reference.code_ref2,
+      //       label: reference.value_ref1,
+      //     })),
+      //   },
+      // ]}
+      dataTable={dataTable}
       columns={columns}
-      data={data}
-      pageCount={pageCount}
-      searchableColumns={[
-        {
-          id: "quiz_title",
-          title: "Judul",
-        },
-      ]}
-      filterableColumns={[
-        {
-          id: "quiz_type",
-          title: "Filter Tipe Quiz",
-          options: referenceResp.data.map((reference) => ({
-            value: reference.code_ref2,
-            label: reference.value_ref1,
-          })),
-        },
-      ]}
+      searchableColumns={searchableColumns}
+      filterableColumns={filterableColumns}
     />
   )
 }
