@@ -1,4 +1,7 @@
+"use client"
+
 import React from "react"
+import { useMediaQuery } from "react-responsive"
 
 import { Icons } from "@/components/icons"
 import { Card } from "@/components/ui/card"
@@ -9,23 +12,47 @@ interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Content({ title, children, className, ...rest }: ContentProps) {
-  return (
-    <Card
-      className={`flex h-fit w-full ${
-        className ? className : "basis-3/4"
-      } items-start justify-normal`}
-      {...rest}
-    >
-      <div className="flex w-full flex-col gap-6 p-4">
-        <div className="flex flex-row items-center justify-between">
-          <p className="grow break-all font-heading text-3xl">{title}</p>
-          <Icons.bookmark className="h-14 w-14 flex-none  pl-5" />
-        </div>
+  const isMobile = useMediaQuery({ query: "(max-width: 640px)" })
 
-        <div className="h-full max-h-max  rounded-md border border-primary p-4">
-          {children}
+  if (isMobile) {
+    return <div className="h-full max-h-max  sm:w-screen">{children}</div>
+  } else {
+    return (
+      <Card
+        className={`flex h-fit w-full ${className ? className : "basis-3/4"} items-start justify-normal sm:w-full`}
+        {...rest}
+      >
+        <div className="flex w-full flex-col gap-6 p-4 sm:w-full">
+          <div className="flex flex-row items-center justify-between">
+            <p className="grow break-all font-heading text-3xl">{title}</p>
+            <Icons.bookmark className="size-14 flex-none pl-5" />
+          </div>
+
+          <div className="h-full max-h-max rounded-md border border-primary p-4 sm:w-full">
+            {children}
+          </div>
         </div>
-      </div>
-    </Card>
-  )
+      </Card>
+    )
+  }
+
+  // return (
+  //   <Card
+  //     className={`flex h-fit w-full ${
+  //       className ? className : "basis-3/4"
+  //     } items-start justify-normal sm:w-full`}
+  //     {...rest}
+  //   >
+  //     <div className="flex w-full flex-col gap-6 p-4 sm:w-full">
+  //       <div className="flex flex-row items-center justify-between">
+  //         <p className="grow break-all font-heading text-3xl">{title}</p>
+  //         <Icons.bookmark className="size-14 flex-none pl-5" />
+  //       </div>
+
+  //       <div className="h-full max-h-max rounded-md border border-primary p-4 sm:w-full">
+  //         {children}
+  //       </div>
+  //     </div>
+  //   </Card>
+  // )
 }

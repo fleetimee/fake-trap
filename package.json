@@ -92,6 +92,7 @@
     "react-pdf": "^7.7.0",
     "react-pdf-tailwind": "^2.1.0",
     "react-player": "^2.14.1",
+    "react-responsive": "^9.0.2",
     "react-scroll-into-view": "^2.1.0",
     "react-select": "^5.8.0",
     "react-textarea-autosize": "^8.5.3",

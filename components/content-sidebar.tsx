@@ -68,7 +68,7 @@ export function KnowledgeContentSidebar({
           <div className="flex justify-end px-3 py-6">
             <Link href={`${baseUrl}/section/new`}>
               <Button size="sm" variant="outline">
-                <Icons.add className="h-4 w-4" />
+                <Icons.add className="size-4" />
                 <span className="ml-2">Tambah Section</span>
               </Button>
             </Link>
@@ -159,15 +159,15 @@ export function KnowledgeContentSidebar({
                                   >
                                     {content.content_type ===
                                     ContentType.LOCAL_FILE ? (
-                                      <Icons.video className="mr-2 h-4 w-4 text-orange-500" />
+                                      <Icons.video className="mr-2 size-4 text-orange-500" />
                                     ) : content.content_type ===
                                       ContentType.VIDEO ? (
-                                      <Icons.youtube className="mr-2 h-4 w-4 text-red-500" />
+                                      <Icons.youtube className="mr-2 size-4 text-red-500" />
                                     ) : content.content_type ===
                                       ContentType.ARTICLE ? (
-                                      <Icons.post className="mr-2 h-4 w-4 text-green-500" />
+                                      <Icons.post className="mr-2 size-4 text-green-500" />
                                     ) : (
-                                      <Icons.paperClip className="mr-2 h-4 w-4 text-blue-500" />
+                                      <Icons.paperClip className="mr-2 size-4 text-blue-500" />
                                     )}
 
                                     <p className="line-clamp-2 ">
