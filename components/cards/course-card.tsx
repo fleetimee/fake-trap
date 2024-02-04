@@ -25,8 +25,11 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
   })
 
   return (
-    <>
-      <Card className=" flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary sm:w-[30rem] md:max-w-2xl xl:h-[300px]">
+    <Link
+      href={`/peserta/course/detail/${props.courseId}`}
+      className="flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary sm:w-[30rem] md:max-w-2xl xl:h-[300px]"
+    >
+      <Card>
         <div className="md:flex">
           <div className="md:shrink-0">
             <img
@@ -58,12 +61,12 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
             >
               {courseStatus}
             </Badge>
-            <a
+            <Link
               className="mt-1 line-clamp-2 block text-lg font-medium leading-tight text-black hover:underline"
-              href="#"
+              href={`/peserta/course/detail/${props.courseId}`}
             >
               {props.courseTitle}
-            </a>
+            </Link>
             <p className="mt-2 line-clamp-2 text-gray-500">
               {props.courseDescription}
             </p>
@@ -89,6 +92,6 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
           </div>
         </CardFooter>
       </Card>
-    </>
+    </Link>
   )
 }

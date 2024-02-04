@@ -6,6 +6,7 @@ import OperatorLottie from "@/public/lottie/role_operator.json"
 import PemateriLottie from "@/public/lottie/role_pemateri_divisi.json"
 import PesertaLottie from "@/public/lottie/role_peserta.json"
 import SupervisorLottie from "@/public/lottie/role_supervisor.json"
+import { ArrowLeftIcon } from "@radix-ui/react-icons"
 import Balancer from "react-wrap-balancer"
 
 import { getCurrentUser } from "@/lib/session"
@@ -49,7 +50,7 @@ export default async function PanelSelector() {
             >
               <LottieClient
                 animationData={Confetti}
-                className="inline-block h-14 w-14"
+                className="inline-block size-14"
               />
             </span>
           </h2>
@@ -137,8 +138,9 @@ export default async function PanelSelector() {
 
       <div className="mx-auto flex max-w-[25rem] items-center justify-center text-center">
         <Link href={"/"}>
-          <Button size="default" className="mr-4 w-full" variant="destructive">
-            Keluar
+          <Button size="default" className="mr-4 w-full" variant="outline">
+            <ArrowLeftIcon className="mr-2 size-5" />
+            Kembali ke Home
           </Button>
         </Link>
       </div>

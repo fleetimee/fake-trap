@@ -90,7 +90,7 @@ export default async function PesertaPage() {
       <DashboardHeader heading="Peserta" description={dateNow} />
 
       <Alert>
-        <PartyPopper className="h-5 w-5" />
+        <PartyPopper className="size-5" />
         <AlertTitle>
           Halo,{" "}
           <span className="font-heading uppercase text-primary">
@@ -165,7 +165,7 @@ export default async function PesertaPage() {
                   <Button variant="outline" className="w-full">
                     Lihat Semua
                     <ArrowRightIcon
-                      className="size-4 ml-2"
+                      className="ml-2 size-4"
                       aria-hidden="true"
                     />
                   </Button>
@@ -173,7 +173,7 @@ export default async function PesertaPage() {
               </div>
             ) : (
               <div className="mx-auto flex flex-col items-center justify-center gap-4 py-16">
-                <Icons.course className="h-20 w-20 text-gray-400" />
+                <Icons.course className="size-20 text-gray-400" />
                 <p className="text-gray-400">
                   Belum ada pelatihan yang diikuti
                 </p>
@@ -205,8 +205,7 @@ export default async function PesertaPage() {
                       baru saja membuat post baru pada forum{" "}
                       <span className="font-semibold underline hover:text-blue-600">
                         <Link
-                          href={`/peserta/course/${post.id_course}/forum/${post.id_threads}`}
-                          target={"_blank"}
+                          href={`/peserta/course/detail/${post.id_course}/threads/${post.id_threads}`}
                         >
                           {post.threads_title}
                         </Link>
@@ -224,7 +223,7 @@ export default async function PesertaPage() {
               </ScrollArea>
             ) : (
               <div className="mx-auto flex flex-col items-center justify-center gap-4 py-16">
-                <Icons.post className="h-20 w-20 text-gray-400" />
+                <Icons.post className="size-20 text-gray-400" />
                 <p className="text-gray-400">Belum ada post yang kamu buat</p>
               </div>
             )}
