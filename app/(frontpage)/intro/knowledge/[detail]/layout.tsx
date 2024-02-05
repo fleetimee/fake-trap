@@ -82,7 +82,6 @@ export default async function KnowledgeDetail({
         id="scrollTarget"
       >
         <Content title={knowledge?.data?.knowledge_title}>{children}</Content>
-
         <KnowledgeContentSidebar
           baseUrl={`/intro/knowledge/${params.detail}`}
           knowledge={knowledge}

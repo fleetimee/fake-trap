@@ -3,21 +3,23 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { ClockIcon } from "@radix-ui/react-icons"
 import Blocks from "editorjs-blocks-react-renderer"
-import { useMediaQuery } from "react-responsive"
-import Balancer from "react-wrap-balancer"
 
 import { authOptions } from "@/lib/auth"
 import { ContentType } from "@/lib/enums/status"
 import { getOneContent } from "@/lib/fetcher/content-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { convertDatetoString } from "@/lib/utils"
-import { YoutubeRender } from "@/components/content-renderer"
 import { LocalVideoFrame } from "@/components/local-video-frame"
-import { LocalVideoPlayer } from "@/components/local-video-player"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { YoutubeFrame } from "@/components/youtube-frame"
 
 interface KnowledgeContentPageProps {
   params: {
@@ -50,37 +52,28 @@ export default async function KnowledgeContentPage({
 
   if (article) {
     return (
-      <div className="whatever-you-want mx-auto flex w-full flex-col items-start justify-center p-4">
-        <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
+      <div className="whatever-you-want mx-auto flex w-full flex-col items-start justify-center  ">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-black dark:text-white">
+              {content.data.content_title}
+            </CardTitle>
+            <CardDescription>
+              {convertDatetoString(content.data.created_at.toString())}
+            </CardDescription>
+          </CardHeader>
 
-        <p>{convertDatetoString(content.data.created_at.toString())}</p>
-
-        <Separator />
-
-        <Blocks data={contentParsed} />
+          <Separator />
+          <CardContent className="text-black dark:text-white">
+            <Blocks data={contentParsed} />
+          </CardContent>
+        </Card>
       </div>
     )
   }
 
   if (video) {
-    return (
-      <div className="flex flex-col items-start justify-center gap-3">
-        <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
-
-        <span className="inline-flex">
-          <ClockIcon className="mr-2 h-6 w-6 text-gray-500" />
-          <p>{convertDatetoString(content.data.created_at.toString())}</p>
-        </span>
-
-        <Separator />
-
-        <p className="py-2 text-sm italic ">
-          {content.data.video?.flavor_text}
-        </p>
-
-        <YoutubeRender link={content.data.video?.video_url} />
-      </div>
-    )
+    return <YoutubeFrame content={content} />
   }
 
   if (localVideo) {
@@ -93,7 +86,7 @@ export default async function KnowledgeContentPage({
         <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
 
         <span className="inline-flex">
-          <ClockIcon className="mr-2 h-6 w-6 text-gray-500" />
+          <ClockIcon className="mr-2 size-6 text-gray-500" />
           <p>{convertDatetoString(content.data.created_at.toString())}</p>
         </span>
         <Separator />
