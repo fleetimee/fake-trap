@@ -51,7 +51,7 @@ export function KnowledgeContentSidebar({
   const pathname = usePathname()
 
   return (
-    <Card className="flex  h-full basis-1/4 flex-col items-center justify-start ">
+    <Card className="flex  h-full basis-1/4 flex-col items-center justify-start rounded-none sm:rounded-lg ">
       <Tabs defaultValue="knowledge" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger
