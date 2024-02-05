@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
+import { ScrollToTopButton } from "@/components/scroll-to-top"
 
 interface IntroLayoutProps {
   children: React.ReactNode
@@ -29,6 +30,8 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
           topNavItems={categoryNav.data}
         />
         <main className="flex-1">{children}</main>
+        <ScrollToTopButton />
+
         <SiteFooter className="border-t" />
       </div>
     )
@@ -54,6 +57,8 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
         topNavItems={categoryNav.data}
       />
       <main className="flex-1">{children}</main>
+      <ScrollToTopButton />
+
       <SiteFooter className="border-t" />
     </div>
   )

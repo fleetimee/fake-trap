@@ -42,16 +42,11 @@ export function LocalVideoFrame({ content }: LocalVideoFrameProps) {
         )
       }
 
-      {
-        // Mobile
-        isMobile && (
-          <AspectRatio ratio={16 / 9}>
-            <LocalVideoPlayer
-              url={`${process.env.NEXT_PUBLIC_BASE_URL}${content.data.video_upload?.video_path}`}
-            />
-          </AspectRatio>
-        )
-      }
+      <AspectRatio ratio={16 / 9}>
+        <LocalVideoPlayer
+          url={`${process.env.NEXT_PUBLIC_BASE_URL}${content.data.video_upload?.video_path}`}
+        />
+      </AspectRatio>
     </div>
   )
 }
