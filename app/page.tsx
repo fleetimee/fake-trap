@@ -19,6 +19,7 @@ import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { ScrollIntoViewButton } from "@/components/scroll-into-view"
+import { ScrollToTopButton } from "@/components/scroll-to-top"
 import { Button, buttonVariants } from "@/components/ui/button"
 
 export const metadata = {
@@ -235,7 +236,7 @@ export default async function IndexPage() {
                 Try it out
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="ml-1 h-6 w-6 duration-150"
+                  className="ml-1 size-6 duration-150"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -262,48 +263,28 @@ export default async function IndexPage() {
         </div>
       </section>
 
+      {/* This section is the "Featured Category" section of the page. It displays a list of popular categories in a grid layout. Each category is represented by a card, and there's a button to view all categories. The section has a background image and uses the framer-motion library for animations. */}
       <section
         id="categories"
         aria-labelledby="categories-heading"
         className="space-y-6 bg-[url(/second_bg.svg)] bg-cover bg-no-repeat py-16  lg:min-h-[60svh]"
       >
-        <div className="mx-auto max-w-screen-xl space-y-16 px-4 py-16 sm:px-6 lg:px-8">
-          {/* <MotionDiv
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <h2 className="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
-                Kategori
-              </h2>
-            </MotionDiv>
-            <Balancer className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-              <MotionDiv
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Jelajahi kategori pengetahuan yang tersedia di dalam e-learning
-                ini.
-              </MotionDiv>
-            </Balancer> */}
-
+        <div className="mx-auto max-w-screen-xl space-y-4 px-4 py-16 sm:px-6 md:space-y-16 lg:px-8">
           <div className="flex items-center justify-between gap-4">
-            <div className="max-w-[58rem] flex-1 space-y-1">
-              <h2 className="flex-1 font-heading text-2xl font-medium sm:text-3xl">
+            <div className="max-w-[58rem] flex-1 space-y-1 bg-white md:bg-none">
+              <h2 className="flex-1 bg-white font-heading text-2xl font-medium sm:text-3xl md:bg-none">
                 Kategori Populer
               </h2>
-              <p className="text-balance max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-                Kategori populer yang tersedia di BPD DIY Elearning
+              <p className="max-w-[46rem] text-balance leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+                Kategori populer yang tersedia di BPD DIY Elearning, yang sudah
+                di akses oleh banyak pengguna
               </p>
             </div>
 
             <Button variant="outline" className="hidden sm:flex" asChild>
               <Link href={"intro/categories/all"}>
                 Lihat Semua
-                <ArrowRightIcon className="size-4 ml-2" aria-hidden="true" />
+                <ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
               </Link>
             </Button>
           </div>
@@ -328,10 +309,22 @@ export default async function IndexPage() {
                 />
               </MotionDiv>
             ))}
+
+            <Button
+              variant="ghost"
+              className="col-span-2 mx-auto flex w-full sm:col-auto sm:hidden"
+              asChild
+            >
+              <Link href={"intro/knowledge/all"}>
+                Lihat Semua
+                <ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
+              </Link>
+            </Button>
           </MotionDiv>
         </div>
       </section>
 
+      {/* Velocity Scroll */}
       <section
         id="parallax-text"
         aria-labelledby="parallax-text-heading"
@@ -340,20 +333,22 @@ export default async function IndexPage() {
         <VelocityScroll />
       </section>
 
+      {/* Featured Knowledge */}
       <section
         id="featured-knowledge"
         aria-labelledby="featured-knowledge-heading"
-        className="mx-auto max-w-screen-xl space-y-16 px-4 py-16 sm:px-6 lg:px-8"
+        className="mx-auto max-w-screen-xl space-y-4 px-4 py-16  sm:px-6 md:space-y-16 lg:px-8"
       >
         <div className="flex items-center justify-between gap-4">
           <div className="max-w-[58rem] flex-1 space-y-1">
             <h2 className="flex-1 font-heading text-2xl font-medium sm:text-3xl">
               Materi Terbaru
             </h2>
-            <p className="text-balance max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+            <p className="max-w-[46rem] text-balance leading-normal text-muted-foreground sm:text-lg sm:leading-7">
               Materi terbaru pilihan yang tersedia di BPD DIY Elearning
             </p>
           </div>
+
           <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -361,23 +356,10 @@ export default async function IndexPage() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {/* <Link href="intro/knowledge/all">
-              <div
-                className={cn(
-                  buttonVariants({
-                    size: "lg",
-                  })
-                )}
-              >
-                Lihat Semua
-                <span className="sr-only">View all products</span>
-              </div>
-            </Link> */}
-
             <Button variant="outline" className="hidden sm:flex" asChild>
               <Link href={"intro/knowledge/all"}>
                 Lihat Semua
-                <ArrowRightIcon className="size-4 ml-2" aria-hidden="true" />
+                <ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
               </Link>
             </Button>
           </MotionDiv>
@@ -408,12 +390,13 @@ export default async function IndexPage() {
           >
             <Link href={"intro/knowledge/all"}>
               Lihat Semua
-              <ArrowRightIcon className="size-4 ml-2" aria-hidden="true" />
+              <ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
             </Link>
           </Button>
         </div>
       </section>
 
+      <ScrollToTopButton />
       <SiteFooter className="border-t" />
     </section>
   )
