@@ -263,7 +263,10 @@ export default async function IndexPage() {
         </div>
       </section>
 
-      {/* This section is the "Featured Category" section of the page. It displays a list of popular categories in a grid layout. Each category is represented by a card, and there's a button to view all categories. The section has a background image and uses the framer-motion library for animations. */}
+      {/* This section is the "Featured Category" section of the page. 
+      It displays a list of popular categories in a grid layout. Each category is represented by a card, 
+      and there's a button to view all categories. 
+      The section has a background image and uses the framer-motion library for animations. */}
       <section
         id="categories"
         aria-labelledby="categories-heading"

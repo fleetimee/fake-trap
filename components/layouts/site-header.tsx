@@ -38,6 +38,8 @@ interface SiteHeaderProps {
   emailName: string
   sidebarNavItems: MenuListResNewData[]
   topNavItems?: CategoryNavDataListRes[]
+
+  titleNav?: string
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
@@ -51,6 +53,18 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             mainNavItems={siteConfig.mainNav}
             sidebarNavItems={props.sidebarNavItems}
           />
+
+          {/* The title is now next to the MobileNav component. */}
+          {props.titleNav ? (
+            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+              {props.titleNav ?? "BPD DIY E-Learning"}
+            </h1>
+          ) : (
+            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+              BPD DIY E-Learning
+            </h1>
+          )}
+
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-2">
               <KnowledgeSearch />
@@ -59,7 +73,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             {props.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="size-8">
                     <AvatarImage
                       src={`data:image/svg+xml;utf8,${generateFromString(
                         props.displayName
@@ -85,7 +99,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                     <DropdownMenuItem asChild>
                       <Link href="/login">
                         <DashboardIcon
-                          className="size-4 mr-2"
+                          className="mr-2 size-4"
                           aria-hidden="true"
                         />
                         Dashboard
@@ -99,7 +113,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                     >
                       <Link href={"/panel-selector"}>
                         <Icons.menu
-                          className="mr-2 h-4 w-4"
+                          className="mr-2 size-4"
                           aria-hidden="true"
                         />
                         Kewenangan
@@ -134,7 +148,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                   >
                     <Link href="/login/signout">
                       <Icons.logout
-                        className="mr-2 h-4 w-4"
+                        className="mr-2 size-4"
                         aria-hidden="true"
                       />
                       Log out
@@ -168,10 +182,19 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             mainNavItems={siteConfig.mainNav}
             sidebarNavItems={props.sidebarNavItems}
           />
+          {props.titleNav ? (
+            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+              {props.titleNav ?? "BPD DIY E-Learning"}
+            </h1>
+          ) : (
+            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+              BPD DIY E-Learning
+            </h1>
+          )}
           {props.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Avatar className="h-8 w-8">
+                <Avatar className="size-8">
                   <AvatarFallback>a</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
