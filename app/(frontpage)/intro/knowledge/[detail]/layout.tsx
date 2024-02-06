@@ -1,12 +1,10 @@
 import React from "react"
 
 import { getOnePublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
-import { cn } from "@/lib/utils"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
-import { Shell } from "@/components/shell/lobby-shell"
 
 interface KnowledgeDetailLayoutProps {
   children: React.ReactNode

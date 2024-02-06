@@ -3,11 +3,6 @@
 import Youtube, { YouTubeProps } from "react-youtube"
 
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Card } from "@/components/ui/card"
-
-
-
-
 
 export function YoutubePlayer({ videoId }: YouTubeProps) {
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
@@ -27,14 +22,14 @@ export function YoutubePlayer({ videoId }: YouTubeProps) {
 
   return (
     <AspectRatio ratio={16 / 9}>
-      <Card className="h-full min-h-full w-full ">
+      <div className="size-full min-h-full ">
         <Youtube
           videoId={videoId}
           opts={opts}
           onReady={onPlayerReady}
-          className="aspect-video h-full w-full rounded-lg object-cover shadow-md "
+          className="aspect-video size-full rounded-lg object-cover shadow-md "
         />
-      </Card>
+      </div>
     </AspectRatio>
   )
 }
