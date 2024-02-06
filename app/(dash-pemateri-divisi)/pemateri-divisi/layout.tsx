@@ -49,6 +49,7 @@ export default async function PemateriDivisiLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
       />
+
       {/* <div className="bg-background bg-cover bg-top bg-no-repeat  dark:bg-none md:bg-left md:py-4 lg:min-h-[100svh]">
         <div className="grid flex-1 gap-12 sm:container md:grid-cols-[200px_1fr] ">
           <aside className="hidden w-[200px] flex-col border-r md:flex">
