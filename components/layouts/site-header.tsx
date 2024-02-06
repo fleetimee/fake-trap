@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { DashboardIcon } from "@radix-ui/react-icons"
 import { generateFromString } from "generate-avatar"
+import { FramerIcon } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
@@ -56,11 +57,12 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
 
           {/* The title is now next to the MobileNav component. */}
           {props.titleNav ? (
-            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+            <h1 className="ml-2 text-center  font-bold md:hidden">
               {props.titleNav ?? "BPD DIY E-Learning"}
             </h1>
           ) : (
-            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+            <h1 className="ml-2 inline-flex items-center text-center  font-bold md:hidden">
+              <FramerIcon className="mr-2 size-4" aria-hidden="true" />
               BPD DIY E-Learning
             </h1>
           )}
@@ -183,11 +185,12 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             sidebarNavItems={props.sidebarNavItems}
           />
           {props.titleNav ? (
-            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+            <h1 className="ml-2 text-center  font-bold md:hidden">
               {props.titleNav ?? "BPD DIY E-Learning"}
             </h1>
           ) : (
-            <h1 className="ml-2 text-center text-xl font-bold md:hidden">
+            <h1 className="ml-2 flex text-center  font-bold md:hidden">
+              <FramerIcon className="mr-2 size-4" aria-hidden="true" />
               BPD DIY E-Learning
             </h1>
           )}

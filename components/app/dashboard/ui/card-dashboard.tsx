@@ -34,7 +34,7 @@ export function CardDashboard({
   const Icon = Icons[icon || "arrowRight"]
 
   return (
-    <Card className="h-fit space-y-2 shadow-md hover:bg-accent hover:text-accent-foreground">
+    <Card className="h-fit space-y-2 rounded-none shadow-md hover:bg-accent hover:text-accent-foreground md:rounded-lg">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
           <CardTitle className="text-sm font-medium">{title}</CardTitle>
@@ -42,7 +42,7 @@ export function CardDashboard({
         </div>
         <div>
           <CardTitle className="text-base">
-            <Icon className="h-4 w-4 text-muted-foreground" />
+            <Icon className="size-4 text-muted-foreground" />
           </CardTitle>
         </div>
       </CardHeader>

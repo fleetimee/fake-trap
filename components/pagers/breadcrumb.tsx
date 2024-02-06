@@ -26,7 +26,7 @@ export function BreadCrumbs({
     <nav
       aria-label="breadcrumbs"
       className={cn(
-        "flex items-center overflow-x-auto whitespace-nowrap text-sm font-medium",
+        "flex items-center overflow-x-auto whitespace-nowrap p-2 text-sm font-medium md:p-0 ",
         isWhiteText ? "text-white" : "text-foreground"
       )}
     >
@@ -47,7 +47,7 @@ export function BreadCrumbs({
               {segment.title}
             </Link>
             {!isLastSegment && (
-              <SeparatorIcon className="mx-2 h-4 w-4" aria-hidden="true" />
+              <SeparatorIcon className="mx-2 size-4" aria-hidden="true" />
             )}
           </React.Fragment>
         )

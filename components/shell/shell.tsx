@@ -1,9 +1,5 @@
 import { cn } from "@/lib/utils"
 
-
-
-
-
 /**
  * Interface for the props of the DashboardShell component.
  */
@@ -22,7 +18,13 @@ export function DashboardShell({
   ...props
 }: DashboardShellProps) {
   return (
-    <div className={cn("grid items-start gap-8", className)} {...props}>
+    <div
+      className={cn(
+        "grid items-start gap-4 md:grid md:items-start md:gap-8",
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   )

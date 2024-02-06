@@ -124,7 +124,7 @@ export default async function PemateriDivisiDashboardPage() {
         <LottieClient className="hidden lg:block" animationData={HelloLottie} />
       </div>
 
-      <Card>
+      <Card className="rounded-none md:rounded-lg">
         <CardHeader>
           <div className="flex-col md:flex md:flex-row md:items-center md:justify-between">
             <div className="space-y-2">
