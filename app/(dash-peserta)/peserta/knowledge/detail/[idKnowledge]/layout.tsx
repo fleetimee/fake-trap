@@ -51,29 +51,33 @@ export default async function KnowledgeDetailLayout({
 
   return (
     <DashboardShell>
-      <BreadCrumbs
-        segments={[
-          {
-            href: "/peserta",
-            title: "Dashboard",
-          },
-          {
-            href: "/peserta/knowledge",
-            title: "Pengetahuan",
-          },
-          {
-            href: `/peserta/knowledge/detail/${params.idKnowledge}`,
-            title: knowledge.data.knowledge_title,
-          },
-        ]}
-      />
+      <div className="hidden sm:block">
+        <BreadCrumbs
+          segments={[
+            {
+              href: "/peserta",
+              title: "Dashboard",
+            },
+            {
+              href: "/peserta/knowledge",
+              title: "Pengetahuan",
+            },
+            {
+              href: `/peserta/knowledge/detail/${params.idKnowledge}`,
+              title: knowledge.data.knowledge_title,
+            },
+          ]}
+        />
+      </div>
 
-      <SectionBanner
-        title={knowledge.data.knowledge_title}
-        description={knowledge.data.description}
-        urlLink="/peserta/knowledge"
-        image={knowledge.data.image}
-      />
+      <div className="hidden sm:block">
+        <SectionBanner
+          title={knowledge.data.knowledge_title}
+          description={knowledge.data.description}
+          urlLink="/peserta/knowledge"
+          image={knowledge.data.image}
+        />
+      </div>
 
       <div
         className="flex h-auto flex-col gap-4 px-2 lg:flex-row"

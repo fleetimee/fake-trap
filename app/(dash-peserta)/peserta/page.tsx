@@ -133,7 +133,7 @@ export default async function PesertaPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="h-fit lg:col-span-3">
+        <Card className="h-fit rounded-none md:rounded-lg lg:col-span-3">
           <CardHeader>
             <CardTitle>Pelatihan</CardTitle>
             <CardDescription>
@@ -182,7 +182,7 @@ export default async function PesertaPage() {
           </CardContent>
         </Card>
 
-        <Card className="h-fit lg:col-span-4">
+        <Card className="h-fit rounded-none md:rounded-lg lg:col-span-4">
           <CardHeader>
             <CardTitle>Post Activity</CardTitle>
             <CardDescription>
