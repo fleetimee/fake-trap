@@ -56,7 +56,7 @@ export function KnowledgeContentSidebar({
         <TabsList className="w-full">
           <TabsTrigger
             value="knowledge"
-            className="font-lg w-full  font-semibold"
+            className="font-lg w-full  rounded-none font-semibold sm:rounded-sm"
           >
             <div className="inline-flex items-center">
               <span className="ml-2">Materi</span>

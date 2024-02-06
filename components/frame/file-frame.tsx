@@ -111,21 +111,56 @@ export function FileFrame({ content, params }: FileFrameProps) {
       {isMobile && (
         <Card className="w-full rounded-none p-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <div className="flex flex-col space-y-2">
-              <div className="flex items-center gap-2">
-                <FileIcon className="size-6" />
-                <h3 className="text-lg font-semibold">Document 1</h3>
-              </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Description of Document 1
-              </p>
-              <Link
-                className="inline-flex h-9 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-                href="#"
-              >
-                Download
-              </Link>
-            </div>
+            {content.data.files &&
+              content.data.files.map((file) => (
+                <Card
+                  key={file.id_content_file}
+                  className="rounded-lg border-none"
+                >
+                  <CardContent className="p-4">
+                    <div className="flex flex-row items-center justify-between">
+                      <h2 className="text-2xl font-bold">{file.file_type}</h2>
+                      <h3 className="text-gray-500">
+                        {Number(file.file_size)
+                          ? (Number(file.file_size) / 1024 / 1024).toFixed(2)
+                          : "N/A"}{" "}
+                        MB
+                      </h3>
+                    </div>
+                    <p className="mt-2 text-gray-600">
+                      {file.file_path.split("/").pop()}
+                    </p>
+                    <div className="mt-4 flex space-x-2">
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/${file.file_path}`}
+                        target="_blank"
+                        className={buttonVariants({
+                          size: "sm",
+                          className:
+                            "w-full transition-all duration-200 hover:bg-gray-700 hover:text-white",
+                        })}
+                      >
+                        Download
+                      </Link>
+                      <Button
+                        className="w-full transition-all duration-200 hover:border-gray-700 hover:text-gray-700"
+                        size="sm"
+                        variant="outline"
+                      >
+                        <Link
+                          href={`/intro/knowledge/${params.detail}/section/${
+                            params.idSection
+                          }/content/${params.idContent}/render/${file.file_path
+                            .split("/")
+                            .pop()}`}
+                        >
+                          Preview
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
           </div>
         </Card>
       )}
