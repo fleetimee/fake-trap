@@ -82,7 +82,7 @@ export function KnowledgeContentSidebar({
               <Accordion
                 type="single"
                 collapsible
-                className="px-4"
+                className="md:px-2"
                 key={knowledge.data?.section[0].id_section}
                 defaultValue={knowledge.data?.section[0].id_section.toString()}
               >
@@ -93,7 +93,7 @@ export function KnowledgeContentSidebar({
                     value={section.id_section.toString()}
                     className="text-sm"
                   >
-                    <AccordionTrigger className="line-clamp-2 font-heading text-base font-bold">
+                    <AccordionTrigger className="line-clamp-2 bg-primary-foreground px-2 font-heading text-base font-bold">
                       <ContextMenu key={section.id_section}>
                         <ContextMenuTrigger>
                           {/* The Trigger is the Accordion Title */}
@@ -170,9 +170,12 @@ export function KnowledgeContentSidebar({
                                       <Icons.paperClip className="mr-2 size-4 text-blue-500" />
                                     )}
 
-                                    <p className="line-clamp-2 ">
-                                      {content.content_title}
-                                    </p>
+                                    <div>
+                                      <p className="line-clamp-1 ">
+                                        {content.content_title}
+                                      </p>
+                                      <p className="text-xs ">1 min</p>
+                                    </div>
                                   </Button>
                                 </Link>
                               </AccordionContent>
