@@ -142,16 +142,16 @@ export function KnowledgeContentSidebar({
                             <ContextMenuTrigger>
                               <AccordionContent
                                 key={content.id_content.toString()}
-                                className="py-1"
+                                className="py-0 md:py-1 "
                               >
                                 <Link
                                   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                 >
                                   <Button
                                     className={cn(
-                                      "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                      "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-none text-left font-heading transition-all hover:bg-primary hover:text-background md:rounded-md md:py-2",
                                       {
-                                        "border border-primary bg-primary-foreground text-primary":
+                                        "bg-background text-primary md:border md:border-primary":
                                           pathname !==
                                           `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
                                       }

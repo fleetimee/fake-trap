@@ -19,7 +19,7 @@ export function Content({ title, children, className, ...rest }: ContentProps) {
   } else {
     return (
       <Card
-        className={`flex h-fit w-full ${className ? className : "basis-3/4"} items-start justify-normal sm:w-full`}
+        className={`flex h-fit w-full ${className ? className : "basis-3/4"} items-start justify-normal rounded-none sm:w-full md:rounded-lg`}
         {...rest}
       >
         <div className="flex w-full flex-col gap-6 p-4 sm:w-full">

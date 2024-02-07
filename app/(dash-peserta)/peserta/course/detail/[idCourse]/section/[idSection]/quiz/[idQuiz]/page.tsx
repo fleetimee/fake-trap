@@ -136,7 +136,7 @@ export default async function CourseQuizPageProps({
   }
 
   return (
-    <Card className="w-full ">
+    <Card className="w-full rounded-none md:rounded-lg ">
       <CardHeader>
         <CardTitle>{quiz.data.quiz_title}</CardTitle>
         <CardDescription>{quiz.data.quiz_desc}</CardDescription>

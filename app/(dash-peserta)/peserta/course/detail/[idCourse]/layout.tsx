@@ -87,29 +87,33 @@ export default async function CourseDetailLayout({
 
   return (
     <DashboardShell>
-      <BreadCrumbs
-        segments={[
-          {
-            href: "/peserta",
-            title: "Dashboard",
-          },
-          {
-            href: "/peserta/course",
-            title: "Pelatihan",
-          },
-          {
-            href: `/peserta/course/detail/${params.idCourse}`,
-            title: course.data.course_name,
-          },
-        ]}
-      />
+      <div className="hidden sm:block">
+        <BreadCrumbs
+          segments={[
+            {
+              href: "/peserta",
+              title: "Dashboard",
+            },
+            {
+              href: "/peserta/course",
+              title: "Pelatihan",
+            },
+            {
+              href: `/peserta/course/detail/${params.idCourse}`,
+              title: course.data.course_name,
+            },
+          ]}
+        />
+      </div>
 
-      <SectionBanner
-        description={course.data.course_desc}
-        title={course.data.course_name}
-        urlLink={`/peserta/course/detail/${params.idCourse}`}
-        image={course.data.image}
-      />
+      <div className="hidden sm:block">
+        <SectionBanner
+          description={course.data.course_desc}
+          title={course.data.course_name}
+          urlLink={`/peserta/course/detail/${params.idCourse}`}
+          image={course.data.image}
+        />
+      </div>
 
       <div className="flex items-center justify-end">
         <VercelToolbar
@@ -125,7 +129,7 @@ export default async function CourseDetailLayout({
       )}
 
       <div
-        className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
+        className="flex h-auto flex-col gap-4 md:px-2 lg:flex-row"
         id="scrollTarget"
       >
         <Content
