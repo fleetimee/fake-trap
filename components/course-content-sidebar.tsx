@@ -11,7 +11,7 @@ import {
   CourseKnowledgeSectionListResData,
   CourseOneRes,
 } from "@/types/course/res"
-import { ContentType } from "@/lib/enums/status"
+import { ContentType, QuizType } from "@/lib/enums/status"
 import { cn } from "@/lib/utils"
 import { CreateQuizDropdownButton } from "@/components/create-quiz-dropwdown"
 import { DeleteSection } from "@/components/delete-section"
@@ -87,7 +87,7 @@ export function CourseContentSidebar({
                     key={section.id_knowledge.toString()}
                     value={section.id_knowledge.toString()}
                   >
-                    <AccordionTrigger className="bg-primary-foreground px-2 text-base font-semibold">
+                    <AccordionTrigger className="bg-primary-foreground px-2 font-heading text-base font-semibold">
                       <ContextMenu>
                         <ContextMenuTrigger className="text-left">{`${section.knowledge_title}`}</ContextMenuTrigger>
                         {canCreateContent ? (
@@ -129,7 +129,7 @@ export function CourseContentSidebar({
                       </ContextMenu>
                     </AccordionTrigger>
 
-                    <AccordionContent className="py-0 md:py-1 ">
+                    <AccordionContent className="py-0 md:p-1 ">
                       {section?.section ? (
                         section.section.map((section) => (
                           <Collapsible className="">
@@ -150,30 +150,12 @@ export function CourseContentSidebar({
                               </CollapsibleTrigger>
                             </div>
 
-                            <CollapsibleContent className="md:space-y-4">
+                            <CollapsibleContent className="md:space-y-4 md:py-4">
                               {section?.content ? (
                                 section.content.map((content) => (
-                                  // <Link
-                                  //   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
-                                  //   className="flex w-full cursor-pointer items-center justify-between"
-                                  // >
-                                  //   <Button
-                                  //     className={cn(
-                                  //       "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-none text-left font-heading transition-all hover:bg-primary hover:text-background md:rounded-md md:py-2",
-                                  //       {
-                                  //         "bg-background text-primary md:border md:border-primary":
-                                  //           pathname !==
-                                  //           `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
-                                  //       }
-                                  //     )}
-                                  //   >
-                                  //     {content.content_title}
-                                  //   </Button>
-                                  // </Link>
-
                                   <Link
                                     href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
-                                    className="flex w-full cursor-pointer items-center justify-between"
+                                    className="flex w-full cursor-pointer items-center justify-between "
                                   >
                                     <Button
                                       className={cn(
@@ -220,7 +202,7 @@ export function CourseContentSidebar({
                         ))
                       ) : (
                         <div className="flex min-h-[250] items-center justify-center text-sm text-muted-foreground md:min-h-[300px]">
-                          <div className="flex flex-col items-center justify-between">
+                          <div className="flex flex-col items-center justify-between py-4 md:py-0">
                             <LottieClient animationData={Empty2} />
                             <p>Belum ada section</p>
                           </div>
@@ -260,7 +242,7 @@ export function CourseContentSidebar({
               <Accordion
                 type="single"
                 collapsible
-                className="px-4"
+                className=""
                 key={course.data.section[0].id_section.toString()}
                 defaultValue={course.data.section[0].id_section.toString()}
               >
@@ -269,9 +251,12 @@ export function CourseContentSidebar({
                     key={section.id_section.toString()}
                     value={section.id_section.toString()}
                   >
-                    <AccordionTrigger className="font-heading text-base font-bold">
+                    <AccordionTrigger className="line-clamp-2 bg-primary-foreground px-2 font-heading text-base font-bold">
                       <ContextMenu>
-                        <ContextMenuTrigger>{`${section.section_title}`}</ContextMenuTrigger>
+                        <ContextMenuTrigger>
+                          {`${section.section_title}`}
+                        </ContextMenuTrigger>
+
                         {canCreateContent ? (
                           <ContextMenuContent className="w-64">
                             <ContextMenuItem inset disabled>
@@ -316,7 +301,7 @@ export function CourseContentSidebar({
                         {section.quiz.map((quiz) => (
                           <AccordionContent
                             key={quiz.id_quiz.toString()}
-                            className="py-1"
+                            className="py-0 md:p-1 "
                           >
                             <Link
                               // href={`${pathname}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
@@ -324,15 +309,25 @@ export function CourseContentSidebar({
                             >
                               <Button
                                 className={cn(
-                                  "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                  "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-none text-left font-heading transition-all hover:bg-primary hover:text-background md:rounded-md md:py-2",
                                   {
-                                    "border border-primary bg-primary-foreground text-primary":
+                                    "bg-background text-primary md:border md:border-primary":
                                       pathname !==
                                       `${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`,
                                   }
                                 )}
                               >
-                                {quiz.quiz_title}
+                                {quiz.quiz_type === QuizType.PRETEST ? (
+                                  <Icons.arrowUpDown className="mr-2 size-4 text-orange-500" />
+                                ) : quiz.quiz_type === QuizType.POSTTEST ? (
+                                  <Icons.arrowUpDown className="mr-2 size-4 text-red-500" />
+                                ) : (
+                                  <Icons.quiz className="mr-2 size-4 text-green-500" />
+                                )}
+
+                                <p className="line-clamp-1">
+                                  {quiz.quiz_title}
+                                </p>
                               </Button>
                             </Link>
                           </AccordionContent>
