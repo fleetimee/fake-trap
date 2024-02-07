@@ -3,15 +3,16 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Empty from "@/public/lottie/empty.json"
+import Empty2 from "@/public/lottie/empty2.json"
 import { ChevronsUpDown } from "lucide-react"
 
 import {
-  CourseKnowledgeListResData,
   CourseKnowledgeSectionListResData,
   CourseOneRes,
 } from "@/types/course/res"
+import { ContentType } from "@/lib/enums/status"
 import { cn } from "@/lib/utils"
-import { CreateContentDropdownButton } from "@/components/create-content-dropdown-button"
 import { CreateQuizDropdownButton } from "@/components/create-quiz-dropwdown"
 import { DeleteSection } from "@/components/delete-section"
 import { EmptyContent } from "@/components/empty"
@@ -27,7 +28,6 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuShortcut,
   ContextMenuTrigger,
@@ -36,6 +36,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Icons } from "./icons"
+import { LottieClient } from "./lottie-anim"
 import {
   Collapsible,
   CollapsibleContent,
@@ -77,7 +78,7 @@ export function CourseContentSidebar({
               <Accordion
                 type="single"
                 collapsible
-                className="px-4"
+                className=""
                 key={knowledgeSection[0].id_knowledge.toString()}
                 defaultValue={knowledgeSection[0].id_knowledge.toString()}
               >
@@ -86,7 +87,7 @@ export function CourseContentSidebar({
                     key={section.id_knowledge.toString()}
                     value={section.id_knowledge.toString()}
                   >
-                    <AccordionTrigger className=" text-base font-semibold">
+                    <AccordionTrigger className="bg-primary-foreground px-2 text-base font-semibold">
                       <ContextMenu>
                         <ContextMenuTrigger className="text-left">{`${section.knowledge_title}`}</ContextMenuTrigger>
                         {canCreateContent ? (
@@ -128,12 +129,12 @@ export function CourseContentSidebar({
                       </ContextMenu>
                     </AccordionTrigger>
 
-                    <AccordionContent>
+                    <AccordionContent className="py-0 md:py-1 ">
                       {section?.section ? (
                         section.section.map((section) => (
-                          <Collapsible className="space-y-6 py-2">
-                            <div className="flex items-center justify-between space-x-4 px-4">
-                              <h4 className="text-sm font-semibold">
+                          <Collapsible className="">
+                            <div className="flex items-center justify-between space-x-4 border-b bg-primary-foreground  p-4">
+                              <h4 className=" font-semibold">
                                 {section.section_title}
                               </h4>
 
@@ -143,45 +144,87 @@ export function CourseContentSidebar({
                                   size="sm"
                                   className="w-9 p-0"
                                 >
-                                  <ChevronsUpDown className="h-4 w-4" />
+                                  <ChevronsUpDown className="size-4" />
                                   <span className="sr-only">Toggle</span>
                                 </Button>
                               </CollapsibleTrigger>
                             </div>
 
-                            <CollapsibleContent className="space-y-6">
+                            <CollapsibleContent className="md:space-y-4">
                               {section?.content ? (
                                 section.content.map((content) => (
+                                  // <Link
+                                  //   href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
+                                  //   className="flex w-full cursor-pointer items-center justify-between"
+                                  // >
+                                  //   <Button
+                                  //     className={cn(
+                                  //       "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-none text-left font-heading transition-all hover:bg-primary hover:text-background md:rounded-md md:py-2",
+                                  //       {
+                                  //         "bg-background text-primary md:border md:border-primary":
+                                  //           pathname !==
+                                  //           `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
+                                  //       }
+                                  //     )}
+                                  //   >
+                                  //     {content.content_title}
+                                  //   </Button>
+                                  // </Link>
+
                                   <Link
                                     href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
                                     className="flex w-full cursor-pointer items-center justify-between"
                                   >
                                     <Button
                                       className={cn(
-                                        "flex h-16 w-full justify-start overflow-visible whitespace-normal rounded-md py-2 text-left font-heading transition-all hover:bg-primary hover:text-background",
+                                        "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-none text-left font-heading transition-all hover:bg-primary hover:text-background md:rounded-md md:py-2",
                                         {
-                                          "border border-primary bg-primary-foreground text-primary":
+                                          "bg-background text-primary md:border md:border-primary":
                                             pathname !==
                                             `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
                                         }
                                       )}
                                     >
-                                      {content.content_title}
+                                      {content.content_type ===
+                                      ContentType.LOCAL_FILE ? (
+                                        <Icons.video className="mr-2 size-4 text-orange-500" />
+                                      ) : content.content_type ===
+                                        ContentType.VIDEO ? (
+                                        <Icons.youtube className="mr-2 size-4 text-red-500" />
+                                      ) : content.content_type ===
+                                        ContentType.ARTICLE ? (
+                                        <Icons.post className="mr-2 size-4 text-green-500" />
+                                      ) : (
+                                        <Icons.paperClip className="mr-2 size-4 text-blue-500" />
+                                      )}
+
+                                      <div>
+                                        <p className="line-clamp-1 ">
+                                          {content.content_title}
+                                        </p>
+                                        <p className="text-xs ">1 min</p>
+                                      </div>
                                     </Button>
                                   </Link>
                                 ))
                               ) : (
-                                <p className="text-sm text-muted-foreground">
-                                  Belum ada content
-                                </p>
+                                <div className="flex min-h-[200px] items-center justify-center text-sm text-muted-foreground">
+                                  <div className="flex items-center justify-between md:flex-col">
+                                    <LottieClient animationData={Empty} />
+                                    <p>Belum ada content</p>
+                                  </div>
+                                </div>
                               )}
                             </CollapsibleContent>
                           </Collapsible>
                         ))
                       ) : (
-                        <p className="text-sm text-muted-foreground">
-                          Belum ada section
-                        </p>
+                        <div className="flex min-h-[250] items-center justify-center text-sm text-muted-foreground md:min-h-[300px]">
+                          <div className="flex flex-col items-center justify-between">
+                            <LottieClient animationData={Empty2} />
+                            <p>Belum ada section</p>
+                          </div>
+                        </div>
                       )}
                     </AccordionContent>
                   </AccordionItem>
@@ -205,7 +248,7 @@ export function CourseContentSidebar({
             <div className="flex justify-end px-3 py-6">
               <Link href={`${baseUrl}/section/new`}>
                 <Button size="sm" variant="outline">
-                  <Icons.add className="h-4 w-4" />
+                  <Icons.add className="size-4" />
                   <span className="ml-2">Tambah Section</span>
                 </Button>
               </Link>
