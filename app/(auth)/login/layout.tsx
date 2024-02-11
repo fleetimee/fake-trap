@@ -18,7 +18,7 @@ export default function LoginLayoutPage({ children }: LoginLayoutPageProps) {
           src="/images/bg-login2.jpg"
           alt="A skateboarder doing a high drop"
           fill
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 size-full object-cover"
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
@@ -27,7 +27,7 @@ export default function LoginLayoutPage({ children }: LoginLayoutPageProps) {
           href="/"
           className="absolute left-8 top-6 z-20 flex items-center text-lg font-bold tracking-tight"
         >
-          <Icons.logo className="mr-2 h-6 w-6" aria-hidden="true" />
+          <Icons.logo className="mr-2 size-6" aria-hidden="true" />
           <span>{siteConfig.name}</span>
         </Link>
         {/* <div className="absolute bottom-6 left-8 z-20 line-clamp-1 text-base">

@@ -20,15 +20,6 @@ export default async function IntroDetailKnowledge({ params }: Props) {
     idKnowledge: parseInt(params.detail),
   })
 
-  const isPublic = await lookupKnowledgePublic({
-    idKnowledge: parseInt(params.detail),
-    token: user?.token,
-  })
-
-  if (!isPublic.data) {
-    return notFound()
-  }
-
   return (
     <Image
       src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.data.image}`}

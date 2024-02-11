@@ -136,7 +136,7 @@ export default async function CourseQuizPageProps({
   }
 
   return (
-    <Card className="w-full rounded-none md:rounded-lg ">
+    <Card className="w-full rounded-none border-none border-background shadow-none">
       <CardHeader>
         <CardTitle>{quiz.data.quiz_title}</CardTitle>
         <CardDescription>{quiz.data.quiz_desc}</CardDescription>
@@ -162,13 +162,14 @@ export default async function CourseQuizPageProps({
               Riwayat Nilai
             </TabsTrigger>
           </TabsList>
+
           <TabsContent value="announcement" className="w-full space-y-6">
             <p className="flex items-center justify-center p-4 font-heading text-4xl">
               {quizType?.value_ref1}
             </p>
             <div className="flex items-center justify-center py-2">
               <div className="rounded-full border border-gray-300 p-8">
-                <Icons.warning className="h-32 w-32 text-yellow-500" />
+                <Icons.warning className="size-32 text-yellow-500" />
               </div>
             </div>
             <div className="p-4">
@@ -255,12 +256,11 @@ export default async function CourseQuizPageProps({
               </AlertDialogContent>
             </AlertDialog>
           </TabsContent>
-          <TabsContent value="nilai">
-            <Table>
+
+          <TabsContent value="nilai" className="w-full space-y-6">
+            <Table className="relative">
               <TableHeader>
                 <TableRow>
-                  <TableHead>Nama Pelatihan</TableHead>
-                  <TableHead>Tipe</TableHead>
                   <TableHead>Nilai</TableHead>
                   <TableHead>Created At</TableHead>
                   <TableHead>Report</TableHead>
@@ -269,8 +269,6 @@ export default async function CourseQuizPageProps({
               <TableBody>
                 {userQuiz.data.map((result) => (
                   <TableRow key={result.id_attempt}>
-                    <TableCell>{result.quiz_title}</TableCell>
-                    <TableCell>{result.status_text}</TableCell>
                     <TableCell>{result.score}</TableCell>
                     <TableCell>
                       {convertDatetoStringWithTime(
@@ -286,10 +284,10 @@ export default async function CourseQuizPageProps({
                             "mt-4 w-full bg-blue-500 text-center text-white hover:bg-blue-600",
                         })}
                         href={`
-                ${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${tokenExtracted.id}/${result.id_attempt}
-              `}
+                  ${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${tokenExtracted.id}/${result.id_attempt}
+                `}
                       >
-                        <PrinterIcon className="h-4 w-4" />
+                        <PrinterIcon className="size-4" />
                       </Link>
                     </TableCell>
                   </TableRow>

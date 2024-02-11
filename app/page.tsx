@@ -126,7 +126,7 @@ export default async function IndexPage() {
                   width="0"
                   height="0"
                   sizes="100vw"
-                  className="h-auto w-auto "
+                  className="size-auto "
                   alt=""
                 />
               </div>
@@ -138,13 +138,6 @@ export default async function IndexPage() {
                 sukses dengan BPD DIY Learning Management System
               </p>
               <div className="items-center justify-center space-y-3 pt-10 sm:flex sm:space-x-6 sm:space-y-0 lg:justify-start">
-                {/* <a
-                  href="javascript:void(0)"
-                  className="block w-full rounded-md bg-white px-7 py-3 text-center text-gray-800 shadow-md sm:w-auto"
-                >
-                  Pelajari Lebih Lanjut
-                </a> */}
-
                 <Link
                   href="/login"
                   className={buttonVariants({
@@ -165,7 +158,7 @@ export default async function IndexPage() {
                     })}
                   >
                     <span className="mr-2">
-                      <Icons.arrowRight className="h-4 w-4" />
+                      <Icons.arrowRight className="size-4" />
                     </span>
                     Fitur
                   </Button>
@@ -229,7 +222,7 @@ export default async function IndexPage() {
                 menantang, dan nggak ngebosenin! Kayak main game aja, eh tapi
                 yang ngehasilin ilmu yang berguna loh!
               </p>
-              <a
+              <Link
                 className="mt-5 inline-flex items-center rounded-full bg-indigo-50 px-4 py-2 font-medium text-indigo-600"
                 href="javascript:void()"
               >
@@ -248,7 +241,7 @@ export default async function IndexPage() {
                     d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
             <div className="mx-auto mt-5 flex-1 sm:w-9/12 lg:mt-0 lg:w-auto">
               <Image

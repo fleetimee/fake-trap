@@ -1,6 +1,11 @@
 import React from "react"
+import { notFound } from "next/navigation"
 
-import { getOnePublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import {
+  getOnePublicKnowledge,
+  lookupKnowledgePublic,
+} from "@/lib/fetcher/knowledge-fetcher"
+import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
@@ -14,9 +19,23 @@ interface KnowledgeDetailLayoutProps {
 }
 
 export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
+  const user = await getCurrentUser()
+
   const knowledge = await getOnePublicKnowledge({
     idKnowledge: Number(params.detail),
   })
+
+  const isPublic = await lookupKnowledgePublic({
+    idKnowledge: Number(params.detail),
+    token: user?.token,
+  })
+
+  if (isPublic.code === 404) {
+    return {
+      title: "Pengetahuan tidak ditemukan",
+      description: "Pengetahuan tidak ditemukan",
+    }
+  }
 
   return {
     title: knowledge.data.knowledge_title,
@@ -28,9 +47,20 @@ export default async function KnowledgeDetail({
   children,
   params,
 }: KnowledgeDetailLayoutProps) {
+  const user = await getCurrentUser()
+
   const knowledge = await getOnePublicKnowledge({
     idKnowledge: Number(params.detail),
   })
+
+  const isPublic = await lookupKnowledgePublic({
+    idKnowledge: Number(params.detail),
+    token: user?.token,
+  })
+
+  if (isPublic.code === 404) {
+    return notFound()
+  }
 
   return (
     <div className="sm:container sm:grid sm:items-center sm:gap-8 sm:pb-8 sm:pt-6 md:py-8">

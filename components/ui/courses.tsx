@@ -39,7 +39,6 @@ interface CoursesProps {
 }
 
 export function Courses({ courses, pageCount }: CoursesProps) {
-  const id = React.useId()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -91,7 +90,7 @@ export function Courses({ courses, pageCount }: CoursesProps) {
 
   return (
     <section className="flex flex-col gap-6 space-y-2">
-      <div className="  flex items-center space-x-2">
+      <div className="flex items-center space-x-2">
         <Sheet>
           <SheetTrigger asChild>
             <Button aria-label="Filter products" size="sm" disabled={isPending}>

@@ -6,7 +6,6 @@ import { authOptions } from "@/lib/auth"
 import { getPesertaEnrolledCourses } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
-import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { NotFoundAnim } from "@/components/not-found-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -74,15 +73,10 @@ export default async function PesertaCoursePage({
         ]}
       />
 
-      <MotionDiv
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
-      >
-        <DashboardHeader
-          heading="Pelatihan Kamu"
-          description="Ini merupakan pelatihan yang kamu ikuti"
-        />
-      </MotionDiv>
+      <DashboardHeader
+        heading="Pelatihan Kamu"
+        description="Ini merupakan pelatihan yang kamu ikuti"
+      />
 
       <Separator />
 

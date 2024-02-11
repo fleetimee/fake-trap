@@ -318,16 +318,26 @@ export function CourseContentSidebar({
                                 )}
                               >
                                 {quiz.quiz_type === QuizType.PRETEST ? (
-                                  <Icons.arrowUpDown className="mr-2 size-4 text-orange-500" />
+                                  <Icons.postTest className="mr-2 size-4 text-purple-600" />
                                 ) : quiz.quiz_type === QuizType.POSTTEST ? (
-                                  <Icons.arrowUpDown className="mr-2 size-4 text-red-500" />
+                                  <Icons.preTest className="mr-2 size-4 text-green-500" />
                                 ) : (
                                   <Icons.quiz className="mr-2 size-4 text-green-500" />
                                 )}
 
-                                <p className="line-clamp-1">
-                                  {quiz.quiz_title}
-                                </p>
+                                <div>
+                                  <p className="line-clamp-1">
+                                    {quiz.quiz_title}
+                                  </p>
+
+                                  <p className="text-xs">
+                                    {quiz.quiz_type === QuizType.PRETEST
+                                      ? "PRE-TEST"
+                                      : quiz.quiz_type === QuizType.POSTTEST
+                                        ? "POST-TEST"
+                                        : "Quiz"}
+                                  </p>
+                                </div>
                               </Button>
                             </Link>
                           </AccordionContent>
