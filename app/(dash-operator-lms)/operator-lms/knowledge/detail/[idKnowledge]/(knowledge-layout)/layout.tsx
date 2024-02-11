@@ -52,32 +52,36 @@ export default async function KnowledgeDetailLayout({
 
   return (
     <DashboardShell>
-      <BreadCrumbs
-        segments={[
-          {
-            href: "/operator-lms",
-            title: "Dashboard",
-          },
-          {
-            href: "/operator-lms/knowledge",
-            title: "Pengetahuan",
-          },
-          {
-            href: `/operator-lms/knowledge/detail/${params.idKnowledge}`,
-            title: knowledge.data?.knowledge_title,
-          },
-        ]}
-      />
+      <div className="hidden sm:block">
+        <BreadCrumbs
+          segments={[
+            {
+              href: "/operator-lms",
+              title: "Dashboard",
+            },
+            {
+              href: "/operator-lms/knowledge",
+              title: "Pengetahuan",
+            },
+            {
+              href: `/operator-lms/knowledge/detail/${params.idKnowledge}`,
+              title: knowledge.data?.knowledge_title,
+            },
+          ]}
+        />
+      </div>
 
-      <SectionBanner
-        title={knowledge.data?.knowledge_title}
-        description={knowledge.data?.description}
-        urlLink={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/new`}
-        image={knowledge.data?.image}
-      />
+      <div className="hidden sm:block">
+        <SectionBanner
+          title={knowledge.data?.knowledge_title}
+          description={knowledge.data?.description}
+          urlLink={`/operator-lms/knowledge/detail/${params.idKnowledge}/section/new`}
+          image={knowledge.data?.image}
+        />
+      </div>
 
       <div
-        className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
+        className="flex h-auto flex-col gap-4 md:px-2 lg:flex-row"
         id="scrollTarget"
       >
         {/* Content Section */}

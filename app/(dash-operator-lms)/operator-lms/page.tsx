@@ -53,7 +53,7 @@ export default async function OperatorLMSDashboard() {
         animate={{ opacity: 1, x: 0 }}
       >
         <Alert>
-          <PartyPopper className="h-5 w-5" />
+          <PartyPopper className="size-5" />
           <AlertTitle>
             Halo,{" "}
             <span className="font-heading uppercase text-primary">
