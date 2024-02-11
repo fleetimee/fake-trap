@@ -65,29 +65,33 @@ export default async function CourseDetailLayout({
 
   return (
     <DashboardShell>
-      <BreadCrumbs
-        segments={[
-          {
-            href: "/operator-lms",
-            title: "Dashboard",
-          },
-          {
-            href: "/operator-lms/course",
-            title: "Pelatihan",
-          },
-          {
-            href: `/operator-lms/course/detail/${params.idCourse}`,
-            title: course?.data?.course_name,
-          },
-        ]}
-      />
+      <div className="hidden sm:block">
+        <BreadCrumbs
+          segments={[
+            {
+              href: "/operator-lms",
+              title: "Dashboard",
+            },
+            {
+              href: "/operator-lms/course",
+              title: "Pelatihan",
+            },
+            {
+              href: `/operator-lms/course/detail/${params.idCourse}`,
+              title: course?.data?.course_name,
+            },
+          ]}
+        />
+      </div>
 
-      <SectionBanner
-        title={course.data?.course_name}
-        description={course?.data?.course_desc}
-        urlLink={`/operator-lms/course/detail/${params.idCourse}/section/new`}
-        image={course?.data?.image}
-      />
+      <div className="hidden sm:block">
+        <SectionBanner
+          title={course.data?.course_name}
+          description={course?.data?.course_desc}
+          urlLink={`/operator-lms/course/detail/${params.idCourse}/section/new`}
+          image={course?.data?.image}
+        />
+      </div>
 
       <div className="flex items-center justify-end">
         <VercelToolbar
@@ -106,7 +110,7 @@ export default async function CourseDetailLayout({
       )}
 
       <div
-        className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
+        className="flex h-auto flex-col gap-4 md:px-2 lg:flex-row"
         id="scrollTarget"
       >
         {/* Content Section */}
