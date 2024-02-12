@@ -86,6 +86,7 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
         <FormField
           control={form.control}
           name="email"
+          disabled={isLoading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
@@ -104,6 +105,7 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
         <FormField
           control={form.control}
           name="password"
+          disabled={isLoading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
@@ -145,7 +147,7 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
         <Button type="submit" disabled={isLoading || !isCaptchaVerified}>
           {isLoading && (
             <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
+              className="mr-2 size-4 animate-spin"
               aria-hidden="true"
             />
           )}
