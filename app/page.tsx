@@ -263,12 +263,12 @@ export default async function IndexPage() {
       <section
         id="categories"
         aria-labelledby="categories-heading"
-        className="space-y-6 bg-[url(/second_bg.svg)] bg-cover bg-no-repeat py-16  lg:min-h-[60svh]"
+        className="space-y-6 bg-[url(/second_bg.svg)] bg-cover bg-right-bottom bg-no-repeat py-16  lg:min-h-[60svh]"
       >
         <div className="mx-auto max-w-screen-xl space-y-4 px-4 py-16 sm:px-6 md:space-y-16 lg:px-8">
           <div className="flex items-center justify-between gap-4">
-            <div className="max-w-[58rem] flex-1 space-y-1 bg-white md:bg-none">
-              <h2 className="flex-1 bg-white font-heading text-2xl font-medium sm:text-3xl md:bg-none">
+            <div className="max-w-[58rem] flex-1 space-y-1  md:bg-none">
+              <h2 className="flex-1 font-heading text-2xl font-medium  sm:text-3xl md:bg-none">
                 Kategori Populer
               </h2>
               <p className="max-w-[46rem] text-balance leading-normal text-muted-foreground sm:text-lg sm:leading-7">

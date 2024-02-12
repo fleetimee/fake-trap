@@ -55,36 +55,40 @@ export default async function KnowledgeDetailLayout({
 
   return (
     <DashboardShell>
-      <BreadCrumbs
-        segments={[
-          {
-            href: "/supervisor-pemateri-divisi",
-            title: "Dashboard",
-          },
-          {
-            href: "/supervisor-pemateri-divisi/approval",
-            title: "Approval",
-          },
-          {
-            href: `#`,
-            title: "Pengetahuan",
-          },
-          {
-            href: `/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}`,
-            title: knowledge.data?.knowledge_title,
-          },
-        ]}
-      />
+      <div className="hidden sm:block">
+        <BreadCrumbs
+          segments={[
+            {
+              href: "/supervisor-pemateri-divisi",
+              title: "Dashboard",
+            },
+            {
+              href: "/supervisor-pemateri-divisi/approval",
+              title: "Approval",
+            },
+            {
+              href: `#`,
+              title: "Pengetahuan",
+            },
+            {
+              href: `/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}`,
+              title: knowledge.data?.knowledge_title,
+            },
+          ]}
+        />
+      </div>
 
-      <SectionBanner
-        title={knowledge.data?.knowledge_title}
-        description={knowledge.data?.description}
-        urlLink={`/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}/edit`}
-        image={knowledge.data?.image}
-      />
+      <div className="hidden sm:block">
+        <SectionBanner
+          title={knowledge.data?.knowledge_title}
+          description={knowledge.data?.description}
+          urlLink={`/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}/edit`}
+          image={knowledge.data?.image}
+        />
+      </div>
 
       <div
-        className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
+        className="flex h-auto flex-col gap-4 md:px-2 lg:flex-row"
         id="scrollTarget"
       >
         <Content title={knowledge.data?.knowledge_title}>{children}</Content>

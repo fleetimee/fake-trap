@@ -69,29 +69,33 @@ export default async function CourseDetailLayout({
 
   return (
     <DashboardShell>
-      <BreadCrumbs
-        segments={[
-          {
-            href: "/supervisor-lms",
-            title: "Dashboard",
-          },
-          {
-            href: "/supervisor-lms/approval",
-            title: "Approve Pelatihan",
-          },
-          {
-            href: `/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`,
-            title: course.data?.course_name,
-          },
-        ]}
-      />
+      <div className="hidden md:block">
+        <BreadCrumbs
+          segments={[
+            {
+              href: "/supervisor-lms",
+              title: "Dashboard",
+            },
+            {
+              href: "/supervisor-lms/approval",
+              title: "Approve Pelatihan",
+            },
+            {
+              href: `/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`,
+              title: course.data?.course_name,
+            },
+          ]}
+        />
+      </div>
 
-      <SectionBanner
-        description={course?.data?.course_desc}
-        title={course?.data?.course_name}
-        urlLink={`/pemateri-divisi/course/detail/${params.idCourse}/section/new`}
-        image={course?.data?.image}
-      />
+      <div className="hidden md:block">
+        <SectionBanner
+          description={course?.data?.course_desc}
+          title={course?.data?.course_name}
+          urlLink={`/pemateri-divisi/course/detail/${params.idCourse}/section/new`}
+          image={course?.data?.image}
+        />
+      </div>
 
       {/* <MotionDiv
         className="flex flex-row gap-4 px-2"
@@ -126,7 +130,7 @@ export default async function CourseDetailLayout({
       )}
 
       <div
-        className="flex h-auto flex-col gap-4 px-2 lg:flex-row"
+        className="flex h-auto flex-col gap-4 md:px-2 lg:flex-row"
         id="scrollTarget"
       >
         {/* Content Section */}

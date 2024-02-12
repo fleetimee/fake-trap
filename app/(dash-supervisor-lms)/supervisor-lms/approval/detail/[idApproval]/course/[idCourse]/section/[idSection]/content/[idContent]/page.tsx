@@ -1,12 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import Blocks from "editorjs-blocks-react-renderer"
 
 import { authOptions } from "@/lib/auth"
+import { ContentType } from "@/lib/enums/status"
 import { getOneContent } from "@/lib/fetcher/content-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { YoutubeRender } from "@/components/content-renderer"
+import { ArticleFrame } from "@/components/frame/article-frame"
+import { LocalVideoFrame } from "@/components/frame/local-video-frame"
+import { YoutubeFrame } from "@/components/frame/youtube-frame"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -36,34 +38,17 @@ export default async function CourseContentPage({
 
   const contentParsed = JSON.parse(content?.data?.article?.body || "{}")
 
-  const article = content?.data?.content_type === "0014"
-  const video = content?.data?.content_type === "0012"
-  const file = content?.data?.content_type === "0013"
+  const article = content?.data?.content_type === ContentType.ARTICLE
+  const video = content?.data?.content_type === ContentType.VIDEO
+  const file = content?.data?.content_type === ContentType.DOCUMENT
+  const localVideo = content?.data?.content_type === ContentType.LOCAL_FILE
 
   if (article) {
-    return (
-      <div className="whatever-you-want flex w-fit flex-col items-start justify-center p-4">
-        <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
-
-        <Separator />
-
-        <Blocks data={contentParsed} />
-      </div>
-    )
+    return <ArticleFrame content={content} contentParsed={contentParsed} />
   }
 
   if (video) {
-    return (
-      <div className="flex flex-col items-start justify-center gap-3">
-        <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
-
-        <Separator />
-
-        <p className="text-sm italic ">{content.data.video?.flavor_text}</p>
-
-        <YoutubeRender link={content.data.video?.video_url} />
-      </div>
-    )
+    return <YoutubeFrame content={content} />
   }
 
   if (file) {
@@ -151,4 +136,10 @@ export default async function CourseContentPage({
       </div>
     )
   }
+
+  if (localVideo) {
+    return <LocalVideoFrame content={content} />
+  }
+
+  return null
 }

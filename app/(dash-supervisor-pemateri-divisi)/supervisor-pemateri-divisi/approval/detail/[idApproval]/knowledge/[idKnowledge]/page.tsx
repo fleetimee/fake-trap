@@ -30,7 +30,7 @@ export default async function ApprovalDetailKnowledgePage({
     <Image
       src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.data.image}`}
       alt={knowledge.data.knowledge_title}
-      className="aspect-video rounded-lg object-cover shadow-md "
+      className="aspect-video rounded-none object-cover shadow-none md:rounded-lg md:shadow-md "
       width={1280}
       height={720}
     />
