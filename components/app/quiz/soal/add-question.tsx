@@ -4,6 +4,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
+import * as XLSX from "xlsx"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -18,10 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-
-
-
+import { Label } from "@/components/ui/label"
 
 export const formSchemaQuestion = z.object({
   id_quiz: z.number(),
@@ -64,6 +62,38 @@ export function QuestionForm(props: {
       ],
     },
   })
+
+  function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files && event.target.files[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      if (!e.target) return
+      const data = new Uint8Array(e.target.result as ArrayBuffer)
+      const workbook = XLSX.read(data, { type: "array" })
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]]
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1,
+        range: 1,
+      }) as (string | boolean)[][]
+      const quizzes = jsonData.map((row) => {
+        const id_quiz = Number(row[0])
+        const question_text = row[1] as string
+        const answers = []
+        for (let i = 2; i < row.length; i += 2) {
+          const answer_text = row[i] as string
+          const is_correct = row[i + 1] as boolean
+          if (answer_text != null) {
+            answers.push({ answer_text, is_correct })
+          }
+        }
+        return { id_quiz, question_text, answers }
+      })
+      props.setQuizzes((prev) => [...prev, ...quizzes])
+    }
+    reader.readAsArrayBuffer(file)
+  }
 
   const { fields, append, remove } = useFieldArray({
     name: "answers",
@@ -210,7 +240,20 @@ export function QuestionForm(props: {
         </form>
       </Form>
 
-      <Button onClick={onAddAnswer}>Tambah Jawaban</Button>
+      <div className="flex flex-col items-center justify-center gap-4 space-y-2">
+        <Button onClick={onAddAnswer} className="w-full max-w-sm">
+          Tambah Jawaban
+        </Button>
+
+        <p className="text-sm text-muted-foreground">Atau</p>
+
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="picture">Import dari Excel</Label>
+          <div>
+            <Input id="picture" type="file" onChange={handleFileUpload} />
+          </div>
+        </div>
+      </div>
     </Card>
   )
 }

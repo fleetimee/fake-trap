@@ -38,6 +38,8 @@ export function SoalShell(props: {
     z.infer<typeof formSchemaQuestion>[]
   >([])
 
+  console.log(quizzes)
+
   function deleteQuestion(index: number) {
     setQuizzes((prev) => prev.filter((_, i) => i !== index))
   }
@@ -79,7 +81,7 @@ export function SoalShell(props: {
         className="lg:col-span-2"
       >
         <Alert>
-          <RocketIcon className="h-4 w-4" />
+          <RocketIcon className="size-4" />
           <AlertTitle>Guide</AlertTitle>
           <AlertDescription>
             Tambahkan pertanyaan dan jawaban di sebelah kiri, kemudian klik
