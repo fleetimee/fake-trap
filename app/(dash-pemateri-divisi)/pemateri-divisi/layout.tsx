@@ -75,6 +75,7 @@ export default async function PemateriDivisiLayout({
       <ScrollToTopButton />
 
       <SiteFooter className="border-t" />
+      <ScrollToTopButton />
 
       {/* Mobile Navbar we could use it later */}
       {/* <section

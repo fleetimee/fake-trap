@@ -7,6 +7,7 @@ import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { DashboardNewNewNav } from "@/components/new-nav"
+import { ScrollToTopButton } from "@/components/scroll-to-top"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -57,6 +58,7 @@ export default async function SupervisorLMSLayout({
         </main>
       </div>
       <SiteFooter className="border-t" />
+      <ScrollToTopButton />
     </div>
   )
 }
