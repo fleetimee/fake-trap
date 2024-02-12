@@ -74,7 +74,7 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
             </NavigationMenuItem>
           ) : null}
 
-          {topNavItems?.map((item) =>
+          {/* {topNavItems?.map((item) =>
             item?.category_name ? (
               <NavigationMenuItem key={item.category_name}>
                 <NavigationMenuTrigger className="h-auto capitalize">
@@ -95,7 +95,7 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ) : null
-          )}
+          )} */}
         </NavigationMenuList>
       </NavigationMenu>
       {/* <button
