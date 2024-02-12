@@ -194,17 +194,19 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
               BPD DIY E-Learning
             </h1>
           )}
-          {props.user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar className="size-8">
-                  <AvatarFallback>a</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <div className="flex flex-col space-y-1 leading-none">
-                    {/* {session?.expires.username && (
+
+          <div className="flex flex-1 items-center justify-end space-x-4">
+            {props.user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className="size-8">
+                    <AvatarFallback>a</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1 leading-none">
+                      {/* {session?.expires.username && (
               <p className="font-medium">{session?.expires.username}</p>
             )}
             {session?.expires.email && (
@@ -212,58 +214,59 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                 {session?.expires.email}
               </p>
             )} */}
+                    </div>
                   </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard">Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/settings">Settings</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onSelect={(event) => {
-                    event.preventDefault()
-                    signOut({
-                      callbackUrl: `${window.location.origin}/login`,
-                    }).then(() => {
-                      localStorage.clear()
-                      sessionStorage.clear()
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard">Dashboard</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/settings">Settings</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onSelect={(event) => {
+                      event.preventDefault()
+                      signOut({
+                        callbackUrl: `${window.location.origin}/login`,
+                      }).then(() => {
+                        localStorage.clear()
+                        sessionStorage.clear()
 
-                      document.cookie.split(";").forEach((c) => {
-                        document.cookie = c
-                          .replace(/^ +/, "")
-                          .replace(
-                            /=.*/,
-                            `=;expires=${new Date().toUTCString()};path=/`
-                          )
+                        document.cookie.split(";").forEach((c) => {
+                          document.cookie = c
+                            .replace(/^ +/, "")
+                            .replace(
+                              /=.*/,
+                              `=;expires=${new Date().toUTCString()};path=/`
+                            )
+                        })
                       })
-                    })
-                  }}
-                >
-                  Sign out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Link
-              href="/login"
-              rel="noopener noreferrer"
-              replace
-              prefetch={false}
-            >
-              <div
-                className={buttonVariants({
-                  size: "sm",
-                })}
+                    }}
+                  >
+                    Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                href="/login"
+                rel="noopener noreferrer"
+                replace
+                prefetch={false}
               >
-                Sign In
-                <span className="sr-only">Masuk</span>
-              </div>
-            </Link>
-          )}
+                <div
+                  className={buttonVariants({
+                    size: "lg",
+                  })}
+                >
+                  Sign In
+                  <span className="sr-only">Masuk</span>
+                </div>
+              </Link>
+            )}
+          </div>
         </div>
       </header>
     )
