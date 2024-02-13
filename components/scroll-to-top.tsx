@@ -47,14 +47,14 @@ export function ScrollToTopButton() {
           className="fixed bottom-4 right-4 rounded-full p-2 opacity-100 outline-none transition-opacity duration-200"
           onClick={scrollToTop}
         >
-          <ChevronUp />
+          <ChevronUp className="size-full" />
         </Button>
       ) : (
         <Button
           className="fixed bottom-4 right-4 rounded-full p-2 opacity-100 outline-none transition-opacity duration-200"
           onClick={scrollToBottom}
         >
-          <ChevronDown />
+          <ChevronDown className="size-full" />
         </Button>
       )}
     </>

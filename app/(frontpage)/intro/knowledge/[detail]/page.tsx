@@ -1,10 +1,6 @@
 import Image from "next/image"
-import { notFound } from "next/navigation"
 
-import {
-  getOnePublicKnowledge,
-  lookupKnowledgePublic,
-} from "@/lib/fetcher/knowledge-fetcher"
+import { getOnePublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 
 type Props = {
   params: {
@@ -17,15 +13,15 @@ export default async function IntroDetailKnowledge({ params }: Props) {
     idKnowledge: parseInt(params.detail),
   })
 
-  const isPublic = await lookupKnowledgePublic({
-    idKnowledge: parseInt(params.detail),
-  })
+  // const isPublic = await lookupKnowledgePublic({
+  //   idKnowledge: parseInt(params.detail),
+  // })
 
-  console.log(isPublic)
+  // console.log(isPublic)
 
-  if (!isPublic.data) {
-    return notFound()
-  }
+  // if (!isPublic.data) {
+  //   return notFound()
+  // }
 
   return (
     <Image

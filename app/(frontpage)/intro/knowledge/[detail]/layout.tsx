@@ -19,8 +19,6 @@ interface KnowledgeDetailLayoutProps {
 }
 
 export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
-  // const user = await getCurrentUser()
-
   // const knowledge = await getOnePublicKnowledge({
   //   idKnowledge: Number(params.detail),
   // })
@@ -46,6 +44,17 @@ export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
     idKnowledge: Number(params.detail),
   })
 
+  const isPublic = await lookupKnowledgePublic({
+    idKnowledge: Number(params.detail),
+  })
+
+  if (isPublic.code === 404) {
+    return {
+      title: "Materi Tidak Ditemukan",
+      description: "Materi Tidak Ditemukan",
+    }
+  }
+
   return {
     title: knowledge.data.knowledge_title,
     description: knowledge.data.description,
@@ -56,11 +65,17 @@ export default async function KnowledgeDetail({
   children,
   params,
 }: KnowledgeDetailLayoutProps) {
-  const user = await getCurrentUser()
-
   const knowledge = await getOnePublicKnowledge({
     idKnowledge: Number(params.detail),
   })
+
+  const isPublic = await lookupKnowledgePublic({
+    idKnowledge: Number(params.detail),
+  })
+
+  if (isPublic.code === 404) {
+    return notFound()
+  }
 
   // const isPublic = await lookupKnowledgePublic({
   //   idKnowledge: Number(params.detail),

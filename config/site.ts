@@ -4,13 +4,13 @@ export type SiteConfig = typeof siteConfig
  * Configuration object for the site.
  */
 export const siteConfig = {
-  name: "BPD Elearning",
+  name: "BPD DIY Elearning",
   url: `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}`,
   description:
     "E-learning BPD DIY memberikan anda akses ke ribuan pelatihan online. Pelajari apa saja, kapan saja, di mana saja",
   mainNav: [
     {
-      title: "Explore",
+      title: "Menu",
       items: [
         {
           title: "Kategori",
@@ -19,9 +19,22 @@ export const siteConfig = {
           items: [],
         },
         {
-          title: "Pengetahuan",
+          title: "Materi",
           href: "/#featured-knowledge",
           description: "Baca dan pahami pengetahuan yang tersedia",
+          items: [],
+        },
+
+        {
+          title: "Pelatihan",
+          href: "#",
+          description: "Pelatihan yang tersedia",
+          items: [],
+        },
+        {
+          title: "Forum",
+          href: "#",
+          description: "Forum diskusi",
           items: [],
         },
       ],
