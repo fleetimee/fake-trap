@@ -58,8 +58,13 @@ export function DashboardNewNewNav({ items, org }: DashboardNavNewProps) {
                       : "transparent"
                   )}
                 >
-                  <Icon className="mr-2 h-6 w-6" />
+                  <Icon className="mr-2 size-6" />
                   <span className={cn()}>{item.menu_name}</span>
+                  {item.menu_name === "Pelatihan" ? (
+                    <span className="ml-2 inline-block rounded-full bg-red-500 p-1 text-xs font-bold text-white">
+                      1
+                    </span>
+                  ) : null}
                 </span>
               </Link>
             )

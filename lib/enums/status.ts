@@ -22,7 +22,7 @@ export enum ContentType {
 }
 
 export enum CourseAvailability {
-  SOON = "Upcoming",
-  ACTIVE = "Active",
-  OVER = "Over",
+  SOON = "Akan Mulai",
+  ACTIVE = "Sedang Berlangsung",
+  OVER = "Selesai",
 }
