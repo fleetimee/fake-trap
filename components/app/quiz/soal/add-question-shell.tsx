@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { RocketIcon } from "@radix-ui/react-icons"
 import { toast as sonnerToast } from "sonner"
@@ -10,6 +11,7 @@ import { createExerciseQuestion } from "@/lib/fetcher/exercise-fetcher"
 import { QuestionForm } from "@/components/app/quiz/soal/add-question"
 import { LottieAnimationQuiz } from "@/components/app/quiz/soal/quiz-lottie-animation"
 import { MotionDiv } from "@/components/framer-wrapper"
+import { Icons } from "@/components/icons"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -53,6 +55,8 @@ export function SoalShell(props: {
         body: JSON.stringify(values),
       })
 
+      console.log(response)
+
       if (response.ok) {
         sonnerToast.success("Berhasil", {
           description: "Soal berhasil ditambahkan",
@@ -78,15 +82,45 @@ export function SoalShell(props: {
       <MotionDiv
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="lg:col-span-2"
+        className="space-y-4 lg:col-span-2"
       >
-        <Alert>
-          <RocketIcon className="size-4" />
+        <Alert className="border border-green-500">
+          <Icons.note className="size-4" />
           <AlertTitle>Guide</AlertTitle>
           <AlertDescription>
             Tambahkan pertanyaan dan jawaban di sebelah kiri, kemudian klik
             tombol <span className="font-semibold">Submit Quiz</span> di sebelah
             kanan untuk menyimpan soal untuk quiz ini.
+          </AlertDescription>
+        </Alert>
+
+        <Alert className="border border-yellow-400">
+          <Icons.sheet className="size-4" />
+          <AlertTitle>Template Excel</AlertTitle>
+          <AlertDescription>
+            Untuk memudahkan penambahan soal, gunakan template excel berikut{" "}
+            {/* <a
+              href="/template-soal.xlsx"
+              download
+              className="text-blue-400 underline"
+            >
+              template-soal.xlsx
+            </a> */}
+            <Link
+              href="/Book1.xlsx"
+              target="_blank"
+              className="text-blue-700 underline"
+            >
+              template-soal.xlsx
+            </Link>
+            <p className="mt-2">
+              Setelah diisi, upload file excel tersebut di halaman{" "}
+              <span className="font-semibold">Tambah Soal</span>
+            </p>
+            <p className="mt-2">
+              Pastikan format file excel sesuai dengan template yang telah
+              disediakan
+            </p>
           </AlertDescription>
         </Alert>
       </MotionDiv>

@@ -19,23 +19,32 @@ interface KnowledgeDetailLayoutProps {
 }
 
 export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
-  const user = await getCurrentUser()
+  // const user = await getCurrentUser()
+
+  // const knowledge = await getOnePublicKnowledge({
+  //   idKnowledge: Number(params.detail),
+  // })
+
+  // const isPublic = await lookupKnowledgePublic({
+  //   idKnowledge: Number(params.detail),
+  //   token: user?.token,
+  // })
+
+  // if (isPublic.code === 404) {
+  //   return {
+  //     title: "Pengetahuan tidak ditemukan",
+  //     description: "Pengetahuan tidak ditemukan",
+  //   }
+  // }
+
+  // return {
+  //   title: knowledge.data.knowledge_title,
+  //   description: knowledge.data.description,
+  // }
 
   const knowledge = await getOnePublicKnowledge({
     idKnowledge: Number(params.detail),
   })
-
-  const isPublic = await lookupKnowledgePublic({
-    idKnowledge: Number(params.detail),
-    token: user?.token,
-  })
-
-  if (isPublic.code === 404) {
-    return {
-      title: "Pengetahuan tidak ditemukan",
-      description: "Pengetahuan tidak ditemukan",
-    }
-  }
 
   return {
     title: knowledge.data.knowledge_title,
@@ -53,14 +62,14 @@ export default async function KnowledgeDetail({
     idKnowledge: Number(params.detail),
   })
 
-  const isPublic = await lookupKnowledgePublic({
-    idKnowledge: Number(params.detail),
-    token: user?.token,
-  })
+  // const isPublic = await lookupKnowledgePublic({
+  //   idKnowledge: Number(params.detail),
+  //   token: user?.token,
+  // })
 
-  if (isPublic.code === 404) {
-    return notFound()
-  }
+  // if (isPublic.code === 404) {
+  //   return notFound()
+  // }
 
   return (
     <div className="sm:container sm:grid sm:items-center sm:gap-8 sm:pb-8 sm:pt-6 md:py-8">

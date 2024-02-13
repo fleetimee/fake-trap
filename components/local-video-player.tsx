@@ -2,21 +2,25 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { EnterFullScreenIcon, ExitFullScreenIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
-import { Pause, Play, Rewind } from "lucide-react"
 import ReactPlayer from "react-player"
 import { toast as sonnerToast } from "sonner"
-
-import { Button } from "@/components/ui/button"
 
 interface LocalVideoPlayerProps {
   url: string
   thumbnail?: string
+  idContent?: string
 }
 
-export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
+export function LocalVideoPlayer({
+  url,
+  thumbnail,
+  idContent,
+}: LocalVideoPlayerProps) {
   const [playing, setPlaying] = useState(false)
+  const [timestamp, setTimestamp] = useState(240)
+  const [isReady, setIsReady] = useState(false)
+
   const [played, setPlayed] = useState(0)
   const [light, setLight] = useState("/images/maxresdefault.jpg")
   const [showButton, setShowButton] = useState(true)
@@ -84,6 +88,45 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
     }, 2000) // Hide button after 2 seconds
   }
 
+  // Fetch timestamp data from server
+  // useEffect(() => {
+  //   fetch(
+  //     `${process.env.NEXT_PUBLIC_BASE_URL}/public/users/fa357ffc-3ea2-47a5-8867-e510e72bcf62/videoContent/176`
+  //   ).then(async (res) => {
+  //     const response = await res.json()
+
+  //     console.log("Response:", response) // Log the fetched response
+
+  //     console.log("Player ref:", playerRef.current) // Log the player ref
+
+  //     // Check if timestamp is a valid number
+  //     if (
+  //       typeof response.data.timestamp === "number" &&
+  //       isFinite(response.data.timestamp)
+  //     ) {
+  //       console.log("Timestamp is a valid number:", response.data.timestamp)
+
+  //       // Seek to second timestamp
+  //       setTimestamp(response.data.timestamp)
+  //     } else {
+  //       console.log("Timestamp is not a valid number:", response.data.timestamp)
+  //     }
+  //   })
+  // }, [])
+
+  const handleReady = () => {
+    if (playerRef.current && timestamp !== null) {
+      playerRef.current.seekTo(timestamp, "seconds")
+      setIsReady(true)
+    }
+  }
+
+  const handleStart = () => {
+    if (playerRef.current && isReady) {
+      playerRef.current.getInternalPlayer().play()
+    }
+  }
+
   // useEffect(() => {
   //   return () => {
   //     clearTimeout(mouseLeaveTimeout)
@@ -124,9 +167,12 @@ export function LocalVideoPlayer({ url, thumbnail }: LocalVideoPlayerProps) {
       }
     >
       <ReactPlayer
+        ref={playerRef}
         pip={true}
         url={url}
         light={light}
+        // onReady={handleReady}
+        // onStart={handleStart}
         playing
         controls
         width="100%"

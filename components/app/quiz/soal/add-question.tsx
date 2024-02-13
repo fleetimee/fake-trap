@@ -77,12 +77,13 @@ export function QuestionForm(props: {
         header: 1,
         range: 1,
       }) as (string | boolean)[][]
+
       const quizzes = jsonData.map((row) => {
-        const id_quiz = Number(row[0])
-        const question_text = row[1] as string
+        const id_quiz = parseInt(props.idQuiz) // Get id_quiz from props
+        const question_text = row[0] as string
         const answers = []
-        for (let i = 2; i < row.length; i += 2) {
-          const answer_text = row[i] as string
+        for (let i = 1; i < row.length; i += 2) {
+          const answer_text = String(row[i]) // Convert answer_text to string
           const is_correct = row[i + 1] as boolean
           if (answer_text != null) {
             answers.push({ answer_text, is_correct })
@@ -90,6 +91,7 @@ export function QuestionForm(props: {
         }
         return { id_quiz, question_text, answers }
       })
+
       props.setQuizzes((prev) => [...prev, ...quizzes])
     }
     reader.readAsArrayBuffer(file)

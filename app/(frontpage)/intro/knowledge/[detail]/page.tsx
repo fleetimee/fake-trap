@@ -5,7 +5,6 @@ import {
   getOnePublicKnowledge,
   lookupKnowledgePublic,
 } from "@/lib/fetcher/knowledge-fetcher"
-import { getCurrentUser } from "@/lib/session"
 
 type Props = {
   params: {
@@ -14,11 +13,19 @@ type Props = {
 }
 
 export default async function IntroDetailKnowledge({ params }: Props) {
-  const user = await getCurrentUser()
-
   const knowledge = await getOnePublicKnowledge({
     idKnowledge: parseInt(params.detail),
   })
+
+  const isPublic = await lookupKnowledgePublic({
+    idKnowledge: parseInt(params.detail),
+  })
+
+  console.log(isPublic)
+
+  if (!isPublic.data) {
+    return notFound()
+  }
 
   return (
     <Image

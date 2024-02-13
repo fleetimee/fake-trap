@@ -56,11 +56,13 @@ export default async function ExerciseDetailPesertaPage({
     orderBy: orderBy,
   })
 
+  console.log(exerciseMember)
+
   return (
     <DashboardShell>
       <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Alert>
-          <PersonIcon className="h-4 w-4" />
+          <PersonIcon className="size-4" />
           <AlertTitle>List Peserta</AlertTitle>
           <AlertDescription>
             Berikut adalah list peserta yang sudah mengerjakan tes ini

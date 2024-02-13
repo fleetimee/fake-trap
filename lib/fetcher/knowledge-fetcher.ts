@@ -505,22 +505,18 @@ export async function lookupKnowledge({
 }
 
 interface LookupKnowledgePublicProps {
-  token: string | undefined
   idKnowledge: number
 }
 
 export async function lookupKnowledgePublic({
-  token,
   idKnowledge,
 }: LookupKnowledgePublicProps) {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idKnowledge}/public`
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/public/knowledge/${idKnowledge}/public`
 
   try {
     const res = await fetch(url, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+
       cache: "no-store",
     })
 
