@@ -40,8 +40,6 @@ export function SoalShell(props: {
     z.infer<typeof formSchemaQuestion>[]
   >([])
 
-  console.log(quizzes)
-
   function deleteQuestion(index: number) {
     setQuizzes((prev) => prev.filter((_, i) => i !== index))
   }

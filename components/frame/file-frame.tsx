@@ -43,8 +43,6 @@ export function FileFrame({ content, params }: FileFrameProps) {
 
   const pathname = usePathname()
 
-  console.log(pathname)
-
   return (
     <div
       className={`flex max-w-sm flex-col items-start space-y-4 overflow-auto sm:max-w-lg md:max-w-full`}

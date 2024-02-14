@@ -56,8 +56,6 @@ export default async function ExerciseDetailPesertaPage({
     orderBy: orderBy,
   })
 
-  console.log(exerciseMember)
-
   return (
     <DashboardShell>
       <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

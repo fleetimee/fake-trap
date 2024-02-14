@@ -18,8 +18,6 @@ export default function KnowledgeContentPdfRenderer({
   params,
   searchParams,
 }: KnowledgeContentPdfRendererProps) {
-  console.log(searchParams.fullPath)
-
   if (!searchParams.fullPath) {
     return notFound()
   }
