@@ -3,6 +3,7 @@
 import { JSX, SVGProps } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ClockIcon } from "lucide-react"
 import { useMediaQuery } from "react-responsive"
 
@@ -23,6 +24,10 @@ interface FileFrameProps {
 
 export function FileFrame({ content, params }: FileFrameProps) {
   const isMobile = useMediaQuery({ query: "(max-width: 640px)" })
+
+  const pathname = usePathname()
+
+  console.log(pathname)
 
   return (
     <div className={`flex flex-col items-start justify-center gap-3 `}>
@@ -75,7 +80,7 @@ export function FileFrame({ content, params }: FileFrameProps) {
                     </p>
                     <div className="mt-4 flex space-x-2">
                       <Link
-                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/${file.file_path}`}
+                        href={`${process.env.NEXT_PUBLIC_BASE_URL}${file.file_path}`}
                         target="_blank"
                         className={buttonVariants({
                           size: "sm",
@@ -91,11 +96,15 @@ export function FileFrame({ content, params }: FileFrameProps) {
                         variant="outline"
                       >
                         <Link
-                          href={`/intro/knowledge/${params.detail}/section/${
-                            params.idSection
-                          }/content/${params.idContent}/render/${file.file_path
+                          // href={`/intro/knowledge/${params.detail}/section/${
+                          //   params.idSection
+                          // }/content/${params.idContent}/render/${file.file_path
+                          //   .split("/")
+                          //   .pop()}`}
+
+                          href={`${pathname}/render/${file.file_path
                             .split("/")
-                            .pop()}`}
+                            .pop()}?fullPath=${file.file_path}`}
                         >
                           Preview
                         </Link>
@@ -132,7 +141,7 @@ export function FileFrame({ content, params }: FileFrameProps) {
                     </p>
                     <div className="mt-4 flex space-x-2">
                       <Link
-                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/${file.file_path}`}
+                        href={`${process.env.NEXT_PUBLIC_BASE_URL}${file.file_path}`}
                         target="_blank"
                         className={buttonVariants({
                           size: "sm",

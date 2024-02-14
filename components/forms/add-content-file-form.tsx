@@ -59,8 +59,6 @@ export function AddContentFileForm({ idSection }: AddContentFileFormProps) {
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransaction(async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/content/file`
-
         const formData = new FormData()
 
         Object.keys(data).forEach((key) => {
@@ -134,7 +132,7 @@ export function AddContentFileForm({ idSection }: AddContentFileFormProps) {
             <div className="flex flex-col items-start gap-5">
               {files.map((file, index) => (
                 <div key={index} className="flex items-center gap-2">
-                  <Icons.billing className="h-5 w-5 text-gray-400" />
+                  <Icons.billing className="size-5 text-gray-400" />
                   <Link
                     href={file.preview}
                     target="_blank"
@@ -178,7 +176,7 @@ export function AddContentFileForm({ idSection }: AddContentFileFormProps) {
         </FormItem>
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Tambah
         </Button>
       </form>
