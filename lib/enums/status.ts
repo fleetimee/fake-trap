@@ -26,3 +26,10 @@ export enum CourseAvailability {
   ACTIVE = "Sedang Berlangsung",
   OVER = "Selesai",
 }
+
+export enum DocumentType {
+  PDF = ".pdf",
+  DOC = ".doc | .docx",
+  XLS = ".xls | .xlsx",
+  PPT = ".ppt | .pptx",
+}

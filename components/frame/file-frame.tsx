@@ -4,14 +4,30 @@ import { JSX, SVGProps } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ClockIcon } from "lucide-react"
+import { ClockIcon, DownloadIcon, EyeIcon, FileType } from "lucide-react"
 import { useMediaQuery } from "react-responsive"
 
 import { ContentOneRes } from "@/types/content/res"
-import { convertDatetoString } from "@/lib/utils"
+import { DocumentType } from "@/lib/enums/status"
+import { cn, convertDatetoString } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip"
 
 interface FileFrameProps {
   content: ContentOneRes
@@ -30,149 +46,273 @@ export function FileFrame({ content, params }: FileFrameProps) {
   console.log(pathname)
 
   return (
-    <div className={`flex flex-col items-start justify-center gap-3 `}>
-      {!isMobile && (
-        <>
-          <h1 className="text-4xl font-bold  ">{content.data.content_title}</h1>
+    <div
+      className={`flex max-w-sm flex-col items-start space-y-4 overflow-auto sm:max-w-lg md:max-w-full`}
+    >
+      <div>
+        <h1 className="font-heading  md:text-lg">
+          Berikut adalah file yang dapat diunduh
+        </h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Terakhir diupdate{" "}
+          {convertDatetoString(content?.data.created_at.toString() || "")}
+        </p>
+      </div>
 
-          <span className="inline-flex">
-            <ClockIcon className="mr-2 size-6 text-gray-500" />
-            <p>{convertDatetoString(content.data.created_at.toString())}</p>
-          </span>
+      <Separator />
 
-          <Separator />
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[700px]">Nama File</TableHead>
+            <TableHead>Preview</TableHead>
+            <TableHead>Download</TableHead>
+          </TableRow>
+        </TableHeader>
 
-          <p className="text-xl italic ">
-            Terdapat {content.data.files?.length} file yang dapat diunduh untuk
-            di baca
-          </p>
+        <TableBody>
+          {/* <TableRow>
+            <TableCell>
+              <div className="flex items-center gap-2 text-sm">
+                <FileIcon className="size-4 text-red-500 dark:text-red-400" />
+                <div>
+                  <span className="truncate">Report.pdf</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {" "}
+                    (2.5MB)
+                  </span>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    application/pdf
+                  </p>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <EyeIcon className="size-4" />
+                Preview
+              </Button>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <DownloadIcon className="size-4" />
+                Download
+              </Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <div className="flex items-center gap-2 text-sm">
+                <FileIcon className="size-4 text-blue-500 dark:text-blue-400" />
+                <div>
+                  <span className="truncate">Proposal.docx</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {" "}
+                    (1.8MB)
+                  </span>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  </p>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <EyeIcon className="size-4" />
+                Preview
+              </Button>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <DownloadIcon className="size-4" />
+                Download
+              </Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <div className="flex items-center gap-2 text-sm">
+                <FileIcon className="size-4 text-green-500 dark:text-green-400" />
+                <div>
+                  <span className="truncate">Expenses.xlsx</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {" "}
+                    (4.2MB)
+                  </span>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                  </p>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <EyeIcon className="size-4" />
+                Preview
+              </Button>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <DownloadIcon className="size-4" />
+                Download
+              </Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <div className="flex items-center gap-2 text-sm">
+                <FileIcon className="size-4 text-yellow-500 dark:text-yellow-400" />
+                <div>
+                  <span className="truncate">Slides.ppt</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {" "}
+                    (3.1MB)
+                  </span>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    application/vnd.ms-powerpoint
+                  </p>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <EyeIcon className="size-4" />
+                Preview
+              </Button>
+            </TableCell>
+            <TableCell>
+              <Button
+                className="flex items-center gap-2"
+                size="sm"
+                variant="ghost"
+              >
+                <DownloadIcon className="size-4" />
+                Download
+              </Button>
+            </TableCell>
+          </TableRow> */}
 
-          <div className="grid grid-cols-1 items-center justify-center gap-8  xl:grid-cols-2">
-            {content.data.files &&
-              content.data.files.map((file) => (
-                <Card
-                  key={file.id_content_file}
-                  className="mx-auto w-80 overflow-hidden rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl"
-                >
-                  <Image
-                    alt="Profile picture"
-                    className="w-full object-cover"
-                    height="320"
-                    src="/images/placeholder.svg"
-                    style={{
-                      aspectRatio: "320/320",
-                      objectFit: "cover",
-                    }}
-                    width="320"
-                  />
-                  <CardContent className="p-4">
-                    <h2 className="text-2xl font-bold transition-all duration-200 hover:text-gray-700">
-                      {file.file_type}
-                    </h2>
-                    <h3 className="text-gray-500 transition-all duration-200 hover:text-gray-600">
-                      {Number(file.file_size)
-                        ? (Number(file.file_size) / 1024 / 1024).toFixed(2)
-                        : "N/A"}{" "}
-                      MB
-                    </h3>
-                    <p className="mt-2 text-gray-600 transition-all duration-200 hover:text-gray-700">
-                      {file.file_path.split("/").pop()}
-                    </p>
-                    <div className="mt-4 flex space-x-2">
-                      <Link
-                        href={`${process.env.NEXT_PUBLIC_BASE_URL}${file.file_path}`}
-                        target="_blank"
-                        className={buttonVariants({
-                          size: "sm",
-                          className:
-                            "w-full transition-all duration-200 hover:bg-gray-700 hover:text-white",
+          {content?.data.files &&
+            content?.data.files.map((file, index) => {
+              return (
+                <TableRow key={index}>
+                  <TableCell>
+                    <div className="flex items-center gap-4 text-sm">
+                      <FileIcon
+                        className={cn({
+                          "size-6": true,
+                          "text-red-500 dark:text-red-400":
+                            DocumentType.PDF.split(" | ").includes(file.ext),
+                          "text-blue-500 dark:text-blue-400":
+                            DocumentType.DOC.split(" | ").includes(file.ext),
+                          "text-green-500 dark:text-green-400":
+                            DocumentType.XLS.split(" | ").includes(file.ext),
+                          "text-orange-500 dark:text-orange-400":
+                            DocumentType.PPT.split(" | ").includes(file.ext),
                         })}
-                      >
-                        Download
-                      </Link>
-                      <Button
-                        className="w-full transition-all duration-200 hover:border-gray-700 hover:text-gray-700"
-                        size="sm"
-                        variant="outline"
-                      >
-                        <Link
-                          // href={`/intro/knowledge/${params.detail}/section/${
-                          //   params.idSection
-                          // }/content/${params.idContent}/render/${file.file_path
-                          //   .split("/")
-                          //   .pop()}`}
-
-                          href={`${pathname}/render/${file.file_path
-                            .split("/")
-                            .pop()}?fullPath=${file.file_path}`}
-                        >
-                          Preview
-                        </Link>
-                      </Button>
+                      />
+                      <div>
+                        <span className="line-clamp-1 truncate">
+                          {file.original_filename}
+                        </span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          {" "}
+                          ({file.file_type})
+                        </span>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {Number(file.file_size)
+                            ? (Number(file.file_size) / 1024 / 1024).toFixed(2)
+                            : "N/A"}{" "}
+                          MB
+                        </p>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        </>
-      )}
-
-      {isMobile && (
-        <Card className="w-full rounded-none p-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {content.data.files &&
-              content.data.files.map((file) => (
-                <Card
-                  key={file.id_content_file}
-                  className="rounded-lg border-none"
-                >
-                  <CardContent className="p-4">
-                    <div className="flex flex-row items-center justify-between">
-                      <h2 className="text-2xl font-bold">{file.file_type}</h2>
-                      <h3 className="text-gray-500">
-                        {Number(file.file_size)
-                          ? (Number(file.file_size) / 1024 / 1024).toFixed(2)
-                          : "N/A"}{" "}
-                        MB
-                      </h3>
-                    </div>
-                    <p className="mt-2 text-gray-600">
-                      {file.file_path.split("/").pop()}
-                    </p>
-                    <div className="mt-4 flex space-x-2">
+                  </TableCell>
+                  <TableCell>
+                    {file.ext !== DocumentType.PDF ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              className="flex items-center gap-2 text-gray-400"
+                              size="sm"
+                              variant="ghost"
+                            >
+                              <EyeIcon className="size-4" />
+                              Preview
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Preview tidak tersedia</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
                       <Link
-                        href={`${process.env.NEXT_PUBLIC_BASE_URL}${file.file_path}`}
-                        target="_blank"
-                        className={buttonVariants({
-                          size: "sm",
-                          className:
-                            "w-full transition-all duration-200 hover:bg-gray-700 hover:text-white",
-                        })}
+                        href={`${pathname}/render/${file.file_path
+                          .split("/")
+                          .pop()}?fullPath=${file.file_path}`}
+                        passHref
                       >
-                        Download
-                      </Link>
-                      <Button
-                        className="w-full transition-all duration-200 hover:border-gray-700 hover:text-gray-700"
-                        size="sm"
-                        variant="outline"
-                      >
-                        <Link
-                          href={`/intro/knowledge/${params.detail}/section/${
-                            params.idSection
-                          }/content/${params.idContent}/render/${file.file_path
-                            .split("/")
-                            .pop()}`}
+                        <Button
+                          className="flex items-center gap-2"
+                          size="sm"
+                          variant="ghost"
                         >
+                          <EyeIcon className="size-4" />
                           Preview
-                        </Link>
+                        </Button>
+                      </Link>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      href={`${process.env.NEXT_PUBLIC_BASE_URL}${file.file_path}`}
+                      passHref
+                    >
+                      <Button
+                        className="flex items-center gap-2"
+                        size="sm"
+                        variant="ghost"
+                      >
+                        <DownloadIcon className="size-4" />
+                        Download
                       </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        </Card>
-      )}
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+        </TableBody>
+      </Table>
     </div>
   )
 }

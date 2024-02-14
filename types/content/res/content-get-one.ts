@@ -37,6 +37,8 @@ export type ContentOneFile = {
   file_path: string
   file_type: string
   file_size: string
+  original_filename: string
+  ext: string
 }
 
 export type ContentOneVideoUpload = {

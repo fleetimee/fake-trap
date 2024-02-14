@@ -24,19 +24,7 @@ export default function KnowledgeContentPdfRenderer({
     return notFound()
   }
 
-  console.log(params.filePath)
-
   const filePath = `${process.env.NEXT_PUBLIC_BASE_URL}${searchParams.fullPath}`
 
-  console.log(filePath)
-
-  // return <PdfRender link={filePath} />
-
-  const docs = [
-    {
-      uri: `${filePath}`,
-    }, // Remote file
-  ]
-
-  return <DocViewerClient documents={docs} />
+  return <PdfRender link={filePath} />
 }
