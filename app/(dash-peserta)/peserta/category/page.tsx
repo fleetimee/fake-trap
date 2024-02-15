@@ -1,11 +1,13 @@
 import React from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import NotFoundLottie from "@/public/lottie/not-found.json"
 
 import { authOptions } from "@/lib/auth"
 import { getCategoriesWithKnowledge } from "@/lib/fetcher/category-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { Categories } from "@/components/categories"
+import { NotFoundAnim } from "@/components/not-found-anim"
 
 export const metadata: Metadata = {
   title: "Kategori",
@@ -22,7 +24,7 @@ export default async function PesertaCategoryPage({
 }: PesertaCategoryPageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, search, store_page } = searchParams
+  const { page, per_page, sort, search } = searchParams
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 9
@@ -47,7 +49,14 @@ export default async function PesertaCategoryPage({
     sortBy: sortBy,
   })
 
-  return (
+  return categories.data.length > 0 ? (
     <Categories categories={categories.data} pageCount={categories.totalPage} />
+  ) : (
+    <NotFoundAnim
+      animationData={NotFoundLottie}
+      title="Belum ada Kategori"
+      description="Tidak ada kategori yang tersedia saat ini. Silahkan coba lagi nanti."
+      backButtonUrl="/peserta"
+    />
   )
 }

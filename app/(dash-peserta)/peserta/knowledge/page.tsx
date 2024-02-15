@@ -1,6 +1,7 @@
 import React from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import NotFoundLottie from "@/public/lottie/not-found.json"
 
 import { authOptions } from "@/lib/auth"
 import { getKnowledgeUser } from "@/lib/fetcher/knowledge-fetcher"
@@ -8,6 +9,7 @@ import { getCurrentUser } from "@/lib/session"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { Knowledges } from "@/components/knowledges"
+import { NotFoundAnim } from "@/components/not-found-anim"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Separator } from "@/components/ui/separator"
@@ -76,10 +78,19 @@ export default async function PesertaKnowledgePage({
 
       <Separator />
 
-      <Knowledges
-        knowledges={knowledges.data}
-        pageCount={knowledges.totalPage}
-      />
+      {knowledges.data.length === 0 ? (
+        <NotFoundAnim
+          animationData={NotFoundLottie}
+          title="Belum ada Pelatihan"
+          description="Maaf anda belum di assign pelatihan oleh administrator"
+          backButtonUrl="/peserta"
+        />
+      ) : (
+        <Knowledges
+          knowledges={knowledges.data}
+          pageCount={knowledges.totalPage}
+        />
+      )}
     </DashboardShell>
   )
 }
