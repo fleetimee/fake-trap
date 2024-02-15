@@ -83,6 +83,8 @@ export default async function CourseDetailLayout({
     dateStart: course.data.date_start,
   })
 
+  console.log("courseStatus", courseStatus)
+
   const notAvailable = courseStatus !== CourseAvailability.ACTIVE
 
   return (

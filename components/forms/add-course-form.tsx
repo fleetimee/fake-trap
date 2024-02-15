@@ -429,7 +429,7 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
         />
 
         <Button type="submit" className="w-fit" disabled={isLoading}>
-          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isLoading && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Tambah
         </Button>
       </form>

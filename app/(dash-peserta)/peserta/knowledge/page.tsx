@@ -73,7 +73,10 @@ export default async function PesertaKnowledgePage({
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <DashboardHeader heading="Pengetahuan" />
+        <DashboardHeader
+          heading="Pengetahuan"
+          description="Pengetahuan atau Materi Terbuka yang dapat diakses oleh semua peserta."
+        />
       </MotionDiv>
 
       <Separator />
@@ -81,8 +84,8 @@ export default async function PesertaKnowledgePage({
       {knowledges.data.length === 0 ? (
         <NotFoundAnim
           animationData={NotFoundLottie}
-          title="Belum ada Pelatihan"
-          description="Maaf anda belum di assign pelatihan oleh administrator"
+          title="Belum ada Materi"
+          description="Tidak ada materi yang tersedia saat ini."
           backButtonUrl="/peserta"
         />
       ) : (

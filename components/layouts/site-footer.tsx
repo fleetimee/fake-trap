@@ -19,7 +19,13 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             © {new Date().getFullYear()} BANK BPD DIY . All Rights Reserved.
           </p>
         </div>
-        <ModeToggle />
+
+        <div className="flex flex-col items-center justify-between gap-4 space-x-4 md:flex-row">
+          <p className="font text-center font-heading text-sm leading-loose text-white md:text-left">
+            Aturan Privacy
+          </p>
+          <ModeToggle />
+        </div>
       </div>
     </footer>
   )

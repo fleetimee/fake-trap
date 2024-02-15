@@ -77,7 +77,7 @@ export function DateTimePicker({
             !date && "text-muted-foreground"
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          <CalendarIcon className="mr-2 size-4" />
           {date ? (
             selectedDateTime.toFormat("DDD HH:mm")
           ) : (

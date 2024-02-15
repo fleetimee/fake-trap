@@ -264,7 +264,7 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Update
         </Button>
       </form>
