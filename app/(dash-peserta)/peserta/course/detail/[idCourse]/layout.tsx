@@ -1,22 +1,41 @@
 import React from "react"
 import { Metadata } from "next"
+import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 
+import { CourseOneResSection } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
-import { CourseAvailability } from "@/lib/enums/status"
+import { CourseAvailability, QuizType } from "@/lib/enums/status"
 import {
   getCourseKnowledgeSection,
   getOneCourse,
 } from "@/lib/fetcher/course-fetcher"
-import { getCheckUserCourseEnrollmentStatus } from "@/lib/fetcher/users-fetcher"
+import {
+  getCheckUserCourseEnrollmentStatus,
+  getUserPretestCheck,
+} from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { extractToken, getCourseStatus } from "@/lib/utils"
+import { cn, extractToken, getCourseStatus } from "@/lib/utils"
 import { Content } from "@/components/content"
 import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
+import { CourseContentSidebarPretest } from "@/components/course-content-sidebar-pretest"
 import { SectionBanner } from "@/components/create-section-banner"
+import { EmptyContent } from "@/components/empty"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VercelToolbar } from "@/components/vercel-toolbar"
 
 interface CourseDetailLayoutProps {
@@ -83,7 +102,27 @@ export default async function CourseDetailLayout({
     dateStart: course.data.date_start,
   })
 
-  console.log("courseStatus", courseStatus)
+  const checkUserPretest = await getUserPretestCheck({
+    idCourse: params.idCourse,
+    token: user?.token,
+    userUuid: tokenExtracted?.id,
+  })
+
+  let filteredSections: CourseOneResSection[] = []
+
+  if (course && course.data && course.data.section) {
+    filteredSections = course.data.section.filter((section) => {
+      // Filter the quizzes in each section
+      const filteredQuizzes = section.quiz.filter(
+        (quiz) => quiz.quiz_type === "0021"
+      )
+
+      // If there are any quizzes left after filtering, return true (keep the section)
+      return filteredQuizzes.length > 0
+    })
+  }
+
+  console.log(filteredSections)
 
   const notAvailable = courseStatus !== CourseAvailability.ACTIVE
 
@@ -140,13 +179,18 @@ export default async function CourseDetailLayout({
         >
           {children}
         </Content>
-        {notAvailable ? null : (
+        {notAvailable ? null : checkUserPretest.data ? (
           <CourseContentSidebar
             course={course}
             baseUrl={`/peserta/course/detail/${params.idCourse}`}
             canCreateContent={false}
             canCreateSection={false}
             knowledgeSection={knowledgeSection.data}
+          />
+        ) : (
+          <CourseContentSidebarPretest
+            filteredSections={filteredSections}
+            baseUrl={`/peserta/course/detail/${params.idCourse}`}
           />
         )}
       </div>

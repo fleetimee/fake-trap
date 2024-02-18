@@ -9,6 +9,7 @@ export type QuizOneResData = {
   quiz_title: string
   quiz_desc: string
   quiz_type: string
+  time_limit: number
   created_at: Date
   questions: QuizOneResQuestion[]
   id_section: number

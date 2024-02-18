@@ -16,8 +16,8 @@ export function SectionBanner({ className, ...props }: SectionBannerProps) {
             ? {
                 backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}${props.image})`,
                 backgroundSize: "cover",
-                backdropFilter: "blur(20px)",
-                filter: "grayscale(0.1)",
+                backgroundPosition: "center",
+                backdropFilter: "blur(10px)",
               }
             : {}
         }

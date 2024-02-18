@@ -76,36 +76,40 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           }
         })
 
-        const response = await createCourse({
-          token: session?.user.token,
-          body: formData,
-        })
-
-        if (response.ok) {
-          const responseData = await response.json()
-
-          const newCourseId = responseData.data
-
-          sonnerToast.success("Berhasil", {
-            description: "Pelatihan berhasil dibuat",
-          })
-
-          if (baseUrl) {
-            router.push(`${baseUrl}/detail/${newCourseId}/people/new`)
-            router.refresh()
-            form.reset()
-          } else {
-            router.back()
-            router.refresh()
-            form.reset()
-          }
-        } else {
-          const errorResponse: ErrorResponse = await response.json()
-
-          sonnerToast.error("Gagal", {
-            description: `${errorResponse.error}`,
-          })
+        for (let pair of formData.entries()) {
+          console.log(pair[0] + ", " + pair[1])
         }
+
+        // const response = await createCourse({
+        //   token: session?.user.token,
+        //   body: formData,
+        // })
+
+        // if (response.ok) {
+        //   const responseData = await response.json()
+
+        //   const newCourseId = responseData.data
+
+        //   sonnerToast.success("Berhasil", {
+        //     description: "Pelatihan berhasil dibuat",
+        //   })
+
+        //   if (baseUrl) {
+        //     router.push(`${baseUrl}/detail/${newCourseId}/people/new`)
+        //     router.refresh()
+        //     form.reset()
+        //   } else {
+        //     router.back()
+        //     router.refresh()
+        //     form.reset()
+        //   }
+        // } else {
+        //   const errorResponse: ErrorResponse = await response.json()
+
+        //   sonnerToast.error("Gagal", {
+        //     description: `${errorResponse.error}`,
+        //   })
+        // }
       } catch (error) {
         sonnerToast.error("Gagal", {
           description: `${error}`,

@@ -87,7 +87,7 @@ export function CourseContentSidebar({
                     key={section.id_knowledge.toString()}
                     value={section.id_knowledge.toString()}
                   >
-                    <AccordionTrigger className="bg-primary-foreground px-2 font-heading text-base font-semibold">
+                    <AccordionTrigger className="bg-primary  px-2 font-heading text-base font-semibold text-primary-foreground">
                       <ContextMenu>
                         <ContextMenuTrigger className="text-left">{`${section.knowledge_title}`}</ContextMenuTrigger>
                         {canCreateContent ? (
@@ -133,7 +133,7 @@ export function CourseContentSidebar({
                       {section?.section ? (
                         section.section.map((section) => (
                           <Collapsible className="">
-                            <div className="flex items-center justify-between space-x-4 border-b bg-primary-foreground  p-4">
+                            <div className="flex items-center justify-between space-x-4 border-b bg-card  p-4">
                               <h4 className=" font-semibold">
                                 {section.section_title}
                               </h4>
@@ -251,7 +251,7 @@ export function CourseContentSidebar({
                     key={section.id_section.toString()}
                     value={section.id_section.toString()}
                   >
-                    <AccordionTrigger className="line-clamp-2 bg-primary-foreground px-2 font-heading text-base font-bold">
+                    <AccordionTrigger className="line-clamp-2 bg-primary px-2 font-heading text-base font-bold text-primary-foreground">
                       <ContextMenu>
                         <ContextMenuTrigger>
                           {`${section.section_title}`}

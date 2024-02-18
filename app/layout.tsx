@@ -5,6 +5,7 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { fontHeading, fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import Background from "@/components/background"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SonnerToaster } from "@/components/ui/sonner-toaster"
@@ -63,7 +64,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               {/* <BGGrid> */}
               {/* <Providers>{children}</Providers> */}
 
-              {children}
+              <Background>{children}</Background>
 
               {/*{children}*/}
               {/* </BGGrid> */}

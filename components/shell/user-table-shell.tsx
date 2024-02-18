@@ -41,7 +41,7 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
           const user = row.original
 
           return (
-            <Avatar className="h-12 w-12  bg-white">
+            <Avatar className="size-12 bg-white">
               <AvatarImage
                 src={`data:image/svg+xml;utf8,${generateFromString(user.name)}`}
               />
@@ -102,8 +102,8 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
                 {user.roles === "Pemateri"
                   ? "Admin"
                   : user.roles === "Admin"
-                  ? "Pemateri"
-                  : user.roles}
+                    ? "Pemateri"
+                    : user.roles}
               </p>
             </div>
           )

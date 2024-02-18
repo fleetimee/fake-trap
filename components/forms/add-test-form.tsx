@@ -180,7 +180,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
                               (quiz) => quiz.code_ref2 === field.value
                             )?.value_ref1
                           : "Pilih tipe kuis"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -200,7 +200,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
                           >
                             <Check
                               className={cn(
-                                "mr-2 h-4 w-4",
+                                "mr-2 size-4",
                                 quiz.code_ref2 === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
@@ -239,7 +239,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Tambah
         </Button>
       </form>

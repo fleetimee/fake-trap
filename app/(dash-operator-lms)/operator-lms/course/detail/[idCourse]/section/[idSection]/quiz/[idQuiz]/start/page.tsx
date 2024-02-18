@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getOneQuiz } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { UserSubmittedAnswerFormProps } from "@/components/forms/user-submmited-answer-form"
+import { UserSubmittedAnswerForm } from "@/components/forms/user-submmited-answer-form"
 
 interface CourseQuizStartPageProps {
   params: {
@@ -28,7 +28,7 @@ export default async function CourseQuizStartPage({
   })
 
   return (
-    <UserSubmittedAnswerFormProps
+    <UserSubmittedAnswerForm
       question={quiz?.data?.questions}
       quiz={quiz}
       baseUrl="/operator-lms/"

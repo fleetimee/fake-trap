@@ -12,6 +12,8 @@ import {
 } from "@/types/me/res"
 import { QuizUserResultListRes } from "@/types/quiz/res"
 import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
+import { UserOneLeaderboardRes } from "@/types/user/res/user-get-leaderboard"
+import { UserOnePretestCheckRes } from "@/types/user/res/user-get-pretest-check"
 import { UserOrgOneRes } from "@/types/user/res/user-org-get-one"
 
 interface GetUserV2Props {
@@ -470,6 +472,64 @@ export async function getUserOrg({
   })
 
   return await res.json()
+}
+
+interface GetUserLeaderboardProps {
+  token: string | undefined
+  userUuid: string
+  idQuiz: string
+}
+
+export async function getUserLeaderboard({
+  token,
+  userUuid,
+  idQuiz,
+}: GetUserLeaderboardProps): Promise<UserOneLeaderboardRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/getQuizLeaderboardPosition/${idQuiz}`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+    throw error
+  }
+}
+
+interface GetUserPretestCheckProps {
+  token: string | undefined
+  userUuid: string
+  idCourse: string
+}
+
+export async function getUserPretestCheck({
+  token,
+  userUuid,
+  idCourse,
+}: GetUserPretestCheckProps): Promise<UserOnePretestCheckRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/getCheckPretest/${idCourse}`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+    throw error
+  }
 }
 
 interface CreateUserProps {

@@ -9,6 +9,7 @@ import {
   QuizUserAttemptList,
 } from "@/types/quiz/res"
 import { QuizDashboardCountRes } from "@/types/quiz/res/quiz-get-dashboard-count"
+import { QuizLeaderboardListRes } from "@/types/quiz/res/quiz-leaderboard-list"
 
 interface GetQuizProps {
   token: string | undefined
@@ -444,6 +445,54 @@ export async function getQuizDashboardCount({
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/quiz-count/${idUser}`
 
   const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return await res.json()
+}
+
+interface GetQuizLeaderboardProps {
+  token: string | undefined
+  idExercise: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+}
+
+export async function getQuizLeaderboard({
+  token,
+  idExercise,
+  limit,
+  page,
+  sortBy = "position",
+  orderBy = "asc",
+}: GetQuizLeaderboardProps): Promise<QuizLeaderboardListRes> {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/leaderboard`
+
+  const urlObj = new URL(url)
+
+  if (page) {
+    urlObj.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    urlObj.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    urlObj.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    urlObj.searchParams.append("orderBy", orderBy)
+  }
+
+  const res = await fetch(urlObj.toString(), {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -44,7 +44,7 @@ interface UserSubmittedAnswerFormProps {
 
 type Inputs = z.infer<typeof userSubmittedAnswerSchema>
 
-export function UserSubmittedAnswerFormProps({
+export function UserSubmittedAnswerForm({
   question,
   quiz,
   baseUrl,
@@ -55,49 +55,40 @@ export function UserSubmittedAnswerFormProps({
 
   const [isPending, startTransition] = React.useTransition()
 
-  // const [timer, setTimer] = useState(5) // Set timer to 60 seconds or any desired time
+  const [timeRemaining, setTimeRemaining] = useState(quiz?.data?.time_limit)
 
-  // useEffect(() => {
-  //   let interval: NodeJS.Timeout
+  const [startTime, setStartTime] = useState<Date | null>(null)
 
-  //   if (timer > 0) {
-  //     // Start the timer when the component mounts
-  //     interval = setInterval(() => {
-  //       setTimer((prevTimer) => prevTimer - 1)
-  //     }, 1000)
-  //   }
-
-  //   // Clear the interval when the component unmounts or the timer reaches zero
-  //   return () => clearInterval(interval)
-  // }, [timer])
-
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  //     e.preventDefault()
-  //     e.returnValue =
-  //       "Are you sure you want to leave? Your progress will be lost."
-  //   }
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload)
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload)
-  //   }
-  // }, [])
+  // Flag all question as unanswered defaulted to 0
+  const initialAnswers = question.reduce((acc, curr) => {
+    // @ts-ignore
+    acc[curr.id_question] = 0
+    return acc
+  }, {})
 
   const router = useRouter()
 
   const form = useForm<Inputs>({
-    resolver: zodResolver(userSubmittedAnswerSchema),
     defaultValues: {
       uuid: session?.expires?.id,
       id_quiz: quiz?.data?.id_quiz,
-      selected_answers: {},
+      selected_answers: initialAnswers,
     },
   })
 
   const onSubmit = useCallback(
     async (values: Inputs) => {
+      if (startTime) {
+        const endTime = new Date()
+        const elapsedTime = Math.round(
+          (endTime.getTime() - startTime.getTime()) / 1000
+        ) // in seconds
+        const hours = Math.floor(elapsedTime / 3600)
+        const minutes = Math.floor((elapsedTime % 3600) / 60)
+        const seconds = elapsedTime % 60
+        values.time_elapsed = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+      }
+
       startTransition(async () => {
         try {
           const res = await createUserAnswer({
@@ -127,8 +118,23 @@ export function UserSubmittedAnswerFormProps({
         }
       })
     },
-    [startTransition, session, router, form]
+    [startTime, session?.user?.token, router, form]
   )
+
+  useEffect(() => {
+    setStartTime(new Date())
+  }, [])
+
+  useEffect(() => {
+    if (timeRemaining > 0) {
+      const timerId = setTimeout(() => {
+        setTimeRemaining(timeRemaining - 1)
+      }, 1000)
+      return () => clearTimeout(timerId)
+    } else {
+      form.handleSubmit(onSubmit)()
+    }
+  }, [timeRemaining, form, onSubmit])
 
   if (!quiz.data.questions) {
     return (
@@ -170,7 +176,10 @@ export function UserSubmittedAnswerFormProps({
             <div className="flex flex-col gap-2">
               {/* <p className="ml-4 text-sm ">Butir Soal: {questionLength} Soal</p>
             <p className="ml-4 text-sm ">Dibuat Pada: {formattedDate}</p> */}
-              <p className="ml-4 text-sm ">Waktu: 30 Menit</p>
+              <p className="ml-4 text-sm ">
+                Waktu: {Math.floor(timeRemaining / 60)} Menit{" "}
+                {timeRemaining % 60} Detik
+              </p>
             </div>
           </div>
 
@@ -207,17 +216,22 @@ export function UserSubmittedAnswerFormProps({
                                 key={key}
                                 disabled={isPending || isPreviewOnly}
                                 className="grid grid-cols-2 gap-4 xl:grid-cols-2"
-                                // value={field.value.toString()}
+                                value={field.value.toString()}
                                 onValueChange={(value) => {
-                                  const confirmBox = window.confirm(
-                                    "Are you sure you want to select this answer?"
+                                  // const confirmBox = window.confirm(
+                                  //   "Are you sure you want to select this answer?"
+                                  // )
+                                  // if (confirmBox === true) {
+                                  //   form.setValue(
+                                  //     `selected_answers.${question.id_question}`,
+                                  //     parseInt(value)
+                                  //   )
+                                  // }
+
+                                  form.setValue(
+                                    `selected_answers.${question.id_question}`,
+                                    parseInt(value)
                                   )
-                                  if (confirmBox === true) {
-                                    form.setValue(
-                                      `selected_answers.${question.id_question}`,
-                                      parseInt(value)
-                                    )
-                                  }
                                 }}
                               >
                                 {question.answers.map((answer, index) => (
