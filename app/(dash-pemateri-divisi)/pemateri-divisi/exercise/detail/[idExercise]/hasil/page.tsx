@@ -58,7 +58,7 @@ export default async function ExerciseDetailHasilPage({
   return (
     <DashboardShell>
       <Alert>
-        <DiscordLogoIcon className="h-4 w-4" />
+        <DiscordLogoIcon className="size-4" />
         <AlertTitle>Hasil Ujian</AlertTitle>
         <AlertDescription>
           Berikut adalah nilai dari semua percobaan quiz yang telah peserta
@@ -70,7 +70,7 @@ export default async function ExerciseDetailHasilPage({
         <UserQuizResultTableShell
           data={exerciseResult.data}
           pageCount={exerciseResult.totalPage}
-          linkString={`/operator-lms/exercise/detail`}
+          linkString={`/pemateri-divisi/exercise/detail`}
           idQuiz={params.idExercise}
         />
       </Suspense>
