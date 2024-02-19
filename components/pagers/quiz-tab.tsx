@@ -1,5 +1,6 @@
 "use client"
 
+import { title } from "process"
 import React from "react"
 import { useRouter, useSelectedLayoutSegment } from "next/navigation"
 import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs"
@@ -51,6 +52,13 @@ export function QuizTab({ className, quizId, initialRoute }: QuizTabProps) {
         ? `${initialRoute}/hasil`
         : `/dashboard/quiz/${quizId}/hasil`,
       isActive: segment === "hasil",
+    },
+    {
+      title: "Leaderboard",
+      href: initialRoute
+        ? `${initialRoute}/leaderboard`
+        : `/dashboard/quiz/${quizId}/leaderboard`,
+      isActive: segment === "leaderboard",
     },
   ]
 

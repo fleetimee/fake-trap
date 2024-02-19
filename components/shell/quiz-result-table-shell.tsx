@@ -3,11 +3,13 @@
 import React from "react"
 import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
+import { generateFromString } from "generate-avatar"
 
 import { QuizUserAttemptListData } from "@/types/quiz/res"
-import { convertDatetoString } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 interface UserQuizResultTableShellProps {
   data: QuizUserAttemptListData[]
@@ -24,6 +26,21 @@ export function UserQuizResultTableShell({
 }: UserQuizResultTableShellProps) {
   const columns = React.useMemo<ColumnDef<QuizUserAttemptListData, unknown>[]>(
     () => [
+      {
+        id: "avatar",
+        cell: ({ row }) => {
+          const user = row.original
+
+          return (
+            <Avatar className="size-12 bg-white">
+              <AvatarImage
+                src={`data:image/svg+xml;utf8,${generateFromString(user.name)}`}
+              />
+              <AvatarFallback />
+            </Avatar>
+          )
+        },
+      },
       {
         accessorKey: "name",
         header: ({ column }) => (
@@ -42,14 +59,7 @@ export function UserQuizResultTableShell({
           <DataTableColumnHeader column={column} title="UUID" />
         ),
       },
-      {
-        accessorKey: "created_at",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Waktu" />
-        ),
-        cell: ({ row }) =>
-          convertDatetoString(row.original.created_at.toString()),
-      },
+
       {
         accessorKey: "score",
         header: ({ column }) => (

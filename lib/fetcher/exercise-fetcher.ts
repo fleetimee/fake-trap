@@ -474,6 +474,8 @@ export async function getQuizLeaderboard({
 }: GetQuizLeaderboardProps): Promise<QuizLeaderboardListRes> {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/leaderboard`
 
+  console.log(url)
+
   const urlObj = new URL(url)
 
   if (page) {

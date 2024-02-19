@@ -2,10 +2,12 @@
 
 import React from "react"
 import { ColumnDef } from "@tanstack/react-table"
+import { generateFromString } from "generate-avatar"
 
 import { QuizMemberListResData } from "@/types/quiz/res"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
 interface QuizMemberTableShellProps {
@@ -19,11 +21,26 @@ export function QuizMemberTableShell({
   pageCount,
   idExercise,
 }: QuizMemberTableShellProps) {
-  const [isPending, startTransition] = React.useTransition()
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
+  // const [isPending, startTransition] = React.useTransition()
+  // const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
 
   const columns = React.useMemo<ColumnDef<QuizMemberListResData, unknown>[]>(
     () => [
+      {
+        id: "avatar",
+        cell: ({ row }) => {
+          const user = row.original
+
+          return (
+            <Avatar className="size-12 bg-white">
+              <AvatarImage
+                src={`data:image/svg+xml;utf8,${generateFromString(user.name)}`}
+              />
+              <AvatarFallback />
+            </Avatar>
+          )
+        },
+      },
       {
         accessorKey: "name",
         header: ({ column }) => (
