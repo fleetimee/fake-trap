@@ -6,20 +6,19 @@ import { usePathname } from "next/navigation"
 import { CourseOneResSection } from "@/types/course/res"
 import { QuizType } from "@/lib/enums/status"
 import { cn } from "@/lib/utils"
-
-import { EmptyContent } from "./empty"
-import { Icons } from "./icons"
+import { EmptyContent } from "@/components/empty"
+import { Icons } from "@/components/icons"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion"
-import { Button } from "./ui/button"
-import { Card } from "./ui/card"
-import { ContextMenu, ContextMenuTrigger } from "./ui/context-menu"
-import { ScrollArea } from "./ui/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+} from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface CourseContentSidebarPretestProps {
   filteredSections: CourseOneResSection[]
