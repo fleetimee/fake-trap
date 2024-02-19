@@ -1,5 +1,4 @@
 import {
-  Album,
   AlertTriangle,
   ArrowRight,
   ArrowUpDown,
@@ -34,6 +33,7 @@ import {
   LayoutDashboard,
   Library,
   Loader2,
+  Lock,
   LogOut,
   MailCheck,
   MailQuestion,
@@ -69,6 +69,7 @@ import {
 export type Icon = LucideProps
 
 export const Icons = {
+  lock: Lock,
   send: Send,
   pending: CircleEllipsis,
   outsideLink: FileSymlink,
