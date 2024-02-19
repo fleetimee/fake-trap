@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation"
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer"
 
 import { PdfRender } from "@/components/content-renderer"
-
-import { DocViewerClient } from "./DocViewer"
 
 interface KnowledgeContentPdfRendererProps {
   params: {

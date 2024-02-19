@@ -10,6 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { ReferenceListRes } from "@/types/references/res"
+import { timerOptions } from "@/config/timer-options"
 import { createExercise } from "@/lib/fetcher/exercise-fetcher"
 import { cn } from "@/lib/utils"
 import { testSchema } from "@/lib/validations/test"
@@ -60,6 +61,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
       quiz_title: "",
       quiz_desc: "",
       quiz_type: "",
+
       created_by: session?.expires.id,
       updated_by: session?.expires.id,
     },
@@ -217,6 +219,93 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
               <FormDescription>
                 Pilih tipe kuis yang akan dibuat
               </FormDescription>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="time_limit"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Batas Waktu <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        disabled={isPending}
+                        className={cn(
+                          "w-full justify-between",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value
+                          ? timerOptions.find(
+                              (timer) => timer.value === field.value
+                            )?.label
+                          : "Pilih batas waktu"}
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[400px] p-0 xl:w-[680px]">
+                    <Command>
+                      <CommandInput placeholder="Pilih tipe quiz..." />
+                      <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
+                      <CommandGroup>
+                        {/* {references.data.map((quiz) => (
+                          <CommandItem
+                            value={quiz.value_ref1}
+                            key={quiz.id_ref}
+                            onSelect={(value) => {
+                              form.clearErrors("quiz_type")
+                              form.setValue("quiz_type", quiz.code_ref2)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 size-4",
+                                quiz.code_ref2 === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {quiz.value_ref1}
+                          </CommandItem>
+                        ))} */}
+
+                        {timerOptions.map((timer) => (
+                          <CommandItem
+                            value={timer.label}
+                            key={timer.value}
+                            onSelect={(value) => {
+                              form.clearErrors("time_limit")
+                              form.setValue("time_limit", timer.value)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 size-4",
+                                timer.value === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {timer.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />

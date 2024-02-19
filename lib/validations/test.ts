@@ -14,7 +14,9 @@ export const testSchema = z.object({
   quiz_type: z.string().min(1, {
     message: "Tipe test tidak boleh kosong",
   }),
-  time_limit: z.date().optional(),
+  time_limit: z.number().min(1, {
+    message: "Waktu test tidak boleh kosong",
+  }),
   created_by: z.string().min(1, {
     message: "Created by tidak boleh kosong",
   }),
