@@ -1,11 +1,10 @@
 import React from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 
 import { CourseOneResSection } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
-import { CourseAvailability, QuizType } from "@/lib/enums/status"
+import { CourseAvailability } from "@/lib/enums/status"
 import {
   getCourseKnowledgeSection,
   getOneCourse,
@@ -15,27 +14,14 @@ import {
   getUserPretestCheck,
 } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { cn, extractToken, getCourseStatus } from "@/lib/utils"
+import { extractToken, getCourseStatus } from "@/lib/utils"
 import { Content } from "@/components/content"
 import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { CourseContentSidebarPretest } from "@/components/course-content-sidebar-pretest"
 import { SectionBanner } from "@/components/create-section-banner"
-import { EmptyContent } from "@/components/empty"
-import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VercelToolbar } from "@/components/vercel-toolbar"
 
 interface CourseDetailLayoutProps {
@@ -121,8 +107,6 @@ export default async function CourseDetailLayout({
       return filteredQuizzes.length > 0
     })
   }
-
-  console.log(filteredSections)
 
   const notAvailable = courseStatus !== CourseAvailability.ACTIVE
 
