@@ -10,7 +10,9 @@ export default function GlobalLoadingPage() {
     <div className="flex min-h-screen items-center justify-center">
       {/* <LottieClient animationData={Loader} className="size-1/6" /> */}
 
-      <Lottie animationData={Loader} className="size-1/6" />
+      {/* <Lottie animationData={Loader} className="size-1/6" /> */}
+
+      <p className="text-2xl font-bold text-gray-500">...</p>
     </div>
   )
 }
