@@ -82,17 +82,6 @@ export default async function SupervisorPemateriDivisiPage() {
         className="grid grid-cols-1 gap-4"
         style={{ gridTemplateRows: "auto 1fr" }}
       >
-        {/* {approvalCount.data.map((item, index) => {
-          return (
-            <div key={index}>
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">{item.status}</h2>
-                <span className="text-xl font-bold">{item.count}</span>
-              </div>
-            </div>
-          )
-        })} */}
-
         <div className=" grid grid-cols-2 gap-4 xl:grid-cols-4">
           {approvalCount.data.map((item, index) => {
             return (
@@ -102,9 +91,9 @@ export default async function SupervisorPemateriDivisiPage() {
                   item.status === "approved" ? (
                     <Icons.mailCheck className="text-blue-500" />
                   ) : item.status === "Pending" ? (
-                    <Icons.mailCheck className="text-blue-500" />
+                    <Icons.mailQuestion className="text-green-500" />
                   ) : (
-                    <Icons.mailCheck className="text-blue-500" />
+                    <Icons.mailX className="text-red-500" />
                   )
                 }
                 title={
