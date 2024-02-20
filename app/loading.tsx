@@ -1,3 +1,5 @@
+"use client"
+
 import Loader from "@/public/lottie/loading1.json"
 
 import { LottieClient } from "@/components/lottie-anim"
