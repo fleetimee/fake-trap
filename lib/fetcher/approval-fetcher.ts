@@ -10,6 +10,7 @@ import {
   ApprovalKnowledgeCountRes,
   ApprovalKnowledgeCountResData,
 } from "@/types/approval/res/approval-knowledge-count-list"
+import { ApprovalSupervisorPemateriDivisiCountListRes } from "@/types/approval/res/approval-supervisor-count-list"
 
 /*
  ___                                             ___                ___
@@ -469,6 +470,30 @@ export async function getDetailCourseApproval({
       Authorization: `Bearer ${token}`,
     },
     cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetSupervisorPemateriDivisiCountProps {
+  token: string | undefined
+  userUuid: string
+}
+
+export async function getSupervisorPemateriDivisiCount({
+  token,
+  userUuid,
+}: GetSupervisorPemateriDivisiCountProps): Promise<ApprovalSupervisorPemateriDivisiCountListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/supervisor/${userUuid}/count`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
   })
 
   return await res.json()

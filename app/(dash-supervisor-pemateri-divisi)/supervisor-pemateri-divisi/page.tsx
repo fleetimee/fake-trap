@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
+import { getSupervisorPemateriDivisiCount } from "@/lib/fetcher/approval-fetcher"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
@@ -30,6 +31,14 @@ export default async function SupervisorPemateriDivisiPage() {
     uuid: tokenExtracted?.id,
   })
 
+  // Fetch Approval Count
+  const approvalCount = await getSupervisorPemateriDivisiCount({
+    token: user?.token,
+    userUuid: tokenExtracted?.id,
+  })
+
+  console.log(approvalCount)
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -53,7 +62,7 @@ export default async function SupervisorPemateriDivisiPage() {
         animate={{ opacity: 1, x: 0 }}
       >
         <Alert>
-          <PartyPopper className="h-5 w-5" />
+          <PartyPopper className="size-5" />
           <AlertTitle>
             Halo,{" "}
             <span className="font-heading uppercase text-primary">
