@@ -9,9 +9,11 @@ import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -75,6 +77,49 @@ export default async function SupervisorPemateriDivisiPage() {
           </AlertDescription>
         </Alert>
       </MotionDiv>
+
+      <div
+        className="grid grid-cols-1 gap-4"
+        style={{ gridTemplateRows: "auto 1fr" }}
+      >
+        {/* {approvalCount.data.map((item, index) => {
+          return (
+            <div key={index}>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">{item.status}</h2>
+                <span className="text-xl font-bold">{item.count}</span>
+              </div>
+            </div>
+          )
+        })} */}
+
+        <div className=" grid grid-cols-2 gap-4 xl:grid-cols-4">
+          {approvalCount.data.map((item, index) => {
+            return (
+              <Widget
+                key={index}
+                icon={
+                  item.status === "approved" ? (
+                    <Icons.mailCheck className="text-blue-500" />
+                  ) : item.status === "Pending" ? (
+                    <Icons.mailCheck className="text-blue-500" />
+                  ) : (
+                    <Icons.mailCheck className="text-blue-500" />
+                  )
+                }
+                title={
+                  item.status === "approved"
+                    ? "Approved"
+                    : item.status === "pending"
+                      ? "Pending"
+                      : "Rejected"
+                }
+                subtitle={item.count.toString()}
+              />
+            )
+          })}
+        </div>
+      </div>
     </DashboardShell>
   )
 }

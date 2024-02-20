@@ -1,10 +1,10 @@
 export interface ApprovalSupervisorPemateriDivisiCountListRes {
   code: number
   message: string
-  data: ApprovalSupervisorPemateriDivisiCountListRes[]
+  data: ApprovalSupervisorPemateriDivisiCountListResData[]
 }
 
-export interface ApprovalSupervisorPemateriDivisiCountListRes {
+export interface ApprovalSupervisorPemateriDivisiCountListResData {
   status: string
   count: number
 }
