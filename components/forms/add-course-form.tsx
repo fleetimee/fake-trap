@@ -14,10 +14,10 @@ import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { createCourse } from "@/lib/fetcher/course-fetcher"
 import { courseSchema } from "@/lib/validations/course"
+import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button"
+import { DateTimePicker } from "@/components/ui/datetimepicker"
 
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
-import { DateTimePicker } from "../ui/datetimepicker"
 import {
   Form,
   FormControl,
@@ -80,36 +80,36 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           console.log(pair[0] + ", " + pair[1])
         }
 
-        // const response = await createCourse({
-        //   token: session?.user.token,
-        //   body: formData,
-        // })
+        const response = await createCourse({
+          token: session?.user.token,
+          body: formData,
+        })
 
-        // if (response.ok) {
-        //   const responseData = await response.json()
+        if (response.ok) {
+          const responseData = await response.json()
 
-        //   const newCourseId = responseData.data
+          const newCourseId = responseData.data
 
-        //   sonnerToast.success("Berhasil", {
-        //     description: "Pelatihan berhasil dibuat",
-        //   })
+          sonnerToast.success("Berhasil", {
+            description: "Pelatihan berhasil dibuat",
+          })
 
-        //   if (baseUrl) {
-        //     router.push(`${baseUrl}/detail/${newCourseId}/people/new`)
-        //     router.refresh()
-        //     form.reset()
-        //   } else {
-        //     router.back()
-        //     router.refresh()
-        //     form.reset()
-        //   }
-        // } else {
-        //   const errorResponse: ErrorResponse = await response.json()
+          if (baseUrl) {
+            router.push(`${baseUrl}/detail/${newCourseId}/people/new`)
+            router.refresh()
+            form.reset()
+          } else {
+            router.back()
+            router.refresh()
+            form.reset()
+          }
+        } else {
+          const errorResponse: ErrorResponse = await response.json()
 
-        //   sonnerToast.error("Gagal", {
-        //     description: `${errorResponse.error}`,
-        //   })
-        // }
+          sonnerToast.error("Gagal", {
+            description: `${errorResponse.error}`,
+          })
+        }
       } catch (error) {
         sonnerToast.error("Gagal", {
           description: `${error}`,
