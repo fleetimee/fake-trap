@@ -17,7 +17,6 @@ import { courseSchema } from "@/lib/validations/course"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { DateTimePicker } from "@/components/ui/datetimepicker"
-
 import {
   Form,
   FormControl,
@@ -26,10 +25,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
-import { Zoom } from "../zoom-image"
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Zoom } from "@/components/zoom-image"
 
 type Inputs = z.infer<typeof courseSchema>
 
