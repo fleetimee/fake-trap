@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 import { CourseAvailability } from "@/lib/enums/status"
 import { cn, getCourseStatus } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardFooter } from "@/components/ui/card"
 
 export interface CourseCardV2Props {
@@ -19,6 +20,8 @@ export interface CourseCardV2Props {
 }
 
 export default function CourseCardV2({ ...props }: CourseCardV2Props) {
+  const router = useRouter()
+
   const courseStatus = getCourseStatus({
     dateStart: props.startDate,
     dateEnd: props.endDate,
@@ -28,6 +31,8 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
     <Link
       href={`/peserta/course/detail/${props.courseId}`}
       className="flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary sm:w-[30rem] md:max-w-2xl xl:h-[300px]"
+      passHref
+      target="_blank"
     >
       <Card>
         <div className="md:flex">
@@ -83,12 +88,24 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
           <div className="flex items-center space-x-1">
             <Link
               href={`/peserta/course/detail/${props.courseId}`}
+              target="_blank"
+              passHref
               className={buttonVariants({
-                variant: "outline",
+                variant: "secondary",
               })}
             >
               Ke Pelatihan
             </Link>
+
+            {/* <Button
+              variant="outline"
+              onClick={() => {
+                router.push(`/peserta/course/detail/${props.courseId}`)
+                router.refresh()
+              }}
+            >
+              Ke Pelatihan
+            </Button> */}
           </div>
         </CardFooter>
       </Card>

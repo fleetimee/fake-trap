@@ -8,16 +8,22 @@ import { MenuListResNewData } from "@/types/menu/res"
 import { UserOrgOneResData } from "@/types/user/res/user-org-get-one"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-
-import MiniProfile from "./mini-profile"
+import MiniProfile from "@/components/mini-profile"
 
 interface DashboardNavNewProps {
   items: MenuListResNewData[]
   org: UserOrgOneResData
+  pesertaCourseTrackerCount?: number
 }
 
-export function DashboardNewNewNav({ items, org }: DashboardNavNewProps) {
+export function DashboardNewNewNav({
+  items,
+  org,
+  pesertaCourseTrackerCount,
+}: DashboardNavNewProps) {
   const { data: session } = useSession()
+
+  console.log(pesertaCourseTrackerCount)
 
   const path = usePathname()
 
@@ -60,10 +66,12 @@ export function DashboardNewNewNav({ items, org }: DashboardNavNewProps) {
                 >
                   <Icon className="mr-2 size-6" />
                   <span className={cn()}>{item.menu_name}</span>
-                  {item.menu_name === "Pelatihan" ? (
-                    <span className="ml-2 inline-block rounded-full bg-red-500 p-1 text-xs font-bold text-white">
-                      1
-                    </span>
+                  {item.id_menu === 50 ? (
+                    pesertaCourseTrackerCount ? (
+                      <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                        {pesertaCourseTrackerCount}
+                      </span>
+                    ) : null
                   ) : null}
                 </span>
               </Link>

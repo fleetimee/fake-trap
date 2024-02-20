@@ -3,7 +3,10 @@ import React from "react"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getMenu } from "@/lib/fetcher/menu-fetcher"
 import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
-import { getUserOrg } from "@/lib/fetcher/users-fetcher"
+import {
+  getUserCourseTrackerCount,
+  getUserOrg,
+} from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { SiteFooter } from "@/components/layouts/site-footer"
@@ -37,6 +40,13 @@ export default async function PesertaLayout({
     email: tokenExtracted.email,
   })
 
+  const courseTrackerCount = await getUserCourseTrackerCount({
+    token: user?.token,
+    uuid: tokenExtracted.id,
+  })
+
+  console.log(courseTrackerCount)
+
   const categoryNav = await getNavbar()
 
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
@@ -55,7 +65,11 @@ export default async function PesertaLayout({
       <div className="py-4">
         <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
           <aside className="hidden w-[200px] flex-col border-r md:flex">
-            <DashboardNewNewNav items={menu?.data} org={userOrg.data} />
+            <DashboardNewNewNav
+              items={menu?.data}
+              org={userOrg.data}
+              pesertaCourseTrackerCount={courseTrackerCount?.data}
+            />
           </aside>
           <main className="flex w-full flex-1 flex-col overflow-auto">
             {children}

@@ -12,6 +12,7 @@ import {
 import {
   getCheckUserCourseEnrollmentStatus,
   getUserPretestCheck,
+  markCourseAsAccessed,
 } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken, getCourseStatus } from "@/lib/utils"
@@ -92,6 +93,12 @@ export default async function CourseDetailLayout({
     idCourse: params.idCourse,
     token: user?.token,
     userUuid: tokenExtracted?.id,
+  })
+
+  const markCourse = await markCourseAsAccessed({
+    token: user?.token,
+    idCourse: params.idCourse,
+    uuid: tokenExtracted?.id,
   })
 
   let filteredSections: CourseOneResSection[] = []

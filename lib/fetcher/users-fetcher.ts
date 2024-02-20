@@ -532,6 +532,54 @@ export async function getUserPretestCheck({
   }
 }
 
+interface GetUserCourseTrackerCount {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+export async function getUserCourseTrackerCount({
+  token,
+  uuid,
+}: GetUserCourseTrackerCount) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getCourseCountTracker`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface MarkCourseAsAccessedProps {
+  token: string | undefined
+  uuid: string
+  idCourse: string
+}
+
+export async function markCourseAsAccessed({
+  token,
+  uuid,
+  idCourse,
+}: MarkCourseAsAccessedProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/markCourseAsAccessed/${idCourse}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return res
+}
+
 interface CreateUserProps {
   token: string | undefined
   body: BodyInit
