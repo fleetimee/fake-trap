@@ -58,8 +58,7 @@ export function DashboardNewNewNav({
                 <span
                   className={cn(
                     "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground ",
-                    path === item.menu_url ||
-                      path.startsWith(`${item.menu_url}/`)
+                    path.split("/")[2] === item.menu_url.split("/")[2]
                       ? "bg-accent"
                       : "transparent"
                   )}
