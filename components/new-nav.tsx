@@ -14,12 +14,14 @@ interface DashboardNavNewProps {
   items: MenuListResNewData[]
   org: UserOrgOneResData
   pesertaCourseTrackerCount?: number
+  supervisorDivisiTrackerCount?: number
 }
 
 export function DashboardNewNewNav({
   items,
   org,
   pesertaCourseTrackerCount,
+  supervisorDivisiTrackerCount,
 }: DashboardNavNewProps) {
   const { data: session } = useSession()
 
@@ -73,9 +75,11 @@ export function DashboardNewNewNav({
                   ) : null}
 
                   {item.id_menu === 39 ? (
-                    <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
-                      2
-                    </span>
+                    supervisorDivisiTrackerCount ? (
+                      <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                        {supervisorDivisiTrackerCount}
+                      </span>
+                    ) : null
                   ) : null}
                 </span>
               </Link>

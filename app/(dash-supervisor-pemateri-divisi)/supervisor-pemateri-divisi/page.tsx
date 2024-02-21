@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import Image from "next/image"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { formatDistanceToNow } from "date-fns"
 import { PartyPopper } from "lucide-react"
@@ -27,6 +28,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
 import { Widget } from "@/components/widget"
 
@@ -209,7 +220,40 @@ export default async function SupervisorPemateriDivisiPage() {
                           </div>
                         </div>
 
-                        <Button className="w-full md:w-auto">Aksi</Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button className="w-full md:w-auto">Aksi</Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="w-44">
+                            <DropdownMenuLabel>Opsi</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                              <Link
+                                href={`supervisor-pemateri-divisi/approval/detail/${item.id_approval_knowledge}/knowledge/${item.id_knowledge}`}
+                              >
+                                <DropdownMenuItem>
+                                  <Icons.bookmark className="mr-2 size-4" />
+                                  <span>Detail</span>
+                                  <DropdownMenuShortcut>
+                                    ⌘+L
+                                  </DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                              </Link>
+
+                              <Link
+                                href={`supervisor-pemateri-divisi/approval/confirmation/${item.id_approval_knowledge}`}
+                              >
+                                <DropdownMenuItem>
+                                  <Icons.edit className="mr-2 size-4" />
+                                  <span>Konfirmasi</span>
+                                  <DropdownMenuShortcut>
+                                    ⌘+E
+                                  </DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                              </Link>
+                            </DropdownMenuGroup>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
 
                       <div className="flex items-center py-2">

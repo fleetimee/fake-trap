@@ -52,8 +52,6 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  console.log(status_text)
-
   const approvals = await getSupervisorPemateriApprovalRequests({
     idApprover: tokenExtracted?.id,
     token: user?.token,

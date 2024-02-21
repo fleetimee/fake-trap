@@ -6,6 +6,7 @@ export type ApprovalSupervisorNotificationListRes = {
 
 export type ApprovalSupervisorNotificationListResData = {
   id_approval_knowledge: number
+  id_knowledge: number
   knowledge_title: string
   knowledge_image: string
   description: string
