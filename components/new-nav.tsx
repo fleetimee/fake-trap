@@ -73,6 +73,12 @@ export function DashboardNewNewNav({
                       </span>
                     ) : null
                   ) : null}
+
+                  {item.id_menu === 39 ? (
+                    <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                      2
+                    </span>
+                  ) : null}
                 </span>
               </Link>
             )

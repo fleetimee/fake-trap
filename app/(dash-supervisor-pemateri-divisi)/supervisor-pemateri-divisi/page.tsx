@@ -1,9 +1,14 @@
 import { Metadata } from "next"
+import Image from "next/image"
 import { redirect } from "next/navigation"
+import { formatDistanceToNow } from "date-fns"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
-import { getSupervisorPemateriDivisiCount } from "@/lib/fetcher/approval-fetcher"
+import {
+  getSupervisorPemateriDivisiCount,
+  getSupervisorPemateriDivisiNotificationList,
+} from "@/lib/fetcher/approval-fetcher"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
@@ -13,6 +18,16 @@ import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
 import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
@@ -39,7 +54,16 @@ export default async function SupervisorPemateriDivisiPage() {
     userUuid: tokenExtracted?.id,
   })
 
-  console.log(approvalCount)
+  // Fetch Recent Notificaitons
+  const notifications = await getSupervisorPemateriDivisiNotificationList({
+    token: user?.token,
+    userUuid: tokenExtracted?.id,
+  })
+
+  const notificationsCount =
+    notifications.data.length > 0 ? notifications.data.length : 0
+
+  console.log("approvalCount", notifications)
 
   return (
     <DashboardShell>
@@ -90,7 +114,7 @@ export default async function SupervisorPemateriDivisiPage() {
                 icon={
                   item.status === "approved" ? (
                     <Icons.mailCheck className="text-blue-500" />
-                  ) : item.status === "Pending" ? (
+                  ) : item.status === "pending" ? (
                     <Icons.mailQuestion className="text-green-500" />
                   ) : (
                     <Icons.mailX className="text-red-500" />
@@ -109,6 +133,94 @@ export default async function SupervisorPemateriDivisiPage() {
           })}
         </div>
       </div>
+
+      <Card className="w-full lg:min-w-[600px]">
+        <CardHeader className="space-y-2 pb-4">
+          <CardTitle>
+            <Icons.bell className="mr-2 inline-flex size-6 animate-pulse text-red-500" />
+            Kotak Masuk
+          </CardTitle>
+          <CardDescription>
+            Ada {notificationsCount} Pengajuan Materi yang perlu dilakukan
+            tindakan
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="border-t border-gray-200 dark:border-gray-700">
+            <div className="grid gap-4 space-y-4 p-4">
+              {notifications.data.length > 0 ? (
+                notifications.data.map((item, index) => {
+                  return (
+                    <div
+                      className="grid gap-1.5"
+                      key={item.id_approval_knowledge}
+                    >
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-medium">
+                          Dari: {item.requester_name}
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {formatDistanceToNow(new Date(item.updated_at), {
+                            addSuffix: true,
+                          })}
+                        </p>
+                      </div>
+
+                      <p className="text-sm">
+                        Perihal:{" "}
+                        {item.status === "0051"
+                          ? "Pengajuan Materi"
+                          : item.status === "0053"
+                            ? "Revisi Pengajuan Materi"
+                            : "Pengajuan Materi"}
+                        <span className="inline-flex">
+                          <Badge
+                            variant="secondary"
+                            className="ml-2 bg-yellow-500"
+                          >
+                            {item.status_name}
+                          </Badge>
+                        </span>
+                      </p>
+
+                      <div className="flex flex-col items-end justify-between gap-2 md:flex-row md:gap-0">
+                        <div className="flex  w-full max-w-lg items-start space-x-2 rounded-md border border-primary p-2">
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.knowledge_image}`}
+                            alt={item.knowledge_title}
+                            width={100}
+                            height={100}
+                          />
+                          <div>
+                            <p className="font-heading">
+                              {item.knowledge_title}
+                            </p>
+                            <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        <Button className="w-full md:w-auto">Aksi</Button>
+                      </div>
+
+                      <div className="flex items-center py-2">
+                        <Separator />
+                      </div>
+                    </div>
+                  )
+                })
+              ) : (
+                <div className="flex items-center justify-center">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Tidak ada notifikasi
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </DashboardShell>
   )
 }

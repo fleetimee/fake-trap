@@ -3,6 +3,7 @@ import {
   ArrowRight,
   ArrowUpDown,
   Ban,
+  Bell,
   Bird,
   Bookmark,
   Calendar,
@@ -69,6 +70,7 @@ import {
 export type Icon = LucideProps
 
 export const Icons = {
+  bell: Bell,
   lock: Lock,
   send: Send,
   pending: CircleEllipsis,

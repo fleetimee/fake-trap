@@ -11,6 +11,7 @@ import {
   ApprovalKnowledgeCountResData,
 } from "@/types/approval/res/approval-knowledge-count-list"
 import { ApprovalSupervisorPemateriDivisiCountListRes } from "@/types/approval/res/approval-supervisor-count-list"
+import { ApprovalSupervisorNotificationListRes } from "@/types/approval/res/approval-supervisor-notification-list"
 
 /*
  ___                                             ___                ___
@@ -490,6 +491,31 @@ export async function getSupervisorPemateriDivisiCount({
     method: "GET",
     headers: {
       ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
+interface GetSupervisorPemateriDivisiNotificationListProps {
+  token: string | undefined
+  userUuid: string
+}
+
+export async function getSupervisorPemateriDivisiNotificationList({
+  token,
+  userUuid,
+}: GetSupervisorPemateriDivisiNotificationListProps): Promise<ApprovalSupervisorNotificationListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/supervisor/${userUuid}/notification`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+
       Authorization: `Bearer ${token}`,
     },
 
