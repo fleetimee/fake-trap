@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
+import NextTopLoader from "nextjs-toploader"
 
 import { siteConfig } from "@/config/site"
 import { fontHeading, fontSans } from "@/lib/fonts"
@@ -59,10 +60,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <NextAuthProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            {/*<NextTopLoader />*/}
             <div className="relative flex min-h-screen flex-col">
               {/* <BGGrid> */}
               {/* <Providers>{children}</Providers> */}
+              <NextTopLoader />
 
               <Background>{children}</Background>
 

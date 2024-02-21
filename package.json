@@ -79,7 +79,7 @@
     "next-auth": "^4.24.5",
     "next-nprogress-bar": "^2.1.2",
     "next-themes": "^0.2.1",
-    "nextjs-toploader": "^1.6.4",
+    "nextjs-toploader": "^1.6.6",
     "pdfjs-dist": "^4.0.379",
     "react": "^18.2.0",
     "react-cropper": "^2.3.3",

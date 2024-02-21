@@ -4,13 +4,16 @@ import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
+import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -28,6 +31,10 @@ export default async function OperatorLMSDashboard() {
   const loggedOnUser = await getLoggedOnUser({
     token: user?.token,
     uuid: tokenExtracted.id,
+  })
+
+  const globalCount = await getGlobalCount({
+    token: user?.token,
   })
 
   return (
@@ -66,6 +73,35 @@ export default async function OperatorLMSDashboard() {
           </AlertDescription>
         </Alert>
       </MotionDiv>
+
+      <div
+        className="grid grid-cols-2 gap-4 xl:grid-cols-4"
+        style={{ marginTop: "1rem" }}
+      >
+        <Widget
+          icon={<Icons.knowledge className="text-green-500" />}
+          title="Pengetahuan"
+          subtitle={globalCount.data?.knowledge_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.category className="text-blue-500" />}
+          title="Kategori"
+          subtitle={globalCount.data?.category_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.quiz className="text-yellow-500" />}
+          title="Test dan Latihan"
+          subtitle={globalCount.data?.quiz_count.toString()}
+        />
+
+        <Widget
+          icon={<Icons.course className="text-red-500" />}
+          title="Pelatihan"
+          subtitle={globalCount.data?.course_count.toString()}
+        />
+      </div>
     </DashboardShell>
   )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import Link from "next/link"
 import { DashboardIcon } from "@radix-ui/react-icons"
 import { generateFromString } from "generate-avatar"
@@ -44,6 +45,29 @@ interface SiteHeaderProps {
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
+  const [time, setTime] = React.useState<Date>(new Date())
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date())
+    }, 1000)
+
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
+
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
+  }
+
   if (props.user) {
     return (
       // <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -68,6 +92,10 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
           )}
 
           <div className="flex flex-1 items-center justify-end space-x-4">
+            <div className=" hidden text-sm font-medium leading-none text-muted-foreground md:block">
+              {time.toLocaleString("id-ID", options)}
+            </div>
+
             <nav className="flex items-center space-x-2">
               <KnowledgeSearch />
             </nav>
