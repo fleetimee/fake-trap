@@ -3,6 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
+import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"
 
@@ -179,11 +180,50 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
     []
   )
 
+  const searchableColumns: DataTableSearchableColumn<ApprovalSupervisorPemateriListResData>[] =
+    [
+      {
+        id: "knowledge_title",
+        title: "Judul",
+      },
+    ]
+
+  const filterableColumns: DataTableFilterableColumn<ApprovalSupervisorPemateriListResData>[] =
+    [
+      {
+        id: "status_text",
+        title: "Status",
+        options: [
+          {
+            label: "PENDING",
+            value: "0051",
+          },
+          {
+            label: "APPROVED",
+            value: "0052",
+          },
+          {
+            label: "REJECTED",
+            value: "0053",
+          },
+        ],
+      },
+    ]
+
   const { dataTable } = useDataTable({
     data,
     columns,
     pageCount,
+    searchableColumns,
+    filterableColumns,
   })
 
-  return <DataTable dataTable={dataTable} columns={columns} />
+  return (
+    <DataTable
+      dataTable={dataTable}
+      columns={columns}
+      searchableColumns={searchableColumns}
+      filterableColumns={filterableColumns}
+    />
+  )
 }

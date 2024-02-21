@@ -7,6 +7,7 @@ import { getSupervisorPemateriApprovalRequests } from "@/lib/fetcher/approval-fe
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -28,7 +29,8 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
 }: SpvPemateriDivisiApproveCoursePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, status, knowledge_title } = searchParams ?? {}
+  const { page, per_page, sort, status_text, knowledge_title, from, to } =
+    searchParams ?? {}
 
   const tokenExtracted = extractToken(user?.token)
 
@@ -39,6 +41,9 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
   const searchQueryInitial =
     typeof knowledge_title === "string" ? knowledge_title : ""
 
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
+
   // Split sort into sortField and sortOrder
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
@@ -46,6 +51,8 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  console.log(status_text)
 
   const approvals = await getSupervisorPemateriApprovalRequests({
     idApprover: tokenExtracted?.id,
@@ -55,6 +62,9 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
     searchQuery: searchQueryInitial,
     sortBy: sortField,
     orderBy: sortOrder,
+    from: fromInitial,
+    to: toInitial,
+    statusCodes: status_text,
   })
 
   return (
@@ -82,6 +92,11 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
             description="Approve Materi yang diajukan oleh pemateri divisi"
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex  place-items-end items-end justify-self-end"
+        />
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

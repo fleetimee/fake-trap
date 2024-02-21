@@ -23,8 +23,6 @@ export function DashboardNewNewNav({
 }: DashboardNavNewProps) {
   const { data: session } = useSession()
 
-  console.log(pesertaCourseTrackerCount)
-
   const path = usePathname()
 
   if (!items?.length) {

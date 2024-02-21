@@ -63,8 +63,6 @@ export default async function SupervisorPemateriDivisiPage() {
   const notificationsCount =
     notifications.data.length > 0 ? notifications.data.length : 0
 
-  console.log("approvalCount", notifications)
-
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -133,6 +131,16 @@ export default async function SupervisorPemateriDivisiPage() {
           })}
         </div>
       </div>
+
+      {notifications.data.length > 0 && (
+        <Alert className="border border-red-500">
+          <Icons.note className="size-4" />
+          <AlertTitle className="text-red-500">Heads up!</AlertTitle>
+          <AlertDescription>
+            Segera lakukan tindakan pada pengajuan materi yang masuk
+          </AlertDescription>
+        </Alert>
+      )}
 
       <Card className="w-full lg:min-w-[600px]">
         <CardHeader className="space-y-2 pb-4">

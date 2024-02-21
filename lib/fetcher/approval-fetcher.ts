@@ -120,6 +120,9 @@ interface GetSupervisorPemateriApprovalRequestProps {
   orderBy?: string
   searchQuery?: string
   status?: string
+  from?: string
+  to?: string
+  statusCodes?: string | string[] | undefined
 }
 
 export async function getSupervisorPemateriApprovalRequests({
@@ -131,6 +134,9 @@ export async function getSupervisorPemateriApprovalRequests({
   orderBy = "desc",
   searchQuery = "",
   status = "",
+  from,
+  to,
+  statusCodes = "",
 }: GetSupervisorPemateriApprovalRequestProps): Promise<ApprovalSupervisorPemateriListRes> {
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/knowledge/approver/${idApprover}`
   const url = new URL(baseUrl)
@@ -157,6 +163,22 @@ export async function getSupervisorPemateriApprovalRequests({
 
   if (status) {
     url.searchParams.append("status", status)
+  }
+
+  if (from) {
+    url.searchParams.append("from", from)
+  }
+
+  if (to) {
+    url.searchParams.append("to", to)
+  }
+
+  if (statusCodes) {
+    if (Array.isArray(statusCodes)) {
+      url.searchParams.append("statusCode", statusCodes.join("."))
+    } else {
+      url.searchParams.append("statusCode", statusCodes)
+    }
   }
 
   const res = await fetch(url.toString(), {
