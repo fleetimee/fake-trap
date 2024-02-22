@@ -57,15 +57,25 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
     }
   }, [])
 
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: false,
+  const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: false,
+    }
+
+    const formattedDate = date.toLocaleDateString("id-ID", options)
+    const formattedTime = date.toLocaleTimeString("id-ID", timeOptions)
+
+    return `${formattedDate} | ${formattedTime}`
   }
 
   if (props.user) {
@@ -93,7 +103,9 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
 
           <div className="flex flex-1 items-center justify-end space-x-4">
             <div className=" hidden text-sm font-medium leading-none text-muted-foreground md:block">
-              {time.toLocaleString("id-ID", options)}
+              <div className="rounded-full bg-gray-200 px-4 py-2 text-black">
+                Server Time: {formatDate(time)}
+              </div>
             </div>
 
             <nav className="flex items-center space-x-2">

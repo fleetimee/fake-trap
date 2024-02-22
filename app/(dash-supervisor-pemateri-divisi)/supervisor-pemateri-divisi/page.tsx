@@ -110,26 +110,30 @@ export default async function SupervisorPemateriDivisiPage() {
         <div className=" grid grid-cols-2 gap-4 xl:grid-cols-4">
           {approvalCount.data.map((item, index) => {
             return (
-              <Widget
-                key={index}
-                icon={
-                  item.status === "approved" ? (
-                    <Icons.mailCheck className="text-blue-500" />
-                  ) : item.status === "pending" ? (
-                    <Icons.mailQuestion className="text-green-500" />
-                  ) : (
-                    <Icons.mailX className="text-red-500" />
-                  )
-                }
-                title={
-                  item.status === "approved"
-                    ? "Approved"
-                    : item.status === "pending"
-                      ? "Pending"
-                      : "Rejected"
-                }
-                subtitle={item.count.toString()}
-              />
+              <Link
+                href={`supervisor-pemateri-divisi/approval?page=1&status_text=${item.status_code}`}
+              >
+                <Widget
+                  key={index}
+                  icon={
+                    item.status === "approved" ? (
+                      <Icons.mailCheck className="text-blue-500" />
+                    ) : item.status === "pending" ? (
+                      <Icons.mailQuestion className="text-green-500" />
+                    ) : (
+                      <Icons.mailX className="text-red-500" />
+                    )
+                  }
+                  title={
+                    item.status === "approved"
+                      ? "Approved"
+                      : item.status === "pending"
+                        ? "Pending"
+                        : "Rejected"
+                  }
+                  subtitle={item.count.toString()}
+                />
+              </Link>
             )
           })}
         </div>

@@ -6,5 +6,6 @@ export interface ApprovalSupervisorPemateriDivisiCountListRes {
 
 export interface ApprovalSupervisorPemateriDivisiCountListResData {
   status: string
+  status_code: string
   count: number
 }
