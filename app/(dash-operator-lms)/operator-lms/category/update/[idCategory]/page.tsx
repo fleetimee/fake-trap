@@ -32,13 +32,17 @@ export default async function OperatorLMSUpdateCategoryPage({
 }: OperatorLMSUpdateCategoryPageProps) {
   const user = await getCurrentUser()
 
+  const idCategory = params.idCategory.includes("_")
+    ? params.idCategory.split("_")[1]
+    : params.idCategory
+
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
   const category = await getOneCategory({
     token: user?.token,
-    idCategory: params.idCategory,
+    idCategory: idCategory,
   })
 
   if (category.code === 400) {

@@ -15,4 +15,5 @@ export type CategoryListResData = {
   image: string
   total_knowledge: number
   created_by: string
+  slug: string
 }

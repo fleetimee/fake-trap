@@ -17,6 +17,7 @@ import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -49,8 +50,6 @@ export default async function OperatorLMSDashboard() {
   const getNewestKnowledgeOperator = await getNewestOperatorKnowledge({
     token: user?.token,
   })
-
-  console.log(getNewestKnowledgeOperator)
 
   const globalCount = await getGlobalCount({
     token: user?.token,
@@ -125,53 +124,51 @@ export default async function OperatorLMSDashboard() {
             <div className="grid grid-cols-1 gap-4 space-y-4">
               {getNewestKnowledgeOperator.data.length > 0 ? (
                 getNewestKnowledgeOperator.data.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-2 space-x-2 rounded-xl  p-2"
-                  >
-                    <div className="size-[80px] overflow-hidden rounded-full border-2">
-                      <Image
-                        width={2000}
-                        height={2000}
-                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`}
-                        alt={item.knowledge_title}
-                        className="rounded-full object-cover"
-                      />
-                    </div>
-
-                    <div className="flex-1 space-y-2 overflow-hidden">
-                      <p className="text-primary-500 dark:text-primary-400 font-sans text-lg font-semibold">
-                        {item.knowledge_title}
-                      </p>
-
-                      <div className="text-muted-500 dark:text-muted-400 flex flex-col items-start gap-2 font-sans text-sm">
-                        <div className="inline-flex items-center">
-                          <Icons.user className="size-4" />
-                          <span className="text-muted-500 dark:text-muted-400 ml-1 font-sans text-sm">
-                            {item.requester_name}
-                          </span>
-                        </div>
-
-                        <div className="inline-flex items-center">
-                          <Icons.calendar className="size-4" />
-                          <span className="text-muted-500 dark:text-muted-400 ml-1 font-sans text-sm">
-                            {formatDistanceToNow(new Date(item.updated_at), {
-                              addSuffix: true,
-                            })}{" "}
-                            |{" "}
-                            <span>
-                              <Badge>{item.status_text}</Badge>
+                  <div className="flex flex-col gap-4 space-y-4 rounded-xl bg-white p-4 shadow-md dark:bg-gray-800 dark:shadow-none">
+                    <div
+                      key={index}
+                      className="flex items-start gap-2 space-x-2 rounded-xl  p-2"
+                    >
+                      <Avatar>
+                        <AvatarImage
+                          sizes="40px"
+                          src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`}
+                          alt={item.knowledge_title}
+                        />
+                        <AvatarFallback>NA</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 space-y-2 overflow-hidden">
+                        <p className="text-primary-500 dark:text-primary-400 font-sans text-lg font-semibold">
+                          {item.knowledge_title}
+                        </p>
+                        <div className="text-muted-500 dark:text-muted-400 flex flex-col items-start gap-2 font-sans text-sm">
+                          <div className="inline-flex items-center">
+                            <Icons.user className="size-4" />
+                            <span className="text-muted-500 dark:text-muted-400 ml-1 font-sans text-sm">
+                              {item.requester_name}
                             </span>
-                          </span>
+                          </div>
+                          <div className="inline-flex items-center">
+                            <Icons.calendar className="size-4" />
+                            <span className="text-muted-500 dark:text-muted-400 ml-1 font-sans text-sm">
+                              {formatDistanceToNow(new Date(item.updated_at), {
+                                addSuffix: true,
+                              })}{" "}
+                              |{" "}
+                              <span>
+                                <Badge>{item.status_text}</Badge>
+                              </span>
+                            </span>
+                          </div>
                         </div>
+                        <Separator />
+                        <p className="text-muted-500 dark:text-muted-400 line-clamp-2 font-sans text-sm">
+                          {item.description}
+                        </p>
                       </div>
-
-                      <Separator />
-
-                      <p className="text-muted-500 dark:text-muted-400 line-clamp-2 font-sans text-sm">
-                        {item.description}
-                      </p>
                     </div>
+
+                    <Button>Detail</Button>
                   </div>
                 ))
               ) : (
@@ -179,12 +176,14 @@ export default async function OperatorLMSDashboard() {
               )}
             </div>
           </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
+          <CardFooter className="flex flex-col">
+            <Button className="flex items-end " variant="outline">
+              Lebih Banyak
+            </Button>
           </CardFooter>
         </Card>
 
-        <Card>
+        <Card className="h-fit">
           <CardHeader>
             <CardTitle>Notifikasi</CardTitle>
             <CardDescription>

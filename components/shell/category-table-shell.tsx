@@ -83,6 +83,7 @@ export function CategoryTableShell({
           )
         },
         enableSorting: false,
+        enableHiding: true,
       },
 
       {

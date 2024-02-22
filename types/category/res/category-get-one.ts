@@ -12,6 +12,7 @@ export type CategoryOneResData = {
   created_at: Date
   updated_at: Date
   created_by: string
+  slug: string
 }
 
 export type CategoryOneResKnowledge = {
