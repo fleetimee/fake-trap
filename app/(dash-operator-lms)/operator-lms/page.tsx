@@ -1,10 +1,12 @@
 import { Metadata } from "next"
+import Image from "next/image"
 import { redirect } from "next/navigation"
+import { formatDistanceToNow } from "date-fns"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
-import { GetNewestOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import { getNewestOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
@@ -13,6 +15,17 @@ import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
 import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
@@ -33,7 +46,7 @@ export default async function OperatorLMSDashboard() {
     uuid: tokenExtracted.id,
   })
 
-  const getNewestKnowledgeOperator = await GetNewestOperatorKnowledge({
+  const getNewestKnowledgeOperator = await getNewestOperatorKnowledge({
     token: user?.token,
   })
 
@@ -97,6 +110,95 @@ export default async function OperatorLMSDashboard() {
           title="Pelatihan"
           subtitle={globalCount.data?.course_count.toString()}
         />
+      </div>
+
+      <div className="mt-4 grid min-h-[500px] grid-cols-1 gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Pengetahuan Terbaru</CardTitle>
+            <CardDescription>
+              Pengetahuan Terbaru yang di buat oleh Pemateri Divisi
+            </CardDescription>
+            <Separator />
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 gap-4 space-y-4">
+              {getNewestKnowledgeOperator.data.length > 0 ? (
+                getNewestKnowledgeOperator.data.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-2 space-x-2 rounded-xl  p-2"
+                  >
+                    <div className="size-[80px] overflow-hidden rounded-full border-2">
+                      <Image
+                        width={2000}
+                        height={2000}
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`}
+                        alt={item.knowledge_title}
+                        className="rounded-full object-cover"
+                      />
+                    </div>
+
+                    <div className="flex-1 space-y-2 overflow-hidden">
+                      <p className="text-primary-500 dark:text-primary-400 font-sans text-lg font-semibold">
+                        {item.knowledge_title}
+                      </p>
+
+                      <div className="text-muted-500 dark:text-muted-400 flex flex-col items-start gap-2 font-sans text-sm">
+                        <div className="inline-flex items-center">
+                          <Icons.user className="size-4" />
+                          <span className="text-muted-500 dark:text-muted-400 ml-1 font-sans text-sm">
+                            {item.requester_name}
+                          </span>
+                        </div>
+
+                        <div className="inline-flex items-center">
+                          <Icons.calendar className="size-4" />
+                          <span className="text-muted-500 dark:text-muted-400 ml-1 font-sans text-sm">
+                            {formatDistanceToNow(new Date(item.updated_at), {
+                              addSuffix: true,
+                            })}{" "}
+                            |{" "}
+                            <span>
+                              <Badge>{item.status_text}</Badge>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <Separator />
+
+                      <p className="text-muted-500 dark:text-muted-400 line-clamp-2 font-sans text-sm">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>Tidak Ada Data</p>
+              )}
+            </div>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Notifikasi</CardTitle>
+            <CardDescription>
+              Notifikasi terbaru terkait dengan Pengajuan Pelatihan baru.
+            </CardDescription>
+            <Separator />
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
       </div>
     </DashboardShell>
   )

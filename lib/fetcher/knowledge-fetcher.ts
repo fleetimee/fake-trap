@@ -1,6 +1,7 @@
 import {
   KnowledgeGetNewRes,
   KnowledgeListRes,
+  KnowledgeNewOperatorNewRes,
   KnowledgeOneRes,
   KnowledgeStatusCount,
 } from "@/types/knowledge/res"
@@ -350,9 +351,9 @@ interface GetNewestOperatorKnowledgeProps {
   token: string
 }
 
-export async function GetNewestOperatorKnowledge({
+export async function getNewestOperatorKnowledge({
   token,
-}: GetNewestOperatorKnowledgeProps) {
+}: GetNewestOperatorKnowledgeProps): Promise<KnowledgeNewOperatorNewRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/operator/newest`
 
   const res = await fetch(url, {

@@ -29,4 +29,5 @@ export interface KnowledgeNewOperatorNewResData {
   requester_name: string
   status: string
   status_text: string
+  updated_at: string
 }
