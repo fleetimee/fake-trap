@@ -48,31 +48,21 @@ export default async function OperatorLMSDashboard() {
         ]}
       />
 
-      <MotionDiv
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <DashboardHeader heading="Operator LMS" description={dateNow} />
-      </MotionDiv>
+      <DashboardHeader heading="Operator LMS" description={dateNow} />
 
-      <MotionDiv
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
-      >
-        <Alert>
-          <PartyPopper className="size-5" />
-          <AlertTitle>
-            Halo,{" "}
-            <span className="font-heading uppercase text-primary">
-              {loggedOnUser.data?.name}
-            </span>
-          </AlertTitle>
-          <AlertDescription>
-            Have a Nice{" "}
-            <span className="font-heading uppercase">{getDayWithText}</span> !
-          </AlertDescription>
-        </Alert>
-      </MotionDiv>
+      <Alert>
+        <PartyPopper className="size-5" />
+        <AlertTitle>
+          Halo,{" "}
+          <span className="font-heading uppercase text-primary">
+            {loggedOnUser.data?.name}
+          </span>
+        </AlertTitle>
+        <AlertDescription>
+          Have a Nice{" "}
+          <span className="font-heading uppercase">{getDayWithText}</span> !
+        </AlertDescription>
+      </Alert>
 
       <div
         className="grid grid-cols-2 gap-4 xl:grid-cols-4"
