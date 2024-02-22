@@ -1,11 +1,13 @@
 import { Metadata } from "next"
 import Image from "next/image"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { formatDistanceToNow } from "date-fns"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { badgeSwitch } from "@/lib/badge-switch"
+import { getOperatorLmsNotificationList } from "@/lib/fetcher/approval-fetcher"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getNewestOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
@@ -18,7 +20,7 @@ import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -51,6 +53,13 @@ export default async function OperatorLMSDashboard() {
   const getNewestKnowledgeOperator = await getNewestOperatorKnowledge({
     token: user?.token,
   })
+
+  const getOperatorLmsNotification = await getOperatorLmsNotificationList({
+    token: user?.token,
+    userUuid: tokenExtracted.id,
+  })
+
+  console.log(getOperatorLmsNotification)
 
   const globalCount = await getGlobalCount({
     token: user?.token,
@@ -113,6 +122,8 @@ export default async function OperatorLMSDashboard() {
       </div>
 
       <div className="mt-4 grid min-h-[500px] grid-cols-1 gap-4 md:grid-cols-2">
+        {/* Card New Materi */}
+
         <Card>
           <CardHeader>
             <CardTitle>Pengetahuan Terbaru</CardTitle>
@@ -139,9 +150,14 @@ export default async function OperatorLMSDashboard() {
                         <AvatarFallback>NA</AvatarFallback>
                       </Avatar>
                       <div className="flex-1 space-y-2 overflow-hidden">
-                        <p className="text-primary-500 dark:text-primary-400 font-sans text-lg font-semibold">
-                          {item.knowledge_title}
-                        </p>
+                        <Link
+                          href={`/operator-lms/knowledge/detail/${item.id_knowledge}`}
+                          className="text-blue-600 hover:underline"
+                        >
+                          <p className="text-primary-500 dark:text-primary-400 font-sans text-lg font-semibold">
+                            {item.knowledge_title}
+                          </p>
+                        </Link>
                         <div className="text-muted-500 dark:text-muted-400 flex flex-col items-start gap-2 font-sans text-sm">
                           <div className="inline-flex items-center">
                             <Icons.user className="size-4" />
@@ -174,7 +190,14 @@ export default async function OperatorLMSDashboard() {
                       </div>
                     </div>
 
-                    <Button>Detail</Button>
+                    <Link
+                      href={`/operator-lms/knowledge/detail/${item.id_knowledge}`}
+                      className={buttonVariants({
+                        variant: "outline",
+                      })}
+                    >
+                      Lihat Detail
+                    </Link>
                   </div>
                 ))
               ) : (
@@ -183,12 +206,18 @@ export default async function OperatorLMSDashboard() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">
-            <Button className="flex items-end " variant="outline">
-              Lebih Banyak
-            </Button>
+            <Link
+              href="/operator-lms/knowledge"
+              className="flex items-end justify-end"
+            >
+              <Button className="flex items-end " variant="outline">
+                Lebih Banyak
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
 
+        {/* Card Notifikasi */}
         <Card className="h-fit">
           <CardHeader>
             <CardTitle>Notifikasi</CardTitle>

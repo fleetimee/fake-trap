@@ -547,6 +547,30 @@ export async function getSupervisorPemateriDivisiNotificationList({
   return await res.json()
 }
 
+interface GetOperatorLmsNotificationListProps {
+  token: string | undefined
+  userUuid: string
+}
+
+export async function getOperatorLmsNotificationList({
+  token,
+  userUuid,
+}: GetOperatorLmsNotificationListProps) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/operator-lms/${userUuid}/notification`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    cache: "no-cache",
+  })
+
+  return await res.json()
+}
+
 interface CreateCourseApprovalProps {
   token: string | undefined
   body: BodyInit
