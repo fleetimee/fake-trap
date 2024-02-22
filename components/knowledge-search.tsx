@@ -1,7 +1,9 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
+import Search from "@/public/lottie/search.json"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 
@@ -21,9 +23,14 @@ import {
 } from "@/components/ui/command"
 import { Skeleton } from "@/components/ui/skeleton"
 
+import { LottieClient } from "./lottie-anim"
+
 interface KnowledgeGroup {
   category: KnowledgeListResData["id_category"]
-  knowledge: Pick<KnowledgeListResData, "id_knowledge" | "knowledge_title">[]
+  knowledge: Pick<
+    KnowledgeListResData,
+    "id_knowledge" | "knowledge_title" | "image"
+  >[]
 }
 
 export function KnowledgeSearch() {
@@ -59,6 +66,7 @@ export function KnowledgeSearch() {
           const category = item.id_category
           const knowledge = item.knowledge_title
           const knowledgeId = item.id_knowledge
+          const image = item.image
 
           const group = knowledgeGroup.find(
             (group) => group.category === category
@@ -68,6 +76,7 @@ export function KnowledgeSearch() {
             group.knowledge.push({
               id_knowledge: knowledgeId,
               knowledge_title: knowledge,
+              image,
             })
           } else {
             knowledgeGroup.push({
@@ -76,6 +85,7 @@ export function KnowledgeSearch() {
                 {
                   id_knowledge: knowledgeId,
                   knowledge_title: knowledge,
+                  image,
                 },
               ],
             })
@@ -119,10 +129,10 @@ export function KnowledgeSearch() {
     <>
       <Button
         variant="outline"
-        className="relative h-9 w-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
+        className="relative size-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
         onClick={() => setOpen(true)}
       >
-        <MagnifyingGlassIcon className="h-4 w-4 xl:mr-2" aria-hidden="true" />
+        <MagnifyingGlassIcon className="size-4 xl:mr-2" aria-hidden="true" />
         <span className="hidden xl:inline-flex">Search materi...</span>
         <span className="sr-only">Search materi</span>
         <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xs font-medium opacity-100 xl:flex">
@@ -145,7 +155,12 @@ export function KnowledgeSearch() {
           <CommandEmpty
             className={cn(isPending ? "hidden" : "py-6 text-center text-sm")}
           >
-            :(
+            <LottieClient
+              animationData={Search}
+              className="mx-auto size-32"
+              loop
+              autoplay
+            />
           </CommandEmpty>
           {isPending ? (
             <div className="space-y-1 overflow-hidden px-1 py-2">
@@ -167,7 +182,14 @@ export function KnowledgeSearch() {
                         )
                       }
                     >
-                      <Icons.knowledge className="mr-2.5 h-3 w-3 text-muted-foreground" />
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`}
+                        alt="knowledge"
+                        width={150}
+                        height={150}
+                        className="mr-2.5 rounded-xl"
+                      />
+
                       <span className="truncate">{item.knowledge_title}</span>
                     </CommandItem>
                   )

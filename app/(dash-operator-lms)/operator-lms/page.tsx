@@ -5,6 +5,7 @@ import { formatDistanceToNow } from "date-fns"
 import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
+import { badgeSwitch } from "@/lib/badge-switch"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getNewestOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
@@ -156,7 +157,12 @@ export default async function OperatorLMSDashboard() {
                               })}{" "}
                               |{" "}
                               <span>
-                                <Badge>{item.status_text}</Badge>
+                                {badgeSwitch({
+                                  approval: {
+                                    status_code: item.status,
+                                    status_text: item.status_text,
+                                  },
+                                })}
                               </span>
                             </span>
                           </div>

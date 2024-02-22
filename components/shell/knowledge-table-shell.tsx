@@ -10,6 +10,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { badgeSwitch } from "@/lib/badge-switch"
 import { convertDatetoStringShort } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
@@ -18,19 +19,6 @@ import { Badge } from "@/components/ui/badge"
 
 interface BadgeSwitchProps {
   approval: any
-}
-
-function badgeSwitch({ approval }: BadgeSwitchProps) {
-  switch (approval.status_code) {
-    case "0052":
-      return <Badge className="bg-green-400">{approval.status_text}</Badge>
-    case "0051":
-      return <Badge className="bg-yellow-400">{approval.status_text}</Badge>
-    case "0053":
-      return <Badge className="bg-red-400">{approval.status_text}</Badge>
-    default:
-      return <Badge className="bg-orange-400">Draft</Badge>
-  }
 }
 
 interface KnowledgeTableShellProps {
