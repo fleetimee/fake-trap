@@ -346,6 +346,26 @@ export async function getKnowledgeUser({
   }
 }
 
+interface GetNewestOperatorKnowledgeProps {
+  token: string
+}
+
+export async function GetNewestOperatorKnowledge({
+  token,
+}: GetNewestOperatorKnowledgeProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/operator/newest`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
 interface GetKnowledgeStatusCountProps {
   token: string
   userUuid: string

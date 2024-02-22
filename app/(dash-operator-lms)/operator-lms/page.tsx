@@ -4,6 +4,7 @@ import { PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
+import { GetNewestOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
@@ -31,6 +32,12 @@ export default async function OperatorLMSDashboard() {
     token: user?.token,
     uuid: tokenExtracted.id,
   })
+
+  const getNewestKnowledgeOperator = await GetNewestOperatorKnowledge({
+    token: user?.token,
+  })
+
+  console.log(getNewestKnowledgeOperator)
 
   const globalCount = await getGlobalCount({
     token: user?.token,

@@ -14,3 +14,19 @@ export type KnowledgeGetNewResData = {
   created_at: Date
   updated_at: Date
 }
+
+export interface KnowledgeNewOperatorNewRes {
+  code: number
+  message: string
+  data: KnowledgeNewOperatorNewResData[]
+}
+
+export interface KnowledgeNewOperatorNewResData {
+  id_knowledge: number
+  knowledge_title: string
+  description: string
+  image: string
+  requester_name: string
+  status: string
+  status_text: string
+}
