@@ -96,7 +96,7 @@ export async function getPublicCategories({
   orderBy = "desc",
   searchQuery = "",
 }: GetPublicCategoriesProps): Promise<CategoryListRes> {
-  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category?`
+  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/public/category`
 
   const url = new URL(baseUrl)
 
