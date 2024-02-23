@@ -166,37 +166,41 @@ export default async function SupervisorLmsProfilePage() {
               {notifications.data.length > 0 ? (
                 notifications.data.map((item, index) => {
                   return (
-                    <div className="grid gap-1.5" key={item.id_approval_course}>
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium">
-                          Dari: {item.requester_name}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {formatDistanceToNow(new Date(item.updated_at), {
-                            addSuffix: true,
-                          })}
+                    <div
+                      className="grid gap-1.5 space-y-4"
+                      key={item.id_approval_course}
+                    >
+                      <div>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-medium">
+                            Dari: {item.requester_name}
+                          </p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {formatDistanceToNow(new Date(item.updated_at), {
+                              addSuffix: true,
+                            })}
+                          </p>
+                        </div>
+                        <p className="text-sm">
+                          Perihal:{" "}
+                          {item.status === "0051"
+                            ? "Pengajuan Materi"
+                            : item.status === "0053"
+                              ? "Revisi Pengajuan Materi"
+                              : "Pengajuan Materi"}
+                          <span className="inline-flex">
+                            <Badge
+                              variant="secondary"
+                              className="ml-2 bg-yellow-500"
+                            >
+                              {item.status_name}
+                            </Badge>
+                          </span>
                         </p>
                       </div>
 
-                      <p className="text-sm">
-                        Perihal:{" "}
-                        {item.status === "0051"
-                          ? "Pengajuan Materi"
-                          : item.status === "0053"
-                            ? "Revisi Pengajuan Materi"
-                            : "Pengajuan Materi"}
-                        <span className="inline-flex">
-                          <Badge
-                            variant="secondary"
-                            className="ml-2 bg-yellow-500"
-                          >
-                            {item.status_name}
-                          </Badge>
-                        </span>
-                      </p>
-
                       <div className="flex flex-col items-end justify-between gap-2 md:flex-row md:gap-0">
-                        <div className="flex  w-full max-w-lg items-start space-x-2 rounded-md border border-primary p-2">
+                        <div className="flex  min-h-[150px] w-full max-w-lg items-start space-x-2 rounded-md border border-primary p-2">
                           <Image
                             src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.image}`}
                             alt={item.course_name}
@@ -205,7 +209,7 @@ export default async function SupervisorLmsProfilePage() {
                           />
                           <div>
                             <p className="font-heading">{item.course_name}</p>
-                            <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
+                            <p className="line-clamp-4 text-sm text-gray-500 dark:text-gray-400">
                               {item.course_desc}
                             </p>
                           </div>
