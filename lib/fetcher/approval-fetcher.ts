@@ -594,6 +594,28 @@ export async function getSupervisorLmsCount({
   return await res.json()
 }
 
+interface GetSupervisorLmsNotificationListProps {
+  token: string | undefined
+  userUuid: string
+}
+
+export async function getSupervisorLmsNotificationList({
+  token,
+  userUuid,
+}: GetSupervisorLmsNotificationListProps) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/supervisor-lms/${userUuid}/notification`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return await res.json()
+}
+
 interface CreateCourseApprovalProps {
   token: string | undefined
   body: BodyInit
