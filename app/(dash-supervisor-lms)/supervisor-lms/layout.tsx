@@ -40,7 +40,7 @@ export default async function SupervisorLMSLayout({
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
 
   return (
-    <div className="flex min-h-screen flex-col space-y-6 ">
+    <div className="flex min-h-screen flex-col  ">
       <SiteHeader
         user={user}
         displayName={userLogged.data.name}
@@ -49,13 +49,15 @@ export default async function SupervisorLMSLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
       />
-      <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
-        <aside className="hidden w-[200px] flex-col border-r md:flex">
-          <DashboardNewNewNav items={menu?.data} org={userOrg.data} />
-        </aside>
-        <main className="flex w-full flex-1 flex-col overflow-auto">
-          {children}
-        </main>
+      <div className="grow bg-background py-4">
+        <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
+          <aside className="hidden w-[200px] flex-col border-r md:flex">
+            <DashboardNewNewNav items={menu?.data} org={userOrg.data} />
+          </aside>
+          <main className="flex w-full flex-1 flex-col overflow-auto">
+            {children}
+          </main>
+        </div>
       </div>
       <SiteFooter className="border-t" />
       <ScrollToTopButton />

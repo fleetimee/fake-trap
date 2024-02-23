@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { PartyPopper } from "lucide-react"
 
@@ -9,9 +10,11 @@ import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -32,12 +35,10 @@ export default async function SupervisorLmsProfilePage() {
   })
 
   // Fetch supervisor LMS Count
-  const supervisorLmsCount = await getSupervisorLmsCount({
+  const approvalCount = await getSupervisorLmsCount({
     token: user?.token,
     userUuid: tokenExtracted?.id,
   })
-
-  console.log(supervisorLmsCount)
 
   return (
     <DashboardShell>
@@ -50,31 +51,57 @@ export default async function SupervisorLmsProfilePage() {
         ]}
       />
 
-      <MotionDiv
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <DashboardHeader heading="Supervisor LMS" description={dateNow} />
-      </MotionDiv>
+      <DashboardHeader heading="Supervisor LMS" description={dateNow} />
 
-      <MotionDiv
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
+      <Alert>
+        <PartyPopper className="size-5" />
+        <AlertTitle>
+          Halo,{" "}
+          <span className="font-heading uppercase text-primary">
+            {loggedOnUser.data?.name}
+          </span>
+        </AlertTitle>
+        <AlertDescription>
+          Have a Nice{" "}
+          <span className="font-heading uppercase">{getDayWithText}</span> !
+        </AlertDescription>
+      </Alert>
+
+      <div
+        className="grid grid-cols-1 gap-4"
+        style={{ gridTemplateRows: "auto 1fr" }}
       >
-        <Alert>
-          <PartyPopper className="size-5" />
-          <AlertTitle>
-            Halo,{" "}
-            <span className="font-heading uppercase text-primary">
-              {loggedOnUser.data?.name}
-            </span>
-          </AlertTitle>
-          <AlertDescription>
-            Have a Nice{" "}
-            <span className="font-heading uppercase">{getDayWithText}</span> !
-          </AlertDescription>
-        </Alert>
-      </MotionDiv>
+        <div className=" grid grid-cols-2 gap-4 xl:grid-cols-4">
+          {approvalCount.data.map((item, index) => {
+            return (
+              <Link
+                href={`supervisor-pemateri-divisi/approval?page=1&status_text=${item.status_code}`}
+              >
+                <Widget
+                  key={index}
+                  icon={
+                    item.status === "approved" ? (
+                      <Icons.mailCheck className="text-blue-500" />
+                    ) : item.status === "pending" ? (
+                      <Icons.mailQuestion className="text-green-500" />
+                    ) : (
+                      <Icons.mailX className="text-red-500" />
+                    )
+                  }
+                  title={
+                    item.status === "approved"
+                      ? "Approved"
+                      : item.status === "pending"
+                        ? "Pending"
+                        : "Rejected"
+                  }
+                  subtitle={item.count.toString()}
+                />
+              </Link>
+            )
+          })}
+        </div>
+      </div>
     </DashboardShell>
   )
 }
