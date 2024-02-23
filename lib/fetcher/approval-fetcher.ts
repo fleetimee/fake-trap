@@ -11,7 +11,7 @@ import {
   ApprovalKnowledgeCountRes,
   ApprovalKnowledgeCountResData,
 } from "@/types/approval/res/approval-knowledge-count-list"
-import { ApprovalSupervisorPemateriDivisiCountListRes } from "@/types/approval/res/approval-supervisor-count-list"
+import { StatusCountListRes } from "@/types/approval/res/approval-status-count-list"
 import { ApprovalSupervisorNotificationListRes } from "@/types/approval/res/approval-supervisor-notification-list"
 
 /*
@@ -507,7 +507,7 @@ interface GetSupervisorPemateriDivisiCountProps {
 export async function getSupervisorPemateriDivisiCount({
   token,
   userUuid,
-}: GetSupervisorPemateriDivisiCountProps): Promise<ApprovalSupervisorPemateriDivisiCountListRes> {
+}: GetSupervisorPemateriDivisiCountProps): Promise<StatusCountListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/supervisor/${userUuid}/count`
 
   const res = await fetch(url, {
@@ -572,11 +572,40 @@ export async function getOperatorLmsNotificationList({
   return await res.json()
 }
 
+interface GetSupervisorLmsCountProps {
+  token: string | undefined
+  userUuid: string
+}
+
+export async function getSupervisorLmsCount({
+  token,
+  userUuid,
+}: GetSupervisorLmsCountProps): Promise<StatusCountListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/supervisor-lms/${userUuid}/count`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      ContentType: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return await res.json()
+}
+
 interface CreateCourseApprovalProps {
   token: string | undefined
   body: BodyInit
 }
 
+/**
+ * Creates a course approval.
+ * @param {CreateCourseApprovalProps} options - The options for creating the course approval.
+ * @param {string} options.token - The token for authorization.
+ * @param {any} options.body - The body of the request.
+ * @returns {Promise<Response>} - The response from the server.
+ */
 export async function createCourseApproval({
   token,
   body,

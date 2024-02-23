@@ -19,7 +19,7 @@ interface ArticleFrameProps {
 export function ArticleFrame({ content, contentParsed }: ArticleFrameProps) {
   return (
     <div className="whatever-you-want mx-auto flex w-full flex-col items-start justify-center  ">
-      <Card className="rounded-none border-none sm:rounded-lg">
+      <Card className="w-full rounded-none border-none sm:rounded-lg">
         <CardHeader>
           <CardTitle className="text-black dark:text-white">
             {content.data.content_title}
@@ -30,7 +30,7 @@ export function ArticleFrame({ content, contentParsed }: ArticleFrameProps) {
         </CardHeader>
 
         <Separator />
-        <CardContent className="text-black dark:text-white">
+        <CardContent className="w-full text-black dark:text-white">
           <Blocks data={contentParsed} />
         </CardContent>
       </Card>
