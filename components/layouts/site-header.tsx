@@ -291,12 +291,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link
-                href="/login"
-                rel="noopener noreferrer"
-                replace
-                prefetch={false}
-              >
+              <Link href="/login">
                 <div
                   className={buttonVariants({
                     size: "lg",

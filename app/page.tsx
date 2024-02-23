@@ -73,7 +73,6 @@ export default async function IndexPage() {
     page: PUBLIC_CATEGORY_PAGE_SIZE,
   })
 
-
   const [publicCategoryResp, publicKnowledgeResp] = await Promise.all([
     publicCategory,
     publicKnowledge,
@@ -89,9 +88,6 @@ export default async function IndexPage() {
   const isMoreThanOneRole = tokenExtracted
     ? tokenExtracted.role.length > 1
     : false
-  
-  
-  console.log(publicCategoryResp)
 
   return (
     <section className="">
