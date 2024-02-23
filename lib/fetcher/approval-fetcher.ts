@@ -12,6 +12,7 @@ import {
   ApprovalKnowledgeCountResData,
 } from "@/types/approval/res/approval-knowledge-count-list"
 import { StatusCountListRes } from "@/types/approval/res/approval-status-count-list"
+import { ApprovalSupervisorLmsNotificationListRes } from "@/types/approval/res/approval-supervisor-lms-notification-list"
 import { ApprovalSupervisorNotificationListRes } from "@/types/approval/res/approval-supervisor-notification-list"
 
 /*
@@ -602,7 +603,7 @@ interface GetSupervisorLmsNotificationListProps {
 export async function getSupervisorLmsNotificationList({
   token,
   userUuid,
-}: GetSupervisorLmsNotificationListProps) {
+}: GetSupervisorLmsNotificationListProps): Promise<ApprovalSupervisorLmsNotificationListRes> {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/supervisor-lms/${userUuid}/notification`
 
   const res = await fetch(url, {

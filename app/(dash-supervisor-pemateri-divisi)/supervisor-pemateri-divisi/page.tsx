@@ -111,6 +111,7 @@ export default async function SupervisorPemateriDivisiPage() {
             return (
               <Link
                 href={`supervisor-pemateri-divisi/approval?page=1&status_text=${item.status_code}`}
+                key={index}
               >
                 <Widget
                   key={index}
