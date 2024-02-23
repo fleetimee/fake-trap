@@ -1,5 +1,6 @@
 import {
   ApprovalOperatorLMSListRes,
+  ApprovalOperatorLMSNotificationListRes,
   ApprovalRequestList,
   ApprovalSupervisorCourseListRes,
   ApprovalSupervisorCourseOneRes,
@@ -555,7 +556,7 @@ interface GetOperatorLmsNotificationListProps {
 export async function getOperatorLmsNotificationList({
   token,
   userUuid,
-}: GetOperatorLmsNotificationListProps) {
+}: GetOperatorLmsNotificationListProps): Promise<ApprovalOperatorLMSNotificationListRes> {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/operator-lms/${userUuid}/notification`
 
   const res = await fetch(url, {

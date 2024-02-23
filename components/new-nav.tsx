@@ -17,6 +17,7 @@ interface DashboardNavNewProps {
   org: UserOrgOneResData
   pesertaCourseTrackerCount?: number
   supervisorDivisiTrackerCount?: number
+  operatorLmsTrackerCount?: number
 }
 
 export function DashboardNewNewNav({
@@ -24,6 +25,7 @@ export function DashboardNewNewNav({
   org,
   pesertaCourseTrackerCount,
   supervisorDivisiTrackerCount,
+  operatorLmsTrackerCount,
 }: DashboardNavNewProps) {
   const { data: session } = useSession()
 
@@ -44,7 +46,7 @@ export function DashboardNewNewNav({
             kdKantor={org.kd_kantor}
           />
         )}
-        <ScrollArea className="grid h-72">
+        <ScrollArea className="grid h-80">
           <div className="grid flex-col gap-3">
             {items.map((item, index) => {
               const Icon = Icons[item.menu_icon || "arrowRight"]
@@ -68,6 +70,7 @@ export function DashboardNewNewNav({
                     >
                       <Icon className="mr-2 size-6" />
                       <span className={cn()}>{item.menu_name}</span>
+
                       {item.id_menu === 50 ? (
                         pesertaCourseTrackerCount ? (
                           <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
@@ -75,10 +78,19 @@ export function DashboardNewNewNav({
                           </span>
                         ) : null
                       ) : null}
+
                       {item.id_menu === 39 ? (
                         supervisorDivisiTrackerCount ? (
                           <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                             {supervisorDivisiTrackerCount}
+                          </span>
+                        ) : null
+                      ) : null}
+
+                      {item.id_menu === 57 ? (
+                        operatorLmsTrackerCount ? (
+                          <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                            {operatorLmsTrackerCount}
                           </span>
                         ) : null
                       ) : null}

@@ -14,7 +14,6 @@ import {
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { dateNow, extractToken, getDayWithText } from "@/lib/utils"
-import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { Icons } from "@/components/icons"
 import { LottieClient } from "@/components/lottie-anim"

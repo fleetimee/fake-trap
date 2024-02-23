@@ -30,6 +30,7 @@ export interface ApprovalOperatorLMSNotificationListRes {
   id_approval_course: number
   id_course: number
   course_name: string
+  image: string
   course_description: string
   status: string
   status_text: string

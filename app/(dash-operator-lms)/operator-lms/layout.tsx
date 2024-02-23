@@ -1,3 +1,4 @@
+import { getOperatorApprovalRequests } from "@/lib/fetcher/approval-fetcher"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getMenu } from "@/lib/fetcher/menu-fetcher"
 import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
@@ -25,6 +26,17 @@ export default async function OperatorLMSLayout({
     idRole: "3",
   })
 
+  const getRejectedCount = await getOperatorApprovalRequests({
+    idRequester: tokenExtracted?.id,
+    token: user?.token,
+    limit: 9999,
+    page: 1,
+    status: "0053",
+  })
+
+  const rejectedCount =
+    getRejectedCount.data.length > 0 ? getRejectedCount.data.length : 0
+
   const userLogged = await getLoggedOnUser({
     token: user?.token,
     uuid: tokenExtracted.id,
@@ -49,11 +61,14 @@ export default async function OperatorLMSLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
       />
-      {/* <div className="bg-background bg-cover bg-top bg-no-repeat  py-4 dark:bg-none md:bg-left lg:min-h-[100svh]"> */}
       <div className="grow bg-background py-4">
         <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
           <aside className="hidden w-[200px] flex-col border-r md:flex">
-            <DashboardNewNewNav org={userOrg.data} items={menu?.data} />
+            <DashboardNewNewNav
+              org={userOrg.data}
+              items={menu?.data}
+              operatorLmsTrackerCount={rejectedCount}
+            />
           </aside>
           <main className="flex w-full flex-1 flex-col overflow-auto">
             {children}
