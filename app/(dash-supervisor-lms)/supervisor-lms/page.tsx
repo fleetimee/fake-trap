@@ -109,30 +109,30 @@ export default async function SupervisorLmsProfilePage() {
         <div className=" grid grid-cols-2 gap-4 xl:grid-cols-4">
           {approvalCount.data.map((item, index) => {
             return (
-              // <Link
-              //   href={`supervisor-pemateri-divisi/approval?page=1&status_text=${item.status_code}`}
-              // >
-              <Widget
-                key={index}
-                icon={
-                  item.status === "approved" ? (
-                    <Icons.mailCheck className="text-blue-500" />
-                  ) : item.status === "pending" ? (
-                    <Icons.mailQuestion className="text-green-500" />
-                  ) : (
-                    <Icons.mailX className="text-red-500" />
-                  )
-                }
-                title={
-                  item.status === "approved"
-                    ? "Approved"
-                    : item.status === "pending"
-                      ? "Pending"
-                      : "Rejected"
-                }
-                subtitle={item.count.toString()}
-              />
-              // </Link>
+              <Link
+                href={`supervisor-lms/approval?page=1&status_text=${item.status_code}`}
+              >
+                <Widget
+                  key={index}
+                  icon={
+                    item.status === "approved" ? (
+                      <Icons.mailCheck className="text-blue-500" />
+                    ) : item.status === "pending" ? (
+                      <Icons.mailQuestion className="text-green-500" />
+                    ) : (
+                      <Icons.mailX className="text-red-500" />
+                    )
+                  }
+                  title={
+                    item.status === "approved"
+                      ? "Approved"
+                      : item.status === "pending"
+                        ? "Pending"
+                        : "Rejected"
+                  }
+                  subtitle={item.count.toString()}
+                />
+              </Link>
             )
           })}
         </div>
@@ -224,8 +224,6 @@ export default async function SupervisorLmsProfilePage() {
                             <DropdownMenuSeparator />
                             <DropdownMenuGroup>
                               <Link
-                                // href={`supervisor-pemateri-divisi/approval/detail/${item.id_approval_knowledge}/knowledge/${item.id_knowledge}`}
-
                                 href={`supervisor-lms/approval/detail/${item.id_approval_course}/course/${item.id_course}`}
                               >
                                 <DropdownMenuItem>
@@ -238,7 +236,6 @@ export default async function SupervisorLmsProfilePage() {
                               </Link>
 
                               <Link
-                                // href={`supervisor-pemateri-divisi/approval/confirmation/${item.id_approval_knowledge}`}
                                 href={`supervisor-lms/approval/confirmation/${item.id_approval_course}`}
                               >
                                 <DropdownMenuItem>

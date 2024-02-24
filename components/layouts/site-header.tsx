@@ -81,8 +81,8 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
   if (props.user) {
     return (
       // <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <header className="sticky top-0 z-50 w-full border-b bg-background">
-        <div className="h-2 bg-primary"></div> {/* Blue strip */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="h-2 bg-primary backdrop-blur"></div> {/* Blue strip */}{" "}
         <div className="container flex h-16 items-center">
           <MainNav items={siteConfig.mainNav} topNavItems={props.topNavItems} />
           <MobileNav

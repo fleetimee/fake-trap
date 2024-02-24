@@ -4,7 +4,7 @@ import { Icons } from "@/components/icons"
 
 export const marketingFeatures = [
   {
-    icon: <Icons.category className="h-10 w-10" />,
+    icon: <Icons.category className="size-10" />,
     title: "Kategori",
     body: (
       <>
@@ -16,7 +16,7 @@ export const marketingFeatures = [
     image: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/category.jpg`,
   },
   {
-    icon: <Icons.knowledge className="h-10 w-10" />,
+    icon: <Icons.knowledge className="size-10" />,
     title: "Pengetahuan",
     body: (
       <>
@@ -28,7 +28,7 @@ export const marketingFeatures = [
     image: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/knowledge.jpg`,
   },
   {
-    icon: <Icons.course className="h-10 w-10" />,
+    icon: <Icons.course className="size-10" />,
     title: "Pelatihan",
     body: (
       <>
@@ -41,7 +41,7 @@ export const marketingFeatures = [
   },
 
   {
-    icon: <Globe className="h-10 w-10" />,
+    icon: <Globe className="size-10" />,
     title: "Forum",
     body: (
       <>

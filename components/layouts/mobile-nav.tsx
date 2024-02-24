@@ -42,7 +42,7 @@ export function MobileNav({
           variant="ghost"
           className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
         >
-          <Icons.menu className="h-6 w-6" />
+          <Icons.menu className="size-6" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
@@ -54,7 +54,7 @@ export function MobileNav({
             className="flex items-center"
             onClick={() => setIsOpen(false)}
           >
-            <Icons.logo className="mr-2 h-4 w-4" aria-hidden="true" />
+            <Icons.logo className="mr-2 size-4" aria-hidden="true" />
             <span className="font-bold">{siteConfig.name}</span>
           </Link>
         </div>

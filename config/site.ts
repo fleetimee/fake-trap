@@ -15,26 +15,30 @@ export const siteConfig = {
         {
           title: "Kategori",
           href: "/#categories",
-          description: "Jelajahi kategori pengetahuan yang tersedia",
+          description:
+            "    Memungkinkan pengguna untuk dengan mudah menavigasi ke kategori yang diinginkan.",
           items: [],
         },
         {
           title: "Materi",
           href: "/#featured-knowledge",
-          description: "Baca dan pahami pengetahuan yang tersedia",
+          description:
+            " Memungkinkan pengguna untuk mencari dan mengeksplorasi informasi yang relevan.",
           items: [],
         },
 
         {
           title: "Pelatihan",
           href: "#",
-          description: "Pelatihan yang tersedia",
+          description:
+            "Memungkinkan pengguna untuk mengeksplorasi pelatihan yang tersedia dan mengikuti pelatihan yang diinginkan.",
           items: [],
         },
         {
           title: "Forum",
           href: "#",
-          description: "Forum diskusi",
+          description:
+            "Menyediakan forum diskusi atau komunitas online di mana pengguna dapat berinteraksi",
           items: [],
         },
       ],
