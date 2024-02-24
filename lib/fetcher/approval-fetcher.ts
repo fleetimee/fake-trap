@@ -426,6 +426,9 @@ interface GetSupervisorLmsApprovalRequestProps {
   orderBy?: string
   searchQuery?: string
   status?: string
+  from?: string
+  to?: string
+  statusCode?: string | string[] | undefined
 }
 
 export async function getSupervisorLmsApprovalRequests({
@@ -437,6 +440,9 @@ export async function getSupervisorLmsApprovalRequests({
   orderBy = "desc",
   searchQuery = "",
   status = "",
+  from,
+  to,
+  statusCode,
 }: GetSupervisorLmsApprovalRequestProps): Promise<ApprovalSupervisorCourseListRes> {
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/approval/course/approver/${idApprover}`
   const url = new URL(baseUrl)
@@ -463,6 +469,22 @@ export async function getSupervisorLmsApprovalRequests({
 
   if (status) {
     url.searchParams.append("status", status)
+  }
+
+  if (from) {
+    url.searchParams.append("from", from)
+  }
+
+  if (to) {
+    url.searchParams.append("to", to)
+  }
+
+  if (statusCode) {
+    if (Array.isArray(statusCode)) {
+      url.searchParams.append("statusCode", statusCode.join("."))
+    } else {
+      url.searchParams.append("statusCode", statusCode)
+    }
   }
 
   const res = await fetch(url.toString(), {

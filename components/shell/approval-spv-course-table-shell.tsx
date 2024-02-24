@@ -3,10 +3,12 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { ApprovalSupervisorCourseListResData } from "@/types/approval/res"
+import { badgeSwitch } from "@/lib/badge-switch"
 import { convertDatetoString } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
@@ -19,23 +21,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-interface BadgeSwitchProps {
-  approval: any
-}
-
-function badgeSwitch({ approval }: BadgeSwitchProps) {
-  switch (approval.status) {
-    case "0052":
-      return <Badge className="bg-green-400">{approval.status_text}</Badge>
-    case "0051":
-      return <Badge className="bg-yellow-400">{approval.status_text}</Badge>
-    case "0053":
-      return <Badge className="bg-red-400">{approval.status_text}</Badge>
-    default:
-      return <Badge className="bg-orange-400">Draft</Badge>
-  }
-}
 
 interface SupervisorLmsApprovalPemateriTableProps {
   data: ApprovalSupervisorCourseListResData[]
@@ -64,9 +49,9 @@ export function ApprovalCourseSupervisorTableShell({
                 <Button
                   aria-label="Open menu"
                   variant="ghost"
-                  className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+                  className="flex size-8 p-0 data-[state=open]:bg-muted"
                 >
-                  <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+                  <DotsHorizontalIcon className="size-4" aria-hidden="true" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-[160px]">
@@ -126,7 +111,13 @@ export function ApprovalCourseSupervisorTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Status" />
         ),
-        cell: ({ row }) => badgeSwitch({ approval: row.original }),
+        cell: ({ row }) =>
+          badgeSwitch({
+            approval: {
+              status_code: row.original.status,
+              status_text: row.original.status_text,
+            },
+          }),
       },
       {
         accessorKey: "created_at",
@@ -179,11 +170,50 @@ export function ApprovalCourseSupervisorTableShell({
     []
   )
 
+  const searchableColumns: DataTableSearchableColumn<ApprovalSupervisorCourseListResData>[] =
+    [
+      {
+        id: "course_name",
+        title: "Nama Pelatihan",
+      },
+    ]
+
+  const filterableColumns: DataTableFilterableColumn<ApprovalSupervisorCourseListResData>[] =
+    [
+      {
+        id: "status_text",
+        title: "Status",
+        options: [
+          {
+            label: "PENDING",
+            value: "0051",
+          },
+          {
+            label: "APPROVED",
+            value: "0052",
+          },
+          {
+            label: "REJECTED",
+            value: "0053",
+          },
+        ],
+      },
+    ]
+
   const { dataTable } = useDataTable({
     data,
     columns,
     pageCount,
+    searchableColumns,
+    filterableColumns,
   })
 
-  return <DataTable dataTable={dataTable} columns={columns} />
+  return (
+    <DataTable
+      dataTable={dataTable}
+      columns={columns}
+      searchableColumns={searchableColumns}
+      filterableColumns={filterableColumns}
+    />
+  )
 }

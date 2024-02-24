@@ -7,6 +7,7 @@ import { getSupervisorLmsApprovalRequests } from "@/lib/fetcher/approval-fetcher
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -28,18 +29,21 @@ export default async function SupervisorLmsApprovalPage({
 }: SupervisorLmsApprovalPageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, status, knowledge_title } = searchParams ?? {}
+  const { page, per_page, sort, status_text, course_name, from, to } =
+    searchParams ?? {}
 
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortFieldInitial = typeof sort === "string" ? sort : "created_at"
   const sortOrderInitial = typeof sort === "string" ? sort : "asc"
-  const searchQueryInitial =
-    typeof knowledge_title === "string" ? knowledge_title : ""
+  const searchQueryInitial = typeof course_name === "string" ? course_name : ""
 
   // Split sort into sortField and sortOrder
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
+
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -54,6 +58,9 @@ export default async function SupervisorLmsApprovalPage({
     limit: limitInitial,
     sortBy: sortField,
     orderBy: sortOrder,
+    from: fromInitial,
+    to: toInitial,
+    statusCode: status_text,
     searchQuery: searchQueryInitial,
   })
 
@@ -82,6 +89,11 @@ export default async function SupervisorLmsApprovalPage({
             description="Approve Pelatihan yang diajukan oleh Operator LMS"
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex min-w-[200px] place-items-end items-end justify-self-end"
+        />
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

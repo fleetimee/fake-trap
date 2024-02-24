@@ -8,6 +8,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { ApprovalSupervisorPemateriListResData } from "@/types/approval/res"
+import { badgeSwitch } from "@/lib/badge-switch"
 import { convertDatetoString } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
@@ -20,23 +21,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-interface BadgeSwitchProps {
-  approval: any
-}
-
-function badgeSwitch({ approval }: BadgeSwitchProps) {
-  switch (approval.status) {
-    case "0052":
-      return <Badge className="bg-green-400">{approval.status_text}</Badge>
-    case "0051":
-      return <Badge className="bg-yellow-400">{approval.status_text}</Badge>
-    case "0053":
-      return <Badge className="bg-red-400">{approval.status_text}</Badge>
-    default:
-      return <Badge className="bg-orange-400">Draft</Badge>
-  }
-}
 
 interface KnowledgeSupervisorPemateriTableShellProps {
   data: ApprovalSupervisorPemateriListResData[]
@@ -127,7 +111,13 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Status" />
         ),
-        cell: ({ row }) => badgeSwitch({ approval: row.original }),
+        cell: ({ row }) =>
+          badgeSwitch({
+            approval: {
+              status_code: row.original.status,
+              status_text: row.original.status_text,
+            },
+          }),
       },
       {
         accessorKey: "created_at",
