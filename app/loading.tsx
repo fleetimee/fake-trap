@@ -16,7 +16,11 @@ export default function GlobalLoadingPage() {
 
       {/* <Lottie animationData={Loader} className="size-1/6" /> */}
 
-      <Image src={BpdLogo} alt="BPD Logo" className="ml-12 w-1/6" />
+      <Image
+        src={BpdLogo}
+        alt="BPD Logo"
+        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/6"
+      />
 
       <Icons.spinner className="w-1/6 animate-spin" />
 
