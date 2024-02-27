@@ -10,7 +10,7 @@ import { Categories } from "@/components/categories"
 import { NotFoundAnim } from "@/components/not-found-anim"
 
 export const metadata: Metadata = {
-  title: "Kategori",
+  title: "Modul",
 }
 
 interface PesertaCategoryPageProps {
@@ -54,8 +54,8 @@ export default async function PesertaCategoryPage({
   ) : (
     <NotFoundAnim
       animationData={NotFoundLottie}
-      title="Belum ada Kategori"
-      description="Tidak ada kategori yang tersedia saat ini. Silahkan coba lagi nanti."
+      title="Belum ada Modul"
+      description="Tidak ada Modul yang tersedia saat ini. Silahkan coba lagi nanti."
       backButtonUrl="/peserta"
     />
   )

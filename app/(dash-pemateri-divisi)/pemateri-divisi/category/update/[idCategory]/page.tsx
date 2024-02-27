@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Update Kategori",
-  description: "Halaman untuk mengubah kategori",
+  title: "Update Modul",
+  description: "Halaman untuk mengubah Modul",
 }
 
 interface PemateriDivisiUpdateCategoryPageProps {
@@ -67,7 +67,7 @@ export default async function PemateriDivisiUpdateCategoryPage({
           },
           {
             href: "/pemateri-divisi/category",
-            title: "Kategori",
+            title: "Modul",
           },
           {
             href: `/pemateri-divisi/category/update/${params.idCategory}`,
@@ -75,16 +75,16 @@ export default async function PemateriDivisiUpdateCategoryPage({
           },
           {
             href: `/pemateri-divisi/category/update/${params.idCategory}`,
-            title: "Ubah Kategori",
+            title: "Ubah Modul",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Ubah Kategori</CardTitle>
+          <CardTitle className="text-xl">Ubah Modul</CardTitle>
           <CardDescription>
-            Ubah kategori dengan mengisi form di bawah ini.
+            Ubah Modul dengan mengisi form di bawah ini.
           </CardDescription>
         </CardHeader>
         <CardContent>

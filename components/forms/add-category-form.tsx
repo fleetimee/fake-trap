@@ -64,7 +64,7 @@ export function AddCategoryForm() {
 
       if (response.ok) {
         sonnerToast.success("Berhasil", {
-          description: "Kategori berhasil ditambahkan",
+          description: "Modul berhasil ditambahkan",
         })
 
         router.back()
@@ -72,7 +72,7 @@ export function AddCategoryForm() {
         form.reset()
       } else {
         sonnerToast.error("Gagal", {
-          description: "Kategori gagal ditambahkan",
+          description: "Modul gagal ditambahkan",
         })
       }
     } catch (error) {
@@ -93,12 +93,12 @@ export function AddCategoryForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Nama Kategori <span className="text-red-500">*</span>
+                Nama Modul <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="Tuliskan nama kategori"
+                  placeholder="Tuliskan nama Modul"
                   {...field}
                   disabled={isLoading}
                 />
@@ -179,7 +179,7 @@ export function AddCategoryForm() {
         <Button type="submit" className="w-fit" disabled={isLoading}>
           {isLoading && (
             <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
+              className="mr-2 size-4 animate-spin"
               aria-hidden="true"
             />
           )}

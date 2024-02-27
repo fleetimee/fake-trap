@@ -19,8 +19,8 @@ import { CategoryTableShell, DashboardShell } from "@/components/shell"
 import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
-  title: "Kategori",
-  description: "Kategori yang tersedia di LMS",
+  title: "Modul",
+  description: "Modul yang tersedia di LMS",
 }
 
 interface CategoryPageProps {
@@ -98,7 +98,7 @@ export default async function PemateriDivisiCategoryPage({
           },
           {
             href: "/pemateri-divisi/category",
-            title: "Kategori",
+            title: "Modul",
           },
         ]}
       />
@@ -109,8 +109,8 @@ export default async function PemateriDivisiCategoryPage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Kategori"
-            description="Kategori yang tersedia di LMS"
+            heading="Modul"
+            description="Modul yang tersedia di LMS"
           />
         </MotionDiv>
 
@@ -124,7 +124,7 @@ export default async function PemateriDivisiCategoryPage({
         <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
           <Widget
             icon={<Icons.category className="text-blue-500" />}
-            title="Kategori"
+            title="Modul"
             subtitle={categoryHighlight.data.total_category_count.toString()}
           />
 
@@ -150,7 +150,7 @@ export default async function PemateriDivisiCategoryPage({
         <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
           <Widget
             icon={<Icons.category />}
-            title="Kategori"
+            title="Modul"
             subtitle={categoryData.count.toString()}
           />
         </div>

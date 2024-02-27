@@ -4,7 +4,7 @@ import { PublicCategories } from "@/components/public-categories"
 import { Shell } from "@/components/shell/lobby-shell"
 
 export const metadata = {
-  title: "Semua Kategori",
+  title: "Semua Modul",
   description: "Explore our products and services.",
 }
 
@@ -48,7 +48,7 @@ export default async function AllPublicCategories({
             title: "Frontpage",
           },
           {
-            title: "Semua Kategori",
+            title: "Semua Modul",
             href: `/intro/categories/all`,
           },
         ]}

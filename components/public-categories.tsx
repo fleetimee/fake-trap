@@ -116,8 +116,8 @@ export function PublicCategories({
   return (
     <>
       <HeaderIntro
-        title="Semua Kategori"
-        description="Semua kategori yang tersedia"
+        title="Semua Modul"
+        description="Semua Modul yang tersedia"
         size="sm"
         isWhiteText={isWhiteText}
       />
@@ -137,9 +137,9 @@ export function PublicCategories({
             <div className="flex max-w-xl flex-1 flex-col gap-5 overflow-hidden p-1 ">
               <div className="flex flex-col items-start justify-between gap-5 rounded-lg border p-6 shadow-sm">
                 <div className="space-y-0.5">
-                  <Label>Cari Kategori</Label>
+                  <Label>Cari Modul</Label>
                   <CardDescription>
-                    Cari kategori berdasarkan nama kategori
+                    Cari Modul berdasarkan nama Modul
                   </CardDescription>
                 </div>
 
@@ -188,7 +188,7 @@ export function PublicCategories({
           <DropdownMenuTrigger asChild>
             <Button aria-label="Sort products" size="sm" disabled={isPending}>
               Sort
-              <ChevronDownIcon className="ml-2 h-4 w-4" aria-hidden="true" />
+              <ChevronDownIcon className="ml-2 size-4" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-48">
@@ -240,7 +240,7 @@ export function PublicCategories({
               }}
               disabled={isPending}
             >
-              <XIcon className=" h-4 w-4" aria-hidden="true" />
+              <XIcon className="size-4" aria-hidden="true" />
             </Button>
           )
         }

@@ -13,7 +13,7 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CategoryTableShell, DashboardShell } from "@/components/shell"
 
 export const metadata: Metadata = {
-  title: "Kategori",
+  title: "Modul",
   description: "Operator LMS Category Page",
 }
 
@@ -68,7 +68,7 @@ export default async function OperatorLmsCategoryPage({
           },
           {
             href: "/operator-lms/category",
-            title: "Kategori",
+            title: "Modul",
           },
         ]}
       />
@@ -79,8 +79,8 @@ export default async function OperatorLmsCategoryPage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Kategori"
-            description="Kategori Pengetahuan yang tersedia"
+            heading="Modul"
+            description="Modul Pengetahuan yang tersedia"
           />
         </MotionDiv>
       </div>

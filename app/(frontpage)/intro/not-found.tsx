@@ -26,7 +26,7 @@ export default function KnowledgePublicNotFound() {
               Yah Maaf !
             </CardTitle>
             <CardDescription>
-              Pengetahuan atau Kategori yang kamu cari tidak ditemukan
+              Pengetahuan atau Modul yang kamu cari tidak ditemukan
             </CardDescription>
           </CardHeader>
           <CardContent className="gap-4 space-y-12 md:space-y-0">

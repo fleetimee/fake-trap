@@ -268,7 +268,7 @@ export function AddKnowledgeForm({
                           >
                             <Check
                               className={cn(
-                                "mr-2 h-4 w-4",
+                                "mr-2 size-4",
                                 content.code_ref2 === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
@@ -292,7 +292,7 @@ export function AddKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Kategori <span className="text-red-500">*</span>{" "}
+                Modul <span className="text-red-500">*</span>{" "}
               </FormLabel>
               <FormControl>
                 <Popover>
@@ -310,16 +310,16 @@ export function AddKnowledgeForm({
                           ? category.data.find(
                               (category) => category.id_category === field.value
                             )?.category_name
-                          : "Pilih Kategori"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          : "Pilih Modul"}
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="h-[300px] w-[400px] p-0 xl:w-[680px]">
                     <Command>
-                      <CommandInput placeholder="Jenis Kategori" />
+                      <CommandInput placeholder="Jenis Modul" />
                       <CommandList>
-                        <CommandEmpty>Kategori tidak ditemukan</CommandEmpty>
+                        <CommandEmpty>Modul tidak ditemukan</CommandEmpty>
                         <CommandGroup>
                           <ScrollArea className="h-full">
                             {category.data.map((category) => (
@@ -336,7 +336,7 @@ export function AddKnowledgeForm({
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    "mr-2 size-4",
                                     category.id_category === field.value
                                       ? "opacity-100"
                                       : "opacity-0"

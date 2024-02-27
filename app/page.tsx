@@ -269,11 +269,11 @@ export default async function IndexPage() {
           <div className="flex items-center justify-between gap-4">
             <div className="max-w-[58rem] flex-1 space-y-1  md:bg-none">
               <h2 className="flex-1 font-heading text-2xl font-medium  sm:text-3xl md:bg-none">
-                Kategori Populer
+                Modul Populer
               </h2>
               <p className="max-w-[46rem] text-balance leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-                Kategori populer yang tersedia di BPD DIY Elearning, yang sudah
-                di akses oleh banyak pengguna
+                Modul populer yang tersedia di BPD DIY Elearning, yang sudah di
+                akses oleh banyak pengguna
               </p>
             </div>
 

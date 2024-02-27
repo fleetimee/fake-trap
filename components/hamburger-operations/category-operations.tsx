@@ -42,8 +42,6 @@ export function CategoryOperations({
   rule,
   editRowLink,
 }: CategoryOperationsProps) {
-  console.log(kategori)
-
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -84,7 +82,7 @@ export function CategoryOperations({
               navigator.clipboard
                 .writeText(kategori.id_category.toString())
                 .then(() => {
-                  sonnerToast.info("ID Kategori berhasil dicopy")
+                  sonnerToast.info("ID Modul berhasil dicopy")
                 })
                 .catch((error) => {
                   console.error("Failed to copy text: ", error)
@@ -131,7 +129,7 @@ export function CategoryOperations({
               Apakah anda yakin ingin menghapus kategori ini?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Kategori yang dihapus tidak dapat dikembalikan
+              Modal yang dihapus tidak dapat dikembalikan
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -147,7 +145,7 @@ export function CategoryOperations({
 
                 if (deleted) {
                   sonnerToast.success("Berhasil", {
-                    description: "Kategori berhasil dihapus",
+                    description: "Modul berhasil dihapus",
                   })
 
                   setIsDeleteLoading(false)
@@ -155,7 +153,7 @@ export function CategoryOperations({
                   router.refresh()
                 } else {
                   sonnerToast.error("Gagal", {
-                    description: "Kategori gagal dihapus",
+                    description: "Modul gagal dihapus",
                   })
                   setIsDeleteLoading(false)
                 }

@@ -67,7 +67,7 @@ export function CategoryTableShell({
       {
         accessorKey: "category_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Kategori" />
+          <DataTableColumnHeader column={column} title="Nama Modul" />
         ),
         enableSorting: true,
         enableHiding: true,
@@ -127,7 +127,7 @@ export function CategoryTableShell({
   const searchableColumns: DataTableSearchableColumn<CategoryListResData>[] = [
     {
       id: "category_name",
-      title: "Kategori",
+      title: "Cari Modul",
     },
   ]
 

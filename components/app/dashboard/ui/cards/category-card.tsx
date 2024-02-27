@@ -16,10 +16,10 @@ export async function DashboardCategoryCardCount({
 
   return (
     <CardDashboardIndicator
-      title="Kategori"
+      title="Modul"
       icon="category"
       content={categoryResp.count}
-      description="Kategori yang tersedia"
+      description="Modul yang tersedia"
     />
   )
 }

@@ -80,7 +80,7 @@ export function KnowledgeTableShell({
       {
         accessorKey: "id_category",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Kategori" />
+          <DataTableColumnHeader column={column} title="Modul" />
         ),
         cell: ({ row }) => (
           <Badge variant="secondary">
@@ -194,7 +194,7 @@ export function KnowledgeTableShell({
   const filterableColumns: DataTableFilterableColumn<KnowledgeListResData>[] = [
     {
       id: "id_category",
-      title: "Filter Kategori",
+      title: "Filter Modul",
       options: categoryResp.data.map((category) => ({
         label: category.category_name,
         value: category.id_category,

@@ -4,10 +4,6 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
 import { Separator } from "@/components/ui/separator"
 
-
-
-
-
 interface PemateriCategoryLayoutProps {
   children: React.ReactNode
 }
@@ -25,7 +21,7 @@ export default function PemateriCategoryLayout({
           },
           {
             href: "/peserta/category",
-            title: "Kategori",
+            title: "Modul",
           },
         ]}
       />
@@ -35,9 +31,9 @@ export default function PemateriCategoryLayout({
         animate={{ opacity: 1, y: 0 }}
       >
         <DashboardHeader
-          heading="Kategori"
+          heading="Modul"
           description="
-          Semua Kategori yang tersedia di BPD E-learning"
+          Semua Modul yang tersedia di BPD E-learning"
         />
       </MotionDiv>
 

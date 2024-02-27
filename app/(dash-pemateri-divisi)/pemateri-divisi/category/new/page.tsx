@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah Kategori",
-  description: "Tambah Kategori baru",
+  title: "Tambah Modul",
+  description: "Tambah Modul baru",
 }
 
 export default async function PemateriDivisiCategoryPageNew() {
@@ -46,19 +46,19 @@ export default async function PemateriDivisiCategoryPageNew() {
           },
           {
             href: "/pemateri-divisi/category",
-            title: "Kategori",
+            title: "Modul",
           },
           {
             href: "/pemateri-divisi/category/new",
-            title: "Tambah Kategori",
+            title: "Tambah Modul",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Kategori</CardTitle>
-          <CardDescription>Tambah Kategori Baru</CardDescription>
+          <CardTitle className="text-xl">Tambah Modul</CardTitle>
+          <CardDescription>Tambah Modul Baru</CardDescription>
         </CardHeader>
 
         <CardContent>

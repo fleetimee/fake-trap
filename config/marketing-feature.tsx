@@ -5,7 +5,7 @@ import { Icons } from "@/components/icons"
 export const marketingFeatures = [
   {
     icon: <Icons.category className="size-10" />,
-    title: "Kategori",
+    title: "Modul",
     body: (
       <>
         Memungkinkan pengguna untuk dengan mudah menavigasi ke kategori yang

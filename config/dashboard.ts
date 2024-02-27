@@ -1,9 +1,5 @@
 import { DashboardConfig } from "types"
 
-
-
-
-
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
     {
@@ -30,7 +26,7 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Kategori",
+      title: "Modul",
       href: "/dashboard/category",
       icon: "category",
       items: [],
@@ -78,7 +74,7 @@ export const userAreaDashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Kategori",
+      title: "Modul",
       href: "/member-area/category",
       icon: "category",
       items: [],
@@ -170,9 +166,9 @@ export const userAreaRole: UserAreaRole = {
       icon: "book",
     },
     {
-      title: "Kategori",
+      title: "Modul",
       description:
-        "Jelajahi Pengetahuan berdasarkan kategori yang tersedia untuk memudahkan anda mencari pengetahuan yang anda inginkan",
+        "Jelajahi Pengetahuan berdasarkan modul yang tersedia untuk memudahkan anda mencari pengetahuan yang anda inginkan",
       icon: "category",
     },
     {
@@ -261,8 +257,8 @@ export const adminAreaRole: UserAreaRole = {
     },
     {
       icon: "laptop",
-      title: "Kategori",
-      description: "Anda dapat mengelola kategori yang anda buat",
+      title: "Modul",
+      description: "Anda dapat mengelola modul yang anda buat",
     },
     {
       icon: "laptop",

@@ -115,7 +115,7 @@ export default async function PesertaPage() {
 
         <Widget
           icon={<Icons.category className="text-blue-500" />}
-          title="Kategori"
+          title="Modul"
           subtitle={globalCount.data?.category_count.toString()}
         />
 

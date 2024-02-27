@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Update Kategori",
-  description: "Halaman untuk mengubah kategori",
+  title: "Update Modul",
+  description: "Halaman untuk mengubah Modul",
 }
 
 interface OperatorLMSUpdateCategoryPageProps {
@@ -68,11 +68,11 @@ export default async function OperatorLMSUpdateCategoryPage({
           },
           {
             href: "/operator-lms/category",
-            title: "Kategori",
+            title: "Modul",
           },
           {
             href: `/operator-lms/category/update/${category.data.id_category}`,
-            title: "Update Kategori",
+            title: "Update Modul",
           },
           {
             href: `/operator-lms/category/update/${category.data.id_category}`,
@@ -84,10 +84,10 @@ export default async function OperatorLMSUpdateCategoryPage({
       <Card>
         <CardHeader className="space-y-1">
           <CardTitle className="text-xl">
-            Update Kategori:{" "}
+            Update Modul:{" "}
             <span className="font-bold">{category.data.category_name}</span>
           </CardTitle>
-          <CardDescription>Update Kategori yang sudah ada</CardDescription>
+          <CardDescription>Update Modul yang sudah ada</CardDescription>
         </CardHeader>
 
         <CardContent>
