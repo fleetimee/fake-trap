@@ -1,3 +1,4 @@
+import { getSupervisorLmsNotificationList } from "@/lib/fetcher/approval-fetcher"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getMenu } from "@/lib/fetcher/menu-fetcher"
 import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
@@ -35,6 +36,14 @@ export default async function SupervisorLMSLayout({
     email: tokenExtracted.email,
   })
 
+  const approvalCount = await getSupervisorLmsNotificationList({
+    token: user?.token,
+    userUuid: tokenExtracted?.id,
+  })
+
+  const notificationsCount =
+    approvalCount.data.length > 0 ? approvalCount.data.length : 0
+
   const categoryNav = await getNavbar()
 
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
@@ -52,7 +61,11 @@ export default async function SupervisorLMSLayout({
       <div className="grow bg-background py-4">
         <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
           <aside className="hidden w-[200px] flex-col border-r md:flex">
-            <DashboardNewNewNav items={menu?.data} org={userOrg.data} />
+            <DashboardNewNewNav
+              items={menu?.data}
+              org={userOrg.data}
+              supervisorLmsTrackerCount={notificationsCount}
+            />
           </aside>
           <main className="flex w-full flex-1 flex-col overflow-auto">
             {children}

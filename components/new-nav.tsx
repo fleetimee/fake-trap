@@ -18,6 +18,7 @@ interface DashboardNavNewProps {
   pesertaCourseTrackerCount?: number
   supervisorDivisiTrackerCount?: number
   operatorLmsTrackerCount?: number
+  supervisorLmsTrackerCount?: number
 }
 
 export function DashboardNewNewNav({
@@ -26,6 +27,7 @@ export function DashboardNewNewNav({
   pesertaCourseTrackerCount,
   supervisorDivisiTrackerCount,
   operatorLmsTrackerCount,
+  supervisorLmsTrackerCount,
 }: DashboardNavNewProps) {
   const { data: session } = useSession()
 
@@ -91,6 +93,14 @@ export function DashboardNewNewNav({
                         operatorLmsTrackerCount ? (
                           <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                             {operatorLmsTrackerCount}
+                          </span>
+                        ) : null
+                      ) : null}
+
+                      {item.id_menu === 43 ? (
+                        supervisorLmsTrackerCount ? (
+                          <span className="ml-2 inline-flex size-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                            {supervisorLmsTrackerCount}
                           </span>
                         ) : null
                       ) : null}
