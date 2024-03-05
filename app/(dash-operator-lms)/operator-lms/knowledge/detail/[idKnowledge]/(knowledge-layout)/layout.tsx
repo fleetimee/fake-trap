@@ -61,7 +61,7 @@ export default async function KnowledgeDetailLayout({
             },
             {
               href: "/operator-lms/knowledge",
-              title: "Pengetahuan",
+              title: "Materi",
             },
             {
               href: `/operator-lms/knowledge/detail/${params.idKnowledge}`,

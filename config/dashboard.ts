@@ -38,7 +38,7 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Pengetahuan",
+      title: "Materi",
       href: "/dashboard/knowledge",
       icon: "knowledge",
       items: [],
@@ -80,7 +80,7 @@ export const userAreaDashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Pengetahuan",
+      title: "Materi",
       href: "/member-area/knowledge",
       icon: "knowledge",
       items: [],
@@ -160,15 +160,15 @@ export const userAreaRole: UserAreaRole = {
     "Sebagai user, anda dapat mengakses berbagai fitur dibawah ini",
   features: [
     {
-      title: "Pengetahuan",
+      title: "Materi",
       description:
-        "Baca dan pelajari pengetahuan yang sudah disediakan oleh pemberi materi",
+        "Baca dan pelajari materi yang sudah disediakan oleh pemberi materi",
       icon: "book",
     },
     {
       title: "Modul",
       description:
-        "Jelajahi Pengetahuan berdasarkan modul yang tersedia untuk memudahkan anda mencari pengetahuan yang anda inginkan",
+        "Jelajahi materi berdasarkan modul yang tersedia untuk memudahkan anda mencari materi yang anda inginkan",
       icon: "category",
     },
     {
@@ -196,9 +196,9 @@ export const supervisorAreaRole: UserAreaRole = {
     "Sebagai supervisor, anda dapat mengakses berbagai fitur dibawah ini",
   features: [
     {
-      title: "Approval Pengetahuan",
+      title: "Approval Materi",
       description:
-        "Anda dapat menyetujui atau menolak pengetahuan yang diajukan oleh pemateri",
+        "Anda dapat menyetujui atau menolak materi yang diajukan oleh pemateri",
       icon: "laptop",
     },
     {
@@ -208,9 +208,8 @@ export const supervisorAreaRole: UserAreaRole = {
       icon: "laptop",
     },
     {
-      title: "Cek Pengetahuan",
-      description:
-        "Anda dapat melihat pengetahuan yang sudah disetujui oleh anda",
+      title: "Cek Materi",
+      description: "Anda dapat melihat materi yang sudah disetujui oleh anda",
       icon: "book",
     },
     {
@@ -247,8 +246,8 @@ export const adminAreaRole: UserAreaRole = {
   features: [
     {
       icon: "laptop",
-      title: "Pengetahuan",
-      description: "Anda dapat mengelola pengetahuan yang anda buat",
+      title: "Materi",
+      description: "Anda dapat mengelola materi yang anda buat",
     },
     {
       icon: "laptop",
@@ -274,7 +273,7 @@ export const adminAreaRole: UserAreaRole = {
       icon: "laptop",
       title: "Konten",
       description:
-        "Anda dapat mengelola konten pengetahuan dan pelatihan yang anda buat",
+        "Anda dapat mengelola konten materi dan pelatihan yang anda buat",
     },
   ],
 }

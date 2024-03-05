@@ -68,7 +68,7 @@ export default async function KnowledgeDetailLayout({
             },
             {
               href: `#`,
-              title: "Pengetahuan",
+              title: "Materi",
             },
             {
               href: `/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}`,

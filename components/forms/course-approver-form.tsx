@@ -109,22 +109,22 @@ export function ApproverCourseForm({ idApproval }: ApproverCourseFormProps) {
                     <SelectValue placeholder="Pilih Status">
                       {field.value === "0051" ? (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-yellow-500" />
+                          <CircleIcon className="size-5 text-yellow-500" />
                           <span>Menunggu Konfirmasi</span>
                         </div>
                       ) : field.value === "0052" ? (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-green-500" />
+                          <CircleIcon className="size-5 text-green-500" />
                           <span>DITERIMA</span>
                         </div>
                       ) : field.value === "0053" ? (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-red-500" />
+                          <CircleIcon className="size-5 text-red-500" />
                           <span>DITOLAK</span>
                         </div>
                       ) : (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-red-500" />
+                          <CircleIcon className="size-5 text-red-500" />
                           <span>Pilih Status</span>
                         </div>
                       )}
@@ -140,7 +140,6 @@ export function ApproverCourseForm({ idApproval }: ApproverCourseFormProps) {
                 <FormDescription>
                   Status pengajuan diterima dan status materi akan berubah
                   menjadi DITERIMA dan materi akan ditampilkan di halaman Materi
-                  / Pengetahuan
                 </FormDescription>
               ) : field.value === "0053" ? (
                 <FormDescription>
@@ -174,7 +173,7 @@ export function ApproverCourseForm({ idApproval }: ApproverCourseFormProps) {
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Kirim
         </Button>
       </form>

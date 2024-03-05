@@ -98,12 +98,9 @@ export default async function KnowledgeDetail({
             },
             {
               href: "/intro/knowledge/all",
-              title: "Semua Pengetahuan",
+              title: "Semua Materi",
             },
-            {
-              href: "#",
-              title: "Knowledge",
-            },
+
             {
               href: `/intro/knowledge/${params.detail}`,
               title: knowledge.data.knowledge_title,

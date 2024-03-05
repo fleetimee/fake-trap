@@ -4,7 +4,7 @@ import { PublicKnowledges } from "@/components/public-knowledges"
 import { Shell } from "@/components/shell/lobby-shell"
 
 export const metadata = {
-  title: "Semua Pengetahuan",
+  title: "Semua Materi",
   description: "fleetime",
 }
 
@@ -48,7 +48,7 @@ export default async function AllPublicKnowledge({
             title: "Frontpage",
           },
           {
-            title: "Semua Pengetahuan",
+            title: "Semua Materi",
             href: `/intro/knowledge/all`,
           },
         ]}

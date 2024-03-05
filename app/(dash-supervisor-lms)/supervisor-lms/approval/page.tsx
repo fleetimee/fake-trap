@@ -15,7 +15,7 @@ import { DashboardShell } from "@/components/shell"
 import { ApprovalCourseSupervisorTableShell } from "@/components/shell/approval-spv-course-table-shell"
 
 export const metadata: Metadata = {
-  title: "Approve Pengetahuan",
+  title: "Approve Materi",
 }
 
 interface SupervisorLmsApprovalPageProps {

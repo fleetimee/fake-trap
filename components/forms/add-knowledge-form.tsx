@@ -103,7 +103,7 @@ export function AddKnowledgeForm({
           const newKnowledgeId = responseData.data
 
           sonnerToast.success("Berhasil", {
-            description: "Pengetahuan berhasil ditambahkan",
+            description: "Materi berhasil ditambahkan",
           })
 
           if (baseUrl) {
@@ -117,12 +117,12 @@ export function AddKnowledgeForm({
           }
         } else {
           sonnerToast.error("Gagal", {
-            description: "Pengetahuan gagal ditambahkan",
+            description: "Materi gagal ditambahkan",
           })
         }
       } catch (error) {
         sonnerToast.error("Gagal", {
-          description: "Pengetahuan gagal ditambahkan",
+          description: "Materi gagal ditambahkan",
         })
       } finally {
       }
@@ -141,12 +141,12 @@ export function AddKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Judul Pengetahuan <span className="text-red-500">*</span>
+                Judul Materi <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Tuliskan judul pengetahuan yang ingin dibuat"
+                  placeholder="Tuliskan judul materi yang ingin dibuat"
                   disabled={isPending}
                 />
               </FormControl>
@@ -162,12 +162,12 @@ export function AddKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Deskripsi Pengetahuan <span className="text-red-500">*</span>
+                Deskripsi Materi <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder="Tuliskan deskripsi pengetahuan yang ingin dibuat"
+                  placeholder="Tuliskan deskripsi materi yang ingin dibuat"
                   disabled={isPending}
                   className="h-20 resize-none"
                 />
@@ -248,7 +248,7 @@ export function AddKnowledgeForm({
                               (content) => content.code_ref2 === field.value
                             )?.value_ref1
                           : "Pilih Status"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -377,7 +377,7 @@ export function AddKnowledgeForm({
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Tambah
         </Button>
       </form>

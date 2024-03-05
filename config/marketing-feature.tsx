@@ -17,7 +17,7 @@ export const marketingFeatures = [
   },
   {
     icon: <Icons.knowledge className="size-10" />,
-    title: "Pengetahuan",
+    title: "Materi",
     body: (
       <>
         Memungkinkan pengguna untuk mencari dan mengeksplorasi informasi yang

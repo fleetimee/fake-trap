@@ -15,7 +15,7 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
 
 export const metadata: Metadata = {
-  title: "Pengetahuan",
+  title: "Materi",
   description: "Operator LMS Knowledge Page",
 }
 
@@ -92,7 +92,7 @@ export default async function OperatorLMSKnowledgePage({
           },
           {
             href: "/operator-lms/knowledge",
-            title: "Pengetahuan",
+            title: "Materi",
           },
         ]}
       />
@@ -103,8 +103,8 @@ export default async function OperatorLMSKnowledgePage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Pengetahuan"
-            description="Pengetahuan yang tersedia di e-learning"
+            heading="Materi"
+            description="Materi yang tersedia di e-learning"
           />
         </MotionDiv>
 

@@ -36,7 +36,7 @@ export default async function KnowledgeSectionUpdatePage({
       <div>
         <h3 className="text-lg font-medium">Section / Bagian</h3>
         <p className="text-sm text-muted-foreground">
-          Perbarui nama section atau bagian untuk pengetahuan yang anda miliki.
+          Perbarui nama section atau bagian untuk materi yang anda miliki.
         </p>
       </div>
       <Separator />

@@ -13,10 +13,10 @@ export const siteConfig = {
       title: "Menu",
       items: [
         {
-          title: "Kategori",
+          title: "Modul",
           href: "/#categories",
           description:
-            "    Memungkinkan pengguna untuk dengan mudah menavigasi ke kategori yang diinginkan.",
+            "    Memungkinkan pengguna untuk dengan mudah menavigasi ke modul yang diinginkan.",
           items: [],
         },
         {

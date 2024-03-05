@@ -113,7 +113,7 @@ export default async function OperatorLMSDashboard() {
       >
         <Widget
           icon={<Icons.knowledge className="text-green-500" />}
-          title="Pengetahuan"
+          title="Materi"
           subtitle={globalCount.data?.knowledge_count.toString()}
         />
 
@@ -140,9 +140,9 @@ export default async function OperatorLMSDashboard() {
         {/* Card New Materi */}
         <Card>
           <CardHeader>
-            <CardTitle>Pengetahuan Terbaru</CardTitle>
+            <CardTitle>Materi Terbaru</CardTitle>
             <CardDescription>
-              Pengetahuan Terbaru yang di buat oleh Pemateri Divisi
+              Materi Terbaru yang di buat oleh Pemateri Divisi
             </CardDescription>
             <Separator />
           </CardHeader>

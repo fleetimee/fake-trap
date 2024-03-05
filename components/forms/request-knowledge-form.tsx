@@ -181,8 +181,7 @@ export function RequestKnowledgeForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Atasan yang dipilih akan menerima permintaan pengajuan
-                pengetahuan
+                Atasan yang dipilih akan menerima permintaan pengajuan materi
               </FormDescription>
               <FormMessage />
             </FormItem>

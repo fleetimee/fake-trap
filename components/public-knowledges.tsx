@@ -154,8 +154,8 @@ export function PublicKnowledges({
         }}
       >
         <HeaderIntro
-          title="Semua Pengetahuan"
-          description="Temukan pengetahuan yang kamu butuhkan"
+          title="Semua Materi"
+          description="Temukan materi yang kamu butuhkan"
           size="sm"
           isWhiteText={isWhiteText}
         />
@@ -228,7 +228,7 @@ export function PublicKnowledges({
           <DropdownMenuTrigger asChild>
             <Button aria-label="Sort products" size="sm" disabled={isPending}>
               Sort
-              <ChevronDownIcon className="ml-2 h-4 w-4" aria-hidden="true" />
+              <ChevronDownIcon className="ml-2 size-4" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-48">
@@ -281,7 +281,7 @@ export function PublicKnowledges({
               }}
               disabled={isPending}
             >
-              <XIcon className=" h-4 w-4" aria-hidden="true" />
+              <XIcon className=" size-4" aria-hidden="true" />
             </Button>
           )
         }

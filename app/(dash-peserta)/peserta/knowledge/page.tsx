@@ -15,7 +15,7 @@ import { DashboardShell } from "@/components/shell"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
-  title: "Pengetahuan",
+  title: "Materi",
 }
 
 interface PesertaKnowledgePageProps {
@@ -64,7 +64,7 @@ export default async function PesertaKnowledgePage({
           },
           {
             href: "/peserta/knowledge",
-            title: "Pengetahuan",
+            title: "Materi",
           },
         ]}
       />
@@ -74,8 +74,8 @@ export default async function PesertaKnowledgePage({
         animate={{ opacity: 1, y: 0 }}
       >
         <DashboardHeader
-          heading="Pengetahuan"
-          description="Pengetahuan atau Materi Terbuka yang dapat diakses oleh semua peserta."
+          heading="Materi"
+          description="Materi Terbuka yang dapat diakses oleh semua peserta."
         />
       </MotionDiv>
 

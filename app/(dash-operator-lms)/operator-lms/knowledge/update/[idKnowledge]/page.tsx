@@ -19,8 +19,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Update Pengetahuan",
-  description: "Halaman untuk mengubah knowledge",
+  title: "Update Materi",
+  description: "Halaman untuk mengubah materi",
 }
 
 interface OperatorLMSUpdateKnowledgePageProps {
@@ -77,11 +77,11 @@ export default async function OperatorLMSUpdateKnowledgePage({
           },
           {
             href: "/operator-lms/knowledge",
-            title: "Pengetahuan",
+            title: "Materi",
           },
           {
             href: `/operator-lms/knowledge/update/${knowledge.data.id_knowledge}`,
-            title: "Update Pengetahuan",
+            title: "Update Materi",
           },
           {
             href: `/operator-lms/knowledge/update/${knowledge.data.id_knowledge}`,
@@ -93,12 +93,12 @@ export default async function OperatorLMSUpdateKnowledgePage({
       <Card>
         <CardHeader className="space-y-1">
           <CardTitle className="text-xl">
-            Update Pengetahuan:{" "}
+            Update Materi:{" "}
             <span className="font-semibold">
               {knowledge.data.knowledge_title}
             </span>
           </CardTitle>
-          <CardDescription>Update Pengetahuan yang sudah ada</CardDescription>
+          <CardDescription>Update Materi yang sudah ada</CardDescription>
         </CardHeader>
 
         <CardContent>

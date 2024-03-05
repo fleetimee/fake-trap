@@ -1,13 +1,13 @@
 export const storeSubscriptionPlans = [
   {
     id: "basic",
-    name: "Pengetahuan",
-    description: "Approve pengetahuan yang sudah dibuat oleh pembuat materi",
+    name: "Materi",
+    description: "Approve materi yang sudah dibuat oleh pembuat materi",
     features: [
-      "Konfirmasi atau tolak pengetahuan yang dibuat oleh pemberi pengetahuan",
-      "Mengatur status pengetahuan yang sudah dibuat oleh pemberi pengetahuan",
-      "Track progress pengetahuan yang sudah anda approve",
-      "Track progress pengetahuan yang sudah anda tolak",
+      "Konfirmasi atau tolak materi yang dibuat oleh pemberi materi",
+      "Mengatur status materi yang sudah dibuat oleh pemberi materi",
+      "Track progress materi yang sudah anda approve",
+      "Track progress materi yang sudah anda tolak",
     ],
     price: 0,
     link: "/supervisor-area/approval/approve-knowledge",

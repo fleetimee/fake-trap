@@ -75,7 +75,7 @@ export function CategoryTableShell({
       {
         accessorKey: "total_knowledge",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Total Pengetahuan" />
+          <DataTableColumnHeader column={column} title="Total Materi" />
         ),
         cell: ({ row }) => {
           return (

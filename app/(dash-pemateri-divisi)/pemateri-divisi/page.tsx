@@ -104,7 +104,7 @@ export default async function PemateriDivisiDashboardPage() {
       >
         <Widget
           icon={<Icons.knowledge className="text-green-500" />}
-          title={"Pengetahuan"}
+          title={"Materi"}
           subtitle={KnowledgeCount.toString()}
         />
         <Widget

@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Update Pengetahuan",
-  description: "Halaman untuk mengubah pengetahuan",
+  title: "Update Materi",
+  description: "Halaman untuk mengubah materi",
 }
 
 interface PemateriDivisiUpdateKnowledgePageProps {
@@ -83,7 +83,7 @@ export default async function PemateriDivisiUpdateKnowledgePage({
           },
           {
             href: "/pemateri-divisi/knowledge",
-            title: "Pengetahuan",
+            title: "Materi",
           },
           {
             href: `/pemateri-divisi/knowledge/update/${knowledge.data.id_knowledge}`,
@@ -99,12 +99,12 @@ export default async function PemateriDivisiUpdateKnowledgePage({
       <Card>
         <CardHeader className="space-y-1">
           <CardTitle className="text-xl">
-            Update Pengetahuan:{" "}
+            Update Materi:{" "}
             <span className="font-semibold">
               {knowledge.data.knowledge_title}
             </span>
           </CardTitle>
-          <CardDescription>Update Pengetahuan yang sudah ada</CardDescription>
+          <CardDescription>Update Materi yang sudah ada</CardDescription>
         </CardHeader>
 
         <CardContent>

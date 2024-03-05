@@ -65,9 +65,9 @@ export function KnowledgeOperations({
           <Button
             aria-label="Open menu"
             variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+            className="flex size-8 p-0 data-[state=open]:bg-muted"
           >
-            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+            <DotsHorizontalIcon className="size-4" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
@@ -96,7 +96,7 @@ export function KnowledgeOperations({
               )
 
               sonnerToast.info("Berhasil", {
-                description: "ID Pengetahuan berhasil dicopy",
+                description: "ID Materi berhasil dicopy",
               })
             }}
           >
@@ -138,10 +138,10 @@ export function KnowledgeOperations({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Apakah anda yakin ingin menghapus pengetahuan ini?
+              Apakah anda yakin ingin menghapus materi ini?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Pengetahuan yang dihapus tidak dapat dikembalikan
+              Materi yang dihapus tidak dapat dikembalikan
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -157,7 +157,7 @@ export function KnowledgeOperations({
 
                 if (deleted) {
                   sonnerToast.success("Berhasil", {
-                    description: "Pengetahuan berhasil dihapus",
+                    description: "Materi berhasil dihapus",
                   })
 
                   setIsDeleteLoading(false)
@@ -165,7 +165,7 @@ export function KnowledgeOperations({
                   router.refresh()
                 } else {
                   sonnerToast.error("Gagal", {
-                    description: "Pengetahuan gagal dihapus",
+                    description: "Materi gagal dihapus",
                   })
 
                   setIsDeleteLoading(false)
@@ -174,9 +174,9 @@ export function KnowledgeOperations({
               className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
             >
               {isDeleteLoading ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                <Icons.spinner className="mr-2 size-4 animate-spin" />
               ) : (
-                <Icons.trash className="mr-2 h-4 w-4" />
+                <Icons.trash className="mr-2 size-4" />
               )}
               <span>Hapus</span>
             </AlertDialogAction>

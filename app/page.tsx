@@ -134,8 +134,8 @@ export default async function IndexPage() {
                 Learning Management System
               </p>
               <p className="mt-3 text-white">
-                Dapatkan pengetahuan dan keterampilan yang Anda butuhkan untuk
-                sukses dengan BPD DIY Learning Management System
+                Dapatkan materi dan keterampilan yang Anda butuhkan untuk sukses
+                dengan BPD DIY Learning Management System
               </p>
               <div className="items-center justify-center space-y-3 pt-10 sm:flex sm:space-x-6 sm:space-y-0 lg:justify-start">
                 <Link

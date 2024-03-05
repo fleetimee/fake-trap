@@ -63,7 +63,7 @@ export default async function DetailIntroCategory({ params }: Props) {
         <HeaderIntro
           isWhiteText
           title={toTitleCase(category.data.category_name)}
-          description={`Jelajahi pengetahuan ${category.data.category_name} yang ada di E-learning`}
+          description={`Jelajahi materi ${category.data.category_name} yang ada di E-learning`}
           size="sm"
         />
       </MotionDiv>

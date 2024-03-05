@@ -105,14 +105,14 @@ export function UpdateKnowledgeForm({
 
         if (response.ok) {
           sonnerToast.success("Berhasil", {
-            description: "Pengetahuan berhasil diubah",
+            description: "Materi berhasil diubah",
           })
 
           router.back()
           router.refresh()
         } else {
           sonnerToast.error("Gagal", {
-            description: "Pengetahuan gagal diubah",
+            description: "Materi gagal diubah",
           })
         }
       } catch (error) {
@@ -135,12 +135,12 @@ export function UpdateKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Judul Pengetahuan <span className="text-red-500">*</span>
+                Judul Materi <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Judul Pengetahuan"
+                  placeholder="Judul Materi"
                   disabled={isPending}
                 />
               </FormControl>
@@ -155,12 +155,12 @@ export function UpdateKnowledgeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Deskripsi Pengetahuan <span className="text-red-500">*</span>
+                Deskripsi Materi <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder="Tuliskan deskripsi pengetahuan yang ingin dibuat"
+                  placeholder="Tuliskan deskripsi materi yang ingin dibuat"
                   disabled={isPending}
                   className="h-20 resize-none"
                 />
@@ -236,7 +236,7 @@ export function UpdateKnowledgeForm({
                               (content) => content.code_ref2 === field.value
                             )?.value_ref1
                           : "Pilih Status"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -256,7 +256,7 @@ export function UpdateKnowledgeForm({
                           >
                             <Check
                               className={cn(
-                                "mr-2 h-4 w-4",
+                                "mr-2 size-4",
                                 content.code_ref2 === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
@@ -367,7 +367,7 @@ export function UpdateKnowledgeForm({
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Update
         </Button>
       </form>

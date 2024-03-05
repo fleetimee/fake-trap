@@ -34,7 +34,7 @@ export function CourseAlert({
         </h4>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
-            <ChevronsUpDown className="h-4 w-4" />
+            <ChevronsUpDown className="size-4" />
             <span className="sr-only">Toggle</span>
           </Button>
         </CollapsibleTrigger>
@@ -47,10 +47,10 @@ export function CourseAlert({
           transition={{ duration: 0.5 }}
         >
           <Alert className="basis-full">
-            <DrawingPinFilledIcon className="h-4 w-4" />
+            <DrawingPinFilledIcon className="size-4" />
             <AlertTitle className="text-red-600">Informasi!</AlertTitle>
             <AlertDescription>
-              Pelatihan ini berdasarkan pada pengetahuan{" "}
+              Pelatihan ini berdasarkan pada materi{" "}
               <span className="font-bold">
                 <Link
                   href={
@@ -71,12 +71,12 @@ export function CourseAlert({
         {knowledgeSection.data?.slice(1).map((section) => (
           <div className="flex flex-col gap-4 px-2" key={section.id_knowledge}>
             <Alert className="basis-full">
-              <DrawingPinFilledIcon className="h-4 w-4" />
+              <DrawingPinFilledIcon className="size-4" />
               <AlertTitle className="font-semibold text-red-600">
                 Informasi!
               </AlertTitle>
               <AlertDescription>
-                Pelatihan ini berdasarkan pada pengetahuan{" "}
+                Pelatihan ini berdasarkan pada materi{" "}
                 <span className="font-bold">
                   <Link
                     href={

@@ -25,7 +25,7 @@ export default async function KnowledgeSectionNewPage({
       <div>
         <h3 className="text-lg font-medium">Section / Bagian</h3>
         <p className="text-sm text-muted-foreground">
-          Tambah Section atau Bagian baru untuk pengetahuan yang anda miliki.
+          Tambah Section atau Bagian baru untuk materi yang anda miliki.
         </p>
       </div>
       <Separator />

@@ -122,22 +122,22 @@ export function RequesterRevisionForm({
                     <SelectValue placeholder="Pilih Status">
                       {field.value === "0051" ? (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-yellow-500" />
+                          <CircleIcon className="size-5 text-yellow-500" />
                           <span>PENDING</span>
                         </div>
                       ) : field.value === "0052" ? (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-green-500" />
+                          <CircleIcon className="size-5 text-green-500" />
                           <span>DITERIMA</span>
                         </div>
                       ) : field.value === "0053" ? (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-red-500" />
+                          <CircleIcon className="size-5 text-red-500" />
                           <span>DITOLAK</span>
                         </div>
                       ) : (
                         <div className="flex items-center space-x-2">
-                          <CircleIcon className="h-5 w-5 text-red-500" />
+                          <CircleIcon className="size-5 text-red-500" />
                           <span>Pilih Status</span>
                         </div>
                       )}
@@ -157,7 +157,6 @@ export function RequesterRevisionForm({
                 <FormDescription>
                   Status pengajuan diterima dan status materi akan berubah
                   menjadi DITERIMA dan materi akan ditampilkan di halaman Materi
-                  / Pengetahuan
                 </FormDescription>
               ) : field.value === "0053" ? (
                 <FormDescription>
@@ -214,7 +213,7 @@ export function RequesterRevisionForm({
                 disabled={isPending}
               >
                 {isPending && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
                 )}
                 Kirim
               </Button>

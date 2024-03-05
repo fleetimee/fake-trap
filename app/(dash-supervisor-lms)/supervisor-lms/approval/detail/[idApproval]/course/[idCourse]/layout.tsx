@@ -97,22 +97,6 @@ export default async function CourseDetailLayout({
         />
       </div>
 
-      {/* <MotionDiv
-        className="flex flex-row gap-4 px-2"
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Alert className="basis-full">
-          <PartyPopper className="h-5 w-5" />
-          <AlertTitle>Informasi!</AlertTitle>
-          <AlertDescription>
-            Pelatihan ini berdasarkan pada pengetahuan{" "}
-            <span className="font-bold">{knowledge.data.knowledge_title}</span>
-          </AlertDescription>
-        </Alert>
-      </MotionDiv> */}
-
       <div className="flex items-center justify-end">
         <VercelToolbar
           materiButton={`/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}/knowledge`}

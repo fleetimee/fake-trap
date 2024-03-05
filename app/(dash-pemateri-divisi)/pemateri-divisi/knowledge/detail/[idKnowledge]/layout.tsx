@@ -61,7 +61,7 @@ export default async function KnowledgeDetailLayout({
             },
             {
               href: "/pemateri-divisi/knowledge",
-              title: "Pengetahuan",
+              title: "Materi",
             },
             {
               href: `/pemateri-divisi/knowledge/detail/${params.idKnowledge}`,

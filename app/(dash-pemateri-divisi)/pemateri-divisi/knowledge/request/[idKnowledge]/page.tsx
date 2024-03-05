@@ -23,7 +23,7 @@ import {
 import { Label } from "@/components/ui/label"
 
 export const metadata: Metadata = {
-  title: "Ajukan Pengetahuan Baru",
+  title: "Ajukan Materi Baru",
 }
 
 interface PemateriDivisiKnowledgePageNewProps {
@@ -75,11 +75,11 @@ export default async function PemateriDivisiRequestKnowledgeNew({
           },
           {
             href: "/pemateri-divisi/knowledge",
-            title: "Pengetahuan",
+            title: "Materi",
           },
           {
             href: "/pemateri-divisi/knowledge/request",
-            title: "Ajukan Pengetahuan Baru",
+            title: "Ajukan Materi Baru",
           },
         ]}
       />
@@ -87,21 +87,21 @@ export default async function PemateriDivisiRequestKnowledgeNew({
       <div className="lg:flex lg:items-start lg:space-x-10">
         <Card className="lg:w-1/2">
           <CardHeader>
-            <CardTitle>Preview Pengetahuan</CardTitle>
+            <CardTitle>Preview Materi</CardTitle>
             <CardDescription>
-              Ini adalah preview dari pengetahuan yang akan anda ajukan.
+              Ini adalah preview dari Materi yang akan anda ajukan.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="bookTitlePreview" className="font-bold">
-                Judul Pengetahuan
+                Judul Materi
               </Label>
               <div id="bookTitlePreview">{knowledge.data.knowledge_title}</div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="bookDescriptionPreview" className="font-bold">
-                Deskripsi Pengetahuan
+                Deskripsi Materi
               </Label>
               <div id="bookDescriptionPreview">
                 {knowledge.data.description}
@@ -126,7 +126,7 @@ export default async function PemateriDivisiRequestKnowledgeNew({
           <CardHeader>
             <CardTitle>Submit Pengajuan</CardTitle>
             <CardDescription>
-              Silahkan isi form dibawah ini untuk mengajukan pengetahuan baru.
+              Silahkan isi form dibawah ini untuk mengajukan materi baru.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

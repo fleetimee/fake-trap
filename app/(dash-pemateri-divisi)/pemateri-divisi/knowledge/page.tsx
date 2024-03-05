@@ -21,7 +21,7 @@ import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
 import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
-  title: "Pengetahuan",
+  title: "Materi",
   description: "Operator LMS Knowledge Page",
 }
 
@@ -105,7 +105,7 @@ export default async function PemateriDivisiKnowledgePage({
           },
           {
             href: "/pemateri-divisi/knowledge",
-            title: "Pengetahuan",
+            title: "Materi",
           },
         ]}
       />
@@ -116,8 +116,8 @@ export default async function PemateriDivisiKnowledgePage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Pengetahuan"
-            description="Materi dan Pengetahuan yang anda buat"
+            heading="Materi"
+            description="Materi yang anda buat"
           />
         </MotionDiv>
 

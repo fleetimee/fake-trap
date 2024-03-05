@@ -81,7 +81,7 @@ export default async function ApproveCourseRevisionPage({
           <CardHeader>
             <CardTitle>Preview Pengajuan</CardTitle>
             <CardDescription>
-              Ini adalah pengajuan pengetahuan yang akan di approve
+              Ini adalah pengajuan materi yang akan di approve
             </CardDescription>
           </CardHeader>
           <Separator />

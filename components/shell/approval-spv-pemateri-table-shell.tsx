@@ -92,7 +92,7 @@ export function ApprovalKnowledgeSupervisorPemateriTableShell({
       {
         accessorKey: "knowledge_title",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Judul Pengetahuan" />
+          <DataTableColumnHeader column={column} title="Judul Materi" />
         ),
         cell: ({ row }) => (
           <div className="w-[250px]">

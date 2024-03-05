@@ -78,16 +78,16 @@ export default async function SupervisorPemateriConfirmationPage({
       <div className="lg:flex lg:items-start lg:space-x-10">
         <Card className="border-2 hover:border-primary lg:w-1/2">
           <CardHeader>
-            <CardTitle>Preview Pengajuan</CardTitle>
+            <CardTitle>Preview Materi</CardTitle>
             <CardDescription>
-              Ini adalah pengajuan pengetahuan yang akan di approve
+              Ini adalah pengajuan materi yang akan di approve
             </CardDescription>
           </CardHeader>
           <Separator />
 
           <CardContent className="space-y-8 py-5">
             <div className="space-y-2">
-              <Label className="font-bold">Judul Pengetahuan</Label>
+              <Label className="font-bold">Judul Materi</Label>
               <div>
                 <Link
                   href={`/supervisor-pemateri-divisi/approval/detail/${params.idApproval}/knowledge/${approvalRequest.data.id_knowledge}`}

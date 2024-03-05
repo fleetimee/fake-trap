@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah Pengetahuan Baru",
+  title: "Tambah Materi Baru",
   description: "Operator LMS New Knowledge Page",
 }
 
@@ -59,19 +59,19 @@ export default async function PemateriDivisiKnowledgePageNew() {
           },
           {
             href: "/pemateri-divisi/knowledge",
-            title: "Pengetahuan",
+            title: "Materi",
           },
           {
             href: "/pemateri-divisi/knowledge/new",
-            title: "Tambah Pengetahuan Baru",
+            title: "Tambah Materi Baru",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Pengetahuan</CardTitle>
-          <CardDescription>Tambah Pengetahuan Baru</CardDescription>
+          <CardTitle className="text-xl">Tambah Materi</CardTitle>
+          <CardDescription>Tambah Materi Baru</CardDescription>
         </CardHeader>
 
         <CardContent>

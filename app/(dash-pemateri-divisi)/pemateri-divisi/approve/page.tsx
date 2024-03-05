@@ -90,8 +90,8 @@ export default async function PemateriDivisiApprovePage({
           className="col-span-2"
         >
           <DashboardHeader
-            heading="Pengajuan Materi / Pengetahuan"
-            description="Ini merupakan daftar pengetahuan / materi yang sudah kamu ajukan ke atasanmu"
+            heading="Pengajuan Materi"
+            description="Ini merupakan daftar materi yang sudah kamu ajukan ke atasanmu"
           />
         </MotionDiv>
       </div>

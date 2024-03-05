@@ -80,9 +80,9 @@ export default async function OperatorLmsCourseRequestPage({
       <div className="lg:flex lg:items-start lg:space-x-10">
         <Card className="lg:w-1/2">
           <CardHeader>
-            <CardTitle>Preview Pengetahuan</CardTitle>
+            <CardTitle>Preview Materi</CardTitle>
             <CardDescription>
-              Ini adalah preview dari pengetahuan yang akan anda ajukan.
+              Ini adalah preview dari materi yang akan anda ajukan.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

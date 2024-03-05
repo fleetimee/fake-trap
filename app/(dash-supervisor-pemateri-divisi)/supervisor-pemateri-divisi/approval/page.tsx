@@ -15,7 +15,7 @@ import { DashboardShell } from "@/components/shell"
 import { ApprovalKnowledgeSupervisorPemateriTableShell } from "@/components/shell/approval-spv-pemateri-table-shell"
 
 export const metadata: Metadata = {
-  title: "Approve Pengetahuan",
+  title: "Approve Materi",
 }
 
 interface SpvPemateriDivisiApproveCoursePageProps {
@@ -75,7 +75,7 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
           },
           {
             href: "/supervisor-pemateri-divisi/approval",
-            title: "Approve Pengetahuan",
+            title: "Approve Materi",
           },
         ]}
       />
@@ -86,7 +86,7 @@ export default async function SpvPemateriDivisiApproveKnowledgePage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Approve Pengetahuan"
+            heading="Approve Materi"
             description="Approve Materi yang diajukan oleh pemateri divisi"
           />
         </MotionDiv>

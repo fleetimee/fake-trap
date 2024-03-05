@@ -4,13 +4,13 @@ export const knowledgeSchema = z.object({
   KnowledgeTitle: z
     .string()
     .min(1, {
-      message: "Judul pengetahuan tidak boleh kosong",
+      message: "Judul materi tidak boleh kosong",
     })
     .max(60, {
-      message: "Judul pengetahuan tidak boleh lebih dari 60 karakter",
+      message: "Judul materi tidak boleh lebih dari 60 karakter",
     }),
   Description: z.string().min(1, {
-    message: "Deskripsi pengetahuan tidak boleh kosong",
+    message: "Deskripsi materi tidak boleh kosong",
   }),
   Status: z.string().min(1, {
     message: "Status tidak boleh kosong",
@@ -38,7 +38,7 @@ export const knowledgeSchema = z.object({
       }
     ),
   IdCategory: z.number().min(1, {
-    message: "Kategori tidak boleh kosong",
+    message: "Modul tidak boleh kosong",
   }),
   CreatedBy: z.string().min(1, {
     message: "Created by tidak boleh kosong",

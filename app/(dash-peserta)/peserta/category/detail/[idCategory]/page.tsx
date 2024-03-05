@@ -61,7 +61,7 @@ export default async function DetailCategory({ params }: DetailCategoryProps) {
             leading-relaxed text-gray-700
       "
       >
-        Berikut adalah pengetahuan yang tersedia di modul ini :
+        Berikut adalah materi yang tersedia di modul ini :
       </h1>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

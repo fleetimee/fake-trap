@@ -74,7 +74,7 @@ export function VelocityScroll() {
   }
   return (
     <section>
-      <ParallaxText baseVelocity={5}>Pengetahuan Modul Elearning</ParallaxText>
+      <ParallaxText baseVelocity={5}>Materi Modul Elearning</ParallaxText>
       <ParallaxText baseVelocity={-5}>Pelatihan Forum Interaktif</ParallaxText>
     </section>
   )

@@ -80,7 +80,7 @@ export default async function OperatorLmsCategoryPage({
         >
           <DashboardHeader
             heading="Modul"
-            description="Modul Pengetahuan yang tersedia"
+            description="Modul Materi yang tersedia"
           />
         </MotionDiv>
       </div>

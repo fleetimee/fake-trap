@@ -16,10 +16,10 @@ export async function DashboardKnowledgeCardCount({
 
   return (
     <CardDashboardIndicator
-      title="Pengetahuan"
+      title="Materi"
       icon="knowledge"
       content={knowledgeResp.count}
-      description="Pengetahuan yang tersedia"
+      description="Materi yang tersedia"
     />
   )
 }
