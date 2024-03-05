@@ -26,7 +26,7 @@ export function QuizTab({ className, quizId, initialRoute }: QuizTabProps) {
       isActive: segment === null,
     },
     {
-      title: "Soal Builder",
+      title: "Buat Soal",
       href: initialRoute
         ? `${initialRoute}/soal`
         : `/dashboard/quiz/${quizId}/soal`,
