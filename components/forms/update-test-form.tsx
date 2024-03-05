@@ -11,6 +11,7 @@ import { z } from "zod"
 
 import { QuizOneResData } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
+import { timerOptions } from "@/config/timer-options"
 import { updateExercise } from "@/lib/fetcher/exercise-fetcher"
 import { cn } from "@/lib/utils"
 import { testSchema } from "@/lib/validations/test"
@@ -61,6 +62,7 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
       quiz_title: quiz.quiz_title,
       quiz_desc: quiz.quiz_desc,
       quiz_type: quiz.quiz_type,
+      time_limit: quiz.time_limit,
       created_by: quiz.created_by,
       updated_by: session?.expires.id,
     },
@@ -146,13 +148,12 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
 
         <FormField
           control={form.control}
-          name="quiz_type"
+          name="time_limit"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Tipe Kuis <span className="text-red-500">*</span>
+                Batas Waktu <span className="text-red-500">*</span>
               </FormLabel>
-
               <FormControl>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -167,20 +168,20 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
                         )}
                       >
                         {field.value
-                          ? references.data.find(
-                              (quiz) => quiz.code_ref2 === field.value
-                            )?.value_ref1
-                          : "Pilih tipe kuis"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          ? timerOptions.find(
+                              (timer) => timer.value === field.value
+                            )?.label
+                          : "Pilih batas waktu"}
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-[400px] p-0 xl:w-[680px]">
                     <Command>
                       <CommandInput placeholder="Pilih tipe quiz..." />
-                      <CommandEmpty>Tipe Quiz tidak ditemukan</CommandEmpty>
+                      <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
                       <CommandGroup>
-                        {references.data.map((quiz) => (
+                        {/* {references.data.map((quiz) => (
                           <CommandItem
                             value={quiz.value_ref1}
                             key={quiz.id_ref}
@@ -191,7 +192,7 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
                           >
                             <Check
                               className={cn(
-                                "mr-2 h-4 w-4",
+                                "mr-2 size-4",
                                 quiz.code_ref2 === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
@@ -199,15 +200,35 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
                             />
                             {quiz.value_ref1}
                           </CommandItem>
+                        ))} */}
+
+                        {timerOptions.map((timer) => (
+                          <CommandItem
+                            value={timer.label}
+                            key={timer.value}
+                            onSelect={(value) => {
+                              form.clearErrors("time_limit")
+                              form.setValue("time_limit", timer.value)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 size-4",
+                                timer.value === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {timer.label}
+                          </CommandItem>
                         ))}
                       </CommandGroup>
                     </Command>
                   </PopoverContent>
                 </Popover>
               </FormControl>
-              <FormDescription>
-                Pilih tipe kuis yang akan dibuat
-              </FormDescription>
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -247,7 +268,7 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Update
         </Button>
       </form>

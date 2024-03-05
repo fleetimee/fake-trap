@@ -179,7 +179,7 @@ export function QuestionForm(props: {
           <div className="flex flex-row items-center justify-between">
             <h1 className="font-heading font-semibold">Pertanyaan</h1>
 
-            <Button type="submit">Push Pertanyaan</Button>
+            <Button type="submit">Tambah Pertanyaan</Button>
           </div>
 
           <FormField

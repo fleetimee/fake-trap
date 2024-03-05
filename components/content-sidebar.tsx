@@ -137,6 +137,17 @@ export function KnowledgeContentSidebar({
 
                     {section.content ? (
                       <>
+                        {canCreateContent ? (
+                          <AccordionContent className="py-1">
+                            {/* Create content button */}
+                            <CreateContentDropdownButton
+                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
+                            />
+                          </AccordionContent>
+                        ) : null}
+
                         {section.content.map((content) => (
                           <ContextMenu key={content.id_content.toString()}>
                             <ContextMenuTrigger>
@@ -194,19 +205,16 @@ export function KnowledgeContentSidebar({
                             ) : null}
                           </ContextMenu>
                         ))}
-                        {canCreateContent ? (
-                          <AccordionContent className="py-1">
-                            {/* Create content button */}
-                            <CreateContentDropdownButton
-                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-                            />
-                          </AccordionContent>
-                        ) : null}
                       </>
                     ) : (
                       <AccordionContent className="py-4">
+                        {canCreateContent ? (
+                          <CreateContentDropdownButton
+                            videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
+                            fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
+                            articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
+                          />
+                        ) : null}
                         <div className="flex flex-col gap-4">
                           <AccordionContent className="py-4">
                             <EmptyContent className="h-[50px]">
@@ -220,13 +228,6 @@ export function KnowledgeContentSidebar({
                             </EmptyContent>
                           </AccordionContent>
                           {/* Create content button */}
-                          {canCreateContent ? (
-                            <CreateContentDropdownButton
-                              videoCreationUrl={`${baseUrl}/section/${section.id_section}/content/video/new`}
-                              fileCreationUrl={`${baseUrl}/section/${section.id_section}/content/file/new`}
-                              articleCreationUrl={`${baseUrl}/section/${section.id_section}/content/article/new`}
-                            />
-                          ) : null}
                         </div>
                       </AccordionContent>
                     )}
