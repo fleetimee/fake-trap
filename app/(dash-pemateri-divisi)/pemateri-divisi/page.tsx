@@ -109,7 +109,7 @@ export default async function PemateriDivisiDashboardPage() {
         />
         <Widget
           icon={<Icons.quiz className="text-blue-600" />}
-          title={"Test"}
+          title={"Ujian"}
           subtitle={TestCount.toString()}
         />
       </div>

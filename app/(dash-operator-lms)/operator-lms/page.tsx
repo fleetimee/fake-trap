@@ -125,7 +125,7 @@ export default async function OperatorLMSDashboard() {
 
         <Widget
           icon={<Icons.quiz className="text-yellow-500" />}
-          title="Test dan Latihan"
+          title="Ujian"
           subtitle={globalCount.data?.quiz_count.toString()}
         />
 

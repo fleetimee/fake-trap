@@ -11,8 +11,8 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, QuizTableShell } from "@/components/shell"
 
 export const metadata: Metadata = {
-  title: "Test dan Latihan",
-  description: "Test",
+  title: "Ujian",
+  description: "Ujian",
 }
 
 interface OperatorLMSExercisePageProps {
@@ -69,7 +69,7 @@ export default async function OperatorLMSExercisePage({
           },
           {
             href: "/operator-lms/exercise",
-            title: "Test dan Latihan",
+            title: "Ujian",
           },
         ]}
       />
@@ -80,8 +80,8 @@ export default async function OperatorLMSExercisePage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Test dan Latihan"
-            description="Buat Pre Test, Post Test, dan Latihan untuk peserta Anda."
+            heading="Ujian"
+            description="Kelola ujian yang ada di sistem"
           />
         </MotionDiv>
       </div>

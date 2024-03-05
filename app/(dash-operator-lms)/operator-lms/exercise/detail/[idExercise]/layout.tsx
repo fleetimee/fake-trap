@@ -41,7 +41,7 @@ export default async function ExerciseDetailLayout({
           },
           {
             href: "/operator-lms/exercise",
-            title: "Test dan Latihan",
+            title: "Ujian",
           },
           {
             href: `/operator-lms/exercise/detail/${params.idExercise}`,

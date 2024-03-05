@@ -41,7 +41,7 @@ export default async function ExerciseDetailLayout({
           },
           {
             href: "/pemateri-divisi/exercise",
-            title: "Test dan Latihan",
+            title: "Ujian",
           },
           {
             href: `/pemateri-divisi/exercise/detail/${params.idExercise}`,

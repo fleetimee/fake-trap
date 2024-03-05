@@ -19,8 +19,8 @@ import { DashboardShell, QuizTableShell } from "@/components/shell"
 import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
-  title: "Test dan Latihan",
-  description: "Test",
+  title: "Ujian",
+  description: "Ujian",
 }
 
 interface PemateriExercisePageProps {
@@ -84,7 +84,7 @@ export default async function PemateriDivisiExercisePage({
           },
           {
             href: "/pemateri-divisi/exercise",
-            title: "Test dan Latihan",
+            title: "Ujian",
           },
         ]}
       />
@@ -95,7 +95,7 @@ export default async function PemateriDivisiExercisePage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Test dan Latihan"
+            heading="Ujian"
             description="Buat Pre Test, Post Test, dan Latihan untuk peserta Anda."
           />
         </MotionDiv>

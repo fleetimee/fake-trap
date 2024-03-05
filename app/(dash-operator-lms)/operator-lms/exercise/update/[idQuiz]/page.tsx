@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Update Test dan Latihan",
-  description: "Update Test dan Latihan",
+  title: "Update Ujian",
+  description: "Update Ujian",
 }
 
 interface OperatorLMSExercisePageUpdateProps {
@@ -60,11 +60,11 @@ export default async function OperatorLMSExercisePageUpdate({
           },
           {
             href: "/operator-lms/exercise",
-            title: "Test dan Latihan",
+            title: "Ujian",
           },
           {
             href: `/operator-lms/exercise/update/${params.idQuiz}`,
-            title: "Update Test dan Latihan",
+            title: "Update Ujian",
           },
           {
             href: `/operator-lms/exercise/update/${params.idQuiz}`,

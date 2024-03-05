@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Update Test dan Latihan",
-  description: "Update Test dan Latihan",
+  title: "Update Ujian",
+  description: "Update Ujian",
 }
 
 interface PemateriDivisiExercisePageUpdateProps {
@@ -63,11 +63,11 @@ export default async function PemateriDivisiExercisePageUpdate({
           },
           {
             href: "/pemateri-divisi/exercise",
-            title: "Test dan Latihan",
+            title: "Ujian",
           },
           {
             href: `/pemateri-divisi/exercise/update/${params.idQuiz}`,
-            title: "Update Test dan Latihan",
+            title: "Update Ujian",
           },
         ]}
       />
@@ -75,11 +75,11 @@ export default async function PemateriDivisiExercisePageUpdate({
       <Card>
         <CardHeader className="space-y-1">
           <CardTitle>
-            Update Tes:{" "}
+            Update Ujian:{" "}
             <span className="font-semibold">{quiz.data?.quiz_title}</span>
           </CardTitle>
           <CardDescription>
-            Update Tes yang sudah dibuat sebelumnya
+            Update Ujian yang sudah dibuat sebelumnya
           </CardDescription>
         </CardHeader>
 

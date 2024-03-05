@@ -112,7 +112,7 @@ export function AddQuizMultipleChoiceQuiz({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Pilih Test <span className="text-red-500">*</span>
+                Pilih Ujian <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Popover>
@@ -131,8 +131,8 @@ export function AddQuizMultipleChoiceQuiz({
                           ? quizList.find(
                               (quiz) => quiz.id_quiz === field.value
                             )?.quiz_title
-                          : "Pilih Test"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          : "Pilih Ujian"}
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -157,7 +157,7 @@ export function AddQuizMultipleChoiceQuiz({
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
+                                    "mr-2 size-4",
                                     quiz.id_quiz === field.value
                                       ? "opacity-100"
                                       : "opacity-0"
@@ -180,7 +180,7 @@ export function AddQuizMultipleChoiceQuiz({
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Tambah
         </Button>
       </form>

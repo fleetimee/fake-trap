@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah Test dan Latihan",
-  description: "Tambah Test dan Latihan",
+  title: "Tambah Ujian",
+  description: "Tambah Ujian",
 }
 
 export default async function PemateriDivisiExercisePageNew() {
@@ -42,18 +42,18 @@ export default async function PemateriDivisiExercisePageNew() {
           },
           {
             href: "/pemateri-divisi/exercise",
-            title: "Test dan Latihan",
+            title: "Ujian",
           },
           {
             href: "/pemateri-divisi/exercise/new",
-            title: "Tambah Test dan Latihan",
+            title: "Tambah Ujian",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Test dan Latihan</CardTitle>
+          <CardTitle className="text-xl">Tambah Ujian</CardTitle>
           <CardDescription>
             Buat Pre Test, Post Test, dan Latihan untuk peserta Anda.
           </CardDescription>

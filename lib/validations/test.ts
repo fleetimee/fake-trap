@@ -1,21 +1,20 @@
-import { time } from "console"
 import { z } from "zod"
 
 export const testSchema = z.object({
   quiz_title: z
     .string()
     .min(1, {
-      message: "Judul test tidak boleh kosong",
+      message: "Judul ujian tidak boleh kosong",
     })
     .max(255),
   quiz_desc: z.string().min(1, {
-    message: "Deskripsi test tidak boleh kosong",
+    message: "Deskripsi ujian tidak boleh kosong",
   }),
   quiz_type: z.string().min(1, {
-    message: "Tipe test tidak boleh kosong",
+    message: "Tipe ujian tidak boleh kosong",
   }),
   time_limit: z.number().min(1, {
-    message: "Waktu test tidak boleh kosong",
+    message: "Waktu ujian tidak boleh kosong",
   }),
   created_by: z.string().min(1, {
     message: "Created by tidak boleh kosong",

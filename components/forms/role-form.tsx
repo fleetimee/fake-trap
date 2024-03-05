@@ -146,9 +146,9 @@ export function RuleForm({ rule }: RuleFormProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel className="text-base">Membuat Test</FormLabel>
+                    <FormLabel className="text-base">Membuat Ujian</FormLabel>
                     <FormDescription>
-                      Apakah grup ini dapat membuat test?
+                      Apakah grup ini dapat membuat ujian?
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -350,7 +350,7 @@ export function RuleForm({ rule }: RuleFormProps) {
         <Button type="submit" className="w-fit" disabled={isPending}>
           {isPending && (
             <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
+              className="mr-2 size-4 animate-spin"
               aria-hidden="true"
             />
           )}
