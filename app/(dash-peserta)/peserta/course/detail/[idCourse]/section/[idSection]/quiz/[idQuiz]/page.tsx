@@ -139,22 +139,6 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
   const minutes = quiz.data.time_limit / 60
 
   const percentageScore = (userScore / maximumScore) * 100
-  // if (isPretest && userQuiz.data.length > 0) {
-  //   return (
-  //     <p>
-  //       Anda sudah mengerjakan pretest, silahkan lanjutkan ke materi selanjutnya
-  //     </p>
-  //   )
-  // }
-
-  // if (isPosttest && userQuiz.data.length === 3) {
-  //   return (
-  //     <p>
-  //       Anda sudah mengerjakan posttest, silahkan lanjutkan ke materi
-  //       selanjutnya
-  //     </p>
-  //   )
-  // }
 
   if (quiz.code === 400) {
     return notFound()
@@ -267,7 +251,11 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
               >
                 <Button
                   className="mt-4 w-full"
-                  variant="secondary"
+                  variant={
+                    isPretestExceded || isPosttestExceded
+                      ? "destructive"
+                      : "default"
+                  }
                   disabled={isPretestExceded || isPosttestExceded}
                 >
                   Mulai Quiz

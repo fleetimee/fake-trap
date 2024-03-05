@@ -42,7 +42,7 @@ export function CourseContentSidebarPretest({
 
         <TabsContent value="course">
           <ScrollArea className="h-[700px] w-full">
-            {filteredSections ? (
+            {filteredSections && filteredSections.length > 0 ? (
               <Accordion
                 type="single"
                 collapsible

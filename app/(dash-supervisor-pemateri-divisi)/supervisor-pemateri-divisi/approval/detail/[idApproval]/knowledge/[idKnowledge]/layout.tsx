@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -7,8 +8,11 @@ import { getCurrentUser } from "@/lib/session"
 import { Content } from "@/components/content"
 import { KnowledgeContentSidebar } from "@/components/content-sidebar"
 import { SectionBanner } from "@/components/create-section-banner"
+import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
 
 interface ApprovalDetailKnowledgePageProps {
   params: {
@@ -85,6 +89,23 @@ export default async function KnowledgeDetailLayout({
           urlLink={`/approval/detail/${params.idApproval}/knowledge/${params.idKnowledge}/edit`}
           image={knowledge.data?.image}
         />
+      </div>
+
+      <div className="px-2">
+        <Alert className="text-primary-700 flex flex-col gap-2   lg:flex-none lg:gap-0">
+          <Icons.handShake className="size-4" />
+          <AlertTitle>Approve Materi</AlertTitle>
+          <AlertDescription>
+            Silahkan approve materi menggunakan tombol di samping
+          </AlertDescription>
+          <div className="flex w-full flex-row justify-end gap-2 lg:w-auto">
+            <Link
+              href={`/supervisor-pemateri-divisi/approval/confirmation/${params.idApproval}`}
+            >
+              <Button className="w-full lg:w-auto">Approve</Button>
+            </Link>
+          </div>
+        </Alert>
       </div>
 
       <div
