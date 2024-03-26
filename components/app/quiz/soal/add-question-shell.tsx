@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { RocketIcon } from "@radix-ui/react-icons"
@@ -24,6 +24,11 @@ export function SoalShell(props: {
   const [parent, enableAnimations] = useAutoAnimate()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [randomize, setRandomize] = useState(false)
+
+  const handleRandomize = () => {
+    setRandomize(!randomize)
+  }
 
   const formSchemaQuestion = z.object({
     id_quiz: z.number(),
@@ -131,41 +136,48 @@ export function SoalShell(props: {
         <Card className="flex flex-col gap-8 p-5" ref={parent}>
           <div className="flex items-center justify-between">
             <h1 className="font-heading font-semibold">Hasil Soal</h1>
-            <Button onClick={() => onSubmit(quizzes)}>Submit Quiz</Button>
-          </div>
-          {quizzes.map((quiz, index) => (
-            <div key={index}>
-              <div className="flex items-center justify-between">
-                <p className="space-y-4 pb-4 text-sm font-semibold leading-none">
-                  {index + 1}. {quiz.question_text}
-                </p>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => deleteQuestion(index)}
-                >
-                  Hapus
-                </Button>
-              </div>
-              <ul className="grid list-inside list-disc grid-cols-2 gap-4">
-                {quiz.answers.map((answer, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    {/* <input type="checkbox" checked={answer.is_correct} /> */}
-                    <Checkbox
-                      checked={answer.is_correct}
-                      disabled={
-                        quiz.answers.filter((answer) => answer.is_correct)
-                          .length > 0
-                      }
-                    />
-                    <p className="text-sm font-medium leading-none">
-                      {answer.answer_text}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+            <div className="flex gap-4">
+              <Button onClick={handleRandomize}>Randomize</Button>
+              <Button onClick={() => onSubmit(quizzes)}>Submit Quiz</Button>
             </div>
-          ))}
+          </div>
+          {(randomize ? quizzes.sort(() => Math.random() - 0.5) : quizzes).map(
+            (quiz, index) => (
+              <div key={index}>
+                <div className="flex items-center justify-between">
+                  <p className="space-y-4 pb-4 text-sm font-semibold leading-none">
+                    {index + 1}. {quiz.question_text}
+                  </p>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => deleteQuestion(index)}
+                  >
+                    Hapus
+                  </Button>
+                </div>
+                <ul className="grid list-inside list-disc grid-cols-2 gap-4">
+                  {(randomize
+                    ? quiz.answers.sort(() => Math.random() - 0.5)
+                    : quiz.answers
+                  ).map((answer, index) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <Checkbox
+                        checked={answer.is_correct}
+                        disabled={
+                          quiz.answers.filter((answer) => answer.is_correct)
+                            .length > 0
+                        }
+                      />
+                      <p className="text-sm font-medium leading-none">
+                        {answer.answer_text}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          )}
         </Card>
       )}
 
