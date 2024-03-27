@@ -115,13 +115,6 @@ export function PublicCategories({
 
   return (
     <>
-      <HeaderIntro
-        title="Semua Modul"
-        description="Semua Modul yang tersedia"
-        size="sm"
-        isWhiteText={isWhiteText}
-      />
-
       <div className="flex items-center space-x-2">
         <Sheet>
           <SheetTrigger asChild>
@@ -184,6 +177,7 @@ export function PublicCategories({
             </div>
           </SheetContent>
         </Sheet>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button aria-label="Sort products" size="sm" disabled={isPending}>
