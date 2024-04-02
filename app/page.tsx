@@ -173,7 +173,7 @@ export default async function IndexPage() {
         className="relative flex h-auto min-h-screen flex-col  lg:min-h-[100svh]"
         id="feature"
       >
-        <div className="gap-12  ">
+        <div className="gap-12">
           <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
             <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center py-2 text-center">
               <h2 className="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
