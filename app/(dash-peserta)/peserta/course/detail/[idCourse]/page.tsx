@@ -46,6 +46,8 @@ export default async function CourseDetailPage({
     userUuid: tokenExtracted?.id,
   })
 
+  console.log(checkUserPretest)
+
   return checkUserPretest.data ? (
     <Image
       src={`${process.env.NEXT_PUBLIC_BASE_URL}${course?.data?.image}`}

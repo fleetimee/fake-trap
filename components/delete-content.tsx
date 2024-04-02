@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
-import { ErrorResponse } from "@/types/error-res"
 import { deleteContent } from "@/lib/fetcher/content-fetcher"
 import {
   ContextMenuItem,

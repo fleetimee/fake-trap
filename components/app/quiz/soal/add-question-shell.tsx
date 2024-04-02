@@ -49,6 +49,10 @@ export function SoalShell(props: {
     setQuizzes((prev) => prev.filter((_, i) => i !== index))
   }
 
+  function deleteALlQuestion() {
+    setQuizzes([])
+  }
+
   async function onSubmit(values: z.infer<typeof formSchemaQuestion>[]) {
     setIsLoading(true)
 
@@ -137,6 +141,13 @@ export function SoalShell(props: {
           <div className="flex items-center justify-between">
             <h1 className="font-heading font-semibold">Hasil Soal</h1>
             <div className="flex gap-4">
+              <Button
+                variant="destructive"
+                onClick={deleteALlQuestion}
+                disabled={isLoading}
+              >
+                Hapus Semua
+              </Button>
               <Button onClick={handleRandomize}>Randomize</Button>
               <Button onClick={() => onSubmit(quizzes)}>Submit Quiz</Button>
             </div>

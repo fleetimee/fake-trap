@@ -1,9 +1,5 @@
 import { z } from "zod"
 
-
-
-
-
 export const usersSchema = z.object({
   name: z.string().min(1, {
     message: "Nama tidak boleh kosong",
@@ -26,6 +22,6 @@ export const usersSchema = z.object({
       })
     )
     .min(1, {
-      message: "Role tidak boleh kosong",
+      message: "Kewenangan tidak boleh kosong",
     }),
 })

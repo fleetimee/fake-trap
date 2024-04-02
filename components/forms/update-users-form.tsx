@@ -178,7 +178,7 @@ export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Role <span className="text-red-500">*</span>
+                Kewenangan <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Popover>
