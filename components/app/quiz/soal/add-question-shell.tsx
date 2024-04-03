@@ -62,8 +62,6 @@ export function SoalShell(props: {
         body: JSON.stringify(values),
       })
 
-      console.log(response)
-
       if (response.ok) {
         sonnerToast.success("Berhasil", {
           description: "Soal berhasil ditambahkan",
