@@ -3,6 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
@@ -28,6 +29,10 @@ export function CategoryTableShell({
   newRowLink,
   editRowLink,
 }: CategoryTableShellProps) {
+  const path = usePathname()
+
+  const absolutePath = path.split("/")[1]
+
   const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
       {
@@ -71,6 +76,18 @@ export function CategoryTableShell({
         ),
         enableSorting: true,
         enableHiding: true,
+        cell: ({ row }) => {
+          return (
+            <Link
+              href={`/${absolutePath}/knowledge?page=1&id_category=${row.original.id_category}`}
+              passHref
+            >
+              <p className="cursor-pointer text-sm font-bold text-blue-500">
+                {row.original.category_name}
+              </p>
+            </Link>
+          )
+        },
       },
       {
         accessorKey: "total_knowledge",
