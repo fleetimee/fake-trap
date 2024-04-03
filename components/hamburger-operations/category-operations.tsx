@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
@@ -71,27 +71,6 @@ export function CategoryOperations({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <Link href={`/dashboard/category/${kategori.id_category}`}>
-            <DropdownMenuItem>Detail</DropdownMenuItem>
-          </Link>
-
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem
-            onClick={() => {
-              navigator.clipboard
-                .writeText(kategori.id_category.toString())
-                .then(() => {
-                  sonnerToast.info("ID Modul berhasil dicopy")
-                })
-                .catch((error) => {
-                  console.error("Failed to copy text: ", error)
-                })
-            }}
-          >
-            Copy
-          </DropdownMenuItem>
-
           <DropdownMenuItem
             className="flex items-center"
             disabled={!rule.can_write_knowledge}
@@ -113,7 +92,7 @@ export function CategoryOperations({
           <DropdownMenuSeparator />
 
           <DropdownMenuItem
-            className="flex  items-center"
+            className="text-red-60  flex items-center"
             disabled={!rule.can_write_knowledge}
             onSelect={() => setOpenDeleteAlert(true)}
           >
