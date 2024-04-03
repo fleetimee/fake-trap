@@ -191,6 +191,10 @@ export function UpdateKnowledgeForm({
                   }}
                 />
               </FormControl>
+              <FormDescription>
+                Gambar ini opsional, jika tidak diisi maka akan menggunakan
+                gambar default
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
