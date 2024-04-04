@@ -1,7 +1,9 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import Link from "next/link"
+import Logo from "@/public/logo.png"
 import { MainNavItem } from "@/types"
 
 import { CategoryNavDataListRes } from "@/types/navbar/res/navbar-list"
@@ -29,7 +31,10 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
   return (
     <div className="hidden gap-6 lg:flex">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <Icons.logo className="text-primary" />
+        {/* <Icons.logo className="text-primary" /> */}
+
+        <Image src={Logo} alt="Logo" width={20} height={20} />
+
         <span className="hidden font-bold text-primary sm:inline-block">
           {siteConfig.name}
         </span>
