@@ -632,6 +632,31 @@ export async function getUserPastCourseKnowledge({
   return await res.json()
 }
 
+interface GetUserKnowledgeEligibilityProps {
+  token: string | undefined
+  userUuid: string
+  idKnowledge: string
+}
+
+export async function getUserKnowledgeEligibility({
+  token,
+  userUuid,
+  idKnowledge,
+}: GetUserKnowledgeEligibilityProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/getCheckKnowledgeEligibility/${idKnowledge}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
 interface CreateUserProps {
   token: string | undefined
   body: BodyInit

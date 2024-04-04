@@ -132,9 +132,17 @@ export default async function LibraryPage() {
                     <TableCell>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="text-lg font-semibold">
-                            {knowledge.knowledge_title}
-                          </h3>
+                          <Link
+                            href={`/peserta/knowledge/${knowledge.id_knowledge}`}
+                          >
+                            <h3
+                              className="cursor-pointer text-lg font-semibold
+                              text-blue-500 hover:text-blue-700 hover:underline
+                            "
+                            >
+                              {knowledge.knowledge_title}
+                            </h3>
+                          </Link>
                           <p className="text-sm text-gray-500">
                             {knowledge.description}
                           </p>
