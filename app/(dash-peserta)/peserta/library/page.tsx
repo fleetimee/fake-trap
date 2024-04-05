@@ -133,7 +133,7 @@ export default async function LibraryPage() {
                       <div className="flex items-center justify-between">
                         <div>
                           <Link
-                            href={`/peserta/knowledge/${knowledge.id_knowledge}`}
+                            href={`/peserta/knowledge/detail/${knowledge.id_knowledge}`}
                           >
                             <h3
                               className="cursor-pointer text-lg font-semibold
