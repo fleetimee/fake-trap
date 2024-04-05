@@ -72,7 +72,7 @@ export function CategoryTableShell({
       {
         accessorKey: "category_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Modul" />
+          <DataTableColumnHeader column={column} title="Nama Divisi" />
         ),
         enableSorting: true,
         enableHiding: true,

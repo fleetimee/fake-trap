@@ -50,7 +50,7 @@ export default async function OperatorLMSUsersPageNew() {
         ]}
       />
       <Alert variant="destructive">
-        <Shield className="h-4 w-4" />
+        <Shield className="size-4" />
         <AlertTitle>Perhatian!</AlertTitle>
         <AlertDescription>
           Demi keamanan, setelah menambahkan user baru, user tersebut akan
