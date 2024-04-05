@@ -115,8 +115,6 @@ export default async function CourseDetailLayout({
     })
   }
 
-  console.log("filteredSections", filteredSections)
-
   const notAvailable = courseStatus !== CourseAvailability.ACTIVE
 
   return (

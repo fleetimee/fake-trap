@@ -28,6 +28,8 @@ export async function generateMetadata({ params }: KnowledgeDetailLayoutProps) {
     token: user?.token,
   })
 
+  console.log(knowledge)
+
   return {
     title: knowledge.data?.knowledge_title,
     description: knowledge.data?.description,

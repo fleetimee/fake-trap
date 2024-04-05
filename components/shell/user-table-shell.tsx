@@ -91,7 +91,7 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
       {
         accessorKey: "roles",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Role" />
+          <DataTableColumnHeader column={column} title="Kewenagan" />
         ),
         cell: ({ row }) => {
           const user = row.original

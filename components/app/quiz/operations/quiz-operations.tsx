@@ -7,7 +7,6 @@ import { AlertDialogDescription } from "@radix-ui/react-alert-dialog"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
-import { z } from "zod"
 
 import { QuizListResData } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
@@ -54,9 +53,9 @@ export function QuizOperations({ quiz, linkString }: QuizOperationsProps) {
           <Button
             aria-label="Open menu"
             variant="ghost"
-            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+            className="flex size-8 p-0 data-[state=open]:bg-muted"
           >
-            <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
+            <DotsHorizontalIcon className="size-4" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
@@ -126,9 +125,9 @@ export function QuizOperations({ quiz, linkString }: QuizOperationsProps) {
               className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
             >
               {isDeleteLoading ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                <Icons.spinner className="mr-2 size-4 animate-spin" />
               ) : (
-                <Icons.trash className="mr-2 h-4 w-4" />
+                <Icons.trash className="mr-2 size-4" />
               )}
               Hapus
             </AlertDialogAction>

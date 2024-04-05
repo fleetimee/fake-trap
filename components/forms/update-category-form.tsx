@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -137,6 +138,10 @@ export default function UpdateCategoryForm({
                   }}
                 />
               </FormControl>
+              <FormDescription>
+                Gambar ini opsional, jika tidak diisi maka akan menggunakan
+                gambar default
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

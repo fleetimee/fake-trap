@@ -227,12 +227,6 @@ export function getCourseStatus({
     })
   )
 
-  console.log("currentDateInUserTimezone", currentDateInUserTimezone)
-
-  console.log("startDate", startDate)
-
-  console.log("endDate", endDate)
-
   if (isAfter(startDate, endDate)) {
     throw new Error("Start date cannot be after end date")
   }

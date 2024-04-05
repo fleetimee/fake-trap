@@ -4,7 +4,7 @@ export type SiteConfig = typeof siteConfig
  * Configuration object for the site.
  */
 export const siteConfig = {
-  name: "BPD DIY Elearning",
+  name: "BPD DIY E-Learning",
   url: `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}`,
   description:
     "E-learning BPD DIY memberikan anda akses ke ribuan pelatihan online. Pelajari apa saja, kapan saja, di mana saja",

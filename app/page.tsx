@@ -102,7 +102,7 @@ export default async function IndexPage() {
 
       <section className="bg-[url(/hero_bg.svg)] bg-cover bg-bottom py-14 md:bg-left lg:min-h-[100svh]">
         <div className="mx-auto max-w-screen-xl md:px-8 lg:h-screen">
-          <div className="items-center gap-x-12 sm:px-4 md:px-0 lg:flex">
+          <div className="items-center gap-x-12 py-20 sm:px-4 md:px-0 lg:flex">
             <div className="flex-1 sm:hidden lg:block">
               {/* <img
                 src="/images/cta-one.png"
@@ -115,7 +115,7 @@ export default async function IndexPage() {
                 className="hidden scale-125 rounded-lg transition-all duration-150 ease-in-out sm:block md:max-w-lg"
                 alt=""
                 width={1200}
-                height={1200}
+                height={2000}
               />
             </div>
             <div className="mt-6 max-w-xl space-y-3 px-4 sm:px-0 md:mt-0 lg:max-w-2xl">
@@ -173,7 +173,7 @@ export default async function IndexPage() {
         className="relative flex h-auto min-h-screen flex-col  lg:min-h-[100svh]"
         id="feature"
       >
-        <div className="gap-12  ">
+        <div className="gap-12">
           <section className="space-y-6  py-12 md:pt-10 lg:pt-24">
             <div className="mx-auto flex max-w-[58rem] animate-fade-up flex-col items-center py-2 text-center">
               <h2 className="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">

@@ -11,10 +11,16 @@ import {
   UserRecentPostListRes,
 } from "@/types/me/res"
 import { QuizUserResultListRes } from "@/types/quiz/res"
-import { UserListRes, UserOneRes, UserRoleListRes } from "@/types/user/res"
+import {
+  UserListRes,
+  UserOneRes,
+  UserPastResultListRes,
+  UserRoleListRes,
+} from "@/types/user/res"
 import { UserOneLeaderboardRes } from "@/types/user/res/user-get-leaderboard"
 import { UserOnePretestCheckRes } from "@/types/user/res/user-get-pretest-check"
 import { UserOrgOneRes } from "@/types/user/res/user-org-get-one"
+import { UserPastCourseKnowledgeListRes } from "@/types/user/res/user-past-knowledge-list"
 
 interface GetUserV2Props {
   token: string | undefined
@@ -578,6 +584,77 @@ export async function markCourseAsAccessed({
   })
 
   return res
+}
+
+interface GetUserPastResultProps {
+  token: string | undefined
+  userUuid: string
+}
+
+export async function getUserPastResult({
+  token,
+  userUuid,
+}: GetUserPastResultProps): Promise<UserPastResultListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/userLibraryResult`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetUserPastCourseKnowledgeProps {
+  token: string | undefined
+  userUuid: string
+}
+
+export async function getUserPastCourseKnowledge({
+  token,
+  userUuid,
+}: GetUserPastCourseKnowledgeProps): Promise<UserPastCourseKnowledgeListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/userLibraryKnowledge`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
+interface GetUserKnowledgeEligibilityProps {
+  token: string | undefined
+  userUuid: string
+  idKnowledge: string
+}
+
+export async function getUserKnowledgeEligibility({
+  token,
+  userUuid,
+  idKnowledge,
+}: GetUserKnowledgeEligibilityProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${userUuid}/getCheckKnowledgeEligibility/${idKnowledge}`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
 }
 
 interface CreateUserProps {

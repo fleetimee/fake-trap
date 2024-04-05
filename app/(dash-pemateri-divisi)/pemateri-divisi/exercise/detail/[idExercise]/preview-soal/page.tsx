@@ -6,9 +6,11 @@ import { Variants } from "framer-motion"
 import { authOptions } from "@/lib/auth"
 import { getQuizLesson } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { DeleteQuestions } from "@/components/delete-questions"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { NotFoundAnim } from "@/components/not-found-anim"
 import { DashboardShell } from "@/components/shell"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardDescription,
@@ -81,6 +83,7 @@ export default async function ExerciseDetailQuestionPreview({
               bounceDamping: 10,
             },
           }}
+          className="grid grid-cols-2 justify-between gap-6"
         >
           <CardHeader className="flex justify-between">
             <CardTitle className="font-heading">Preview Soal</CardTitle>
@@ -88,6 +91,8 @@ export default async function ExerciseDetailQuestionPreview({
               Berikut adalah tampilan soal yang sudah anda buat
             </CardDescription>
           </CardHeader>
+
+          <DeleteQuestions idQuiz={Number(params.idExercise)} />
         </MotionDiv>
         <MotionDiv
           variants={parentVariants}
@@ -105,6 +110,7 @@ export default async function ExerciseDetailQuestionPreview({
                   <p className="font-heading leading-8 ">
                     {index + 1}. {item.question_text}
                   </p>
+
                   <div className="grid grid-cols-2 gap-6">
                     {item?.answers?.map((answer) => {
                       return (

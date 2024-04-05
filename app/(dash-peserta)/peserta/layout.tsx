@@ -45,8 +45,6 @@ export default async function PesertaLayout({
     uuid: tokenExtracted.id,
   })
 
-  console.log(courseTrackerCount)
-
   const categoryNav = await getNavbar()
 
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
