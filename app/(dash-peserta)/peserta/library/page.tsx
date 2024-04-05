@@ -68,10 +68,6 @@ export default async function LibraryPage() {
     userUuid: tokenExtracted?.id,
   })
 
-  console.log(pastResults)
-
-  console.log(pastCourseKnowledge)
-
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
@@ -186,7 +182,7 @@ export default async function LibraryPage() {
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {result?.pretest_result.map((test) => (
+                          {result?.pretest_result?.map((test) => (
                             <TableRow key={test.id_user_quiz}>
                               <TableCell>{test.quiz_title}</TableCell>
                               <TableCell>
@@ -223,7 +219,7 @@ export default async function LibraryPage() {
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {result?.posttest_result.map((test) => (
+                          {result?.posttest_result?.map((test) => (
                             <TableRow key={test.id_user_quiz}>
                               <TableCell>{test.quiz_title}</TableCell>
                               <TableCell>

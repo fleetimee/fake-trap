@@ -17,7 +17,7 @@ export function ForumPost({ post }: ForumPost) {
   return (
     <Card
       key={post.id_post}
-      className="h-full min-h-[350px] w-full border-2 border-black bg-yellow-300 p-8 text-black hover:bg-yellow-400"
+      className="size-full min-h-[350px] border-2 border-black bg-yellow-300 p-8 text-black hover:bg-yellow-400"
     >
       <div className="flex flex-col items-end">
         <p className="items-end text-xs font-bold">
@@ -27,7 +27,7 @@ export function ForumPost({ post }: ForumPost) {
       <Separator className="my-6" />
       <div className="grid sm:grid-cols-1 lg:grid-cols-12">
         <div className="mr-4 flex max-h-full flex-col items-center justify-start gap-4 sm:col-span-full lg:col-span-2">
-          <Avatar className="h-20 w-20 border-2 border-black bg-white">
+          <Avatar className="size-20 border-2 border-black bg-white">
             <AvatarImage
               src={`data:image/svg+xml;utf8,${generateFromString(
                 post.username

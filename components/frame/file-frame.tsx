@@ -295,6 +295,7 @@ export function FileFrame({ content, params }: FileFrameProps) {
                     <Link
                       href={`${process.env.NEXT_PUBLIC_BASE_URL}${file.file_path}`}
                       passHref
+                      target="_blank"
                     >
                       <Button
                         className="flex items-center gap-2"

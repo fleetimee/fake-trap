@@ -310,13 +310,13 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
                             >
                               <div
                                 className={cn(
-                                  "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                                  "mr-2 flex size-4 items-center justify-center rounded-sm border border-primary",
                                   isSelected
                                     ? "bg-primary text-primary-foreground"
                                     : "opacity-50 [&_svg]:invisible"
                                 )}
                               >
-                                <CheckIcon className={cn("h-4 w-4")} />
+                                <CheckIcon className={cn("size-4")} />
                               </div>
                               <span>{option.role_name}</span>
                             </CommandItem>
@@ -355,7 +355,7 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
         />
 
         <Button type="submit" disabled={isPending} className="w-fit">
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          {isPending && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           Tambah
         </Button>
       </form>
