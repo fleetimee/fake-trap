@@ -16,6 +16,7 @@ export type UserOneResData = {
   last_login: Date
   role: UserOneResRole[]
   created_by: string
+  profile_picture: string
 }
 
 export type UserOneResRole = {

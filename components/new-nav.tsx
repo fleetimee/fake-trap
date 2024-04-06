@@ -46,6 +46,7 @@ export function DashboardNewNewNav({
             unitKerja={org.unit_kerja}
             jabatan={org.jabatan}
             kdKantor={org.kd_kantor}
+            profilePicture={org.profile_picture}
           />
         )}
         <ScrollArea className="grid h-80">

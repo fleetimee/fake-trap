@@ -17,4 +17,5 @@ export interface UserOrgOneResData {
   unit_kerja: string
   jabatan: string
   kd_kantor: string
+  profile_picture: string
 }
