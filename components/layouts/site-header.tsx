@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { DashboardIcon } from "@radix-ui/react-icons"
 import { generateFromString } from "generate-avatar"
@@ -40,8 +41,8 @@ interface SiteHeaderProps {
   emailName: string
   sidebarNavItems: MenuListResNewData[]
   topNavItems?: CategoryNavDataListRes[]
-
   titleNav?: string
+  profilePicture?: string
 }
 
 export function SiteHeader({ ...props }: SiteHeaderProps) {
@@ -78,9 +79,10 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
     return `${formattedDate} | ${formattedTime}`
   }
 
+  const profilePictureLink = `${process.env.NEXT_PUBLIC_BASE_URL}${props.profilePicture}`
+
   if (props.user) {
     return (
-      // <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="h-2 bg-primary backdrop-blur"></div> {/* Blue strip */}{" "}
         <div className="container flex h-16 items-center">
@@ -116,14 +118,20 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             {props.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Avatar className="size-8">
-                    <AvatarImage
-                      src={`data:image/svg+xml;utf8,${generateFromString(
-                        props.displayName
-                      )}`}
+                  <div className="relative size-8 overflow-hidden rounded-full bg-white">
+                    <Image
+                      src={
+                        props.profilePicture
+                          ? profilePictureLink
+                          : `data:image/svg+xml;utf8,${generateFromString(
+                              props.displayName ? props.displayName : "Nama"
+                            )}`
+                      }
+                      alt="User name"
+                      width={50}
+                      height={50}
                     />
-                    <AvatarFallback />
-                  </Avatar>
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">

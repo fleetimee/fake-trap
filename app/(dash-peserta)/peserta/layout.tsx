@@ -58,6 +58,7 @@ export default async function PesertaLayout({
         isMoreThanOneRole={isUserHasMoreThanOneRole}
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
+        profilePicture={userLogged.data.profile_picture}
       />
       {/* <div className="bg-background bg-cover bg-top bg-no-repeat  py-4 dark:bg-none md:bg-left lg:min-h-[100svh]"> */}
       <div className="grow bg-background py-4">

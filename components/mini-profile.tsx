@@ -1,7 +1,7 @@
+/* eslint-disable tailwindcss/enforces-shorthand */
 import Image from "next/image"
 import { generateFromString } from "generate-avatar"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 
 import { Zoom } from "./zoom-image"
@@ -21,20 +21,6 @@ export default function MiniProfile({ ...props }: MiniProfileProps) {
     <>
       <aside className="h-full w-full rounded-lg border border-primary bg-primary p-6 transition-all">
         <div className="flex flex-col items-center">
-          {/* <Avatar className="h-24 w-24 bg-cover bg-top">
-            <AvatarImage
-              className="aspect-video"
-              alt="User name"
-              src={
-                props.profilePicture
-                  ? profilePictureLink
-                  : `data:image/svg+xml;utf8,${generateFromString(
-                      props.name ? props.name : "Nama"
-                    )}`
-              }
-            />
-            <AvatarFallback>UN</AvatarFallback>
-          </Avatar> */}
           <Zoom>
             <div className="relative size-24 overflow-hidden rounded-full bg-white">
               <Image
@@ -42,13 +28,12 @@ export default function MiniProfile({ ...props }: MiniProfileProps) {
                   props.profilePicture
                     ? profilePictureLink
                     : `data:image/svg+xml;utf8,${generateFromString(
-                        props.name ? props.name : "Nama"
+                        props.name ? props.name : "Default"
                       )}`
                 }
-                alt="User name"
-                layout="fill"
-                objectFit="cover"
-                objectPosition="center top"
+                alt={props.name ? props.name : "Default"}
+                width={1000}
+                height={1000}
               />
             </div>
           </Zoom>

@@ -98,6 +98,7 @@ export default async function IndexPage() {
         isMoreThanOneRole={isMoreThanOneRole ?? false}
         sidebarNavItems={[]}
         topNavItems={categoryNav.data}
+        profilePicture={loggedOnUser?.data?.profile_picture}
       />
 
       <section className="bg-[url(/hero_bg.svg)] bg-cover bg-bottom py-14 md:bg-left lg:min-h-[100svh]">

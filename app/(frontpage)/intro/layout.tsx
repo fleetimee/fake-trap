@@ -55,7 +55,7 @@ export default async function IntroLayout({ children }: IntroLayoutProps) {
         isMoreThanOneRole={isMoreThanOneRole}
         sidebarNavItems={[]}
         topNavItems={categoryNav.data}
-        titleNav="BPD DIY E-Learning"
+        profilePicture={loggedOnUser?.data?.profile_picture}
       />
       <main className="flex-1">{children}</main>
       <ScrollToTopButton />

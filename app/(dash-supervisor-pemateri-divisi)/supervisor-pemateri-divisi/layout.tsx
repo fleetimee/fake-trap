@@ -57,6 +57,7 @@ export default async function SupervisorPemateriDivisiLayout({
         isMoreThanOneRole={isUserHasMoreThanOneRole}
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
+        profilePicture={userLogged.data.profile_picture}
       />
       <div className="grow bg-background py-4">
         <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
