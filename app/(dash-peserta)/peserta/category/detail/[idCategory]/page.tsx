@@ -1,5 +1,5 @@
 import React from "react"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import {
@@ -28,6 +28,10 @@ export async function generateMetadata({ params }: DetailCategoryProps) {
     token: user?.token,
   })
 
+  if (category.code === 400) {
+    return notFound()
+  }
+
   return {
     title: category.data.category_name,
   }
@@ -51,16 +55,8 @@ export default async function DetailCategory({ params }: DetailCategoryProps) {
   })
 
   return (
-    <div
-      className="
-        flex flex-col gap-4
-    "
-    >
-      <h1
-        className="text-lg font-semibold
-            leading-relaxed text-gray-700
-      "
-      >
+    <div className="flex flex-col gap-4">
+      <h1 className="text-lg font-semibold leading-relaxed text-gray-700">
         Berikut adalah materi yang tersedia di modul ini :
       </h1>
 

@@ -220,7 +220,7 @@ export async function getCategoriesWithKnowledge({
   orderBy = "desc",
   searchQuery = "",
 }: GetCategoryWithKnowledge): Promise<CategoryListRes> {
-  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category/haveKnowledge`
+  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/category`
   const url = new URL(baseUrl)
 
   if (page) {

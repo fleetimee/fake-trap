@@ -1,6 +1,6 @@
 import React from "react"
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import NotFoundLottie from "@/public/lottie/not-found.json"
 
 import { authOptions } from "@/lib/auth"
@@ -48,6 +48,10 @@ export default async function PesertaCategoryPage({
     orderBy: orderBy,
     sortBy: sortBy,
   })
+
+  if (categories.code === 404) {
+    return notFound()
+  }
 
   return categories.data.length > 0 ? (
     <Categories categories={categories.data} pageCount={categories.totalPage} />
