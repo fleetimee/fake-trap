@@ -2,7 +2,6 @@
 
 import React from "react"
 import Image from "next/image"
-import Link from "next/link"
 import {
   motion,
   MotionValue,
@@ -136,7 +135,7 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product relative h-96 w-[30rem] flex-shrink-0"
+      className="group/product relative h-96 w-[30rem] shrink-0"
     >
       <Image
         src={product.thumbnail}
