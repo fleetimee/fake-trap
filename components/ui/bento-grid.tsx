@@ -44,17 +44,17 @@ export const BentoGridItem = ({
       )}
     >
       {header}
-      <ScrollIntoViewButton selector={link}>
-        <div className="transition duration-200 group-hover/bento:translate-x-2">
-          {icon}
-          <div className="my-2 font-sans font-bold text-neutral-600 dark:text-neutral-200">
+      <div className="transition duration-200 group-hover/bento:translate-x-2">
+        {icon}
+        <ScrollIntoViewButton selector={link}>
+          <div className="mb-2 mt-2 font-sans font-bold text-neutral-600  hover:text-blue-500 hover:underline dark:text-neutral-200">
             {title}
           </div>
           <div className="font-sans text-xs font-normal text-neutral-600 dark:text-neutral-300">
             {description}
           </div>
-        </div>
-      </ScrollIntoViewButton>
+        </ScrollIntoViewButton>
+      </div>
     </div>
   )
 }
