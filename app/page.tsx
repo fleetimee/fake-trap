@@ -10,9 +10,9 @@ import { getPublicKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
+import { BentoGridSecondDemo } from "@/components/bento-feature"
 import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
-import { MarketingCard } from "@/components/cards/marketing-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
@@ -196,16 +196,18 @@ export default async function IndexPage() {
               </p>
             </div>
 
-            <MarketingCard
+            {/* <MarketingCard
               parentVariant={parentVariant}
               childVariant={childVariant}
-            />
+            /> */}
+
+            <BentoGridSecondDemo />
           </section>
         </div>
       </section>
 
       <section
-        className="relative mx-auto  p-4 md:px-8"
+        className="relative mx-auto p-4 md:px-8"
         style={{
           background:
             "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.17) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)",
