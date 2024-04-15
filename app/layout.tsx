@@ -11,6 +11,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SonnerToaster } from "@/components/ui/sonner-toaster"
 import { Toaster } from "@/components/ui/toaster"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { NextAuthProvider } from "@/app/providers"
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     "React",
     "Tailwind CSS",
     "Server Components",
-    "Elearning",
+    "E-Learning",
   ],
   creator: "Novian Andika",
   // themeColor: [
@@ -60,18 +61,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <NextAuthProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              {/* <BGGrid> */}
-              {/* <Providers>{children}</Providers> */}
-              <NextTopLoader />
-
-              <Background>{children}</Background>
-
-              {/*{children}*/}
-              {/* </BGGrid> */}
-              <Toaster />
-              <TailwindIndicator />
-            </div>
+            <TooltipProvider>
+              <div className="relative flex min-h-screen flex-col">
+                {/* <BGGrid> */}
+                {/* <Providers>{children}</Providers> */}
+                <NextTopLoader />
+                <Background>{children}</Background>
+                {/*{children}*/}
+                {/* </BGGrid> */}
+                <Toaster />
+                <TailwindIndicator />
+              </div>
+            </TooltipProvider>
           </ThemeProvider>
           <SonnerToaster />
         </NextAuthProvider>

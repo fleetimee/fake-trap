@@ -13,6 +13,7 @@ import { extractToken } from "@/lib/utils"
 import { BentoGridDemo } from "@/components/bento-feature"
 import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
+import { ElearningParallax } from "@/components/elearning-parallax"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
@@ -22,6 +23,7 @@ import { ScrollIntoViewButton } from "@/components/scroll-into-view"
 import { ScrollToTopButton } from "@/components/scroll-to-top"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { ContainerScroll } from "@/components/ui/container-scroll"
 import { MacbookScroll } from "@/components/ui/macbook-scroll"
 
 export const metadata = {
@@ -172,6 +174,32 @@ export default async function IndexPage() {
         </div>
       </section>
 
+      <ElearningParallax />
+
+      <div className="hidden overflow-hidden md:flex md:flex-col">
+        <ContainerScroll
+          titleComponent={
+            <>
+              <h1 className="text-4xl font-semibold text-black dark:text-white">
+                Yuk, Belajar Lebih Seru <br />
+                <span className="mt-1 text-4xl font-bold leading-none md:text-[6rem]">
+                  Dengan E-Learning
+                </span>
+              </h1>
+            </>
+          }
+        >
+          <Image
+            src={"/images/promo2.png"}
+            alt="hero"
+            height={720}
+            width={1400}
+            className="mx-auto h-full rounded-2xl object-cover object-left-top"
+            draggable={false}
+          />
+        </ContainerScroll>
+      </div>
+
       <section
         className="relative flex h-auto min-h-screen flex-col  lg:min-h-[100svh]"
         id="feature"
@@ -208,16 +236,12 @@ export default async function IndexPage() {
         </div>
       </section>
 
-      <div className="w-full overflow-hidden bg-white dark:bg-[#0B0B0F]">
+      <div className="hidden w-full overflow-hidden bg-white dark:bg-[#0B0B0F] md:block">
         <MacbookScroll
-          title={
-            <span>
-              E-Learning yang berbeda dari yang lain. <br /> No kidding.
-            </span>
-          }
+          title={<span>Belajar Jadi Lebih Mudah dan Menyenangkan.</span>}
           badge={
             <Link href="https://peerlist.io/manuarora">
-              <Badge className="h-10 w-10 -rotate-12 transform" />
+              <Badge className="size-10 -rotate-12" />
             </Link>
           }
           src={"/images/promo.png"}

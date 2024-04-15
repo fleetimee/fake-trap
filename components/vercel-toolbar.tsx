@@ -1,6 +1,5 @@
 "use client"
 
-import { JSX, SVGProps } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import {
   ArchiveIcon,
@@ -13,12 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 interface VercelToolbarProps {
   homeButton?: string
@@ -109,22 +103,20 @@ interface TooltipButtonProps {
 
 function TooltipButton({ tooltipText, onClick, children }: TooltipButtonProps) {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            className="rounded-full text-zinc-100 hover:bg-gray-600 hover:text-zinc-100"
-            size="icon"
-            variant="ghost"
-            onClick={onClick}
-          >
-            {children}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <span>{tooltipText}</span>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          className="rounded-full text-zinc-100 hover:bg-gray-600 hover:text-zinc-100"
+          size="icon"
+          variant="ghost"
+          onClick={onClick}
+        >
+          {children}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <span>{tooltipText}</span>
+      </TooltipContent>
+    </Tooltip>
   )
 }

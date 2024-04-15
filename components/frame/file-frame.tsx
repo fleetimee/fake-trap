@@ -1,19 +1,16 @@
 "use client"
 
 import { JSX, SVGProps } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ClockIcon, DownloadIcon, EyeIcon, FileType } from "lucide-react"
+import { DownloadIcon, EyeIcon } from "lucide-react"
 import { useMediaQuery } from "react-responsive"
 
 import { ContentOneRes } from "@/types/content/res"
 import { DocumentType } from "@/lib/enums/status"
 import { cn, convertDatetoString } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-
 import {
   Table,
   TableBody,
@@ -21,13 +18,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
+} from "@/components/ui/table"
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip"
+} from "@/components/ui/tooltip"
 
 interface FileFrameProps {
   content: ContentOneRes
@@ -256,23 +252,21 @@ export function FileFrame({ content, params }: FileFrameProps) {
                   </TableCell>
                   <TableCell>
                     {file.ext !== DocumentType.PDF ? (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              className="flex items-center gap-2 text-gray-400"
-                              size="sm"
-                              variant="ghost"
-                            >
-                              <EyeIcon className="size-4" />
-                              Preview
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Preview tidak tersedia</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            className="flex items-center gap-2 text-gray-400"
+                            size="sm"
+                            variant="ghost"
+                          >
+                            <EyeIcon className="size-4" />
+                            Preview
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Preview tidak tersedia</p>
+                        </TooltipContent>
+                      </Tooltip>
                     ) : (
                       <Link
                         href={`${pathname}/render/${file.file_path
