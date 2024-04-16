@@ -18,7 +18,7 @@ export function LogOutButtons() {
           event.preventDefault()
 
           signOut({
-            callbackUrl: "/login",
+            callbackUrl: "/",
           }).then(() => {
             localStorage.clear()
             sessionStorage.clear()

@@ -58,7 +58,11 @@ const childVariant: Variants = {
   },
 }
 
-export default async function IndexPage() {
+interface IndexLayoutProps {
+  children: React.ReactNode
+}
+
+export default async function IndexLayout({ children }: IndexLayoutProps) {
   const user = await getCurrentUser()
 
   const categoryNav = await getNavbar()
@@ -119,24 +123,16 @@ export default async function IndexPage() {
 
               <Image
                 src="/images/cta-one.png"
-                className="hidden scale-125 rounded-lg transition-all duration-150 ease-in-out sm:block md:max-w-lg"
+                className="hidden h-fit scale-125  rounded-lg sm:block md:max-w-lg"
                 alt=""
                 width={1200}
                 height={2000}
               />
             </div>
+
             <div className="mt-6 max-w-xl space-y-3 px-4 sm:px-0 md:mt-0 lg:max-w-2xl">
               {/* Logo Image */}
-              <div className="flex  w-fit  items-center rounded-xl bg-white p-2 shadow-md">
-                <Image
-                  src="/images/logo.png"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="size-auto "
-                  alt=""
-                />
-              </div>
+
               {/* <p className="text-3xl font-semibold text-white sm:text-4xl">
                 Learning Management System
               </p>
@@ -145,35 +141,7 @@ export default async function IndexPage() {
                 dengan BPD DIY Learning Management System
               </p> */}
 
-              <ElearningHero />
-
-              <div className="items-center justify-center space-y-3 pt-10 sm:flex sm:space-x-6 sm:space-y-0 lg:justify-start">
-                <Link
-                  href="/login"
-                  className={buttonVariants({
-                    size: "lg",
-                    variant: "outline",
-                    className: "w-full sm:w-auto",
-                  })}
-                >
-                  Get Started
-                </Link>
-
-                <ScrollIntoViewButton selector="#feature">
-                  <Button
-                    className={buttonVariants({
-                      size: "lg",
-                      variant: "default",
-                      className: "w-full sm:w-auto",
-                    })}
-                  >
-                    <span className="mr-2">
-                      <Icons.arrowRight className="size-4" />
-                    </span>
-                    Fitur
-                  </Button>
-                </ScrollIntoViewButton>
-              </div>
+              {children}
             </div>
           </div>
         </div>
