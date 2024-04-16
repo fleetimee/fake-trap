@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
+import Script from "next/script"
 import NextTopLoader from "nextjs-toploader"
 
 import { siteConfig } from "@/config/site"
@@ -66,7 +67,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 {/* <BGGrid> */}
                 {/* <Providers>{children}</Providers> */}
                 <NextTopLoader />
-                <Background>{children}</Background>
+                <Background>
+                  {children}
+                  <Script
+                    defer
+                    src="https://static.cloudflareinsights.com/beacon.min.js"
+                    data-cf-beacon='{"token": "29ffe609493c44b99a0a3923ab5d53f4"}'
+                  />
+                </Background>
                 {/*{children}*/}
                 {/* </BGGrid> */}
                 <Toaster />
