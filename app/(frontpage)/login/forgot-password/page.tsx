@@ -21,7 +21,7 @@ export const metadata = {
 export default async function LoginPage() {
   return (
     <Shell className="max-w-lg">
-      <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900  md:min-w-[30rem]">
+      <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900 sm:p-1 md:min-w-[10rem]">
         <Card className=" md:min-w-[30rem]">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">Reset password</CardTitle>

@@ -123,7 +123,7 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
 
               <Image
                 src="/images/cta-one.png"
-                className="hidden scale-125 rounded-lg transition-all duration-150 ease-in-out sm:block md:max-w-lg"
+                className="hidden h-fit scale-125  rounded-lg sm:block md:max-w-lg"
                 alt=""
                 width={1200}
                 height={2000}
