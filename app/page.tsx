@@ -13,6 +13,7 @@ import { extractToken } from "@/lib/utils"
 import { BentoGridDemo } from "@/components/bento-feature"
 import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
+import { ElearningHero } from "@/components/elearning-hero"
 import { ElearningParallax } from "@/components/elearning-parallax"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Icons } from "@/components/icons"
@@ -24,6 +25,7 @@ import { ScrollToTopButton } from "@/components/scroll-to-top"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ContainerScroll } from "@/components/ui/container-scroll"
+import { HeroHighlight } from "@/components/ui/hero-highlight"
 import { MacbookScroll } from "@/components/ui/macbook-scroll"
 
 export const metadata = {
@@ -135,13 +137,16 @@ export default async function IndexPage() {
                   alt=""
                 />
               </div>
-              <p className="text-3xl font-semibold text-white sm:text-4xl">
+              {/* <p className="text-3xl font-semibold text-white sm:text-4xl">
                 Learning Management System
               </p>
               <p className="mt-3 text-white">
                 Dapatkan materi dan keterampilan yang Anda butuhkan untuk sukses
                 dengan BPD DIY Learning Management System
-              </p>
+              </p> */}
+
+              <ElearningHero />
+
               <div className="items-center justify-center space-y-3 pt-10 sm:flex sm:space-x-6 sm:space-y-0 lg:justify-start">
                 <Link
                   href="/login"
