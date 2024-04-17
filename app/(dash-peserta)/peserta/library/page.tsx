@@ -100,7 +100,7 @@ export default async function LibraryPage() {
           <CardHeader>
             <CardTitle>Materi</CardTitle>
             <CardDescription>
-              Ini merupakan materi yang sudah di pelajari dalam pelatihan
+              Ini merupakan materi yang sudah di pelajari dalam pembelajaran
             </CardDescription>
           </CardHeader>
 
@@ -157,7 +157,7 @@ export default async function LibraryPage() {
           <CardHeader>
             <CardTitle>Hasil Ujian</CardTitle>
             <CardDescription>
-              Disini merupakan hasil ujian dari pelatihan yang sudah kamu
+              Disini merupakan hasil ujian dari pembelajaran yang sudah kamu
               lakukan, bisa kamu lihat kembali dan di review kembali.
             </CardDescription>
           </CardHeader>

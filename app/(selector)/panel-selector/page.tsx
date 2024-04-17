@@ -98,7 +98,7 @@ export default async function PanelSelector() {
         {isSpvOperatorLMS && (
           <ButtonSelector
             title="Spv Operator LMS"
-            description="Spv Operator LMS dapat menapprove pelatihan yang ada di LMS."
+            description="Spv Operator LMS dapat menapprove pembelajaran yang ada di LMS."
             link="/supervisor-lms"
             disabled={!isSpvOperatorLMS}
             isTextMuted
@@ -109,7 +109,7 @@ export default async function PanelSelector() {
         {isPeserta && (
           <ButtonSelector
             title="Peserta"
-            description="Peserta dapat mengikuti pelatihan yang ada di LMS."
+            description="Peserta dapat mengikuti pembelajaran yang ada di LMS."
             link="/peserta"
             disabled={!isPeserta}
             animationData={PesertaLottie}

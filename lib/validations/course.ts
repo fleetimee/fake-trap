@@ -2,10 +2,10 @@ import { z } from "zod"
 
 export const courseSchema = z.object({
   CourseName: z.string().min(1, {
-    message: "Nama pelatihan harus diisi",
+    message: "Nama pembelajaran harus diisi",
   }),
   CourseDesc: z.string().min(1, {
-    message: "Deskripsi pelatihan harus diisi",
+    message: "Deskripsi pembelajaran harus diisi",
   }),
   DateStart: z.date(),
   DateEnd: z.date(),

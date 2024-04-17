@@ -74,7 +74,7 @@ export default async function CourseDetailLayout({
             },
             {
               href: "/operator-lms/course",
-              title: "Pelatihan",
+              title: "Pembelajaran",
             },
             {
               href: `/operator-lms/course/detail/${params.idCourse}`,

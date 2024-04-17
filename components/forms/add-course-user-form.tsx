@@ -250,7 +250,7 @@ export function AddCourseUserForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Pilih peserta yang akan ditambahkan ke dalam pelatihan ini.
+                Pilih peserta yang akan ditambahkan ke dalam pembelajaran ini.
               </FormDescription>
               <FormMessage />
             </FormItem>

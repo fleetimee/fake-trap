@@ -74,7 +74,7 @@ export default async function SupervisorLmsApprovalPage({
           },
           {
             href: "/supervisor-lms/approval",
-            title: "Approve Pelatihan",
+            title: "Approve Pembelajaran",
           },
         ]}
       />
@@ -85,8 +85,8 @@ export default async function SupervisorLmsApprovalPage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Approve Pelatihan"
-            description="Approve Pelatihan yang diajukan oleh Operator LMS"
+            heading="Approve Pembelajaran"
+            description="Approve Pembelajaran yang diajukan oleh Operator LMS"
           />
         </MotionDiv>
 

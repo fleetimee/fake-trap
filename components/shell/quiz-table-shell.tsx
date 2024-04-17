@@ -101,7 +101,7 @@ export function QuizTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader
             column={column}
-            title="Terhubung dengan Pelatihan?"
+            title="Terhubung dengan Pembelajaran?"
           />
         ),
         cell: ({ row }) => {

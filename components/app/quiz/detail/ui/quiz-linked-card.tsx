@@ -11,10 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 interface QuizLinkedCardProps {
   code: number
   data: QuizLinkedListData
@@ -24,9 +20,9 @@ export function QuizLinkedCard({ code, data }: QuizLinkedCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Link Kuis Ke Pelatihan</CardTitle>
+        <CardTitle className="text-lg">Link Kuis Ke Pembelajaran</CardTitle>
         <CardDescription>
-          Apakah kuis ini sudah di linkan ke pelatihan ?
+          Apakah kuis ini sudah di hubungkan ke pembelajaran ?
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">

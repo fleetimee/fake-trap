@@ -26,7 +26,7 @@ export const products = [
     thumbnail: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/parallax/image4.png`,
   },
   {
-    title: "Pelatihan",
+    title: "Pembelajaran",
     thumbnail: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/parallax/image5.png`,
   },
   {

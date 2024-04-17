@@ -48,13 +48,13 @@ async function deleteCourse({ courseId, token }: DeleteCourseProps) {
 
   if (res.ok) {
     sonnerToast.success("Berhasil", {
-      description: "Pelatihan berhasil dihapus",
+      description: "Pembelajaran berhasil dihapus",
     })
 
     return true
   } else {
     sonnerToast.error("Gagal", {
-      description: "Pelatihan gagal dihapus",
+      description: "Pembelajaran gagal dihapus",
     })
 
     return false
@@ -136,10 +136,10 @@ export function CourseOperations({ courseResp }: CourseOperationProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Apakah anda yakin ingin menghapus pelatihan ini?
+              Apakah anda yakin ingin menghapus pembelajaran ini?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Pelatihan yang sudah dihapus tidak dapat dikembalikan
+              Pembelajaran yang sudah dihapus tidak dapat dikembalikan
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

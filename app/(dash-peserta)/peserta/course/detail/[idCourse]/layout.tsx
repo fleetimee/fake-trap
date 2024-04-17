@@ -128,7 +128,7 @@ export default async function CourseDetailLayout({
             },
             {
               href: "/peserta/course",
-              title: "Pelatihan",
+              title: "Pembelajaran",
             },
             {
               href: `/peserta/course/detail/${params.idCourse}`,

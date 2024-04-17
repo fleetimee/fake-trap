@@ -82,8 +82,8 @@ export default async function OperatorLMSCoursePage({
           animate={{ opacity: 1, y: 0 }}
         >
           <DashboardHeader
-            heading="Pelatihan"
-            description="Kelola pelatihan yang ada di platform lms."
+            heading="Pembelajaran"
+            description="Kelola pembelajaran yang ada di platform lms."
           />
         </MotionDiv>
       </div>

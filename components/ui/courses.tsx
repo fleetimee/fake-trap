@@ -107,7 +107,7 @@ export function Courses({ courses, pageCount }: CoursesProps) {
                 <div className="space-y-0.5">
                   <Label>Cari Pelatihanmu</Label>
                   <CardDescription>
-                    Temukan pelatihan yang kamu butuhkan
+                    Temukan pembelajaran yang kamu butuhkan
                   </CardDescription>
                 </div>
 

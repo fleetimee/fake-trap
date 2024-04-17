@@ -13,11 +13,11 @@ export async function DashboardCourseHighlight({
   return (
     <CardDashboard
       url={`dashboard/course/${courseResp.data.id_course}`}
-      title="Pelatihan Terbaru"
+      title="Pembelajaran Terbaru"
       icon="course"
       name={courseResp.data.course_name}
       image={courseResp.data.image}
-      buttonText="Lihat Pelatihan"
+      buttonText="Lihat Pembelajaran"
     />
   )
 }

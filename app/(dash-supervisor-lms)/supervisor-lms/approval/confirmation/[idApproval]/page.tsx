@@ -80,14 +80,14 @@ export default async function SupervisorLmsConfirmationPage({
           <CardHeader>
             <CardTitle>Preview Pengajuan</CardTitle>
             <CardDescription>
-              Ini adalah pengajuan pelatihan yang akan di approve
+              Ini adalah pengajuan pembelajaran yang akan di approve
             </CardDescription>
           </CardHeader>
           <Separator />
 
           <CardContent className="space-y-8 py-5">
             <div className="space-y-2">
-              <Label className="font-bold">Judul Pelatihan</Label>
+              <Label className="font-bold">Judul Pembelajaran</Label>
               <div>
                 <Link
                   href={`/supervisor-lms/approval/detail/${params.idApproval}/course/${approvalRequest.data.id_course}`}

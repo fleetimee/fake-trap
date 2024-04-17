@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Tambah Pelatihan Baru",
+  title: "Tambah Pembelajaran Baru",
   description: "Operator LMS New Course Page",
 }
 
@@ -49,20 +49,20 @@ export default async function OperatorLMSCoursePageNew() {
           },
           {
             href: "/operator-lms/course",
-            title: "Pelatihan",
+            title: "Pembelajaran",
           },
           {
             href: "/operator-lms/course/new",
-            title: "Tambah Pelatihan Baru",
+            title: "Tambah Pembelajaran Baru",
           },
         ]}
       />
 
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl">Tambah Pelatihan</CardTitle>
+          <CardTitle className="text-xl">Tambah Pembelajaran</CardTitle>
           <CardDescription>
-            Tambahkan pelatihan baru ke dalam platform lms.
+            Tambahkan pembelajaran baru ke dalam platform lms.
           </CardDescription>
         </CardHeader>
 

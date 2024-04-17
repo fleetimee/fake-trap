@@ -68,7 +68,7 @@ export function CourseContentSidebar({
             Materi
           </TabsTrigger>
           <TabsTrigger value="course" className="w-full font-semibold">
-            Pelatihan
+            Pembelajaran
           </TabsTrigger>
         </TabsList>
 

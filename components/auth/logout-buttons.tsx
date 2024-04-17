@@ -31,7 +31,7 @@ export function LogOutButtons() {
           })
         }}
       >
-        Log out
+        Keluar
       </Button>
 
       <Button
@@ -41,7 +41,7 @@ export function LogOutButtons() {
         className="w-full"
         onClick={() => router.back()}
       >
-        Go back
+        Kembali
       </Button>
     </div>
   )

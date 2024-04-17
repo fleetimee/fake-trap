@@ -61,9 +61,9 @@ export const marketingFeatures: MarketingFeaturesProps[] = [
   },
   {
     icon: <IconBrandDatabricks className="size-4" />,
-    title: "Pelatihan",
+    title: "Pembelajaran",
     description:
-      "Pelatihan merupakan serangkaian kegiatan yang bertujuan untuk meningkatkan pengetahuan dan keterampilan seseorang.",
+      "Pembelajaran merupakan serangkaian kegiatan yang bertujuan untuk meningkatkan pengetahuan dan keterampilan seseorang.",
     link: "#featured-courses",
     header: (
       <Image

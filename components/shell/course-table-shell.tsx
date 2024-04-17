@@ -87,7 +87,7 @@ export function CourseTableShell({
       {
         accessorKey: "course_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Pelatihan" />
+          <DataTableColumnHeader column={column} title="Nama Pembelajaran" />
         ),
         cell: ({ row }) => {
           return (
@@ -196,7 +196,7 @@ export function CourseTableShell({
   const searchableColumns: DataTableSearchableColumn<CourseListResData>[] = [
     {
       id: "course_name",
-      title: "Nama Pelatihan",
+      title: "Nama Pembelajaran",
     },
   ]
 
@@ -258,7 +258,7 @@ export function CourseTableShell({
       // searchableColumns={[
       //   {
       //     id: "course_name",
-      //     title: "Nama Pelatihan",
+      //     title: "Nama Pembelajaran",
       //   },
       // ]}
 

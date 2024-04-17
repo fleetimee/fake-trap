@@ -44,7 +44,7 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Pelatihan",
+      title: "Pembelajaran",
       href: "/dashboard/course",
       icon: "course",
       items: [],
@@ -86,7 +86,7 @@ export const userAreaDashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Pelatihan",
+      title: "Pembelajaran",
       href: "/member-area/course",
       icon: "course",
       items: [],
@@ -177,14 +177,14 @@ export const userAreaRole: UserAreaRole = {
       icon: "quiz",
     },
     {
-      title: "Pelatihan atau Pelatihan",
-      description: "Anda dapat mengikuti pelatihan yang tersedia",
+      title: "Pembelajaran atau Pembelajaran",
+      description: "Anda dapat mengikuti pembelajaran yang tersedia",
       icon: "course",
     },
     {
       title: "Forum",
       description:
-        "Anda dapat berdiskusi dengan user lainnya pada forum yang ada di setiap pelatihan atau pelatihan yang anda ikuti",
+        "Anda dapat berdiskusi dengan user lainnya pada forum yang ada di setiap pembelajaran atau pembelajaran yang anda ikuti",
       icon: "forum",
     },
   ],
@@ -202,9 +202,9 @@ export const supervisorAreaRole: UserAreaRole = {
       icon: "laptop",
     },
     {
-      title: "Approval Pelatihan",
+      title: "Approval Pembelajaran",
       description:
-        "Anda dapat menyetujui atau menolak Pelatihan yang diajukan oleh pemateri",
+        "Anda dapat menyetujui atau menolak Pembelajaran yang diajukan oleh pemateri",
       icon: "laptop",
     },
     {
@@ -213,9 +213,9 @@ export const supervisorAreaRole: UserAreaRole = {
       icon: "book",
     },
     {
-      title: "Cek Pelatihan",
+      title: "Cek Pembelajaran",
       description:
-        "Anda dapat melihat pelatihan yang sudah disetujui oleh anda",
+        "Anda dapat melihat pembelajaran yang sudah disetujui oleh anda",
       icon: "course",
     },
   ],
@@ -251,8 +251,8 @@ export const adminAreaRole: UserAreaRole = {
     },
     {
       icon: "laptop",
-      title: "Pelatihan",
-      description: "Anda dapat mengelola pelatihan yang anda buat",
+      title: "Pembelajaran",
+      description: "Anda dapat mengelola pembelajaran yang anda buat",
     },
     {
       icon: "laptop",
@@ -273,7 +273,7 @@ export const adminAreaRole: UserAreaRole = {
       icon: "laptop",
       title: "Konten",
       description:
-        "Anda dapat mengelola konten materi dan pelatihan yang anda buat",
+        "Anda dapat mengelola konten materi dan pembelajaran yang anda buat",
     },
   ],
 }

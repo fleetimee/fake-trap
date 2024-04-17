@@ -94,7 +94,7 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
                 variant: "secondary",
               })}
             >
-              Ke Pelatihan
+              Ke Pembelajaran
             </Link>
 
             {/* <Button
@@ -104,7 +104,7 @@ export default function CourseCardV2({ ...props }: CourseCardV2Props) {
                 router.refresh()
               }}
             >
-              Ke Pelatihan
+              Ke Pembelajaran
             </Button> */}
           </div>
         </CardFooter>

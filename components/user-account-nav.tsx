@@ -15,10 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-
-
-
-
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">
 }
@@ -92,8 +88,8 @@ export default function UserAccountNav(props: { user: UserExtracted }) {
           size: "sm",
         })}
       >
-        Sign In
-        <span className="sr-only">Sign In</span>
+        Log In
+        <span className="sr-only">Log In</span>
       </div>
     </Link>
   )

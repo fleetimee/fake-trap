@@ -50,9 +50,9 @@ export default async function CourseKnowledgePage({
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">Materi Pelatihan</h3>
+        <h3 className="text-lg font-medium">Materi Pembelajaran</h3>
         <p className="text-sm text-muted-foreground">
-          Berikut adalah daftar materi yang ada di pelatihan ini.
+          Berikut adalah daftar materi yang ada di pembelajaran ini.
         </p>
       </div>
       <Separator />

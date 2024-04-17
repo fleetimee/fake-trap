@@ -92,7 +92,7 @@ export function ApprovalCourseSupervisorTableShell({
       {
         accessorKey: "course_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Pelatihan" />
+          <DataTableColumnHeader column={column} title="Nama Pembelajaran" />
         ),
         cell: ({ row }) => (
           <div className="w-[250px]">
@@ -174,7 +174,7 @@ export function ApprovalCourseSupervisorTableShell({
     [
       {
         id: "course_name",
-        title: "Nama Pelatihan",
+        title: "Nama Pembelajaran",
       },
     ]
 

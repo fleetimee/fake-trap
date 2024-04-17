@@ -4,10 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
-
-
-
-
 interface ProfileCardProps {
   username: string
   email: string
@@ -46,7 +42,7 @@ export function ProfileCard({ ...props }: ProfileCardProps) {
         </div>
 
         <div className="grid grid-cols-1 items-start gap-1">
-          <span className="font-heading text-xs">Jumlah Pelatihan</span>
+          <span className="font-heading text-xs">Jumlah Pembelajaran</span>
           <span className="text-xl font-semibold">{props.numberOfCourse}</span>
         </div>
       </div>

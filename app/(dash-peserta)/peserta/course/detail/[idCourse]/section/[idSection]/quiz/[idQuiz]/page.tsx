@@ -193,11 +193,12 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
             <div className="p-4">
               <h2 className="mb-2 text-lg font-bold">
-                Silahkan baca informasi berikut sebelum memulai Pelatihan:
+                Silahkan baca informasi berikut sebelum memulai Pembelajaran:
               </h2>
               <ul className="list-inside list-disc space-y-1 pl-5">
                 <li className="text-sm">
-                  Waktu Pelatihan hanya {quiz.data.time_limit / 60} menit
+                  Waktu mengerjakan ujian hanya {quiz.data.time_limit / 60}{" "}
+                  menit
                 </li>
 
                 <li className="text-sm">
@@ -212,12 +213,12 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
             <div className="p-4">
               <h2 className="mb-2 text-lg font-bold">
-                Status Pengerjaan Pelatihan anda:
+                Status Pengerjaan Ujian anda:
               </h2>
 
               <ul className="list-inside list-disc space-y-1 pl-5">
                 <li className="text-sm">
-                  Tipe Pelatihan ini merupakan{" "}
+                  Tipe Ujian ini merupakan{" "}
                   <span className="font-bold italic underline">
                     {quizType?.value_ref1}
                   </span>
@@ -240,7 +241,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                   ANDA SUDAH MELEBIHI LIMIT KESEMPATAN
                 </p>
               ) : (
-                <p className="text-green-500">ANDA DAPAT MEMULAI PELATIHAN</p>
+                <p className="text-green-500">ANDA DAPAT MEMULAI UJIAN</p>
               )}
             </h1>
 

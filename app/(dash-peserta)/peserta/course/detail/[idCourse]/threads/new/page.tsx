@@ -1,10 +1,6 @@
 import { AddThreadForm } from "@/components/forms/add-thread-form"
 import { Separator } from "@/components/ui/separator"
 
-
-
-
-
 interface AddThreadsPageNewProps {
   params: {
     idCourse: string
@@ -17,7 +13,7 @@ export default function AddThreadsPageNew({ params }: AddThreadsPageNewProps) {
       <div>
         <h3 className="text-lg font-medium">Buat Thread Baru</h3>
         <p className="text-sm text-muted-foreground">
-          Buat Diskusi Thread baru untuk pelatihan ini.
+          Buat Diskusi Thread baru untuk pembelajaran ini.
         </p>
       </div>
       <Separator />

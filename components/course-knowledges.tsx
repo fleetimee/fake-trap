@@ -72,7 +72,7 @@ export function CoursesKnowledges({
           ) : (
             <div className="col-span-3 flex min-h-[300px] flex-col justify-center gap-4 space-y-12">
               <p className="col-span-3 line-clamp-2 items-center  justify-center text-center text-2xl font-semibold uppercase leading-tight">
-                Belum ada materi pada pelatihan ini
+                Belum ada materi pada pembelajaran ini
               </p>
 
               <div className="mx-auto flex h-44 w-44 flex-col items-center justify-center rounded-full bg-yellow-300 p-7">

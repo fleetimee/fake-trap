@@ -123,10 +123,10 @@ export function RuleForm({ rule }: RuleFormProps) {
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">
-                      Membuat Pelatihan
+                      Membuat Pembelajaran
                     </FormLabel>
                     <FormDescription>
-                      Apakah grup ini dapat membuat pelatihan?
+                      Apakah grup ini dapat membuat pembelajaran?
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -215,10 +215,10 @@ export function RuleForm({ rule }: RuleFormProps) {
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">
-                      Meng-approve Pelatihan
+                      Meng-approve Pembelajaran
                     </FormLabel>
                     <FormDescription>
-                      Apakah grup ini dapat meng-approve pelatihan?
+                      Apakah grup ini dapat meng-approve pembelajaran?
                     </FormDescription>
                   </div>
                   <FormControl>

@@ -29,7 +29,7 @@ export function CourseAlert({
     <Collapsible className="space-y-4">
       <div className="flex items-center justify-between space-x-4  px-4">
         <h4 className="text-sm font-semibold italic">
-          Pelatihan ini memiliki{" "}
+          Pembelajaran ini memiliki{" "}
           {knowledgeSection.data ? knowledgeSection.data.length : 0} materi
         </h4>
         <CollapsibleTrigger asChild>
@@ -50,7 +50,7 @@ export function CourseAlert({
             <DrawingPinFilledIcon className="size-4" />
             <AlertTitle className="text-red-600">Informasi!</AlertTitle>
             <AlertDescription>
-              Pelatihan ini berdasarkan pada materi{" "}
+              Pembelajaran ini berdasarkan pada materi{" "}
               <span className="font-bold">
                 <Link
                   href={
@@ -76,7 +76,7 @@ export function CourseAlert({
                 Informasi!
               </AlertTitle>
               <AlertDescription>
-                Pelatihan ini berdasarkan pada materi{" "}
+                Pembelajaran ini berdasarkan pada materi{" "}
                 <span className="font-bold">
                   <Link
                     href={

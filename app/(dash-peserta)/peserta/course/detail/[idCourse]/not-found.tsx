@@ -14,10 +14,10 @@ export default async function CourseNotFound() {
       <ErrorCard
         title="Oops"
         description="
-          Pelatihan yang anda pilih sudah berakhir, atau belum dimulai
+          Pembelajaran yang anda pilih sudah berakhir, atau belum dimulai
         "
         retryLink="/peserta/course"
-        retryLinkText="Kembali ke Daftar Pelatihan"
+        retryLinkText="Kembali ke Daftar Pembelajaran"
       />
     </Shell>
   )

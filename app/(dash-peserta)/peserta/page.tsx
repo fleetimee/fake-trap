@@ -127,7 +127,7 @@ export default async function PesertaPage() {
 
         <Widget
           icon={<Icons.course className="text-red-500" />}
-          title="Pelatihan"
+          title="Pembelajaran"
           subtitle={globalCount.data?.course_count.toString()}
         />
       </div>
@@ -135,9 +135,9 @@ export default async function PesertaPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="h-fit rounded-none md:rounded-lg lg:col-span-3">
           <CardHeader>
-            <CardTitle>Pelatihan</CardTitle>
+            <CardTitle>Pembelajaran</CardTitle>
             <CardDescription>
-              Berikut adalah pelatihan yang kamu ikuti
+              Berikut adalah pembelajaran yang kamu ikuti
             </CardDescription>
           </CardHeader>
 
@@ -147,7 +147,7 @@ export default async function PesertaPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Nama Pelatihan</TableHead>
+                      <TableHead>Nama Pembelajaran</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -175,7 +175,7 @@ export default async function PesertaPage() {
               <div className="mx-auto flex flex-col items-center justify-center gap-4 py-16">
                 <Icons.course className="size-20 text-gray-400" />
                 <p className="text-gray-400">
-                  Belum ada pelatihan yang diikuti
+                  Belum ada pembelajaran yang diikuti
                 </p>
               </div>
             )}

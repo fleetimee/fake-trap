@@ -151,8 +151,8 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
               aria-hidden="true"
             />
           )}
-          Sign in
-          <span className="sr-only">Sign in</span>
+          LOG IN
+          <span className="sr-only">LOG IN</span>
         </Button>
       </form>
     </Form>

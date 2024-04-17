@@ -34,7 +34,7 @@ export default async function CourseKnowledgePage({
       <div>
         <h3 className="text-lg font-medium">Tambah Materi</h3>
         <p className="text-sm text-muted-foreground">
-          Tambahkan materi baru ke dalam pelatihan ini.
+          Tambahkan materi baru ke dalam pembelajaran ini.
         </p>
       </div>
       <Separator />

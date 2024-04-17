@@ -53,8 +53,8 @@ export default async function CoursePeoplePage({
       <div>
         <h3 className="text-lg font-medium">Tambahkan Peserta</h3>
         <p className="text-sm text-muted-foreground">
-          Tambahkan peserta ke dalam pelatihan ini. Peserta akan mendapatkan
-          akses ke semua materi yang ada di pelatihan ini.
+          Tambahkan peserta ke dalam pembelajaran ini. Peserta akan mendapatkan
+          akses ke semua materi yang ada di pembelajaran ini.
         </p>
       </div>
       <Separator />

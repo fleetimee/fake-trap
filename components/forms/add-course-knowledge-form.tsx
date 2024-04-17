@@ -81,7 +81,7 @@ export function AddCourseKnowledgeForm({
 
         if (res.ok) {
           sonnerToast.success("Berhasil", {
-            description: "Materi berhasil ditambahkan ke dalam pelatihan",
+            description: "Materi berhasil ditambahkan ke dalam pembelajaran",
           })
 
           router.back()
@@ -90,12 +90,12 @@ export function AddCourseKnowledgeForm({
         } else {
           const error: ErrorResponse = await res.json()
 
-          sonnerToast.error("Gagal menambahkan materi ke dalam pelatihan", {
+          sonnerToast.error("Gagal menambahkan materi ke dalam pembelajaran", {
             description: error.error,
           })
         }
       } catch (error) {
-        sonnerToast.error("Gagal menambahkan materi ke dalam pelatihan", {
+        sonnerToast.error("Gagal menambahkan materi ke dalam pembelajaran", {
           description: `Terjadi kesalahan: ${error}`,
         })
       }
@@ -260,7 +260,7 @@ export function AddCourseKnowledgeForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Pilih materi yang akan ditambahkan ke dalam pelatihan
+                Pilih materi yang akan ditambahkan ke dalam pembelajaran
               </FormDescription>
               <FormMessage />
             </FormItem>

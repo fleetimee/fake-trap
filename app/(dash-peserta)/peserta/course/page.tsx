@@ -14,8 +14,8 @@ import { Courses } from "@/components/ui/courses"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
-  title: "Pelatihan Kamu",
-  description: "Pelatihan",
+  title: "Pembelajaran Kamu",
+  description: "Pembelajaran",
 }
 
 interface PesertaCoursePageProps {
@@ -68,14 +68,14 @@ export default async function PesertaCoursePage({
           },
           {
             href: "/peserta/course",
-            title: "Pelatihan",
+            title: "Pembelajaran",
           },
         ]}
       />
 
       <DashboardHeader
-        heading="Pelatihan Kamu"
-        description="Ini merupakan pelatihan yang kamu ikuti"
+        heading="Pembelajaran Kamu"
+        description="Ini merupakan pembelajaran yang kamu ikuti"
       />
 
       <Separator />
@@ -83,8 +83,8 @@ export default async function PesertaCoursePage({
       {userCourse.data.length === 0 ? (
         <NotFoundAnim
           animationData={NotFoundLottie}
-          title="Belum ada Pelatihan"
-          description="Maaf anda belum di assign pelatihan oleh administrator"
+          title="Belum ada Pembelajaran"
+          description="Maaf anda belum di assign pembelajaran oleh administrator"
           backButtonUrl="/peserta"
         />
       ) : (

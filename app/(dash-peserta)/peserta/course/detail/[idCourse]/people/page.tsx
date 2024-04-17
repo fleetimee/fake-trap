@@ -69,7 +69,7 @@ export default async function CoursePeoplePage({
       <div>
         <h3 className="text-lg font-medium">Daftar Peserta</h3>
         <p className="text-sm text-muted-foreground">
-          Daftar Peserta yang mengikuti pelatihan ini
+          Daftar Peserta yang mengikuti pembelajaran ini
         </p>
       </div>
       <Separator />

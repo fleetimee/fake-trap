@@ -82,7 +82,7 @@ export default async function CourseDetailLayout({
             },
             {
               href: "/supervisor-lms/approval",
-              title: "Approve Pelatihan",
+              title: "Approve Pembelajaran",
             },
             {
               href: `/supervisor-lms/approval/detail/${params.idApproval}/course/${params.idCourse}`,

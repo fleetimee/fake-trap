@@ -90,7 +90,7 @@ export function RequestCourseForm({
 
         if (res.ok) {
           sonnerToast.success("Success", {
-            description: "Permintaan pelatihan berhasil diajukan",
+            description: "Permintaan pembelajaran berhasil diajukan",
           })
 
           router.push(baseUrl)
@@ -187,7 +187,8 @@ export function RequestCourseForm({
                 </Popover>
               </FormControl>
               <FormDescription>
-                Atasan yang dipilih akan menerima permintaan pengajuan pelatihan
+                Atasan yang dipilih akan menerima permintaan pengajuan
+                pembelajaran
               </FormDescription>
               <FormMessage />
             </FormItem>

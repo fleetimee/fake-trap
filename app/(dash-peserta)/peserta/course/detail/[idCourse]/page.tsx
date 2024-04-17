@@ -68,7 +68,7 @@ export default async function CourseDetailPage({
         <Icons.lock className="size-16 text-white" />
         <p className="mt-4 max-w-md text-center text-white">
           Silahkan kerjakan Pretest terlebih dahulu, untuk membuka materi
-          pelatihan.
+          pembelajaran.
         </p>
       </div>
     </div>

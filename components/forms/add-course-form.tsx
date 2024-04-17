@@ -86,7 +86,7 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           const newCourseId = responseData.data
 
           sonnerToast.success("Berhasil", {
-            description: "Pelatihan berhasil dibuat",
+            description: "Pembelajaran berhasil dibuat",
           })
 
           if (baseUrl) {
@@ -125,11 +125,11 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Nama Pelatihan <span className="text-red-500">*</span>
+                Nama Pembelajaran <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Ketikkan judul pelatihan disini"
+                  placeholder="Ketikkan judul pembelajaran disini"
                   {...field}
                   disabled={isLoading}
                 />
@@ -210,7 +210,7 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
                 </Popover>
               </FormControl>
               <FormDescription>
-                Pengetahuan terkait yang ingin dibuat pelatihan ini
+                Pengetahuan terkait yang ingin dibuat pembelajaran ini
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -284,7 +284,7 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
                 </Popover>
               </FormControl>
               <FormDescription>
-                Pemateri yang akan mengajar pelatihan ini
+                Pemateri yang akan mengajar pembelajaran ini
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -296,10 +296,10 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           name="CourseDesc"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Deskripsi Pelatihan</FormLabel>
+              <FormLabel>Deskripsi Pembelajaran</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Ketikkan deskripsi pelatihan disini"
+                  placeholder="Ketikkan deskripsi pembelajaran disini"
                   {...field}
                   disabled={isLoading}
                   className="h-40 resize-none"
@@ -373,7 +373,7 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
                 }}
               />
               <FormDescription>
-                Tanggal mulai pelatihan yang ingin dibuat.
+                Tanggal mulai pembelajaran yang ingin dibuat.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -397,7 +397,7 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
                 }}
               />
               <FormDescription>
-                Tanggal selesai pelatihan yang ingin dibuat.
+                Tanggal selesai pembelajaran yang ingin dibuat.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -414,13 +414,13 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Ketikkan judul pelatihan disini"
+                  placeholder="Ketikkan judul pembelajaran disini"
                   {...field}
                   disabled
                 />
               </FormControl>
               <FormDescription>
-                Ini adalah unique identifier dari user yang membuat pelatihan
+                Ini adalah unique identifier dari user yang membuat pembelajaran
               </FormDescription>
               <FormMessage />
             </FormItem>

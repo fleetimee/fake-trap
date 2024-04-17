@@ -26,7 +26,7 @@ import {
 import { Label } from "@/components/ui/label"
 
 export const metadata: Metadata = {
-  title: "Ajukan Pelatihan Baru",
+  title: "Ajukan Pembelajaran Baru",
 }
 
 interface OperatorLmsCourseRequestPageProps {
@@ -68,11 +68,11 @@ export default async function OperatorLmsCourseRequestPage({
           },
           {
             href: "/operator-lms/course",
-            title: "Pelatihan",
+            title: "Pembelajaran",
           },
           {
             href: "/operator-lms/course/request",
-            title: "Ajukan Pelatihan Baru",
+            title: "Ajukan Pembelajaran Baru",
           },
         ]}
       />
@@ -88,13 +88,13 @@ export default async function OperatorLmsCourseRequestPage({
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="bookTitlePreview" className="font-bold">
-                Judul Pelatihan
+                Judul Pembelajaran
               </Label>
               <div id="bookTitlePreview">{course.data.course_name}</div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="bookDescriptionPreview" className="font-bold">
-                Deskripsi Pelatihan
+                Deskripsi Pembelajaran
               </Label>
               <div id="bookDescriptionPreview">{course.data.course_desc}</div>
             </div>
@@ -118,7 +118,7 @@ export default async function OperatorLmsCourseRequestPage({
           <CardHeader>
             <CardTitle>Submit Pengajuan</CardTitle>
             <CardDescription>
-              Silahkan isi form dibawah ini untuk mengajukan pelatihan baru.
+              Silahkan isi form dibawah ini untuk mengajukan pembelajaran baru.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

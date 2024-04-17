@@ -28,6 +28,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { MovingBorderButton } from "../ui/moving-border"
+
 interface SiteHeaderProps {
   user:
     | {
@@ -107,7 +109,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
           <div className="flex flex-1 items-center justify-end space-x-4">
             <div className=" hidden text-sm font-medium leading-none text-muted-foreground md:block">
               <div className="rounded-full bg-gray-200 px-4 py-2 text-black">
-                Server Time: {formatDate(time)}
+                Waktu Server: {formatDate(time)}
               </div>
             </div>
 
@@ -202,7 +204,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                         className="mr-2 size-4"
                         aria-hidden="true"
                       />
-                      Log out
+                      Keluar
                       <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                     </Link>
                   </DropdownMenuItem>
@@ -215,7 +217,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                     size: "lg",
                   })}
                 >
-                  Sign In
+                  Log In
                   <span className="sr-only">Masuk</span>
                 </div>
               </Link>
@@ -299,13 +301,13 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link href="/login">
+              <Link href="/login" className="p-8">
                 <div
                   className={buttonVariants({
                     size: "lg",
                   })}
                 >
-                  Sign In
+                  Log In
                   <span className="sr-only">Masuk</span>
                 </div>
               </Link>

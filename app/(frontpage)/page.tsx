@@ -26,10 +26,10 @@ export default async function IndexPage() {
           className={buttonVariants({
             size: "lg",
             variant: "outline",
-            className: "w-full sm:w-auto",
+            className: "w-full sm:w-auto sm:min-w-[10rem]",
           })}
         >
-          Get Started
+          Mulai
         </Link>
 
         <ScrollIntoViewButton selector="#feature">
@@ -41,7 +41,7 @@ export default async function IndexPage() {
             })}
           >
             <span className="mr-2">
-              <Icons.arrowRight className="size-4" />
+              <Icons.arrowRight className="size-5" />
             </span>
             Fitur
           </Button>

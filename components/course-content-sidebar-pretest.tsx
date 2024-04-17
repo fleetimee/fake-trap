@@ -36,7 +36,7 @@ export function CourseContentSidebarPretest({
       <Tabs defaultValue="course" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="course" className="w-full font-semibold">
-            Pelatihan
+            Pembelajaran
           </TabsTrigger>
         </TabsList>
 

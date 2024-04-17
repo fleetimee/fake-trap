@@ -119,11 +119,11 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Nama Pelatihan <span className="text-red-500">*</span>
+                Nama Pembelajaran <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Ketikkan judul pelatihan disini"
+                  placeholder="Ketikkan judul pembelajaran disini"
                   {...field}
                   disabled={isPending}
                 />
@@ -138,10 +138,10 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
           name="CourseDesc"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Deskripsi Pelatihan</FormLabel>
+              <FormLabel>Deskripsi Pembelajaran</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Ketikkan deskripsi pelatihan disini"
+                  placeholder="Ketikkan deskripsi pembelajaran disini"
                   {...field}
                   disabled={isPending}
                   className="h-40 resize-none"
@@ -209,7 +209,7 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
                 }}
               />
               <FormDescription>
-                Tanggal mulai pelatihan yang ingin dibuat.
+                Tanggal mulai pembelajaran yang ingin dibuat.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -233,7 +233,7 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
                 }}
               />
               <FormDescription>
-                Tanggal selesai pelatihan yang ingin dibuat.
+                Tanggal selesai pembelajaran yang ingin dibuat.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -250,13 +250,13 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Ketikkan judul pelatihan disini"
+                  placeholder="Ketikkan judul pembelajaran disini"
                   {...field}
                   disabled
                 />
               </FormControl>
               <FormDescription>
-                Ini adalah unique identifier dari user yang membuat pelatihan
+                Ini adalah unique identifier dari user yang membuat pembelajaran
               </FormDescription>
               <FormMessage />
             </FormItem>

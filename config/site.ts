@@ -7,7 +7,7 @@ export const siteConfig = {
   name: "BPD DIY E-Learning",
   url: `${process.env.NEXT_PUBLIC_IMAGE_URL ?? "http://localhost:3000"}`,
   description:
-    "E-Learning BPD DIY memberikan anda akses ke ribuan pelatihan online. Pelajari apa saja, kapan saja, di mana saja",
+    "E-Learning BPD DIY memberikan anda akses ke ribuan pembelajaran online. Pelajari apa saja, kapan saja, di mana saja",
   mainNav: [
     {
       title: "Menu",
@@ -28,10 +28,10 @@ export const siteConfig = {
         },
 
         {
-          title: "Pelatihan",
+          title: "Pembelajaran",
           href: "#",
           description:
-            "Memungkinkan pengguna untuk mengeksplorasi pelatihan yang tersedia dan mengikuti pelatihan yang diinginkan.",
+            "Memungkinkan pengguna untuk mengeksplorasi pembelajaran yang tersedia dan mengikuti pembelajaran yang diinginkan.",
           items: [],
         },
         {

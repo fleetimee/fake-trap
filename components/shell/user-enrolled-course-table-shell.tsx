@@ -72,7 +72,7 @@ export function UserEnrolledCourseTableShell({
       {
         accessorKey: "course_name",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Nama Pelatihan" />
+          <DataTableColumnHeader column={column} title="Nama Pembelajaran" />
         ),
         cell: ({ row }) => {
           return (
@@ -166,7 +166,7 @@ export function UserEnrolledCourseTableShell({
     [
       {
         id: "course_name",
-        title: "Nama Pelatihan",
+        title: "Nama Pembelajaran",
       },
     ]
 

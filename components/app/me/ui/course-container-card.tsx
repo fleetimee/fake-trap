@@ -5,10 +5,6 @@ import { CourseListCard } from "@/components/app/me/ui"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
-
-
-
-
 interface CourseContainerCardProps {
   enrolledCourseList: UserEnrolledCourseListRes
   link?: string
@@ -22,7 +18,7 @@ export function CourseContainerCard({
     <Card className="col-span-7 flex min-h-[300px] w-full flex-col gap-8 p-4">
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-2xl font-light">
-          Pelatihan Yang Diikuti
+          Pembelajaran Yang Diikuti
         </h1>
 
         <Link href={link ?? "/dashboard/me/course"}>

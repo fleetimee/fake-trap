@@ -24,7 +24,7 @@ export default async function LoginPage() {
       <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900  md:min-w-[30rem]">
         <Card className=" md:min-w-[30rem]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Sign in</CardTitle>
+            <CardTitle className="text-2xl">Log in</CardTitle>
             <CardDescription>
               Enter your credentials to access your account
             </CardDescription>
