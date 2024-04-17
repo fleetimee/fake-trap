@@ -13,8 +13,8 @@ import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CourseTableShell, DashboardShell } from "@/components/shell"
 
 export const metadata: Metadata = {
-  title: "Pelatihan",
-  description: "Pelatihan",
+  title: "Pembelajaran",
+  description: "Pembelajaran",
 }
 
 interface OperatorLMSCoursePageProps {
@@ -71,7 +71,7 @@ export default async function OperatorLMSCoursePage({
           },
           {
             href: "/operator-lms/course",
-            title: "Pelatihan",
+            title: "Pembelajaran",
           },
         ]}
       />

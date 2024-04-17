@@ -131,7 +131,7 @@ export default async function OperatorLMSDashboard() {
 
         <Widget
           icon={<Icons.course className="text-red-500" />}
-          title="Pelatihan"
+          title="Pembelajaran"
           subtitle={globalCount.data?.course_count.toString()}
         />
       </div>
@@ -280,10 +280,10 @@ export default async function OperatorLMSDashboard() {
                         <p className="inline-flex items-center text-sm">
                           Perihal:{" "}
                           {item.status === "0051"
-                            ? "Pengajuan Pelatihan"
+                            ? "Pengajuan Pembelajaran"
                             : item.status === "0053"
-                              ? "Revisi Pengajuan Pelatihan"
-                              : "Pengajuan Pelatihan"}
+                              ? "Revisi Pengajuan Pembelajaran"
+                              : "Pengajuan Pembelajaran"}
                           <span className="ml-2 inline-flex">
                             {badgeSwitch({
                               approval: {

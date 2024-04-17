@@ -87,7 +87,7 @@ export default async function ApproveCourseRevisionPage({
           <Separator />
           <CardContent className="space-y-8 py-5">
             <div className="space-y-2">
-              <Label className="font-bold">Judul Pelatihan</Label>
+              <Label className="font-bold">Judul Pembelajaran</Label>
               <div>
                 <Link
                   href={`/operator-lms/course/detail/${approvalRequest.data.id_course}`}
