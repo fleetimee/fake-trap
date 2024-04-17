@@ -20,4 +20,5 @@ export type UserListResData = {
   user_quiz: null
   roles: string
   atasan: string
+  profile_picture: string
 }

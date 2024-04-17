@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
@@ -41,12 +42,18 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
           const user = row.original
 
           return (
-            <Avatar className="size-12 bg-white">
-              <AvatarImage
-                src={`data:image/svg+xml;utf8,${generateFromString(user.name)}`}
+            <div className="relative size-20 overflow-hidden rounded-full bg-white">
+              <Image
+                src={
+                  user.profile_picture
+                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${user.profile_picture}`
+                    : `data:image/svg+xml;utf8,${generateFromString(user.name)}`
+                }
+                alt="User name"
+                width={200}
+                height={200}
               />
-              <AvatarFallback />
-            </Avatar>
+            </div>
           )
         },
       },

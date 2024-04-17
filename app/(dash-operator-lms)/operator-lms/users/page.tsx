@@ -49,6 +49,8 @@ export default async function OperatorLMSUsersPage({
     searchQuery: nameInitial,
   })
 
+  console.log(userList)
+
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }

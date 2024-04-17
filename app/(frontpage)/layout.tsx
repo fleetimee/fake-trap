@@ -13,23 +13,19 @@ import { extractToken } from "@/lib/utils"
 import { BentoGridDemo } from "@/components/bento-feature"
 import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
-import { ElearningHero } from "@/components/elearning-hero"
 import { ElearningParallax } from "@/components/elearning-parallax"
 import { MotionDiv } from "@/components/framer-wrapper"
-import { Icons } from "@/components/icons"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
 import { VelocityScroll } from "@/components/scroll-based-velocity"
-import { ScrollIntoViewButton } from "@/components/scroll-into-view"
 import { ScrollToTopButton } from "@/components/scroll-to-top"
 import { Badge } from "@/components/ui/badge"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { ContainerScroll } from "@/components/ui/container-scroll"
-import { HeroHighlight } from "@/components/ui/hero-highlight"
 import { MacbookScroll } from "@/components/ui/macbook-scroll"
 
 export const metadata = {
-  title: "BPD E-learning: Pelajari apa saja, kapan saja, di mana saja",
+  title: "BPD DIY E-learning: Pelajari apa saja, kapan saja, di mana saja",
   description: "fleetime",
 }
 
