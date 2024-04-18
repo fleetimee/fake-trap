@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import Learn from "@/public/lottie/learning.json"
@@ -20,11 +21,13 @@ import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getUserLeaderboard } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import {
+  cn,
   convertDatetoString,
   convertDatetoStringWithTime,
   extractToken,
   getCourseStatus,
 } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { LottieClient } from "@/components/lottie-anim"
 import {
   AlertDialog,
@@ -349,6 +352,11 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
             <Card className="w-full max-w-3xl space-y-4">
               <CardHeader className="pb-0">
                 <CardTitle className="text-xl">Ranked</CardTitle>
+
+                <CardDescription>
+                  Ini merupakan peringkat keseluruhan peserta yang mengerjakan
+                  ujian disortir berdasarkan nilai tertinggi dan waktu tercepat
+                </CardDescription>
               </CardHeader>
               <CardContent className="py-2">
                 {getCurrentUserPlacement.data > 0 ? (
@@ -410,27 +418,48 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                       {getLeaderboad.data.length > 0 ? (
                         getLeaderboad.data.map((leaderboard, index) => (
                           <tr
-                            className="bg-gray-50 dark:bg-background"
+                            className={cn(
+                              "bg-gray-50 dark:bg-background",
+                              leaderboard.user_uuid === tokenExtracted.id &&
+                                "bg-blue-200 dark:bg-blue-700"
+                            )}
                             key={leaderboard.position}
                           >
                             <td className="p-4 text-left">
-                              {leaderboard.position === 1
-                                ? `${leaderboard.position}st`
-                                : leaderboard.position === 2
-                                  ? `${leaderboard.position}nd`
-                                  : leaderboard.position === 3
-                                    ? `${leaderboard.position}rd`
-                                    : `${leaderboard.position}th`}
+                              {leaderboard.position === 1 ? (
+                                <div className="inline-flex items-center justify-between space-x-2">
+                                  <Icons.crown className="text-gold h-6 w-6" />
+                                  <span>{`${leaderboard.position}st`}</span>
+                                </div>
+                              ) : leaderboard.position === 2 ? (
+                                <div className="inline-flex items-center justify-between space-x-2">
+                                  <Icons.crown className="text-silver h-6 w-6" />
+                                  <span>{`${leaderboard.position}st`}</span>
+                                </div>
+                              ) : leaderboard.position === 3 ? (
+                                <div className="inline-flex items-center justify-between space-x-2">
+                                  <Icons.crown className="text-bronze h-6 w-6" />
+                                  <span>{`${leaderboard.position}st`}</span>
+                                </div>
+                              ) : (
+                                `${leaderboard.position}th`
+                              )}
                             </td>
                             <td className="p-4">
                               <Button className="rounded-lg" variant="ghost">
                                 <div className="flex items-center space-x-3">
-                                  <Avatar className="size-12 bg-white">
-                                    <AvatarImage
-                                      src={`data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`}
+                                  <div className="relative size-10 overflow-hidden rounded-full bg-white">
+                                    <Image
+                                      src={
+                                        leaderboard.profile_picture
+                                          ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                          : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
+                                      }
+                                      alt="User name"
+                                      width={200}
+                                      height={200}
                                     />
-                                    <AvatarFallback />
-                                  </Avatar>
+                                  </div>
                                   <span className="font-medium">
                                     {leaderboard.name}
                                   </span>

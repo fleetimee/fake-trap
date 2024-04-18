@@ -25,6 +25,9 @@ module.exports = {
 
     extend: {
       colors: {
+        gold: "#FFD700",
+        silver: "#C0C0C0",
+        bronze: "#CD7F32",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
