@@ -32,7 +32,7 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
     },
     {
-      title: "Quiz",
+      title: "Ujian",
       href: "/dashboard/quiz",
       icon: "quiz",
       items: [],
@@ -261,7 +261,7 @@ export const adminAreaRole: UserAreaRole = {
     },
     {
       icon: "laptop",
-      title: "Quiz",
+      title: "Ujian",
       description: "Anda dapat mengelola quiz yang anda buat",
     },
     {

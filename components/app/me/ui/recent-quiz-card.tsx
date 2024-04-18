@@ -15,10 +15,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-
-
-
-
 interface RecentQuizCard {
   quizTakenList: UserQuizTakenListRes
   link?: string
@@ -33,7 +29,7 @@ export function RecentQuizCard({
   return (
     <Card className="col-span-7 flex min-h-[395px] flex-col gap-6 p-4 lg:col-span-4">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-2xl font-light">Riwayat Quiz</h1>
+        <h1 className="font-heading text-2xl font-light">Riwayat Ujian</h1>
 
         <Link href={link ?? "/dashboard/me/recent-quiz"}>
           <Button variant="outline">Lihat semua</Button>

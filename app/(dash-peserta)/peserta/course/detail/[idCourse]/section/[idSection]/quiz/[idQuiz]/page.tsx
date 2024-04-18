@@ -202,11 +202,11 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                 </li>
 
                 <li className="text-sm">
-                  Quiz hanya dapat di kerjakan sekali untuk tipe Pre Test
+                  Ujian hanya dapat di kerjakan sekali untuk tipe Pre Test
                 </li>
                 <li className="text-sm">
-                  Quiz dapat di kerjakan 3 kali untuk tipe Post Test dan diambil
-                  nilai terbaik
+                  Ujian dapat di kerjakan 3 kali untuk tipe Post Test dan
+                  diambil nilai terbaik
                 </li>
               </ul>
             </div>
@@ -259,7 +259,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                   }
                   disabled={isPretestExceded || isPosttestExceded}
                 >
-                  Mulai Quiz
+                  Mulai Ujian
                 </Button>
               </AlertDialogTrigger>
 
@@ -267,7 +267,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Yakin Mulai ?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Setelah Quiz di mulai, tidak dapat di ulang
+                    Setelah Ujian di mulai, tidak dapat di ulang
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

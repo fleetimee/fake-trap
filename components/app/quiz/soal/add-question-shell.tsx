@@ -94,8 +94,8 @@ export function SoalShell(props: {
           <AlertTitle>Guide</AlertTitle>
           <AlertDescription>
             Tambahkan pertanyaan dan jawaban di sebelah kiri, kemudian klik
-            tombol <span className="font-semibold">Submit Quiz</span> di sebelah
-            kanan untuk menyimpan soal untuk quiz ini.
+            tombol <span className="font-semibold">Submit Ujian</span> di
+            sebelah kanan untuk menyimpan soal untuk quiz ini.
           </AlertDescription>
         </Alert>
 
@@ -147,7 +147,7 @@ export function SoalShell(props: {
                 Hapus Semua
               </Button>
               <Button onClick={handleRandomize}>Randomize</Button>
-              <Button onClick={() => onSubmit(quizzes)}>Submit Quiz</Button>
+              <Button onClick={() => onSubmit(quizzes)}>Submit Ujian</Button>
             </div>
           </div>
           {(randomize ? quizzes.sort(() => Math.random() - 0.5) : quizzes).map(

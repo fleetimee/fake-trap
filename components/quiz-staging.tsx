@@ -25,7 +25,7 @@ export function QuizAnnoucement({ ...props }: QuizAnnouncementProps) {
   return (
     <EmptyContent className="min-h-[400px]">
       <EmptyContent.Icon name="comment" />
-      <EmptyContent.Title>Mulai Quiz Ini ?</EmptyContent.Title>
+      <EmptyContent.Title>Mulai Ujian Ini ?</EmptyContent.Title>
       <EmptyContent.Description className="text-lg italic">
         {props.quizName}
       </EmptyContent.Description>
@@ -33,7 +33,7 @@ export function QuizAnnoucement({ ...props }: QuizAnnouncementProps) {
       <AlertDialog>
         <AlertDialogTrigger>
           <Button className="mt-4 w-full" variant="secondary">
-            Mulai Quiz
+            Mulai Ujian
           </Button>
         </AlertDialogTrigger>
 
@@ -41,7 +41,7 @@ export function QuizAnnoucement({ ...props }: QuizAnnouncementProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>Yakin Mulai ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Setelah Quiz di mulai, tidak dapat di ulang
+              Setelah Ujian di mulai, tidak dapat di ulang
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -56,9 +56,9 @@ export function QuizAnnoucement({ ...props }: QuizAnnouncementProps) {
 
       <ul className="list-inside list-disc ">
         <EmptyContent.Description className="text-left">
-          <li>Waktu Quiz hanya 30 menit </li>
-          <li>Quiz hanya dapat di kerjakan sekali </li>
-          <li>Quiz tidak dapat di ulang </li>
+          <li>Waktu Ujian hanya 30 menit </li>
+          <li>Ujian hanya dapat di kerjakan sekali </li>
+          <li>Ujian tidak dapat di ulang </li>
         </EmptyContent.Description>
       </ul>
     </EmptyContent>

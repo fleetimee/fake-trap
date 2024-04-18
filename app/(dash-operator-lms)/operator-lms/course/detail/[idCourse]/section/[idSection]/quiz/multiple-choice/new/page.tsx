@@ -42,7 +42,7 @@ export default async function CourseQuizMultipleChoicePage({
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">Quiz Pilihan Ganda</h3>
+        <h3 className="text-lg font-medium">Ujian Pilihan Ganda</h3>
         <p className="text-sm text-muted-foreground">
           Tambahkan quiz pilihan ganda untuk section{" "}
           {section.data.section_title}

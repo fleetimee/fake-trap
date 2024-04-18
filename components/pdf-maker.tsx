@@ -46,7 +46,7 @@ export default function MyDocument({
       <Page size="A4" style={tw("p-8 flex flex-col gap-4 font-sans w-full")}>
         <View style={tw("flex justify-center items-center")}>
           <Text style={tw("text-xl font-bold")}>
-            Hasil Quiz : {getOneQuiz.quiz_title}
+            Hasil Ujian : {getOneQuiz.quiz_title}
           </Text>
         </View>
 

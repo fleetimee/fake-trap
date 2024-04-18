@@ -127,7 +127,7 @@ export function UserQuizGroupedTableShell({
     [
       {
         id: "quiz_type",
-        title: "Filter Tipe Quiz",
+        title: "Filter Tipe Ujian",
         options: referenceResp.data.map((reference) => ({
           value: reference.code_ref2,
           label: reference.value_ref1,
@@ -157,7 +157,7 @@ export function UserQuizGroupedTableShell({
       // filterableColumns={[
       //   {
       //     id: "quiz_type",
-      //     title: "Filter Tipe Quiz",
+      //     title: "Filter Tipe Ujian",
       //     options: referenceResp.data.map((reference) => ({
       //       value: reference.code_ref2,
       //       label: reference.value_ref1,

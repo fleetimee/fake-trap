@@ -29,7 +29,7 @@ export function CreateQuizDropdownButton({
         >
           <Icons.add className="h-4 w-4" />
 
-          <span className="ml-2">Tambah Quiz</span>
+          <span className="ml-2">Tambah Ujian</span>
         </Link>
       </DropdownMenuTrigger>
     </DropdownMenu>

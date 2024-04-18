@@ -91,7 +91,7 @@ export function QuizOperations({ quiz, linkString }: QuizOperationsProps) {
               Apakah anda yakin ingin menghapus quiz ini?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Quiz yang sudah dihapus tidak dapat dikembalikan
+              Ujian yang sudah dihapus tidak dapat dikembalikan
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

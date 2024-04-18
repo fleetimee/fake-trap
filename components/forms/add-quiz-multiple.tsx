@@ -79,7 +79,7 @@ export function AddQuizMultipleChoiceQuiz({
 
         if (res.ok) {
           sonnerToast.success("Berhasil", {
-            description: "Quiz berhasil ditambahkan",
+            description: "Ujian berhasil ditambahkan",
           })
 
           router.back()
@@ -140,7 +140,7 @@ export function AddQuizMultipleChoiceQuiz({
                     <Command>
                       <CommandInput placeholder="Cari test..." />
                       <CommandList>
-                        <CommandEmpty>Quiz tidak ditemukan</CommandEmpty>
+                        <CommandEmpty>Ujian tidak ditemukan</CommandEmpty>
                         <CommandGroup>
                           <ScrollArea className="h-full">
                             {quizList.map((quiz) => (

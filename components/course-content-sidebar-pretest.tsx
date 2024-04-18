@@ -103,7 +103,7 @@ export function CourseContentSidebarPretest({
                                       ? "PRE-TEST"
                                       : quiz.quiz_type === QuizType.POSTTEST
                                         ? "POST-TEST"
-                                        : "Quiz"}
+                                        : "Ujian"}
                                   </p>
                                 </div>
                               </Button>
