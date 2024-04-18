@@ -13,8 +13,6 @@ import { useDataTable } from "@/hooks/use-data-table"
 import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-
 interface UserTableShellProps {
   data: UserListResData[]
   pageCount: number

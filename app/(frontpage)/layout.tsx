@@ -21,6 +21,7 @@ import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { ScrollToTopButton } from "@/components/scroll-to-top"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { ContainerScroll } from "@/components/ui/container-scroll"
 import { MacbookScroll } from "@/components/ui/macbook-scroll"
 
@@ -143,9 +144,9 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
         </div>
       </section>
 
-      <ElearningParallax />
+      {/* <ElearningParallax /> */}
 
-      <div className="hidden overflow-hidden md:flex md:flex-col">
+      {/* <div className="hidden overflow-hidden md:flex md:flex-col">
         <ContainerScroll
           titleComponent={
             <>
@@ -167,7 +168,7 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
             draggable={false}
           />
         </ContainerScroll>
-      </div>
+      </div> */}
 
       <section
         className="relative flex h-auto min-h-screen flex-col  lg:min-h-[100svh]"
@@ -205,7 +206,7 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
         </div>
       </section>
 
-      <div className="hidden w-full overflow-hidden bg-white dark:bg-[#0B0B0F] md:block">
+      {/* <div className="hidden w-full overflow-hidden bg-white dark:bg-[#0B0B0F] md:block">
         <MacbookScroll
           title={<span>Belajar Jadi Lebih Mudah dan Menyenangkan.</span>}
           badge={
@@ -216,7 +217,7 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
           src={"/images/promo.png"}
           showGradient={false}
         />
-      </div>
+      </div> */}
 
       {/* This section is the "Featured Category" section of the page. 
       It displays a list of popular categories in a grid layout. Each category is represented by a card, 
@@ -227,7 +228,7 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
         aria-labelledby="categories-heading"
         className="space-y-6 bg-[url(/second_bg.svg)] bg-cover bg-right-bottom bg-no-repeat py-16  lg:min-h-[60svh]"
       >
-        <div className="mx-auto max-w-screen-xl space-y-4 px-4 py-16 sm:px-6 md:space-y-16 lg:px-8">
+        <div className="mx-auto max-w-screen-xl space-y-4 px-4 py-8 sm:px-6 md:space-y-16 lg:px-8">
           <div className="flex items-center justify-between gap-4">
             <div className="max-w-[58rem] flex-1 space-y-1  md:bg-none">
               <h2 className="flex-1 font-heading text-2xl font-medium  sm:text-3xl md:bg-none">
@@ -286,9 +287,19 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
       <section
         id="parallax-text"
         aria-labelledby="parallax-text-heading"
-        className="mx-auto hidden max-w-full  lg:min-h-[40svh]  2xl:block "
+        className="mx-auto max-w-screen-xl items-center  px-6  lg:min-h-[10svh] 2xl:block "
       >
-        <VelocityScroll />
+        <Card className="mx-auto flex h-11 items-center justify-center bg-gradient-to-r from-blue-700 to-blue-900">
+          {/* @ts-ignore */}
+          <marquee behavior="" direction="">
+            <p className="text-white">
+              Selamat Hari Raya Idul Fitri 1445 H | Bank BPD DIY | 7 Kantor
+              Cabang | 109 Kantor Capem | Kita Berkembang Bersama | Call Center
+              1500061{" "}
+            </p>
+            {/* @ts-ignore */}
+          </marquee>
+        </Card>
       </section>
 
       {/* Featured Knowledge */}
