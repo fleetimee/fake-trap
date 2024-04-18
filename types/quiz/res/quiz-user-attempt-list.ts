@@ -17,4 +17,5 @@ export type QuizUserAttemptListData = {
   is_correct: boolean
   created_at: Date
   score: number
+  profile_picture: string
 }

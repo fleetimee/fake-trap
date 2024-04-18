@@ -8,7 +8,7 @@ import { getQuizMembers } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { MotionDiv } from "@/components/framer-wrapper"
-import { DashboardShell, QuizMemberTableShell } from "@/components/shell"
+import { DashboardShell, UjianPesertaTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export const metadata: Metadata = {
@@ -63,13 +63,13 @@ export default async function ExerciseDetailPesertaPage({
           <PersonIcon className="size-4" />
           <AlertTitle>List Peserta</AlertTitle>
           <AlertDescription>
-            Berikut adalah list peserta yang sudah mengerjakan tes ini
+            Berikut adalah list peserta yang sudah mengerjakan ujian ini
           </AlertDescription>
         </Alert>
       </MotionDiv>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
-        <QuizMemberTableShell
+        <UjianPesertaTableShell
           data={exerciseMember.data}
           pageCount={exerciseMember.totalPage}
           idExercise={params.idExercise}

@@ -123,7 +123,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Masukkan judul tes"
+                  placeholder="Masukkan judul ujian"
                   disabled={isPending}
                 />
               </FormControl>
@@ -144,7 +144,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder="Masukkan deskripsi tes"
+                  placeholder="Masukkan deskripsi ujian"
                   disabled={isPending}
                   className="h-32 resize-none"
                 />
@@ -321,7 +321,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
                 <Input {...field} disabled placeholder="" />
               </FormControl>
               <FormDescription>
-                Ini adalah unique identifier dari user yang membuat tes
+                Ini adalah unique identifier dari user yang membuat ujian
               </FormDescription>
             </FormItem>
           )}

@@ -173,7 +173,7 @@ export function AddCategoryForm() {
                 <Input type="text" {...field} disabled />
               </FormControl>
               <FormDescription>
-                Ini adalah unique identifier dari user yang membuat tes
+                Ini adalah unique identifier dari user yang membuat ujian
               </FormDescription>
               <FormMessage />
             </FormItem>

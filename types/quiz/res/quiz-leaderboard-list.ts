@@ -14,4 +14,5 @@ export interface QuizLeaderboardListResData {
   id_quiz: number
   score: number
   time_elapsed: string
+  profile_picture: string
 }

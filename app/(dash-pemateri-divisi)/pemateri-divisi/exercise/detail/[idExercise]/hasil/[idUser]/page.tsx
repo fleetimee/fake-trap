@@ -79,7 +79,7 @@ export default async function ExerciseResultDetailPage({
             <CardHeader>
               <CardTitle>Hasil Tes</CardTitle>
               <CardDescription className="text-lg">
-                Berikut adalah nilai tes yang telah peserta{" "}
+                Berikut adalah nilai ujian yang telah peserta{" "}
                 <span className="font-semibold">{person.data.name}</span>{" "}
                 lakukan
               </CardDescription>
@@ -96,7 +96,7 @@ export default async function ExerciseResultDetailPage({
                       </Badge>
                     </div>
                     <CardDescription className="mt-2 text-gray-500 dark:text-gray-400">
-                      Peserta {person.data.name} telah menyelesaikan tes ini
+                      Peserta {person.data.name} telah menyelesaikan ujian ini
                       dengan jawaban benar sebanyak{" "}
                       <span className="text-lg font-semibold">
                         {correctAnswer}
@@ -188,7 +188,7 @@ export default async function ExerciseResultDetailPage({
               <div>
                 <CardTitle>Printout</CardTitle>
                 <CardDescription className="text-lg">
-                  Cetak hasil tes peserta{" "}
+                  Cetak hasil ujian peserta{" "}
                   <span className="font-semibold">{person.data.name}</span>{" "}
                 </CardDescription>
               </div>

@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
+import { headers } from "next/headers"
 import Script from "next/script"
 import NextTopLoader from "nextjs-toploader"
 

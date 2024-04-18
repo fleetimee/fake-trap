@@ -363,7 +363,7 @@ export function UpdateKnowledgeForm({
                 <Input {...field} placeholder="Created By" disabled />
               </FormControl>
               <FormDescription>
-                Ini adalah unique identifier dari user yang mensuting tes ini
+                Ini adalah unique identifier dari user yang mensuting ujian ini
               </FormDescription>
               <FormMessage />
             </FormItem>

@@ -7,7 +7,7 @@ import { authOptions } from "@/lib/auth"
 import { getQuizAttempts } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
-import { DashboardShell, UserQuizResultTableShell } from "@/components/shell"
+import { DashboardShell, UjianResultTableShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export const metadata: Metadata = {
@@ -67,7 +67,7 @@ export default async function ExerciseDetailHasilPage({
       </Alert>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
-        <UserQuizResultTableShell
+        <UjianResultTableShell
           data={exerciseResult.data}
           pageCount={exerciseResult.totalPage}
           idQuiz={params.idExercise}

@@ -373,7 +373,7 @@ export function AddKnowledgeForm({
                 <Input {...field} placeholder="Created By" disabled />
               </FormControl>
               <FormDescription>
-                Ini adalah unique identifier dari user yang membuat tes
+                Ini adalah unique identifier dari user yang membuat ujian
               </FormDescription>
               <FormMessage />
             </FormItem>

@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 import { ColumnDef } from "@tanstack/react-table"
 import { generateFromString } from "generate-avatar"
 
 import { QuizLeaderboardListResData } from "@/types/quiz/res/quiz-leaderboard-list"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface QuizLeaderboardTableShellProps {
   data: QuizLeaderboardListResData[]
@@ -56,12 +56,18 @@ export function QuizLeaderboardTableShell({
           const user = row.original
 
           return (
-            <Avatar className="size-12 bg-white">
-              <AvatarImage
-                src={`data:image/svg+xml;utf8,${generateFromString(user.name)}`}
+            <div className="relative size-20 overflow-hidden rounded-full bg-white">
+              <Image
+                src={
+                  user.profile_picture
+                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${user.profile_picture}`
+                    : `data:image/svg+xml;utf8,${generateFromString(user.name)}`
+                }
+                alt="User name"
+                width={200}
+                height={200}
               />
-              <AvatarFallback />
-            </Avatar>
+            </div>
           )
         },
       },

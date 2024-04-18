@@ -1,30 +1,31 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 import { ColumnDef } from "@tanstack/react-table"
 import { generateFromString } from "generate-avatar"
 
-import { QuizMemberListResData } from "@/types/quiz/res"
+import { UjianPesertaListResData } from "@/types/quiz/res"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
-interface QuizMemberTableShellProps {
-  data: QuizMemberListResData[]
+interface UjianPesertaTableShellProps {
+  data: UjianPesertaListResData[]
   pageCount: number
   idExercise: string
 }
 
-export function QuizMemberTableShell({
+export function UjianPesertaTableShell({
   data,
   pageCount,
   idExercise,
-}: QuizMemberTableShellProps) {
+}: UjianPesertaTableShellProps) {
   // const [isPending, startTransition] = React.useTransition()
   // const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
 
-  const columns = React.useMemo<ColumnDef<QuizMemberListResData, unknown>[]>(
+  const columns = React.useMemo<ColumnDef<UjianPesertaListResData, unknown>[]>(
     () => [
       {
         id: "avatar",
@@ -32,12 +33,18 @@ export function QuizMemberTableShell({
           const user = row.original
 
           return (
-            <Avatar className="size-12 bg-white">
-              <AvatarImage
-                src={`data:image/svg+xml;utf8,${generateFromString(user.name)}`}
+            <div className="relative size-20 overflow-hidden rounded-full bg-white">
+              <Image
+                src={
+                  user.profile_picture
+                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${user.profile_picture}`
+                    : `data:image/svg+xml;utf8,${generateFromString(user.name)}`
+                }
+                alt="User name"
+                width={200}
+                height={200}
               />
-              <AvatarFallback />
-            </Avatar>
+            </div>
           )
         },
       },

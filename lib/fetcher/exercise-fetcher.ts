@@ -2,11 +2,11 @@ import {
   FetchUserQuizListRes,
   QuizLinkedList,
   QuizListRes,
-  QuizMemberListRes,
   QuizOneRes,
   QuizOneUserCountRes,
   QuizQuestionListRes,
   QuizUserAttemptList,
+  UjianPesertaListRes,
 } from "@/types/quiz/res"
 import { QuizDashboardCountRes } from "@/types/quiz/res/quiz-get-dashboard-count"
 import { QuizLeaderboardListRes } from "@/types/quiz/res/quiz-leaderboard-list"
@@ -284,7 +284,7 @@ export async function getQuizMembers({
   page,
   sortBy = "attempts",
   orderBy = "desc",
-}: GetQuizMembersProps): Promise<QuizMemberListRes> {
+}: GetQuizMembersProps): Promise<UjianPesertaListRes> {
   let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/getMember`
 
   const url = new URL(baseUrl)
