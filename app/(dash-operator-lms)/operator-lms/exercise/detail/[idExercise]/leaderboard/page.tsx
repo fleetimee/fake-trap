@@ -7,7 +7,7 @@ import { getQuizLeaderboard } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DashboardShell } from "@/components/shell"
-import { QuizLeaderboardTableShell } from "@/components/shell/quiz-leaderboard-table-shell"
+import { UjianLeaderboardTableShell } from "@/components/shell/ujian-leaderboard-table-shell"
 
 export const metadata: Metadata = {
   title: "Leaderboard",
@@ -57,7 +57,7 @@ export default async function ExerciseDetailLeaderboardPage({
   return (
     <DashboardShell>
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
-        <QuizLeaderboardTableShell
+        <UjianLeaderboardTableShell
           data={leaderboard?.data}
           pageCount={leaderboard.totalPage}
           idExercise={params.idExercise}

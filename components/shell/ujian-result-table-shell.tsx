@@ -101,7 +101,7 @@ export function UjianResultTableShell({
       dataTable={dataTable}
       columns={columns}
       isExportable
-      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${idQuiz}/getUserAttempt`}
+      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/quizzes/${idQuiz}/attempts/export`}
     />
   )
 }

@@ -20,10 +20,6 @@ import { DataTableViewOptions } from "@/components/data-table/data-table-view-op
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-
-
-
-
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
   filterableColumns?: DataTableFilterableColumn<TData>[]
@@ -130,7 +126,12 @@ export function DataTableToolbar<TData>({
         ) : null}
 
         {isExportable && exportAction ? (
-          <Link aria-label="Export" href={exportAction}>
+          <Link
+            aria-label="Export"
+            href={exportAction}
+            target="_blank"
+            rel="noreferrer"
+          >
             <div
               className={cn(
                 buttonVariants({

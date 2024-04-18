@@ -8,7 +8,6 @@ import { generateFromString } from "generate-avatar"
 import { UjianPesertaListResData } from "@/types/quiz/res"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
 interface UjianPesertaTableShellProps {
@@ -88,7 +87,7 @@ export function UjianPesertaTableShell({
       dataTable={dataTable}
       columns={columns}
       isExportable
-      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${idExercise}/getQuizMember`}
+      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/quizzes/${idExercise}/members/export`}
     />
   )
 }

@@ -9,17 +9,17 @@ import { QuizLeaderboardListResData } from "@/types/quiz/res/quiz-leaderboard-li
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 
-interface QuizLeaderboardTableShellProps {
+interface UjianLeaderboardTableShellProps {
   data: QuizLeaderboardListResData[]
   pageCount: number
   idExercise: string
 }
 
-export function QuizLeaderboardTableShell({
+export function UjianLeaderboardTableShell({
   data,
   pageCount,
   idExercise,
-}: QuizLeaderboardTableShellProps) {
+}: UjianLeaderboardTableShellProps) {
   const columns = React.useMemo<
     ColumnDef<QuizLeaderboardListResData, unknown>[]
   >(
@@ -99,5 +99,12 @@ export function QuizLeaderboardTableShell({
     pageCount,
   })
 
-  return <DataTable dataTable={dataTable} columns={columns} />
+  return (
+    <DataTable
+      dataTable={dataTable}
+      columns={columns}
+      isExportable
+      exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/quizzes/${idExercise}/leaderboard/export`}
+    />
+  )
 }
