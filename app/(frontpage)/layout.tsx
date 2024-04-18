@@ -293,9 +293,8 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
           {/* @ts-ignore */}
           <marquee behavior="" direction="">
             <p className="text-white">
-              Selamat Hari Raya Idul Fitri 1445 H | Bank BPD DIY | 7 Kantor
-              Cabang | 109 Kantor Capem | Kita Berkembang Bersama | Call Center
-              1500061{" "}
+              Learning Management System | Bank BPD DIY | Kita Berkembang
+              Bersama | Call Center 1500061{" "}
             </p>
             {/* @ts-ignore */}
           </marquee>
