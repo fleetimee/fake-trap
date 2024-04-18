@@ -614,6 +614,7 @@ export async function updateKnowledge({
         Authorization: `Bearer ${token}`,
       },
       body,
+      cache: "no-store",
     })
 
     // if (!res.ok) {
