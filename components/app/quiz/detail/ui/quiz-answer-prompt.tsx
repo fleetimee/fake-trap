@@ -20,8 +20,8 @@ export function QuizAnswerPromptCard({
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-lg">Pertanyaan</CardTitle>
-        <CardDescription>Apakah pertanyaan sudah ditambahkan?</CardDescription>
+        <CardTitle className="text-lg">Soal Ujian</CardTitle>
+        <CardDescription>Apakah soal ujian sudah ditambahkan?</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-1">
         <div
@@ -53,7 +53,7 @@ export function QuizAnswerPromptCard({
                 !isAlreadyAnswered ? "line-through" : ""
               )}
             >
-              Pertanyaan sudah ditambahkan.
+              Soal ujian sudah ditambahkan.
             </p>
           </div>
         </div>
@@ -87,7 +87,7 @@ export function QuizAnswerPromptCard({
                 isAlreadyAnswered ? "line-through" : ""
               )}
             >
-              Belum ada pertanyaan untuk ujian ini.
+              Belum ada soal untuk ujian ini.
             </p>
           </div>
         </div>
