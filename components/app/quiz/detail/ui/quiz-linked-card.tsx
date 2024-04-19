@@ -29,11 +29,9 @@ export function QuizLinkedCard({ code, data }: QuizLinkedCardProps) {
         <div className="flex items-start space-x-4">
           <div>
             {code !== 404 ? (
-              <Link href={`/dashboard/course/${data.id_course}`}>
-                <p className="font-heading text-lg underline hover:text-blue-600">
-                  {data.course_name}
-                </p>
-              </Link>
+              <p className="font-heading text-lg underline hover:text-blue-600">
+                {data.course_name}
+              </p>
             ) : (
               <p className="font-heading text-lg">Belum ada</p>
             )}
