@@ -69,7 +69,7 @@ export function QuizTableShell({
       {
         accessorKey: "quiz_type",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Tipe Kuis" />
+          <DataTableColumnHeader column={column} title="Tipe Ujian" />
         ),
         cell: ({ row }) => (
           <Badge className="text-center">
@@ -123,7 +123,7 @@ export function QuizTableShell({
   const searchableColumns: DataTableSearchableColumn<QuizListResData>[] = [
     {
       id: "quiz_title",
-      title: "Judul Kuis",
+      title: "Judul Ujian",
     },
   ]
 

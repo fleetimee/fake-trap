@@ -118,10 +118,10 @@ export function CourseContentSidebarPretest({
                             <EmptyContent className="h-[50px]">
                               <EmptyContent.Icon name="empty" />
                               <EmptyContent.Title>
-                                Tidak ada kuis
+                                Tidak ada ujian
                               </EmptyContent.Title>
                               <EmptyContent.Description>
-                                Belum ada kuis untuk bagian ini
+                                Belum ada ujian untuk bagian ini
                               </EmptyContent.Description>
                             </EmptyContent>
                           </AccordionContent>

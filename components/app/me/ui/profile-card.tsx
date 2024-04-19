@@ -49,7 +49,7 @@ export function ProfileCard({ ...props }: ProfileCardProps) {
 
       <div className="grid grid-cols-2 items-start justify-between">
         <div className="grid grid-cols-1 items-start gap-1">
-          <span className="font-heading text-xs ">Kuis Yang Dijawab</span>
+          <span className="font-heading text-xs ">Ujian Yang Dijawab</span>
           <span className="text-xl font-semibold">{props.numberOfQuiz}</span>
         </div>
       </div>

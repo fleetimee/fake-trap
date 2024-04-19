@@ -9,10 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 interface QuizTypeCardProps {
   detailQuizData: QuizOneRes
   detailQuizType: ReferenceListRes
@@ -36,8 +32,8 @@ export function QuizTypeCard({
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle className="text-lg">Tipe Kuis</CardTitle>
-        <CardDescription>Tipe kuis ini adalah</CardDescription>
+        <CardTitle className="text-lg">Tipe Ujian</CardTitle>
+        <CardDescription>Tipe ujian ini adalah</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="flex items-center space-x-4">
@@ -47,7 +43,7 @@ export function QuizTypeCard({
           <div>
             <p className="text-sm font-medium leading-none">{quizType}</p>
             <p className="text-sm text-muted-foreground">
-              Kuis ini merupakan{" "}
+              Ujian ini merupakan{" "}
               <span className="font-semibold lowercase italic">{quizType}</span>
             </p>
           </div>

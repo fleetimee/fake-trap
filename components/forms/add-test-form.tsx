@@ -161,7 +161,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Tipe Kuis <span className="text-red-500">*</span>
+                Tipe Ujian <span className="text-red-500">*</span>
               </FormLabel>
 
               <FormControl>
@@ -181,7 +181,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
                           ? references.data.find(
                               (quiz) => quiz.code_ref2 === field.value
                             )?.value_ref1
-                          : "Pilih tipe kuis"}
+                          : "Pilih tipe ujian"}
                         <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
@@ -217,7 +217,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
                 </Popover>
               </FormControl>
               <FormDescription>
-                Pilih tipe kuis yang akan dibuat
+                Pilih tipe ujian yang akan dibuat
               </FormDescription>
             </FormItem>
           )}

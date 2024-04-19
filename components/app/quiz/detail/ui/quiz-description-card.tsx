@@ -9,10 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 interface QuizDescriptionCardProps {
   data: QuizOneResData
 }
@@ -21,8 +17,8 @@ export function QuizDescriptionCard({ data }: QuizDescriptionCardProps) {
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle className="text-lg">Deskripsi Kuis</CardTitle>
-        <CardDescription>Deskripsi kuis dimuat disini</CardDescription>
+        <CardTitle className="text-lg">Deskripsi Ujian</CardTitle>
+        <CardDescription>Deskripsi ujian dimuat disini</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="flex items-start space-x-4">

@@ -10,10 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
-
-
 interface QuizAnswerPromptCardProps {
   isAlreadyAnswered: boolean
 }
@@ -91,7 +87,7 @@ export function QuizAnswerPromptCard({
                 isAlreadyAnswered ? "line-through" : ""
               )}
             >
-              Belum ada pertanyaan untuk kuis ini.
+              Belum ada pertanyaan untuk ujian ini.
             </p>
           </div>
         </div>
