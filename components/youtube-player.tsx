@@ -1,5 +1,6 @@
 "use client"
 
+import { YouTubeEmbed } from "@next/third-parties/google"
 import Youtube, { YouTubeProps } from "react-youtube"
 
 import { AspectRatio } from "@/components/ui/aspect-ratio"

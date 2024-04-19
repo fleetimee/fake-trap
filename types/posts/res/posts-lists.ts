@@ -16,4 +16,6 @@ export type PostsListResData = {
   updated_at: Date
   username: string
   user_uuid: string
+  profile_picture: string
+  name: string
 }

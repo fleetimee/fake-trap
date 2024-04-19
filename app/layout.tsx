@@ -1,8 +1,8 @@
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
-import { headers } from "next/headers"
 import Script from "next/script"
+import { GoogleTagManager } from "@next/third-parties/google"
 import NextTopLoader from "nextjs-toploader"
 
 import { siteConfig } from "@/config/site"
@@ -70,6 +70,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <GoogleTagManager gtmId="GTM-5FS6WP7L" />
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

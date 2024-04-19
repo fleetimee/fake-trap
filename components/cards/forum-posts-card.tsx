@@ -1,11 +1,11 @@
+import Image from "next/image"
 import Blocks from "editorjs-blocks-react-renderer"
 import { generateFromString } from "generate-avatar"
+import Balancer from "react-wrap-balancer"
 
 import { PostsListResData } from "@/types/posts/res"
-import { convertDatetoString } from "@/lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
+import { getMetaData } from "@/lib/utils"
+import { Card, CardContent, CardTitle } from "@/components/ui/card"
 
 interface ForumPost {
   post: PostsListResData
@@ -14,34 +14,46 @@ interface ForumPost {
 export function ForumPost({ post }: ForumPost) {
   const contentParsed = JSON.parse(post.content)
 
-  return (
-    <Card
-      key={post.id_post}
-      className="size-full min-h-[350px] border-2 border-black bg-yellow-300 p-8 text-black hover:bg-yellow-400"
-    >
-      <div className="flex flex-col items-end">
-        <p className="items-end text-xs font-bold">
-          {convertDatetoString(new Date(post.created_at).toString())}
-        </p>
-      </div>
-      <Separator className="my-6" />
-      <div className="grid sm:grid-cols-1 lg:grid-cols-12">
-        <div className="mr-4 flex max-h-full flex-col items-center justify-start gap-4 sm:col-span-full lg:col-span-2">
-          <Avatar className="size-20 border-2 border-black bg-white">
-            <AvatarImage
-              src={`data:image/svg+xml;utf8,${generateFromString(
-                post.username
-              )}`}
-            />
-            <AvatarFallback />
-          </Avatar>
-          <p className="truncate font-sans text-lg">{post.username}</p>{" "}
-        </div>
+  const profilePictureLink = `${process.env.NEXT_PUBLIC_BASE_URL}${post.profile_picture}`
 
-        <div className="whatever-you-want ml-4 border-2 border-black bg-white p-4 sm:col-span-full lg:col-span-10">
-          <Blocks data={contentParsed} />
+  return (
+    <Card>
+      <CardTitle className={`group p-4 pb-0`}>
+        <div className="flex items-start gap-4">
+          <div className="relative size-12 overflow-hidden rounded-full bg-white">
+            <Image
+              src={
+                profilePictureLink
+                  ? profilePictureLink
+                  : `data:image/svg+xml;utf8,${generateFromString(
+                      post.username ? post.username : "Nama"
+                    )}`
+              }
+              alt="User name"
+              width={100}
+              height={100}
+            />
+          </div>
+          <div className="space-y-1">
+            <h2 className={`${"text-sm group-hover:underline"}`}>
+              {post.name}
+            </h2>
+            <p className={`text-sm text-foreground/60`}>{post.username}</p>
+          </div>
         </div>
-      </div>
+      </CardTitle>
+      <CardContent className="p-4 pt-2">
+        <div>
+          <small className="text-sm text-foreground/60">
+            Dibuat saat {getMetaData(post.created_at)}
+          </small>
+        </div>
+        <p className="cst-wrap-text mt-1">
+          <Balancer>
+            <Blocks data={contentParsed} />
+          </Balancer>
+        </p>
+      </CardContent>
     </Card>
   )
 }
