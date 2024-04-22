@@ -1,7 +1,5 @@
-import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { generateFromString } from "generate-avatar"
 import Balancer from "react-wrap-balancer"
 
 import { authOptions } from "@/lib/auth"
@@ -11,9 +9,8 @@ import { getCurrentUser } from "@/lib/session"
 import { getMetaData } from "@/lib/utils"
 import { ForumPost } from "@/components/cards/forum-posts-card"
 import { Icons } from "@/components/icons"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { buttonVariants } from "@/components/ui/button"
-import { Card, CardContent, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 
 interface ThreadPageProps {
   params: {

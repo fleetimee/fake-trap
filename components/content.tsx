@@ -24,7 +24,7 @@ export function Content({ title, children, className, ...rest }: ContentProps) {
       >
         <div className="flex w-full flex-col gap-6 p-4 sm:w-full">
           <div className="flex flex-row items-center justify-between">
-            <p className="grow break-all font-heading text-3xl">{title}</p>
+            <p className="grow break-all font-heading text-2xl">{title}</p>
             <Icons.bookmark className="size-14 flex-none pl-5" />
           </div>
 

@@ -9,21 +9,20 @@ import { ThreadListResData } from "@/types/threads/res"
 import { sortOptions } from "@/config/threads"
 import { cn } from "@/lib/utils"
 import { useDebounce } from "@/hooks/use-debounce"
-
-import { ForumCard } from "./cards/forum-card"
-import { PaginationButton } from "./pagers/pagination-button"
-import { Button } from "./ui/button"
-import { CardDescription } from "./ui/card"
+import { ForumCard } from "@/components/cards/forum-card"
+import { PaginationButton } from "@/components/pagers/pagination-button"
+import { Button } from "@/components/ui/button"
+import { CardDescription } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import { Separator } from "./ui/separator"
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
 import {
   Sheet,
   SheetContent,
@@ -31,7 +30,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet"
+} from "@/components/ui/sheet"
 
 interface ThreadsProps {
   data: ThreadListResData[]
