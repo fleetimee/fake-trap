@@ -60,7 +60,7 @@ export default async function KnowledgeDetailLayout({
             },
             {
               href: "/peserta/knowledge",
-              title: "Materi",
+              title: "Materi Publik",
             },
             {
               href: `/peserta/knowledge/detail/${params.idKnowledge}`,

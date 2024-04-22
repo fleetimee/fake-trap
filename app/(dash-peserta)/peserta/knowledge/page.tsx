@@ -64,7 +64,7 @@ export default async function PesertaKnowledgePage({
           },
           {
             href: "/peserta/knowledge",
-            title: "Materi",
+            title: "Materi Publik",
           },
         ]}
       />
@@ -74,7 +74,7 @@ export default async function PesertaKnowledgePage({
         animate={{ opacity: 1, y: 0 }}
       >
         <DashboardHeader
-          heading="Materi"
+          heading="Materi Publik"
           description="Materi Terbuka yang dapat diakses oleh semua peserta."
         />
       </MotionDiv>
