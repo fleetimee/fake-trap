@@ -6,7 +6,6 @@ import {
   CourseOneRes,
   CourseVacantUserListRes,
 } from "@/types/course/res"
-import { UserEnrolledCourseListRes } from "@/types/me/res"
 import { UserListRes } from "@/types/user/res"
 
 interface GetCourseProps {
@@ -17,6 +16,8 @@ interface GetCourseProps {
   orderBy?: string
   searchQuery?: string
   statusText?: string | string[] | undefined // Add this line
+  from?: string
+  to?: string
 }
 
 export async function getCourse({
@@ -27,6 +28,8 @@ export async function getCourse({
   orderBy = "asc",
   searchQuery = "",
   statusText = "",
+  from = "",
+  to = "",
 }: GetCourseProps): Promise<CourseListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/course/v2?`
 
@@ -60,6 +63,14 @@ export async function getCourse({
     } else {
       url = `${url}&status=${statusText}`
     }
+  }
+
+  if (from) {
+    url = `${url}&from=${from}`
+  }
+
+  if (to) {
+    url = `${url}&to=${to}`
   }
 
   try {

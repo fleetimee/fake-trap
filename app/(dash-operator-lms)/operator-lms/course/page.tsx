@@ -7,6 +7,7 @@ import { getCourse } from "@/lib/fetcher/course-fetcher"
 import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -28,7 +29,8 @@ export default async function OperatorLMSCoursePage({
 }: OperatorLMSCoursePageProps) {
   const user = await getCurrentUser()
 
-  const { page, per_page, sort, course_name, status_text } = searchParams ?? {}
+  const { page, per_page, sort, course_name, status_text, from, to } =
+    searchParams ?? {}
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -45,6 +47,9 @@ export default async function OperatorLMSCoursePage({
   const sortBy = sortByInitial.split(".")[0]
   const orderBy = orderByInitial.split(".")[1]
 
+  const fromInitial = typeof from === "string" ? from : ""
+  const toInitial = typeof to === "string" ? to : ""
+
   const course = await getCourse({
     token: user?.token,
     page: pageInitial,
@@ -53,6 +58,8 @@ export default async function OperatorLMSCoursePage({
     orderBy: orderBy,
     searchQuery: searchQueryInitial,
     statusText: status_text,
+    from: fromInitial,
+    to: toInitial,
   })
 
   const knowledge = await getOperatorKnowledge({
@@ -86,6 +93,11 @@ export default async function OperatorLMSCoursePage({
             description="Kelola pembelajaran yang ada di platform lms."
           />
         </MotionDiv>
+
+        <DateRangePicker
+          align="end"
+          className="flex  place-items-end items-end justify-self-end"
+        />
       </div>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>

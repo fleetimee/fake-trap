@@ -3,7 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
@@ -46,6 +46,21 @@ export function CourseTableShell({
   isOperator = true,
 }: CourseTableShell) {
   const pathname = usePathname()
+  const params = useSearchParams()
+
+  const dateStart = params.get("from")
+  const dateEnd = params.get("to")
+
+  console.log(dateStart)
+  console.log(dateEnd)
+
+  let exportUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/course/export`
+
+  if (dateStart && dateEnd) {
+    exportUrl += `?start_date=${encodeURIComponent(dateStart)}&end_date=${encodeURIComponent(dateEnd)}`
+  }
+
+  console.log(exportUrl)
 
   const columns = React.useMemo<ColumnDef<CourseListResData, unknown>[]>(
     () => [
@@ -267,6 +282,8 @@ export function CourseTableShell({
       newRowLink={`${pathname}/new`}
       searchableColumns={searchableColumns}
       filterableColumns={filterableColumns}
+      isExportable
+      exportAction={exportUrl}
     />
   )
 }
