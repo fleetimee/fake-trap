@@ -51,16 +51,11 @@ export function CourseTableShell({
   const dateStart = params.get("from")
   const dateEnd = params.get("to")
 
-  console.log(dateStart)
-  console.log(dateEnd)
-
   let exportUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/course/export`
 
   if (dateStart && dateEnd) {
     exportUrl += `?start_date=${encodeURIComponent(dateStart)}&end_date=${encodeURIComponent(dateEnd)}`
   }
-
-  console.log(exportUrl)
 
   const columns = React.useMemo<ColumnDef<CourseListResData, unknown>[]>(
     () => [
