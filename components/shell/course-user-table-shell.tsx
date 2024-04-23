@@ -14,7 +14,7 @@ interface CourseUserTableShellProps {
   data: UserListResData[]
   pageCount: number
   linkString?: string
-  idCourse: string
+  idCourse?: string
 }
 
 export function CourseUserTableShell({
@@ -80,17 +80,6 @@ export function CourseUserTableShell({
 
   return (
     <DataTable
-      // columns={columns}
-      // data={data}
-      // pageCount={pageCount}
-      // searchableColumns={[
-      //   {
-      //     id: "name",
-      //     title: "Nama",
-      //   },
-      // ]}
-      // newRowLink={linkString === "" ? undefined : linkString}
-
       dataTable={dataTable}
       columns={columns}
       newRowLink={linkString === "" ? undefined : linkString}
