@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
+import { redirect, useSearchParams } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"

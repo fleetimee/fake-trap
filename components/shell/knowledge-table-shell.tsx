@@ -3,7 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 
@@ -35,6 +35,49 @@ export function KnowledgeTableShell({
   pageCount,
 }: KnowledgeTableShellProps) {
   const pathname = usePathname()
+
+  const searchParams = useSearchParams()
+
+  // Get all search params
+  const status = searchParams.get("status")
+  const statusText = searchParams.get("status_text")
+  const idCategory = searchParams.get("id_category")
+  const page = searchParams.get("page")
+  const perPage = searchParams.get("per_page")
+  const from = searchParams.get("from")
+  const to = searchParams.get("to")
+
+  const params = new URLSearchParams()
+
+  if (status) {
+    params.append("visibility", status)
+  }
+
+  if (statusText) {
+    params.append("statusCodes", statusText)
+  }
+
+  if (idCategory) {
+    params.append("categoryIds", idCategory)
+  }
+
+  if (page) {
+    params.append("page", page.toString())
+  }
+
+  if (perPage) {
+    params.append("per_page", perPage.toString())
+  }
+
+  if (from) {
+    params.append("from", from)
+  }
+
+  if (to) {
+    params.append("to", to)
+  }
+
+  const exportUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/knowledge/v2/export?${params.toString()}`
 
   const columns = React.useMemo<ColumnDef<KnowledgeListResData, unknown>[]>(
     () => [
@@ -243,6 +286,8 @@ export function KnowledgeTableShell({
       newRowLink={`${pathname}/new`}
       searchableColumns={searchableColumns}
       filterableColumns={filterableColumns}
+      exportAction={exportUrl}
+      isExportable
     />
   )
 }
