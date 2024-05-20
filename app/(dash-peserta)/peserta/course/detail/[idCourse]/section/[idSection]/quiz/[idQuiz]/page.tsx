@@ -1,6 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
+import BronzeMedal from "@/public/images/bronzeMedal.png"
+import GoldMedal from "@/public/images/goldMedal.png"
+import SilverMedal from "@/public/images/silverMedal.png"
 import Learn from "@/public/lottie/learning.json"
 import QuizEnabled from "@/public/lottie/quiz_enabled.json"
 import Stop from "@/public/lottie/stop.json"
@@ -372,10 +375,35 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                     </p>
 
                     <div className="flex items-center justify-center py-0">
-                      <LottieClient
-                        animationData={Trophy}
-                        className="size-1/2"
-                      />
+                      {getCurrentUserPlacement.data === 1 && (
+                        // <LottieClient
+                        //   animationData={GoldTrophy}
+                        //   className="size-1/2"
+                        // />
+
+                        <Image
+                          src={GoldMedal}
+                          alt="Gold Medal"
+                          width={400}
+                          height={400}
+                        />
+                      )}
+                      {getCurrentUserPlacement.data === 2 && (
+                        <Image
+                          src={SilverMedal}
+                          alt="Silver Medal"
+                          width={400}
+                          height={400}
+                        />
+                      )}
+                      {getCurrentUserPlacement.data === 3 && (
+                        <Image
+                          src={BronzeMedal}
+                          alt="Bronze Medal"
+                          width={400}
+                          height={400}
+                        />
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -427,17 +455,17 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                             <td className="p-4 text-left">
                               {leaderboard.position === 1 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
-                                  <Icons.crown className="text-gold h-6 w-6" />
+                                  <Icons.crown className="h-6 w-6 text-gold" />
                                   <span>{`${leaderboard.position}st`}</span>
                                 </div>
                               ) : leaderboard.position === 2 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
-                                  <Icons.crown className="text-silver h-6 w-6" />
+                                  <Icons.crown className="h-6 w-6 text-silver" />
                                   <span>{`${leaderboard.position}st`}</span>
                                 </div>
                               ) : leaderboard.position === 3 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
-                                  <Icons.crown className="text-bronze h-6 w-6" />
+                                  <Icons.crown className="h-6 w-6 text-bronze" />
                                   <span>{`${leaderboard.position}st`}</span>
                                 </div>
                               ) : (
