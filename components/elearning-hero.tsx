@@ -22,11 +22,14 @@ export function ElearningHero() {
         }}
         className="mx-auto max-w-4xl  text-left text-2xl font-bold leading-relaxed  text-white md:text-4xl lg:text-5xl lg:leading-snug "
       >
-        <Highlight className="text-left text-white">
-          Learning Management System
-        </Highlight>
-        <br />
-        Dengan BPD DIY LMS kamu bisa belajar dimana saja dan kapan saja.
+        <div className="text-left text-6xl text-white">B-LIVE</div>
+        <div className="text-2xl">
+          {" "}
+          (BPD DIY Learning Integrated Virtual Education)
+        </div>
+        <div className="hidden font-normal text-white md:block">
+          Dengan BPD DIY LMS kamu bisa belajar dimana saja dan kapan saja.
+        </div>
       </motion.h1>
     </HeroHighlight>
   )

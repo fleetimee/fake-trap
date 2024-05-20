@@ -13,20 +13,15 @@ import { extractToken } from "@/lib/utils"
 import { BentoGridDemo } from "@/components/bento-feature"
 import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
-import { ElearningParallax } from "@/components/elearning-parallax"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { SiteFooter } from "@/components/layouts/site-footer"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { VelocityScroll } from "@/components/scroll-based-velocity"
 import { ScrollToTopButton } from "@/components/scroll-to-top"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { ContainerScroll } from "@/components/ui/container-scroll"
-import { MacbookScroll } from "@/components/ui/macbook-scroll"
 
 export const metadata = {
-  title: "BPD DIY E-learning: Pelajari apa saja, kapan saja, di mana saja",
+  title: "B-LIVE: Pelajari apa saja, kapan saja, di mana saja",
   description: "fleetime",
 }
 

@@ -31,12 +31,10 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
   return (
     <div className="hidden gap-6 lg:flex">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
-        {/* <Icons.logo className="text-primary" /> */}
-
         <Image src={Logo} alt="Logo" width={20} height={20} />
 
-        <span className="hidden font-bold text-primary sm:inline-block">
-          {siteConfig.name}
+        <span className="hidden text-xl font-bold text-primary sm:inline-block">
+          - LIVE
         </span>
       </Link>
       <NavigationMenu>
