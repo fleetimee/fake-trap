@@ -1,14 +1,18 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { generateFromString } from "generate-avatar"
+import Balancer from "react-wrap-balancer"
 
 import { authOptions } from "@/lib/auth"
 import { getPostsList } from "@/lib/fetcher/post-fetcher"
 import { getOneThread } from "@/lib/fetcher/threads-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { getMetaData } from "@/lib/utils"
 import { ForumPost } from "@/components/cards/forum-posts-card"
 import { Icons } from "@/components/icons"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { buttonVariants } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardTitle } from "@/components/ui/card"
 
 interface ThreadPageProps {
   params: {
@@ -40,10 +44,34 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
   return (
     <div className="flex flex-col justify-between gap-8">
       <p className="font-heading text-2xl">Thread Starter</p>
-      <Card className="h-full min-h-[120px] w-full border-4 border-black bg-primary p-8 text-black">
-        <p className="font-heading text-2xl text-white">
-          {thread.data.threads_title}
-        </p>
+      <Card>
+        <CardTitle className={`$ group p-4 pb-0`}>
+          <div className="flex items-start gap-4">
+            <Avatar>
+              <AvatarImage
+                src={`data:image/svg+xml;utf8,${generateFromString(thread.data.id_threads.toString())}`}
+              />
+              <AvatarFallback className="rounded-md">{"A"}</AvatarFallback>
+            </Avatar>
+
+            <div className="space-y-1 text-sm">
+              <h2 className={`group-hover:underline"}`}>ANONIM</h2>
+
+              <p className="text-foreground/60">anonim</p>
+            </div>
+          </div>
+        </CardTitle>
+
+        <CardContent className="p-4 pt-2">
+          <div>
+            <small className="text-sm text-foreground/60">
+              Dibuat saat {getMetaData(thread.data.created_at)}
+            </small>
+          </div>
+          <p className="cst-wrap-text mt-1">
+            <Balancer>{thread.data.threads_title}</Balancer>
+          </p>
+        </CardContent>
       </Card>
 
       <p className="font-heading text-2xl">Balasan</p>
