@@ -15,7 +15,7 @@ import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
 import { ErrorResponse } from "@/types/error-res"
-import { createPost } from "@/lib/fetcher/post-fetcher"
+import { createPost, editPost, getPostById } from "@/lib/fetcher/post-fetcher"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -28,9 +28,10 @@ const formSchema = z.object({
 
 interface EditorProps {
   id_threads: number
+  editedPostId?: string
 }
 
-export function Editor({ id_threads }: EditorProps) {
+export function Editor({ id_threads, editedPostId }: EditorProps) {
   const { data: session } = useSession()
 
   const { register, handleSubmit } = useForm<z.infer<typeof formSchema>>({
@@ -67,15 +68,31 @@ export function Editor({ id_threads }: EditorProps) {
 
     const body = formSchema.parse(formSchema)
 
+    let initialData = null
+
+    if (editedPostId) {
+      const res = await getPostById({
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imlhbi5hZGhpamF5YUBicGRkaXkuY28uaWQiLCJleHAiOjE3NDc4MTM5OTAsImlkIjoiMTQzNTE0YjAtNmRhYy00MTYwLTk4YTQtZTQ5Y2JlZDNkMjk0IiwibmFtZSI6IklBTiBGRUJSSVlBTlRPIEFESElKQVlBIiwib3JpZ19pYXQiOjE3MTYyNzc5OTAsInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IlBlbWF0ZXJpIiwicm9sZV9kZXNjcmlwdGlvbiI6IlBlbWF0ZXJpICIsImNyZWF0ZWRfYXQiOiIyMDI0LTA1LTIxVDE0OjUzOjEwLjkyOTI4NzYrMDc6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyMy0wOC0yMVQwODowODozNS40MzUzNjErMDc6MDAifSx7ImlkX3JvbGUiOjUsInJvbGVfbmFtZSI6IlBlc2VydGEiLCJyb2xlX2Rlc2NyaXB0aW9uIjoiVXNlcnMiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNS0yMVQxNDo1MzoxMC45MjkyODc2KzA3OjAwIiwidXBkYXRlZF9hdCI6IjIwMjMtMTEtMTVUMjE6MzA6MzYuMTY3KzA3OjAwIn1dLCJ1c2VybmFtZSI6Imlhbi5hZGhpamF5YSJ9.2tvG0hGzZRwgzJ3nFdenwyiwM0OKAhqpq8Fu2Ty7gzc",
+        idPosts: editedPostId,
+      })
+
+      console.log(res)
+
+      initialData = JSON.parse(res?.data.content || "{}")
+    }
+
+    console.log(initialData)
+
     if (!ref.current) {
       const editor = new EditorJS({
         holder: "editor",
         onReady() {
           ref.current = editor
         },
-        placeholder: "Type here to write your post...",
+        placeholder: "Ketik disini untuk membuat post...",
         inlineToolbar: true,
-        data: body.content,
+        data: initialData || body.content || {},
         tools: {
           header: Header,
           linkTool: LinkTool,
@@ -88,7 +105,7 @@ export function Editor({ id_threads }: EditorProps) {
         },
       })
     }
-  }, [])
+  }, [editedPostId])
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -116,14 +133,33 @@ export function Editor({ id_threads }: EditorProps) {
 
     const block = await ref.current?.save()
 
-    const res = await createPost({
-      token: session?.user.token,
-      body: JSON.stringify({
-        id_threads: id_threads,
-        content: JSON.stringify(block),
-        user_uuid: session?.expires.id,
-      }),
-    })
+    // const res = await createPost({
+    //   token: session?.user.token,
+    //   body: JSON.stringify({
+    //     id_threads: id_threads,
+    //     content: JSON.stringify(block),
+    //     user_uuid: session?.expires.id,
+    //   }),
+    // })
+
+    const res = editedPostId
+      ? await editPost({
+          token: session?.user.token,
+          idPosts: editedPostId,
+          body: JSON.stringify({
+            id_threads: id_threads,
+            content: JSON.stringify(block),
+            user_uuid: session?.expires.id,
+          }),
+        })
+      : await createPost({
+          token: session?.user.token,
+          body: JSON.stringify({
+            id_threads: id_threads,
+            content: JSON.stringify(block),
+            user_uuid: session?.expires.id,
+          }),
+        })
 
     setIsSaving(false)
 
@@ -169,7 +205,7 @@ export function Editor({ id_threads }: EditorProps) {
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            <span>Save</span>
+            <span>{editedPostId ? "Update" : "Post"}</span>
           </button>
         </div>
         <div className="prose prose-stone dark:prose-invert whatever-you-want mx-auto w-[800px]">

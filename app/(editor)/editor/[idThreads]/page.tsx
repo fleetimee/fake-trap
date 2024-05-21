@@ -10,13 +10,19 @@ interface EditorPageProps {
   params: {
     idThreads: string
   }
+  searchParams: {
+    editedPostId: string
+  }
 }
 
 export const metadata: Metadata = {
-  title: "Buat post baru",
+  title: "Buat / Update Post",
 }
 
-export default async function EditorPage({ params }: EditorPageProps) {
+export default async function EditorPage({
+  params,
+  searchParams,
+}: EditorPageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -32,5 +38,10 @@ export default async function EditorPage({ params }: EditorPageProps) {
     return notFound()
   }
 
-  return <Editor id_threads={parseInt(params.idThreads)} />
+  return (
+    <Editor
+      id_threads={parseInt(params.idThreads)}
+      editedPostId={searchParams.editedPostId}
+    />
+  )
 }
