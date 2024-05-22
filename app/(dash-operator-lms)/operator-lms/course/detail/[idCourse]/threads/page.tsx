@@ -4,7 +4,6 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getThreadList } from "@/lib/fetcher/threads-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { cn } from "@/lib/utils"
 import { ForumCard } from "@/components/cards/forum-card"
 import { buttonVariants } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -49,9 +48,6 @@ export default async function CourseThreadPage({
           className={buttonVariants({
             size: "lg",
             variant: "outline",
-            className: cn(
-              "inline-block border-4 border-black bg-yellow-300 px-6 py-2 text-lg text-black hover:bg-yellow-400"
-            ),
           })}
         >
           Buat Thread Baru

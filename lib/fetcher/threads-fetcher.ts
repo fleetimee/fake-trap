@@ -95,3 +95,21 @@ export async function createThread({ token, body }: CreateThreadProps) {
 
   return res
 }
+
+interface DeleteThreadProps {
+  token: string | undefined
+  idThreads: string
+}
+
+export async function deleteThread({ token, idThreads }: DeleteThreadProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/threads/${idThreads}`
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return res
+}

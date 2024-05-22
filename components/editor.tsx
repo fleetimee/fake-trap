@@ -72,8 +72,7 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
 
     if (editedPostId) {
       const res = await getPostById({
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imlhbi5hZGhpamF5YUBicGRkaXkuY28uaWQiLCJleHAiOjE3NDc4MTM5OTAsImlkIjoiMTQzNTE0YjAtNmRhYy00MTYwLTk4YTQtZTQ5Y2JlZDNkMjk0IiwibmFtZSI6IklBTiBGRUJSSVlBTlRPIEFESElKQVlBIiwib3JpZ19pYXQiOjE3MTYyNzc5OTAsInJvbGUiOlt7ImlkX3JvbGUiOjEsInJvbGVfbmFtZSI6IlBlbWF0ZXJpIiwicm9sZV9kZXNjcmlwdGlvbiI6IlBlbWF0ZXJpICIsImNyZWF0ZWRfYXQiOiIyMDI0LTA1LTIxVDE0OjUzOjEwLjkyOTI4NzYrMDc6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyMy0wOC0yMVQwODowODozNS40MzUzNjErMDc6MDAifSx7ImlkX3JvbGUiOjUsInJvbGVfbmFtZSI6IlBlc2VydGEiLCJyb2xlX2Rlc2NyaXB0aW9uIjoiVXNlcnMiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNS0yMVQxNDo1MzoxMC45MjkyODc2KzA3OjAwIiwidXBkYXRlZF9hdCI6IjIwMjMtMTEtMTVUMjE6MzA6MzYuMTY3KzA3OjAwIn1dLCJ1c2VybmFtZSI6Imlhbi5hZGhpamF5YSJ9.2tvG0hGzZRwgzJ3nFdenwyiwM0OKAhqpq8Fu2Ty7gzc",
+        token: session?.user.token,
         idPosts: editedPostId,
       })
 
@@ -105,6 +104,7 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
         },
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editedPostId])
 
   React.useEffect(() => {
@@ -132,15 +132,6 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
     setIsSaving(true)
 
     const block = await ref.current?.save()
-
-    // const res = await createPost({
-    //   token: session?.user.token,
-    //   body: JSON.stringify({
-    //     id_threads: id_threads,
-    //     content: JSON.stringify(block),
-    //     user_uuid: session?.expires.id,
-    //   }),
-    // })
 
     const res = editedPostId
       ? await editPost({
@@ -197,9 +188,9 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
                 Back
               </>
             </Button>
-            {/* <p className="text-sm text-muted-foreground">
-              {post.published ? "Published" : "Draft"}
-            </p> */}
+            <p className="text-sm text-muted-foreground">
+              {editedPostId ? "Update" : "Buat"} Post
+            </p>
           </div>
           <button type="submit" className={cn(buttonVariants())}>
             {isSaving && (

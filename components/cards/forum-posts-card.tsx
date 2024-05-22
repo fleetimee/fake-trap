@@ -13,6 +13,7 @@ import { toast as sonnerToast } from "sonner"
 import { PostsListResData } from "@/types/posts/res"
 import { deletePost } from "@/lib/fetcher/post-fetcher"
 import { getMetaData } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,13 +23,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
-
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 interface ForumPost {
   post: PostsListResData
