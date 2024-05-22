@@ -1,8 +1,10 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Logo from "@/public/logo.png"
 import { MainNavItem } from "@/types"
 
 import { MenuListResNewData } from "@/types/menu/res"
@@ -48,7 +50,7 @@ export function MobileNav({
       </SheetTrigger>
       <SheetContent position="left" size="content">
         <div className="px-7">
-          <Link
+          {/* <Link
             aria-label="Home"
             href="/"
             className="flex items-center"
@@ -56,6 +58,14 @@ export function MobileNav({
           >
             <Icons.logo className="mr-2 size-4" aria-hidden="true" />
             <span className="font-bold">{siteConfig.name}</span>
+          </Link> */}
+
+          <Link href="/" className="flex items-center  ">
+            <Image src={Logo} alt="Logo" width={20} height={20} />
+
+            <span className="text-xl font-bold text-primary sm:inline-block">
+              - LIVE
+            </span>
           </Link>
         </div>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
