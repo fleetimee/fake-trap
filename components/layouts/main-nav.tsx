@@ -30,10 +30,10 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
 
   return (
     <div className="hidden gap-6 lg:flex">
-      <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <Image src={Logo} alt="Logo" width={20} height={20} />
+      <Link href="/" className="hidden items-center space-x-0 md:flex">
+        <Image src={Logo} alt="Logo" width={25} height={25} />
 
-        <span className="hidden text-xl font-bold text-primary sm:inline-block">
+        <span className="text-bpdprimary hidden  font-bold sm:inline-block">
           - LIVE
         </span>
       </Link>

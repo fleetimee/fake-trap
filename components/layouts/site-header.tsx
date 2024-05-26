@@ -85,7 +85,8 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
 
   if (props.user) {
     return (
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      // <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-40 border-b bg-background">
         <div className="h-2 bg-primary backdrop-blur"></div> {/* Blue strip */}{" "}
         <div className="container flex h-16 items-center">
           <MainNav items={siteConfig.mainNav} topNavItems={props.topNavItems} />
@@ -100,10 +101,10 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
               {props.titleNav ?? "BPD DIY E-Learning"}
             </h1>
           ) : (
-            <Link href="/" className="flex items-center space-x-2 lg:hidden ">
-              <Image src={Logo} alt="Logo" width={20} height={20} />
+            <Link href="/" className="flex items-center space-x-0 lg:hidden ">
+              <Image src={Logo} alt="Logo" width={30} height={30} />
 
-              <span className="text-xl font-bold text-primary sm:inline-block lg:hidden">
+              <span className=" text-bpdprimary font-bold sm:inline-block lg:hidden">
                 - LIVE
               </span>
             </Link>
@@ -243,10 +244,10 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
               {props.titleNav ?? "BPD DIY E-Learning"}
             </h1>
           ) : (
-            <Link href="/" className="flex items-center space-x-2 lg:hidden ">
-              <Image src={Logo} alt="Logo" width={20} height={20} />
+            <Link href="/" className="flex items-center space-x-0 lg:hidden ">
+              <Image src={Logo} alt="Logo" width={25} height={25} />
 
-              <span className="text-xl font-bold text-primary sm:inline-block lg:hidden">
+              <span className=" text-bpdprimary font-bold sm:inline-block lg:hidden">
                 - LIVE
               </span>
             </Link>

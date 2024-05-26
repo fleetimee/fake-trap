@@ -61,9 +61,9 @@ export function MobileNav({
           </Link> */}
 
           <Link href="/" className="flex items-center  ">
-            <Image src={Logo} alt="Logo" width={20} height={20} />
+            <Image src={Logo} alt="Logo" width={25} height={25} />
 
-            <span className="text-xl font-bold text-primary sm:inline-block">
+            <span className=" text-bpdprimary font-bold sm:inline-block">
               - LIVE
             </span>
           </Link>
