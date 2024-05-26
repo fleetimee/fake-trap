@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Turnstile } from "@marsidev/react-turnstile"
 import { signIn } from "next-auth/react"
+import ReCAPTCHA from "react-google-recaptcha"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
@@ -117,7 +118,37 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
           )}
         />
 
-        <Button type="submit" disabled={isLoading}>
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+          onChange={async (token) => {
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_BASE_URL}/verifyRecaptcha`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  event: {
+                    token: token,
+                    siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+                  },
+                }),
+              }
+            )
+
+            if (response.ok) {
+              setCaptchaVerified(true)
+            } else {
+              sonnerToast.error("Perhatian", {
+                description: "Captcha tidak valid",
+              })
+            }
+          }}
+          onExpired={() => setCaptchaVerified(false)}
+        />
+
+        <Button type="submit" disabled={isLoading || !isCaptchaVerified}>
           {isLoading && (
             <Icons.spinner
               className="mr-2 size-4 animate-spin"

@@ -4,6 +4,7 @@ import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Turnstile } from "@marsidev/react-turnstile"
+import ReCAPTCHA from "react-google-recaptcha"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
@@ -99,19 +100,21 @@ export function ForgotPasswordForm() {
           )}
         />
 
-        <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
-          className="h-12 w-full"
-          onSuccess={async (token) => {
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+          onChange={async (token) => {
             const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/verifyTurnstile`,
+              `${process.env.NEXT_PUBLIC_BASE_URL}/verifyRecaptcha`,
               {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  token: token,
+                  event: {
+                    token: token,
+                    siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+                  },
                 }),
               }
             )
@@ -124,6 +127,7 @@ export function ForgotPasswordForm() {
               })
             }
           }}
+          onExpired={() => setCaptchaVerified(false)}
         />
 
         <Button type="submit" disabled={isPending || !isCaptchaVerified}>

@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import Link from "next/link"
 
+import { UserAuthForm } from "@/components/forms/user-auth-form"
 import { Shell } from "@/components/shell/lobby-shell"
 import { BackgroundGradient } from "@/components/ui/background-gradient"
 import {
@@ -11,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { UserAuthForm } from "@/components/user-auth-form"
 
 export const metadata = {
   title: "Login",
@@ -24,7 +24,7 @@ export default async function LoginPage() {
       <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900  md:min-w-[30rem]">
         <Card className=" md:min-w-[30rem]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Log in</CardTitle>
+            <CardTitle className="text-2xl">👋 Log in</CardTitle>
             <CardDescription>
               Enter your credentials to access your account
             </CardDescription>

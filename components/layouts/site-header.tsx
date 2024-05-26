@@ -6,7 +6,6 @@ import Link from "next/link"
 import Logo from "@/public/logo.png"
 import { DashboardIcon } from "@radix-ui/react-icons"
 import { generateFromString } from "generate-avatar"
-import { FramerIcon } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
@@ -16,7 +15,7 @@ import { Icons } from "@/components/icons"
 import { KnowledgeSearch } from "@/components/knowledge-search"
 import { MainNav } from "@/components/layouts/main-nav"
 import { MobileNav } from "@/components/layouts/mobile-nav"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,

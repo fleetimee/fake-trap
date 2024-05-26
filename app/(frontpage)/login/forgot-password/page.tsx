@@ -24,7 +24,7 @@ export default async function LoginPage() {
       <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900 sm:p-1 md:min-w-[10rem]">
         <Card className=" md:min-w-[30rem]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Reset password</CardTitle>
+            <CardTitle className="text-2xl">🤔 Reset password</CardTitle>
             <CardDescription>
               Enter your email address and we will send you a verification code
             </CardDescription>
