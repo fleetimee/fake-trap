@@ -51,7 +51,16 @@ export default async function KnowledgeContentPage({
   }
 
   if (file) {
-    return <FileFrame content={content} params={params} />
+    return (
+      <FileFrame
+        content={content}
+        params={{
+          detail: params.detail,
+          idSection: params.idSection,
+          idContent: params.idContent,
+        }}
+      />
+    )
   }
 
   return null

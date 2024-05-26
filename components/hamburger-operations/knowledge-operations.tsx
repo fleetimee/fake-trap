@@ -38,12 +38,14 @@ interface KnowledgeOperationsProps {
   referenceResp: ReferenceListRes
   updateRowLink?: string
   isApproval?: boolean
+  isAdmin?: boolean
 }
 
 export function KnowledgeOperations({
   knowledgeData,
   updateRowLink,
   isApproval = false,
+  isAdmin = false,
 }: KnowledgeOperationsProps) {
   const { data: session } = useSession()
   const router = useRouter()
@@ -74,7 +76,7 @@ export function KnowledgeOperations({
           {isApproval && (
             <>
               <DropdownMenuItem
-                disabled={isStatusCodeIn(["0051", "0052", "0053"])}
+                disabled={isStatusCodeIn(["0051", "0052", "0053"]) || isAdmin}
               >
                 <Link
                   href={`${pathName}/request/${knowledgeData.id_knowledge}`}
@@ -89,22 +91,9 @@ export function KnowledgeOperations({
               <DropdownMenuSeparator />
             </>
           )}
-          <DropdownMenuItem
-            onClick={() => {
-              navigator.clipboard.writeText(
-                knowledgeData.id_knowledge.toString()
-              )
 
-              sonnerToast.info("Berhasil", {
-                description: "ID Materi berhasil dicopy",
-              })
-            }}
-          >
-            Copy
-          </DropdownMenuItem>
           <DropdownMenuItem
-            className="flex items-center
-                  "
+            className="flex items-center"
             // onSelect={() => setOpenEditKnowledgeSheet(true)}
           >
             <Link
@@ -122,7 +111,7 @@ export function KnowledgeOperations({
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="flex  items-center "
+            className="flex items-center text-red-500 hover:text-red-700"
             onSelect={() => setOpenDeleteKnowledgeAlert(true)}
           >
             Hapus

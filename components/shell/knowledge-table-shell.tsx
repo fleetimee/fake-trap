@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
+import { useSession } from "next-auth/react"
 
 import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
@@ -34,6 +35,12 @@ export function KnowledgeTableShell({
   referenceResp,
   pageCount,
 }: KnowledgeTableShellProps) {
+  const { data: session } = useSession()
+
+  const isAdmin = session?.expires.role.some(
+    (role) => role.role_name === "Admin" || role.role_name === "Operator LMS"
+  )
+
   const pathname = usePathname()
 
   const searchParams = useSearchParams()
@@ -96,6 +103,7 @@ export function KnowledgeTableShell({
               referenceResp={referenceResp}
               updateRowLink={`${pathname}/update/${knowledge.id_knowledge}`}
               isApproval
+              isAdmin
             />
           )
         },
