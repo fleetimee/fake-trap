@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { Metadata } from "next"
 import Link from "next/link"
 
 import { UserAuthForm } from "@/components/forms/user-auth-form"
@@ -13,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Login",
   description: "Masuk ke akun e-learning",
 }

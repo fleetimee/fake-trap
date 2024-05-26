@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { Metadata } from "next"
 import Link from "next/link"
 
 import { ForgotPasswordForm } from "@/components/forms/forgot-password-form"
@@ -13,8 +14,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export const metadata = {
-  title: "Lupa Password",
+export const metadata: Metadata = {
+  title: "Lupa Password ",
   description: "Masuk ke akun e-learning",
 }
 

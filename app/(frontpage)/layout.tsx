@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
@@ -20,8 +21,13 @@ import { ScrollToTopButton } from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
-export const metadata = {
-  title: "B-LIVE: Pelajari apa saja, kapan saja, di mana saja",
+export const metadata: Metadata = {
+  // title: "B-LIVE: Pelajari apa saja, kapan saja, di mana saja",
+  title: {
+    default: "B-LIVE: Pelajari apa saja, kapan saja, di mana saja",
+    template: "%s | B-LIVE",
+  },
+
   description: "fleetime",
 }
 
