@@ -117,34 +117,7 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
           )}
         />
 
-        <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
-          className="h-12 w-full"
-          onSuccess={async (token) => {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/verifyTurnstile`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  token: token,
-                }),
-              }
-            )
-
-            if (response.ok) {
-              setCaptchaVerified(true)
-            } else {
-              sonnerToast.error("Perhatian", {
-                description: "Captcha tidak valid",
-              })
-            }
-          }}
-        />
-
-        <Button type="submit" disabled={isLoading || !isCaptchaVerified}>
+        <Button type="submit" disabled={isLoading}>
           {isLoading && (
             <Icons.spinner
               className="mr-2 size-4 animate-spin"
