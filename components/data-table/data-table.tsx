@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import type {
   DataTableFilterableColumn,
@@ -92,6 +94,34 @@ export function DataTable<TData, TValue>({
   isExportable = false,
   deleteRowsAction,
 }: DataTableProps<TData, TValue>) {
+  const [isMouseDown, setIsMouseDown] = React.useState(false)
+  const [startX, setStartX] = React.useState(0)
+  const [scrollLeft, setScrollLeft] = React.useState(0)
+
+  const scrollAreaRef = React.useRef<HTMLDivElement>(null)
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    setIsMouseDown(true)
+    setStartX(e.pageX - scrollAreaRef.current!.offsetLeft)
+    setScrollLeft(scrollAreaRef.current!.scrollLeft)
+  }
+
+  const onMouseLeave = () => {
+    setIsMouseDown(false)
+  }
+
+  const onMouseUp = () => {
+    setIsMouseDown(false)
+  }
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDown) return
+    e.preventDefault()
+    const x = e.pageX - scrollAreaRef.current!.offsetLeft
+    const walk = (x - startX) * 3 //scroll-fast
+    scrollAreaRef.current!.scrollLeft = scrollLeft - walk
+  }
+
   return (
     <div className="w-full space-y-2.5 overflow-auto">
       <DataTableToolbar
@@ -104,7 +134,14 @@ export function DataTable<TData, TValue>({
         deleteRowsAction={deleteRowsAction}
       />
       <div className="rounded-md border">
-        <ScrollArea>
+        <ScrollArea
+          ref={scrollAreaRef}
+          onMouseDown={onMouseDown}
+          onMouseLeave={onMouseLeave}
+          onMouseUp={onMouseUp}
+          onMouseMove={onMouseMove}
+          className={isMouseDown ? "cursor-grabbing" : ""}
+        >
           <Table>
             <TableHeader>
               {dataTable.getHeaderGroups().map((headerGroup) => (
