@@ -9,7 +9,11 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
-import { ErrorResponse } from "@/types/error-res"
+import {
+  ErrorResponse,
+  ErrorResponseJson,
+  SuccessResponse,
+} from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { createCourse } from "@/lib/fetcher/course-fetcher"
@@ -80,14 +84,20 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           body: formData,
         })
 
+        console.log(response)
+
         if (response.ok) {
-          const responseData = await response.json()
+          const responseData: SuccessResponse = await response.json()
 
           const newCourseId = responseData.data
 
-          sonnerToast.success("Berhasil", {
-            description: "Pembelajaran berhasil dibuat",
-          })
+          sonnerToast.success(
+            `Success ${response.status}: ${response.statusText}`,
+            {
+              description:
+                responseData.message || "Pembelajaran berhasil dibuat",
+            }
+          )
 
           if (baseUrl) {
             router.push(`${baseUrl}/detail/${newCourseId}/people/new`)
@@ -99,13 +109,18 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
             form.reset()
           }
         } else {
-          const errorResponse: ErrorResponse = await response.json()
+          const errorResponse: ErrorResponseJson = await response.json()
 
-          sonnerToast.error("Gagal", {
-            description: `${errorResponse.error}`,
-          })
+          sonnerToast.error(
+            `Error ${response.status}: ${response.statusText}`,
+            {
+              description: errorResponse.message,
+            }
+          )
         }
       } catch (error) {
+        console.error(error)
+
         sonnerToast.error("Gagal", {
           description: `${error}`,
         })

@@ -9,10 +9,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
 import { RuleOneResData } from "@/types/rule/res"
-import {
-  convertDatetoString,
-  convertDateToStringSimpliefied,
-} from "@/lib/utils"
+import { convertDatetoString, convertDateToStringSimplified } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 import { CategoryOperations } from "@/components/hamburger-operations/category-operations"
@@ -114,7 +111,7 @@ export function CategoryTableShell({
 
           return (
             <div className="w-[150px]">
-              {convertDateToStringSimpliefied(
+              {convertDateToStringSimplified(
                 row.original.created_at.toString()
               )}
             </div>
@@ -134,7 +131,7 @@ export function CategoryTableShell({
 
           return (
             <div className="w-[150px]">
-              {convertDateToStringSimpliefied(
+              {convertDateToStringSimplified(
                 row.original.updated_at.toString()
               )}
             </div>
@@ -148,12 +145,26 @@ export function CategoryTableShell({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Dibuat oleh" />
         ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[150px]">
+              <p>{row.original.created_by}</p>
+            </div>
+          )
+        },
       },
       {
         accessorKey: "updated_by",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Diubah oleh" />
         ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[150px]">
+              <p>{row.original.updated_by}</p>
+            </div>
+          )
+        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

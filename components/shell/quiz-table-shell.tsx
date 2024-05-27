@@ -8,7 +8,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { QuizListResData } from "@/types/quiz/res"
 import { ReferenceListRes } from "@/types/references/res"
-import { convertDatetoString } from "@/lib/utils"
+import { convertDatetoString, convertDateToStringSimplified } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { QuizOperations } from "@/components/app/quiz/operations"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
@@ -91,9 +91,44 @@ export function QuizTableShell({
 
           return (
             <div className="w-[200px]">
-              {convertDatetoString(row.original.created_at.toString())}
+              {convertDateToStringSimplified(
+                row.original.created_at.toString()
+              )}
             </div>
           )
+        },
+      },
+      {
+        accessorKey: "updated_at",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diperbarui pada" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[200px]">
+              {convertDateToStringSimplified(
+                row.original.updated_at.toString()
+              )}
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: "created_by_name",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Dibuat oleh" />
+        ),
+        cell: ({ row }) => {
+          return <div className="w-[200px]">{row.original.created_by_name}</div>
+        },
+      },
+      {
+        accessorKey: "updated_by_name",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diperbarui oleh" />
+        ),
+        cell: ({ row }) => {
+          return <div className="w-[200px]">{row.original.updated_by_name}</div>
         },
       },
       {
