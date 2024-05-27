@@ -103,7 +103,7 @@ export function KnowledgeTableShell({
               referenceResp={referenceResp}
               updateRowLink={`${pathname}/update/${knowledge.id_knowledge}`}
               isApproval
-              isAdmin
+              isAdmin={isAdmin}
             />
           )
         },
