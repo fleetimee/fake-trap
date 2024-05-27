@@ -31,6 +31,26 @@ export function convertDatetoString(date: string): string {
   })
 }
 
+/**
+ * Converts a date string to a formatted string representation.
+ * @param date - The date string to convert.
+ * @returns The formatted string representation of the date.
+ */
+export function convertDateToStringSimpliefied(date: string): string {
+  const dateObj = new Date(date)
+
+  // Add 7 hours to the date to match with GMT+7
+  dateObj.setUTCHours(dateObj.getUTCHours() + 7)
+
+  const day = dateObj.getUTCDate().toString().padStart(2, "0")
+  const month = (dateObj.getUTCMonth() + 1).toString().padStart(2, "0") // Months are 0-based
+  const year = dateObj.getUTCFullYear().toString().slice(2) // Get last two digits of year
+  const hours = dateObj.getUTCHours().toString().padStart(2, "0")
+  const minutes = dateObj.getUTCMinutes().toString().padStart(2, "0")
+
+  return `${day}/${month}/${year} - ${hours}.${minutes}`
+}
+
 export function convertDatetoStringWithTime(date: string): string {
   const dateObj = new Date(date)
   return dateObj.toLocaleDateString("id-ID", {

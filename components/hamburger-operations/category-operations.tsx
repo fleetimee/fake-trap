@@ -84,7 +84,7 @@ export function CategoryOperations({
               passHref
               className="flex w-full items-center justify-between"
             >
-              Edit
+              Update
             </Link>
             <DropdownMenuShortcut>⇧⌘E</DropdownMenuShortcut>
           </DropdownMenuItem>

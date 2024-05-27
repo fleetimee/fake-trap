@@ -16,4 +16,5 @@ export type CategoryListResData = {
   total_knowledge: number
   created_by: string
   slug: string
+  updated_by: string
 }

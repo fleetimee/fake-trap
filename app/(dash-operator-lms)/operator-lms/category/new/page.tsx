@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { AddCategoryForm } from "@/components/forms/add-category-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -26,6 +27,8 @@ export default async function OperatorLmsCategoryPageNew() {
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const tokenExtracted = extractToken(user?.token)
 
   const rule = await getRule({
     token: user?.token,
@@ -62,7 +65,7 @@ export default async function OperatorLmsCategoryPageNew() {
         </CardHeader>
 
         <CardContent>
-          <AddCategoryForm />
+          <AddCategoryForm userId={tokenExtracted?.id} />
         </CardContent>
       </Card>
     </DashboardShell>

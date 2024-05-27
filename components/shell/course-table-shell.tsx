@@ -80,7 +80,7 @@ export function CourseTableShell({
         ),
         cell: ({ row }) => (
           // <AspectRatio ratio={16 / 9}>
-          <Link href={`/dashboard/course/${row.original.id_course}`}>
+          <Link href={`${pathname}/detail/${row.original.id_course}`}>
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_URL}${row.original.image}`}
               alt={row.original.course_name}

@@ -29,6 +29,7 @@ import { Zoom } from "@/components/zoom-image"
 
 interface UpdateCategoryFormProps {
   category: CategoryOneResData
+  userId?: string
 }
 
 type Inputs = z.infer<typeof updateCategorySchema>
@@ -37,6 +38,7 @@ type InputsWithIndexSignature = Inputs & { [key: string]: any }
 
 export default function UpdateCategoryForm({
   category,
+  userId,
 }: UpdateCategoryFormProps) {
   const [selectedImage, setSelectedImage] = useState(
     `${process.env.NEXT_PUBLIC_BASE_URL}${category.image}`
@@ -52,7 +54,7 @@ export default function UpdateCategoryForm({
     resolver: zodResolver(updateCategorySchema),
     defaultValues: {
       CategoryName: category.category_name,
-      CreatedBy: session?.expires.id,
+      UpdatedBy: userId ? userId : session?.expires.id,
     },
   })
 

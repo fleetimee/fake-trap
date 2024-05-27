@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth"
 import { getOneCategory } from "@/lib/fetcher/category-fetcher"
 import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import UpdateCategoryForm from "@/components/forms/update-category-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -31,6 +32,8 @@ export default async function OperatorLMSUpdateCategoryPage({
   params,
 }: OperatorLMSUpdateCategoryPageProps) {
   const user = await getCurrentUser()
+
+  const tokenExtracted = extractToken(user?.token)
 
   const idCategory = params.idCategory.includes("_")
     ? params.idCategory.split("_")[1]

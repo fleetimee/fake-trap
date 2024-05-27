@@ -9,7 +9,10 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { CategoryListResData } from "@/types/category/res"
 import { RuleOneResData } from "@/types/rule/res"
-import { convertDatetoString } from "@/lib/utils"
+import {
+  convertDatetoString,
+  convertDateToStringSimpliefied,
+} from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table/"
 import { CategoryOperations } from "@/components/hamburger-operations/category-operations"
@@ -82,7 +85,7 @@ export function CategoryTableShell({
               href={`/${absolutePath}/knowledge?page=1&id_category=${row.original.id_category}`}
               passHref
             >
-              <p className="cursor-pointer text-sm font-bold text-blue-500">
+              <p className="w-[300px] cursor-pointer text-sm font-bold text-blue-500">
                 {row.original.category_name}
               </p>
             </Link>
@@ -92,12 +95,10 @@ export function CategoryTableShell({
       {
         accessorKey: "total_knowledge",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Total Materi" />
+          <DataTableColumnHeader column={column} title="Materi" />
         ),
         cell: ({ row }) => {
-          return (
-            <p className="text-sm font-bold">{row.original.total_knowledge}</p>
-          )
+          return <p>{row.original.total_knowledge}</p>
         },
         enableSorting: false,
         enableHiding: true,
@@ -111,7 +112,13 @@ export function CategoryTableShell({
         cell: ({ row }) => {
           convertDatetoString(row.original.created_at.toString())
 
-          return <>{convertDatetoString(row.original.created_at.toString())}</>
+          return (
+            <div className="w-[150px]">
+              {convertDateToStringSimpliefied(
+                row.original.created_at.toString()
+              )}
+            </div>
+          )
         },
         enableSorting: true,
         enableHiding: true,
@@ -125,7 +132,13 @@ export function CategoryTableShell({
         cell: ({ row }) => {
           convertDatetoString(row.original.updated_at.toString())
 
-          return <>{convertDatetoString(row.original.updated_at.toString())}</>
+          return (
+            <div className="w-[150px]">
+              {convertDateToStringSimpliefied(
+                row.original.updated_at.toString()
+              )}
+            </div>
+          )
         },
         enablesorting: true,
         enableHiding: true,
@@ -134,6 +147,12 @@ export function CategoryTableShell({
         accessorKey: "created_by",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Dibuat oleh" />
+        ),
+      },
+      {
+        accessorKey: "updated_by",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diubah oleh" />
         ),
       },
     ],

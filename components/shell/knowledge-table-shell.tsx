@@ -149,7 +149,7 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Judul" />
         ),
         cell: ({ row }) => (
-          <div className="w-[300px] ">
+          <div className="w-[300px]">
             <Link
               href={`${pathname}/detail/${row.original.id_knowledge}`}
               className="text-sm font-semibold text-blue-600 hover:underline"

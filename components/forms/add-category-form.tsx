@@ -29,7 +29,11 @@ type Inputs = z.infer<typeof categorySchema>
 
 type InputsWithIndexSignature = Inputs & { [key: string]: any }
 
-export function AddCategoryForm() {
+interface AddCategoryFormProps {
+  userId?: string
+}
+
+export function AddCategoryForm({ userId }: AddCategoryFormProps) {
   const [preview, setPreview] = useState<string | null>(null)
 
   const { data: session } = useSession()
@@ -43,7 +47,8 @@ export function AddCategoryForm() {
     defaultValues: {
       CategoryName: "",
       image: new File([], ""),
-      CreatedBy: session?.expires.id,
+      CreatedBy: userId ? userId : session?.expires.id,
+      UpdatedBy: userId ? userId : session?.expires.id,
     },
   })
 
@@ -164,20 +169,13 @@ export function AddCategoryForm() {
         <FormField
           control={form.control}
           name="CreatedBy"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Dibuat Oleh <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input type="text" {...field} disabled />
-              </FormControl>
-              <FormDescription>
-                Ini adalah unique identifier dari user yang membuat ujian
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => <Input type="hidden" {...field} disabled />}
+        />
+
+        <FormField
+          control={form.control}
+          name="UpdatedBy"
+          render={({ field }) => <Input type="hidden" {...field} disabled />}
         />
 
         <Button type="submit" className="w-fit" disabled={isLoading}>

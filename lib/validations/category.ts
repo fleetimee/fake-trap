@@ -8,6 +8,9 @@ export const categorySchema = z.object({
   CreatedBy: z.string().min(1, {
     message: "Pembuat harus diisi",
   }),
+  UpdatedBy: z.string().min(1, {
+    message: "Pembuat harus diisi",
+  }),
 })
 
 export const updateCategorySchema = z.object({
@@ -36,4 +39,5 @@ export const updateCategorySchema = z.object({
     )
     .optional(),
   CreatedBy: z.string().optional(),
+  UpdatedBy: z.string().optional(),
 })
