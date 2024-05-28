@@ -42,9 +42,10 @@ interface AddCourseFormProps {
   knowledge: KnowledgeListResData[]
   tutors: UserRoleListResData[]
   baseUrl?: string
+  userId?: string
 }
 
-export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
+export function AddCourseForm({ baseUrl, userId }: AddCourseFormProps) {
   const { data: session } = useSession()
 
   const [preview, setPreview] = React.useState<string | null>(null)
@@ -61,7 +62,8 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
       DateStart: new Date(),
       DateEnd: new Date(),
       image: new File([], ""),
-      CreatedBy: session?.expires.id,
+      CreatedBy: userId ? userId : session?.expires.id,
+      UpdatedBy: userId ? userId : session?.expires.id,
     },
   })
 
@@ -423,22 +425,25 @@ export function AddCourseForm({ baseUrl }: AddCourseFormProps) {
           control={form.control}
           name="CreatedBy"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Dibuat Oleh <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Ketikkan judul pembelajaran disini"
-                  {...field}
-                  disabled
-                />
-              </FormControl>
-              <FormDescription>
-                Ini adalah unique identifier dari user yang membuat pembelajaran
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+            <Input
+              placeholder="Ketikkan judul pembelajaran disini"
+              {...field}
+              disabled
+              type="hidden"
+            />
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="UpdatedBy"
+          render={({ field }) => (
+            <Input
+              placeholder="Ketikkan judul pembelajaran disini"
+              {...field}
+              disabled
+              type="hidden"
+            />
           )}
         />
 

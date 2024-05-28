@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth"
 import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getUsersByGroupId } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { AddCourseForm } from "@/components/forms/add-course-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -23,6 +24,8 @@ export const metadata: Metadata = {
 
 export default async function OperatorLMSCoursePageNew() {
   const user = await getCurrentUser()
+
+  const tokenExtracted = extractToken(user?.token)
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -71,6 +74,7 @@ export default async function OperatorLMSCoursePageNew() {
             knowledge={knowledge.data}
             tutors={tutors.data}
             baseUrl={"/operator-lms/course"}
+            userId={tokenExtracted.id}
           />
         </CardContent>
       </Card>

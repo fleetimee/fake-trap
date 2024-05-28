@@ -13,7 +13,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { timerOptions } from "@/config/timer-options"
 import { createExercise } from "@/lib/fetcher/exercise-fetcher"
 import { cn } from "@/lib/utils"
-import { testSchema } from "@/lib/validations/test"
+import { createTestSchema, updateTestSchema } from "@/lib/validations/test"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -41,7 +41,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 import { Icons } from "../icons"
 
-type Inputs = z.infer<typeof testSchema>
+type Inputs = z.infer<typeof createTestSchema>
 
 interface AddTestFormProps {
   references: ReferenceListRes
@@ -57,7 +57,7 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<Inputs>({
-    resolver: zodResolver(testSchema),
+    resolver: zodResolver(createTestSchema),
     defaultValues: {
       quiz_title: "",
       quiz_desc: "",
@@ -292,6 +292,12 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
         <FormField
           control={form.control}
           name="created_by"
+          render={({ field }) => <Input type="hidden" {...field} disabled />}
+        />
+
+        <FormField
+          control={form.control}
+          name="updated_by"
           render={({ field }) => <Input type="hidden" {...field} disabled />}
         />
 

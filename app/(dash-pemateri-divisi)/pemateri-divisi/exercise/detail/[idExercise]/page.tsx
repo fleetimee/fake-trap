@@ -75,6 +75,8 @@ export default async function ExerciseDetailPage({
       }),
     ])
 
+  console.log(exerciseLinked)
+
   const isAlreadyHaveQuestion = !!exercise?.data?.questions
   const userCount = exerciseUserCount?.data?.count
 

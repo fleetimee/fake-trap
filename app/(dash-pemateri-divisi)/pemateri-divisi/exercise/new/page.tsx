@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { AddTestForm } from "@/components/forms/add-test-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -22,6 +23,8 @@ export const metadata: Metadata = {
 
 export default async function PemateriDivisiExercisePageNew() {
   const user = await getCurrentUser()
+
+  const tokenExtracted = extractToken(user?.token)
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -63,6 +66,7 @@ export default async function PemateriDivisiExercisePageNew() {
           <AddTestForm
             references={references}
             baseUrl="/pemateri-divisi/exercise"
+            userId={tokenExtracted.id}
           />
         </CardContent>
       </Card>

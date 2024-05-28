@@ -39,9 +39,10 @@ interface UpdateCourseFormProps {
   course: CourseOneResData
   knowledge: KnowledgeListResData[]
   tutors: UserRoleListResData[]
+  userId?: string
 }
 
-export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
+export function UpdateCourseForm({ course, userId }: UpdateCourseFormProps) {
   const { data: session } = useSession()
 
   const [selectedImage, setSelectedImage] = useState(
@@ -59,7 +60,7 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
       CourseDesc: course.course_desc,
       DateStart: new Date(course.date_start),
       DateEnd: new Date(course.date_end),
-      CreatedBy: course.created_by,
+      UpdatedBy: userId ? userId : session?.expires.id,
     },
   })
 
@@ -242,24 +243,14 @@ export function UpdateCourseForm({ course }: UpdateCourseFormProps) {
 
         <FormField
           control={form.control}
-          name="CreatedBy"
+          name="UpdatedBy"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Dibuat Oleh <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Ketikkan judul pembelajaran disini"
-                  {...field}
-                  disabled
-                />
-              </FormControl>
-              <FormDescription>
-                Ini adalah unique identifier dari user yang membuat pembelajaran
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+            <Input
+              placeholder="Ketikkan judul pembelajaran disini"
+              {...field}
+              disabled
+              type="hidden"
+            />
           )}
         />
 

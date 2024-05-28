@@ -9,7 +9,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import { CourseListResData } from "@/types/course/res"
 import { KnowledgeListRes } from "@/types/knowledge/res"
-import { convertDatetoString } from "@/lib/utils"
+import { convertDatetoString, convertDateToStringSimplified } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { CourseOperations } from "@/components/hamburger-operations/course-operations"
@@ -134,7 +134,7 @@ export function CourseTableShell({
           return (
             <div className="w-[200px]">
               {
-                convertDatetoString(
+                convertDateToStringSimplified(
                   row.original.date_start.toString()
                 ) as React.ReactNode
               }
@@ -154,7 +154,7 @@ export function CourseTableShell({
           return (
             <div className="w-[200px]">
               {
-                convertDatetoString(
+                convertDateToStringSimplified(
                   row.original.date_end.toString()
                 ) as React.ReactNode
               }
@@ -163,11 +163,10 @@ export function CourseTableShell({
         },
         size: 400,
       },
-
       {
         id: "status",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Waktu" />
+          <DataTableColumnHeader column={column} title="Status" />
         ),
         cell: ({ row }) => {
           const status = [
@@ -181,7 +180,7 @@ export function CourseTableShell({
             },
             {
               id: 3,
-              name: "Soon",
+              name: "Akan Datang",
             },
           ]
 
@@ -196,6 +195,68 @@ export function CourseTableShell({
           } else {
             return <Badge className="text-center">{status[2].name}</Badge>
           }
+        },
+      },
+      {
+        accessorKey: "user_created_by",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Dibuat oleh" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[200px]">
+              <p>{row.original.user_created_by}</p>
+            </div>
+          )
+        },
+        size: 400,
+      },
+      {
+        accessorKey: "user_updated_by",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diupdate oleh" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[200px]">
+              <p>{row.original.user_updated_by}</p>
+            </div>
+          )
+        },
+        size: 400,
+      },
+      {
+        accessorKey: "created_at",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Dibuat pada" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[200px]">
+              <p>
+                {convertDateToStringSimplified(
+                  row.original.created_at.toString()
+                )}
+              </p>
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: "updated_at",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diupdate pada" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[200px]">
+              <p>
+                {convertDateToStringSimplified(
+                  row.original.updated_at.toString()
+                )}
+              </p>
+            </div>
+          )
         },
       },
     ],

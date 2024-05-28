@@ -17,7 +17,7 @@ interface QuizLinkedCardProps {
 }
 
 export function QuizLinkedCard({ code, data }: QuizLinkedCardProps) {
-  const linkedCheck = code
+  const linkedCheck = code === 200
 
   return (
     <Card>

@@ -6,6 +6,7 @@ import { getOneCourse } from "@/lib/fetcher/course-fetcher"
 import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { getUsersByGroupId } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { UpdateCourseForm } from "@/components/forms/update-course-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -32,6 +33,8 @@ export default async function OperatorLMSCoursePageUpdate({
   params,
 }: OperatorLMSCoursePageUpdateProps) {
   const user = await getCurrentUser()
+
+  const tokenExtracted = extractToken(user?.token)
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -88,6 +91,7 @@ export default async function OperatorLMSCoursePageUpdate({
             course={course.data}
             knowledge={knowledge.data}
             tutors={tutors.data}
+            userId={tokenExtracted.id}
           />
         </CardContent>
       </Card>

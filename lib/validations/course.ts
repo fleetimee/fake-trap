@@ -13,6 +13,7 @@ export const courseSchema = z.object({
   CreatedBy: z.string().min(1, {
     message: "Pembuat harus dipilih",
   }),
+  UpdatedBy: z.string().optional(),
 })
 
 export const updateCourseSchema = z.object({
@@ -43,7 +44,7 @@ export const updateCourseSchema = z.object({
       }
     )
     .optional(),
-  CreatedBy: z.string().optional(),
+  UpdatedBy: z.string().optional(),
 })
 
 export const addCourseUserSchema = z.object({

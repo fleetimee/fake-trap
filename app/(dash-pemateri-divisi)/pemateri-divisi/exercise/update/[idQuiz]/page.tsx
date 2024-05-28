@@ -84,7 +84,11 @@ export default async function PemateriDivisiExercisePageUpdate({
         </CardHeader>
 
         <CardContent>
-          <UpdateTestForm quiz={quiz.data} references={reference} />
+          <UpdateTestForm
+            quiz={quiz.data}
+            references={reference}
+            userId={tokenExtracted.id}
+          />
         </CardContent>
       </Card>
     </DashboardShell>

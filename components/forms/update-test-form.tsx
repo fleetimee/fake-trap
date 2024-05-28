@@ -14,7 +14,7 @@ import { ReferenceListRes } from "@/types/references/res"
 import { timerOptions } from "@/config/timer-options"
 import { updateExercise } from "@/lib/fetcher/exercise-fetcher"
 import { cn } from "@/lib/utils"
-import { testSchema } from "@/lib/validations/test"
+import { updateTestSchema } from "@/lib/validations/test"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -41,12 +41,12 @@ import {
 } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 
-type Inputs = z.infer<typeof testSchema>
+type Inputs = z.infer<typeof updateTestSchema>
 
 interface UpdateTestFormProps {
   quiz: QuizOneResData
   references: ReferenceListRes
-  userId: string
+  userId?: string
 }
 
 export function UpdateTestForm({
@@ -61,7 +61,7 @@ export function UpdateTestForm({
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<Inputs>({
-    resolver: zodResolver(testSchema),
+    resolver: zodResolver(updateTestSchema),
     defaultValues: {
       quiz_title: quiz.quiz_title,
       quiz_desc: quiz.quiz_desc,
