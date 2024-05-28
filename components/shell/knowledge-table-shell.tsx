@@ -12,7 +12,10 @@ import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { badgeSwitch } from "@/lib/badge-switch"
-import { convertDatetoStringShort } from "@/lib/utils"
+import {
+  convertDatetoStringShort,
+  convertDateToStringSimplified,
+} from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { KnowledgeOperations } from "@/components/hamburger-operations/knowledge-operations"
@@ -188,10 +191,14 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Dibuat pada" />
         ),
         cell: ({ row }) => {
-          convertDatetoStringShort(row.original.created_at.toString())
+          convertDateToStringSimplified(row.original.created_at.toString())
 
           return (
-            <>{convertDatetoStringShort(row.original.created_at.toString())}</>
+            <div className="w-[150px]">
+              {convertDateToStringSimplified(
+                row.original.created_at.toString()
+              )}
+            </div>
           )
         },
       },
@@ -201,10 +208,44 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Diubah pada" />
         ),
         cell: ({ row }) => {
-          convertDatetoStringShort(row.original.updated_at.toString())
+          convertDateToStringSimplified(row.original.updated_at.toString())
 
           return (
-            <>{convertDatetoStringShort(row.original.updated_at.toString())}</>
+            <div className="w-[150px]">
+              {convertDateToStringSimplified(
+                row.original.updated_at.toString()
+              )}
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: "user_created_by",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Dibuat oleh" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[150px]">
+              {row.original.user_created_by
+                ? row.original.user_created_by
+                : "-"}
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: "user_updated_by",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Diubah oleh" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="w-[150px]">
+              {row.original.user_updated_by
+                ? row.original.user_updated_by
+                : "-"}
+            </div>
           )
         },
       },
