@@ -15,6 +15,7 @@ import { timerOptions } from "@/config/timer-options"
 import { updateExercise } from "@/lib/fetcher/exercise-fetcher"
 import { cn } from "@/lib/utils"
 import { testSchema } from "@/lib/validations/test"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -40,16 +41,19 @@ import {
 } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 
-import { Icons } from "../icons"
-
 type Inputs = z.infer<typeof testSchema>
 
 interface UpdateTestFormProps {
   quiz: QuizOneResData
   references: ReferenceListRes
+  userId: string
 }
 
-export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
+export function UpdateTestForm({
+  quiz,
+  references,
+  userId,
+}: UpdateTestFormProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -63,8 +67,7 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
       quiz_desc: quiz.quiz_desc,
       quiz_type: quiz.quiz_type,
       time_limit: quiz.time_limit,
-      created_by: quiz.created_by,
-      updated_by: session?.expires.id,
+      updated_by: userId ? userId : session?.expires.id,
     },
   })
 
@@ -254,16 +257,7 @@ export function UpdateTestForm({ quiz, references }: UpdateTestFormProps) {
           control={form.control}
           name="updated_by"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Diubah Oleh</FormLabel>
-
-              <FormControl>
-                <Input {...field} disabled placeholder="" />
-              </FormControl>
-              <FormDescription>
-                Ini adalah unique identifier dari user yang mengubah ujian
-              </FormDescription>
-            </FormItem>
+            <Input {...field} disabled placeholder="" type="hidden" />
           )}
         />
 

@@ -140,7 +140,7 @@ export function DataTable<TData, TValue>({
           onMouseLeave={onMouseLeave}
           onMouseUp={onMouseUp}
           onMouseMove={onMouseMove}
-          className={isMouseDown ? "cursor-grabbing" : ""}
+          className={isMouseDown ? "cursor-grabbing" : "cursor-grab"}
         >
           <Table>
             <TableHeader>

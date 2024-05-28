@@ -46,9 +46,10 @@ type Inputs = z.infer<typeof testSchema>
 interface AddTestFormProps {
   references: ReferenceListRes
   baseUrl?: string
+  userId?: string
 }
 
-export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
+export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -61,9 +62,8 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
       quiz_title: "",
       quiz_desc: "",
       quiz_type: "",
-
-      created_by: session?.expires.id,
-      updated_by: session?.expires.id,
+      created_by: userId ? userId : session?.expires.id,
+      updated_by: userId ? userId : session?.expires.id,
     },
   })
 
@@ -258,27 +258,6 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
                       <CommandInput placeholder="Pilih tipe quiz..." />
                       <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
                       <CommandGroup>
-                        {/* {references.data.map((quiz) => (
-                          <CommandItem
-                            value={quiz.value_ref1}
-                            key={quiz.id_ref}
-                            onSelect={(value) => {
-                              form.clearErrors("quiz_type")
-                              form.setValue("quiz_type", quiz.code_ref2)
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 size-4",
-                                quiz.code_ref2 === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {quiz.value_ref1}
-                          </CommandItem>
-                        ))} */}
-
                         {timerOptions.map((timer) => (
                           <CommandItem
                             value={timer.label}
@@ -313,18 +292,7 @@ export function AddTestForm({ references, baseUrl }: AddTestFormProps) {
         <FormField
           control={form.control}
           name="created_by"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Dibuat Oleh</FormLabel>
-
-              <FormControl>
-                <Input {...field} disabled placeholder="" />
-              </FormControl>
-              <FormDescription>
-                Ini adalah unique identifier dari user yang membuat ujian
-              </FormDescription>
-            </FormItem>
-          )}
+          render={({ field }) => <Input type="hidden" {...field} disabled />}
         />
 
         <Button type="submit" className="w-fit" disabled={isPending}>

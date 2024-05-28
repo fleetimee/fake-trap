@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth"
 import { getOneQuiz } from "@/lib/fetcher/exercise-fetcher"
 import { getReference } from "@/lib/fetcher/reference-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { UpdateTestForm } from "@/components/forms/update-test-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -31,6 +32,8 @@ export default async function OperatorLMSExercisePageUpdate({
   params,
 }: OperatorLMSExercisePageUpdateProps) {
   const user = await getCurrentUser()
+
+  const tokenExtracted = extractToken(user?.token)
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -85,7 +88,11 @@ export default async function OperatorLMSExercisePageUpdate({
         </CardHeader>
 
         <CardContent>
-          <UpdateTestForm quiz={quiz.data} references={reference} />
+          <UpdateTestForm
+            quiz={quiz.data}
+            references={reference}
+            userId={tokenExtracted.id}
+          />
         </CardContent>
       </Card>
     </DashboardShell>

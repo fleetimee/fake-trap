@@ -16,8 +16,5 @@ export const testSchema = z.object({
   time_limit: z.number().min(1, {
     message: "Waktu ujian tidak boleh kosong",
   }),
-  created_by: z.string().min(1, {
-    message: "Created by tidak boleh kosong",
-  }),
   updated_by: z.string().optional(),
 })
