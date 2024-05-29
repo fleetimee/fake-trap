@@ -1,24 +1,25 @@
-"use client";
+"use client"
 
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
-import { toast as sonnerToast } from "sonner";
-import * as XLSX from "xlsx";
-import { z } from "zod";
+import { useAutoAnimate } from "@formkit/auto-animate/react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useFieldArray, useForm } from "react-hook-form"
+import { toast as sonnerToast } from "sonner"
+import * as XLSX from "xlsx"
+import { z } from "zod"
 
-
-
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
-
-
-
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 export const formSchemaQuestion = z.object({
   id_quiz: z.number(),
@@ -77,19 +78,25 @@ export function QuestionForm(props: {
         range: 1,
       }) as (string | boolean)[][]
 
-      const quizzes = jsonData.map((row) => {
-        const id_quiz = parseInt(props.idQuiz) // Get id_quiz from props
-        const question_text = row[0] as string
-        const answers = []
-        for (let i = 1; i < row.length; i += 2) {
-          const answer_text = row[i] ? String(row[i]) : "" // Convert answer_text to string
-          const is_correct = row[i + 1] as boolean
-          if (answer_text != null && answer_text.trim() !== "") {
-            answers.push({ answer_text, is_correct })
+      console.log(jsonData)
+
+      const quizzes = jsonData
+        .filter((row) => row.length > 0) // Exclude empty arrays
+        .map((row) => {
+          const id_quiz = parseInt(props.idQuiz) // Get id_quiz from props
+          const question_text = row[0] as string
+          const answers = []
+          for (let i = 1; i < row.length; i += 2) {
+            const answer_text = row[i] !== undefined ? String(row[i]) : "" // Convert answer_text to string
+            const is_correct = row[i + 1] as boolean
+            if (answer_text.trim() !== "") {
+              answers.push({ answer_text, is_correct })
+            }
           }
-        }
-        return { id_quiz, question_text, answers }
-      })
+          return { id_quiz, question_text, answers }
+        })
+
+      console.log(quizzes)
 
       props.setQuizzes((prev) => [...prev, ...quizzes])
     }
