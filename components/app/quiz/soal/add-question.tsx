@@ -81,13 +81,13 @@ export function QuestionForm(props: {
         const id_quiz = parseInt(props.idQuiz) // Get id_quiz from props
         const question_text = row[0] as string
         const answers = []
-          for (let i = 1; i < row.length; i += 2) {
-            const answer_text = String(row[i]) // Convert answer_text to string
-            const is_correct = row[i + 1] as boolean
-            if (answer_text != null && answer_text.trim() !== "") {
-              answers.push({ answer_text, is_correct })
-            }
+        for (let i = 1; i < row.length; i += 2) {
+          const answer_text = row[i] ? String(row[i]) : "" // Convert answer_text to string
+          const is_correct = row[i + 1] as boolean
+          if (answer_text != null && answer_text.trim() !== "") {
+            answers.push({ answer_text, is_correct })
           }
+        }
         return { id_quiz, question_text, answers }
       })
 
