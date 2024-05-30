@@ -151,6 +151,74 @@ export function UpdateTestForm({
 
         <FormField
           control={form.control}
+          name="quiz_type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Tipe Ujian <span className="text-red-500">*</span>
+              </FormLabel>
+
+              <FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        disabled={isPending}
+                        className={cn(
+                          "w-full justify-between",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value
+                          ? references.data.find(
+                              (quiz) => quiz.code_ref2 === field.value
+                            )?.value_ref1
+                          : "Pilih tipe ujian"}
+                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[400px] p-0 xl:w-[680px]">
+                    <Command>
+                      <CommandInput placeholder="Pilih tipe quiz..." />
+                      <CommandEmpty>Konten tidak ditemukan</CommandEmpty>
+                      <CommandGroup>
+                        {references.data.map((quiz) => (
+                          <CommandItem
+                            value={quiz.value_ref1}
+                            key={quiz.id_ref}
+                            onSelect={(value) => {
+                              form.clearErrors("quiz_type")
+                              form.setValue("quiz_type", quiz.code_ref2)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 size-4",
+                                quiz.code_ref2 === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {quiz.value_ref1}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
+              <FormDescription>
+                Pilih tipe ujian yang akan dibuat
+              </FormDescription>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="time_limit"
           render={({ field }) => (
             <FormItem>

@@ -104,7 +104,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             <Link href="/" className="flex items-center space-x-0 lg:hidden ">
               <Image src={Logo} alt="Logo" width={30} height={30} />
 
-              <span className=" text-bpdprimary font-bold sm:inline-block lg:hidden">
+              <span className=" font-bold text-bpdprimary sm:inline-block lg:hidden">
                 - LIVE
               </span>
             </Link>
@@ -247,7 +247,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             <Link href="/" className="flex items-center space-x-0 lg:hidden ">
               <Image src={Logo} alt="Logo" width={25} height={25} />
 
-              <span className=" text-bpdprimary font-bold sm:inline-block lg:hidden">
+              <span className=" font-bold text-bpdprimary sm:inline-block lg:hidden">
                 - LIVE
               </span>
             </Link>
@@ -292,14 +292,16 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                         localStorage.clear()
                         sessionStorage.clear()
 
-                        document.cookie.split(";").forEach((c) => {
-                          document.cookie = c
-                            .replace(/^ +/, "")
-                            .replace(
-                              /=.*/,
-                              `=;expires=${new Date().toUTCString()};path=/`
-                            )
-                        })
+                        if (typeof window !== "undefined") {
+                          document.cookie.split(";").forEach((c) => {
+                            document.cookie = c
+                              .replace(/^ +/, "")
+                              .replace(
+                                /=.*/,
+                                `=;expires=${new Date().toUTCString()};path=/`
+                              )
+                          })
+                        }
                       })
                     }}
                   >
