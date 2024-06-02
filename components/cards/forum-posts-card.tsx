@@ -6,13 +6,14 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import Blocks, { RenderFn } from "editorjs-blocks-react-renderer"
 import { generateFromString } from "generate-avatar"
+import { File } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Balancer from "react-wrap-balancer"
 import { toast as sonnerToast } from "sonner"
 
 import { PostsListResData } from "@/types/posts/res"
 import { deletePost } from "@/lib/fetcher/post-fetcher"
-import { getMetaData } from "@/lib/utils"
+import { cn, getMetaData } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import {
   AlertDialog,
@@ -37,13 +38,39 @@ export interface FileAttachmentData {
 }
 
 const FileAttachment: RenderFn<FileAttachmentData> = ({ data }) => {
+  const getColor = (extension: string) => {
+    switch (extension) {
+      case ".doc":
+      case ".docx":
+        return "text-blue-500"
+      case ".pdf":
+        return "text-red-500"
+      case ".ppt":
+      case ".pptx":
+        return "text-orange-500"
+      case ".xls":
+      case ".xlsx":
+        return "text-green-500"
+    }
+  }
+
+  console.log(data.file.extension)
+
+  const color = getColor(data.file.extension) // replace `fileExtension` with the actual variable holding the file extension
+
   return (
     <Link href={data.file.url} target="_blank" className="p-11">
-      <div className="flex w-full items-center rounded-md border bg-white p-2">
-        <FileIcon className="text-red-500" />
+      <div className="flex items-center rounded-md border bg-white p-2 md:w-[700px]">
+        {/* <FileIcon className="text-black" /> */}
+
+        <File className={cn("h-6 w-6", color)} />
         <div className="flex flex-col px-2">
-          <span className="text-sm font-semibold">{data.file.title}</span>
-          <span className="text-xs text-gray-500">{data.file.size} KiB</span>
+          <span className="truncate text-sm font-semibold">
+            {data.file.title}
+          </span>
+          <span className="text-xs text-gray-500">
+            {(data.file.size * 1024).toFixed(2)} KB
+          </span>{" "}
         </div>
         <Button variant="ghost" className="ml-auto">
           <ChevronDownIcon />
