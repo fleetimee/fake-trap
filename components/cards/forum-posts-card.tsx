@@ -4,7 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import Blocks from "editorjs-blocks-react-renderer"
+import Blocks, { RenderFn } from "editorjs-blocks-react-renderer"
 import { generateFromString } from "generate-avatar"
 import { useSession } from "next-auth/react"
 import Balancer from "react-wrap-balancer"
@@ -31,6 +31,68 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+export interface FileAttachmentData {
+  file: { title: string; size: number; extension: string; url: string }
+}
+
+const FileAttachment: RenderFn<FileAttachmentData> = ({ data }) => {
+  return (
+    <Link href={data.file.url} target="_blank" className="p-11">
+      <div className="flex w-full items-center rounded-md border bg-white p-2">
+        <FileIcon className="text-red-500" />
+        <div className="flex flex-col px-2">
+          <span className="text-sm font-semibold">{data.file.title}</span>
+          <span className="text-xs text-gray-500">{data.file.size} KiB</span>
+        </div>
+        <Button variant="ghost" className="ml-auto">
+          <ChevronDownIcon />
+        </Button>
+      </div>
+    </Link>
+  )
+}
+
+function ChevronDownIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  )
+}
+
+function FileIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+    </svg>
+  )
+}
+
+export default FileAttachment
 
 interface ForumPost {
   post: PostsListResData
@@ -135,7 +197,12 @@ export function ForumPost({ post }: ForumPost) {
           <p className="cst-wrap-text mt-1">
             {contentParsed ? (
               <Balancer>
-                <Blocks data={contentParsed} />
+                <Blocks
+                  data={contentParsed}
+                  renderers={{
+                    attaches: FileAttachment,
+                  }}
+                />
               </Balancer>
             ) : (
               <p>{post.content}</p>

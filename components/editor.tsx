@@ -10,7 +10,6 @@ import * as z from "zod"
 
 import "@/styles/editor.css"
 
-import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
@@ -64,7 +63,9 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
     // @ts-ignore
     const InlineCode = (await import("@editorjs/inline-code")).default
     // @ts-ignore
-    const SimpleImage = (await import("@editorjs/simple-image")).default
+    const Image = (await import("@editorjs/image")).default
+    // @ts-ignore
+    const Attaches = (await import("@editorjs/attaches")).default
 
     const body = formSchema.parse(formSchema)
 
@@ -100,7 +101,20 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
           inlineCode: InlineCode,
           table: Table,
           embed: Embed,
-          image: SimpleImage,
+          image: {
+            class: Image,
+            config: {
+              endpoints: {
+                byFile: `${process.env.NEXT_PUBLIC_BASE_URL}/forumImageUpload`,
+              },
+            },
+          },
+          attaches: {
+            class: Attaches,
+            config: {
+              endpoint: `${process.env.NEXT_PUBLIC_BASE_URL}/forumFileUpload`,
+            },
+          },
         },
       })
     }
