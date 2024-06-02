@@ -78,7 +78,7 @@ export default async function SupervisorLmsConfirmationPage({
       <div className="lg:flex lg:items-start lg:space-x-10">
         <Card className="border-2 hover:border-primary lg:w-1/2">
           <CardHeader>
-            <CardTitle>Preview Pengajuan</CardTitle>
+            <CardTitle>Preview Pembelajaran</CardTitle>
             <CardDescription>
               Ini adalah pengajuan pembelajaran yang akan di approve
             </CardDescription>
@@ -154,7 +154,7 @@ export default async function SupervisorLmsConfirmationPage({
           })}
         >
           <CardHeader>
-            <CardTitle>Submit Pengajuan</CardTitle>
+            <CardTitle>Approve / Tolak Pengajuan</CardTitle>
             <CardDescription>
               Ini adalah form untuk melakukan approve pengajuan atau menolak
               untuk kembali di revisi oleh pengaju

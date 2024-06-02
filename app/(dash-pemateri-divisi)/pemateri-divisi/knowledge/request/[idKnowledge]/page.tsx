@@ -124,7 +124,7 @@ export default async function PemateriDivisiRequestKnowledgeNew({
         </Card>
         <Card className="lg:w-1/2">
           <CardHeader>
-            <CardTitle>Submit Pengajuan</CardTitle>
+            <CardTitle>Cari Approval Pemateri</CardTitle>
             <CardDescription>
               Silahkan isi form dibawah ini untuk mengajukan materi baru.
             </CardDescription>

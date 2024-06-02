@@ -258,7 +258,12 @@ export function QuestionForm(props: {
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="picture">Import dari Excel</Label>
           <div>
-            <Input id="picture" type="file" onChange={handleFileUpload} />
+            <Input
+              id="picture"
+              type="file"
+              accept=".xlsx,.xls"
+              onChange={handleFileUpload}
+            />{" "}
           </div>
         </div>
       </div>

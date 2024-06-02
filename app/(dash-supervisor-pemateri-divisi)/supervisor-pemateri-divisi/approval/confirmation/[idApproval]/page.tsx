@@ -154,7 +154,7 @@ export default async function SupervisorPemateriConfirmationPage({
           })}
         >
           <CardHeader>
-            <CardTitle>Submit Pengajuan</CardTitle>
+            <CardTitle>Approve / Tolak Pengajuan</CardTitle>
             <CardDescription>
               Ini adalah form untuk melakukan approve pengajuan atau menolak
               untuk kembali di revisi oleh pengaju
