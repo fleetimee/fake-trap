@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -27,6 +28,7 @@ export function QuizDescriptionCard({ data }: QuizDescriptionCardProps) {
           </div>
         </div>
       </CardContent>
+      <CardFooter>Durasi Ujian: {data.time_limit / 60} menit</CardFooter>
     </Card>
   )
 }
