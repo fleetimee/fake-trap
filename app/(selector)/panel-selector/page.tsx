@@ -76,8 +76,8 @@ export default async function PanelSelector() {
 
         {isSpvPematerDivisi && (
           <ButtonSelector
-            title="Spv Divisi"
-            description="Spv divisi dapat menapprove materi yang ada di divisi masing-masing."
+            title="Approval Pemateri"
+            description="Approval Pemateri dapat menapprove materi yang ada di divisi masing-masing."
             link="/supervisor-pemateri-divisi"
             disabled={!isSpvPematerDivisi}
             animationData={SupervisorLottie}
@@ -97,8 +97,8 @@ export default async function PanelSelector() {
 
         {isSpvOperatorLMS && (
           <ButtonSelector
-            title="Spv Operator LMS"
-            description="Spv Operator LMS dapat menapprove pembelajaran yang ada di LMS."
+            title="Approval LMS"
+            description="Approval LMS dapat menapprove pembelajaran yang ada di LMS."
             link="/supervisor-lms"
             disabled={!isSpvOperatorLMS}
             isTextMuted
