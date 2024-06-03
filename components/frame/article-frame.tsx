@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
+import FileAttachment from "../cards/forum-posts-card"
+
 interface ArticleFrameProps {
   content: ContentOneRes
   contentParsed: any
@@ -31,7 +33,12 @@ export function ArticleFrame({ content, contentParsed }: ArticleFrameProps) {
 
         <Separator />
         <CardContent className="w-full text-black dark:text-white">
-          <Blocks data={contentParsed} />
+          <Blocks
+            data={contentParsed}
+            renderers={{
+              attaches: FileAttachment,
+            }}
+          />
         </CardContent>
       </Card>
     </div>
