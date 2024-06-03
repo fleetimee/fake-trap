@@ -86,7 +86,7 @@ export default async function SupervisorPemateriDivisiPage() {
         ]}
       />
 
-      <DashboardHeader heading="Supervisor Divisi" description={dateNow} />
+      <DashboardHeader heading="Approval Pemateri" description={dateNow} />
 
       <Alert>
         <PartyPopper className="size-5" />
