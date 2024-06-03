@@ -64,7 +64,11 @@ export function AddContentArticleForm({ idSection }: AddArticleFormProps) {
     // @ts-ignore
     const InlineCode = (await import("@editorjs/inline-code")).default
     // @ts-ignore
-    const SimpleImage = (await import("@editorjs/simple-image")).default
+    // const SimpleImage = (await import("@editorjs/simple-image")).default
+    // @ts-ignore
+    const Image = (await import("@editorjs/image")).default
+    // @ts-ignore
+    const Attaches = (await import("@editorjs/attaches")).default
 
     const body = articleSchema.pick({ body: true }).parse(form.getValues())
 
@@ -85,7 +89,20 @@ export function AddContentArticleForm({ idSection }: AddArticleFormProps) {
           inlineCode: InlineCode,
           table: Table,
           embed: Embed,
-          image: SimpleImage,
+          image: {
+            class: Image,
+            config: {
+              endpoints: {
+                byFile: `${process.env.NEXT_PUBLIC_BASE_URL}/forumImageUpload`,
+              },
+            },
+          },
+          attaches: {
+            class: Attaches,
+            config: {
+              endpoint: `${process.env.NEXT_PUBLIC_BASE_URL}/forumFileUpload`,
+            },
+          },
         },
       })
     }
