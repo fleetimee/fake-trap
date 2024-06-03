@@ -60,7 +60,7 @@ export const products = [
     thumbnail: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/parallax/image12.png`,
   },
   {
-    title: "Supervisor Divisi",
+    title: "Approval Pemateri",
     thumbnail: `${process.env.NEXT_PUBLIC_IMAGE_URL}/images/parallax/image13.png`,
   },
   {

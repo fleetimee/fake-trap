@@ -60,7 +60,7 @@ export default async function SupervisorLmsSettingLayout({
         >
           <DashboardHeader
             heading="Setting"
-            description="Pengaturan Akun Supervisor LMS"
+            description="Pengaturan Akun Approval LMS"
           />
         </MotionDiv>
       </div>

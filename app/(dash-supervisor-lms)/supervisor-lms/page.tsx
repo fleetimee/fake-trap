@@ -86,7 +86,7 @@ export default async function SupervisorLmsProfilePage() {
         ]}
       />
 
-      <DashboardHeader heading="Supervisor LMS" description={dateNow} />
+      <DashboardHeader heading="Approval LMS" description={dateNow} />
 
       <Alert>
         <PartyPopper className="size-5" />
