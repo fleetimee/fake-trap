@@ -1,11 +1,12 @@
 "use client"
 
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import useFormPersist from "react-hook-form-persist"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
@@ -59,12 +60,24 @@ export function UserSubmittedAnswerForm({
 
   const [startTime, setStartTime] = useState<Date | null>(null)
 
-  // Flag all question as unanswered defaulted to 0
-  const initialAnswers = question.reduce((acc, curr) => {
-    // @ts-ignore
-    acc[curr.id_question] = 0
-    return acc
-  }, {})
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  if (!question) {
+    throw new Error("Ujian ini belum memiliki soal")
+  }
+
+  const persistedState =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem(`quizStorage-${quiz.data.id_quiz}`)
+      : null
+
+  const initialAnswers = persistedState
+    ? JSON.parse(persistedState).selected_answers
+    : question.reduce((acc, curr) => {
+        // @ts-ignore
+        acc[curr.id_question] = 0
+        return acc
+      }, {})
 
   const router = useRouter()
 
@@ -76,8 +89,92 @@ export function UserSubmittedAnswerForm({
     },
   })
 
+  useFormPersist(`quizStorage-${quiz.data.id_quiz}`, {
+    watch: form.watch,
+    setValue: form.setValue,
+    storage: typeof window !== "undefined" ? window.localStorage : undefined, // default window.sessionStorage
+    exclude: ["baz"],
+  })
+
+  useEffect(() => {
+    const savedStartTime = localStorage.getItem(
+      `startTime-${quiz.data.id_quiz}`
+    )
+    const savedTimeRemaining = localStorage.getItem(
+      `timeRemaining-${quiz.data.id_quiz}`
+    )
+
+    if (savedStartTime) {
+      const startTime = new Date(savedStartTime)
+      const now = new Date()
+      const timePassed = Math.floor(
+        (now.getTime() - startTime.getTime()) / 1000
+      )
+
+      if (savedTimeRemaining) {
+        const timeRemaining = parseInt(savedTimeRemaining, 10)
+        setTimeRemaining(timeRemaining - timePassed)
+      }
+    } else {
+      setStartTime(new Date())
+      localStorage.setItem(
+        `startTime-${quiz.data.id_quiz}`,
+        new Date().toISOString()
+      )
+    }
+  }, [quiz.data.id_quiz])
+
+  useEffect(() => {
+    if (!timeRemaining || isSubmitted) return
+
+    const interval = setInterval(() => {
+      setTimeRemaining((prev) => {
+        if (prev <= 0 || isSubmitted) {
+          clearInterval(interval)
+          return 0
+        }
+        const newTimeRemaining = prev - 1
+        localStorage.setItem(
+          `timeRemaining-${quiz.data.id_quiz}`,
+          newTimeRemaining.toString()
+        )
+        return newTimeRemaining
+      })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [timeRemaining, quiz.data.id_quiz, isSubmitted])
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue =
+        "You have unsaved changes, are you sure you want to leave?"
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+    }
+  }, [])
+
+  useEffect(() => {
+    const savedStartTime = localStorage.getItem("startTime")
+    if (savedStartTime) {
+      setStartTime(new Date(savedStartTime))
+    } else {
+      const newStartTime = new Date()
+      setStartTime(newStartTime)
+      localStorage.setItem("startTime", newStartTime.toISOString())
+    }
+  }, [])
+
   const onSubmit = useCallback(
     async (values: Inputs) => {
+      // Set a default value for time_elapsed
+      values.time_elapsed = "00:00:00"
+
       if (startTime) {
         const endTime = new Date()
         const elapsedTime = Math.round(
@@ -88,6 +185,8 @@ export function UserSubmittedAnswerForm({
         const seconds = elapsedTime % 60
         values.time_elapsed = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
       }
+
+      setIsSubmitted(true)
 
       startTransition(async () => {
         try {
@@ -101,9 +200,21 @@ export function UserSubmittedAnswerForm({
               description: "Jawaban berhasil disimpan",
             })
 
+            // Clear the saved start time and remaining time from the local storage
+            localStorage.removeItem(`startTime-${quiz.data.id_quiz}`)
+            localStorage.removeItem(`timeRemaining-${quiz.data.id_quiz}`)
+
+            // Clear the quizStorage
+
+            // Reset the form fields to their initial values
+            form.reset()
+
+            localStorage.removeItem(`quizStorage-${quiz.data.id_quiz}`)
+
             router.back()
             router.refresh()
-            form.reset()
+
+            setIsSubmitted(false)
           } else {
             const errorResponse: ErrorResponse = await res.json()
 
@@ -118,12 +229,8 @@ export function UserSubmittedAnswerForm({
         }
       })
     },
-    [startTime, session?.user?.token, router, form]
+    [startTime, session?.user?.token, quiz.data.id_quiz, form, router]
   )
-
-  useEffect(() => {
-    setStartTime(new Date())
-  }, [])
 
   useEffect(() => {
     if (timeRemaining > 0) {
@@ -174,12 +281,21 @@ export function UserSubmittedAnswerForm({
         <CardContent className="space-y-8 py-6">
           <div className="flex items-end justify-end">
             <div className="flex flex-col gap-2">
-              {/* <p className="ml-4 text-sm ">Butir Soal: {questionLength} Soal</p>
-            <p className="ml-4 text-sm ">Dibuat Pada: {formattedDate}</p> */}
-              <p className="ml-4 text-sm ">
-                Waktu: {Math.floor(timeRemaining / 60)} Menit{" "}
-                {timeRemaining % 60} Detik
-              </p>
+              <div className="fixed bottom-24 right-4 z-50 flex flex-col items-center justify-center gap-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Waktu Tersisa</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-4xl font-bold">
+                      <span className="text-gray-500 dark:text-gray-400">
+                        {Math.floor(timeRemaining / 60)}:
+                      </span>
+                      <span>{timeRemaining % 60}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
 
@@ -216,7 +332,7 @@ export function UserSubmittedAnswerForm({
                                 key={key}
                                 disabled={isPending || isPreviewOnly}
                                 className="grid grid-cols-2 gap-4 xl:grid-cols-2"
-                                value={field.value.toString()}
+                                // value={field.value.toString()}
                                 onValueChange={(value) => {
                                   // const confirmBox = window.confirm(
                                   //   "Are you sure you want to select this answer?"
@@ -242,6 +358,9 @@ export function UserSubmittedAnswerForm({
                                     <FormControl>
                                       <RadioGroupItem
                                         value={answer.id_answer.toString()}
+                                        checked={
+                                          field.value === answer.id_answer
+                                        }
                                       />
                                     </FormControl>
                                     <FormLabel className="font-normal leading-8">

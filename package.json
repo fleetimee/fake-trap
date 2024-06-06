@@ -93,6 +93,7 @@
     "react-editor-js": "^2.1.0",
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.48.2",
+    "react-hook-form-persist": "^3.0.0",
     "react-hydration-provider": "^2.1.0",
     "react-medium-image-zoom": "^5.1.8",
     "react-pdf": "^7.7.0",

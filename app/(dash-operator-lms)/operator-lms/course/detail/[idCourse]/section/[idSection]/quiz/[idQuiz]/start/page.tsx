@@ -27,6 +27,8 @@ export default async function CourseQuizStartPage({
     id: params.idQuiz,
   })
 
+  console.log(quiz)
+
   return (
     <UserSubmittedAnswerForm
       question={quiz?.data?.questions}
