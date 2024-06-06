@@ -12,6 +12,7 @@ import { changePassword } from "@/lib/fetcher/password-fetcher"
 import { changePasswordSchema } from "@/lib/validations/change-password"
 
 import { Icons } from "../icons"
+import { PasswordInput } from "../password-input"
 import { Button } from "../ui/button"
 import {
   Form,
@@ -42,6 +43,7 @@ export function ChangePasswordForm() {
     defaultValues: {
       old_password: "",
       password: "",
+      password_confirmation: "",
     },
   })
 
@@ -86,12 +88,14 @@ export function ChangePasswordForm() {
             <FormItem>
               <FormLabel>Password Lama</FormLabel>
               <FormControl>
-                <Input
+                {/* <Input
                   placeholder=""
                   {...field}
                   disabled={isPending}
                   type="password"
-                />
+                /> */}
+
+                <PasswordInput {...field} disabled={isPending} />
               </FormControl>
               <FormDescription>
                 Masukkan password lama anda untuk memvalidasi perubahan
@@ -109,14 +113,33 @@ export function ChangePasswordForm() {
             <FormItem>
               <FormLabel>Password Baru</FormLabel>
               <FormControl>
-                <Input
+                {/* <Input
                   placeholder=""
                   {...field}
                   disabled={isPending}
                   type="password"
-                />
+                /> */}
+
+                <PasswordInput {...field} disabled={isPending} />
               </FormControl>
               <FormDescription>Masukkan password baru anda.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password_confirmation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Konfirmasi Password Baru</FormLabel>
+              <FormControl>
+                <PasswordInput {...field} disabled={isPending} />
+              </FormControl>
+              <FormDescription>
+                Masukkan password baru anda sekali lagi untuk konfirmasi.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

@@ -95,11 +95,7 @@ export function ProfileForm({ person }: ProfileFormProps) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Masukkan email"
-                  disabled={isPending}
-                />
+                <Input {...field} placeholder="Masukkan email" disabled />
               </FormControl>
               <FormDescription>
                 Email ini akan digunakan untuk mengirimkan notifikasi, reset
@@ -110,7 +106,7 @@ export function ProfileForm({ person }: ProfileFormProps) {
           )}
         />
 
-        <Button type="submit" disabled={isPending} className="w-fit">
+        {/* <Button type="submit" disabled className="w-fit">
           {isPending && (
             <Icons.spinner
               className="mr-2 h-4 w-4 animate-spin"
@@ -118,7 +114,7 @@ export function ProfileForm({ person }: ProfileFormProps) {
             />
           )}
           Update
-        </Button>
+        </Button> */}
       </form>
     </Form>
   )

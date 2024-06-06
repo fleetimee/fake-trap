@@ -9,7 +9,7 @@ import { toast as sonnerToast } from "sonner"
 import * as z from "zod"
 
 import { UserOneResData } from "@/types/user/res"
-import { updateUser } from "@/lib/fetcher/users-fetcher"
+import { updateNameUser, updateUser } from "@/lib/fetcher/users-fetcher"
 import { accountSchema } from "@/lib/validations/account"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -47,7 +47,7 @@ export function AccountForm({ person }: AccountFormProps) {
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        const response = await updateUser({
+        const response = await updateNameUser({
           token: session?.user.token,
           uuid: person.uuid,
           body: JSON.stringify(data),

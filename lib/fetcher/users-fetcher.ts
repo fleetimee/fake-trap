@@ -722,6 +722,31 @@ export async function updateUser({ token, uuid, body }: UpdateUserProps) {
   return res
 }
 
+interface UpdateNameUserProps {
+  token: string | undefined
+  uuid: string
+  body: BodyInit
+}
+
+export async function updateNameUser({
+  token,
+  uuid,
+  body,
+}: UpdateNameUserProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/updateName`
+
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+    cache: "no-store",
+  })
+
+  return res
+}
+
 interface DeleteUserProps {
   token: string | undefined
   uuid: string

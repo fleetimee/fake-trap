@@ -20,7 +20,7 @@ const sidebarNavItem = [
     href: "/supervisor-lms/setting/account",
   },
   {
-    title: "Keamanan",
+    title: "Ubah Password",
     href: "/supervisor-lms/setting/security",
   },
 ]

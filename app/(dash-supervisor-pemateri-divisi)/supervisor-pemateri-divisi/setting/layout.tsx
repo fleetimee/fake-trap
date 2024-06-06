@@ -20,7 +20,7 @@ const sidebarNavItem = [
     href: "/supervisor-pemateri-divisi/setting/account",
   },
   {
-    title: "Keamanan",
+    title: "Ubah Password",
     href: "/supervisor-pemateri-divisi/setting/security",
   },
 ]

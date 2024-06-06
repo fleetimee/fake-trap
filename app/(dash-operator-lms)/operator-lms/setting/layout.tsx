@@ -10,7 +10,6 @@ import { Separator } from "@/components/ui/separator"
 
 import { SidebarNav } from "./_components/setting_sidebar"
 
-
 const sidebarNavItem = [
   {
     title: "Profil",

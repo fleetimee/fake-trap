@@ -7,7 +7,7 @@ import { ChangePasswordForm } from "@/components/forms/password-form"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
-  title: "Keamanan",
+  title: "Ubah Password",
   description: "Pengaturan",
 }
 
@@ -21,7 +21,7 @@ export default async function OperatorLMSSecuritySettingPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">Keamanan</h3>
+        <h3 className="text-lg font-medium">Ubah Password</h3>
         <p className="text-sm text-muted-foreground">
           Ubah kata sandi Anda dan atur opsi keamanan lainnya.
         </p>
