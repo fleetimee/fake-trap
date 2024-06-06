@@ -354,6 +354,29 @@ export async function getUserRecentPostList({
   return await res.json()
 }
 
+interface GetUserRecentPostsList {
+  token: string | undefined
+  uuid: string | undefined
+}
+
+export async function getUserRecentPostsList({
+  token,
+  uuid,
+}: GetUserRecentPostsList): Promise<UserRecentPostListRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/${uuid}/getRecentPosts`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+
+  return await res.json()
+}
+
 interface GetUserAvgQuizScore {
   token: string | undefined
   uuid: string | undefined

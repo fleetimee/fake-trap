@@ -1,7 +1,12 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { ArrowRightIcon, PartyPopper } from "lucide-react"
+import {
+  ArrowRightIcon,
+  MessageSquare,
+  MessageSquareIcon,
+  PartyPopper,
+} from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
@@ -9,6 +14,7 @@ import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
 import {
   getPesertaEnrolledCourses,
   getUserRecentPostList,
+  getUserRecentPostsList,
 } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import {
@@ -55,26 +61,32 @@ export default async function PesertaPage() {
 
   const tokenExtracted = extractToken(user?.token)
 
-  const loggedOnUser = await getLoggedOnUser({
-    token: user?.token,
-    uuid: tokenExtracted?.id,
-  })
+  const [loggedOnUser, globalCount, course, recentPost, recentPostALl] =
+    await Promise.all([
+      getLoggedOnUser({
+        token: user?.token,
+        uuid: tokenExtracted?.id,
+      }),
+      getGlobalCount({
+        token: user?.token,
+      }),
+      getPesertaEnrolledCourses({
+        token: user?.token,
+        uuid: tokenExtracted?.id,
+        limit: 5,
+        page: 1,
+      }),
+      getUserRecentPostList({
+        token: user?.token,
+        uuid: tokenExtracted?.id,
+      }),
+      getUserRecentPostsList({
+        token: user?.token,
+        uuid: tokenExtracted?.id,
+      }),
+    ])
 
-  const globalCount = await getGlobalCount({
-    token: user?.token,
-  })
-
-  const course = await getPesertaEnrolledCourses({
-    token: user?.token,
-    uuid: tokenExtracted?.id,
-    limit: 5,
-    page: 1,
-  })
-
-  const recentPost = await getUserRecentPostList({
-    token: user?.token,
-    uuid: tokenExtracted?.id,
-  })
+  console.log(recentPostALl)
 
   return (
     <DashboardShell>
@@ -130,6 +142,60 @@ export default async function PesertaPage() {
           title="Pembelajaran"
           subtitle={globalCount.data?.course_count.toString()}
         />
+      </div>
+
+      <div className="mt-4 grid grid-cols-1 gap-4">
+        <Card className="h-fit rounded-none md:rounded-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <MessageSquareIcon className="mr-2 size-5" />
+              Forum Activity
+            </CardTitle>
+            <CardDescription>
+              Berikut adalah post terbaru di forum diskusi pembelajaran yang
+              kamu ikuti
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            {recentPostALl.data ? (
+              <ScrollArea className="h-[400px] w-full space-y-3 rounded-md border">
+                {recentPostALl.data.map((post) => (
+                  <div
+                    key={post.id_post}
+                    className="grid grid-cols-6 items-center justify-between space-y-6 p-4 "
+                  >
+                    <div className="col-span-4 text-sm">
+                      <span className="font-heading uppercase">
+                        {post.username}
+                      </span>{" "}
+                      baru saja membuat post baru pada forum{" "}
+                      <span className="font-semibold underline hover:text-blue-600">
+                        <Link
+                          href={`/peserta/course/detail/${post.id_course}/threads/${post.id_threads}`}
+                        >
+                          {post.threads_title}
+                        </Link>
+                      </span>{" "}
+                    </div>
+                    <p className="col-span-2  text-right text-xs font-light">
+                      {convertDatetoString(
+                        new Date(post.created_at).toString()
+                      )}
+                    </p>
+
+                    <Separator className="col-span-6 " />
+                  </div>
+                ))}
+              </ScrollArea>
+            ) : (
+              <div className="mx-auto flex flex-col items-center justify-center gap-4 py-16">
+                <Icons.post className="size-20 text-gray-400" />
+                <p className="text-gray-400">Belum ada post yang kamu buat</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">

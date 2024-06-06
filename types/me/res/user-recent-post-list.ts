@@ -9,7 +9,6 @@ export type UserRecentPostListResData = {
   id_course: number
   id_threads: number
   threads_title: string
-  content: string
   created_at: Date
   updated_at: Date
   username: string

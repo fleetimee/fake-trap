@@ -1,5 +1,3 @@
-import { KnowledgeListResData } from "@/types/knowledge/res"
-
 export type UserPastCourseKnowledgeListRes = {
   code: number
   message: string
