@@ -291,7 +291,9 @@ export function UserSubmittedAnswerForm({
                       <span className="text-gray-500 dark:text-gray-400">
                         {Math.floor(timeRemaining / 60)}:
                       </span>
-                      <span>{timeRemaining % 60}</span>
+                      <span>
+                        {(timeRemaining % 60).toString().padStart(2, "0")}
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
