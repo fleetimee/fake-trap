@@ -75,9 +75,14 @@ export function KnowledgeOperations({
         <DropdownMenuContent align="end" className="w-[160px]">
           {isApproval && (
             <>
+              {/* Catatan Novian Fix */}
               <DropdownMenuItem disabled={!isStatusCodeIn(["0053"]) || isAdmin}>
                 <Link
-                  href={`${pathName}/request/${knowledgeData.id_knowledge}`}
+                  href={
+                    isStatusCodeIn(["0053"])
+                      ? `/approve/revision/77`
+                      : `${pathName}/request/${knowledgeData.id_knowledge}`
+                  }
                   rel="noreferrer"
                   className="flex w-full cursor-default items-center"
                 >
