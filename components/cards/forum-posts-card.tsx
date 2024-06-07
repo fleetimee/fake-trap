@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import Blocks, { RenderFn } from "editorjs-blocks-react-renderer"
 import { generateFromString } from "generate-avatar"
-import { File } from "lucide-react"
+import { Download, File } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Balancer from "react-wrap-balancer"
 import { toast as sonnerToast } from "sonner"
@@ -60,7 +60,7 @@ const FileAttachment: RenderFn<FileAttachmentData> = ({ data }) => {
 
   return (
     <Link href={data.file.url} target="_blank" className="p-11">
-      <div className="flex items-center rounded-md border bg-white p-2 md:w-[700px]">
+      <div className="flex w-full items-center rounded-md border bg-white p-2">
         {/* <FileIcon className="text-black" /> */}
 
         <File className={cn("h-6 w-6", color)} />
@@ -73,7 +73,7 @@ const FileAttachment: RenderFn<FileAttachmentData> = ({ data }) => {
           </span>{" "}
         </div>
         <Button variant="ghost" className="ml-auto">
-          <ChevronDownIcon />
+          <Download className="h-6 w-6" />
         </Button>
       </div>
     </Link>
