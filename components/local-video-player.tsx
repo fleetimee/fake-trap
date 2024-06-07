@@ -195,12 +195,12 @@ export function LocalVideoPlayer({
         }}
       />
 
-      <div className="absolute right-4 top-4 rounded-xl bg-black/50 p-2 text-xs text-white xl:text-xl">
+      <div className="absolute right-4 top-4 rounded-xl p-2 text-xs text-white xl:text-xl">
         <Image
           alt="Logo"
           className="ml-2 inline-block"
           height={50}
-          src="/images/logo.png"
+          src="/logo_tv.jpeg"
           width={50}
         />
       </div>

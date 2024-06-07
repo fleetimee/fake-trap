@@ -1,25 +1,13 @@
-import Image from "next/image"
-import Link from "next/link"
 import { redirect } from "next/navigation"
-import { ClockIcon } from "@radix-ui/react-icons"
-import Blocks from "editorjs-blocks-react-renderer"
-import Balancer from "react-wrap-balancer"
 
 import { authOptions } from "@/lib/auth"
 import { ContentType } from "@/lib/enums/status"
 import { getOneContent } from "@/lib/fetcher/content-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { convertDatetoString } from "@/lib/utils"
-import { YoutubeRender } from "@/components/content-renderer"
 import { ArticleFrame } from "@/components/frame/article-frame"
 import { FileFrame } from "@/components/frame/file-frame"
 import { LocalVideoFrame } from "@/components/frame/local-video-frame"
 import { YoutubeFrame } from "@/components/frame/youtube-frame"
-import { LocalVideoPlayer } from "@/components/local-video-player"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 
 interface KnowledgeContentPageProps {
   params: {
