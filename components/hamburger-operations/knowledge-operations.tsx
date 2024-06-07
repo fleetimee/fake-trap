@@ -75,15 +75,13 @@ export function KnowledgeOperations({
         <DropdownMenuContent align="end" className="w-[160px]">
           {isApproval && (
             <>
-              <DropdownMenuItem
-                disabled={isStatusCodeIn(["0051", "0052", "0053"]) || isAdmin}
-              >
+              <DropdownMenuItem disabled={!isStatusCodeIn(["0053"]) || isAdmin}>
                 <Link
                   href={`${pathName}/request/${knowledgeData.id_knowledge}`}
                   rel="noreferrer"
                   className="flex w-full cursor-default items-center"
                 >
-                  Ajukan
+                  {isStatusCodeIn(["0053"]) ? "Ajukan Ulang" : "Ajukan"}
                   <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
