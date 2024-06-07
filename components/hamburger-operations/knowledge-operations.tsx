@@ -80,7 +80,7 @@ export function KnowledgeOperations({
                 <Link
                   href={
                     isStatusCodeIn(["0053"])
-                      ? `/approve/revision/77`
+                      ? `pemateri-divisi/approve/revision/77`
                       : `${pathName}/request/${knowledgeData.id_knowledge}`
                   }
                   rel="noreferrer"
