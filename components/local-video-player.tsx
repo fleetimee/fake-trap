@@ -196,13 +196,12 @@ export function LocalVideoPlayer({
       />
 
       <div className="absolute right-4 top-4 rounded-xl bg-black/50 p-2 text-xs text-white xl:text-xl">
-        Hak Cipta &copy; {format(new Date(), "yyyy")}
         <Image
           alt="Logo"
           className="ml-2 inline-block"
-          height={100}
+          height={50}
           src="/images/logo.png"
-          width={100}
+          width={50}
         />
       </div>
 
