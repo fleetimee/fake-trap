@@ -37,6 +37,16 @@ export interface FileAttachmentData {
   file: { title: string; size: number; extension: string; url: string }
 }
 
+function formatFileSize(sizeInBytes: number) {
+  const sizeInKB = sizeInBytes / 1024
+  if (sizeInKB < 1024) {
+    return `${sizeInKB.toFixed(2)} KB`
+  } else {
+    const sizeInMB = sizeInKB / 1024
+    return `${sizeInMB.toFixed(2)} MB`
+  }
+}
+
 const FileAttachment: RenderFn<FileAttachmentData> = ({ data }) => {
   const getColor = (extension: string) => {
     switch (extension) {
@@ -58,6 +68,8 @@ const FileAttachment: RenderFn<FileAttachmentData> = ({ data }) => {
 
   const color = getColor(data.file.extension) // replace `fileExtension` with the actual variable holding the file extension
 
+  console.log(data.file.size)
+
   return (
     <Link href={data.file.url} target="_blank" className="p-11">
       <div className="flex w-full items-center rounded-md border bg-white p-2">
@@ -69,8 +81,8 @@ const FileAttachment: RenderFn<FileAttachmentData> = ({ data }) => {
             {data.file.title}
           </span>
           <span className="text-xs text-gray-500">
-            {(data.file.size * 1024).toFixed(2)} KB
-          </span>{" "}
+            {formatFileSize(data.file.size)}
+          </span>
         </div>
         <Button variant="ghost" className="ml-auto">
           <Download className="h-6 w-6" />
