@@ -25,6 +25,7 @@ export type KnowledgeListResData = {
   user_request: string
   user_created_by: string
   user_updated_by: string
+  id_approval_knowledge: number
 }
 
 export type KnowledgeListResSection = {
