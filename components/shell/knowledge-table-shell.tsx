@@ -30,6 +30,7 @@ interface KnowledgeTableShellProps {
   categoryResp: CategoryListRes
   referenceResp: ReferenceListRes
   pageCount: number
+  canCreate?: boolean
 }
 
 export function KnowledgeTableShell({
@@ -37,6 +38,7 @@ export function KnowledgeTableShell({
   categoryResp,
   referenceResp,
   pageCount,
+  canCreate,
 }: KnowledgeTableShellProps) {
   const { data: session } = useSession()
 
@@ -337,6 +339,7 @@ export function KnowledgeTableShell({
       filterableColumns={filterableColumns}
       exportAction={exportUrl}
       isExportable
+      canCreate={canCreate}
     />
   )
 }

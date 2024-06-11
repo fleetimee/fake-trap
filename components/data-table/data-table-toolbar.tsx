@@ -27,6 +27,7 @@ interface DataTableToolbarProps<TData> {
   isExportable?: boolean
   exportAction?: string
   newRowLink?: string
+  canCreate?: boolean
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
 }
 
@@ -38,6 +39,7 @@ export function DataTableToolbar<TData>({
   deleteRowsAction,
   isExportable,
   exportAction,
+  canCreate = true,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
   const [isPending, startTransition] = React.useTransition()
@@ -108,7 +110,7 @@ export function DataTableToolbar<TData>({
             <TrashIcon className="mr-2 h-4 w-4" aria-hidden="true" />
             Delete
           </Button>
-        ) : newRowLink ? (
+        ) : canCreate && newRowLink ? (
           <Link aria-label="Create new row" href={newRowLink}>
             <div
               className={cn(
@@ -124,7 +126,6 @@ export function DataTableToolbar<TData>({
             </div>
           </Link>
         ) : null}
-
         {isExportable && exportAction ? (
           <Link
             aria-label="Export"

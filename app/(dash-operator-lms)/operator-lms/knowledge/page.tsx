@@ -120,6 +120,7 @@ export default async function OperatorLMSKnowledgePage({
           categoryResp={categoryResp}
           referenceResp={referenceResp}
           pageCount={knowledgeResp.totalPage}
+          canCreate={false}
         />
       </Suspense>
     </DashboardShell>

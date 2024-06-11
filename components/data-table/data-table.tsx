@@ -82,6 +82,8 @@ interface DataTableProps<TData, TValue> {
    * @example deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
    */
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
+
+  canCreate?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -93,6 +95,7 @@ export function DataTable<TData, TValue>({
   exportAction,
   isExportable = false,
   deleteRowsAction,
+  canCreate = true,
 }: DataTableProps<TData, TValue>) {
   const [isMouseDown, setIsMouseDown] = React.useState(false)
   const [startX, setStartX] = React.useState(0)
@@ -132,6 +135,7 @@ export function DataTable<TData, TValue>({
         exportAction={exportAction}
         isExportable={isExportable}
         deleteRowsAction={deleteRowsAction}
+        canCreate={canCreate}
       />
       <div className="rounded-md border">
         <ScrollArea
