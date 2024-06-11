@@ -92,6 +92,7 @@ export default async function KnowledgeDetailLayout({
           baseUrl={`/operator-lms/knowledge/detail/${params.idKnowledge}`}
           knowledge={knowledge}
           canCreateContent={true}
+          newSection
         />
       </div>
     </DashboardShell>
