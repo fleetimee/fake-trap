@@ -1,16 +1,11 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import {
-  ArrowRightIcon,
-  MessageSquare,
-  MessageSquareIcon,
-  PartyPopper,
-} from "lucide-react"
+import { ArrowRightIcon, MessageSquareIcon, PartyPopper } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
-import { getGlobalCount } from "@/lib/fetcher/menu-fetcher"
+import { getPesertaCount } from "@/lib/fetcher/menu-fetcher"
 import {
   getPesertaEnrolledCourses,
   getUserRecentPostList,
@@ -67,7 +62,7 @@ export default async function PesertaPage() {
         token: user?.token,
         uuid: tokenExtracted?.id,
       }),
-      getGlobalCount({
+      getPesertaCount({
         token: user?.token,
       }),
       getPesertaEnrolledCourses({
@@ -85,8 +80,6 @@ export default async function PesertaPage() {
         uuid: tokenExtracted?.id,
       }),
     ])
-
-  console.log(recentPostALl)
 
   return (
     <DashboardShell>
