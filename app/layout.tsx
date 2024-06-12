@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
+import { Montserrat, Open_Sans, Public_Sans } from "next/font/google"
 import Script from "next/script"
 import { GoogleTagManager } from "@next/third-parties/google"
 import NextTopLoader from "nextjs-toploader"
@@ -15,6 +16,23 @@ import { SonnerToaster } from "@/components/ui/sonner-toaster"
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { NextAuthProvider } from "@/app/providers"
+
+//👇 Configure our font object
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  display: "swap",
+})
+
+const montSerat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+})
+
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "500",
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -69,11 +87,11 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={publicSans.className}>
       <GoogleTagManager gtmId="GTM-5FS6WP7L" />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background  antialiased",
           fontSans.variable,
           fontHeading.variable
         )}

@@ -13,34 +13,15 @@ const SheetTrigger = SheetPrimitive.Trigger
 
 const SheetClose = SheetPrimitive.Close
 
-const portalVariants = cva("fixed inset-0 z-50 flex", {
-  variants: {
-    position: {
-      top: "items-start",
-      bottom: "items-end",
-      left: "justify-start",
-      right: "justify-end",
-    },
-  },
-  defaultVariants: { position: "right" },
-})
-
-interface SheetPortalProps
-  extends SheetPrimitive.DialogPortalProps,
-    VariantProps<typeof portalVariants> {}
-
-const SheetPortal = ({ position, children, ...props }: SheetPortalProps) => (
-  <SheetPrimitive.Portal {...props}>{children}</SheetPrimitive.Portal>
-)
-SheetPortal.displayName = SheetPrimitive.Portal.displayName
+const SheetPortal = SheetPrimitive.Portal
 
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
->(({ className, children, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm transition-all duration-100 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in",
+      "fixed inset-0 z-50 bg-black/80 font-bold data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -50,112 +31,41 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  "fixed z-50 scale-100 gap-4 overflow-y-auto border bg-background p-6 opacity-100 shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-300",
+  "fixed z-50 gap-4 bg-white p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
     variants: {
-      position: {
-        top: "left-0 top-0 w-full data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+      side: {
+        top: "inset-x-0 top-0 border-b-2 border-b-black data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
         bottom:
-          "bottom-0 left-0 w-full data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-        left: "left-0 top-0 h-full data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
+          "inset-x-0 bottom-0 border-t-2 border-t-black data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        left: "inset-y-0 left-0 h-full w-3/4 border-r-2 border-r-black data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
         right:
-          "right-0 top-0 h-full data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
-      },
-      size: {
-        content: "",
-        default: "",
-        sm: "",
-        lg: "",
-        xl: "",
-        full: "",
+          "inset-y-0 right-0 h-full w-3/4 border-l-2 border-l-black data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
       },
     },
-    compoundVariants: [
-      {
-        position: ["top", "bottom"],
-        size: "content",
-        class: "max-h-screen",
-      },
-      {
-        position: ["top", "bottom"],
-        size: "default",
-        class: "h-1/3",
-      },
-      {
-        position: ["top", "bottom"],
-        size: "sm",
-        class: "h-1/4",
-      },
-      {
-        position: ["top", "bottom"],
-        size: "lg",
-        class: "h-1/2",
-      },
-      {
-        position: ["top", "bottom"],
-        size: "xl",
-        class: "h-5/6",
-      },
-      {
-        position: ["top", "bottom"],
-        size: "full",
-        class: "h-screen",
-      },
-      {
-        position: ["right", "left"],
-        size: "content",
-        class: "max-w-screen",
-      },
-      {
-        position: ["right", "left"],
-        size: "default",
-        class: "w-1/3",
-      },
-      {
-        position: ["right", "left"],
-        size: "sm",
-        class: "w-1/4",
-      },
-      {
-        position: ["right", "left"],
-        size: "lg",
-        class: "w-1/2",
-      },
-      {
-        position: ["right", "left"],
-        size: "xl",
-        class: "w-5/6",
-      },
-      {
-        position: ["right", "left"],
-        size: "full",
-        class: "w-screen",
-      },
-    ],
     defaultVariants: {
-      position: "right",
-      size: "default",
+      side: "right",
     },
   }
 )
 
-export interface DialogContentProps
+interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {}
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
-  DialogContentProps
->(({ position, size, className, children, ...props }, ref) => (
-  <SheetPortal position={position}>
+  SheetContentProps
+>(({ side = "right", className, children, ...props }, ref) => (
+  <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content
       ref={ref}
-      className={cn(sheetVariants({ position, size }), className)}
+      className={cn(sheetVariants({ side }), className)}
       {...props}
     >
       {children}
-      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
@@ -170,7 +80,7 @@ const SheetHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-2 text-center sm:text-left",
+      "flex flex-col space-y-2 text-center font-bold sm:text-left",
       className
     )}
     {...props}
@@ -184,7 +94,7 @@ const SheetFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      "flex flex-col-reverse font-bold sm:flex-row sm:justify-end sm:space-x-2",
       className
     )}
     {...props}
@@ -198,7 +108,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn("text-lg font-semibold text-foreground", className)}
+    className={cn("text-lg font-bold text-black", className)}
     {...props}
   />
 ))
@@ -210,7 +120,7 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("font-base text-sm text-black", className)}
     {...props}
   />
 ))
@@ -218,6 +128,8 @@ SheetDescription.displayName = SheetPrimitive.Description.displayName
 
 export {
   Sheet,
+  SheetPortal,
+  SheetOverlay,
   SheetTrigger,
   SheetClose,
   SheetContent,

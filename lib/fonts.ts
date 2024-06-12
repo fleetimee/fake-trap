@@ -1,17 +1,6 @@
-;
-/**
- * This module exports font-related constants and functions.
- */
+import { JetBrains_Mono as FontMono, Inter as FontSans } from "next/font/google"
+import localFont from "next/font/local"
 
-// Importing fonts
-import { JetBrains_Mono as FontMono, Inter as FontSans } from "next/font/google";
-import localFont from "next/font/local";
-
-
-
-
-
-// Font constants
 export const fontMono = FontMono({
   subsets: ["latin"],
   variable: "--font-mono",

@@ -11,9 +11,11 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-main border-2 border-black shadow-base hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none",
-        noShadow: "bg-main border-2 border-black",
+        ghost: "bg-main border-2 border-black",
         link: "underline-offset-4 hover:underline",
         outline: "bg-white border-2 border-black",
+        destructive: "bg-red-500 border-2 border-red-500",
+        secondary: "bg-secondary border-2 border-secondary",
       },
       size: {
         default: "h-10 px-4 py-2",

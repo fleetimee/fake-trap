@@ -25,7 +25,7 @@ export default async function IndexPage() {
           href="/login"
           className={buttonVariants({
             size: "lg",
-            variant: "outline",
+            variant: "default",
             className: "w-full sm:w-auto sm:min-w-[10rem]",
           })}
         >
