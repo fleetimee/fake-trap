@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -19,96 +20,62 @@ export interface CourseCardV2Props {
   endDate: Date
 }
 
-export default function CourseCardV2({ ...props }: CourseCardV2Props) {
-  const router = useRouter()
+export interface CardBodyProps {
+  title: string
+  description: string
+  className?: string
+  status?: CourseAvailability
+}
 
+const CardBody = ({
+  title,
+  description,
+  className = "p-4",
+  status,
+}: CardBodyProps) => (
+  <div className={cn(className)}>
+    <Badge variant="outline" className="max-w-max text-white">
+      {status}
+    </Badge>
+
+    <h3 className="mb-2 mt-3 truncate text-2xl font-bold tracking-tighter text-gray-100">
+      {title}
+    </h3>
+    <p className="truncate text-gray-100">{description}</p>
+  </div>
+)
+
+export default function CourseCardV2({
+  courseTitle,
+  courseDescription,
+  courseImage,
+  ...props
+}: CourseCardV2Props) {
   const courseStatus = getCourseStatus({
     dateStart: props.startDate,
     dateEnd: props.endDate,
   })
 
   return (
-    <Link
-      href={`/peserta/course/detail/${props.courseId}`}
-      className="flex w-full max-w-md flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md hover:border-primary sm:w-[30rem] md:max-w-2xl xl:h-[300px]"
-      passHref
-      target="_blank"
-    >
-      <Card>
-        <div className="md:flex">
-          <div className="md:shrink-0">
-            <img
-              alt="Man looking at item at a store"
-              className={cn({
-                "h-48 w-full object-cover md:h-full md:w-48": true,
-                grayscale: courseStatus !== CourseAvailability.ACTIVE,
-              })}
-              height="48"
-              src={`${process.env.NEXT_PUBLIC_BASE_URL}${props.courseImage}`}
-              style={{
-                aspectRatio: "48/48",
-                objectFit: "cover",
-              }}
-              width="48"
-            />
-          </div>
-          <div className="p-8">
-            {/* <Badge className="mb-4 inline-block rounded-full bg-indigo-100 px-2 text-sm text-indigo-800"> */}
-            <Badge
-              className={cn({
-                "mb-4 inline-block rounded-full bg-indigo-100 px-2 text-sm text-indigo-800":
-                  courseStatus === CourseAvailability.ACTIVE,
-                "mb-4 inline-block rounded-full bg-green-100 px-2 text-sm text-green-800":
-                  courseStatus === CourseAvailability.SOON,
-                "mb-4 inline-block rounded-full bg-red-100 px-2 text-sm text-red-800":
-                  courseStatus === CourseAvailability.OVER,
-              })}
-            >
-              {courseStatus}
-            </Badge>
-            <Link
-              className="mt-1 line-clamp-2 block text-lg font-medium leading-tight text-black hover:underline"
-              href={`/peserta/course/detail/${props.courseId}`}
-            >
-              {props.courseTitle}
-            </Link>
-            <p className="mt-2 line-clamp-2 text-gray-500">
-              {props.courseDescription}
-            </p>
-          </div>
-        </div>
-
-        <CardFooter className="flex items-center justify-between border-t border-gray-200 bg-gray-50 p-6">
-          <div className="text-sm">
-            <p className="font-semibold leading-none text-gray-900">
-              Tanggal Pembuatan
-            </p>
-            <p className="text-gray-600">{props.courseDate}</p>
-          </div>
-          <div className="flex items-center space-x-1">
-            <Link
-              href={`/peserta/course/detail/${props.courseId}`}
-              target="_blank"
-              passHref
-              className={buttonVariants({
-                variant: "secondary",
-              })}
-            >
-              Ke Pembelajaran
-            </Link>
-
-            {/* <Button
-              variant="outline"
-              onClick={() => {
-                router.push(`/peserta/course/detail/${props.courseId}`)
-                router.refresh()
-              }}
-            >
-              Ke Pembelajaran
-            </Button> */}
-          </div>
-        </CardFooter>
-      </Card>
+    <Link href={`/peserta/course/detail/${props.courseId}`} passHref>
+      <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl">
+        <Image
+          fill
+          className="m-0 w-full object-cover"
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}${courseImage}`}
+          alt={courseTitle}
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lxKUAAAAASUVORK5CYII="
+        />
+        {/* overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/10"></div>
+        <CardBody
+          title={courseTitle}
+          description={courseDescription}
+          className="absolute inset-0 flex size-full flex-col justify-end p-4 "
+          status={courseStatus}
+        />
+      </div>
     </Link>
   )
 }

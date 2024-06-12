@@ -6,7 +6,7 @@ import { GoogleTagManager } from "@next/third-parties/google"
 import NextTopLoader from "nextjs-toploader"
 
 import { siteConfig } from "@/config/site"
-import { fontHeading, fontSans } from "@/lib/fonts"
+import { fontHeading, fontSans, publicSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import Background from "@/components/background"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -69,11 +69,11 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={publicSans.className}>
       <GoogleTagManager gtmId="GTM-5FS6WP7L" />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background  antialiased",
           fontSans.variable,
           fontHeading.variable
         )}
