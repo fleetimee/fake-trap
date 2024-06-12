@@ -44,3 +44,24 @@ export async function getGlobalCount({
 
   return res.json()
 }
+
+interface GetPesertaCountProps {
+  token: string | undefined
+}
+
+export async function getPesertaCount({
+  token,
+}: GetPesertaCountProps): Promise<GlobalCountRes> {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/menu/pesertaCount`
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache",
+  })
+
+  return res.json()
+}
