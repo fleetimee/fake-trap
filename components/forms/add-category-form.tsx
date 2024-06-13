@@ -86,10 +86,10 @@ export function AddCategoryForm({ userId }: AddCategoryFormProps) {
         router.refresh()
         form.reset()
       } else {
-        const errorResponse: ErrorResponse = await response.json()
+        const errorResponse: ErrorResponseJson = await response.json()
 
         sonnerToast.error(`Error ${response.status}: ${response.statusText}`, {
-          description: errorResponse.error || "Terjadi kesalahan",
+          description: errorResponse.message || "Terjadi kesalahan",
         })
       }
     } catch (error) {
