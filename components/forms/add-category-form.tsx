@@ -9,7 +9,11 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
-import { ErrorResponseJson, SuccessResponse } from "@/types/error-res"
+import {
+  ErrorResponse,
+  ErrorResponseJson,
+  SuccessResponse,
+} from "@/types/error-res"
 import { createCategory } from "@/lib/fetcher/category-fetcher"
 import { categorySchema } from "@/lib/validations/category"
 import { Icons } from "@/components/icons"
@@ -82,10 +86,10 @@ export function AddCategoryForm({ userId }: AddCategoryFormProps) {
         router.refresh()
         form.reset()
       } else {
-        const errorResponse: ErrorResponseJson = await response.json()
+        const errorResponse: ErrorResponse = await response.json()
 
         sonnerToast.error(`Error ${response.status}: ${response.statusText}`, {
-          description: errorResponse.message,
+          description: errorResponse.error || "Terjadi kesalahan",
         })
       }
     } catch (error) {
