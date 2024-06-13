@@ -35,12 +35,14 @@ interface CategoryOperationsProps {
   kategori: CategoryListResData
   rule: RuleOneResData
   editRowLink?: string
+  isAdmin?: boolean
 }
 
 export function CategoryOperations({
   kategori,
   rule,
   editRowLink,
+  isAdmin = false,
 }: CategoryOperationsProps) {
   const { data: session } = useSession()
 
@@ -58,6 +60,8 @@ export function CategoryOperations({
     }
   }
 
+  const userId = session?.expires.id
+
   return (
     <>
       <DropdownMenu>
@@ -73,7 +77,10 @@ export function CategoryOperations({
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem
             className="flex items-center"
-            disabled={!rule.can_write_knowledge}
+            disabled={
+              !(rule.can_write_knowledge || isAdmin) ||
+              (userId !== kategori.created_by_id && !isAdmin)
+            }
           >
             <Link
               href={
@@ -93,7 +100,10 @@ export function CategoryOperations({
 
           <DropdownMenuItem
             className="text-red-60  flex items-center"
-            disabled={!rule.can_write_knowledge}
+            disabled={
+              !(rule.can_write_knowledge || isAdmin) ||
+              (userId !== kategori.created_by_id && !isAdmin)
+            }
             onSelect={() => setOpenDeleteAlert(true)}
           >
             Hapus

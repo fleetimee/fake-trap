@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
+import { useSession } from "next-auth/react"
 
 import { CategoryListResData } from "@/types/category/res"
 import { RuleOneResData } from "@/types/rule/res"
@@ -29,9 +30,15 @@ export function CategoryTableShell({
   newRowLink,
   editRowLink,
 }: CategoryTableShellProps) {
+  const { data: session } = useSession()
+
   const path = usePathname()
 
   const absolutePath = path.split("/")[1]
+
+  const isAdmin = session?.expires.role.some(
+    (role) => role.role_name === "Admin" || role.role_name === "Operator LMS"
+  )
 
   const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
@@ -48,6 +55,7 @@ export function CategoryTableShell({
               kategori={kategori}
               rule={rule}
               editRowLink={editRowLink}
+              isAdmin={isAdmin}
             />
           )
         },

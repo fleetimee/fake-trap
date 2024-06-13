@@ -47,12 +47,14 @@ export async function getGlobalCount({
 
 interface GetPesertaCountProps {
   token: string | undefined
+  userId: string
 }
 
 export async function getPesertaCount({
   token,
+  userId,
 }: GetPesertaCountProps): Promise<GlobalCountRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/menu/pesertaCount`
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/menu/pesertaCount/${userId}`
 
   const res = await fetch(url, {
     method: "GET",
