@@ -55,7 +55,7 @@ export function CoursesKnowledges({
 
   return (
     <div className="flex flex-col justify-between space-y-8">
-      <div className="grid grid-cols-1 gap-2 space-y-8 xl:grid-cols-1">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <React.Suspense
           fallback={Array.from({ length: 10 }).map((_, i) => (
             <KnowledgeCardSkeleton key={i} />
