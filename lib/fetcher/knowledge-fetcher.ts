@@ -110,6 +110,33 @@ export async function getOperatorKnowledge({
   }
 }
 
+interface GetKnowledgeCourseProps {
+  idCourse: string
+  token: string | undefined
+}
+
+export async function getKnowledgeCourse({
+  idCourse,
+  token,
+}: GetKnowledgeCourseProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/knowledge/${idCourse}/approved`
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(`Fetch request failed: ${error}`)
+    throw error
+  }
+}
+
 interface GetPublicKnowledgeProps {
   page: number
   limit: number
