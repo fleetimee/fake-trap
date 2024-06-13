@@ -58,6 +58,8 @@ export function KnowledgeOperations({
   const isStatusCodeIn = (codes: string[]) =>
     codes.includes(knowledgeData.status_code)
 
+  console.log("knowledgeData", knowledgeData)
+
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
   return (
@@ -76,7 +78,9 @@ export function KnowledgeOperations({
           {isApproval && (
             <>
               {/* Catatan Novian Fix */}
-              <DropdownMenuItem disabled={!isStatusCodeIn(["0053"]) || isAdmin}>
+              <DropdownMenuItem
+                disabled={!(isStatusCodeIn(["0053", ""]) && !isAdmin)}
+              >
                 <Link
                   href={
                     isStatusCodeIn(["0053"])
