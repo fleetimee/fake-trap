@@ -233,10 +233,20 @@ export function FileFrame({ content, params }: FileFrameProps) {
                             DocumentType.PPT.split(" | ").includes(file.ext),
                         })}
                       />
-                      <div>
-                        <span className="line-clamp-1 truncate">
-                          {file.original_filename}
-                        </span>
+                      <div className="w-full">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="line-clamp-2 truncate">
+                              {file.original_filename.length > 15
+                                ? `${file.original_filename.substring(0, 15)}...`
+                                : file.original_filename}
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{file.original_filename}</p>
+                          </TooltipContent>
+                        </Tooltip>
+
                         <span className="text-xs text-gray-500 dark:text-gray-400">
                           {" "}
                           ({file.file_type})
