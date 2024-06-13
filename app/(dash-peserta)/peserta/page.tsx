@@ -64,6 +64,7 @@ export default async function PesertaPage() {
       }),
       getPesertaCount({
         token: user?.token,
+        userId: tokenExtracted?.id,
       }),
       getPesertaEnrolledCourses({
         token: user?.token,
