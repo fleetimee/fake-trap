@@ -2,7 +2,10 @@ import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { Visibility } from "@/lib/enums/status"
-import { getOperatorKnowledge } from "@/lib/fetcher/knowledge-fetcher"
+import {
+  getKnowledgeCourse,
+  getOperatorKnowledge,
+} from "@/lib/fetcher/knowledge-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { AddCourseKnowledgeForm } from "@/components/forms/add-course-knowledge-form"
 import { Separator } from "@/components/ui/separator"
@@ -22,11 +25,9 @@ export default async function CourseKnowledgePage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const knowledges = await getOperatorKnowledge({
-    limit: 999,
-    page: 1,
-    token: user?.token,
-    visibilityId: Visibility.PRIVATE,
+  const knowledges = await getKnowledgeCourse({
+    idCourse: params.idCourse,
+    token: user.token,
   })
 
   return (
