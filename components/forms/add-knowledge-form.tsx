@@ -11,6 +11,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import { CategoryListRes } from "@/types/category/res"
+import { ErrorResponseJson, SuccessResponse } from "@/types/error-res"
 import { ReferenceListRes } from "@/types/references/res"
 import { createKnowledge } from "@/lib/fetcher/knowledge-fetcher"
 import { cn } from "@/lib/utils"
@@ -87,24 +88,32 @@ export function AddKnowledgeForm({
       try {
         const formData = new FormData()
 
-        //append data
+        //append data to form data
         Object.keys(data).forEach((key) => {
-          formData.append(key, data[key])
+          if (data[key] instanceof Date) {
+            formData.append(key, data[key].toISOString())
+          } else {
+            formData.append(key, data[key])
+          }
         })
 
         const response = await createKnowledge({
-          token: session?.user.token,
+          token: session?.user?.token,
           body: formData,
         })
 
         if (response.ok) {
-          const responseData = await response.json()
+          const responseData: SuccessResponse = await response.json()
 
           const newKnowledgeId = responseData.data
 
-          sonnerToast.success("Berhasil", {
-            description: "Materi berhasil ditambahkan",
-          })
+          sonnerToast.success(
+            `Success ${response.status}: ${response.statusText}`,
+            {
+              description:
+                responseData.message || "Materi berhasil ditambahkan",
+            }
+          )
 
           if (baseUrl) {
             router.push(`${baseUrl}/detail/${newKnowledgeId}`)
@@ -116,15 +125,21 @@ export function AddKnowledgeForm({
             form.reset()
           }
         } else {
-          sonnerToast.error("Gagal", {
-            description: "Materi gagal ditambahkan",
-          })
+          const errorResponse: ErrorResponseJson = await response.json()
+
+          sonnerToast.error(
+            `Error ${response.status}: ${response.statusText}`,
+            {
+              description: errorResponse.message,
+            }
+          )
         }
       } catch (error) {
+        console.error(error)
+
         sonnerToast.error("Gagal", {
-          description: "Materi gagal ditambahkan",
+          description: `${error}`,
         })
-      } finally {
       }
     })
   }
