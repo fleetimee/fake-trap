@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
+import { ErrorResponseJson, SuccessResponse } from "@/types/error-res"
 import { createCategory } from "@/lib/fetcher/category-fetcher"
 import { categorySchema } from "@/lib/validations/category"
 import { Icons } from "@/components/icons"
@@ -68,19 +69,29 @@ export function AddCategoryForm({ userId }: AddCategoryFormProps) {
       })
 
       if (response.ok) {
-        sonnerToast.success("Berhasil", {
-          description: "Modul berhasil ditambahkan",
-        })
+        const responseData: SuccessResponse = await response.json()
+
+        sonnerToast.success(
+          `Success ${response.status}: ${response.statusText}`,
+          {
+            description: responseData.message || "Modul berhasil ditambahkan",
+          }
+        )
 
         router.back()
         router.refresh()
         form.reset()
       } else {
-        sonnerToast.error("Gagal", {
-          description: "Modul gagal ditambahkan",
+        const errorResponse: ErrorResponseJson = await response.json()
+
+        sonnerToast.error(`Error ${response.status}: ${response.statusText}`, {
+          description: errorResponse.message,
         })
       }
     } catch (error) {
+      sonnerToast.error("Gagal", {
+        description: `${error}`,
+      })
     } finally {
       setIsloading(false)
     }
