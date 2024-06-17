@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: blive-frontend
     build:
       context: .
       dockerfile: Dockerfile
