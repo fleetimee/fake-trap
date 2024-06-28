@@ -92,7 +92,7 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="text" {...field} />
+                <Input type="text" placeholder="Tuliskan email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
