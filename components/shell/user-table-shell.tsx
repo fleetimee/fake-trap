@@ -6,12 +6,16 @@ import { usePathname } from "next/navigation"
 import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 import { generateFromString } from "generate-avatar"
+import { CalendarDays } from "lucide-react"
 
 import { UserListResData } from "@/types/user/res/user-list"
 import { convertDatetoString, convertDatetoStringWithTime } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
+
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 
 interface UserTableShellProps {
   data: UserListResData[]
@@ -40,18 +44,36 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
           const user = row.original
 
           return (
-            <div className="relative size-20 overflow-hidden rounded-full bg-white">
-              <Image
-                src={
-                  user.profile_picture
-                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${user.profile_picture}`
-                    : `data:image/svg+xml;utf8,${generateFromString(user.name)}`
-                }
-                alt="User name"
-                width={200}
-                height={200}
-              />
-            </div>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <div className="relative size-14 overflow-hidden rounded-full bg-white">
+                  <Image
+                    src={
+                      user.profile_picture
+                        ? `${process.env.NEXT_PUBLIC_BASE_URL}${user.profile_picture}`
+                        : `data:image/svg+xml;utf8,${generateFromString(user.name)}`
+                    }
+                    alt="User name"
+                    width={100}
+                    height={100}
+                  />
+                </div>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-80">
+                <div className="flex justify-between space-x-4">
+                  <Image
+                    src={
+                      user.profile_picture
+                        ? `${process.env.NEXT_PUBLIC_BASE_URL}${user.profile_picture}`
+                        : `data:image/svg+xml;utf8,${generateFromString(user.name)}`
+                    }
+                    alt="User name"
+                    width={700}
+                    height={700}
+                  />
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           )
         },
       },
