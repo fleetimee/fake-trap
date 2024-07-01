@@ -4,6 +4,8 @@ import { useState, useTransition } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -13,10 +15,12 @@ import { CourseOneResData } from "@/types/course/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { updateCourse } from "@/lib/fetcher/course-fetcher"
+import { cn } from "@/lib/utils"
 import { updateCourseSchema } from "@/lib/validations/course"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
+import { Calendar } from "../ui/calendar"
 import { DateTimePicker } from "../ui/datetimepicker"
 import {
   Form,
@@ -28,7 +32,9 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Textarea } from "../ui/textarea"
+import { TimePickerDemo } from "../ui/timepicker-demo"
 import { Zoom } from "../zoom-image"
 
 type Inputs = z.infer<typeof updateCourseSchema>
@@ -197,18 +203,49 @@ export function UpdateCourseForm({ course, userId }: UpdateCourseFormProps) {
           control={form.control}
           name="DateStart"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-left">
                 Tanggal Mulai <span className="text-red-500">*</span>
               </FormLabel>
-
-              <DateTimePicker
-                disabled={isPending}
-                date={field.value as Date}
-                setDate={(date) => {
-                  field.onChange(date)
-                }}
-              />
+              <Popover>
+                <FormControl>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      disabled={isPending}
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP HH:mm:ss")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                </FormControl>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={(date) => {
+                      field.onChange(date)
+                    }}
+                    initialFocus
+                  />
+                  <div className="border-t border-border p-3">
+                    <TimePickerDemo
+                      setDate={(date) => {
+                        field.onChange(date)
+                      }}
+                      date={field.value}
+                    />
+                  </div>
+                </PopoverContent>
+              </Popover>
               <FormDescription>
                 Tanggal mulai pembelajaran yang ingin dibuat.
               </FormDescription>
@@ -221,18 +258,49 @@ export function UpdateCourseForm({ course, userId }: UpdateCourseFormProps) {
           control={form.control}
           name="DateEnd"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-left">
                 Tanggal Selesai <span className="text-red-500">*</span>
               </FormLabel>
-
-              <DateTimePicker
-                disabled={isPending}
-                date={field.value as Date}
-                setDate={(date) => {
-                  field.onChange(date)
-                }}
-              />
+              <Popover>
+                <FormControl>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      disabled={isPending}
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP HH:mm:ss")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                </FormControl>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={(date) => {
+                      field.onChange(date)
+                    }}
+                    initialFocus
+                  />
+                  <div className="border-t border-border p-3">
+                    <TimePickerDemo
+                      setDate={(date) => {
+                        field.onChange(date)
+                      }}
+                      date={field.value}
+                    />
+                  </div>
+                </PopoverContent>
+              </Popover>
               <FormDescription>
                 Tanggal selesai pembelajaran yang ingin dibuat.
               </FormDescription>

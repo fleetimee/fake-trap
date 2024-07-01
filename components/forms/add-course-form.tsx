@@ -4,6 +4,8 @@ import React, { useTransition } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { add, format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -17,6 +19,7 @@ import {
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { createCourse } from "@/lib/fetcher/course-fetcher"
+import { cn } from "@/lib/utils"
 import { courseSchema } from "@/lib/validations/course"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -34,6 +37,10 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Zoom } from "@/components/zoom-image"
 
+import { Calendar } from "../ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { TimePickerDemo } from "../ui/timepicker-demo"
+
 type Inputs = z.infer<typeof courseSchema>
 
 type InputsWithIndexSignature = Inputs & { [key: string]: any }
@@ -47,6 +54,24 @@ interface AddCourseFormProps {
 
 export function AddCourseForm({ baseUrl, userId }: AddCourseFormProps) {
   const { data: session } = useSession()
+
+  const [date, setDate] = React.useState<Date>()
+
+  /**
+   * Carry over the current time when a user clicks a new day
+   * instead of resetting to 00:00.
+   */
+  const handleSelect = (newDay: Date | undefined) => {
+    if (!newDay) return
+    if (!date) {
+      setDate(newDay)
+      return
+    }
+    const diff = newDay.getTime() - date.getTime()
+    const diffInDays = diff / (1000 * 60 * 60 * 24)
+    const newDateFull = add(date, { days: Math.ceil(diffInDays) })
+    setDate(newDateFull)
+  }
 
   const [preview, setPreview] = React.useState<string | null>(null)
 
@@ -377,22 +402,42 @@ export function AddCourseForm({ baseUrl, userId }: AddCourseFormProps) {
           control={form.control}
           name="DateStart"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Tanggal Mulai <span className="text-red-500">*</span>
-              </FormLabel>
-
-              <DateTimePicker
-                disabled={isLoading}
-                date={field.value}
-                setDate={(date) => {
-                  field.onChange(date)
-                }}
-              />
-              <FormDescription>
-                Tanggal mulai pembelajaran yang ingin dibuat.
-              </FormDescription>
-              <FormMessage />
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-left">Tanggal Mulai</FormLabel>
+              <Popover>
+                <FormControl>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP HH:mm:ss")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                </FormControl>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                  />
+                  <div className="border-t border-border p-3">
+                    <TimePickerDemo
+                      setDate={field.onChange}
+                      date={field.value}
+                    />
+                  </div>
+                </PopoverContent>
+              </Popover>
             </FormItem>
           )}
         />
@@ -401,18 +446,49 @@ export function AddCourseForm({ baseUrl, userId }: AddCourseFormProps) {
           control={form.control}
           name="DateEnd"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-left">
                 Tanggal Selesai <span className="text-red-500">*</span>
               </FormLabel>
-
-              <DateTimePicker
-                disabled={isLoading}
-                date={field.value}
-                setDate={(date) => {
-                  field.onChange(date)
-                }}
-              />
+              <Popover>
+                <FormControl>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      disabled={isLoading}
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP HH:mm:ss")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                </FormControl>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={(date) => {
+                      field.onChange(date)
+                    }}
+                    initialFocus
+                  />
+                  <div className="border-t border-border p-3">
+                    <TimePickerDemo
+                      setDate={(date) => {
+                        field.onChange(date)
+                      }}
+                      date={field.value}
+                    />
+                  </div>
+                </PopoverContent>
+              </Popover>
               <FormDescription>
                 Tanggal selesai pembelajaran yang ingin dibuat.
               </FormDescription>
