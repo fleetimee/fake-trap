@@ -9,3 +9,6 @@ services:
       - "3000:3000"
     restart: unless-stopped
     tty: true
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
