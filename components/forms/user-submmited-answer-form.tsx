@@ -175,6 +175,8 @@ export function UserSubmittedAnswerForm({
       // Set a default value for time_elapsed
       values.time_elapsed = "00:00:00"
 
+      console.log(startTime)
+
       if (startTime) {
         const endTime = new Date()
         const elapsedTime = Math.round(
@@ -201,6 +203,7 @@ export function UserSubmittedAnswerForm({
             })
 
             // Clear the saved start time and remaining time from the local storage
+            localStorage.removeItem(`startTime`)
             localStorage.removeItem(`startTime-${quiz.data.id_quiz}`)
             localStorage.removeItem(`timeRemaining-${quiz.data.id_quiz}`)
 
