@@ -110,7 +110,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
   const getLeaderboad = await getQuizLeaderboard({
     token: user?.token,
     idExercise: params.idQuiz,
-    limit: 5,
+    limit: 10,
     page: 1,
   })
 

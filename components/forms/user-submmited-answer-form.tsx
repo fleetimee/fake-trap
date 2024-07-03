@@ -326,8 +326,8 @@ export function UserSubmittedAnswerForm({
                       render={({ field }) => (
                         <div className="">
                           <FormItem className="flex flex-col gap-4">
-                            <FormLabel className="font-heading">
-                              {question.question_text}
+                            <FormLabel className="font-serif text-lg">
+                              {`${index + 1}. ${question.question_text}`}{" "}
                             </FormLabel>
                             <FormControl>
                               <RadioGroup
@@ -355,9 +355,9 @@ export function UserSubmittedAnswerForm({
                                 {question.answers.map((answer, index) => (
                                   <FormItem
                                     key={index}
-                                    className="flex items-center space-x-3 space-y-0"
+                                    className="flex flex-wrap items-center space-x-3"
                                   >
-                                    <FormControl>
+                                    <FormControl className="shrink-0">
                                       <RadioGroupItem
                                         value={answer.id_answer.toString()}
                                         checked={
@@ -365,7 +365,7 @@ export function UserSubmittedAnswerForm({
                                         }
                                       />
                                     </FormControl>
-                                    <FormLabel className="font-normal leading-8">
+                                    <FormLabel className="min-w-0 flex-1 break-words font-normal leading-8">
                                       {answer.answer_text}
                                     </FormLabel>
                                   </FormItem>
