@@ -461,12 +461,12 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                               ) : leaderboard.position === 2 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
                                   <Icons.crown className="h-6 w-6 text-silver" />
-                                  <span>{`${leaderboard.position}st`}</span>
+                                  <span>{`${leaderboard.position}nd`}</span>
                                 </div>
                               ) : leaderboard.position === 3 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
                                   <Icons.crown className="h-6 w-6 text-bronze" />
-                                  <span>{`${leaderboard.position}st`}</span>
+                                  <span>{`${leaderboard.position}rd`}</span>
                                 </div>
                               ) : (
                                 `${leaderboard.position}th`
