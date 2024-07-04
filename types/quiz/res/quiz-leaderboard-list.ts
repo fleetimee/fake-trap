@@ -15,4 +15,5 @@ export interface QuizLeaderboardListResData {
   score: number
   time_elapsed: string
   profile_picture: string
+  earliest_created_at: string
 }

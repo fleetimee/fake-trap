@@ -64,6 +64,12 @@ export function convertDatetoStringWithTime(date: string): string {
   })
 }
 
+export function convertDateToShortString(date: string): string {
+  const dateObj = new Date(date)
+  const minutes = dateObj.getMinutes().toString().padStart(2, "0") // Ensure minutes are always two digits
+  return `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear().toString().slice(-2)}-${dateObj.getHours()}.${minutes}`
+}
+
 export function convertDatetoStringShort(date: string): string {
   const dateObj = new Date(date)
   return dateObj.toLocaleDateString("id-ID", {

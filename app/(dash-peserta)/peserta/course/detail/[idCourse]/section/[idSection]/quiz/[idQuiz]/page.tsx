@@ -10,7 +10,7 @@ import Stop from "@/public/lottie/stop.json"
 import TrophyLess from "@/public/lottie/trophy-less.json"
 import Trophy from "@/public/lottie/trophy.json"
 import { generateFromString } from "generate-avatar"
-import { PrinterIcon } from "lucide-react"
+import { CalendarDays, PrinterIcon } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { CourseAvailability, QuizType } from "@/lib/enums/status"
@@ -25,6 +25,7 @@ import { getUserLeaderboard } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import {
   cn,
+  convertDateToShortString,
   convertDatetoString,
   convertDatetoStringWithTime,
   extractToken,
@@ -43,6 +44,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
@@ -51,6 +53,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 import { Separator } from "@/components/ui/separator"
 import {
   Table,
@@ -113,6 +120,8 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
     limit: 10,
     page: 1,
   })
+
+  console.log(getLeaderboad)
 
   const getCurrentUserPlacement = await getUserLeaderboard({
     token: user?.token,
@@ -353,11 +362,10 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
           >
             <Card className="w-full max-w-3xl space-y-4">
               <CardHeader className="pb-0">
-                <CardTitle className="text-xl">Ranked</CardTitle>
+                <CardTitle className="text-xl">Posisi Anda</CardTitle>
 
                 <CardDescription>
-                  Ini merupakan peringkat keseluruhan peserta yang mengerjakan
-                  ujian disortir berdasarkan nilai tertinggi dan waktu tercepat
+                  Ini adalah ranking anda di leaderboard
                 </CardDescription>
               </CardHeader>
               <CardContent className="py-2">
@@ -427,6 +435,13 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
             <Card className="w-full max-w-3xl space-y-4">
               <CardHeader className="pb-0">
                 <CardTitle className="text-xl">Leaderboard</CardTitle>
+
+                <CardDescription>
+                  Ini merupakan peringkat keseluruhan peserta yang mengerjakan
+                  ujian disortir berdasarkan nilai tertinggi dan waktu tercepat
+                  bila nilai sama dan waktu sama akan ada tiebreaker berdasarkan
+                  waktu awal mengerjakan ujian
+                </CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="overflow-auto rounded-lg border border-gray-200 dark:border-gray-800">
@@ -435,7 +450,9 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                       <tr className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
                         <th className="px-4 py-3 text-left">Position</th>
 
-                        <th className="px-4 py-3 text-left">Participant</th>
+                        <th className="w-[200px] px-4 py-3 text-left">
+                          Participant
+                        </th>
                         <th className="px-4 py-3 text-right">Score</th>
                         <th className="px-4 py-3 text-right">Time</th>
                       </tr>
@@ -473,25 +490,52 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                               )}
                             </td>
                             <td className="p-4">
-                              <Button className="rounded-lg" variant="ghost">
-                                <div className="flex items-center space-x-3">
-                                  <div className="relative size-10 overflow-hidden rounded-full bg-white">
-                                    <Image
-                                      src={
-                                        leaderboard.profile_picture
-                                          ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
-                                          : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
-                                      }
-                                      alt="User name"
-                                      width={200}
-                                      height={200}
-                                    />
+                              <HoverCard>
+                                <HoverCardTrigger asChild>
+                                  <Button
+                                    className="rounded-lg"
+                                    variant="ghost"
+                                  >
+                                    <div className="flex items-center space-x-3">
+                                      <div className="relative size-10 overflow-hidden rounded-full bg-white">
+                                        <Image
+                                          src={
+                                            leaderboard.profile_picture
+                                              ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                              : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
+                                          }
+                                          alt="User name"
+                                          width={200}
+                                          height={200}
+                                        />
+                                      </div>
+                                      <span className="font-medium">
+                                        {leaderboard.name}
+                                      </span>
+                                    </div>
+                                  </Button>
+                                </HoverCardTrigger>
+                                <HoverCardContent>
+                                  <div className="flex justify-between space-x-4">
+                                    <div className="space-y-1">
+                                      <h4 className="text-sm font-semibold">
+                                        {leaderboard.name}
+                                      </h4>
+                                      <p className="text-sm">
+                                        Waktu paling awal mengerjakan test ini :
+                                      </p>
+                                      <div className="flex items-center pt-2">
+                                        <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+                                        <span className="text-xs text-muted-foreground">
+                                          {convertDateToShortString(
+                                            leaderboard.earliest_created_at
+                                          )}
+                                        </span>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <span className="font-medium">
-                                    {leaderboard.name}
-                                  </span>
-                                </div>
-                              </Button>
+                                </HoverCardContent>
+                              </HoverCard>
                             </td>
                             <td className="p-4 text-right">
                               {leaderboard.score}
