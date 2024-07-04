@@ -278,7 +278,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                 <AlertDialogFooter>
                   <AlertDialogCancel>Batal</AlertDialogCancel>
 
-                  <AlertDialogAction>
+                  <AlertDialogAction asChild>
                     <Link
                       href={`
                 /peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}/start
