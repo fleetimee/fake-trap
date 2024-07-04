@@ -6,9 +6,7 @@ import GoldMedal from "@/public/images/goldMedal.png"
 import SilverMedal from "@/public/images/silverMedal.png"
 import Learn from "@/public/lottie/learning.json"
 import QuizEnabled from "@/public/lottie/quiz_enabled.json"
-import Stop from "@/public/lottie/stop.json"
 import TrophyLess from "@/public/lottie/trophy-less.json"
-import Trophy from "@/public/lottie/trophy.json"
 import { generateFromString } from "generate-avatar"
 import { CalendarDays, PrinterIcon } from "lucide-react"
 
@@ -31,6 +29,7 @@ import {
   extractToken,
   getCourseStatus,
 } from "@/lib/utils"
+import Confetti from "@/components/confetti"
 import { Icons } from "@/components/icons"
 import { LottieClient } from "@/components/lottie-anim"
 import {
@@ -44,7 +43,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
@@ -68,6 +66,32 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+const winnerQoutes = [
+  "Victory is yours!",
+  "You are Elden Lord!",
+  "Champion of the Tarnished!",
+  "Glory to the victor!",
+  "You've conquered the Lands Between.",
+  "Triumph over darkness!",
+  "Your legend is forged!",
+  "You have risen above all!",
+  "The Elden Ring is restored!",
+  "Your journey is complete!",
+]
+
+const loserQoutes = [
+  "Embrace the unknown, for only in darkness can you find the light.",
+  "Every step forward, no matter how small, brings you closer to your destiny.",
+  "In the face of adversity, a true Tarnished never falters.",
+  "Strength is not just in the sword, but in the resolve to keep fighting.",
+  "Rise, for even in defeat, there is honor and wisdom to be gained.",
+  "The journey may be perilous, but the flame of hope must never be extinguished.",
+  "Forge your own path, for the Elden Ring awaits those with unwavering will.",
+  "From ashes we rise, stronger and more determined than before.",
+  "In the crucible of struggle, true greatness is born.",
+  "Let your spirit be unyielding, for the trials ahead are but tests of your courage.",
+]
 
 interface CourseQuizPageProps {
   params: {
@@ -121,8 +145,6 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
     page: 1,
   })
 
-  console.log(getLeaderboad)
-
   const getCurrentUserPlacement = await getUserLeaderboard({
     token: user?.token,
     idQuiz: params.idQuiz,
@@ -154,12 +176,27 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
   const percentageScore = (userScore / maximumScore) * 100
 
+  const getRandomQuote = (quotes: string | any[]) =>
+    quotes[Math.floor(Math.random() * quotes.length)]
+
+  const winnerQuote = getRandomQuote(winnerQoutes)
+  const loserQuote = getRandomQuote(loserQoutes)
+
   if (quiz.code === 400) {
     return notFound()
   }
 
   return (
     <Card className="w-full rounded-none border-none border-background shadow-none">
+      <div className="pointer-events-none fixed inset-0 z-50">
+        <Confetti
+          isActive={
+            getCurrentUserPlacement.data >= 1 &&
+            getCurrentUserPlacement.data <= 10
+          }
+          duration={5000}
+        />
+      </div>
       <CardHeader>
         <CardTitle>{quiz.data.quiz_title}</CardTitle>
         <CardDescription>{quiz.data.quiz_desc}</CardDescription>
@@ -382,6 +419,12 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                         : "-"}
                     </p>
 
+                    <p className="my-4 rounded-lg  px-6 py-2 text-center font-serif text-sm italic">
+                      {getCurrentUserPlacement.data <= 3
+                        ? winnerQuote
+                        : loserQuote}
+                    </p>
+
                     <div className="flex items-center justify-center py-0">
                       {getCurrentUserPlacement.data === 1 && (
                         // <LottieClient
@@ -473,17 +516,17 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                               {leaderboard.position === 1 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
                                   <Icons.crown className="h-6 w-6 text-gold" />
-                                  <span>{`${leaderboard.position}st`}</span>
+                                  <span className="font-bold text-gold">{`${leaderboard.position}st`}</span>
                                 </div>
                               ) : leaderboard.position === 2 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
                                   <Icons.crown className="h-6 w-6 text-silver" />
-                                  <span>{`${leaderboard.position}nd`}</span>
+                                  <span className="font-semibold text-silver">{`${leaderboard.position}nd`}</span>
                                 </div>
                               ) : leaderboard.position === 3 ? (
                                 <div className="inline-flex items-center justify-between space-x-2">
                                   <Icons.crown className="h-6 w-6 text-bronze" />
-                                  <span>{`${leaderboard.position}rd`}</span>
+                                  <span className="font-medium text-bronze">{`${leaderboard.position}rd`}</span>
                                 </div>
                               ) : (
                                 `${leaderboard.position}th`
@@ -509,7 +552,9 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                                           height={200}
                                         />
                                       </div>
-                                      <span className="font-medium">
+                                      <span
+                                        className={`font-medium ${leaderboard.position === 1 ? "font-extrabold text-gold" : leaderboard.position === 2 ? "font-semibold text-silver" : leaderboard.position === 3 ? "font-medium text-bronze" : ""}`}
+                                      >
                                         {leaderboard.name}
                                       </span>
                                     </div>
