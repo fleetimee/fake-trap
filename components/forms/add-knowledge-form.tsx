@@ -272,11 +272,6 @@ export function AddKnowledgeForm({
                     </FormControl>
                     <FormDescription>
                       Pilih visibility dari konten yang ingin dibuat
-                      {""}
-                      PRIVATE berarti hanya bisa diakses oleh user yang di
-                      assign.
-                      {""}
-                      PUBLIC berarti bisa diakses oleh semua user
                     </FormDescription>
                   </PopoverTrigger>
                   <PopoverContent className="w-[400px] p-0 xl:w-[680px]">
