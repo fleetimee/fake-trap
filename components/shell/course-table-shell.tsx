@@ -166,7 +166,7 @@ export function CourseTableShell({
       {
         id: "status",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Status" />
+          <DataTableColumnHeader column={column} title="Masa Berlaku" />
         ),
         cell: ({ row }) => {
           const status = [
