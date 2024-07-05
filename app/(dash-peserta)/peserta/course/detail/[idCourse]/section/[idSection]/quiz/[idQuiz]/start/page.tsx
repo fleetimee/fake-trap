@@ -5,6 +5,7 @@ import { QuizType } from "@/lib/enums/status"
 import { getOneQuiz, getUserQuizResults } from "@/lib/fetcher/exercise-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
+import Confetti from "@/components/confetti"
 import { UserSubmittedAnswerForm } from "@/components/forms/user-submmited-answer-form"
 
 interface CourseQuizStartPageProps {
@@ -52,10 +53,12 @@ export default async function CourseQuizStartPage({
   }
 
   return (
-    <UserSubmittedAnswerForm
-      question={quiz?.data?.questions}
-      quiz={quiz}
-      baseUrl="/peserta/"
-    />
+    <>
+      <UserSubmittedAnswerForm
+        question={quiz?.data?.questions}
+        quiz={quiz}
+        baseUrl="/peserta/"
+      />
+    </>
   )
 }

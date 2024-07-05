@@ -130,13 +130,33 @@ export default async function ExerciseResultDetailPage({
                   (answer) => answer.id_question === item.id_question
                 )
 
+                console.log("userAnswer", userAnswer)
+
                 return (
                   <div key={item.id_question} className="space-y-5">
                     <Label htmlFor="current">
                       {index + 1}. {item.question_text}
                     </Label>
                     <div className="grid grid-cols-2 gap-6">
-                      {item?.answers?.map((answer) => {
+                      {/* {item?.answers?.map((answer) => {
+                        console.log("answer", answer)
+
+                        return (
+                          <RadioGroup
+                            key={answer.id_answer}
+                            className="flex items-center space-x-3 space-y-0"
+                          >
+                            <RadioGroupItem
+                              checked={answer.is_correct}
+                              value={answer.id_answer.toString()}
+                              disabled
+                            />
+                            <Label>{answer.answer_text}</Label>
+                          </RadioGroup>
+                        )
+                      })} */}
+
+                      {userAnswer?.map((answer, index) => {
                         return (
                           <RadioGroup
                             key={answer.id_answer}

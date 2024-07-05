@@ -16,6 +16,7 @@ import {
 } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken, getCourseStatus } from "@/lib/utils"
+import Confetti from "@/components/confetti"
 import { Content } from "@/components/content"
 import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"

@@ -261,7 +261,7 @@ export function FileFrame({ content, params }: FileFrameProps) {
                     </div>
                   </TableCell>
                   <TableCell>
-                    {file.ext !== DocumentType.PDF ? (
+                    {file.ext !== DocumentType.PDF || isMobile ? (
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
