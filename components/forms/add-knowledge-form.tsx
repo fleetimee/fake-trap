@@ -249,7 +249,7 @@ export function AddKnowledgeForm({
           name="Status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Status</FormLabel>
+              <FormLabel>Visibility</FormLabel>
               <FormControl>
                 <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
