@@ -266,10 +266,18 @@ export function AddKnowledgeForm({
                           ? reference.data.find(
                               (content) => content.code_ref2 === field.value
                             )?.value_ref1
-                          : "Pilih Status"}
+                          : "Pilih Visibility"}
                         <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
+                    <FormDescription>
+                      Pilih visibility dari konten yang ingin dibuat
+                      {""}
+                      PRIVATE berarti hanya bisa diakses oleh user yang di
+                      assign.
+                      {""}
+                      PUBLIC berarti bisa diakses oleh semua user
+                    </FormDescription>
                   </PopoverTrigger>
                   <PopoverContent className="w-[400px] p-0 xl:w-[680px]">
                     <Command>
