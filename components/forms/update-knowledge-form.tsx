@@ -221,7 +221,7 @@ export function UpdateKnowledgeForm({
           name="Status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Status</FormLabel>
+              <FormLabel>Visibility</FormLabel>
               <FormControl>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -239,7 +239,7 @@ export function UpdateKnowledgeForm({
                           ? reference.data.find(
                               (content) => content.code_ref2 === field.value
                             )?.value_ref1
-                          : "Pilih Status"}
+                          : "Pilih Visibility"}
                         <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
