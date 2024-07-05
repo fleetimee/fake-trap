@@ -275,7 +275,7 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
               className="col-span-2 mx-auto flex w-full sm:col-auto sm:hidden"
               asChild
             >
-              <Link href={"intro/knowledge/all"}>
+              <Link href={"intro/categories/all"}>
                 Lihat Semua
                 <ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
               </Link>
@@ -357,7 +357,7 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
             className="mx-auto flex w-full sm:hidden"
             asChild
           >
-            <Link href={"intro/categories/all"}>
+            <Link href={"intro/knowledge/all"}>
               Lihat Semua
               <ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
             </Link>
