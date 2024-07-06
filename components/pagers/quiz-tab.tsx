@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { Separator } from "@/components/ui/separator"
 
+import { ScrollArea, ScrollBar } from "../ui/scroll-area"
+
 interface QuizTabProps extends React.ComponentPropsWithoutRef<typeof Tabs> {
   quizId: string
   initialRoute?: string
@@ -79,29 +81,36 @@ export function QuizTab({ className, quizId, initialRoute }: QuizTabProps) {
       onValueChange={(value) => router.push(value)}
     >
       <MotionDiv variants={parentVariant} initial="initial" animate="animate">
-        <TabsList className="inline-flex items-center justify-center space-x-1.5 text-muted-foreground">
-          {tabs.map((tab) => (
-            <MotionDiv
-              variants={childrenVariant}
-              role="none"
-              key={tab.href}
-              className={cn(
-                "child border-b-2 border-transparent py-1.5",
-                tab.isActive && "border-foreground"
-              )}
-            >
-              <TabsTrigger
-                value={tab.href}
-                className={cn(
-                  " inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium text-muted-foreground ring-offset-background transition-all hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
-                  tab.isActive && "text-foreground"
-                )}
-              >
-                <p className="line-clamp-1">{tab.title}</p>
-              </TabsTrigger>
-            </MotionDiv>
-          ))}
-        </TabsList>
+        <ScrollArea>
+          <div className="relative  w-full">
+            <TabsList className="inline-flex items-center justify-center space-x-1.5 text-muted-foreground">
+              {tabs.map((tab) => (
+                <MotionDiv
+                  variants={childrenVariant}
+                  role="none"
+                  key={tab.href}
+                  className={cn(
+                    "child border-b-2 border-transparent py-1.5",
+                    tab.isActive && "border-foreground"
+                  )}
+                >
+                  <TabsTrigger
+                    value={tab.href}
+                    className={cn(
+                      " inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium text-muted-foreground ring-offset-background transition-all hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+                      tab.isActive && "text-foreground"
+                    )}
+                  >
+                    <div className="overflow-x-auto whitespace-nowrap">
+                      <p className="inline-block">{tab.title}</p>
+                    </div>
+                  </TabsTrigger>
+                </MotionDiv>
+              ))}
+            </TabsList>
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </MotionDiv>
       <Separator />
     </Tabs>
