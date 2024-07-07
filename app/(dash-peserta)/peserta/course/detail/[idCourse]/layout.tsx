@@ -1,6 +1,7 @@
 import React from "react"
 import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
+import { Terminal } from "lucide-react"
 
 import { CourseOneResSection } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
@@ -16,14 +17,15 @@ import {
 } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken, getCourseStatus } from "@/lib/utils"
-import Confetti from "@/components/confetti"
 import { Content } from "@/components/content"
+import { CountdownTimer } from "@/components/countdown-timer"
 import { CourseAlert } from "@/components/course-alert"
 import { CourseContentSidebar } from "@/components/course-content-sidebar"
 import { CourseContentSidebarPretest } from "@/components/course-content-sidebar-pretest"
 import { SectionBanner } from "@/components/create-section-banner"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { VercelToolbar } from "@/components/vercel-toolbar"
 
 interface CourseDetailLayoutProps {
@@ -139,13 +141,40 @@ export default async function CourseDetailLayout({
         />
       </div>
 
-      <div className="hidden sm:block">
+      <div className="md:px-2">
+        <Alert variant="destructive">
+          <Terminal className="h-4 w-4" />
+          <AlertTitle>Deadline!</AlertTitle>
+          <AlertDescription>
+            Batas akhir pembelajaran hingga{" "}
+            <span className="font-bold">
+              {new Date(course.data.date_end).toLocaleString("id-ID", {
+                weekday: "long", // "long" for the full name of the day, "short" for the abbreviated version.
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false, // Optional: Use 24-hour format
+              })}
+            </span>
+          </AlertDescription>
+        </Alert>
+      </div>
+
+      <div className="relative hidden sm:block">
+        {/* Ensure this div is relatively positioned */}
         <SectionBanner
           description={course.data.course_desc}
           title={course.data.course_name}
           urlLink={`/peserta/course/detail/${params.idCourse}`}
           image={course.data.image}
         />
+        {/* Countdown Timer with "Deadline" */}
+        <div className="absolute right-4 top-4 rounded-lg bg-white/80 px-2 py-1">
+          <CountdownTimer endDate={new Date(course.data.date_end)} />
+        </div>
       </div>
 
       <div className="flex items-center justify-end">

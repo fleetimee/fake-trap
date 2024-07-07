@@ -86,9 +86,9 @@ export function CourseContentSidebarPretest({
                                 )}
                               >
                                 {quiz.quiz_type === QuizType.PRETEST ? (
-                                  <Icons.postTest className="mr-2 size-4 text-purple-600" />
+                                  <Icons.postTest className="mr-2 size-4 text-white" />
                                 ) : quiz.quiz_type === QuizType.POSTTEST ? (
-                                  <Icons.preTest className="mr-2 size-4 text-green-500" />
+                                  <Icons.preTest className="mr-2 size-4 text-white" />
                                 ) : (
                                   <Icons.quiz className="mr-2 size-4 text-green-500" />
                                 )}

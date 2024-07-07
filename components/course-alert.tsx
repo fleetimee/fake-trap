@@ -46,9 +46,9 @@ export function CourseAlert({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Alert className="basis-full">
+          <Alert className="basis-full" variant="informative">
             <DrawingPinFilledIcon className="size-4" />
-            <AlertTitle className="text-red-600">Informasi!</AlertTitle>
+            <AlertTitle>Informasi!</AlertTitle>
             <AlertDescription>
               Pembelajaran ini berdasarkan pada materi{" "}
               <span className="font-bold">
