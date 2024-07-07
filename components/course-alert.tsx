@@ -41,7 +41,7 @@ export function CourseAlert({
       </div>
       {knowledgeSection ? (
         <MotionDiv
-          className="flex flex-row gap-4 px-2"
+          className="flex flex-row gap-4 md:px-2"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}

@@ -9,6 +9,7 @@ import {
   UjianPesertaListRes,
 } from "@/types/quiz/res"
 import { QuizDashboardCountRes } from "@/types/quiz/res/quiz-get-dashboard-count"
+import { QuizLazyUserListRes } from "@/types/quiz/res/quiz-lazy-user"
 import { QuizLeaderboardListRes } from "@/types/quiz/res/quiz-leaderboard-list"
 
 interface GetQuizProps {
@@ -450,6 +451,55 @@ export async function getQuizDashboardCount({
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+  })
+
+  return await res.json()
+}
+
+interface GetQuizLazyUserProps {
+  token: string | undefined
+  idExercise: string
+  limit: number
+  page: number
+  sortBy?: string
+  orderBy?: string
+}
+
+export async function getQuizLazyUser({
+  token,
+  idExercise,
+  limit,
+  page,
+  sortBy = "name",
+  orderBy = "asc",
+}: GetQuizLazyUserProps): Promise<QuizLazyUserListRes> {
+  let baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/${idExercise}/lazyUsers`
+
+  const url = new URL(baseUrl)
+
+  if (page) {
+    url.searchParams.append("page", page.toString())
+  }
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString())
+  }
+
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy)
+  }
+
+  if (orderBy) {
+    url.searchParams.append("orderBy", orderBy)
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ContentType: "application/json",
+    },
+    cache: "no-cache",
   })
 
   return await res.json()

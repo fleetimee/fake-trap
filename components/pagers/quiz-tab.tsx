@@ -62,6 +62,13 @@ export function QuizTab({ className, quizId, initialRoute }: QuizTabProps) {
         : `/dashboard/quiz/${quizId}/leaderboard`,
       isActive: segment === "leaderboard",
     },
+    {
+      title: "Belum Mengerjakan",
+      href: initialRoute
+        ? `${initialRoute}/lazy`
+        : `/dashboard/quiz/${quizId}/lazy`,
+      isActive: segment === "lazy",
+    },
   ]
 
   const parentVariant: Variants = {
