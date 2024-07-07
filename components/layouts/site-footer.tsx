@@ -21,9 +21,15 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 space-x-4 md:flex-row">
-          <p className="font text-center text-sm leading-loose text-white md:text-left">
-            Aturan Privacy
-          </p>
+          <Link
+            href="/intro/privacy-policy"
+            passHref
+            aria-label="Privacy Policy"
+          >
+            <p className="font text-center text-sm leading-loose text-white hover:underline md:text-left">
+              Aturan Privasi
+            </p>
+          </Link>
           <ModeToggle />
         </div>
       </div>
