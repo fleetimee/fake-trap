@@ -189,11 +189,17 @@ export function CourseTableShell({
           const waktuSekarang = new Date()
 
           if (waktuMulai <= waktuSekarang && waktuSekarang <= waktuSelesai) {
-            return <Badge className="text-center">{status[0].name}</Badge>
+            return (
+              <Badge className="truncate text-center">{status[0].name}</Badge>
+            )
           } else if (waktuSekarang > waktuSelesai) {
-            return <Badge className="text-center">{status[1].name}</Badge>
+            return (
+              <Badge className="truncate text-center">{status[1].name}</Badge>
+            )
           } else {
-            return <Badge className="text-center">{status[2].name}</Badge>
+            return (
+              <Badge className="truncate text-center">{status[2].name}</Badge>
+            )
           }
         },
       },

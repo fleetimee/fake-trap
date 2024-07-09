@@ -139,13 +139,16 @@ export function KnowledgeTableShell({
           <DataTableColumnHeader column={column} title="Modul" />
         ),
         cell: ({ row }) => (
-          <Badge variant="secondary">
-            {
-              categoryResp.data.find(
-                (category) => category.id_category === row.original.id_category
-              )?.category_name
-            }
-          </Badge>
+          <div className="flex max-w-xs">
+            <Badge variant="secondary" className="line-clamp-1 truncate">
+              {
+                categoryResp.data.find(
+                  (category) =>
+                    category.id_category === row.original.id_category
+                )?.category_name
+              }
+            </Badge>
+          </div>
         ),
       },
       {
