@@ -160,7 +160,7 @@ export function AddContentFileForm({ idSection }: AddContentFileFormProps) {
               setValue={form.setValue}
               name="files"
               maxFiles={3}
-              maxSize={1024 * 1024 * 4}
+              maxSize={1024 * 1024 * 15} // Updated to 15MB
               files={files}
               setFiles={setFiles}
               isUploading={isPending}
@@ -169,7 +169,7 @@ export function AddContentFileForm({ idSection }: AddContentFileFormProps) {
           </FormControl>
 
           <FormDescription>
-            Maksimal 3 file dengan ukuran maksimal 4MB
+            Maksimal 3 file dengan ukuran maksimal 15MB per filenya
           </FormDescription>
 
           <FormMessage>{form.formState.errors.files?.message}</FormMessage>
