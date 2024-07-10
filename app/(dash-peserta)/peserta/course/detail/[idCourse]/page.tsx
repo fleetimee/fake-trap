@@ -69,26 +69,39 @@ export default async function CourseDetailPage({
       <Faq />
     </div>
   ) : (
-    <div className="relative">
-      <Image
-        src={`${process.env.NEXT_PUBLIC_BASE_URL}${course?.data?.image}`}
-        alt={course?.data?.course_name}
-        className="aspect-video rounded-none object-cover shadow-md md:rounded-lg "
-        width={1280}
-        height={720}
-      />
+    <div>
+      <div className="relative">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}${course?.data?.image}`}
+          alt={course?.data?.course_name}
+          className="aspect-video rounded-none object-cover shadow-md md:rounded-lg"
+          width={1280}
+          height={720}
+        />
 
-      <div className="absolute inset-0 flex  flex-col items-center justify-center bg-black/50 grayscale">
-        <Icons.lock className="size-16 text-white" />
-        <p className="mt-4 max-w-md text-center text-white">
-          Silahkan kerjakan Pretest terlebih dahulu, untuk membuka materi
-          pembelajaran.
-        </p>
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-md bg-black/50 grayscale"
+          style={{ pointerEvents: "none" }}
+        >
+          <Icons.lock
+            className="size-16 text-white"
+            style={{ pointerEvents: "auto" }}
+          />
+          <p
+            className="mt-4 max-w-md text-center text-white"
+            style={{ pointerEvents: "auto" }}
+          >
+            Silahkan kerjakan Pretest terlebih dahulu, untuk membuka materi
+            pembelajaran.
+          </p>
+        </div>
       </div>
 
       <Separator />
 
-      <Faq />
+      <div className="my-2">
+        <Faq />
+      </div>
     </div>
   )
 }

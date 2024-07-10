@@ -6,6 +6,8 @@ import { useMediaQuery } from "react-responsive"
 import { Icons } from "@/components/icons"
 import { Card } from "@/components/ui/card"
 
+import { BorderBeam } from "./border-beam"
+
 interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   children: React.ReactNode
@@ -18,9 +20,8 @@ export function Content({ title, children, className, ...rest }: ContentProps) {
     return <div className="h-full max-h-max  sm:w-screen">{children}</div>
   } else {
     return (
-      <Card
-        className={`flex h-fit w-full ${className ? className : "basis-3/4"} items-start justify-normal rounded-none sm:w-full md:rounded-lg`}
-        {...rest}
+      <div
+        className={`relative flex h-fit w-full ${className ? className : "basis-3/4"} flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl`}
       >
         <div className="flex w-full flex-col gap-6 p-4 sm:w-full">
           <div className="flex flex-row items-center justify-between">
@@ -32,7 +33,10 @@ export function Content({ title, children, className, ...rest }: ContentProps) {
             {children}
           </div>
         </div>
-      </Card>
+
+        {/* Place the BorderBeam component here, as per your requirement */}
+        <BorderBeam size={250} duration={12} delay={9} />
+      </div>
     )
   }
 

@@ -111,8 +111,14 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
       },
       animation: {
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "fade-up": "fade-up 0.5s",
         "fade-down": "fade-down 0.5s",
         "accordion-down": "accordion-down 0.2s ease-out",
