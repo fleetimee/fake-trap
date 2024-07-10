@@ -41,7 +41,7 @@ export function FileFrame({ content, params }: FileFrameProps) {
 
   return (
     <div
-      className={`flex max-w-sm flex-col items-start space-y-4 overflow-auto sm:max-w-lg md:max-w-full`}
+      className={`flex  w-full flex-col items-start space-y-4 overflow-auto`}
     >
       <div>
         <h1 className="font-heading  md:text-lg">
@@ -59,7 +59,7 @@ export function FileFrame({ content, params }: FileFrameProps) {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[700px]">Nama File</TableHead>
-            <TableHead>Preview</TableHead>
+            <TableHead className="hidden md:table-cell">Preview</TableHead>
             <TableHead>Download</TableHead>
           </TableRow>
         </TableHeader>
@@ -260,7 +260,7 @@ export function FileFrame({ content, params }: FileFrameProps) {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
                     {file.ext !== DocumentType.PDF || isMobile ? (
                       <Tooltip>
                         <TooltipTrigger asChild>
