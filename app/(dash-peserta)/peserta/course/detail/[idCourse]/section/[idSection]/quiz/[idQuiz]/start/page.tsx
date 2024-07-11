@@ -40,13 +40,19 @@ export default async function CourseQuizStartPage({
     idQuiz: params.idQuiz,
   })
 
+  const now = new Date()
+  const timeOpen = new Date(quiz.data.jam_buka)
+  const timeClose = new Date(quiz.data.jam_tutup)
+
+  const isQuizOpen = now >= timeOpen && now <= timeClose
+
   const isPretest = quiz.data.quiz_type === QuizType.PRETEST
   const isPosttest = quiz.data.quiz_type === QuizType.POSTTEST
 
   const isPretestExceded = userQuiz.data.length > 0 && isPretest
   const isPosttestExceded = userQuiz.data.length === 3 && isPosttest
 
-  if (isPretestExceded || isPosttestExceded) {
+  if (!isQuizOpen || isPretestExceded || isPosttestExceded) {
     redirect(
       `/peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}`
     )

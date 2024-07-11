@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { MoreHorizontal, Printer } from "lucide-react"
+import { Printer } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import {

@@ -19,6 +19,7 @@ import {
   QuizTypeCard,
   QuizUserCountCard,
 } from "@/components/app/quiz/detail/ui"
+import { QuizOpenClosedCard } from "@/components/app/quiz/detail/ui/quiz-open-closed-card"
 import { MotionDiv } from "@/components/framer-wrapper"
 
 interface ExerciseDetailPageProps {
@@ -75,8 +76,6 @@ export default async function ExerciseDetailPage({
       }),
     ])
 
-  console.log(exerciseLinked)
-
   const isAlreadyHaveQuestion = !!exercise?.data?.questions
   const userCount = exerciseUserCount?.data?.count
 
@@ -130,12 +129,15 @@ export default async function ExerciseDetailPage({
       <MotionDiv className="child grid grid-cols-1" variants={childrenVariant}>
         <QuizLinkedCard code={exerciseLinked.code} data={exerciseLinked.data} />
       </MotionDiv>
-      <div className="grid grid-flow-row gap-4 md:grid-cols-1 lg:grid-cols-2">
+      <div className="grid grid-flow-row gap-4 md:grid-cols-1 lg:grid-cols-3">
         <MotionDiv className="child" variants={childrenVariant}>
           <QuizDescriptionCard data={exercise.data} />
         </MotionDiv>
         <MotionDiv className="child" variants={childrenVariant}>
           <QuizCalendarCard data={exercise.data} />
+        </MotionDiv>
+        <MotionDiv className="child" variants={childrenVariant}>
+          <QuizOpenClosedCard data={exercise.data} />
         </MotionDiv>
       </div>
       <MotionDiv />
