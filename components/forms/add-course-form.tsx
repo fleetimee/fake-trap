@@ -11,11 +11,7 @@ import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
-import {
-  ErrorResponse,
-  ErrorResponseJson,
-  SuccessResponse,
-} from "@/types/error-res"
+import { ErrorResponseJson, SuccessResponse } from "@/types/error-res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { UserRoleListResData } from "@/types/user/res"
 import { createCourse } from "@/lib/fetcher/course-fetcher"
@@ -23,7 +19,6 @@ import { cn } from "@/lib/utils"
 import { courseSchema } from "@/lib/validations/course"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
-import { DateTimePicker } from "@/components/ui/datetimepicker"
 import {
   Form,
   FormControl,
@@ -54,24 +49,6 @@ interface AddCourseFormProps {
 
 export function AddCourseForm({ baseUrl, userId }: AddCourseFormProps) {
   const { data: session } = useSession()
-
-  const [date, setDate] = React.useState<Date>()
-
-  /**
-   * Carry over the current time when a user clicks a new day
-   * instead of resetting to 00:00.
-   */
-  const handleSelect = (newDay: Date | undefined) => {
-    if (!newDay) return
-    if (!date) {
-      setDate(newDay)
-      return
-    }
-    const diff = newDay.getTime() - date.getTime()
-    const diffInDays = diff / (1000 * 60 * 60 * 24)
-    const newDateFull = add(date, { days: Math.ceil(diffInDays) })
-    setDate(newDateFull)
-  }
 
   const [preview, setPreview] = React.useState<string | null>(null)
 

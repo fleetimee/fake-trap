@@ -18,6 +18,8 @@ export const createTestSchema = z.object({
   }),
   created_by: z.string().optional(),
   updated_by: z.string().optional(),
+  jam_buka: z.date(),
+  jam_tutup: z.date(),
 })
 
 export const updateTestSchema = z.object({
@@ -37,4 +39,6 @@ export const updateTestSchema = z.object({
     message: "Waktu ujian tidak boleh kosong",
   }),
   updated_by: z.string().optional(),
+  jam_buka: z.date(),
+  jam_tutup: z.date(),
 })

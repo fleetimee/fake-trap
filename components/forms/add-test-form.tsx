@@ -3,7 +3,8 @@
 import React, { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { format } from "date-fns"
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -40,6 +41,8 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 
 import { Icons } from "../icons"
+import { Calendar } from "../ui/calendar"
+import { TimePickerDemo } from "../ui/timepicker-demo"
 
 type Inputs = z.infer<typeof createTestSchema>
 
@@ -64,6 +67,9 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
       quiz_type: "",
       created_by: userId ? userId : session?.expires.id,
       updated_by: userId ? userId : session?.expires.id,
+      time_limit: 0,
+      jam_buka: new Date(),
+      jam_tutup: new Date(),
     },
   })
 
@@ -283,6 +289,102 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
                   </PopoverContent>
                 </Popover>
               </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="jam_buka"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Jam Buka <span className="text-red-500">*</span>
+              </FormLabel>
+              <Popover>
+                <FormControl>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP HH:mm:ss")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                </FormControl>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                  />
+                  <div className="border-t border-border p-3">
+                    <TimePickerDemo
+                      setDate={field.onChange}
+                      date={field.value}
+                    />
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="jam_tutup"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Jam Tutup <span className="text-red-500">*</span>
+              </FormLabel>
+              <Popover>
+                <FormControl>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP HH:mm:ss")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                </FormControl>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                  />
+                  <div className="border-t border-border p-3">
+                    <TimePickerDemo
+                      setDate={field.onChange}
+                      date={field.value}
+                    />
+                  </div>
+                </PopoverContent>
+              </Popover>
 
               <FormMessage />
             </FormItem>

@@ -15,6 +15,8 @@ export type QuizOneResData = {
   id_section: number
   created_by: string
   updated_by: string
+  jam_buka: Date
+  jam_tutup: Date
 }
 
 export type QuizOneResQuestion = {
