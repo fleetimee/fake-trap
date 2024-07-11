@@ -5,6 +5,7 @@ import BronzeMedal from "@/public/images/bronzeMedal.png"
 import GoldMedal from "@/public/images/goldMedal.png"
 import SilverMedal from "@/public/images/silverMedal.png"
 import Learn from "@/public/lottie/learning.json"
+import Lock from "@/public/lottie/lock.json"
 import QuizEnabled from "@/public/lottie/quiz_enabled.json"
 import TrophyLess from "@/public/lottie/trophy-less.json"
 import { generateFromString } from "generate-avatar"
@@ -25,6 +26,7 @@ import {
   cn,
   convertDateToShortString,
   convertDatetoString,
+  convertDateToStringSimplified,
   convertDatetoStringWithTime,
   extractToken,
   getCourseStatus,
@@ -32,6 +34,8 @@ import {
 import Confetti from "@/components/confetti"
 import { Icons } from "@/components/icons"
 import { LottieClient } from "@/components/lottie-anim"
+import NumberTicker from "@/components/number-ticker"
+import SparklesText from "@/components/sparkle-text"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -67,7 +71,7 @@ import {
 } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const winnerQoutes = [
+const winnerQuotes = [
   "Victory is yours!",
   "You are Elden Lord!",
   "Champion of the Tarnished!",
@@ -78,9 +82,34 @@ const winnerQoutes = [
   "You have risen above all!",
   "The Elden Ring is restored!",
   "Your journey is complete!",
+  "Your name will be etched in the annals of history.",
+  "The world bends to your will!",
+  "Hero of the Elden Ring!",
+  "The dawn of a new era begins with you.",
+  "You stand triumphant over all foes.",
+  "The crown is yours!",
+  "Savior of the Lands Between!",
+  "Your power knows no bounds.",
+  "Champion of light and hope!",
+  "You have mastered the Elden Ring.",
+  "The realm is yours to rule.",
+  "Your victory will be sung for generations.",
+  "You are the beacon of hope!",
+  "Eternal glory is yours!",
+  "You have overcome insurmountable odds.",
+  "The Elden Throne is yours!",
+  "Your bravery has reshaped the world.",
+  "You have written your legend.",
+  "The world bows before you!",
+  "You are the true hero!",
+  "Your might is unparalleled.",
+  "The Elden Ring shines brightly in your hands.",
+  "Your victory is a testament to your strength.",
+  "The realm is safe, thanks to you.",
+  "You are the bringer of peace.",
 ]
 
-const loserQoutes = [
+const loserQuotes = [
   "Embrace the unknown, for only in darkness can you find the light.",
   "Every step forward, no matter how small, brings you closer to your destiny.",
   "In the face of adversity, a true Tarnished never falters.",
@@ -91,14 +120,53 @@ const loserQoutes = [
   "From ashes we rise, stronger and more determined than before.",
   "In the crucible of struggle, true greatness is born.",
   "Let your spirit be unyielding, for the trials ahead are but tests of your courage.",
+  "Defeat is but a lesson in the journey to greatness.",
+  "Each fall only makes you stronger.",
+  "The shadows cast are but stepping stones to the light.",
+  "Courage lies in the will to rise again.",
+  "Every loss is a prelude to triumph.",
+  "In defeat, we find our true strength.",
+  "The path to victory is paved with perseverance.",
+  "Honor is found in the struggle, not just the victory.",
+  "Each setback is a forge for your resilience.",
+  "A true warrior learns from every battle.",
+  "Failure today is the seed of success tomorrow.",
+  "The journey is long, but your spirit is indomitable.",
+  "Defeat is temporary, but your resolve is eternal.",
+  "From every fall, rise with greater determination.",
+  "Your journey does not end here.",
+  "Every defeat is a chapter in the story of victory.",
+  "In the face of defeat, true warriors find their path.",
+  "Each loss carves the path to your destiny.",
+  "Rise, for the journey continues.",
+  "The flame of hope burns ever brighter in the darkest times.",
+  "Even in defeat, the spirit of a warrior shines.",
+  "The road to greatness is never easy.",
+  "From the ashes of defeat, you will rise anew.",
+  "Every fall is a step closer to victory.",
+  "Defeat is but the beginning of your legend.",
 ]
-
 interface CourseQuizPageProps {
   params: {
     idCourse: string
     idSection: string
     idQuiz: string
   }
+}
+
+function getOrdinalIndicator(number: number) {
+  const j = number % 10,
+    k = number % 100
+  if (j === 1 && k !== 11) {
+    return "st"
+  }
+  if (j === 2 && k !== 12) {
+    return "nd"
+  }
+  if (j === 3 && k !== 13) {
+    return "rd"
+  }
+  return "th"
 }
 
 export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
@@ -155,6 +223,12 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
     return notFound()
   }
 
+  const now = new Date()
+  const timeOpen = new Date(quiz.data.jam_buka)
+  const timeClose = new Date(quiz.data.jam_tutup)
+
+  const isQuizOpen = now >= timeOpen && now <= timeClose
+
   const isPretest = quiz.data.quiz_type === QuizType.PRETEST
   const isPosttest = quiz.data.quiz_type === QuizType.POSTTEST
 
@@ -179,8 +253,8 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
   const getRandomQuote = (quotes: string | any[]) =>
     quotes[Math.floor(Math.random() * quotes.length)]
 
-  const winnerQuote = getRandomQuote(winnerQoutes)
-  const loserQuote = getRandomQuote(loserQoutes)
+  const winnerQuote = getRandomQuote(winnerQuotes)
+  const loserQuote = getRandomQuote(loserQuotes)
 
   if (quiz.code === 400) {
     return notFound()
@@ -205,7 +279,19 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
       <Separator />
 
       <CardContent className="space-y-8 py-6">
-        <div className="flex items-end justify-end">
+        <div className="flex items-start justify-between">
+          <div className="flex flex-col gap-2">
+            <p className="ml-4 text-sm ">Jenis Ujian: {quizType?.value_ref1}</p>
+            <p className="ml-4 text-sm ">
+              Jam Buka :{" "}
+              {convertDateToStringSimplified(quiz.data.jam_buka.toString())}
+            </p>
+            <p className="ml-4 text-sm ">
+              Jam Tutup :{" "}
+              {convertDateToStringSimplified(quiz.data.jam_tutup.toString())}
+            </p>
+          </div>
+
           <div className="flex flex-col gap-2">
             <p className="ml-4 text-sm ">Butir Soal: {questionLength} Soal</p>
             <p className="ml-4 text-sm ">Dibuat Pada: {formattedDate}</p>
@@ -232,13 +318,15 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
             </p>
 
             <div className="flex items-center justify-center py-2">
-              {isPretestExceded || isPosttestExceded ? (
-                <LottieClient animationData={Learn} className="size-1/2" />
-              ) : (
+              {isQuizOpen ? (
                 <LottieClient
                   animationData={QuizEnabled}
                   className="size-1/2"
                 />
+              ) : isPretestExceded || isPosttestExceded ? (
+                <LottieClient animationData={Learn} className="size-1/2" />
+              ) : (
+                <LottieClient animationData={Lock} className="size-1/2" />
               )}
             </div>
 
@@ -287,7 +375,9 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
             </div>
 
             <h1 className="text-center text-2xl font-bold">
-              {isPretestExceded || isPosttestExceded ? (
+              {!isQuizOpen ? (
+                <p className="text-yellow-500">BELUM SAATNYA MEMULAI UJIAN</p>
+              ) : isPretestExceded || isPosttestExceded ? (
                 <p className="text-red-600">
                   ANDA SUDAH MELEBIHI LIMIT KESEMPATAN
                 </p>
@@ -299,16 +389,20 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
             <AlertDialog>
               <AlertDialogTrigger
                 className="flex w-full items-center justify-center"
-                disabled={isPretestExceded || isPosttestExceded}
+                disabled={!isQuizOpen || isPretestExceded || isPosttestExceded}
               >
                 <Button
                   className="mt-4 w-full"
                   variant={
-                    isPretestExceded || isPosttestExceded
+                    !isQuizOpen
                       ? "destructive"
-                      : "default"
+                      : isPretestExceded || isPosttestExceded
+                        ? "destructive"
+                        : "default"
                   }
-                  disabled={isPretestExceded || isPosttestExceded}
+                  disabled={
+                    !isQuizOpen || isPretestExceded || isPosttestExceded
+                  }
                 >
                   Mulai Ujian
                 </Button>
@@ -414,16 +508,32 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
                     <p className="text-center text-4xl font-bold">
                       #
-                      {getCurrentUserPlacement.data > 0
-                        ? `${getCurrentUserPlacement.data}${getCurrentUserPlacement.data === 1 ? "st" : getCurrentUserPlacement.data === 2 ? "nd" : getCurrentUserPlacement.data === 3 ? "rd" : "th"}`
-                        : "-"}
+                      {getCurrentUserPlacement.data > 0 ? (
+                        <>
+                          <NumberTicker value={getCurrentUserPlacement.data} />
+                          <span>
+                            {getOrdinalIndicator(getCurrentUserPlacement.data)}
+                          </span>
+                        </>
+                      ) : (
+                        "-"
+                      )}
                     </p>
 
-                    <p className="my-4 rounded-lg  px-6 py-2 text-center font-serif text-sm italic">
+                    {/* <p className="my-4 rounded-lg  px-6 py-2 text-center font-serif text-sm italic">
                       {getCurrentUserPlacement.data <= 3
                         ? winnerQuote
                         : loserQuote}
-                    </p>
+                    </p> */}
+
+                    <SparklesText
+                      text={
+                        getCurrentUserPlacement.data <= 3
+                          ? winnerQuote
+                          : loserQuote
+                      }
+                      className="my-4 rounded-lg  px-6 py-2 text-center font-serif text-sm italic"
+                    />
 
                     <div className="flex items-center justify-center py-0">
                       {getCurrentUserPlacement.data === 1 && (
@@ -572,7 +682,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                                       <div className="flex items-center pt-2">
                                         <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
                                         <span className="text-xs text-muted-foreground">
-                                          {convertDateToShortString(
+                                          {convertDatetoStringWithTime(
                                             leaderboard.earliest_created_at
                                           )}
                                         </span>
