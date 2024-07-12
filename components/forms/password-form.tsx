@@ -1,8 +1,9 @@
 "use client"
 
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { CheckIcon, XIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -33,6 +34,24 @@ interface ErrorResponseProps {
 
 export function ChangePasswordForm() {
   const { data: session } = useSession()
+
+  const [passwordStrength, setPasswordStrength] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    specialChar: false,
+  })
+
+  const checkPasswordStrength = (password: string) => {
+    const length = password.length >= 8
+    const uppercase = /[A-Z]/.test(password)
+    const lowercase = /[a-z]/.test(password)
+    const number = /[0-9]/.test(password)
+    const specialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password) // At least one special character
+
+    setPasswordStrength({ length, uppercase, lowercase, number, specialChar })
+  }
 
   const router = useRouter()
 
@@ -95,7 +114,11 @@ export function ChangePasswordForm() {
                   type="password"
                 /> */}
 
-                <PasswordInput {...field} disabled={isPending} />
+                <PasswordInput
+                  {...field}
+                  disabled={isPending}
+                  placeholder="*********"
+                />
               </FormControl>
               <FormDescription>
                 Masukkan password lama anda untuk memvalidasi perubahan
@@ -120,9 +143,59 @@ export function ChangePasswordForm() {
                   type="password"
                 /> */}
 
-                <PasswordInput {...field} disabled={isPending} />
+                <PasswordInput
+                  {...field}
+                  disabled={isPending}
+                  onChange={(e) => {
+                    field.onChange(e)
+                    checkPasswordStrength(e.target.value)
+                  }}
+                  placeholder="*********"
+                />
               </FormControl>
               <FormDescription>Masukkan password baru anda.</FormDescription>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  {passwordStrength.length ? (
+                    <CheckIcon className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XIcon className="h-4 w-4 text-red-500" />
+                  )}
+                  <p>Minimal 8 karakter</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {passwordStrength.uppercase ? (
+                    <CheckIcon className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XIcon className="h-4 w-4 text-red-500" />
+                  )}
+                  <p>Minimal 1 huruf kapital</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {passwordStrength.lowercase ? (
+                    <CheckIcon className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XIcon className="h-4 w-4 text-red-500" />
+                  )}
+                  <p>Minimal 1 huruf kecil</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {passwordStrength.number ? (
+                    <CheckIcon className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XIcon className="h-4 w-4 text-red-500" />
+                  )}
+                  <p>Minimal 1 angka</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {passwordStrength.specialChar ? (
+                    <CheckIcon className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XIcon className="h-4 w-4 text-red-500" />
+                  )}
+                  <p>Minimal 1 karakter khusus</p>
+                </div>
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -135,7 +208,11 @@ export function ChangePasswordForm() {
             <FormItem>
               <FormLabel>Konfirmasi Password Baru</FormLabel>
               <FormControl>
-                <PasswordInput {...field} disabled={isPending} />
+                <PasswordInput
+                  {...field}
+                  disabled={isPending}
+                  placeholder="*********"
+                />
               </FormControl>
               <FormDescription>
                 Masukkan password baru anda sekali lagi untuk konfirmasi.
@@ -145,7 +222,20 @@ export function ChangePasswordForm() {
           )}
         />
 
-        <Button type="submit" disabled={isPending} className="w-fit">
+        <Button
+          type="submit"
+          disabled={
+            isPending ||
+            !(
+              passwordStrength.length &&
+              passwordStrength.uppercase &&
+              passwordStrength.lowercase &&
+              passwordStrength.number &&
+              passwordStrength.specialChar
+            )
+          }
+          className="w-fit"
+        >
           {isPending && (
             <Icons.spinner
               className="mr-2 h-4 w-4 animate-spin"
