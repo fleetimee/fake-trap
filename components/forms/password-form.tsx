@@ -204,6 +204,11 @@ export function ChangePasswordForm() {
         <FormField
           control={form.control}
           name="password_confirmation"
+          rules={{
+            validate: (value) =>
+              value === form.getValues("password") ||
+              "Konfirmasi password tidak cocok",
+          }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Konfirmasi Password Baru</FormLabel>
@@ -231,7 +236,8 @@ export function ChangePasswordForm() {
               passwordStrength.uppercase &&
               passwordStrength.lowercase &&
               passwordStrength.number &&
-              passwordStrength.specialChar
+              passwordStrength.specialChar &&
+              !form.formState.errors.password_confirmation
             )
           }
           className="w-fit"
