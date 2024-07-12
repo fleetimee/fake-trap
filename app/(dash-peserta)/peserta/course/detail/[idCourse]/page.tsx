@@ -151,10 +151,6 @@ function Faq() {
             dihitung dari waktu awal pengerjaan tes tersebut
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-6">
-          <AccordionTrigger>Apakah ada hadiahnya ?</AccordionTrigger>
-          <AccordionContent>Tergantung</AccordionContent>
-        </AccordionItem>
       </Accordion>
     </div>
   )
