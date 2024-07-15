@@ -216,7 +216,7 @@ export function Courses({ courses, pageCount }: CoursesProps) {
         }
       </div>
 
-      <div className="grid grid-cols-1 gap-6  xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2  xl:grid-cols-3">
         {courses.map((course) => (
           <CourseCardV2
             key={course.id_course}
