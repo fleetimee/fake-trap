@@ -83,11 +83,6 @@ export default async function PemateriDivisiCategoryPage({
 
   const selectedMonth = getMonth(selectedDate)
 
-  const categoryHighlight = await getCategoryHighlight({
-    token: user?.token,
-    month: isNaN(selectedMonth) ? getCurrentMonth() : selectedMonth.toString(),
-  })
-
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -119,42 +114,6 @@ export default async function PemateriDivisiCategoryPage({
           className="flex  place-items-end items-end justify-self-end"
         />
       </div>
-
-      {categoryHighlight.code === 200 ? (
-        <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
-          <Widget
-            icon={<Icons.category className="text-blue-500" />}
-            title="Modul"
-            subtitle={categoryHighlight.data.total_category_count.toString()}
-          />
-
-          <Widget
-            icon={<Icons.average className="text-green-500" />}
-            title="Avg / Bulan"
-            subtitle={categoryHighlight.data.avg_categories_per_month.toString()}
-          />
-
-          <Widget
-            icon={<Icons.user className="text-yellow-500" />}
-            title="Paling Aktif"
-            subtitle={categoryHighlight.data.most_active_creator_name}
-          />
-
-          <Widget
-            icon={<Icons.percent className="text-red-500" />}
-            title="Persentase"
-            subtitle={categoryHighlight.data.latest_month_percent_increase.toString()}
-          />
-        </div>
-      ) : (
-        <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
-          <Widget
-            icon={<Icons.category />}
-            title="Modul"
-            subtitle={categoryData.count.toString()}
-          />
-        </div>
-      )}
 
       <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
         <CategoryTableShell

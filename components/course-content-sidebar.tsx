@@ -132,21 +132,22 @@ export function CourseContentSidebar({
                     <AccordionContent className="py-0 md:p-1 ">
                       {section?.section ? (
                         section.section.map((section) => (
-                          <Collapsible className="">
+                          <Collapsible className="" defaultOpen>
                             <div className="flex items-center justify-between space-x-4 border-b bg-card  p-4">
-                              <h4 className=" font-semibold">
-                                {section.section_title}
-                              </h4>
-
                               <CollapsibleTrigger className="" asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="w-9 p-0"
-                                >
-                                  <ChevronsUpDown className="size-4" />
-                                  <span className="sr-only">Toggle</span>
-                                </Button>
+                                <div className="flex w-full items-center justify-between">
+                                  <h4 className="font-semibold hover:cursor-pointer hover:text-blue-600 hover:underline">
+                                    {section.section_title}
+                                  </h4>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="w-9 p-0"
+                                  >
+                                    <ChevronsUpDown className="size-4" />
+                                    <span className="sr-only">Toggle</span>
+                                  </Button>
+                                </div>
                               </CollapsibleTrigger>
                             </div>
 

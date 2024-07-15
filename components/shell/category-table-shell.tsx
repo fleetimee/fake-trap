@@ -40,6 +40,10 @@ export function CategoryTableShell({
     (role) => role.role_name === "Admin" || role.role_name === "Operator LMS"
   )
 
+  const isPemateriDivisi = session?.expires.role.some(
+    (role) => role.role_name === "Pemateri Divisi"
+  )
+
   const columns = React.useMemo<ColumnDef<CategoryListResData, unknown>[]>(
     () => [
       {
@@ -209,7 +213,7 @@ export function CategoryTableShell({
       dataTable={dataTable}
       columns={columns}
       searchableColumns={searchableColumns}
-      newRowLink={newRowLink ? newRowLink : undefined}
+      newRowLink={!isAdmin ? undefined : newRowLink ? newRowLink : undefined}
     />
   )
 }

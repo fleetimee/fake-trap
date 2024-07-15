@@ -115,7 +115,7 @@ export default async function PesertaPage() {
       >
         <Widget
           icon={<Icons.knowledge className="text-green-500" />}
-          title="Materi"
+          title="Materi Publik"
           subtitle={globalCount.data?.knowledge_count.toString()}
         />
 
