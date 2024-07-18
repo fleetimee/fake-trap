@@ -1,3 +1,5 @@
+import { StrukturListRes } from "@/types/struktur-organisasi/res/struktur-list"
+
 interface StrukturOrganisasiFetcherProps {
   token: string | undefined
   limit: number
@@ -20,4 +22,4 @@ export async function getStrukturOrganisasi({
   jabatan = "",
   kodeKantor = "",
   unitKerja = "",
-}: StrukturOrganisasiFetcherProps) {}
+}: StrukturOrganisasiFetcherProps): Promise<StrukturListRes> {}
