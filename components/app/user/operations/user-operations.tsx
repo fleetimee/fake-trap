@@ -32,10 +32,16 @@ import {
 
 interface UserOperationsAdminProps {
   user: UserListResData
+  editRowLink?: string
 }
 
-export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
+export function UserOperationsAdmin({
+  user,
+  editRowLink,
+}: UserOperationsAdminProps) {
   const { data: session } = useSession()
+
+  console.log(session)
 
   const router = useRouter()
 
@@ -57,7 +63,7 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[200px]">
-          <DropdownMenuItem className="flex items-center">
+          {/* <DropdownMenuItem className="flex items-center">
             <Link
               className="flex w-full cursor-default items-center"
               href={`/dashboard/user/${user.uuid}`}
@@ -66,12 +72,16 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuSeparator />
+          <DropdownMenuSeparator /> */}
 
           <DropdownMenuItem className="flex items-center">
             <Link
               className="flex w-full cursor-default items-center"
-              href={`/operator-lms/users/reset-password/${user.uuid}`}
+              href={
+                editRowLink
+                  ? `${editRowLink}/reset-password/${user.uuid}`
+                  : `/operator-lms/users/reset-password/${user.uuid}`
+              }
             >
               Reset Password
             </Link>
@@ -86,7 +96,11 @@ export function UserOperationsAdmin({ user }: UserOperationsAdminProps) {
             // disabled
           >
             <Link
-              href={`/operator-lms/users/update/${user.uuid}`}
+              href={
+                editRowLink
+                  ? `${editRowLink}/update/${user.uuid}`
+                  : `/operator-lms/users/update/${user.uuid}`
+              }
               className="flex w-full cursor-default items-center"
             >
               <p>Update</p>

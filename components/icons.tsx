@@ -28,6 +28,7 @@ import {
   FileText,
   FlaskConical,
   FlaskRound,
+  GitPullRequestDraft,
   GraduationCap,
   HeartHandshake,
   HelpCircle,
@@ -140,6 +141,7 @@ export const Icons = {
   mailWarning: MailWarning,
   mailX: MailX,
   circleUser: UserCircle2,
+  struktur: GitPullRequestDraft,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

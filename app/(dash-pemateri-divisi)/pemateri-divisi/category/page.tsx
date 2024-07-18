@@ -3,20 +3,15 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
-import {
-  getCategoryHighlight,
-  getOperatorCategory,
-} from "@/lib/fetcher/category-fetcher"
+import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
 import { getRule } from "@/lib/fetcher/rule-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/date-range-picker"
 import { MotionDiv } from "@/components/framer-wrapper"
 import { DashboardHeader } from "@/components/header"
-import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { CategoryTableShell, DashboardShell } from "@/components/shell"
-import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
   title: "Modul",

@@ -118,9 +118,9 @@ export default async function PanelSelector() {
 
         {isExecutive && (
           <ButtonSelector
-            title="Executive"
-            description="Executive dapat melihat laporan yang ada di LMS."
-            link="/executive"
+            title="Administrator"
+            description="Memonitor BLIVE, berupa monitor user, struktur organisasi, dan audit trail"
+            link="/administrator"
             disabled={!isExecutive}
             isTextMuted
             animationData={ExecutiveLottie}

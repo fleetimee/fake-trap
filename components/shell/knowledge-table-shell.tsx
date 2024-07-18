@@ -12,18 +12,11 @@ import { CategoryListRes } from "@/types/category/res"
 import { KnowledgeListResData } from "@/types/knowledge/res"
 import { ReferenceListRes } from "@/types/references/res"
 import { badgeSwitch } from "@/lib/badge-switch"
-import {
-  convertDatetoStringShort,
-  convertDateToStringSimplified,
-} from "@/lib/utils"
+import { convertDateToStringSimplified } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 import { KnowledgeOperations } from "@/components/hamburger-operations/knowledge-operations"
 import { Badge } from "@/components/ui/badge"
-
-interface BadgeSwitchProps {
-  approval: any
-}
 
 interface KnowledgeTableShellProps {
   data: KnowledgeListResData[]

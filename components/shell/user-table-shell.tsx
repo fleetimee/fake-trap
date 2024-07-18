@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation"
 import { DataTableSearchableColumn } from "@/types"
 import { type ColumnDef } from "@tanstack/react-table"
 import { generateFromString } from "generate-avatar"
-import { CalendarDays } from "lucide-react"
 
 import { UserListResData } from "@/types/user/res/user-list"
 import { convertDatetoString, convertDatetoStringWithTime } from "@/lib/utils"
@@ -14,15 +13,19 @@ import { useDataTable } from "@/hooks/use-data-table"
 import { UserOperationsAdmin } from "@/components/app/user/operations/"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 
 interface UserTableShellProps {
   data: UserListResData[]
   pageCount: number
+  editRowLink?: string
 }
 
-export function UserTableShell({ data, pageCount }: UserTableShellProps) {
+export function UserTableShell({
+  data,
+  pageCount,
+  editRowLink,
+}: UserTableShellProps) {
   const pathname = usePathname()
 
   const columns = React.useMemo<ColumnDef<UserListResData, unknown>[]>(
@@ -35,7 +38,7 @@ export function UserTableShell({ data, pageCount }: UserTableShellProps) {
         cell: ({ row }) => {
           const user = row.original
 
-          return <UserOperationsAdmin user={user} />
+          return <UserOperationsAdmin user={user} editRowLink={editRowLink} />
         },
       },
       {
