@@ -100,24 +100,24 @@ export function UserTableShell({
           )
         },
       },
-      {
-        accessorKey: "username",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Username" />
-        ),
-        // cell: ({ row }) => {
-        //   return (
-        //     <Link
-        //       href={`/dashboard/user/${row.original.uuid}`}
-        //       className="text-sm font-bold text-blue-500 hover:underline"
-        //     >
-        //       <p>{row.original.username}</p>
-        //     </Link>
-        //   )
-        // },
-        enableSorting: true,
-        enableHiding: true,
-      },
+      // {
+      //   accessorKey: "username",
+      //   header: ({ column }) => (
+      //     <DataTableColumnHeader column={column} title="Username" />
+      //   ),
+      //   // cell: ({ row }) => {
+      //   //   return (
+      //   //     <Link
+      //   //       href={`/dashboard/user/${row.original.uuid}`}
+      //   //       className="text-sm font-bold text-blue-500 hover:underline"
+      //   //     >
+      //   //       <p>{row.original.username}</p>
+      //   //     </Link>
+      //   //   )
+      //   // },
+      //   enableSorting: true,
+      //   enableHiding: true,
+      // },
       {
         accessorKey: "roles",
         header: ({ column }) => (
@@ -202,8 +202,8 @@ export function UserTableShell({
 
   const searchableColumns: DataTableSearchableColumn<UserListResData>[] = [
     {
-      id: "username",
-      title: "username",
+      id: "name",
+      title: "name",
     },
   ]
 

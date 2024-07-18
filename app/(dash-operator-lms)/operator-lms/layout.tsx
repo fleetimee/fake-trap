@@ -44,7 +44,7 @@ export default async function OperatorLMSLayout({
 
   const userOrg = await getUserOrg({
     token: user?.token,
-    email: tokenExtracted?.email,
+    email: tokenExtracted?.name,
   })
 
   const categoryNav = await getNavbar()

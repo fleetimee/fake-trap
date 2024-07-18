@@ -31,7 +31,7 @@ export default async function ExecutiveLayout({
 
   const userOrg = await getUserOrg({
     token: user?.token,
-    email: tokenExtracted.email,
+    email: tokenExtracted.name,
   })
 
   const categoryNav = await getNavbar()

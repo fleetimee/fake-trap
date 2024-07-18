@@ -25,14 +25,14 @@ interface OperatorLMSUsersPageProps {
 export default async function OperatorLMSUsersPage({
   searchParams,
 }: OperatorLMSUsersPageProps) {
-  const { page, per_page, sort, username } = searchParams ?? {}
+  const { page, per_page, sort, name } = searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
   const sortFieldInitial = typeof sort === "string" ? sort : "created_at"
   const sortOrderInitial = typeof sort === "string" ? sort : "desc"
-  const nameInitial = typeof username === "string" ? username : ""
+  const nameInitial = typeof name === "string" ? name : ""
 
   // Split sort into sortField and sortOrder
   const sortField = sortFieldInitial.split(".")[0]

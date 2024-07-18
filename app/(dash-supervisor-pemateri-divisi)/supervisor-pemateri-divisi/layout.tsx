@@ -33,7 +33,7 @@ export default async function SupervisorPemateriDivisiLayout({
 
   const userOrg = await getUserOrg({
     token: user?.token,
-    email: tokenExtracted.email,
+    email: tokenExtracted.name,
   })
 
   const approvalCount = await getSupervisorPemateriDivisiNotificationList({

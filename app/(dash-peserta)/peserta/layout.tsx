@@ -37,7 +37,7 @@ export default async function PesertaLayout({
 
   const userOrg = await getUserOrg({
     token: user?.token,
-    email: tokenExtracted.email,
+    email: tokenExtracted.name,
   })
 
   const courseTrackerCount = await getUserCourseTrackerCount({

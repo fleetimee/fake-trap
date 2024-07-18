@@ -33,7 +33,7 @@ export default async function SupervisorLMSLayout({
 
   const userOrg = await getUserOrg({
     token: user?.token,
-    email: tokenExtracted.email,
+    email: tokenExtracted.name,
   })
 
   const approvalCount = await getSupervisorLmsNotificationList({

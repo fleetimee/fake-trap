@@ -31,7 +31,7 @@ export default async function AdministratorLayout({
     }),
     getUserOrg({
       token: user?.token,
-      email: tokenExtracted?.email,
+      email: tokenExtracted?.name,
     }),
     getNavbar(),
   ])
