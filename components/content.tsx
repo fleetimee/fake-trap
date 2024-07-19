@@ -6,7 +6,6 @@ import { useMediaQuery } from "react-responsive"
 import { toast as sonnerToast } from "sonner"
 
 import { BorderBeam } from "./border-beam"
-import { ConfettiButton } from "./canvas-convetti"
 import { Button } from "./ui/button"
 
 interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
