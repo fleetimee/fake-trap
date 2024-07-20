@@ -4,8 +4,10 @@ import { redirect } from "next/navigation"
 import { FolderSyncIcon, RefreshCcw } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
+import { getSetting } from "@/lib/fetcher/setting-fetcher"
 import { getStrukturOrganisasi } from "@/lib/fetcher/struktur-organisasi-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { convertDatetoString, convertDatetoStringWithTime } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -62,17 +64,25 @@ export default async function AdminStrukturOrganisasiPage({
   const sortField = sortFieldInitial.split(".")[0]
   const sortOrder = sortOrderInitial.split(".")[1]
 
-  const strukturOrgResp = await getStrukturOrganisasi({
-    token: user?.token,
-    page: pageInitial,
-    limit: limitinitial,
-    nama: namaInitial,
-    jabatan: jabatanInitial,
-    kodeKantor: kodeKantorInitial,
-    unitKerja: unitKerjaInitial,
-    sortField: sortField,
-    orderBy: sortOrder,
-  })
+  const [strukturOrgResp, setting] = await Promise.all([
+    getStrukturOrganisasi({
+      token: user?.token,
+      page: pageInitial,
+      limit: limitinitial,
+      nama: namaInitial,
+      jabatan: jabatanInitial,
+      kodeKantor: kodeKantorInitial,
+      unitKerja: unitKerjaInitial,
+      sortField: sortField,
+      orderBy: sortOrder,
+    }),
+    getSetting({
+      token: user?.token,
+      key: "last_sync_struktur_organisasi",
+    }),
+  ])
+
+  console.log("setting", setting)
 
   return (
     <DashboardShell>
@@ -133,7 +143,8 @@ export default async function AdminStrukturOrganisasiPage({
         <RefreshCcw className="mr-2 h-4 w-4" />
         <AlertTitle>Terakhir disinkronkan:</AlertTitle>
         <AlertDescription>
-          {new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" })}
+          {convertDatetoStringWithTime(setting?.data?.value.toString()) ??
+            "Belum pernah disinkronkan"}
         </AlertDescription>{" "}
       </Alert>
 
