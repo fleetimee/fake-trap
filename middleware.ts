@@ -252,5 +252,6 @@ export const config = {
     "/supervisor-lms/:path*",
     "/peserta/:path*",
     "/executive/:path*",
+    "/administrator/:path*",
   ],
 }

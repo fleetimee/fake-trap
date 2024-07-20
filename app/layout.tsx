@@ -8,6 +8,7 @@ import NextTopLoader from "nextjs-toploader"
 import { siteConfig } from "@/config/site"
 import { fontHeading, fontSans, publicSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import { AutoLogoutProvider } from "@/components/auto-logout-provider"
 import Background from "@/components/background"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -80,28 +81,30 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <NextAuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <TooltipProvider>
-              <div className="relative flex min-h-screen flex-col">
-                {/* <BGGrid> */}
-                {/* <Providers>{children}</Providers> */}
-                <NextTopLoader />
-                <Background>
-                  {children}
-                  <Script
-                    defer
-                    src="https://static.cloudflareinsights.com/beacon.min.js"
-                    data-cf-beacon='{"token": "beeb11f853bd472b9a48566c998dec99"}'
-                  />
-                </Background>
-                {/*{children}*/}
-                {/* </BGGrid> */}
-                <Toaster />
-                <TailwindIndicator />
-              </div>
-            </TooltipProvider>
-          </ThemeProvider>
-          <SonnerToaster />
+          <AutoLogoutProvider>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+              <TooltipProvider>
+                <div className="relative flex min-h-screen flex-col">
+                  {/* <BGGrid> */}
+                  {/* <Providers>{children}</Providers> */}
+                  <NextTopLoader />
+                  <Background>
+                    {children}
+                    <Script
+                      defer
+                      src="https://static.cloudflareinsights.com/beacon.min.js"
+                      data-cf-beacon='{"token": "beeb11f853bd472b9a48566c998dec99"}'
+                    />
+                  </Background>
+                  {/*{children}*/}
+                  {/* </BGGrid> */}
+                  <Toaster />
+                  <TailwindIndicator />
+                </div>
+              </TooltipProvider>
+            </ThemeProvider>
+            <SonnerToaster />
+          </AutoLogoutProvider>
         </NextAuthProvider>
       </body>
     </html>

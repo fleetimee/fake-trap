@@ -82,8 +82,6 @@ export default async function AdminStrukturOrganisasiPage({
     }),
   ])
 
-  console.log("setting", setting)
-
   return (
     <DashboardShell>
       <BreadCrumbs
