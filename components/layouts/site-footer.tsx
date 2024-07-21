@@ -30,7 +30,6 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               Aturan Privasi
             </p>
           </Link>
-          <ModeToggle />
         </div>
       </div>
     </footer>
