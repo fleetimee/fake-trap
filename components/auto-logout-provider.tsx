@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState, type PropsWithChildren } from "react"
 import { signOut, useSession } from "next-auth/react"
+import { toast as sonnerToast } from "sonner"
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function debounceLeading<T extends (...args: any[]) => ReturnType<T>>(
@@ -95,28 +96,21 @@ export function AutoLogoutProvider({
   const isUserInactive = useCallback(() => {
     const now = activity() // Ensure this returns the current time in milliseconds
 
-    console.log("Session:", session)
-    console.log("Status:", status)
-
     if (status === "authenticated") {
-      console.log("Session user expires:", session.user.expires)
-
       let expiry: number
+
+      const expiryDuration = parseInt(
+        process.env.NEXT_PUBLIC_SESSION_EXPIRY_DURATION || "60000",
+        10
+      )
 
       if (session?.user?.expires) {
         expiry = new Date(session.user.expires).getTime()
-
-        console.log("Expiry time:", expiry)
       } else {
         // Set a fixed expiry time if it doesn't exist
-        expiry = new Date().getTime() + 60 * 1000 // 60 seconds from now
+        expiry = new Date().getTime() + expiryDuration
         session.user.expires = new Date(expiry).toISOString() // Update the session with the new expiry time
-
-        console.log("Expiry time:", expiry)
       }
-
-      console.log("Expiry time:", expiry)
-      console.log("Current time:", now)
 
       if (now > expiry) {
         console.log("User has expired", expiry, now)
@@ -124,16 +118,26 @@ export function AutoLogoutProvider({
         if (debug) {
           console.error("User has expired", expiry, now)
         }
-        signOut()
+        signOut({
+          callbackUrl: "/?logoutPopout=true",
+        })
+
         return true
       }
     }
 
     if (lastActivity + timeoutMs < now) {
       if (debug) console.error("User inactive", lastActivity, now)
-      signOut()
+      localStorage.removeItem("_loginTime") // Clear _loginTime from localStorage
+      signOut({
+        callbackUrl: "/?logoutPopout=true",
+      })
+
+      sonnerToast.info("Logged out due to inactivity, please log in again")
+
       return true
     }
+
     return false
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debug, lastActivity, session?.user.expires, status, timeoutMs])
@@ -187,8 +191,45 @@ export function AutoLogoutProvider({
     // we will use localStorage to determine activity
     window.addEventListener("storage", onStorage, false)
 
-    // initialize an interval to check activity
-    const intervalId = window.setInterval(onTimerElapsed, timeoutCheckMs)
+    // Assuming loginTime is stored in localStorage at login
+    const loginTime = parseInt(localStorage.getItem("_loginTime") || "0")
+    const currentTime = new Date().getTime()
+
+    // Session duration set to 1 minute (60000 milliseconds)
+    const sessionDuration =
+      process.env.NEXT_PUBLIC_SESSION_EXPIRY_DURATION || 60000
+
+    // Calculate the expiration time
+    const expirationTime = loginTime + parseInt(sessionDuration.toString())
+
+    console.log(
+      "Session expires at:",
+      new Date(expirationTime).toLocaleTimeString()
+    )
+
+    // Check if the current time is greater than the expiration time
+    if (currentTime > expirationTime) {
+      console.log("Session has expired. Logging out...")
+      localStorage.removeItem("_loginTime") // Clear _loginTime from localStorage
+
+      signOut({
+        callbackUrl: "/?logoutPopout=true",
+      }) // Your logout function
+    } else {
+      console.log("Session is active.")
+    }
+
+    // Initialize an interval to check activity
+    const intervalId = window.setInterval(() => {
+      const currentTime = new Date().getTime()
+      if (currentTime > expirationTime) {
+        console.log("Session has expired. Logging out...")
+        signOut({
+          callbackUrl: "/?logoutPopout=true",
+        }) // Your logout function
+        clearInterval(intervalId) // Stop checking once the user is logged out
+      }
+    }, timeoutCheckMs)
 
     return () => {
       // detach and destroy listeners on deconstructor
@@ -198,8 +239,9 @@ export function AutoLogoutProvider({
 
       window.removeEventListener("storage", onStorage, false)
 
-      window.clearInterval(intervalId)
+      // window.clearInterval(intervalId)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debug, status, timeoutCheckMs, timeoutMs, isUserInactive])
 
   return children
