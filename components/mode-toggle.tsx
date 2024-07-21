@@ -1,47 +1,39 @@
 "use client"
 
 import * as React from "react"
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { useTheme } from "next-themes"
 
-import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { setTheme, theme } = useTheme()
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="size-8 px-0 hover:bg-blue-400"
-        >
-          <Icons.sun className="rotate-0 scale-100 text-white transition-all dark:-rotate-90 dark:scale-0" />
-          <Icons.moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          <Icons.sun className="mr-2 size-4" />
-          <span>Light</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          <Icons.moon className="mr-2 size-4" />
-          <span>Dark</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          <Icons.laptop className="mr-2 size-4" />
-          <span>System</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <TooltipProvider disableHoverableContent>
+      <Tooltip delayDuration={100}>
+        <TooltipTrigger asChild>
+          <Button
+            className="h-8 w-8 rounded-full bg-background"
+            variant="outline"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-transform duration-500 ease-in-out dark:rotate-0 dark:scale-100" />
+            <MoonIcon className="scale-1000 absolute h-[1.2rem] w-[1.2rem] rotate-0 transition-transform duration-500 ease-in-out dark:-rotate-90 dark:scale-0" />
+            <span className="sr-only">Switch Theme</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          {theme === "dark" ? "You are my sunshine" : "Enter the Dark Side"}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
