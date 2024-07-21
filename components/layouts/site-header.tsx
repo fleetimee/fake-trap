@@ -28,7 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { MovingBorderButton } from "../ui/moving-border"
+import { ModeToggle } from "../mode-toggle"
 
 interface SiteHeaderProps {
   user:
@@ -120,6 +120,8 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
             <nav className="flex items-center space-x-2">
               <KnowledgeSearch />
             </nav>
+
+            <ModeToggle />
 
             {props.user ? (
               <DropdownMenu>
@@ -310,16 +312,20 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link href="/login" className="p-8">
-                <div
-                  className={buttonVariants({
-                    size: "lg",
-                  })}
-                >
-                  Log In
-                  <span className="sr-only">Masuk</span>
-                </div>
-              </Link>
+              <div className="flex items-center">
+                <ModeToggle />
+
+                <Link href="/login" className="p-8">
+                  <div
+                    className={buttonVariants({
+                      size: "lg",
+                    })}
+                  >
+                    Log In
+                    <span className="sr-only">Masuk</span>
+                  </div>
+                </Link>
+              </div>
             )}
           </div>
         </div>
