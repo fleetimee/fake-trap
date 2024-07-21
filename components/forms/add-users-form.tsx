@@ -60,6 +60,8 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
 
   const { data: session } = useSession()
 
+  console.log("session", session)
+
   const router = useRouter()
 
   const [isPending, startTransition] = useTransition()

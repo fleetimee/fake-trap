@@ -6,6 +6,7 @@ import Link from "next/link"
 import Logo from "@/public/logo.png"
 import { DashboardIcon } from "@radix-ui/react-icons"
 import { generateFromString } from "generate-avatar"
+import { LogInIcon } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
@@ -312,15 +313,22 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex items-center">
+              <div className="flex items-center space-x-4">
+                <div className=" hidden text-sm font-medium leading-none text-muted-foreground md:block">
+                  <div className="rounded-full bg-gray-200 px-4 py-2 text-black">
+                    Waktu Server: {formatDate(time)}
+                  </div>
+                </div>
+
                 <ModeToggle />
 
-                <Link href="/login" className="p-8">
+                <Link href="/login">
                   <div
                     className={buttonVariants({
-                      size: "lg",
+                      variant: "ringHover",
                     })}
                   >
+                    <LogInIcon className="mr-2 size-4" aria-hidden="true" />
                     Log In
                     <span className="sr-only">Masuk</span>
                   </div>
