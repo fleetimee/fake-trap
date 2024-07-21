@@ -1,9 +1,8 @@
 "use client"
 
-import { useRef, useState, useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Turnstile } from "@marsidev/react-turnstile"
 import { signIn } from "next-auth/react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { useForm } from "react-hook-form"
@@ -65,6 +64,9 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
           })
         } else {
           setIsLoading(false)
+
+          const loginTime = new Date().getTime()
+          localStorage.setItem("_loginTime", loginTime.toString())
 
           router.push("/login")
 
