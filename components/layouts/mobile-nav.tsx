@@ -63,7 +63,7 @@ export function MobileNav({
           <Link href="/" className="flex items-center  ">
             <Image src={Logo} alt="Logo" width={25} height={25} />
 
-            <span className=" text-bpdprimary font-bold sm:inline-block">
+            <span className=" font-bold text-bpdprimary sm:inline-block">
               - LIVE
             </span>
           </Link>
@@ -102,34 +102,37 @@ export function MobileNav({
                   </AccordionContent>
                 </AccordionItem>
               ))}
-              <AccordionItem value="sidebar">
-                <AccordionTrigger className="text-sm">
-                  Sidebar Menu
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="flex flex-col space-y-2">
-                    {sidebarNavItems?.map((item, index) =>
-                      item.menu_url ? (
-                        <MobileLink
-                          key={index}
-                          href={String(item.menu_url)}
-                          pathname={pathname}
-                          setIsOpen={setIsOpen}
-                        >
-                          {item.menu_name}
-                        </MobileLink>
-                      ) : (
-                        <div
-                          key={index}
-                          className="text-foreground/70 transition-colors"
-                        >
-                          {item.menu_name}
-                        </div>
-                      )
-                    )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+
+              {sidebarNavItems.length > 0 ? (
+                <AccordionItem value="sidebar">
+                  <AccordionTrigger className="text-sm">
+                    Sidebar Menu
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex flex-col space-y-2">
+                      {sidebarNavItems?.map((item, index) =>
+                        item.menu_url ? (
+                          <MobileLink
+                            key={index}
+                            href={String(item.menu_url)}
+                            pathname={pathname}
+                            setIsOpen={setIsOpen}
+                          >
+                            {item.menu_name}
+                          </MobileLink>
+                        ) : (
+                          <div
+                            key={index}
+                            className="text-foreground/70 transition-colors"
+                          >
+                            {item.menu_name}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ) : null}
             </Accordion>
           </div>
         </ScrollArea>
