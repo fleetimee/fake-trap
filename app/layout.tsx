@@ -25,11 +25,13 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "Server Components",
-    "E-Learning",
+    "nextjs",
+    "react",
+    "react server components",
+    "table",
+    "react-table",
+    "tanstack-table",
+    "shadcn-table",
   ],
   creator: "Novian Andika",
   // themeColor: [
@@ -62,6 +64,7 @@ export const metadata: Metadata = {
     images: [`${siteConfig.url}/og.png`],
     creator: "fleetime",
   },
+  manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 interface RootLayoutProps {
@@ -75,7 +78,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <meta name="msvalidate.01" content="17252056C47D53A9810A109E27A1B1F1" />
       <body
         className={cn(
-          "min-h-screen bg-background  antialiased",
+          "min-h-screen bg-background antialiased",
           fontSans.variable,
           fontHeading.variable
         )}
