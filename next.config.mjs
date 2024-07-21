@@ -12,6 +12,7 @@ const cspHeader = `
 `
 
 const nextConfig = {
+  poweredByHeader: false,
   reactStrictMode: true,
   publicRuntimeConfig: {
     basePath: "",
