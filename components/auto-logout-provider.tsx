@@ -126,17 +126,17 @@ export function AutoLogoutProvider({
       }
     }
 
-    if (lastActivity + timeoutMs < now) {
-      if (debug) console.error("User inactive", lastActivity, now)
-      localStorage.removeItem("_loginTime") // Clear _loginTime from localStorage
-      signOut({
-        callbackUrl: "/?logoutPopout=true",
-      })
+    // if (lastActivity + timeoutMs < now) {
+    //   if (debug) console.error("User inactive", lastActivity, now)
+    //   localStorage.removeItem("_loginTime") // Clear _loginTime from localStorage
+    //   signOut({
+    //     callbackUrl: "/?logoutPopout=true",
+    //   })
 
-      sonnerToast.info("Logged out due to inactivity, please log in again")
+    //   sonnerToast.info("Logged out due to inactivity, please log in again")
 
-      return true
-    }
+    //   return true
+    // }
 
     return false
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -198,6 +198,8 @@ export function AutoLogoutProvider({
     // Session duration set to 1 minute (60000 milliseconds)
     const sessionDuration =
       process.env.NEXT_PUBLIC_SESSION_EXPIRY_DURATION || 60000
+
+    console.log("Session duration:", sessionDuration)
 
     // Calculate the expiration time
     const expirationTime = loginTime + parseInt(sessionDuration.toString())
