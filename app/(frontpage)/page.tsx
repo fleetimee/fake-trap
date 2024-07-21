@@ -4,9 +4,28 @@ import Link from "next/link"
 import { ElearningHero } from "@/components/elearning-hero"
 import { Icons } from "@/components/icons"
 import { ScrollIntoViewButton } from "@/components/scroll-into-view"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Button, buttonVariants } from "@/components/ui/button"
 
-export default async function IndexPage() {
+interface IndexPageProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function IndexPage({ searchParams }: IndexPageProps) {
+  const { logoutPopout } = searchParams
+
+  console.log(logoutPopout)
+
   return (
     <>
       <div className="flex  w-fit  items-center rounded-xl bg-white p-2 shadow-md">
@@ -47,6 +66,24 @@ export default async function IndexPage() {
           </Button>
         </ScrollIntoViewButton>
       </div>
+
+      <AlertDialog open={Boolean(logoutPopout)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Kamu secara otomatis telah keluar dari akun
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Session kamu telah berakhir, silahkan login kembali
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <Link href="/">
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </Link>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }
