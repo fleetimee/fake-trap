@@ -13,6 +13,7 @@ import { RoleListResData } from "@/types/role/res"
 import { createUser } from "@/lib/fetcher/users-fetcher"
 import { cn } from "@/lib/utils"
 import { usersSchema } from "@/lib/validations/users"
+import { useIsAdmin } from "@/hooks/use-is-admin"
 import { Icons } from "@/components/icons"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -50,9 +51,9 @@ interface AddUserFormProps {
 }
 
 export function AddUserForm({ roleOptions }: AddUserFormProps) {
-  type RoleNovian = z.infer<typeof usersSchema.shape.role>
+  type DefaultRole = z.infer<typeof usersSchema.shape.role>
 
-  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>([
+  const [selectedRole, setSelectedRole] = React.useState<DefaultRole>([
     {
       id_role: 5,
     },
@@ -60,7 +61,7 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
 
   const { data: session } = useSession()
 
-  console.log("session", session)
+  const isAdmin = useIsAdmin()
 
   const router = useRouter()
 
@@ -73,7 +74,6 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
       username: "",
       email: "",
       created_by: session?.expires.id,
-      // Default roke to 1 (peserta)
     },
   })
 
@@ -288,6 +288,12 @@ export function AddUserForm({ roleOptions }: AddUserFormProps) {
                           return (
                             <CommandItem
                               key={index}
+                              disabled={
+                                (option.id_role === 3 ||
+                                  option.id_role === 4 ||
+                                  option.id_role === 6) &&
+                                !isAdmin
+                              }
                               onSelect={() => {
                                 if (isSelected) {
                                   setSelectedRole((prev) => {

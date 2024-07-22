@@ -14,6 +14,7 @@ import { UserOneResData } from "@/types/user/res"
 import { updateUser } from "@/lib/fetcher/users-fetcher"
 import { cn } from "@/lib/utils"
 import { usersSchema } from "@/lib/validations/users"
+import { useIsAdmin } from "@/hooks/use-is-admin"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -53,9 +54,11 @@ interface UpdateUsersFormProps {
 }
 
 export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
-  type RoleNovian = z.infer<typeof usersSchema.shape.role>
+  type DefaultRole = z.infer<typeof usersSchema.shape.role>
 
   const { data: session } = useSession()
+
+  const isAdmin = useIsAdmin()
 
   const router = useRouter()
 
@@ -72,7 +75,7 @@ export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
     },
   })
 
-  const [selectedRole, setSelectedRole] = React.useState<RoleNovian>(user.role)
+  const [selectedRole, setSelectedRole] = React.useState<DefaultRole>(user.role)
 
   React.useEffect(() => {
     form.setValue("role", selectedRole)
@@ -264,6 +267,12 @@ export function UpdateUserForm({ roleOptions, user }: UpdateUsersFormProps) {
 
                           return (
                             <CommandItem
+                              disabled={
+                                (option.id_role === 3 ||
+                                  option.id_role === 4 ||
+                                  option.id_role === 6) &&
+                                !isAdmin
+                              }
                               key={index}
                               onSelect={() => {
                                 if (isSelected) {
