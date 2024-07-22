@@ -35,8 +35,8 @@ export async function getUserV2({
   token,
   page,
   limit,
-  sortBy = "created_at",
-  orderBy = "desc",
+  sortBy = "name",
+  orderBy = "asc",
   searchQuery = "",
 }: GetUserV2Props): Promise<UserListRes> {
   let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/users/v2?`
