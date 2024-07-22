@@ -7,6 +7,7 @@ import {
   Bird,
   Bookmark,
   BookOpen,
+  Bug,
   Calendar,
   Cat,
   Check,
@@ -142,6 +143,7 @@ export const Icons = {
   mailX: MailX,
   circleUser: UserCircle2,
   struktur: GitPullRequestDraft,
+  audit: Bug,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
