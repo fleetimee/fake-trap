@@ -30,8 +30,8 @@ export default async function AdminUsersManagementPage({
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
   const limitInitial = typeof per_page === "string" ? parseInt(per_page) : 10
-  const sortFieldInitial = typeof sort === "string" ? sort : "created_at"
-  const sortOrderInitial = typeof sort === "string" ? sort : "desc"
+  const sortFieldInitial = typeof sort === "string" ? sort : "name"
+  const sortOrderInitial = typeof sort === "string" ? sort : "asc"
   const nameInitial = typeof name === "string" ? name : ""
 
   // Split sort into sortField and sortOrder
