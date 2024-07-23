@@ -1,17 +1,15 @@
 "use client"
 
 import React from "react"
-import { useSearchParams } from "next/navigation"
 import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
-import { useSession } from "next-auth/react"
 
 import { StrukturListResData } from "@/types/struktur-organisasi/res/struktur-list"
 import { useDataTable } from "@/hooks/use-data-table"
 
 import { DataTable, DataTableColumnHeader } from "../data-table"
 
-interface StrukturOrganisasiTableProps {
+interface StrukturOrganisasiTableShellProps {
   data: StrukturListResData[]
   pageCount: number
 }
@@ -19,44 +17,7 @@ interface StrukturOrganisasiTableProps {
 export function StrukturOrganisasiTableShell({
   data,
   pageCount,
-}: StrukturOrganisasiTableProps) {
-  const { data: session } = useSession()
-
-  const searchParams = useSearchParams()
-
-  const page = searchParams.get("page")
-  const perPage = searchParams.get("per_page")
-  const nama = searchParams.get("nama")
-  const jabatan = searchParams.get("jabatan")
-  const kodeKantor = searchParams.get("kodeKantor")
-  const unitKerja = searchParams.get("unitKerja")
-
-  const params = new URLSearchParams()
-
-  if (nama) {
-    params.append("nama", nama)
-  }
-
-  if (jabatan) {
-    params.append("jabatan", jabatan)
-  }
-
-  if (kodeKantor) {
-    params.append("kodeKantor", kodeKantor)
-  }
-
-  if (unitKerja) {
-    params.append("unitKerja", unitKerja)
-  }
-
-  if (page) {
-    params.append("page", page)
-  }
-
-  if (perPage) {
-    params.append("per_page", perPage)
-  }
-
+}: StrukturOrganisasiTableShellProps) {
   const columns = React.useMemo<ColumnDef<StrukturListResData, unknown>[]>(
     () => [
       {
@@ -300,11 +261,6 @@ export function StrukturOrganisasiTableShell({
         },
       ],
       title: "Jabatan",
-    },
-    {
-      id: "unitkerja",
-      options: [],
-      title: "Unit Kerja",
     },
   ]
 
