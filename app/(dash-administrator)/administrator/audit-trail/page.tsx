@@ -1,12 +1,15 @@
+import { Suspense } from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { getAuditTrail } from "@/lib/fetcher/audit-trail-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
+import { AuditTrailTableShell } from "@/components/shell/audit-trail-table-shell"
 
 export const metadata: Metadata = {
   title: "Audit Trail",
@@ -54,8 +57,6 @@ export default async function AdminAuditTrailPage({
     to: toInitial,
   })
 
-  console.log(auditTrail)
-
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -76,6 +77,13 @@ export default async function AdminAuditTrailPage({
         description="
             Audit Trail digunakan untuk melihat aktivitas pengguna dalam melakukan aksi pada aplikasi. Anda dapat melihat aktivitas pengguna dalam melakukan aksi pada aplikasi"
       />
+
+      <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
+        <AuditTrailTableShell
+          data={auditTrail.data}
+          pageCount={auditTrail.totalPage}
+        />
+      </Suspense>
     </DashboardShell>
   )
 }
