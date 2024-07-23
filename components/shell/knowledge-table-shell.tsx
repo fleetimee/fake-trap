@@ -36,7 +36,8 @@ export function KnowledgeTableShell({
   const { data: session } = useSession()
 
   const isAdmin = session?.expires.role.some(
-    (role) => role.role_name === "Admin" || role.role_name === "Operator LMS"
+    (role) =>
+      role.role_name === "Admininstrator" || role.role_name === "Operator LMS"
   )
 
   const pathname = usePathname()
