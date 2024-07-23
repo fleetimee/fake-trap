@@ -47,18 +47,8 @@ export default async function AdminStrukturOrganisasiPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const {
-    page,
-    per_page,
-    sort,
-    nama,
-    jabatan,
-    kd_kantor,
-    unitKerja,
-    isSuccessSync,
-  } = searchParams ?? {}
-
-  console.log(isSuccessSync)
+  const { page, per_page, sort, nama, jabatan, kd_kantor, unitKerja } =
+    searchParams ?? {}
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
@@ -130,23 +120,6 @@ export default async function AdminStrukturOrganisasiPage({
           pageCount={strukturOrgResp.totalPage}
         />
       </Suspense>
-
-      <AlertDialog open={Boolean(isSuccessSync)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>🎉 Berhasil</AlertDialogTitle>
-            <AlertDialogDescription>
-              Struktur Organisasi berhasil disinkronkan dengan DB HRMIS, data
-              sudah up to date
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <Link href="/administrator/struktur-organisasi">
-              <AlertDialogAction>Continue</AlertDialogAction>
-            </Link>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </DashboardShell>
   )
 }
