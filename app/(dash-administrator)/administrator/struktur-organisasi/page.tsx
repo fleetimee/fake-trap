@@ -1,13 +1,14 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
+import Link from "next/link"
 import { redirect } from "next/navigation"
-import { FolderSyncIcon, RefreshCcw } from "lucide-react"
+import { RefreshCcw } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getSetting } from "@/lib/fetcher/setting-fetcher"
 import { getStrukturOrganisasi } from "@/lib/fetcher/struktur-organisasi-fetcher"
 import { getCurrentUser } from "@/lib/session"
-import { convertDatetoString, convertDatetoStringWithTime } from "@/lib/utils"
+import { convertDatetoStringWithTime } from "@/lib/utils"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DashboardHeader } from "@/components/header"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
@@ -16,15 +17,13 @@ import { StrukturOrganisasiTableShell } from "@/components/shell/struktur-organi
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import {
   AlertDialog,
-  AlertDialogCancel,
+  AlertDialogAction,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
 
 import { StrukturOrganisasiSyncButton } from "./_components/struktur-organisasi-sync-button"
 
@@ -48,8 +47,18 @@ export default async function AdminStrukturOrganisasiPage({
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const { page, per_page, sort, nama, jabatan, kd_kantor, unitKerja } =
-    searchParams ?? {}
+  const {
+    page,
+    per_page,
+    sort,
+    nama,
+    jabatan,
+    kd_kantor,
+    unitKerja,
+    isSuccessSync,
+  } = searchParams ?? {}
+
+  console.log(isSuccessSync)
 
   // Initial value
   const pageInitial = typeof page === "string" ? parseInt(page) : 1
@@ -97,44 +106,13 @@ export default async function AdminStrukturOrganisasiPage({
         ]}
       />
 
-      <div
-        className="
-        flex items-center justify-between
-      "
-      >
+      <div className="flex items-center justify-between">
         <DashboardHeader
           heading="Struktur Organisasi"
           description="Struktur Organisasi yang disync dari Database HRMIS, jadi akan selalu up to date dengan data terbaru."
         />
 
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="ml-auto hidden h-8 lg:flex"
-            >
-              <FolderSyncIcon className="mr-2 h-4 w-4" />
-              Sync
-            </Button>
-          </AlertDialogTrigger>
-
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Data Struktur Organisasi akan di Sync secara manual
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                Data Struktur Organisasi akan di Sync secara manual, pastikan
-                koneksi internet stabil
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <StrukturOrganisasiSyncButton />
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <StrukturOrganisasiSyncButton />
       </div>
 
       <Alert variant="destructive">
@@ -152,6 +130,23 @@ export default async function AdminStrukturOrganisasiPage({
           pageCount={strukturOrgResp.totalPage}
         />
       </Suspense>
+
+      <AlertDialog open={Boolean(isSuccessSync)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>🎉 Berhasil</AlertDialogTitle>
+            <AlertDialogDescription>
+              Struktur Organisasi berhasil disinkronkan dengan DB HRMIS, data
+              sudah up to date
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <Link href="/administrator/struktur-organisasi">
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </Link>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardShell>
   )
 }
