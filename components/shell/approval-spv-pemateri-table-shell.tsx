@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"
@@ -12,7 +12,6 @@ import { badgeSwitch } from "@/lib/badge-switch"
 import { convertDatetoString } from "@/lib/utils"
 import { useDataTable } from "@/hooks/use-data-table"
 import { DataTable, DataTableColumnHeader } from "@/components/data-table"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
