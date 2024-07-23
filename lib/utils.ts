@@ -463,3 +463,39 @@ export const getMetaData = (createdAt: string | Date) => {
     }
   }
 }
+
+export function parseUserAgent(userAgent: string): string {
+  const browsers = [
+    { name: "Edge", regex: /Edg\// },
+    { name: "Chrome", regex: /Chrome\// },
+    { name: "Firefox", regex: /Firefox\// },
+    { name: "Safari", regex: /Safari/ },
+  ]
+
+  const osList = [
+    { name: "Windows", regex: /Windows NT/ },
+    { name: "Mac OS", regex: /Mac OS X/ },
+    { name: "Linux", regex: /Linux/ },
+    { name: "Android", regex: /Android/ },
+    { name: "iOS", regex: /iPhone/ },
+  ]
+
+  let browser = "Unknown Browser"
+  let os = "Unknown OS"
+
+  for (const b of browsers) {
+    if (b.regex.test(userAgent)) {
+      browser = b.name
+      break
+    }
+  }
+
+  for (const o of osList) {
+    if (o.regex.test(userAgent)) {
+      os = o.name
+      break
+    }
+  }
+
+  return `${browser}/${os}`
+}
