@@ -5,6 +5,7 @@ import { Shield } from "lucide-react"
 import { authOptions } from "@/lib/auth"
 import { getRole } from "@/lib/fetcher/role-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import { extractToken } from "@/lib/utils"
 import { AddUserForm } from "@/components/forms/add-users-form"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell } from "@/components/shell"
@@ -25,9 +26,13 @@ export const metadata: Metadata = {
 export default async function OperatorLMSUsersPageNew() {
   const user = await getCurrentUser()
 
+  const tokenExtracted = extractToken(user?.token)
+
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const isAdministrator = tokenExtracted.role.some((role) => role.id_role === 6)
 
   const role = await getRole({ token: user?.token })
 
@@ -49,6 +54,18 @@ export default async function OperatorLMSUsersPageNew() {
           },
         ]}
       />
+
+      {!isAdministrator ? (
+        <Alert variant="informative">
+          <Shield className="size-4" />
+          <AlertTitle>Perhatian!</AlertTitle>
+          <AlertDescription>
+            Anda tidak memiliki kewenangan untuk menambah user dengan role
+            Operator LMS, Approval LMS, dan Administrator
+          </AlertDescription>
+        </Alert>
+      ) : null}
+
       <Alert variant="destructive">
         <Shield className="size-4" />
         <AlertTitle>Perhatian!</AlertTitle>
