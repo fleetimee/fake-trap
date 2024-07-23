@@ -77,6 +77,14 @@ module.exports = {
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       keyframes: {
+        ripple: {
+          "0%, 100%": {
+            transform: "translate(-50%, -50%) scale(1)",
+          },
+          "50%": {
+            transform: "translate(-50%, -50%) scale(0.9)",
+          },
+        },
         shine: {
           from: { backgroundPosition: "200% 0" },
           to: { backgroundPosition: "-200% 0" },
@@ -133,6 +141,7 @@ module.exports = {
         },
       },
       animation: {
+        ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "fade-up": "fade-up 0.5s",
         "fade-down": "fade-down 0.5s",
