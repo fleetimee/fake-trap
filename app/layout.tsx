@@ -76,7 +76,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning className={publicSans.className}>
       <GoogleTagManager gtmId="GTM-5FS6WP7L" />
       <meta name="msvalidate.01" content="17252056C47D53A9810A109E27A1B1F1" />
-      <meta name="google-site-verification" content="0lZzVojFyyGhqn-f666vsPcLml8sej_o2pIkAtzVZCU" />
+      <meta
+        name="google-site-verification"
+        content="0lZzVojFyyGhqn-f666vsPcLml8sej_o2pIkAtzVZCU"
+      />
       <body
         className={cn(
           "min-h-screen bg-background antialiased",
