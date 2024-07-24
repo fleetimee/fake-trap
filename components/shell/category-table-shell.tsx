@@ -37,7 +37,8 @@ export function CategoryTableShell({
   const absolutePath = path.split("/")[1]
 
   const isAdmin = session?.expires.role.some(
-    (role) => role.role_name === "Admin" || role.role_name === "Operator LMS"
+    (role) =>
+      role.role_name === "Administrator" || role.role_name === "Operator LMS"
   )
 
   const isPemateriDivisi = session?.expires.role.some(
