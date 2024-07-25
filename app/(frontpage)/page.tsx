@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -19,6 +20,11 @@ interface IndexPageProps {
   searchParams: {
     [key: string]: string | string[] | undefined
   }
+}
+
+export const metadata: Metadata = {
+  title: "B-LIVE",
+  description: "Pelajari apa saja, kapan saja, di mana saja",
 }
 
 export default async function IndexPage({ searchParams }: IndexPageProps) {

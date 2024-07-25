@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     default: "B-LIVE: Pelajari apa saja, kapan saja, di mana saja",
     template: "%s | B-LIVE",
   },
-
   description: "fleetime",
 }
 

@@ -16,7 +16,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Login",
-  description: "Masuk ke akun e-learning",
+  description: "Masuk ke BLIVE",
 }
 
 export default async function LoginPage() {
