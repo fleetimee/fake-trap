@@ -1,3 +1,6 @@
+import { BorderBeam } from "./border-beam"
+import ShineBorder from "./shine-border"
+
 interface CardProps {
   variant?: string
   extra?: string
@@ -36,7 +39,6 @@ export function Widget({ icon, title, subtitle }: WidgetProps) {
           </span>
         </div>
       </div>
-
       <div className="h-50 me-4 flex w-auto flex-col justify-center">
         <p className="font-dm text-sm font-medium text-gray-600 dark:text-white">
           {title}
@@ -45,6 +47,8 @@ export function Widget({ icon, title, subtitle }: WidgetProps) {
           {subtitle}
         </h4>
       </div>
+
+      <BorderBeam size={250} duration={12} delay={9} />
     </Card>
   )
 }
