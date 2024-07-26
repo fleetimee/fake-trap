@@ -24,6 +24,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 
 import { LottieClient } from "./lottie-anim"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 interface KnowledgeGroup {
   category: KnowledgeListResData["id_category"]
@@ -127,24 +128,33 @@ export function KnowledgeSearch() {
 
   return (
     <>
-      <Button
-        variant="outline"
-        className="relative size-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
-        onClick={() => setOpen(true)}
-      >
-        <MagnifyingGlassIcon className="size-4 xl:mr-2" aria-hidden="true" />
-        <span className="hidden xl:inline-flex">Cari materi...</span>
-        <span className="sr-only">Cari materi</span>
-        <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xs font-medium opacity-100 xl:flex">
-          <abbr
-            title={isMacOs() ? "Command" : "Control"}
-            className="no-underline"
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            variant="outline"
+            className="relative size-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
+            onClick={() => setOpen(true)}
           >
-            {isMacOs() ? "⌘" : "Ctrl"}
-          </abbr>
-          K
-        </kbd>
-      </Button>
+            <MagnifyingGlassIcon
+              className="size-4 xl:mr-2"
+              aria-hidden="true"
+            />
+            <span className="hidden xl:inline-flex">Cari materi...</span>
+            <span className="sr-only">Cari materi</span>
+            <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xs font-medium opacity-100 xl:flex">
+              <abbr
+                title={isMacOs() ? "Command" : "Control"}
+                className="no-underline"
+              >
+                {isMacOs() ? "⌘" : "Ctrl"}
+              </abbr>
+              K
+            </kbd>
+          </Button>
+        </TooltipTrigger>
+
+        <TooltipContent>Temukan materi favoritmu</TooltipContent>
+      </Tooltip>
       <CommandDialog position="top" open={open} onOpenChange={setOpen}>
         <CommandInput
           placeholder="Cari materi favoritmu disini..."

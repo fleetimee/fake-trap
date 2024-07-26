@@ -19,6 +19,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+
 interface MainNavProps {
   items?: MainNavItem[]
   children?: React.ReactNode
@@ -30,13 +32,20 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
 
   return (
     <div className="hidden gap-6 lg:flex">
-      <Link href="/" className="hidden items-center space-x-0 md:flex">
-        <Image src={Logo} alt="Logo" width={25} height={25} />
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link href="/" className="hidden items-center space-x-0 md:flex">
+            <Image src={Logo} alt="Logo" width={25} height={25} />
+            <span className="hidden font-bold  text-bpdprimary sm:inline-block">
+              - LIVE
+            </span>
+          </Link>
+        </TooltipTrigger>
 
-        <span className="text-bpdprimary hidden  font-bold sm:inline-block">
-          - LIVE
-        </span>
-      </Link>
+        <TooltipContent>
+          B-LIVE (BPD DIY Learning Integrated Virtual Education)
+        </TooltipContent>
+      </Tooltip>
       <NavigationMenu>
         <NavigationMenuList>
           {items?.[0]?.items ? (

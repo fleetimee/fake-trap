@@ -20,7 +20,12 @@ import {
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 interface MobileNavProps {
   mainNavItems?: MainNavItem[]
@@ -41,10 +46,10 @@ export function MobileNav({
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
-          variant="ghost"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+          variant="outline"
+          className="relative mr-4 size-9 p-0 sm:hidden xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
         >
-          <Icons.menu className="size-6" />
+          <Icons.menu className="size-4 xl:mr-2" aria-hidden="true" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>

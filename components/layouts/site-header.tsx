@@ -98,7 +98,7 @@ export function SiteHeader({ ...props }: SiteHeaderProps) {
 
           {/* The title is now next to the MobileNav component. */}
           {props.titleNav ? (
-            <h1 className="ml-2 text-center  font-bold md:hidden">
+            <h1 className="ml-6 text-center  font-bold md:hidden">
               {props.titleNav ?? "BPD DIY E-Learning"}
             </h1>
           ) : (
