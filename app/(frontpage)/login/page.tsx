@@ -22,12 +22,13 @@ export const metadata: Metadata = {
 export default async function LoginPage() {
   return (
     <Shell className="max-w-lg">
+      <div className="flex items-center justify-center rounded-md bg-white"></div>
       <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900  md:min-w-[30rem]">
         <Card className=" md:min-w-[30rem]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">👋 Log in</CardTitle>
+            <CardTitle className="text-2xl">👋 B - LIVE | Log in</CardTitle>
             <CardDescription>
-              Enter your credentials to access your account
+              Masukkan kredential Anda untuk melanjutkan
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
