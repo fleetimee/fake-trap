@@ -17,3 +17,13 @@ export function CategoryCardSkeleton() {
     </Card>
   )
 }
+
+export function CategoryCardSkeletonSecond() {
+  return (
+    <div className="rounded-lg border p-4 shadow-sm">
+      <Skeleton className="mb-4 h-32 w-full rounded" />
+      <Skeleton className="mb-2 h-6 w-3/4" />
+      <Skeleton className="h-4 w-1/2" />
+    </div>
+  )
+}
