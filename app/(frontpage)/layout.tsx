@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import NotFoundModel from "@/public/images/not-found-model-original.png"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
 import { Variants } from "framer-motion"
 import Balancer from "react-wrap-balancer"
@@ -12,6 +13,7 @@ import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import { extractToken } from "@/lib/utils"
 import { BentoGridDemo } from "@/components/bento-feature"
+import BlurFade from "@/components/blur-fade"
 import { CategoryCard } from "@/components/cards/category-card"
 import { KnowledgeCard } from "@/components/cards/knowledge-card"
 import { MotionDiv } from "@/components/framer-wrapper"
@@ -110,34 +112,30 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
 
       <section className="bg-[url(/hero_bg.svg)] bg-cover bg-bottom py-14 md:bg-left lg:min-h-[100svh]">
         <div className="mx-auto max-w-screen-xl md:px-8 lg:h-screen">
-          <div className="items-center gap-x-12 py-20 sm:px-4 md:px-0 lg:flex">
-            <div className="flex-1 sm:hidden lg:block">
-              {/* <img
-                src="/images/cta-one.png"
-                className="sm:rounded-lg md:max-w-lg"
+          <div className="flex flex-col-reverse items-center gap-x-12 py-20 sm:px-4 md:px-0 lg:flex-row">
+            <div className="flex-1 py-16 sm:mb-0 lg:block">
+              {/* Image component */}
+              {/* <Image
+                src={NotFoundModel}
+                className="h-fit rounded-lg sm:block md:max-w-lg lg:scale-125"
                 alt=""
+                width={1100}
+                height={1100}
               /> */}
 
-              <Image
-                src="/images/cta-one.png"
-                className="hidden h-fit scale-125  rounded-lg sm:block md:max-w-lg"
-                alt=""
-                width={1200}
-                height={2000}
-              />
+              <BlurFade delay={0.25} inView>
+                <Image
+                  src="/images/cta-one.png"
+                  className="h-fit rounded-lg sm:block md:max-w-lg lg:scale-125"
+                  alt=""
+                  width={1200}
+                  height={2000}
+                />
+              </BlurFade>
             </div>
 
             <div className="mt-6 max-w-xl space-y-3 px-4 sm:px-0 md:mt-0 lg:max-w-2xl">
-              {/* Logo Image */}
-
-              {/* <p className="text-3xl font-semibold text-white sm:text-4xl">
-                Learning Management System
-              </p>
-              <p className="mt-3 text-white">
-                Dapatkan materi dan keterampilan yang Anda butuhkan untuk sukses
-                dengan BPD DIY Learning Management System
-              </p> */}
-
+              {/* Content here */}
               {children}
             </div>
           </div>
