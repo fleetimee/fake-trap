@@ -77,6 +77,10 @@ module.exports = {
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       keyframes: {
+        pulse: {
+          "0%, 100%": { boxShadow: "0 0 0 0 var(--pulse-color)" },
+          "50%": { boxShadow: "0 0 0 8px var(--pulse-color)" },
+        },
         ripple: {
           "0%, 100%": {
             transform: "translate(-50%, -50%) scale(1)",
@@ -141,6 +145,7 @@ module.exports = {
         },
       },
       animation: {
+        pulse: "pulse var(--duration) ease-out infinite",
         ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "fade-up": "fade-up 0.5s",
