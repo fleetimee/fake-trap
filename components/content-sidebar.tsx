@@ -93,7 +93,7 @@ export function KnowledgeContentSidebar({
                     value={section.id_section.toString()}
                     className="text-sm"
                   >
-                    <AccordionTrigger className="line-clamp-2 bg-primary-foreground px-2 font-heading text-base font-bold">
+                    <AccordionTrigger className="line-clamp-2 rounded-md bg-primary-foreground px-2 font-heading text-base font-bold dark:bg-black">
                       <ContextMenu key={section.id_section}>
                         <ContextMenuTrigger>
                           {/* The Trigger is the Accordion Title */}
