@@ -94,7 +94,12 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="Tuliskan email" {...field} />
+                <Input
+                  type="text"
+                  placeholder="Tuliskan email"
+                  {...field}
+                  onChange={(e) => field.onChange(e.target.value.toLowerCase())}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
