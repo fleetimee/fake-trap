@@ -1,9 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-
-
-
-
 export default function Loading() {
   return (
     <div className="grid w-full gap-10">
