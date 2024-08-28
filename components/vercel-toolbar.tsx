@@ -7,6 +7,7 @@ import {
   ArrowRightIcon,
   ChatBubbleIcon,
   HomeIcon,
+  Pencil2Icon,
   PersonIcon,
 } from "@radix-ui/react-icons"
 
@@ -19,6 +20,7 @@ interface VercelToolbarProps {
   materiButton?: string
   userButton?: string
   forumButton?: string
+  noteButton?: string
 }
 
 export function VercelToolbar({ ...props }: VercelToolbarProps) {
@@ -88,6 +90,16 @@ export function VercelToolbar({ ...props }: VercelToolbarProps) {
           }}
         >
           <ChatBubbleIcon className="h-6 w-6 stroke-1" />
+          <span className="sr-only">Edit</span>
+        </TooltipButton>
+
+        <TooltipButton
+          tooltipText="Note"
+          onClick={() => {
+            router.push(props.noteButton || "/")
+          }}
+        >
+          <Pencil2Icon className="h-6 w-6 stroke-1" />
           <span className="sr-only">Edit</span>
         </TooltipButton>
       </div>
