@@ -183,6 +183,7 @@ export default async function CourseDetailLayout({
           homeButton={`/peserta/course/detail/${params.idCourse}`}
           forumButton={`/peserta/course/detail/${params.idCourse}/threads`}
           userButton={`/peserta/course/detail/${params.idCourse}/people`}
+          noteButton={`/peserta/course/detail/${params.idCourse}/notes`}
         />
       </div>
 
