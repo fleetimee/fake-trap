@@ -1,10 +1,20 @@
+import Link from "next/link"
+import Blocks from "editorjs-blocks-react-renderer"
 import { FileText, Plus } from "lucide-react"
+import Balancer from "react-wrap-balancer"
 
 import { getUserNotes } from "@/lib/fetcher/note-fetcher"
 import { getCurrentUser } from "@/lib/session"
+import FileAttachment from "@/components/cards/forum-posts-card"
+import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 interface PesertaNotePageProps {
   params: {
@@ -21,6 +31,14 @@ async function PesertaNotePage({ params }: PesertaNotePageProps) {
   })
 
   const noteIsDataNull = useNote?.data === null
+
+  let contentParsed
+
+  try {
+    contentParsed = JSON.parse(useNote?.data?.content)
+  } catch (e) {
+    contentParsed = null
+  }
 
   return (
     <div className="space-y-6">
@@ -46,16 +64,48 @@ async function PesertaNotePage({ params }: PesertaNotePageProps) {
                     and ideas now!
                   </p>
                 </div>
-                <Button className="mx-auto flex items-center" size="lg">
-                  <Plus className="mr-2 h-5 w-5" />
-                  Create your first note
+                <Button className="mx-auto flex items-center" size="lg" asChild>
+                  <Link href={`/editor/notes/${params.idCourse}`}>
+                    <Plus className="mr-2 h-5 w-5" />
+                    Create your first note
+                  </Link>
                 </Button>
               </div>
             </CardContent>
           </Card>
         </div>
       ) : (
-        <div>test</div>
+        <Card>
+          <CardContent className="">
+            <div className="mt-4 flex justify-end space-x-2">
+              <Button variant="outline" size="sm">
+                Update
+              </Button>
+              <Button variant="outline" size="sm" className="text-red-500">
+                Delete
+              </Button>
+              <Button variant="outline" size="sm">
+                Print
+              </Button>
+            </div>
+            <div className="flex w-full justify-center">
+              <div className="cst-wrap-text whatever-you-want">
+                {contentParsed ? (
+                  <Balancer>
+                    <Blocks
+                      data={contentParsed}
+                      renderers={{
+                        attaches: FileAttachment,
+                      }}
+                    />
+                  </Balancer>
+                ) : (
+                  <p>{useNote?.data?.content}</p>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   )

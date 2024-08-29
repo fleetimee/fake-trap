@@ -33,7 +33,7 @@ export async function getOperatorQuiz({
   quizTypes = "",
   isNullSection,
 }: GetQuizProps): Promise<QuizListRes> {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/`
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz`
 
   const urlObj = new URL(url)
 
@@ -70,6 +70,8 @@ export async function getOperatorQuiz({
   }
 
   url = urlObj.toString()
+
+  console.log(url)
 
   try {
     const res = await fetch(url, {
@@ -593,6 +595,29 @@ export async function createExerciseQuestion({
   body,
 }: CreateExerciseQuestionProps) {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/question/bulk`
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  })
+
+  return res
+}
+
+export interface CreateClonedExerciseProps {
+  token: string | undefined
+  body: BodyInit
+}
+
+export async function createClonedExercise({
+  token,
+  body,
+}: CreateClonedExerciseProps) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/quiz/clone`
 
   const res = await fetch(url, {
     method: "POST",

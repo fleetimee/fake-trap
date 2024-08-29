@@ -145,43 +145,45 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsSaving(true)
 
-    const block = await ref.current?.save()
+    try {
+      const block = await ref.current?.save()
+      const requestBody = {
+        id_threads: id_threads,
+        content: JSON.stringify(block),
+        user_uuid: session?.expires.id,
+      }
 
-    const res = editedPostId
-      ? await editPost({
-          token: session?.user.token,
-          idPosts: editedPostId,
-          body: JSON.stringify({
-            id_threads: id_threads,
-            content: JSON.stringify(block),
-            user_uuid: session?.expires.id,
-          }),
+      const res = editedPostId
+        ? await editPost({
+            token: session?.user.token,
+            idPosts: editedPostId,
+            body: JSON.stringify(requestBody),
+          })
+        : await createPost({
+            token: session?.user.token,
+            body: JSON.stringify(requestBody),
+          })
+
+      if (res?.ok) {
+        sonnerToast.success("Berhasil", {
+          description: "Post berhasil disimpan.",
         })
-      : await createPost({
-          token: session?.user.token,
-          body: JSON.stringify({
-            id_threads: id_threads,
-            content: JSON.stringify(block),
-            user_uuid: session?.expires.id,
-          }),
+
+        ref.current?.clear()
+        router.refresh()
+        router.back()
+      } else {
+        const errorResponse: ErrorResponse = await res.json()
+        sonnerToast.error("Gagal", {
+          description: errorResponse.error,
         })
-
-    setIsSaving(false)
-
-    if (res?.ok) {
-      sonnerToast.success("Berhasil", {
-        description: "Post berhasil disimpan.",
-      })
-
-      ref.current?.clear()
-      router.refresh()
-      router.back()
-    } else {
-      const errorResponse: ErrorResponse = await res.json()
-
+      }
+    } catch (error) {
       sonnerToast.error("Gagal", {
-        description: errorResponse.error,
+        description: "Terjadi kesalahan saat menyimpan post.",
       })
+    } finally {
+      setIsSaving(false)
     }
   }
 

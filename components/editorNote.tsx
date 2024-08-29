@@ -14,13 +14,13 @@ import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
 import { ErrorResponse } from "@/types/error-res"
+import { createNote } from "@/lib/fetcher/note-fetcher"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button, buttonVariants } from "@/components/ui/button"
 
 const formSchema = z.object({
-  id_course: z.number(),
-  content: z.any(),
+  content: z.string().optional(),
 })
 
 interface NotesEditorProps {
@@ -30,11 +30,12 @@ interface NotesEditorProps {
 export function NotesEditor({ id_course }: NotesEditorProps) {
   const { data: session } = useSession()
 
-  const { register, handleSubmit } = useForm<z.infer<typeof formSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      id_course: id_course,
-    },
   })
 
   const ref = React.useRef<EditorJS>()
@@ -75,7 +76,7 @@ export function NotesEditor({ id_course }: NotesEditorProps) {
         },
         placeholder: "Ketik untuk memulai membuat catatan...",
         inlineToolbar: true,
-        data: initialData || body.content || {},
+        data: initialData || body.content || ({} as any),
         tools: {
           header: Header,
           linkTool: LinkTool,
@@ -125,6 +126,93 @@ export function NotesEditor({ id_course }: NotesEditorProps) {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsSaving(true)
 
-    const block = await ref.current?.save()
+    try {
+      const block = await ref.current?.save()
+
+      const res = await createNote({
+        token: session?.user?.token,
+        body: JSON.stringify({
+          id_course: id_course,
+          content: JSON.stringify(block),
+        }),
+      })
+
+      if (res?.ok) {
+        sonnerToast.success("Berhasil", {
+          description: "Catatan berhasil disimpan.",
+        })
+
+        ref.current?.clear()
+        router.refresh()
+        router.back()
+      } else {
+        const errorResponse: ErrorResponse = await res.json()
+        sonnerToast.error("Gagal", {
+          description: errorResponse.error,
+        })
+      }
+    } catch (error) {
+      sonnerToast.error("Gagal", {
+        description: "Terjadi kesalahan saat menyimpan post.",
+      })
+    } finally {
+      setIsSaving(false)
+    }
   }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid w-full gap-10">
+        <div className="flex w-full items-center justify-between">
+          <div className="flex items-center space-x-10">
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={() => {
+                router.back()
+              }}
+            >
+              <>
+                <Icons.chevronLeft className="mr-2 h-4 w-4" />
+                Back
+              </>
+            </Button>
+            <p className="text-sm text-muted-foreground">Buat Catatan</p>
+          </div>
+          <button type="submit" className={cn(buttonVariants())}>
+            {isSaving && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            <span>Post</span>
+          </button>
+        </div>
+        <div className="prose prose-stone dark:prose-invert whatever-you-want mx-auto w-[800px] rounded-md border border-dashed border-gray-300 p-4">
+          <TextareaAutosize
+            id="title"
+            disabled
+            className="dis w-full resize-none appearance-none overflow-hidden bg-transparent text-xs font-bold focus:outline-none"
+            {...register("content")}
+          />
+          {errors.content && (
+            <p className="mt-1 text-xs text-red-500">
+              {errors.content.message}
+            </p>
+          )}
+          <div id="editor" className="min-h-[500px]" />
+          <p className="text-sm text-gray-500">
+            Gunakan{" "}
+            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+              Tab
+            </kbd>{" "}
+            untuk membuka command menu
+          </p>
+
+          <p className="text-sm text-gray-500">
+            Anda dapat menyisipkan gambar dengan menarik dan meletakkan gambar
+            ke dalam editor.
+          </p>
+        </div>
+      </div>
+    </form>
+  )
 }

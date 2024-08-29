@@ -213,20 +213,22 @@ export function ForumPost({ post }: ForumPost) {
               Dibuat saat {getMetaData(post.created_at)}
             </small>
           </div>
-          <p className="cst-wrap-text mt-1">
-            {contentParsed ? (
-              <Balancer>
-                <Blocks
-                  data={contentParsed}
-                  renderers={{
-                    attaches: FileAttachment,
-                  }}
-                />
-              </Balancer>
-            ) : (
-              <p>{post.content}</p>
-            )}
-          </p>
+          <div className="flex w-full justify-center">
+            <div className="cst-wrap-text whatever-you-want mt-1">
+              {contentParsed ? (
+                <Balancer>
+                  <Blocks
+                    data={contentParsed}
+                    renderers={{
+                      attaches: FileAttachment,
+                    }}
+                  />
+                </Balancer>
+              ) : (
+                <p>{post.content}</p>
+              )}
+            </div>
+          </div>
         </CardContent>
       </Card>
 
