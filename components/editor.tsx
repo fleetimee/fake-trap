@@ -166,7 +166,9 @@ export function Editor({ id_threads, editedPostId }: EditorProps) {
 
       if (res?.ok) {
         sonnerToast.success("Berhasil", {
-          description: "Post berhasil disimpan.",
+          description: editedPostId
+            ? "Post berhasil diupdate."
+            : "Post berhasil disimpan.",
         })
 
         ref.current?.clear()

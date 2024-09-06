@@ -14,7 +14,11 @@ import { useSession } from "next-auth/react"
 import { toast as sonnerToast } from "sonner"
 
 import { ErrorResponse } from "@/types/error-res"
-import { createNote } from "@/lib/fetcher/note-fetcher"
+import {
+  createNote,
+  getUserNotes,
+  updateNote,
+} from "@/lib/fetcher/note-fetcher"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -25,9 +29,10 @@ const formSchema = z.object({
 
 interface NotesEditorProps {
   id_course: number
+  isUpdate?: string
 }
 
-export function NotesEditor({ id_course }: NotesEditorProps) {
+export function NotesEditor({ id_course, isUpdate }: NotesEditorProps) {
   const { data: session } = useSession()
 
   const {
@@ -67,6 +72,15 @@ export function NotesEditor({ id_course }: NotesEditorProps) {
     const body = formSchema.parse(formSchema)
 
     let initialData = null
+
+    if (isUpdate) {
+      const res = await getUserNotes({
+        token: session?.user.token,
+        idCourse: id_course.toString(),
+      })
+
+      initialData = JSON.parse(res?.data.content || "{}")
+    }
 
     if (!ref.current) {
       const editor = new EditorJS({
@@ -129,17 +143,27 @@ export function NotesEditor({ id_course }: NotesEditorProps) {
     try {
       const block = await ref.current?.save()
 
-      const res = await createNote({
-        token: session?.user?.token,
-        body: JSON.stringify({
-          id_course: id_course,
-          content: JSON.stringify(block),
-        }),
-      })
+      const res = isUpdate
+        ? await updateNote({
+            token: session?.user?.token,
+            body: JSON.stringify({
+              id_course: id_course,
+              content: JSON.stringify(block),
+            }),
+          })
+        : await createNote({
+            token: session?.user?.token,
+            body: JSON.stringify({
+              id_course: id_course,
+              content: JSON.stringify(block),
+            }),
+          })
 
       if (res?.ok) {
         sonnerToast.success("Berhasil", {
-          description: "Catatan berhasil disimpan.",
+          description: isUpdate
+            ? "Catatan berhasil diperbarui"
+            : "Catatan berhasil dibuat",
         })
 
         ref.current?.clear()
@@ -163,8 +187,8 @@ export function NotesEditor({ id_course }: NotesEditorProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid w-full gap-10">
-        <div className="flex w-full items-center justify-between">
-          <div className="flex items-center space-x-10">
+        <div className="mx-auto flex w-full max-w-[800px] flex-col items-center justify-between sm:flex-row">
+          <div className="mb-4 flex items-center space-x-10 sm:mb-0">
             <Button
               variant="ghost"
               type="button"
@@ -177,16 +201,18 @@ export function NotesEditor({ id_course }: NotesEditorProps) {
                 Back
               </>
             </Button>
-            <p className="text-sm text-muted-foreground">Buat Catatan</p>
+            <p className="text-sm text-muted-foreground">
+              {isUpdate ? "Perbarui" : "Buat"} Catatan
+            </p>
           </div>
           <button type="submit" className={cn(buttonVariants())}>
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            <span>Post</span>
+            <span>{isUpdate ? "Perbarui" : "Buat"} Catatan</span>
           </button>
         </div>
-        <div className="prose prose-stone dark:prose-invert whatever-you-want mx-auto w-[800px] rounded-md border border-dashed border-gray-300 p-4">
+        <div className="prose prose-stone dark:prose-invert whatever-you-want mx-auto w-full max-w-[800px] rounded-md border border-dashed border-gray-300 p-4">
           <TextareaAutosize
             id="title"
             disabled
