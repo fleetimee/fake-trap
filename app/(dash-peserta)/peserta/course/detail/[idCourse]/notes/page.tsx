@@ -6,15 +6,11 @@ import Balancer from "react-wrap-balancer"
 import { getUserNotes } from "@/lib/fetcher/note-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import FileAttachment from "@/components/cards/forum-posts-card"
-import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+
+import { DeleteNotesButton } from "./_components/delete-note-button"
 
 interface PesertaNotePageProps {
   params: {
@@ -83,9 +79,7 @@ async function PesertaNotePage({ params }: PesertaNotePageProps) {
                   Update
                 </Link>
               </Button>
-              <Button variant="outline" size="sm" className="text-red-500">
-                Delete
-              </Button>
+              <DeleteNotesButton idCourse={parseInt(params.idCourse)} />
             </div>
             <div className="flex w-full justify-center">
               <div className="cst-wrap-text whatever-you-want">
