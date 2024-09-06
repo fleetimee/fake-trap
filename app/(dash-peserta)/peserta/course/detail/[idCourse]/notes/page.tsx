@@ -78,14 +78,13 @@ async function PesertaNotePage({ params }: PesertaNotePageProps) {
         <Card>
           <CardContent className="">
             <div className="mt-4 flex justify-end space-x-2">
-              <Button variant="outline" size="sm">
-                Update
+              <Button variant="outline" size="sm" asChild>
+                <Link href={`/editor/notes/${params.idCourse}?isUpdate=true`}>
+                  Update
+                </Link>
               </Button>
               <Button variant="outline" size="sm" className="text-red-500">
                 Delete
-              </Button>
-              <Button variant="outline" size="sm">
-                Print
               </Button>
             </div>
             <div className="flex w-full justify-center">
