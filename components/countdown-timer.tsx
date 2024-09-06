@@ -14,8 +14,6 @@ interface TimeLeft {
 }
 
 export function CountdownTimer({ endDate }: CountdownTimerProps) {
-  console.log("CountdownTimer", endDate)
-
   function calculateTimeLeft(): TimeLeft {
     const difference = +new Date(endDate) - +new Date() // Correctly uses endDate as a string for Date constructor
     let timeLeft: TimeLeft = {
