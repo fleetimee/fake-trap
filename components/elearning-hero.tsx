@@ -28,7 +28,7 @@ export function ElearningHero() {
           (BPD DIY Learning Integrated Virtual Education)
         </div>
         <div className="hidden font-normal text-white md:block">
-          Dengan BPD DIY LMS kamu bisa belajar dimana saja dan kapan saja.
+          Belajar dimana saja dan kapan saja
         </div>
       </motion.h1>
     </HeroHighlight>
