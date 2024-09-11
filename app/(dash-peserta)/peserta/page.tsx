@@ -1,7 +1,12 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { ArrowRightIcon, MessageSquareIcon, PartyPopper } from "lucide-react"
+import {
+  ArrowRightIcon,
+  MessageSquareIcon,
+  PartyPopper,
+  Scroll,
+} from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
@@ -152,7 +157,7 @@ export default async function PesertaPage() {
           </CardHeader>
 
           <CardContent>
-            {recentPostALl.data ? (
+            {recentPostALl.data && recentPostALl.data.length > 0 ? (
               <ScrollArea className="h-[400px] w-full space-y-3 rounded-md border">
                 {recentPostALl.data.map((post) => (
                   <div
@@ -172,7 +177,7 @@ export default async function PesertaPage() {
                         </Link>
                       </span>{" "}
                     </div>
-                    <p className="col-span-2  text-right text-xs font-light">
+                    <p className="col-span-2 text-right text-xs font-light">
                       {convertDatetoString(
                         new Date(post.created_at).toString()
                       )}
@@ -184,7 +189,7 @@ export default async function PesertaPage() {
               </ScrollArea>
             ) : (
               <div className="mx-auto flex flex-col items-center justify-center gap-4 py-16">
-                <Icons.post className="size-20 text-gray-400" />
+                <Scroll className="size-20 text-gray-400" />
                 <p className="text-gray-400">Belum ada post yang kamu buat</p>
               </div>
             )}
