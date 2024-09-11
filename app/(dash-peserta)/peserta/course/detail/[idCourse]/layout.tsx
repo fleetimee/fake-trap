@@ -1,7 +1,7 @@
 import React from "react"
 import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
-import { Terminal } from "lucide-react"
+import { Clock11, Scroll, Terminal } from "lucide-react"
 
 import { CourseOneResSection } from "@/types/course/res"
 import { authOptions } from "@/lib/auth"
@@ -142,8 +142,8 @@ export default async function CourseDetailLayout({
       </div>
 
       <div className="md:px-2">
-        <Alert variant="destructive">
-          <Terminal className="h-4 w-4" />
+        <Alert variant="destructive" className="mb-4">
+          <Clock11 className="h-4 w-4" />
           <AlertTitle>Deadline!</AlertTitle>
           <AlertDescription>
             Batas akhir pembelajaran hingga{" "}
@@ -159,6 +159,14 @@ export default async function CourseDetailLayout({
                 hour12: false, // Optional: Use 24-hour format
               })}
             </span>
+          </AlertDescription>
+        </Alert>
+
+        <Alert variant="success">
+          <Scroll className="h-4 w-4" />
+          <AlertTitle>Catatan!</AlertTitle>
+          <AlertDescription>
+            Kamu dapat merangkum materi pembelajaran pada menu "Notes"
           </AlertDescription>
         </Alert>
       </div>

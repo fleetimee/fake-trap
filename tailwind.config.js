@@ -50,6 +50,10 @@ module.exports = {
           DEFAULT: "hsl(var(--informative))",
           foreground: "hsl(var(--informative-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",

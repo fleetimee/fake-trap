@@ -37,6 +37,8 @@ input[type="password"]::-ms-clear {
     --destructive-foreground: 0 0% 100%;
     --informative: 200 88% 60%;
     --informative-foreground: 0 0% 100%;
+    --success: 120 57% 40%; /* Add this line */
+    --success-foreground: 0 0% 100%; /* Add this line */
     --ring: 204 98% 31%;
     --radius: 0.5rem;
   }
