@@ -190,11 +190,21 @@ export function swrFetcher<T>(url: string, token: string) {
   }).then((res) => res.json()) as Promise<T>
 }
 
-export const dateNow = convertDatetoString(new Date().toString())
+export const dateNow = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Jakarta",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+}).format(new Date())
 
-export const getDayWithText = new Date().toLocaleString("en", {
+export const getDayWithText = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Jakarta",
   weekday: "long",
-})
+}).format(new Date())
 
 export function formatBytes(
   bytes: number,
