@@ -45,13 +45,13 @@ export default async function LoginPage() {
               </Suspense>
             </CardContent>
             <CardFooter className="flex flex-wrap items-center justify-end gap-2">
-              <Link
+              {/* <Link
                 aria-label="Reset password"
                 href="/login/forgot-password"
                 className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
               >
                 Reset password
-              </Link>
+              </Link> */}
             </CardFooter>
           </Card>
         </BackgroundGradient>
