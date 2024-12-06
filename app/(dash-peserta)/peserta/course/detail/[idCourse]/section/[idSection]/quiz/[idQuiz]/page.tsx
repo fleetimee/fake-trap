@@ -434,42 +434,67 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
           <TabsContent value="nilai" className="w-full space-y-6">
             {userQuiz.data.length > 0 ? (
-              <Table className="relative">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Nilai</TableHead>
-                    <TableHead>Selesai Pada</TableHead>
-                    <TableHead>Report</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {userQuiz.data.map((result) => (
-                    <TableRow key={result.id_attempt}>
-                      <TableCell>{result.score}</TableCell>
-                      <TableCell>
-                        {convertDatetoStringWithTime(
-                          result.created_at.toString()
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <Link
-                          target="_blank"
-                          className={buttonVariants({
-                            size: "icon",
-                            className:
-                              "mt-4 w-full bg-blue-500 text-center text-white hover:bg-blue-600",
-                          })}
-                          href={`
-                  ${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${tokenExtracted.id}/${result.id_attempt}
-                `}
-                        >
-                          <PrinterIcon className="size-4" />
-                        </Link>
-                      </TableCell>
+              <div className="rounded-lg border shadow-sm">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-muted/50">
+                      <TableHead className="w-[100px]">Nilai</TableHead>
+                      <TableHead>Selesai Pada</TableHead>
+                      <TableHead className="text-right">Report</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {userQuiz.data.map((result) => (
+                      <TableRow key={result.id_attempt}>
+                        <TableCell className="font-medium">
+                          <span
+                            className={cn(
+                              "rounded-md px-2 py-1 text-xs font-semibold",
+                              result.score >= 80
+                                ? "bg-green-100 text-green-700"
+                                : result.score >= 60
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : "bg-red-100 text-red-700"
+                            )}
+                          >
+                            {result.score}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-medium">
+                              {convertDateToShortString(
+                                result.created_at.toString()
+                              )}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(result.created_at).toLocaleTimeString()}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="inline-flex items-center space-x-2 hover:bg-blue-50"
+                            onClick={() => {
+                              const pdfUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${tokenExtracted.id}/${result.id_attempt}`
+                              window.open(
+                                pdfUrl,
+                                "_blank",
+                                "location=yes,height=720,width=800,scrollbars=yes,status=yes,toolbar=no,menubar=no"
+                              )
+                            }}
+                          >
+                            <PrinterIcon className="mr-2 size-4" />
+                            <span>View Report</span>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             ) : (
               <div className="flex flex-col items-center justify-center space-y-4 overflow-auto rounded-lg border border-gray-200 py-4 dark:border-gray-800">
                 <h1 className="flex max-w-md items-center py-2 text-center font-heading ">
