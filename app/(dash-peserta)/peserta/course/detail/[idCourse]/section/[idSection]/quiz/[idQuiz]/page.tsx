@@ -31,7 +31,6 @@ import {
   extractToken,
   getCourseStatus,
 } from "@/lib/utils"
-import Confetti from "@/components/confetti"
 import { Icons } from "@/components/icons"
 import { LottieClient } from "@/components/lottie-anim"
 import NumberTicker from "@/components/number-ticker"
@@ -56,10 +55,19 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import {
   Table,
@@ -209,7 +217,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
   const getLeaderboad = await getQuizLeaderboard({
     token: user?.token,
     idExercise: params.idQuiz,
-    limit: 10,
+    limit: 999,
     page: 1,
   })
 
@@ -262,15 +270,6 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
   return (
     <Card className="w-full rounded-none border-none border-background shadow-none">
-      <div className="pointer-events-none fixed inset-0 z-50">
-        <Confetti
-          isActive={
-            getCurrentUserPlacement.data >= 1 &&
-            getCurrentUserPlacement.data <= 10
-          }
-          duration={5000}
-        />
-      </div>
       <CardHeader>
         <CardTitle>{quiz.data.quiz_title}</CardTitle>
         <CardDescription>{quiz.data.quiz_desc}</CardDescription>
@@ -613,93 +612,122 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
                     <tbody className="bg-gray-50 dark:bg-background">
                       {getLeaderboad.data.length > 0 ? (
-                        getLeaderboad.data.map((leaderboard, index) => (
-                          <tr
-                            className={cn(
-                              "bg-gray-50 dark:bg-background",
-                              leaderboard.user_uuid === tokenExtracted.id &&
-                                "bg-blue-200 dark:bg-blue-700"
-                            )}
-                            key={leaderboard.position}
-                          >
-                            <td className="p-4 text-left">
-                              {leaderboard.position === 1 ? (
-                                <div className="inline-flex items-center justify-between space-x-2">
-                                  <Icons.crown className="h-6 w-6 text-gold" />
-                                  <span className="font-bold text-gold">{`${leaderboard.position}st`}</span>
-                                </div>
-                              ) : leaderboard.position === 2 ? (
-                                <div className="inline-flex items-center justify-between space-x-2">
-                                  <Icons.crown className="h-6 w-6 text-silver" />
-                                  <span className="font-semibold text-silver">{`${leaderboard.position}nd`}</span>
-                                </div>
-                              ) : leaderboard.position === 3 ? (
-                                <div className="inline-flex items-center justify-between space-x-2">
-                                  <Icons.crown className="h-6 w-6 text-bronze" />
-                                  <span className="font-medium text-bronze">{`${leaderboard.position}rd`}</span>
-                                </div>
-                              ) : (
-                                `${leaderboard.position}th`
-                              )}
-                            </td>
-                            <td className="p-4">
-                              <HoverCard>
-                                <HoverCardTrigger asChild>
-                                  <Button
-                                    className="rounded-lg"
-                                    variant="ghost"
-                                  >
-                                    <div className="flex items-center space-x-3">
-                                      <div className="relative size-10 overflow-hidden rounded-full bg-white">
-                                        <Image
-                                          src={
-                                            leaderboard.profile_picture
-                                              ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
-                                              : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
-                                          }
-                                          alt="User name"
-                                          width={200}
-                                          height={200}
-                                        />
-                                      </div>
-                                      <span
-                                        className={`font-medium ${leaderboard.position === 1 ? "font-extrabold text-gold" : leaderboard.position === 2 ? "font-semibold text-silver" : leaderboard.position === 3 ? "font-medium text-bronze" : ""}`}
+                        <>
+                          {/* Show only top 10 in main table */}
+                          {getLeaderboad.data
+                            .slice(0, 10)
+                            .map((leaderboard) => (
+                              <tr
+                                className={cn(
+                                  "bg-gray-50 dark:bg-background",
+                                  leaderboard.user_uuid === tokenExtracted.id &&
+                                    "bg-blue-200 dark:bg-blue-700"
+                                )}
+                                key={leaderboard.position}
+                              >
+                                <td className="p-4 text-left">
+                                  {leaderboard.position === 1 ? (
+                                    <div className="inline-flex items-center justify-between space-x-2">
+                                      <Icons.crown className="h-6 w-6 text-gold" />
+                                      <span className="font-bold text-gold">{`${leaderboard.position}st`}</span>
+                                    </div>
+                                  ) : leaderboard.position === 2 ? (
+                                    <div className="inline-flex items-center justify-between space-x-2">
+                                      <Icons.crown className="h-6 w-6 text-silver" />
+                                      <span className="font-semibold text-silver">{`${leaderboard.position}nd`}</span>
+                                    </div>
+                                  ) : leaderboard.position === 3 ? (
+                                    <div className="inline-flex items-center justify-between space-x-2">
+                                      <Icons.crown className="h-6 w-6 text-bronze" />
+                                      <span className="font-medium text-bronze">{`${leaderboard.position}rd`}</span>
+                                    </div>
+                                  ) : (
+                                    `${leaderboard.position}th`
+                                  )}
+                                </td>
+                                <td className="p-4">
+                                  <HoverCard>
+                                    <HoverCardTrigger asChild>
+                                      <Button
+                                        className="rounded-lg"
+                                        variant="ghost"
                                       >
-                                        {leaderboard.name}
-                                      </span>
-                                    </div>
-                                  </Button>
-                                </HoverCardTrigger>
-                                <HoverCardContent>
-                                  <div className="flex justify-between space-x-4">
-                                    <div className="space-y-1">
-                                      <h4 className="text-sm font-semibold">
-                                        {leaderboard.name}
-                                      </h4>
-                                      <p className="text-sm">
-                                        Waktu paling awal mengerjakan test ini :
-                                      </p>
-                                      <div className="flex items-center pt-2">
-                                        <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
-                                        <span className="text-xs text-muted-foreground">
-                                          {convertDatetoStringWithTime(
-                                            leaderboard.earliest_created_at
-                                          )}
-                                        </span>
+                                        <div className="flex items-center space-x-3">
+                                          <div className="relative size-10 overflow-hidden rounded-full bg-white">
+                                            <Image
+                                              src={
+                                                leaderboard.profile_picture
+                                                  ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                                  : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
+                                              }
+                                              alt="User name"
+                                              width={200}
+                                              height={200}
+                                            />
+                                          </div>
+                                          <span
+                                            className={`font-medium ${leaderboard.position === 1 ? "font-extrabold text-gold" : leaderboard.position === 2 ? "font-semibold text-silver" : leaderboard.position === 3 ? "font-medium text-bronze" : ""}`}
+                                          >
+                                            {leaderboard.name}
+                                          </span>
+                                        </div>
+                                      </Button>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent className="w-80">
+                                      <div className="flex flex-col gap-4">
+                                        <div className="flex items-center gap-4">
+                                          <div className="relative size-24 overflow-hidden rounded-full border-2 border-muted">
+                                            <Image
+                                              src={
+                                                leaderboard.profile_picture
+                                                  ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                                  : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
+                                              }
+                                              alt={leaderboard.name}
+                                              fill
+                                              className="aspect-square scale-150 object-cover object-top" // Increased scale from 125 to 150
+                                              style={{
+                                                objectPosition: "center 0%", // Changed to 0% to show the very top
+                                                transform:
+                                                  "scale(1.5) translateY(10%)", // Added translateY to adjust position
+                                              }}
+                                            />
+                                          </div>
+                                          <div className="space-y-1">
+                                            <h4 className="text-base font-semibold leading-none tracking-tight">
+                                              {leaderboard.name}
+                                            </h4>
+                                            <p className="text-sm font-medium leading-none text-muted-foreground">
+                                              Position #{leaderboard.position}
+                                            </p>
+                                          </div>
+                                        </div>
+                                        <div className="flex flex-col gap-2 border-t pt-4">
+                                          <div className="flex items-center gap-2">
+                                            <CalendarDays className="size-4 text-muted-foreground" />
+                                            <span className="text-sm text-muted-foreground">
+                                              Started at:
+                                            </span>
+                                          </div>
+                                          <p className="text-sm font-medium">
+                                            {convertDatetoStringWithTime(
+                                              leaderboard.earliest_created_at
+                                            )}
+                                          </p>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </div>
-                                </HoverCardContent>
-                              </HoverCard>
-                            </td>
-                            <td className="p-4 text-right">
-                              {leaderboard.score}
-                            </td>
-                            <td className="p-4 text-right">
-                              {leaderboard.time_elapsed}
-                            </td>
-                          </tr>
-                        ))
+                                    </HoverCardContent>
+                                  </HoverCard>
+                                </td>
+                                <td className="p-4 text-right">
+                                  {leaderboard.score}
+                                </td>
+                                <td className="p-4 text-right">
+                                  {leaderboard.time_elapsed}
+                                </td>
+                              </tr>
+                            ))}
+                        </>
                       ) : (
                         <tr>
                           <td colSpan={4} className="p-4 text-center">
@@ -709,6 +737,146 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                       )}
                     </tbody>
                   </table>
+
+                  {/* Add Dialog for remaining entries if more than 10 exist */}
+                  {getLeaderboad.data.length > 10 && (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="mx-auto my-4 flex w-full"
+                        >
+                          Show All Rankings ({getLeaderboad.data.length} total)
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[725px]">
+                        <DialogHeader>
+                          <DialogTitle>Complete Leaderboard</DialogTitle>
+                          <DialogDescription>
+                            Full ranking of all participants
+                          </DialogDescription>
+                        </DialogHeader>
+                        <ScrollArea className="h-[500px] w-full rounded-md border p-4">
+                          <table className="w-full min-w-full">
+                            <tbody>
+                              {getLeaderboad.data.map((leaderboard) => (
+                                <tr
+                                  className={cn(
+                                    "bg-gray-50 dark:bg-background",
+                                    leaderboard.user_uuid ===
+                                      tokenExtracted.id &&
+                                      "bg-blue-200 dark:bg-blue-700"
+                                  )}
+                                  key={leaderboard.position}
+                                >
+                                  <td className="p-4 text-left">
+                                    {leaderboard.position === 1 ? (
+                                      <div className="inline-flex items-center justify-between space-x-2">
+                                        <Icons.crown className="h-6 w-6 text-gold" />
+                                        <span className="font-bold text-gold">{`${leaderboard.position}st`}</span>
+                                      </div>
+                                    ) : leaderboard.position === 2 ? (
+                                      <div className="inline-flex items-center justify-between space-x-2">
+                                        <Icons.crown className="h-6 w-6 text-silver" />
+                                        <span className="font-semibold text-silver">{`${leaderboard.position}nd`}</span>
+                                      </div>
+                                    ) : leaderboard.position === 3 ? (
+                                      <div className="inline-flex items-center justify-between space-x-2">
+                                        <Icons.crown className="h-6 w-6 text-bronze" />
+                                        <span className="font-medium text-bronze">{`${leaderboard.position}rd`}</span>
+                                      </div>
+                                    ) : (
+                                      `${leaderboard.position}th`
+                                    )}
+                                  </td>
+                                  <td className="p-4">
+                                    <HoverCard>
+                                      <HoverCardTrigger asChild>
+                                        <Button
+                                          className="rounded-lg"
+                                          variant="ghost"
+                                        >
+                                          <div className="flex items-center space-x-3">
+                                            <div className="relative size-10 overflow-hidden rounded-full bg-white">
+                                              <Image
+                                                src={
+                                                  leaderboard.profile_picture
+                                                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                                    : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
+                                                }
+                                                alt="User name"
+                                                width={200}
+                                                height={200}
+                                              />
+                                            </div>
+                                            <span
+                                              className={`font-medium ${leaderboard.position === 1 ? "font-extrabold text-gold" : leaderboard.position === 2 ? "font-semibold text-silver" : leaderboard.position === 3 ? "font-medium text-bronze" : ""}`}
+                                            >
+                                              {leaderboard.name}
+                                            </span>
+                                          </div>
+                                        </Button>
+                                      </HoverCardTrigger>
+                                      <HoverCardContent className="w-80">
+                                        <div className="flex flex-col gap-4">
+                                          <div className="flex items-center gap-4">
+                                            <div className="relative size-24 overflow-hidden rounded-full border-2 border-muted">
+                                              <Image
+                                                src={
+                                                  leaderboard.profile_picture
+                                                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                                    : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
+                                                }
+                                                alt={leaderboard.name}
+                                                fill
+                                                className="aspect-square scale-150 object-cover object-top" // Increased scale from 125 to 150
+                                                style={{
+                                                  objectPosition: "center 0%", // Changed to 0% to show the very top
+                                                  transform:
+                                                    "scale(1.5) translateY(10%)", // Added translateY to adjust position
+                                                }}
+                                              />
+                                            </div>
+                                            <div className="space-y-1">
+                                              <h4 className="text-base font-semibold leading-none tracking-tight">
+                                                {leaderboard.name}
+                                              </h4>
+                                              <p className="text-sm font-medium leading-none text-muted-foreground">
+                                                Position #{leaderboard.position}
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <div className="flex flex-col gap-2 border-t pt-4">
+                                            <div className="flex items-center gap-2">
+                                              <CalendarDays className="size-4 text-muted-foreground" />
+                                              <span className="text-sm text-muted-foreground">
+                                                Started at:
+                                              </span>
+                                            </div>
+                                            <p className="text-sm font-medium">
+                                              {convertDatetoStringWithTime(
+                                                leaderboard.earliest_created_at
+                                              )}
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </HoverCardContent>
+                                    </HoverCard>
+                                  </td>
+                                  <td className="p-4 text-right">
+                                    {leaderboard.score}
+                                  </td>
+                                  <td className="p-4 text-right">
+                                    {leaderboard.time_elapsed}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </ScrollArea>
+                      </DialogContent>
+                    </Dialog>
+                  )}
                 </div>
               </CardContent>
             </Card>
