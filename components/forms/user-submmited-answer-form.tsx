@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Info } from "lucide-react"
+import { Info, RefreshCcw } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import useFormPersist from "react-hook-form-persist"
@@ -25,6 +25,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import {
   Form,
   FormControl,
@@ -113,8 +122,7 @@ export function UserSubmittedAnswerForm({
 
   const initialAnswers = persistedState
     ? JSON.parse(persistedState).selected_answers
-    : question.reduce((acc, curr) => {
-        // @ts-ignore
+    : question.reduce<Record<number, number>>((acc, curr) => {
         acc[curr.id_question] = 0
         return acc
       }, {})
@@ -308,6 +316,29 @@ export function UserSubmittedAnswerForm({
       window.removeEventListener("beforeunload", handleBeforeUnload)
     }
   }, [])
+
+  const [openResetDialog, setOpenResetDialog] = useState(false)
+
+  const handleReset = () => {
+    const emptyAnswers = question.reduce<Record<number, number>>(
+      (acc, curr) => {
+        acc[curr.id_question] = 0
+        return acc
+      },
+      {}
+    )
+
+    form.reset({
+      ...form.getValues(),
+      selected_answers: emptyAnswers,
+    })
+
+    setKey((prev) => prev + 1)
+    setOpenResetDialog(false)
+    sonnerToast.info("Reset", {
+      description: "Jawaban berhasil direset",
+    })
+  }
 
   if (!quiz.data.questions) {
     return (
@@ -552,30 +583,71 @@ export function UserSubmittedAnswerForm({
               <div className="grid grid-cols-1 items-center justify-between gap-4 py-2 md:grid-cols-2 md:gap-6">
                 <Button
                   type="submit"
-                  className="w-full"
+                  className={`relative w-full overflow-hidden transition-all duration-300
+                    ${
+                      isPending || isAutoSubmitting
+                        ? "bg-blue-400 dark:bg-blue-600"
+                        : "bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
+                    }
+                  `}
                   disabled={isPending || isPreviewOnly || isAutoSubmitting}
                 >
                   {(isPending || isAutoSubmitting) && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-blue-500/50 backdrop-blur-sm dark:bg-blue-600/50">
+                      <Icons.spinner className="h-5 w-5 animate-spin text-white" />
+                    </div>
                   )}
-                  {isAutoSubmitting ? "Mengumpulkan..." : "Kirim Jawaban"}
+                  <span
+                    className={
+                      isPending || isAutoSubmitting ? "opacity-50" : ""
+                    }
+                  >
+                    {isAutoSubmitting ? "Mengumpulkan..." : "Kirim Jawaban"}
+                  </span>
                 </Button>
 
-                <Button
-                  type="reset"
-                  variant="outline"
-                  className="w-full"
-                  disabled={isPending || isPreviewOnly}
-                  onClick={() => {
-                    setKey((prev) => prev + 1)
-
-                    sonnerToast.info("Reset", {
-                      description: "Jawaban berhasil direset",
-                    })
-                  }}
+                <Dialog
+                  open={openResetDialog}
+                  onOpenChange={setOpenResetDialog}
                 >
-                  Reset
-                </Button>
+                  <DialogTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full border-blue-200 text-blue-600 transition-all hover:border-blue-300 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:border-blue-700 dark:hover:bg-blue-900/50"
+                      disabled={isPending || isPreviewOnly}
+                    >
+                      <RefreshCcw className="mr-2 h-4 w-4" />
+                      Reset Jawaban
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Reset Jawaban</DialogTitle>
+                      <DialogDescription>
+                        Apakah anda yakin ingin mereset semua jawaban? Tindakan
+                        ini tidak dapat dibatalkan.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="gap-2 sm:gap-0">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setOpenResetDialog(false)}
+                      >
+                        Batal
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={handleReset}
+                        className="bg-red-500 hover:bg-red-600"
+                      >
+                        Reset
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </div>
             </form>
           </Form>
