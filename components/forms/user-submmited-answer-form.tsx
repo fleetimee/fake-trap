@@ -493,27 +493,48 @@ export function UserSubmittedAnswerForm({
                                   <label
                                     key={index}
                                     className={`
-                                      relative flex cursor-pointer select-none items-center space-x-3 rounded-lg 
+                                      relative flex cursor-pointer select-none items-center space-x-4 rounded-lg 
                                       border p-4 transition-all duration-200 ease-in-out
                                       ${
                                         field.value === answer.id_answer
-                                          ? "border-blue-500 bg-blue-50/80 shadow-md dark:bg-blue-900/20"
-                                          : "border-blue-100 bg-white hover:border-blue-200 hover:bg-blue-50/50 dark:border-blue-800 dark:bg-slate-900 dark:hover:bg-blue-950/50"
+                                          ? "border-blue-500 bg-blue-50 shadow-sm dark:border-blue-400 dark:bg-blue-950"
+                                          : "border-slate-200 bg-white hover:border-blue-200 hover:bg-blue-50/50 dark:border-slate-800 dark:bg-slate-950 dark:hover:border-blue-800 dark:hover:bg-blue-950/50"
                                       }
                                       ${isPending || isPreviewOnly ? "cursor-not-allowed opacity-60" : ""}
                                     `}
                                   >
-                                    <FormControl className="shrink-0">
-                                      <RadioGroupItem
-                                        value={answer.id_answer.toString()}
-                                        checked={
-                                          field.value === answer.id_answer
-                                        }
-                                        className="pointer-events-none" // Prevent direct radio input interaction
-                                        id={`q-${question.id_question}-a-${answer.id_answer}`}
-                                      />
+                                    <FormControl>
+                                      <div className="relative flex h-5 w-5 items-center justify-center">
+                                        <RadioGroupItem
+                                          value={answer.id_answer.toString()}
+                                          className={`
+                                            h-4 w-4 rounded border border-slate-300 text-blue-600 
+                                            focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 
+                                            disabled:cursor-not-allowed disabled:opacity-50
+                                            dark:border-slate-700 dark:text-blue-500 dark:focus:ring-blue-500 dark:focus:ring-offset-slate-950
+                                            ${
+                                              field.value === answer.id_answer
+                                                ? "border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-500"
+                                                : ""
+                                            }
+                                          `}
+                                        />
+                                        {field.value === answer.id_answer && (
+                                          <svg
+                                            className="absolute h-3 w-3 text-white dark:text-slate-950"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                          >
+                                            <polyline points="20 6 9 17 4 12" />
+                                          </svg>
+                                        )}
+                                      </div>
                                     </FormControl>
-                                    <span className="flex-1 cursor-pointer text-sm font-medium leading-6 md:text-base">
+                                    <span className="flex-1 text-sm font-medium text-slate-700 dark:text-slate-200 md:text-base">
                                       {answer.answer_text}
                                     </span>
                                   </label>
