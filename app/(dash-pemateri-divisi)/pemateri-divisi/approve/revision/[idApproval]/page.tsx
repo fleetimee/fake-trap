@@ -79,7 +79,7 @@ export default async function ApproveKnowledgeRevisionPage({
       <div className="lg:flex lg:items-start lg:space-x-10">
         <Card className="border-2 hover:border-primary lg:w-1/2">
           <CardHeader>
-            <CardTitle>Preview Mateir</CardTitle>
+            <CardTitle>Preview Materi</CardTitle>
             <CardDescription>
               Ini adalah pengajuan materi yang akan di approve
             </CardDescription>
