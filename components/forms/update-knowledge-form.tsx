@@ -82,6 +82,20 @@ export function UpdateKnowledgeForm({
     },
   })
 
+  // Add file validation function
+  const validateImageFile = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      return "File harus berupa gambar"
+    }
+
+    const fileSize = file.size / 1024 / 1024 // Convert to MB
+    if (fileSize > 2) {
+      return "Ukuran file tidak boleh lebih dari 2MB"
+    }
+
+    return true
+  }
+
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
@@ -184,16 +198,31 @@ export function UpdateKnowledgeForm({
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    if (e.target.files) {
-                      form.setValue("image", e.target.files[0])
-                      setSelectedImage(URL.createObjectURL(e.target.files[0]))
+                    if (e.target.files && e.target.files[0]) {
+                      const file = e.target.files[0]
+                      const validationResult = validateImageFile(file)
+
+                      if (validationResult === true) {
+                        form.setValue("image", file)
+                        form.clearErrors("image") // Clear any existing errors
+                        setSelectedImage(URL.createObjectURL(file))
+                      } else {
+                        form.setError("image", {
+                          type: "manual",
+                          message: validationResult,
+                        })
+                        e.target.value = ""
+                        setSelectedImage(
+                          `${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.image}`
+                        )
+                      }
                     }
                   }}
                 />
               </FormControl>
               <FormDescription>
                 Gambar ini opsional, jika tidak diisi maka akan menggunakan
-                gambar default
+                gambar default. Maksimal ukuran file 2MB.
               </FormDescription>
               <FormMessage />
             </FormItem>
