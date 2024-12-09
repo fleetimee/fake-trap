@@ -17,6 +17,13 @@ import { requestKnowledgeSchema } from "@/lib/validations/request"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
   Command,
   CommandEmpty,
   CommandGroup,
@@ -39,6 +46,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 
 type Inputs = z.infer<typeof requestKnowledgeSchema>
@@ -106,116 +114,143 @@ export function RequestKnowledgeForm({
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-8"
-      >
-        <FormField
-          control={form.control}
-          name="user_uuid_approver"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Atasan <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Popover>
-                  <PopoverTrigger asChild>
+    <Card className="w-full border-blue-100">
+      <CardHeader className="border-b border-blue-50 bg-blue-50/50">
+        <CardTitle className="text-blue-900">Pengajuan Permintaan</CardTitle>
+        <CardDescription className="text-blue-600">
+          Ajukan permintaan persetujuan materi kepada atasan Anda
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-6">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid w-full gap-6"
+          >
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="user_uuid_approver"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base font-semibold text-blue-900">
+                      Atasan <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <Button
-                        disabled={isPending}
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "w-full justify-between",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? supervisors.find(
-                              (supervisor) => supervisor.uuid === field.value
-                            )?.name
-                          : "Pilih Supervisor"}
-                        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-                      </Button>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              disabled={isPending}
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-full justify-between border-blue-100 bg-white px-4 py-6 hover:bg-blue-50/50",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value
+                                ? supervisors.find(
+                                    (supervisor) =>
+                                      supervisor.uuid === field.value
+                                  )?.name
+                                : "Pilih Supervisor"}
+                              <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className=" w-[var(--radix-popover-trigger-width)] p-0 xl:w-[620px]">
+                          <Command>
+                            <CommandInput placeholder="Cari Pemateri" />
+
+                            <CommandList>
+                              <CommandEmpty>
+                                Supervisor tidak ditemukan
+                              </CommandEmpty>
+
+                              <CommandGroup>
+                                <ScrollArea className="h-full">
+                                  {supervisors.map((supervisor) => (
+                                    <CommandItem
+                                      value={supervisor.name}
+                                      key={supervisor.uuid}
+                                      onSelect={(value) => {
+                                        form.clearErrors("user_uuid_approver")
+                                        form.setValue(
+                                          "user_uuid_approver",
+                                          supervisor.uuid
+                                        )
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 size-4",
+                                          supervisor.uuid === field.value
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {supervisor.name}
+                                    </CommandItem>
+                                  ))}
+                                </ScrollArea>
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className=" w-[var(--radix-popover-trigger-width)] p-0 xl:w-[620px]">
-                    <Command>
-                      <CommandInput placeholder="Cari Pemateri" />
+                    <FormDescription className="text-sm text-blue-600/80">
+                      Atasan yang dipilih akan menerima permintaan pengajuan
+                      materi
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                      <CommandList>
-                        <CommandEmpty>Supervisor tidak ditemukan</CommandEmpty>
+              <Separator className="my-6 bg-blue-100" />
 
-                        <CommandGroup>
-                          <ScrollArea className="h-full">
-                            {supervisors.map((supervisor) => (
-                              <CommandItem
-                                value={supervisor.name}
-                                key={supervisor.uuid}
-                                onSelect={(value) => {
-                                  form.clearErrors("user_uuid_approver")
-                                  form.setValue(
-                                    "user_uuid_approver",
-                                    supervisor.uuid
-                                  )
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 size-4",
-                                    supervisor.uuid === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {supervisor.name}
-                              </CommandItem>
-                            ))}
-                          </ScrollArea>
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormControl>
-              <FormDescription>
-                Atasan yang dipilih akan menerima permintaan pengajuan materi
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <FormField
+                control={form.control}
+                name="comment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base font-semibold text-blue-900">
+                      Komentar
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        disabled={isPending}
+                        id="comment"
+                        placeholder="Masukkan komentar atau catatan tambahan disini..."
+                        {...field}
+                        className="min-h-[120px] resize-none border-blue-100 focus-visible:ring-blue-400"
+                      />
+                    </FormControl>
+                    <FormDescription className="text-sm text-blue-600/80">
+                      Komentar yang diberikan akan dikirimkan ke approver
+                      pemateri
+                    </FormDescription>
+                    <FormMessage {...field} />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-        <FormField
-          control={form.control}
-          name="comment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="comment">Komentar</FormLabel>
-              <FormControl>
-                <Textarea
-                  disabled={isPending}
-                  id="comment"
-                  placeholder="Komentar"
-                  {...field}
-                  className="w-full"
-                />
-              </FormControl>
-              <FormDescription>
-                Komentar yang diberikan akan dikirimkan ke approver pemateri
-              </FormDescription>
-              <FormMessage {...field} />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit" disabled={isPending} className="w-fit">
-          {isPending && <Icons.spinner className="animate-spin" />}
-          Kirim
-        </Button>
-      </form>
-    </Form>
+            <div className="flex justify-end pt-4">
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="min-w-[120px] gap-2 bg-blue-600 hover:bg-blue-700"
+              >
+                {isPending && <Icons.spinner className="size-4 animate-spin" />}
+                <span>Kirim Permintaan</span>
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   )
 }
