@@ -406,6 +406,7 @@ export function AddCourseForm({ baseUrl, userId }: AddCourseFormProps) {
                     selected={field.value}
                     onSelect={field.onChange}
                     initialFocus
+                    disablePastDates
                   />
                   <div className="border-t border-border p-3">
                     <TimePickerDemo
@@ -455,6 +456,7 @@ export function AddCourseForm({ baseUrl, userId }: AddCourseFormProps) {
                       field.onChange(date)
                     }}
                     initialFocus
+                    disablePastDates
                   />
                   <div className="border-t border-border p-3">
                     <TimePickerDemo
