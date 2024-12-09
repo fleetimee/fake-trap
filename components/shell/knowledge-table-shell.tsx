@@ -144,6 +144,7 @@ export function KnowledgeTableShell({
             </Badge>
           </div>
         ),
+        enableSorting: false,
       },
       {
         accessorKey: "knowledge_title",
