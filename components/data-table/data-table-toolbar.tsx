@@ -29,6 +29,7 @@ interface DataTableToolbarProps<TData> {
   newRowLink?: string
   canCreate?: boolean
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
+  hasActiveParams?: boolean // Add this line
 }
 
 export function DataTableToolbar<TData>({
@@ -40,6 +41,7 @@ export function DataTableToolbar<TData>({
   isExportable,
   exportAction,
   canCreate = true,
+  hasActiveParams = true, // Add this line
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
   const [isPending, startTransition] = React.useTransition()
@@ -129,16 +131,17 @@ export function DataTableToolbar<TData>({
         {isExportable && exportAction ? (
           <Link
             aria-label="Export"
-            href={exportAction}
+            href={hasActiveParams ? exportAction : "#"}
             target="_blank"
             rel="noreferrer"
+            className={!hasActiveParams ? "pointer-events-none" : ""}
           >
             <div
               className={cn(
                 buttonVariants({
                   variant: "outline",
                   size: "sm",
-                  className: "h-8",
+                  className: cn("h-8", !hasActiveParams && "opacity-50"),
                 })
               )}
             >

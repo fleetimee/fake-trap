@@ -84,6 +84,13 @@ interface DataTableProps<TData, TValue> {
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
 
   canCreate?: boolean
+
+  /**
+   * Whether there are active parameters
+   * @default false
+   * @type boolean
+   */
+  hasActiveParams?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -96,6 +103,7 @@ export function DataTable<TData, TValue>({
   isExportable = false,
   deleteRowsAction,
   canCreate = true,
+  hasActiveParams = true,
 }: DataTableProps<TData, TValue>) {
   const [isMouseDown, setIsMouseDown] = React.useState(false)
   const [startX, setStartX] = React.useState(0)
@@ -136,6 +144,7 @@ export function DataTable<TData, TValue>({
         isExportable={isExportable}
         deleteRowsAction={deleteRowsAction}
         canCreate={canCreate}
+        hasActiveParams={hasActiveParams}
       />
       <div className="rounded-md border">
         <ScrollArea

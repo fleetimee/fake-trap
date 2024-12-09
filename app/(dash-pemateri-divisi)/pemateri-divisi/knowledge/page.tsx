@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import { AlertCircle } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getOperatorCategory } from "@/lib/fetcher/category-fetcher"
@@ -18,6 +19,7 @@ import { DashboardHeader } from "@/components/header"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
 import { DashboardShell, KnowledgeTableShell } from "@/components/shell"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Widget } from "@/components/widget"
 
 export const metadata: Metadata = {
@@ -95,6 +97,16 @@ export default async function PemateriDivisiKnowledgePage({
     }),
   ])
 
+  // Check if any filters are applied
+  const hasFilters = !!(
+    searchQueryInitial ||
+    id_category ||
+    status_text ||
+    status ||
+    fromInitial ||
+    toInitial
+  )
+
   return (
     <DashboardShell>
       <BreadCrumbs
@@ -152,6 +164,17 @@ export default async function PemateriDivisiKnowledgePage({
           subtitle={knowledgeStatus.data.recent_knowledge_title.toString()}
         />
       </div>
+
+      {/* Add Alert before DataTable */}
+      <Alert variant="default" className="my-4">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Informasi Ekspor</AlertTitle>
+        <AlertDescription>
+          {hasFilters
+            ? "Data yang diekspor hanya akan mencakup data sesuai dengan filter yang Anda terapkan."
+            : "Tanpa filter yang diterapkan, ekspor akan mencakup semua data yang tersedia."}
+        </AlertDescription>
+      </Alert>
 
       <Suspense fallback={<DataTableSkeleton columnCount={10} />}>
         <KnowledgeTableShell

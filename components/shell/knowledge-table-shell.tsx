@@ -40,6 +40,8 @@ export function KnowledgeTableShell({
       role.role_name === "Admininstrator" || role.role_name === "Operator LMS"
   )
 
+  const userUuid = session?.expires.id
+
   const pathname = usePathname()
 
   const searchParams = useSearchParams()
@@ -83,7 +85,11 @@ export function KnowledgeTableShell({
     params.append("to", to)
   }
 
-  const exportUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/knowledge/v2/export?${params.toString()}`
+  // const exportUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/knowledge/v2/export?${params.toString()}`
+
+  const exportUrl = isAdmin
+    ? `${process.env.NEXT_PUBLIC_BASE_URL}/knowledge/v2/export?${params.toString()}`
+    : `${process.env.NEXT_PUBLIC_BASE_URL}/knowledge/v2/export/${userUuid}?${params.toString()}`
 
   const columns = React.useMemo<ColumnDef<KnowledgeListResData, unknown>[]>(
     () => [
@@ -327,6 +333,10 @@ export function KnowledgeTableShell({
     searchableColumns,
     filterableColumns,
   })
+
+  const hasActiveParams = React.useMemo(() => {
+    return !!(status || statusText || idCategory || from || to)
+  }, [status, statusText, idCategory, from, to])
 
   return (
     <DataTable

@@ -47,8 +47,6 @@ export function Widget({ icon, title, subtitle }: WidgetProps) {
           {subtitle}
         </h4>
       </div>
-
-      <BorderBeam size={250} duration={12} delay={9} />
     </Card>
   )
 }
