@@ -204,7 +204,7 @@ export function RequestKnowledgeForm({
                 />
               </FormControl>
               <FormDescription>
-                Komentar yang diberikan akan dikirimkan ke pemateri
+                Komentar yang diberikan akan dikirimkan ke approver pemateri
               </FormDescription>
               <FormMessage {...field} />
             </FormItem>
