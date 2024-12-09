@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { RocketIcon } from "@radix-ui/react-icons"
@@ -41,9 +41,23 @@ export function SoalShell(props: {
     ),
   })
 
+  const storageKey = `quiz_${props.idQuiz}_questions`
+
+  // Initialize quizzes from localStorage
   const [quizzes, setQuizzes] = React.useState<
     z.infer<typeof formSchemaQuestion>[]
-  >([])
+  >(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(storageKey)
+      return saved ? JSON.parse(saved) : []
+    }
+    return []
+  })
+
+  // Update localStorage when quizzes change
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(quizzes))
+  }, [quizzes, storageKey])
 
   function deleteQuestion(index: number) {
     setQuizzes((prev) => prev.filter((_, i) => i !== index))
@@ -68,6 +82,8 @@ export function SoalShell(props: {
         })
 
         setQuizzes([])
+        // Clear localStorage after successful submission
+        localStorage.removeItem(storageKey)
       } else {
         sonnerToast.error("Gagal", {
           description: "Soal gagal ditambahkan",
