@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useRef, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Turnstile } from "@marsidev/react-turnstile"
@@ -33,8 +33,10 @@ type Inputs = z.infer<typeof forgotPasswordSchema>
 
 export function ForgotPasswordForm() {
   const router = useRouter()
+  const recaptchaRef = useRef<ReCAPTCHA>(null)
 
   const [isCaptchaVerified, setCaptchaVerified] = useState(false)
+  const [cooldown, setCooldown] = useState(0)
 
   const [isPending, startTransition] = useTransition()
 
@@ -45,6 +47,19 @@ export function ForgotPasswordForm() {
     },
   })
 
+  const startCooldown = () => {
+    setCooldown(60)
+    const timer = setInterval(() => {
+      setCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+  }
+
   async function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
@@ -54,11 +69,16 @@ export function ForgotPasswordForm() {
 
         if (response.ok) {
           sonnerToast.success("Berhasil", {
-            description: "Silahkan cek email anda untuk mengubah password",
+            description:
+              "Silahkan cek email Anda untuk melanjutkan proses atur ulang password",
           })
 
           router.refresh()
           form.reset()
+          startCooldown()
+          // Reset ReCAPTCHA and its state
+          recaptchaRef.current?.reset()
+          setCaptchaVerified(false)
         } else {
           const errorResponse: ErrorResponseProps = await response.json()
 
@@ -68,7 +88,8 @@ export function ForgotPasswordForm() {
         }
       } catch (error) {
         sonnerToast.error("Gagal", {
-          description: "Terjadi kesalahan, silahkan coba lagi",
+          description:
+            "Terjadi kesalahan sistem, silahkan coba beberapa saat lagi",
         })
       }
     })
@@ -82,17 +103,17 @@ export function ForgotPasswordForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Alamat Email</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="email"
-                  placeholder="Email"
-                  disabled={isPending}
+                  placeholder="Masukkan email Anda"
+                  disabled={isPending || cooldown > 0}
                 />
               </FormControl>
               <FormDescription>
-                Email yang digunakan untuk login
+                Email yang terdaftar untuk akun Anda
               </FormDescription>
 
               <FormMessage />
@@ -101,6 +122,7 @@ export function ForgotPasswordForm() {
         />
 
         <ReCAPTCHA
+          ref={recaptchaRef}
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
           onChange={async (token) => {
             const response = await fetch(
@@ -130,9 +152,12 @@ export function ForgotPasswordForm() {
           onExpired={() => setCaptchaVerified(false)}
         />
 
-        <Button type="submit" disabled={isPending || !isCaptchaVerified}>
+        <Button
+          type="submit"
+          disabled={isPending || !isCaptchaVerified || cooldown > 0}
+        >
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Continue
+          {cooldown > 0 ? `Tunggu ${cooldown} detik` : "Kirim"}
         </Button>
       </form>
     </Form>

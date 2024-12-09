@@ -15,27 +15,31 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Lupa Password ",
-  description: "Lupa Password",
+  title: "Lupa Password",
+  description: "Atur Ulang Password",
 }
 
 export default async function LoginPage() {
   return (
     <Shell className="max-w-lg">
-      <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900 sm:p-1 md:min-w-[10rem]">
-        <Card className=" md:min-w-[30rem]">
+      <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900 sm:p-1 md:min-w-40">
+        <Card className="md:min-w-[30rem]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">🤔 Reset password</CardTitle>
+            <CardTitle className="text-2xl">🤔 Atur Ulang Password</CardTitle>
             <CardDescription>
-              Enter your email address and we will send you a verification code
+              Masukkan alamat email Anda dan kami akan mengirimkan kode
+              verifikasi
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Suspense fallback={<div>Loading...</div>}>
               <ForgotPasswordForm />
-            </Suspense>{" "}
+            </Suspense>
           </CardContent>
           <CardFooter className="flex flex-wrap items-center justify-end gap-2">
+            <div className="flex-1 text-sm text-muted-foreground">
+              <span id="cooldown-text"></span>
+            </div>
             <Link
               aria-label="Reset password"
               href="/login"
