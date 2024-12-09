@@ -314,6 +314,10 @@ export function KnowledgeTableShell({
           label: "Rejected",
           value: "0053",
         },
+        {
+          label: "Draft",
+          value: "0054",
+        },
       ],
     },
     {
