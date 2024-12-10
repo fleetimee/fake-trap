@@ -68,8 +68,8 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
       created_by: userId ? userId : session?.expires.id,
       updated_by: userId ? userId : session?.expires.id,
       time_limit: 0,
-      jam_buka: new Date(),
-      jam_tutup: new Date(),
+      jam_buka: undefined, // Changed from new Date()
+      jam_tutup: undefined, // Changed from new Date()
     },
   })
 
@@ -317,7 +317,7 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
                       {field.value ? (
                         format(field.value, "PPP HH:mm:ss")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Pilih Waktu Buka</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -328,6 +328,7 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
                     selected={field.value}
                     onSelect={field.onChange}
                     initialFocus
+                    disablePastDates
                   />
                   <div className="border-t border-border p-3">
                     <TimePickerDemo
@@ -365,7 +366,7 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
                       {field.value ? (
                         format(field.value, "PPP HH:mm:ss")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Pilih Waktu Tutup</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -376,6 +377,7 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
                     selected={field.value}
                     onSelect={field.onChange}
                     initialFocus
+                    disablePastDates
                   />
                   <div className="border-t border-border p-3">
                     <TimePickerDemo
