@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Logo from "@/public/logo.png"
 import { MainNavItem } from "@/types"
+import { useSession } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
 import { CategoryNavDataListRes } from "@/types/navbar/res/navbar-list"
@@ -41,6 +42,8 @@ export function MobileNav({
 }: MobileNavProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
+  const { data: session } = useSession()
+  const isLoggedOn = session !== undefined
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -55,16 +58,6 @@ export function MobileNav({
       </SheetTrigger>
       <SheetContent position="left" size="content">
         <div className="px-7">
-          {/* <Link
-            aria-label="Home"
-            href="/"
-            className="flex items-center"
-            onClick={() => setIsOpen(false)}
-          >
-            <Icons.logo className="mr-2 size-4" aria-hidden="true" />
-            <span className="font-bold">{siteConfig.name}</span>
-          </Link> */}
-
           <Link href="/" className="flex items-center  ">
             <Image src={Logo} alt="Logo" width={25} height={25} />
 
@@ -73,74 +66,76 @@ export function MobileNav({
             </span>
           </Link>
         </div>
-        <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-          <div className="pl-1 pr-7">
-            <Accordion type="single" collapsible className="w-full">
-              {mainNavItems?.map((item, index) => (
-                <AccordionItem value={item.title} key={index}>
-                  <AccordionTrigger className="text-sm capitalize">
-                    {item.title}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-col space-y-2">
-                      {item.items?.map((subItem, index) =>
-                        subItem.href ? (
-                          <MobileLink
-                            key={index}
-                            href={String(subItem.href)}
-                            pathname={pathname}
-                            setIsOpen={setIsOpen}
-                            disabled={subItem.disabled}
-                          >
-                            {subItem.title}
-                          </MobileLink>
-                        ) : (
-                          <div
-                            key={index}
-                            className="text-foreground/70 transition-colors"
-                          >
-                            {item.title}
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
+        {isLoggedOn && (
+          <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
+            <div className="pl-1 pr-7">
+              <Accordion type="single" collapsible className="w-full">
+                {mainNavItems?.map((item, index) => (
+                  <AccordionItem value={item.title} key={index}>
+                    <AccordionTrigger className="text-sm capitalize">
+                      {item.title}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        {item.items?.map((subItem, index) =>
+                          subItem.href ? (
+                            <MobileLink
+                              key={index}
+                              href={String(subItem.href)}
+                              pathname={pathname}
+                              setIsOpen={setIsOpen}
+                              disabled={subItem.disabled}
+                            >
+                              {subItem.title}
+                            </MobileLink>
+                          ) : (
+                            <div
+                              key={index}
+                              className="text-foreground/70 transition-colors"
+                            >
+                              {item.title}
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
 
-              {sidebarNavItems.length > 0 ? (
-                <AccordionItem value="sidebar">
-                  <AccordionTrigger className="text-sm">
-                    Sidebar Menu
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-col space-y-2">
-                      {sidebarNavItems?.map((item, index) =>
-                        item.menu_url ? (
-                          <MobileLink
-                            key={index}
-                            href={String(item.menu_url)}
-                            pathname={pathname}
-                            setIsOpen={setIsOpen}
-                          >
-                            {item.menu_name}
-                          </MobileLink>
-                        ) : (
-                          <div
-                            key={index}
-                            className="text-foreground/70 transition-colors"
-                          >
-                            {item.menu_name}
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ) : null}
-            </Accordion>
-          </div>
-        </ScrollArea>
+                {sidebarNavItems.length > 0 ? (
+                  <AccordionItem value="sidebar">
+                    <AccordionTrigger className="text-sm">
+                      Sidebar Menu
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        {sidebarNavItems?.map((item, index) =>
+                          item.menu_url ? (
+                            <MobileLink
+                              key={index}
+                              href={String(item.menu_url)}
+                              pathname={pathname}
+                              setIsOpen={setIsOpen}
+                            >
+                              {item.menu_name}
+                            </MobileLink>
+                          ) : (
+                            <div
+                              key={index}
+                              className="text-foreground/70 transition-colors"
+                            >
+                              {item.menu_name}
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ) : null}
+              </Accordion>
+            </div>
+          </ScrollArea>
+        )}
       </SheetContent>
     </Sheet>
   )

@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Logo from "@/public/logo.png"
 import { MainNavItem } from "@/types"
+import { useSession } from "next-auth/react"
 
 import { CategoryNavDataListRes } from "@/types/navbar/res/navbar-list"
 import { siteConfig } from "@/config/site"
@@ -30,6 +31,12 @@ interface MainNavProps {
 export function MainNav({ items, children, topNavItems }: MainNavProps) {
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
 
+  const { data: session } = useSession()
+
+  const isLoggedOn = session !== undefined
+
+  console.log("session", session)
+
   return (
     <div className="hidden gap-6 lg:flex">
       <Tooltip>
@@ -46,42 +53,22 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
           B-LIVE (BPD DIY Learning Integrated Virtual Education)
         </TooltipContent>
       </Tooltip>
-      <NavigationMenu>
-        <NavigationMenuList>
-          {items?.[0]?.items ? (
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="h-auto">
-                {items[0].title}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  {items[0].items.map((item) => (
-                    <ListItem
-                      key={item.title}
-                      title={item.title}
-                      href={item.href}
-                    >
-                      {item.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          ) : null}
 
-          {/* {topNavItems?.map((item) =>
-            item?.category_name ? (
-              <NavigationMenuItem key={item.category_name}>
-                <NavigationMenuTrigger className="h-auto capitalize">
-                  {item.category_name}
+      {isLoggedOn && (
+        <NavigationMenu>
+          <NavigationMenuList>
+            {items?.[0]?.items ? (
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="h-auto">
+                  {items[0].title}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {item.knowledge.map((item) => (
+                  <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                    {items[0].items.map((item) => (
                       <ListItem
-                        key={item.id_knowledge}
-                        title={item.knowledge_title}
-                        href={`/intro/knowledge/${item.id_knowledge}`}
+                        key={item.title}
+                        title={item.title}
+                        href={item.href}
                       >
                         {item.description}
                       </ListItem>
@@ -89,20 +76,10 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-            ) : null
-          )} */}
-        </NavigationMenuList>
-      </NavigationMenu>
-      {/* <button
-        className="flex items-center space-x-2 md:hidden"
-        onClick={() => setShowMobileMenu(!showMobileMenu)}
-      >
-        {showMobileMenu ? <Icons.close /> : <Icons.logo />}
-        <span className="font-bold">Menu</span>
-      </button>
-      {showMobileMenu && items && (
-        <MobileNav items={items}>{children}</MobileNav>
-      )} */}
+            ) : null}
+          </NavigationMenuList>
+        </NavigationMenu>
+      )}
     </div>
   )
 }
