@@ -29,13 +29,13 @@ export const siteConfig = {
 
         {
           title: "Pembelajaran",
-          href: "#",
+          href: "/peserta/course",
           description:
             "Memungkinkan pengguna untuk mengeksplorasi pembelajaran yang tersedia dan mengikuti pembelajaran yang diinginkan.",
           items: [],
         },
         {
-          title: "Forum",
+          title: "Forum (WIP) 🛠️",
           href: "#",
           description:
             "Menyediakan forum diskusi atau komunitas online di mana pengguna dapat berinteraksi",

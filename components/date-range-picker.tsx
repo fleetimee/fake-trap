@@ -72,7 +72,7 @@ export function DateRangePicker({
     router.push(
       `${pathname}?${createQueryString({
         from: date?.from ? format(date.from, "yyyy-MM-dd") : null,
-        to: date?.to ? format(date.to, "yyyy-MM-dd") : null,
+        to: date?.to ? format(addDays(date.to, 1), "yyyy-MM-dd") : null,
       })}`,
       {
         scroll: false,
