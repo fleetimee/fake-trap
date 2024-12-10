@@ -10,6 +10,7 @@ import { toast as sonnerToast } from "sonner"
 import { z } from "zod"
 
 import {
+  ErrorJsonResponse,
   ErrorResponse,
   ErrorResponseJson,
   SuccessResponse,
@@ -57,6 +58,19 @@ export function AddCategoryForm({ userId }: AddCategoryFormProps) {
     },
   })
 
+  const validateImageFile = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      return "File harus berupa gambar"
+    }
+
+    const fileSize = file.size / 1024 / 1024 // Convert to MB
+    if (fileSize > 2) {
+      return "Ukuran file tidak boleh lebih dari 2MB"
+    }
+
+    return true
+  }
+
   async function onSubmit(data: InputsWithIndexSignature) {
     setIsloading(true)
 
@@ -72,9 +86,9 @@ export function AddCategoryForm({ userId }: AddCategoryFormProps) {
         body: formData,
       })
 
-      if (response.ok) {
-        const responseData: SuccessResponse = await response.json()
+      const responseData = await response.json()
 
+      if (response.ok) {
         sonnerToast.success(
           `Success ${response.status}: ${response.statusText}`,
           {
@@ -86,10 +100,9 @@ export function AddCategoryForm({ userId }: AddCategoryFormProps) {
         router.refresh()
         form.reset()
       } else {
-        const errorResponse: ErrorResponseJson = await response.json()
-
-        sonnerToast.error(`Error ${response.status}: ${response.statusText}`, {
-          description: errorResponse.message || "Terjadi kesalahan",
+        const errorData = responseData as ErrorJsonResponse
+        sonnerToast.error(`Error ${response.status}`, {
+          description: errorData.error || "Terjadi kesalahan",
         })
       }
     } catch (error) {
@@ -143,21 +156,33 @@ export function AddCategoryForm({ userId }: AddCategoryFormProps) {
                   disabled={isLoading}
                   className="h-10 resize-none"
                   onChange={(e) => {
-                    if (e.target.files) {
-                      form.setValue("image", e.target.files[0])
+                    if (e.target.files && e.target.files[0]) {
+                      const file = e.target.files[0]
+                      const validationResult = validateImageFile(file)
 
-                      const reader = new FileReader()
-                      reader.onloadend = () => {
-                        setPreview(reader.result as string)
+                      if (validationResult === true) {
+                        form.setValue("image", file)
+                        form.clearErrors("image") // Clear any existing errors
+                        const reader = new FileReader()
+                        reader.onloadend = () => {
+                          setPreview(reader.result as string)
+                        }
+                        reader.readAsDataURL(file)
+                      } else {
+                        form.setError("image", {
+                          type: "manual",
+                          message: validationResult,
+                        })
+                        e.target.value = "" // Clear the input
+                        setPreview(null)
                       }
-                      reader.readAsDataURL(e.target.files[0])
                     }
                   }}
                 />
               </FormControl>
               <FormDescription>
                 Gambar ini opsional, jika tidak diisi maka akan menggunakan
-                gambar default
+                gambar default. Maksimal ukuran file 2MB.
               </FormDescription>
               <FormMessage />
             </FormItem>

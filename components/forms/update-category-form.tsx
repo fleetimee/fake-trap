@@ -58,6 +58,19 @@ export default function UpdateCategoryForm({
     },
   })
 
+  const validateImageFile = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      return "File harus berupa gambar"
+    }
+
+    const fileSize = file.size / 1024 / 1024 // Convert to MB
+    if (fileSize > 2) {
+      return "Ukuran file tidak boleh lebih dari 2MB"
+    }
+
+    return true
+  }
+
   async function onSubmit(data: InputsWithIndexSignature) {
     startTransition(async () => {
       try {
@@ -73,25 +86,28 @@ export default function UpdateCategoryForm({
           body: formData,
         })
 
+        const responseData = await response.json()
+
         if (response.ok) {
-          sonnerToast.success("Berhasil", {
-            description: "Modul berhasil diubah",
-          })
+          sonnerToast.success(
+            `Success ${response.status}: ${response.statusText}`,
+            {
+              description: responseData.message || "Modul berhasil diubah",
+            }
+          )
 
           router.back()
           router.refresh()
         } else {
-          const errorResponse: ErrorResponse = await response.json()
-
-          sonnerToast.error("Gagal", {
-            description: errorResponse.error,
+          const errorData = responseData as ErrorResponse
+          sonnerToast.error(`Error ${response.status}`, {
+            description: errorData.error || "Terjadi kesalahan",
           })
         }
       } catch (error) {
         sonnerToast.error("Gagal", {
-          description: "Modul gagal diubah",
+          description: `${error}`,
         })
-      } finally {
       }
     })
   }
@@ -133,16 +149,31 @@ export default function UpdateCategoryForm({
                   disabled={isPending}
                   accept="image/*"
                   onChange={(e) => {
-                    if (e.target.files) {
-                      form.setValue("image", e.target.files[0])
-                      setSelectedImage(URL.createObjectURL(e.target.files[0]))
+                    if (e.target.files && e.target.files[0]) {
+                      const file = e.target.files[0]
+                      const validationResult = validateImageFile(file)
+
+                      if (validationResult === true) {
+                        form.setValue("image", file)
+                        form.clearErrors("image")
+                        setSelectedImage(URL.createObjectURL(file))
+                      } else {
+                        form.setError("image", {
+                          type: "manual",
+                          message: validationResult,
+                        })
+                        e.target.value = ""
+                        setSelectedImage(
+                          `${process.env.NEXT_PUBLIC_BASE_URL}${category.image}`
+                        )
+                      }
                     }
                   }}
                 />
               </FormControl>
               <FormDescription>
                 Gambar ini opsional, jika tidak diisi maka akan menggunakan
-                gambar default
+                gambar default. Maksimal ukuran file 2MB.
               </FormDescription>
               <FormMessage />
             </FormItem>
