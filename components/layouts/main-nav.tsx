@@ -33,7 +33,7 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
 
   const { data: session } = useSession()
 
-  const isLoggedOn = session !== undefined
+  const isLoggedOn = session !== null
 
   console.log("session", session)
 

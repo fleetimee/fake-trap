@@ -43,7 +43,7 @@ export function MobileNav({
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
   const { data: session } = useSession()
-  const isLoggedOn = session !== undefined
+  const isLoggedOn = session !== null
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
