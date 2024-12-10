@@ -180,7 +180,8 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
                         disabled={isPending}
                         className={cn(
                           "w-full justify-between",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
+                          form.formState.errors.quiz_type && "border-red-500"
                         )}
                       >
                         {field.value
@@ -225,6 +226,7 @@ export function AddTestForm({ references, baseUrl, userId }: AddTestFormProps) {
               <FormDescription>
                 Pilih tipe ujian yang akan dibuat
               </FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
