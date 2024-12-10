@@ -14,3 +14,8 @@ export interface SuccessResponse {
   data: any
   message: string
 }
+
+export interface ErrorJsonResponse {
+  code: number
+  error: string
+}
