@@ -201,10 +201,30 @@ export const dateNow = new Intl.DateTimeFormat("en-US", {
   hour12: false,
 }).format(new Date())
 
-export const getDayWithText = new Intl.DateTimeFormat("en-US", {
+export const getDayWithText = new Intl.DateTimeFormat("id-ID", {
   timeZone: "Asia/Jakarta",
   weekday: "long",
 }).format(new Date())
+
+// Or alternatively, if you want more control over the translation:
+/*
+export const getDayWithText = (() => {
+  const days = {
+    Sunday: "Minggu",
+    Monday: "Senin",
+    Tuesday: "Selasa",
+    Wednesday: "Rabu",
+    Thursday: "Kamis",
+    Friday: "Jumat",
+    Saturday: "Sabtu"
+  }
+  const englishDay = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Jakarta",
+    weekday: "long"
+  }).format(new Date())
+  return days[englishDay as keyof typeof days]
+})()
+*/
 
 export function formatBytes(
   bytes: number,

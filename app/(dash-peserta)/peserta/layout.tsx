@@ -50,7 +50,7 @@ export default async function PesertaLayout({
   const isUserHasMoreThanOneRole = tokenExtracted?.role.length > 1
 
   return (
-    <div className="relative flex  h-full min-h-screen flex-col">
+    <div className="relative flex h-full min-h-screen flex-col">
       <SiteHeader
         user={user}
         displayName={userLogged.data.name}
@@ -60,22 +60,20 @@ export default async function PesertaLayout({
         topNavItems={categoryNav.data}
         profilePicture={userLogged.data.profile_picture}
       />
-      {/* <div className="bg-background bg-cover bg-top bg-no-repeat  py-4 dark:bg-none md:bg-left lg:min-h-[100svh]"> */}
-      <div className="grow bg-background py-4">
-        <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
-          <aside className="hidden w-[200px] flex-col border-r md:flex">
+      <div className="grow bg-background py-6">
+        <div className="container grid flex-1 gap-8 md:grid-cols-[200px_1fr]">
+          <aside className="hidden w-[200px] flex-col md:flex">
             <DashboardNewNewNav
               items={menu?.data}
               org={userOrg.data}
               pesertaCourseTrackerCount={courseTrackerCount?.data}
             />
           </aside>
-          <main className="flex w-full flex-1 flex-col overflow-auto">
+          <main className="flex w-full flex-1 flex-col overflow-hidden">
             {children}
           </main>
         </div>
       </div>
-      {/* </div> */}
       <SiteFooter className="border-t" />
       <ScrollToTopButton />
     </div>
