@@ -15,6 +15,7 @@ interface CourseUserTableShellProps {
   pageCount: number
   linkString?: string
   idCourse?: string
+  shouldExportable?: boolean
 }
 
 export function CourseUserTableShell({
@@ -22,6 +23,7 @@ export function CourseUserTableShell({
   pageCount,
   linkString = "",
   idCourse,
+  shouldExportable = true,
 }: CourseUserTableShellProps) {
   const exportUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/course/${idCourse}/users/export`
 
@@ -83,7 +85,7 @@ export function CourseUserTableShell({
       dataTable={dataTable}
       columns={columns}
       newRowLink={linkString === "" ? undefined : linkString}
-      isExportable
+      isExportable={shouldExportable}
       exportAction={exportUrl}
     />
   )
