@@ -50,8 +50,31 @@ export function CountdownTimer({ endDate }: CountdownTimerProps) {
   }
 
   return (
-    <div>
-      <span>{`Deadline: ${formatTime(timeLeft.days)}d ${formatTime(timeLeft.hours)}h ${formatTime(timeLeft.minutes)}m ${formatTime(timeLeft.seconds)}s`}</span>
+    <div className="flex items-center space-x-3 rounded-xl bg-blue-50/80 p-3 backdrop-blur-sm">
+      <div className="flex flex-col items-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600 text-xl font-bold text-white">
+          {formatTime(timeLeft.days)}
+        </div>
+        <span className="mt-1 text-xs font-medium text-blue-600">Hari</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500 text-xl font-bold text-white">
+          {formatTime(timeLeft.hours)}
+        </div>
+        <span className="mt-1 text-xs font-medium text-blue-600">Jam</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-400 text-xl font-bold text-white">
+          {formatTime(timeLeft.minutes)}
+        </div>
+        <span className="mt-1 text-xs font-medium text-blue-600">Menit</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-300 text-xl font-bold text-white">
+          {formatTime(timeLeft.seconds)}
+        </div>
+        <span className="mt-1 text-xs font-medium text-blue-600">Detik</span>
+      </div>
     </div>
   )
 }

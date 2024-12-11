@@ -9,35 +9,31 @@ export function SectionBanner({ className, ...props }: SectionBannerProps) {
   return (
     <div className="px-2">
       <section
-        // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-        className=" relative min-h-[300px] rounded-md   py-14 md:block"
-        style={
-          props.image
-            ? {
-                backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}${props.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backdropFilter: "blur(10px)",
-              }
-            : {}
-        }
+        className="relative aspect-[21/9] max-h-[400px] min-h-[300px] w-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
+        style={{
+          background: props.image
+            ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(${process.env.NEXT_PUBLIC_BASE_URL}${props.image})`
+            : "linear-gradient(to right, var(--background), var(--muted))",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          objectFit: "cover",
+        }}
       >
-        <div className="mx-auto max-w-screen-xl justify-between  gap-x-12 px-4 md:flex md:px-8">
-          <div className="max-w-xl rounded-md border-b border-white bg-background/95 p-4 text-black backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:text-white">
-            <h3 className="text-3xl font-semibold  sm:text-4xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent" />
+
+        <div className="relative flex h-full w-full items-center justify-between gap-x-12 px-6 py-16 md:px-8">
+          <div className="max-w-xl rounded-lg border border-blue-200/20 bg-blue-50/95 p-8 backdrop-blur-sm transition-all duration-300 hover:bg-blue-100/95 supports-[backdrop-filter]:bg-blue-50/80">
+            <h3 className="text-3xl font-semibold leading-tight tracking-normal text-blue-900 sm:text-4xl md:tracking-tight lg:text-[2.75rem]">
               {props.title}
             </h3>
-            <p className="mt-3 ">{props.description}</p>
+            <p className="mt-6 text-base font-normal leading-7 text-blue-700/90 [text-wrap:pretty] md:text-lg">
+              {props.description}
+            </p>
           </div>
-          <div className="mt-4 flex-none md:mt-0">
-            {/* {canCreateSection ? (
-              <Link
-                href={props.urlLink}
-                className="inline-block rounded-lg bg-white px-4 py-2 font-medium text-gray-800 shadow-md duration-150 hover:bg-gray-100 hover:shadow-none active:bg-gray-200"
-              >
-                <span className="ml-2">Tambah Section</span>
-              </Link>
-            ) : null} */}
+
+          <div className="mt-4 hidden flex-none md:mt-0 md:block">
+            {/* Add button here if needed */}
           </div>
         </div>
       </section>
