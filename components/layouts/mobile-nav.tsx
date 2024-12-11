@@ -6,10 +6,12 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Logo from "@/public/logo.png"
 import { MainNavItem } from "@/types"
+import { generateFromString } from "generate-avatar"
 import { useSession } from "next-auth/react"
 
 import { MenuListResNewData } from "@/types/menu/res"
 import { CategoryNavDataListRes } from "@/types/navbar/res/navbar-list"
+import { UserOrgOneResData } from "@/types/user/res/user-org-get-one"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -33,17 +35,23 @@ interface MobileNavProps {
   sidebarNavItems: MenuListResNewData[]
   topNavItems?: CategoryNavDataListRes[]
   children?: React.ReactNode
+  userOrg?: UserOrgOneResData
+  profilePicture?: string
 }
 
 export function MobileNav({
   mainNavItems,
   sidebarNavItems,
   children,
+  userOrg,
+  profilePicture,
 }: MobileNavProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
   const { data: session } = useSession()
   const isLoggedOn = session !== null
+
+  console.log("userOrg", userOrg)
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -56,19 +64,22 @@ export function MobileNav({
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" size="content">
-        <div className="px-7">
-          <Link href="/" className="flex items-center  ">
+      <SheetContent
+        position="left"
+        className="flex w-full max-w-[300px] flex-col p-0"
+      >
+        <div className="px-6 py-4">
+          <Link href="/" className="flex items-center">
             <Image src={Logo} alt="Logo" width={25} height={25} />
-
-            <span className=" font-bold text-bpdprimary sm:inline-block">
+            <span className="font-bold text-bpdprimary sm:inline-block">
               - LIVE
             </span>
           </Link>
         </div>
+
         {isLoggedOn && (
-          <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-            <div className="pl-1 pr-7">
+          <>
+            <ScrollArea className="flex-1 px-6">
               <Accordion type="single" collapsible className="w-full">
                 {mainNavItems?.map((item, index) => (
                   <AccordionItem value={item.title} key={index}>
@@ -88,21 +99,14 @@ export function MobileNav({
                             >
                               {subItem.title}
                             </MobileLink>
-                          ) : (
-                            <div
-                              key={index}
-                              className="text-foreground/70 transition-colors"
-                            >
-                              {item.title}
-                            </div>
-                          )
+                          ) : null
                         )}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
                 ))}
 
-                {sidebarNavItems.length > 0 ? (
+                {sidebarNavItems.length > 0 && (
                   <AccordionItem value="sidebar">
                     <AccordionTrigger className="text-sm">
                       Sidebar Menu
@@ -119,22 +123,54 @@ export function MobileNav({
                             >
                               {item.menu_name}
                             </MobileLink>
-                          ) : (
-                            <div
-                              key={index}
-                              className="text-foreground/70 transition-colors"
-                            >
-                              {item.menu_name}
-                            </div>
-                          )
+                          ) : null
                         )}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
-                ) : null}
+                )}
               </Accordion>
-            </div>
-          </ScrollArea>
+            </ScrollArea>
+
+            {/* Profile card moved to footer */}
+            {userOrg && (
+              <div className="mt-auto border-t p-4">
+                <div className="flex items-center gap-3 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 p-3">
+                  <div className="relative">
+                    <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-white/25 to-white/5" />
+                    <div className="relative size-12 overflow-hidden rounded-full border-2 border-white/30">
+                      <Image
+                        src={
+                          profilePicture
+                            ? `${process.env.NEXT_PUBLIC_BASE_URL}${profilePicture}`
+                            : `data:image/svg+xml;utf8,${generateFromString(
+                                userOrg.nama || "Default"
+                              )}`
+                        }
+                        alt={userOrg.nama || "Profile"}
+                        width={48}
+                        height={48}
+                        className="size-full object-cover object-top"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <h3 className="truncate text-sm font-medium text-white">
+                      {userOrg.nama}
+                    </h3>
+                    <p className="truncate text-xs text-white/80">
+                      {userOrg.jabatan}
+                    </p>
+                    <div className="mt-1">
+                      <span className="inline-flex rounded-full bg-white/10 px-2 py-0.5 text-xs text-white backdrop-blur-sm">
+                        {userOrg.kd_kantor}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </SheetContent>
     </Sheet>
