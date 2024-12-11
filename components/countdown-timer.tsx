@@ -49,31 +49,63 @@ export function CountdownTimer({ endDate }: CountdownTimerProps) {
     return time < 10 ? `0${time}` : time.toString()
   }
 
+  const isTimeUp =
+    timeLeft.days === 0 &&
+    timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 &&
+    timeLeft.seconds === 0
+
+  if (isTimeUp) {
+    return (
+      <div className="flex items-center rounded-lg border border-red-400/20 bg-red-500/10 p-2 shadow-lg backdrop-blur-md">
+        <div className="flex items-center space-x-2">
+          <div className="h-2 w-2 animate-pulse rounded-full bg-red-500"></div>
+          <span className="text-sm font-semibold tracking-wider text-red-500">
+            WAKTU HABIS
+          </span>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex items-center space-x-3 rounded-xl bg-blue-50/80 p-3 backdrop-blur-sm">
-      <div className="flex flex-col items-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600 text-xl font-bold text-white">
-          {formatTime(timeLeft.days)}
+    <div className="flex items-center space-x-1 rounded-lg border border-black/10 bg-white/30 p-2 shadow-lg backdrop-blur-md">
+      <div className="flex items-center">
+        <div className="flex flex-col items-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white/80 text-base font-bold text-black shadow-inner">
+            {formatTime(timeLeft.days)}
+          </div>
+          <span className="mt-0.5 text-[9px] font-bold tracking-wider text-black">
+            HARI
+          </span>
         </div>
-        <span className="mt-1 text-xs font-medium text-blue-600">Hari</span>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500 text-xl font-bold text-white">
-          {formatTime(timeLeft.hours)}
+        <span className="mx-0.5 text-sm font-medium text-black/60">:</span>
+        <div className="flex flex-col items-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white/80 text-base font-bold text-black shadow-inner">
+            {formatTime(timeLeft.hours)}
+          </div>
+          <span className="mt-0.5 text-[9px] font-bold tracking-wider text-black">
+            JAM
+          </span>
         </div>
-        <span className="mt-1 text-xs font-medium text-blue-600">Jam</span>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-400 text-xl font-bold text-white">
-          {formatTime(timeLeft.minutes)}
+        <span className="mx-0.5 text-sm font-medium text-black/60">:</span>
+        <div className="flex flex-col items-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white/80 text-base font-bold text-black shadow-inner">
+            {formatTime(timeLeft.minutes)}
+          </div>
+          <span className="mt-0.5 text-[9px] font-bold tracking-wider text-black">
+            MNT
+          </span>
         </div>
-        <span className="mt-1 text-xs font-medium text-blue-600">Menit</span>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-300 text-xl font-bold text-white">
-          {formatTime(timeLeft.seconds)}
+        <span className="mx-0.5 text-sm font-medium text-black/60">:</span>
+        <div className="flex flex-col items-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white/80 text-base font-bold text-black shadow-inner">
+            {formatTime(timeLeft.seconds)}
+          </div>
+          <span className="mt-0.5 text-[9px] font-bold tracking-wider text-black">
+            DTK
+          </span>
         </div>
-        <span className="mt-1 text-xs font-medium text-blue-600">Detik</span>
       </div>
     </div>
   )

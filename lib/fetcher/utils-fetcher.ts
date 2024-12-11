@@ -1,8 +1,9 @@
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY || "your_api_key"
 // Using OpenMeteo API instead (no API key needed)
 const WEATHER_API_URL = `https://api.open-meteo.com/v1/forecast?latitude=-7.7971&longitude=110.3688&current_weather=true&timezone=Asia%2FJakarta`
-// Using type.fit quotes API instead
-const QUOTES_API_URL = "https://type.fit/api/quotes"
+// Update the API URL
+const QUOTES_API_URL =
+  "https://api.forismatic.com/api/1.0/?method=getQuote&forQuote&lang=en&format=json"
 
 export async function getWeatherData() {
   try {
@@ -39,12 +40,10 @@ export async function getMotivationalQuote() {
       next: { revalidate: 86400 },
     })
     if (!res.ok) throw new Error("Quote fetch failed")
-    const quotes = await res.json()
-    // Get a random quote from the collection
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)]
+    const quote = await res.json()
     return {
-      content: randomQuote.text,
-      author: randomQuote.author || "Anonymous",
+      content: quote.quoteText.trim(),
+      author: quote.quoteAuthor.trim() || "Anonymous",
     }
   } catch (error) {
     console.error("Quote fetch error:", error)
@@ -55,7 +54,7 @@ export async function getMotivationalQuote() {
   }
 }
 
-function getWeatherDescription(code: number): string {
+export function getWeatherDescription(code: number): string {
   const weatherCodes: Record<number, string> = {
     0: "Cerah",
     1: "Sebagian Berawan",
@@ -66,10 +65,25 @@ function getWeatherDescription(code: number): string {
     51: "Gerimis Ringan",
     53: "Gerimis",
     55: "Gerimis Lebat",
+    56: "Gerimis Beku Ringan",
+    57: "Gerimis Beku",
     61: "Hujan Ringan",
     63: "Hujan",
     65: "Hujan Lebat",
-    80: "Hujan Lokal",
+    66: "Hujan Beku Ringan",
+    67: "Hujan Beku",
+    71: "Salju Ringan",
+    73: "Salju",
+    75: "Salju Lebat",
+    77: "Butiran Salju",
+    80: "Hujan Lokal Ringan",
+    81: "Hujan Lokal",
+    82: "Hujan Lokal Lebat",
+    85: "Hujan Salju Lokal Ringan",
+    86: "Hujan Salju Lokal",
+    95: "Badai Petir Ringan atau Sedang",
+    96: "Badai Petir dengan Hujan Es Ringan",
+    99: "Badai Petir dengan Hujan Es",
   }
   return weatherCodes[code] || "Tidak ada data"
 }

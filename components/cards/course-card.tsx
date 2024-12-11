@@ -28,6 +28,19 @@ export interface CardBodyProps {
   status?: CourseAvailability
 }
 
+const getStatusColor = (status: CourseAvailability) => {
+  switch (status) {
+    case CourseAvailability.ACTIVE:
+      return "bg-green-500/20 text-green-500 hover:bg-green-500/30"
+    case CourseAvailability.OVER:
+      return "bg-red-500/20 text-red-500 hover:bg-red-500/30"
+    case CourseAvailability.SOON:
+      return "bg-blue-500/20 text-blue-500 hover:bg-blue-500/30"
+    default:
+      return "bg-gray-500/20 text-gray-500 hover:bg-gray-500/30"
+  }
+}
+
 const CardBody = ({
   title,
   description,
@@ -35,7 +48,10 @@ const CardBody = ({
   status,
 }: CardBodyProps) => (
   <div className={cn(className)}>
-    <Badge variant="outline" className="max-w-max text-white">
+    <Badge
+      variant="outline"
+      className={cn("max-w-max", getStatusColor(status!))}
+    >
       {status}
     </Badge>
 

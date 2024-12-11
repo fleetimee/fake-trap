@@ -36,113 +36,126 @@ export default async function PanelSelector() {
   const isExecutive = role.some((item) => item.id_role === 6)
 
   return (
-    <section
-      id="features"
-      className="container space-y-6 bg-slate-50 py-8 dark:bg-transparent md:py-12 lg:py-24"
-    >
-      <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-        <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-          <Balancer>
-            Halo, {tokenExtracted.name}
-            <span
-              className="ml-4 inline-block"
-              style={{ transform: "translateY(-0.1em)" }}
-            >
-              <LottieClient
-                animationData={Confetti}
-                className="inline-block size-14"
+    <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-slate-100 via-blue-50 to-white px-4 py-12 dark:from-slate-900 dark:via-blue-900 dark:to-slate-800">
+      <div className="bg-grid-black/[0.02] dark:bg-grid-white/[0.02] absolute inset-0" />
+
+      <div className="animate-fade-in container relative space-y-12">
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <h2 className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text font-heading text-3xl font-bold leading-tight text-transparent transition-all dark:from-white dark:to-gray-200 sm:text-4xl md:text-6xl">
+            <Balancer ratio={0.5}>
+              Halo,{" "}
+              <span className="bg-gradient-to-r from-blue-600 via-blue-400 to-blue-500 bg-clip-text text-transparent dark:from-blue-400 dark:via-blue-300 dark:to-blue-200">
+                {tokenExtracted.name}
+              </span>
+              <span className="animate-wave ml-1 inline-block align-middle sm:ml-2">
+                <LottieClient
+                  animationData={Confetti}
+                  className="inline-block size-8 sm:size-10"
+                />
+              </span>
+            </Balancer>
+          </h2>
+
+          <p className="max-w-[90%] text-base text-muted-foreground sm:text-lg">
+            Silahkan masuk ke panel yang anda inginkan sesuai dengan hak akses
+          </p>
+        </div>
+
+        <div className="mx-auto grid auto-rows-[1fr] gap-6 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
+          {isPemateriDivisi && (
+            <div className="animate-fade-in-up">
+              <ButtonSelector
+                title="Pemateri Divisi"
+                description="Pemateri divisi dapat mengelola materi yang ada di divisi masing-masing."
+                link="/pemateri-divisi"
+                disabled={!isPemateriDivisi}
+                isTextMuted
+                animationData={PemateriLottie}
               />
-            </span>
-          </Balancer>
-        </h2>
+            </div>
+          )}
 
-        <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          Silahkan masuk ke panel yang anda inginkan sesuai dengan hak akses
-          yang anda miliki.
-        </p>
-      </div>
+          {isSpvPematerDivisi && (
+            <div className="animate-fade-in-up">
+              <ButtonSelector
+                title="Approval Pemateri"
+                description="Approval Pemateri dapat menapprove materi yang ada di divisi masing-masing."
+                link="/supervisor-pemateri-divisi"
+                disabled={!isSpvPematerDivisi}
+                animationData={SupervisorLottie}
+              />
+            </div>
+          )}
 
-      <div className="mx-auto grid items-center justify-items-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
-        {isPemateriDivisi && (
-          <ButtonSelector
-            title="Pemateri Divisi"
-            description="Pemateri divisi dapat mengelola materi yang ada di divisi masing-masing."
-            link="/pemateri-divisi"
-            disabled={!isPemateriDivisi}
-            isTextMuted
-            animationData={PemateriLottie}
-          />
-        )}
+          {isOperatorLMS && (
+            <div className="animate-fade-in-up">
+              <ButtonSelector
+                title="Operator LMS"
+                description="Operator LMS dapat mengelola semua yang ada di LMS."
+                link="/operator-lms"
+                disabled={!isOperatorLMS}
+                isTextMuted
+                animationData={OperatorLottie}
+              />
+            </div>
+          )}
 
-        {isSpvPematerDivisi && (
-          <ButtonSelector
-            title="Approval Pemateri"
-            description="Approval Pemateri dapat menapprove materi yang ada di divisi masing-masing."
-            link="/supervisor-pemateri-divisi"
-            disabled={!isSpvPematerDivisi}
-            animationData={SupervisorLottie}
-          />
-        )}
+          {isSpvOperatorLMS && (
+            <div className="animate-fade-in-up">
+              <ButtonSelector
+                title="Approval LMS"
+                description="Approval LMS dapat menapprove pembelajaran yang ada di LMS."
+                link="/supervisor-lms"
+                disabled={!isSpvOperatorLMS}
+                isTextMuted
+                animationData={SupervisorLottie}
+              />
+            </div>
+          )}
 
-        {isOperatorLMS && (
-          <ButtonSelector
-            title="Operator LMS"
-            description="Operator LMS dapat mengelola semua yang ada di LMS."
-            link="/operator-lms"
-            disabled={!isOperatorLMS}
-            isTextMuted
-            animationData={OperatorLottie}
-          />
-        )}
+          {isPeserta && (
+            <div className="animate-fade-in-up">
+              <ButtonSelector
+                title="Peserta"
+                description="Peserta dapat mengikuti pembelajaran yang ada di LMS."
+                link="/peserta"
+                disabled={!isPeserta}
+                animationData={PesertaLottie}
+              />
+            </div>
+          )}
 
-        {isSpvOperatorLMS && (
-          <ButtonSelector
-            title="Approval LMS"
-            description="Approval LMS dapat menapprove pembelajaran yang ada di LMS."
-            link="/supervisor-lms"
-            disabled={!isSpvOperatorLMS}
-            isTextMuted
-            animationData={SupervisorLottie}
-          />
-        )}
+          {isExecutive && (
+            <div className="animate-fade-in-up">
+              <ButtonSelector
+                title="Administrator"
+                description="Memonitor BLIVE, berupa monitor user, struktur organisasi, dan audit trail"
+                link="/administrator"
+                disabled={!isExecutive}
+                isTextMuted
+                animationData={ExecutiveLottie}
+              />
+            </div>
+          )}
+        </div>
 
-        {isPeserta && (
-          <ButtonSelector
-            title="Peserta"
-            description="Peserta dapat mengikuti pembelajaran yang ada di LMS."
-            link="/peserta"
-            disabled={!isPeserta}
-            animationData={PesertaLottie}
-          />
-        )}
+        <div className="mx-auto text-center md:max-w-[58rem]">
+          <p className="mx-auto max-w-[95%] text-sm leading-relaxed text-muted-foreground sm:text-base sm:leading-7">
+            Panel yang tidak dapat diakses menandakan bahwa Anda belum memiliki
+            hak akses yang sesuai. Apabila Anda yakin seharusnya memiliki akses
+            ke panel tersebut, silakan menghubungi Operator LMS untuk verifikasi
+            lebih lanjut.
+          </p>
+        </div>
 
-        {isExecutive && (
-          <ButtonSelector
-            title="Administrator"
-            description="Memonitor BLIVE, berupa monitor user, struktur organisasi, dan audit trail"
-            link="/administrator"
-            disabled={!isExecutive}
-            isTextMuted
-            animationData={ExecutiveLottie}
-          />
-        )}
-      </div>
-
-      <div className="mx-auto text-center md:max-w-[58rem]">
-        <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          Panel yang tidak bisa diakses berarti anda tidak memiliki hak akses
-          untuk panel tersebut. Jika anda merasa memiliki hak akses untuk panel
-          tersebut, silahkan hubungi Operator LMS.
-        </p>
-      </div>
-
-      <div className="mx-auto flex max-w-[25rem] items-center justify-center text-center">
-        <Link href={"/"}>
-          <Button size="default" className="mr-4 w-full" variant="outline">
-            <ArrowLeftIcon className="mr-2 size-5" />
-            Kembali ke Home
-          </Button>
-        </Link>
+        <div className="mx-auto flex max-w-[25rem] items-center justify-center text-center">
+          <Link href={"/"}>
+            <Button size="default" className="mr-4 w-full" variant="outline">
+              <ArrowLeftIcon className="mr-2 size-5" />
+              Kembali ke Home
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   )

@@ -23,6 +23,7 @@ import {
 import {
   getMotivationalQuote,
   getWeatherData,
+  getWeatherDescription,
 } from "@/lib/fetcher/utils-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import {
@@ -104,13 +105,10 @@ export default async function PesertaPage() {
     getMotivationalQuote(),
   ])
 
-  const getWeatherIcon = (weatherId: number) => {
-    if (weatherId >= 200 && weatherId < 300)
-      return <CloudDrizzle className="size-6 text-blue-500" />
-    if (weatherId >= 300 && weatherId < 600)
-      return <Cloud className="size-6 text-gray-500" />
-    if (weatherId >= 600 && weatherId < 700)
-      return <CloudSun className="size-6 text-orange-500" />
+  const getWeatherIcon = (code: number) => {
+    if (code >= 61) return <CloudDrizzle className="size-6 text-blue-500" />
+    if (code >= 51) return <Cloud className="size-6 text-gray-500" />
+    if (code >= 45) return <CloudSun className="size-6 text-orange-500" />
     return <Sun className="size-6 text-yellow-500" />
   }
 
@@ -181,7 +179,7 @@ export default async function PesertaPage() {
                     <div className="space-y-1">
                       <h3 className="font-heading">Cuaca Yogyakarta</h3>
                       <p className="text-sm text-muted-foreground">
-                        {weather.weather[0].description}
+                        {getWeatherDescription(weather.weather[0].id)}
                       </p>
                       <p className="text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-400">
                         {weather.main.temp.toFixed(1)}°C
