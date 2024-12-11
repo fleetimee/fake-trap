@@ -144,8 +144,19 @@ function getOrdinalIndicator(number: number) {
 const getStatusConfig = (
   isQuizOpen: boolean,
   isPretestExceded: boolean,
-  isPosttestExceded: boolean
+  isPosttestExceded: boolean,
+  isQuestionEmpty: boolean
 ) => {
+  if (isQuestionEmpty) {
+    return {
+      color: "bg-red-100 dark:bg-red-900",
+      textColor: "text-red-800 dark:text-red-100",
+      icon: <AlertTriangle className="mr-2 size-4" />,
+      message: "Soal Belum Tersedia",
+      remark: "Mohon tunggu hingga pengajar menambahkan soal",
+    }
+  }
+
   if (!isQuizOpen) {
     return {
       color: "bg-yellow-100 dark:bg-yellow-900",
@@ -244,6 +255,9 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
   const formattedDate = convertDatetoString(quiz.data.created_at.toString())
 
   const questionLength = quiz.data.questions ? quiz.data.questions.length : 0
+
+  const isQuestionEmpty = questionLength === 0
+
   const totalQuestions = quiz.data.questions ? questionLength : 0
   const maximumScore = totalQuestions * 10
   const userScore = 100
@@ -335,7 +349,8 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                   const status = getStatusConfig(
                     isQuizOpen,
                     isPretestExceded,
-                    isPosttestExceded
+                    isPosttestExceded,
+                    isQuestionEmpty
                   )
                   return (
                     <div className="absolute bottom-0 flex flex-col items-center gap-2 text-center">
@@ -446,6 +461,11 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                       <Icons.lock className="mr-2 size-5" />
                       BELUM SAATNYA MEMULAI UJIAN
                     </span>
+                  ) : isQuestionEmpty ? (
+                    <span className="inline-flex items-center rounded-lg bg-red-100 px-6 py-3 text-red-800 dark:bg-red-900 dark:text-red-100">
+                      <AlertTriangle className="mr-2 size-5" />
+                      SOAL UJIAN BELUM TERSEDIA
+                    </span>
                   ) : isPretestExceded || isPosttestExceded ? (
                     <span className="inline-flex items-center rounded-lg bg-red-100 px-6 py-3 text-red-800 dark:bg-red-900 dark:text-red-100">
                       <AlertTriangle className="mr-2 size-5" />
@@ -463,23 +483,34 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                   <AlertDialogTrigger
                     className="w-full max-w-md"
                     disabled={
-                      !isQuizOpen || isPretestExceded || isPosttestExceded
+                      !isQuizOpen ||
+                      isPretestExceded ||
+                      isPosttestExceded ||
+                      isQuestionEmpty
                     }
                   >
                     <Button
                       className="w-full"
                       size="lg"
                       variant={
-                        !isQuizOpen || isPretestExceded || isPosttestExceded
+                        !isQuizOpen ||
+                        isPretestExceded ||
+                        isPosttestExceded ||
+                        isQuestionEmpty
                           ? "destructive"
                           : "default"
                       }
                       disabled={
-                        !isQuizOpen || isPretestExceded || isPosttestExceded
+                        !isQuizOpen ||
+                        isPretestExceded ||
+                        isPosttestExceded ||
+                        isQuestionEmpty
                       }
                     >
                       {!isQuizOpen ? (
                         <Icons.lock className="mr-2 size-4" />
+                      ) : isQuestionEmpty ? (
+                        <AlertTriangle className="mr-2 size-4" />
                       ) : isPretestExceded || isPosttestExceded ? (
                         <X className="mr-2 size-4" />
                       ) : (
@@ -491,15 +522,27 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Siap Memulai?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Setelah ujian dimulai, Anda tidak dapat mengulang
-                        kembali
+                      <AlertDialogTitle>Siap Memulai Ujian?</AlertDialogTitle>
+                      <AlertDialogDescription className="space-y-2">
+                        <p>Beberapa hal yang perlu diperhatikan:</p>
+                        <ul className="list-disc pl-6 text-sm">
+                          <li>
+                            Anda dapat menghentikan ujian sementara jika waktu
+                            masih tersedia
+                          </li>
+                          <li>Jawaban Anda akan tersimpan secara otomatis</li>
+                          <li>
+                            Anda dapat melanjutkan ujian selama waktu masih
+                            tersedia
+                          </li>
+                          <li>
+                            Jika waktu habis, jawaban akan otomatis dikumpulkan
+                          </li>
+                        </ul>
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Batal</AlertDialogCancel>
-
                       <AlertDialogAction asChild>
                         <Link
                           href={`
@@ -707,12 +750,19 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
             {/* Leaderboard Card */}
             <Card>
               <CardHeader className="pb-0">
-                <div className="flex flex-col space-y-1.5 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-                  <div>
+                <div className="flex flex-col space-y-1.5 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
+                  <div className="space-y-1">
                     <CardTitle className="text-xl">Leaderboard</CardTitle>
-                    <CardDescription className="max-w-2xl">
-                      Peringkat keseluruhan peserta berdasarkan nilai tertinggi
-                      dan waktu tercepat
+                    <CardDescription className="max-w-2xl space-y-1 text-[10px] sm:text-xs">
+                      <p>Peringkat keseluruhan peserta berdasarkan:</p>
+                      <ul className="list-inside list-disc pl-1 text-muted-foreground">
+                        <li>Nilai tertinggi sebagai prioritas utama</li>
+                        <li>Waktu pengerjaan tercepat jika nilai sama</li>
+                        <li>
+                          Waktu mulai paling awal jika nilai dan waktu
+                          pengerjaan sama
+                        </li>
+                      </ul>
                     </CardDescription>
                   </div>
                   {getLeaderboad.data.length > 10 && (
@@ -721,10 +771,10 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="mt-2 sm:mt-0"
+                          className="text-xs hover:bg-gray-100 dark:hover:bg-gray-800"
                         >
-                          <Users className="mr-2 size-4" />
-                          Lihat Semua ({getLeaderboad.data.length})
+                          <Users className="mr-1 size-3.5" />
+                          {getLeaderboad.data.length}
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[725px]">
@@ -873,7 +923,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="p-0">
+              <CardContent className="mt-6 p-0">
                 <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
                   <div className="overflow-x-auto">
                     <table className="w-full divide-y divide-gray-200 dark:divide-gray-800">

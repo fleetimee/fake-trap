@@ -52,7 +52,11 @@ export default async function CourseQuizStartPage({
   const isPretestExceded = userQuiz.data.length > 0 && isPretest
   const isPosttestExceded = userQuiz.data.length === 3 && isPosttest
 
-  if (!isQuizOpen || isPretestExceded || isPosttestExceded) {
+  const questionLength = quiz.data.questions ? quiz.data.questions.length : 0
+
+  const isQuestionEmpty = questionLength === 0
+
+  if (!isQuizOpen || isPretestExceded || isPosttestExceded || isQuestionEmpty) {
     redirect(
       `/peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}`
     )

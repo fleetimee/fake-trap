@@ -172,15 +172,14 @@ export default async function CourseDetailLayout({
       </div>
 
       <div className="relative hidden sm:block">
-        {/* Ensure this div is relatively positioned */}
         <SectionBanner
           description={course.data.course_desc}
           title={course.data.course_name}
           urlLink={`/peserta/course/detail/${params.idCourse}`}
           image={course.data.image}
         />
-        {/* Countdown Timer with "Deadline" */}
-        <div className="absolute right-4 top-4 rounded-lg bg-white/80 px-2 py-1">
+        {/* Updated container styling */}
+        <div className="absolute right-4 top-4">
           <CountdownTimer endDate={new Date(course.data.date_end)} />
         </div>
       </div>
