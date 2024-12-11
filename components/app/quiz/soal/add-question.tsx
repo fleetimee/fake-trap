@@ -23,10 +23,10 @@ import { Label } from "@/components/ui/label"
 
 export const formSchemaQuestion = z.object({
   id_quiz: z.number(),
-  question_text: z.string().nonempty(),
+  question_text: z.string().min(1, "Pertanyaan tidak boleh kosong"),
   answers: z.array(
     z.object({
-      answer_text: z.string().nonempty(),
+      answer_text: z.string().min(1, "Jawaban tidak boleh kosong"),
       is_correct: z.boolean().default(false).optional(),
     })
   ),
@@ -121,19 +121,19 @@ export function QuestionForm(props: {
 
     if (form.getValues("answers").length < 2) {
       return sonnerToast.warning("Perhatian", {
-        description: "Jawaban minimal 2 pilihan",
+        description: "Minimal harus ada 2 pilihan jawaban",
       })
     }
 
     if (!isCorrectAnswer) {
       return sonnerToast.warning("Perhatian", {
-        description: "Jawaban benar harus ada",
+        description: "Harus ada minimal satu jawaban yang benar",
       })
     }
 
     if (correctAnswer.length > 1) {
       return sonnerToast.warning("Perhatian", {
-        description: "Jawaban benar hanya boleh satu",
+        description: "Hanya boleh ada satu jawaban yang benar",
       })
     }
 
@@ -158,7 +158,7 @@ export function QuestionForm(props: {
   function onAddAnswer() {
     if (form.getValues("answers").length > 4) {
       return sonnerToast.warning("Perhatian", {
-        description: "Jawaban maksimal 5 pilihan",
+        description: "Maksimal hanya 5 pilihan jawaban",
       })
     }
 
