@@ -1,64 +1,92 @@
 "use client"
 
-import Link from "next/link"
-import { PrinterIcon } from "lucide-react"
+import { useState } from "react"
+import { Download, Loader2 } from "lucide-react"
 
-import { buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
+import { toast } from "@/components/ui/use-toast"
 
-interface PrintButtonProps {
+interface PrintButtonNilaiProps {
   url: string
+  quizTitle: string
+  attemptNumber: number
 }
 
-export function PrintButtonNilai({ url }: PrintButtonProps) {
-  const handlePrint = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    // Get screen dimensions
-    const screenWidth = window.screen.width
-    const screenHeight = window.screen.height
+export function PrintButtonNilai({
+  url,
+  quizTitle,
+  attemptNumber,
+}: PrintButtonNilaiProps) {
+  const [isLoading, setIsLoading] = useState(false)
 
-    // Calculate window size (80% of screen size)
-    const windowWidth = Math.min(1280, Math.floor(screenWidth * 0.8))
-    const windowHeight = Math.min(720, Math.floor(screenHeight * 0.8))
+  const handlePrint = async () => {
+    try {
+      setIsLoading(true)
+      const response = await fetch(url)
 
-    // Calculate position to center the window
-    const left = Math.floor((screenWidth - windowWidth) / 2)
-    const top = Math.floor((screenHeight - windowHeight) / 2)
+      if (!response.ok) {
+        throw new Error("Failed to download file")
+      }
 
-    const windowFeatures = [
-      `width=${windowWidth}`,
-      `height=${windowHeight}`,
-      `left=${left}`,
-      `top=${top}`,
-      "menubar=no",
-      "toolbar=no",
-      "location=no",
-      "status=no",
-      "addressbar=no",
-      "directories=no",
-      "scrollbars=yes",
-      "resizable=yes",
-      "chrome=no",
-      "centerscreen=yes",
-      "alwaysRaised=yes",
-    ].join(",")
+      const blob = await response.blob()
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const link = document.createElement("a")
+      link.href = downloadUrl
 
-    const newWindow = window.open(url, "_blank", windowFeatures)
-    if (newWindow) {
-      newWindow.focus()
+      // Format the filename: sanitize quiz title and add attempt number
+      const sanitizedQuizTitle = quizTitle
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-") // Replace any non-alphanumeric characters with hyphens
+        .replace(/(^-|-$)/g, "") // Remove leading and trailing hyphens
+      const filename = `hasil-${sanitizedQuizTitle}-attempt-${attemptNumber}.pdf`
+
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(downloadUrl)
+
+      toast({
+        title: "Success",
+        description: "File berhasil diunduh",
+        variant: "default",
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Gagal mengunduh file",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <Link
-      onClick={handlePrint}
-      className={buttonVariants({
-        size: "icon",
-        className:
-          "mt-4 w-full bg-blue-500 text-center text-white hover:bg-blue-600",
-      })}
-      href="#"
-    >
-      <PrinterIcon className="size-4" />
-    </Link>
+    <HoverCard>
+      <HoverCardTrigger asChild>
+        <Button
+          size="sm"
+          variant="outline"
+          className="group relative"
+          onClick={handlePrint}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            <Download className="size-4 transition-transform group-hover:-translate-y-0.5" />
+          )}
+        </Button>
+      </HoverCardTrigger>
+      <HoverCardContent className="w-48 text-center text-sm" align="end">
+        Unduh hasil percobaan ke-{attemptNumber}
+      </HoverCardContent>
+    </HoverCard>
   )
 }

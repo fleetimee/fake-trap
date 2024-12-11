@@ -9,7 +9,17 @@ import Lock from "@/public/lottie/lock.json"
 import QuizEnabled from "@/public/lottie/quiz_enabled.json"
 import TrophyLess from "@/public/lottie/trophy-less.json"
 import { generateFromString } from "generate-avatar"
-import { CalendarDays, PrinterIcon } from "lucide-react"
+import {
+  Activity,
+  AlertTriangle,
+  CalendarDays,
+  Info,
+  List,
+  Play,
+  PrinterIcon,
+  Type,
+  X,
+} from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { CourseAvailability, QuizType } from "@/lib/enums/status"
@@ -83,79 +93,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PrintButtonNilai } from "./PrintButton"
 
 const winnerQuotes = [
-  "Victory is yours!",
-  "You are Elden Lord!",
-  "Champion of the Tarnished!",
-  "Glory to the victor!",
-  "You've conquered the Lands Between.",
-  "Triumph over darkness!",
-  "Your legend is forged!",
-  "You have risen above all!",
-  "The Elden Ring is restored!",
-  "Your journey is complete!",
-  "Your name will be etched in the annals of history.",
-  "The world bends to your will!",
-  "Hero of the Elden Ring!",
-  "The dawn of a new era begins with you.",
-  "You stand triumphant over all foes.",
-  "The crown is yours!",
-  "Savior of the Lands Between!",
-  "Your power knows no bounds.",
-  "Champion of light and hope!",
-  "You have mastered the Elden Ring.",
-  "The realm is yours to rule.",
-  "Your victory will be sung for generations.",
-  "You are the beacon of hope!",
-  "Eternal glory is yours!",
-  "You have overcome insurmountable odds.",
-  "The Elden Throne is yours!",
-  "Your bravery has reshaped the world.",
-  "You have written your legend.",
-  "The world bows before you!",
-  "You are the true hero!",
-  "Your might is unparalleled.",
-  "The Elden Ring shines brightly in your hands.",
-  "Your victory is a testament to your strength.",
-  "The realm is safe, thanks to you.",
-  "You are the bringer of peace.",
+  "Selamat atas pencapaian Anda!",
+  "Prestasi yang luar biasa!",
+  "Anda telah menunjukkan kemampuan terbaik!",
+  "Keberhasilan yang membanggakan!",
+  "Pencapaian yang sangat mengesankan!",
+  "Hasil yang memuaskan!",
+  "Prestasi gemilang!",
+  "Kerja keras Anda membuahkan hasil!",
+  "Pencapaian yang patut dirayakan!",
+  "Kesuksesan yang membanggakan!",
 ]
 
 const loserQuotes = [
-  "Embrace the unknown, for only in darkness can you find the light.",
-  "Every step forward, no matter how small, brings you closer to your destiny.",
-  "In the face of adversity, a true Tarnished never falters.",
-  "Strength is not just in the sword, but in the resolve to keep fighting.",
-  "Rise, for even in defeat, there is honor and wisdom to be gained.",
-  "The journey may be perilous, but the flame of hope must never be extinguished.",
-  "Forge your own path, for the Elden Ring awaits those with unwavering will.",
-  "From ashes we rise, stronger and more determined than before.",
-  "In the crucible of struggle, true greatness is born.",
-  "Let your spirit be unyielding, for the trials ahead are but tests of your courage.",
-  "Defeat is but a lesson in the journey to greatness.",
-  "Each fall only makes you stronger.",
-  "The shadows cast are but stepping stones to the light.",
-  "Courage lies in the will to rise again.",
-  "Every loss is a prelude to triumph.",
-  "In defeat, we find our true strength.",
-  "The path to victory is paved with perseverance.",
-  "Honor is found in the struggle, not just the victory.",
-  "Each setback is a forge for your resilience.",
-  "A true warrior learns from every battle.",
-  "Failure today is the seed of success tomorrow.",
-  "The journey is long, but your spirit is indomitable.",
-  "Defeat is temporary, but your resolve is eternal.",
-  "From every fall, rise with greater determination.",
-  "Your journey does not end here.",
-  "Every defeat is a chapter in the story of victory.",
-  "In the face of defeat, true warriors find their path.",
-  "Each loss carves the path to your destiny.",
-  "Rise, for the journey continues.",
-  "The flame of hope burns ever brighter in the darkest times.",
-  "Even in defeat, the spirit of a warrior shines.",
-  "The road to greatness is never easy.",
-  "From the ashes of defeat, you will rise anew.",
-  "Every fall is a step closer to victory.",
-  "Defeat is but the beginning of your legend.",
+  "Terus semangat, ini baru permulaan!",
+  "Setiap kegagalan adalah langkah menuju kesuksesan.",
+  "Jangan menyerah, cobalah lagi!",
+  "Belajar dari pengalaman ini untuk hasil yang lebih baik.",
+  "Tetap optimis, kesempatan berikutnya pasti ada.",
+  "Jadikan ini sebagai motivasi untuk lebih baik.",
+  "Kegagalan adalah guru terbaik dalam hidup.",
+  "Terus berusaha dan tingkatkan kemampuan Anda.",
+  "Setiap usaha tidak akan sia-sia.",
+  "Percaya pada kemampuan diri sendiri.",
 ]
 interface CourseQuizPageProps {
   params: {
@@ -178,6 +138,40 @@ function getOrdinalIndicator(number: number) {
     return "rd"
   }
   return "th"
+}
+
+const getStatusConfig = (
+  isQuizOpen: boolean,
+  isPretestExceded: boolean,
+  isPosttestExceded: boolean
+) => {
+  if (!isQuizOpen) {
+    return {
+      color: "bg-yellow-100 dark:bg-yellow-900",
+      textColor: "text-yellow-800 dark:text-yellow-100",
+      icon: <Icons.lock className="mr-2 size-4" />,
+      message: "Ujian Terkunci",
+      remark: "Mohon tunggu hingga waktu ujian dimulai",
+    }
+  }
+
+  if (isPretestExceded || isPosttestExceded) {
+    return {
+      color: "bg-red-100 dark:bg-red-900",
+      textColor: "text-red-800 dark:text-red-100",
+      icon: <AlertTriangle className="mr-2 size-4" />,
+      message: "Kesempatan Habis",
+      remark: "Anda telah menggunakan semua kesempatan yang tersedia",
+    }
+  }
+
+  return {
+    color: "bg-green-100 dark:bg-green-900",
+    textColor: "text-green-800 dark:text-green-100",
+    icon: <Icons.check className="mr-2 size-4" />,
+    message: "Ujian Dapat Dimulai",
+    remark: "Silakan mulai ujian sekarang",
+  }
 }
 
 export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
@@ -281,188 +275,332 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
       <Separator />
 
       <CardContent className="space-y-8 py-6">
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col gap-2">
-            <p className="ml-4 text-sm ">Jenis Ujian: {quizType?.value_ref1}</p>
-            <p className="ml-4 text-sm ">
-              Jam Buka :{" "}
-              {convertDateToStringSimplified(quiz.data.jam_buka.toString())}
-            </p>
-            <p className="ml-4 text-sm ">
-              Jam Tutup :{" "}
-              {convertDateToStringSimplified(quiz.data.jam_tutup.toString())}
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <p className="ml-4 text-sm ">Butir Soal: {questionLength} Soal</p>
-            <p className="ml-4 text-sm ">Dibuat Pada: {formattedDate}</p>
-            <p className="ml-4 text-sm ">Waktu: {Math.floor(minutes)} Menit</p>
-          </div>
-        </div>
-
         <Tabs defaultValue="announcement" className="w-full">
-          <TabsList className="w-full">
-            <TabsTrigger value="announcement" className="w-full">
-              Informasi
+          <TabsList className="mb-4 grid w-full grid-cols-3 gap-4 rounded-lg bg-blue-50 p-2 dark:bg-blue-950">
+            <TabsTrigger
+              value="announcement"
+              className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
+            >
+              <div className="flex items-center space-x-2">
+                <Info className="size-4" />
+                <span>Informasi</span>
+              </div>
             </TabsTrigger>
-            <TabsTrigger value="nilai" className="w-full">
-              Riwayat Nilai
+            <TabsTrigger
+              value="nilai"
+              className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
+            >
+              <div className="flex items-center space-x-2">
+                <Activity className="size-4" />
+                <span>Riwayat Nilai</span>
+              </div>
             </TabsTrigger>
-            <TabsTrigger value="placement" className="w-full">
-              Leaderboard
+            <TabsTrigger
+              value="placement"
+              className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
+            >
+              <div className="flex items-center space-x-2">
+                <Icons.crown className="size-4" />
+                <span>Peringkat</span>
+              </div>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="announcement" className="w-full space-y-6">
-            <p className="flex items-center justify-center p-4 font-heading text-4xl">
-              {quizType?.value_ref1}
-            </p>
-
-            <div className="flex items-center justify-center py-2">
-              {isQuizOpen ? (
-                <LottieClient
-                  animationData={QuizEnabled}
-                  className="size-1/2"
-                />
-              ) : isPretestExceded || isPosttestExceded ? (
-                <LottieClient animationData={Learn} className="size-1/2" />
-              ) : (
-                <LottieClient animationData={Lock} className="size-1/2" />
-              )}
+          <TabsContent
+            value="announcement"
+            className="rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
+          >
+            <div className="flex flex-col space-y-1.5 text-center">
+              <h3 className="font-heading text-3xl font-semibold tracking-tight">
+                {quizType?.value_ref1}
+              </h3>
             </div>
 
-            <div className="p-4">
-              <h2 className="mb-2 text-lg font-bold">
-                Silahkan baca informasi berikut sebelum memulai Pembelajaran:
-              </h2>
-              <ul className="list-inside list-disc space-y-1 pl-5">
-                <li className="text-sm">
-                  Waktu mengerjakan ujian hanya {quiz.data.time_limit / 60}{" "}
-                  menit
-                </li>
-
-                <li className="text-sm">
-                  Ujian hanya dapat di kerjakan sekali untuk tipe Pre Test
-                </li>
-                <li className="text-sm">
-                  Ujian dapat di kerjakan 3 kali untuk tipe Post Test dan
-                  diambil nilai terbaik
-                </li>
-              </ul>
+            <div className="flex items-center justify-center py-8">
+              <div className="relative flex flex-col items-center justify-center">
+                <div className="mb-4">
+                  <LottieClient
+                    animationData={
+                      isQuizOpen
+                        ? isPretestExceded || isPosttestExceded
+                          ? Learn
+                          : QuizEnabled
+                        : Lock
+                    }
+                    className="size-72"
+                  />
+                </div>
+                {(() => {
+                  const status = getStatusConfig(
+                    isQuizOpen,
+                    isPretestExceded,
+                    isPosttestExceded
+                  )
+                  return (
+                    <div className="absolute bottom-0 flex flex-col items-center gap-2 text-center">
+                      <span
+                        className={`inline-flex items-center rounded-full ${status.color} ${status.textColor} px-6 py-2.5 text-sm font-semibold`}
+                      >
+                        {status.icon}
+                        {status.message}
+                      </span>
+                      <p className={`text-xs italic ${status.textColor}`}>
+                        {status.remark}
+                      </p>
+                    </div>
+                  )
+                })()}
+              </div>
             </div>
 
-            <div className="p-4">
-              <h2 className="mb-2 text-lg font-bold">
-                Status Pengerjaan Ujian anda:
-              </h2>
+            <div className="space-y-6">
+              <div>
+                <h2 className="mb-4 font-heading text-xl font-semibold">
+                  Informasi Penting
+                </h2>
+                <div className="space-y-6">
+                  <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
+                    <h3 className="mb-2 font-semibold">Ketentuan Waktu</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center">
+                        <List className="mr-2 size-4" />
+                        Jumlah Soal: {questionLength} Soal
+                      </li>
+                      <li className="flex items-center">
+                        <Icons.clock className="mr-2 size-4" />
+                        Durasi ujian: {quiz.data.time_limit / 60} menit
+                      </li>
+                      <li className="flex items-center">
+                        <Icons.calendar className="mr-2 size-4" />
+                        Jam Buka:{" "}
+                        {convertDateToStringSimplified(
+                          quiz.data.jam_buka.toString()
+                        )}
+                      </li>
+                      <li className="flex items-center">
+                        <Icons.calendar className="mr-2 size-4" />
+                        Jam Tutup:{" "}
+                        {convertDateToStringSimplified(
+                          quiz.data.jam_tutup.toString()
+                        )}
+                      </li>
+                      <li className="flex items-center">
+                        <Icons.calendar className="mr-2 size-4" />
+                        Dibuat Pada: {formattedDate}
+                      </li>
+                    </ul>
+                  </div>
 
-              <ul className="list-inside list-disc space-y-1 pl-5">
-                <li className="text-sm">
-                  Tipe Ujian ini merupakan{" "}
-                  <span className="font-bold italic underline">
-                    {quizType?.value_ref1}
-                  </span>
-                  , berarti maksimal kesempatan menjawab adalah{" "}
-                  <span className="font-bold">{isPretest ? 1 : 3}</span> kali
-                </li>
-                <li className="text-sm">
-                  Anda sudah mengerjakan{" "}
-                  <span className="font-bold">
-                    {userQuiz.data ? userQuiz.data.length : 0}
-                  </span>{" "}
-                  kali dari {isPretest ? 1 : 3} kesempatan yang tersedia
-                </li>
-              </ul>
-            </div>
+                  <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
+                    <h3 className="mb-2 font-semibold">Ketentuan Pengerjaan</h3>
+                    <ul className="list-inside list-disc space-y-2 text-sm">
+                      <li className="flex items-center">
+                        <Info className="mr-2 size-4" />
+                        Ujian Pre-Test hanya dapat dikerjakan satu kali
+                      </li>
+                      <li className="flex items-center">
+                        <Info className="mr-2 size-4" />
+                        Ujian Post-Test dapat dikerjakan maksimal tiga kali
+                      </li>
+                      <li className="flex items-center">
+                        <Info className="mr-2 size-4" />
+                        Nilai tertinggi akan diambil sebagai nilai akhir
+                      </li>
+                    </ul>
+                  </div>
 
-            <h1 className="text-center text-2xl font-bold">
-              {!isQuizOpen ? (
-                <p className="text-yellow-500">BELUM SAATNYA MEMULAI UJIAN</p>
-              ) : isPretestExceded || isPosttestExceded ? (
-                <p className="text-red-600">
-                  ANDA SUDAH MELEBIHI LIMIT KESEMPATAN
-                </p>
-              ) : (
-                <p className="text-green-500">ANDA DAPAT MEMULAI UJIAN</p>
-              )}
-            </h1>
+                  <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
+                    <h3 className="mb-2 font-semibold">Status Pengerjaan</h3>
+                    <div className="space-y-2 text-sm">
+                      <p className="flex items-center">
+                        <Type className="mr-2 size-4" />
+                        Tipe Ujian:{" "}
+                        <span className="ml-1 font-semibold">
+                          {quizType?.value_ref1}
+                        </span>
+                      </p>
+                      <p className="flex items-center">
+                        <Icons.check className="mr-2 size-4" />
+                        Kesempatan Tersisa:{" "}
+                        <span className="ml-1 font-semibold">
+                          {isPretest ? 1 : 3} kali
+                        </span>
+                      </p>
+                      <p className="flex items-center">
+                        <Activity className="mr-2 size-4" />
+                        Sudah Dikerjakan:{" "}
+                        <span className="ml-1 font-semibold">
+                          {userQuiz.data ? userQuiz.data.length : 0} kali
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-            <AlertDialog>
-              <AlertDialogTrigger
-                className="flex w-full items-center justify-center"
-                disabled={!isQuizOpen || isPretestExceded || isPosttestExceded}
-              >
-                <Button
-                  className="mt-4 w-full"
-                  variant={
-                    !isQuizOpen
-                      ? "destructive"
-                      : isPretestExceded || isPosttestExceded
-                        ? "destructive"
-                        : "default"
-                  }
-                  disabled={
-                    !isQuizOpen || isPretestExceded || isPosttestExceded
-                  }
-                >
-                  Mulai Ujian
-                </Button>
-              </AlertDialogTrigger>
+              <div className="text-center">
+                <h1 className="mb-4 text-2xl font-bold">
+                  {!isQuizOpen ? (
+                    <span className="inline-flex items-center rounded-lg bg-yellow-100 px-6 py-3 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100">
+                      <Icons.lock className="mr-2 size-5" />
+                      BELUM SAATNYA MEMULAI UJIAN
+                    </span>
+                  ) : isPretestExceded || isPosttestExceded ? (
+                    <span className="inline-flex items-center rounded-lg bg-red-100 px-6 py-3 text-red-800 dark:bg-red-900 dark:text-red-100">
+                      <AlertTriangle className="mr-2 size-5" />
+                      ANDA SUDAH MELEBIHI LIMIT KESEMPATAN
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center rounded-lg bg-green-100 px-6 py-3 text-green-800 dark:bg-green-900 dark:text-green-100">
+                      <Icons.check className="mr-2 size-5" />
+                      ANDA DAPAT MEMULAI UJIAN
+                    </span>
+                  )}
+                </h1>
 
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Yakin Mulai ?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Setelah Ujian di mulai, tidak dapat di ulang
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Batal</AlertDialogCancel>
-
-                  <AlertDialogAction asChild>
-                    <Link
-                      href={`
-                /peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}/start
-              `}
-                      scroll={false}
+                <AlertDialog>
+                  <AlertDialogTrigger
+                    className="w-full max-w-md"
+                    disabled={
+                      !isQuizOpen || isPretestExceded || isPosttestExceded
+                    }
+                  >
+                    <Button
+                      className="w-full"
+                      size="lg"
+                      variant={
+                        !isQuizOpen || isPretestExceded || isPosttestExceded
+                          ? "destructive"
+                          : "default"
+                      }
+                      disabled={
+                        !isQuizOpen || isPretestExceded || isPosttestExceded
+                      }
                     >
-                      Lanjut
-                    </Link>
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+                      {!isQuizOpen ? (
+                        <Icons.lock className="mr-2 size-4" />
+                      ) : isPretestExceded || isPosttestExceded ? (
+                        <X className="mr-2 size-4" />
+                      ) : (
+                        <Play className="mr-2 size-4" />
+                      )}
+                      Mulai Ujian
+                    </Button>
+                  </AlertDialogTrigger>
+
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Siap Memulai?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Setelah ujian dimulai, Anda tidak dapat mengulang
+                        kembali
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Batal</AlertDialogCancel>
+
+                      <AlertDialogAction asChild>
+                        <Link
+                          href={`
+                      /peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}/start
+                    `}
+                          scroll={false}
+                        >
+                          Mulai
+                        </Link>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </div>
           </TabsContent>
 
-          <TabsContent value="nilai" className="w-full space-y-6">
+          <TabsContent
+            value="nilai"
+            className="rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
+          >
             {userQuiz.data.length > 0 ? (
-              <Table className="relative">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Nilai</TableHead>
-                    <TableHead>Selesai Pada</TableHead>
-                    <TableHead>Report</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {userQuiz.data.map((result) => (
-                    <TableRow key={result.id_attempt}>
-                      <TableCell>{result.score}</TableCell>
-                      <TableCell>
-                        {convertDatetoStringWithTime(
-                          result.created_at.toString()
-                        )}
-                      </TableCell>
-                      <TableCell>
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold">Riwayat Nilai</h2>
+                    <p className="text-sm text-muted-foreground">
+                      Berikut adalah riwayat nilai dari ujian yang telah Anda
+                      kerjakan
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  {userQuiz.data.map((result, index) => (
+                    <div
+                      key={result.id_attempt}
+                      className="group relative rounded-lg border p-4 transition-all hover:border-blue-200 hover:shadow-md dark:hover:border-blue-800"
+                    >
+                      <div className="absolute right-4 top-4">
                         <PrintButtonNilai
                           url={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${tokenExtracted.id}/${result.id_attempt}`}
+                          quizTitle={quiz.data.quiz_title}
+                          attemptNumber={index + 1}
                         />
-                      </TableCell>
-                    </TableRow>
+                      </div>
+
+                      <div className="flex items-start space-x-4">
+                        <div className="flex size-12 items-center justify-center rounded-full bg-blue-100 font-semibold dark:bg-blue-900">
+                          #{index + 1}
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <p className="text-sm text-muted-foreground">
+                            Percobaan ke-{index + 1}
+                          </p>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-2xl font-bold">
+                              {result.score}
+                              <span className="ml-1 text-sm font-normal text-muted-foreground">
+                                / 100
+                              </span>
+                            </h3>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <CalendarDays className="size-4" />
+                            {convertDatetoStringWithTime(
+                              result.created_at.toString()
+                            )}
+                          </div>
+
+                          {/* Score bar visualization */}
+                          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-blue-100 dark:bg-blue-900">
+                            <div
+                              className="h-full bg-blue-500 transition-all"
+                              style={{ width: `${result.score}%` }}
+                            />
+                          </div>
+
+                          <div className="mt-2 flex gap-2">
+                            {result.score >= 80 ? (
+                              <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-100">
+                                <Icons.check className="mr-1 size-3" />
+                                Sangat Baik
+                              </span>
+                            ) : result.score >= 60 ? (
+                              <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100">
+                                <Info className="mr-1 size-3" />
+                                Cukup Baik
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-100">
+                                <AlertTriangle className="mr-1 size-3" />
+                                Perlu Perbaikan
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </TableBody>
-              </Table>
+                </div>
+              </div>
             ) : (
               <div className="flex flex-col items-center justify-center space-y-4 overflow-auto rounded-lg border border-gray-200 py-4 dark:border-gray-800">
                 <h1 className="flex max-w-md items-center py-2 text-center font-heading ">
@@ -481,7 +619,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
           <TabsContent
             value="placement"
-            className="grid w-full grid-cols-1 space-y-6 md:grid-cols-1"
+            className="rounded-lg border border-blue-100 bg-white p-4 shadow-lg dark:border-blue-800 dark:bg-background"
           >
             <Card className="w-full max-w-3xl space-y-4">
               <CardHeader className="pb-0">
@@ -512,12 +650,6 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                       )}
                     </p>
 
-                    {/* <p className="my-4 rounded-lg  px-6 py-2 text-center font-serif text-sm italic">
-                      {getCurrentUserPlacement.data <= 3
-                        ? winnerQuote
-                        : loserQuote}
-                    </p> */}
-
                     <SparklesText
                       text={
                         getCurrentUserPlacement.data <= 3
@@ -529,11 +661,6 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
 
                     <div className="flex items-center justify-center py-0">
                       {getCurrentUserPlacement.data === 1 && (
-                        // <LottieClient
-                        //   animationData={GoldTrophy}
-                        //   className="size-1/2"
-                        // />
-
                         <Image
                           src={GoldMedal}
                           alt="Gold Medal"
@@ -593,20 +720,19 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                   <table className="w-full min-w-full">
                     <thead className="bg-gray-50 dark:bg-background">
                       <tr className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                        <th className="px-4 py-3 text-left">Position</th>
+                        <th className="px-4 py-3 text-left">Posisi</th>
 
                         <th className="w-[200px] px-4 py-3 text-left">
-                          Participant
+                          Peserta
                         </th>
-                        <th className="px-4 py-3 text-right">Score</th>
-                        <th className="px-4 py-3 text-right">Time</th>
+                        <th className="px-4 py-3 text-right">Nilai</th>
+                        <th className="px-4 py-3 text-right">Waktu</th>
                       </tr>
                     </thead>
 
                     <tbody className="bg-gray-50 dark:bg-background">
                       {getLeaderboad.data.length > 0 ? (
                         <>
-                          {/* Show only top 10 in main table */}
                           {getLeaderboad.data
                             .slice(0, 10)
                             .map((leaderboard) => (
@@ -691,7 +817,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                                               {leaderboard.name}
                                             </h4>
                                             <p className="text-sm font-medium leading-none text-muted-foreground">
-                                              Position #{leaderboard.position}
+                                              Posisi #{leaderboard.position}
                                             </p>
                                           </div>
                                         </div>
@@ -699,7 +825,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                                           <div className="flex items-center gap-2">
                                             <CalendarDays className="size-4 text-muted-foreground" />
                                             <span className="text-sm text-muted-foreground">
-                                              Started at:
+                                              Mulai pada:
                                             </span>
                                           </div>
                                           <p className="text-sm font-medium">
@@ -731,7 +857,6 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                     </tbody>
                   </table>
 
-                  {/* Add Dialog for remaining entries if more than 10 exist */}
                   {getLeaderboad.data.length > 10 && (
                     <Dialog>
                       <DialogTrigger asChild>
@@ -739,14 +864,15 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                           variant="ghost"
                           className="mx-auto my-4 flex w-full"
                         >
-                          Show All Rankings ({getLeaderboad.data.length} total)
+                          Tampilkan Semua Peringkat ({getLeaderboad.data.length}{" "}
+                          total)
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[725px]">
                         <DialogHeader>
-                          <DialogTitle>Complete Leaderboard</DialogTitle>
+                          <DialogTitle>Daftar Peringkat Lengkap</DialogTitle>
                           <DialogDescription>
-                            Full ranking of all participants
+                            Peringkat seluruh peserta
                           </DialogDescription>
                         </DialogHeader>
                         <ScrollArea className="h-[500px] w-full rounded-md border p-4">
@@ -835,7 +961,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                                                 {leaderboard.name}
                                               </h4>
                                               <p className="text-sm font-medium leading-none text-muted-foreground">
-                                                Position #{leaderboard.position}
+                                                Posisi #{leaderboard.position}
                                               </p>
                                             </div>
                                           </div>
@@ -843,7 +969,7 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                                             <div className="flex items-center gap-2">
                                               <CalendarDays className="size-4 text-muted-foreground" />
                                               <span className="text-sm text-muted-foreground">
-                                                Started at:
+                                                Mulai pada:
                                               </span>
                                             </div>
                                             <p className="text-sm font-medium">
