@@ -38,81 +38,60 @@ export function KnowledgeCard({
   ...props
 }: PublicKnowledgeCardProps) {
   return (
-    <HoverCard>
-      <HoverCardTrigger>
-        <Card
-          className={cn(
-            "h-full overflow-hidden rounded-sm hover:border-primary ",
-            className
+    <Link href={link} className="group flex h-full">
+      <Card
+        className={cn(
+          "flex w-full flex-col overflow-hidden transition-all duration-200 hover:shadow-md",
+          "border-transparent hover:border-primary/50",
+          className
+        )}
+        {...props}
+      >
+        <div className="aspect-[16/9] w-full overflow-hidden">
+          {knowledge.image ? (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.image}`}
+              alt={knowledge.knowledge_title}
+              width={400}
+              height={225}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div className="flex size-full items-center justify-center bg-muted">
+              <Icons.placeholder
+                className="size-9 text-muted-foreground"
+                aria-hidden="true"
+              />
+            </div>
           )}
-          {...props}
-        >
-          <Link href={link}>
-            <CardHeader className="border-b p-0">
-              <AspectRatio ratio={4 / 3}>
-                {knowledge.image ? (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${knowledge.image}`}
-                    alt={knowledge.id_knowledge.toString()}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    fill
-                    className="object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div
-                    aria-label="Placeholder"
-                    role="img"
-                    aria-roledescription="placeholder"
-                    className="flex size-full items-center justify-center bg-secondary"
-                  >
-                    <Icons.placeholder
-                      className="size-9 text-muted-foreground"
-                      aria-hidden="true"
-                    />
-                  </div>
-                )}
-              </AspectRatio>
-            </CardHeader>
-          </Link>
-          <Link href={link}>
-            <CardContent className="grid gap-2.5 p-4">
-              <CardTitle className="line-clamp-1">
-                {knowledge.knowledge_title}
-              </CardTitle>
-              <CardDescription className="line-clamp-2">
-                {knowledge.description}
-              </CardDescription>
-            </CardContent>
-          </Link>
-          <CardFooter className="p-4">
-            <Link href={link}>
-              <MotionDiv
-                whileHover={{ scale: [null, 1.2, 1.1] }}
-                transition={{ duration: 0.3 }}
-                className={cn(
-                  buttonVariants({
-                    size: "sm",
-                    className: "h-8 w-full",
-                  })
-                )}
-              >
-                Lihat Materi
-              </MotionDiv>{" "}
-            </Link>
-          </CardFooter>
-        </Card>
-      </HoverCardTrigger>
-      <HoverCardContent side="top" avoidCollisions={false}>
-        <div className="flex justify-between space-x-4">
-          <div className="space-y-1">
-            <h4 className="text-sm font-semibold">
-              {knowledge.knowledge_title}
-            </h4>
-            <p className="text-sm">{knowledge.description}</p>
-          </div>
         </div>
-      </HoverCardContent>
-    </HoverCard>
+
+        <div className="flex flex-1 flex-col p-2.5 sm:p-4">
+          <h3 className="mb-2 line-clamp-2 text-sm font-semibold text-blue-900 transition-colors group-hover:text-blue-700 sm:text-base">
+            {knowledge.knowledge_title}
+          </h3>
+          <p className="line-clamp-3 flex-1 text-xs text-gray-600 sm:text-sm">
+            {knowledge.description}
+          </p>
+        </div>
+
+        <CardFooter className="border-t p-2.5 sm:p-4">
+          <MotionDiv
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+            className={cn(
+              buttonVariants({
+                size: "sm",
+                className:
+                  "w-full bg-blue-600 text-xs hover:bg-blue-700 sm:text-sm",
+              })
+            )}
+          >
+            Lihat Materi
+          </MotionDiv>
+        </CardFooter>
+      </Card>
+    </Link>
   )
 }

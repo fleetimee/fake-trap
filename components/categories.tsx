@@ -217,7 +217,7 @@ export function Categories({ categories, pageCount }: CategoriesProps) {
           )
         }
       </div>
-      <div className="xs:grid-cols-2 grid gap-4  lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <React.Suspense
           fallback={Array.from({ length: 8 }).map((_, i) => (
             <CategoryCardSkeleton key={i} />
