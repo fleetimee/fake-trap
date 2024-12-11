@@ -59,6 +59,7 @@ export default async function PesertaLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
         profilePicture={userLogged.data.profile_picture}
+        userOrg={userOrg.data}
       />
       <div className="grow bg-background py-6">
         <div className="container grid flex-1 gap-8 md:grid-cols-[200px_1fr]">
