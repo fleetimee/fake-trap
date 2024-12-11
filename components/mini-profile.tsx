@@ -20,10 +20,6 @@ export default function MiniProfile({ ...props }: MiniProfileProps) {
 
   return (
     <aside className="group relative">
-      {/* Animated border beam */}
-      <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 opacity-75 blur-sm transition-all duration-1000 group-hover:opacity-100" />
-      <div className="absolute -inset-1 animate-border-beam rounded-lg bg-gradient-to-r from-transparent via-blue-400 to-transparent blur-sm" />
-
       {/* Main content */}
       <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-blue-600 to-blue-700">
         <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
