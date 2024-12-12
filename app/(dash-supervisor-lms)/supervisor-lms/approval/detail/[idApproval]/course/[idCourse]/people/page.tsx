@@ -64,7 +64,12 @@ export default async function CoursePeoplePage({
           <DataTableSkeleton columnCount={6} isNewRowCreatable={true} />
         }
       >
-        <CourseUserTableShell data={users.data} pageCount={users.totalPage} />
+        <CourseUserTableShell
+          data={users.data}
+          pageCount={users.totalPage}
+          idCourse={params.idCourse}
+          shouldExportable={true}
+        />
       </React.Suspense>
     </div>
   )
