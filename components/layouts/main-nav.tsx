@@ -35,8 +35,6 @@ export function MainNav({ items, children, topNavItems }: MainNavProps) {
 
   const isLoggedOn = session !== null
 
-  console.log("session", session)
-
   return (
     <div className="hidden gap-6 lg:flex">
       <Tooltip>

@@ -51,8 +51,6 @@ export function MobileNav({
   const { data: session } = useSession()
   const isLoggedOn = session !== null
 
-  console.log("userOrg", userOrg)
-
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
