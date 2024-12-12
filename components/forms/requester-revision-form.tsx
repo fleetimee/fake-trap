@@ -115,7 +115,7 @@ export function RequesterRevisionForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full max-w-2xl gap-8"
+        className="grid w-full max-w-2xl gap-8 p-6"
       >
         <FormField
           control={form.control}
@@ -190,9 +190,9 @@ export function RequesterRevisionForm({
                 Konfirmasi Revisi
               </AlertDialogTitle>
               <AlertDialogDescription>
-                Pengajuan akan direvisi dan dikirim kembali ke pengaju pastikan
-                data yang di revisi sudah sesuai dengan kebutuhan dan arahan
-                dari supervisor
+                Pengajuan akan direvisi dan dikirim kembali ke supervisor
+                pastikan data yang di revisi sudah sesuai dengan kebutuhan dan
+                arahan dari supervisor
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="gap-3">
