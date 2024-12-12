@@ -78,54 +78,37 @@ export function Content({ title, children, className, ...rest }: ContentProps) {
   }
 
   if (isMobile) {
-    return <div className="h-full max-h-max  sm:w-screen">{children}</div>
+    return <div className="h-full max-h-max sm:w-screen">{children}</div>
   } else {
     return (
       <div
-        className={`relative flex h-fit w-full ${className ? className : "basis-3/4"} flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl`}
+        className={`relative flex h-fit w-full ${
+          className ? className : "basis-3/4"
+        } flex-col items-center justify-center overflow-hidden border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)]`}
       >
-        <div className="flex w-full flex-col gap-6 p-4 sm:w-full">
+        <div className="flex w-full flex-col gap-6 p-6">
           <div className="flex flex-row items-center justify-between">
-            <p className="grow break-all font-heading text-2xl">{title}</p>
+            <p className="grow break-all font-mono text-2xl font-bold text-black">
+              {title}
+            </p>
             <div className="relative">
               <Button
                 onClick={handleClick}
                 variant="outline"
-                className="flex h-12 w-12 items-center justify-center rounded-full  text-xl text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-sm border-2 border-black bg-yellow-100 text-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)]"
               >
                 🎉
               </Button>
             </div>
           </div>
 
-          <div className="h-full max-h-max rounded-md border border-primary p-4 sm:w-full">
+          <div className="h-full max-h-max border-2 border-black bg-blue-50/50 p-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)] sm:w-full">
             {children}
           </div>
         </div>
 
-        {/* Place the BorderBeam component here, as per your requirement */}
         <BorderBeam size={250} duration={12} delay={9} />
       </div>
     )
   }
-
-  // return (
-  //   <Card
-  //     className={`flex h-fit w-full ${
-  //       className ? className : "basis-3/4"
-  //     } items-start justify-normal sm:w-full`}
-  //     {...rest}
-  //   >
-  //     <div className="flex w-full flex-col gap-6 p-4 sm:w-full">
-  //       <div className="flex flex-row items-center justify-between">
-  //         <p className="grow break-all font-heading text-3xl">{title}</p>
-  //         <Icons.bookmark className="size-14 flex-none pl-5" />
-  //       </div>
-
-  //       <div className="h-full max-h-max rounded-md border border-primary p-4 sm:w-full">
-  //         {children}
-  //       </div>
-  //     </div>
-  //   </Card>
-  // )
 }

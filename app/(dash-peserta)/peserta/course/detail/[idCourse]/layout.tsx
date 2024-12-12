@@ -142,29 +142,35 @@ export default async function CourseDetailLayout({
       </div>
 
       <div className="md:px-2">
-        <Alert variant="destructive" className="mb-4">
+        <Alert
+          variant="destructive"
+          className="mb-4 border-2 border-black bg-red-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+        >
           <Clock11 className="h-4 w-4" />
-          <AlertTitle>Deadline!</AlertTitle>
+          <AlertTitle className="font-bold">Deadline!</AlertTitle>
           <AlertDescription>
             Batas akhir pembelajaran hingga{" "}
             <span className="font-bold">
               {new Date(course.data.date_end).toLocaleString("id-ID", {
-                weekday: "long", // "long" for the full name of the day, "short" for the abbreviated version.
+                weekday: "long",
                 year: "numeric",
                 month: "long",
                 day: "numeric",
                 hour: "2-digit",
                 minute: "2-digit",
                 second: "2-digit",
-                hour12: false, // Optional: Use 24-hour format
+                hour12: false,
               })}
             </span>
           </AlertDescription>
         </Alert>
 
-        <Alert variant="success">
+        <Alert
+          variant="success"
+          className="border-2 border-black bg-green-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+        >
           <Scroll className="h-4 w-4" />
-          <AlertTitle>Catatan!</AlertTitle>
+          <AlertTitle className="font-bold">Catatan!</AlertTitle>
           <AlertDescription>
             Kamu dapat merangkum materi pembelajaran pada menu "Notes"
           </AlertDescription>
