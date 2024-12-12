@@ -191,7 +191,7 @@ export function Approves({ approvals, pageCount }: ApprovesProps) {
         <DateRangePicker />
       </div>
 
-      <div className="mx-auto grid grid-cols-1 items-center justify-between gap-8 xl:grid-cols-3">
+      <div className="flex flex-col space-y-4">
         {approvals?.map((request) => (
           <PengajuanCard
             key={request.id_approval}

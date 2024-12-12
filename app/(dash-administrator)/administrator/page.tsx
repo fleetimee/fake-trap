@@ -52,7 +52,7 @@ export default async function AdministratorDashboard() {
           </span>
         </AlertTitle>
         <AlertDescription>
-          Have a Nice{" "}
+          Selamat beraktifitas, hari ini hari{" "}
           <span className="font-heading uppercase">{getDayWithText}</span> !
         </AlertDescription>
       </Alert>

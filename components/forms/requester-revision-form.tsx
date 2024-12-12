@@ -3,7 +3,14 @@
 import React, { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CircleIcon } from "@radix-ui/react-icons"
+import {
+  CalendarIcon,
+  CheckCircledIcon,
+  CircleIcon,
+  CrossCircledIcon,
+  FileTextIcon,
+  UpdateIcon,
+} from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -115,30 +122,18 @@ export function RequesterRevisionForm({
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Status</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <UpdateIcon className="h-4 w-4 text-purple-500" />
+                Status Revisi
+              </FormLabel>
               <Select disabled value={field.value}>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih Status">
-                      {field.value === "0051" ? (
-                        <div className="flex items-center space-x-2">
-                          <CircleIcon className="size-5 text-yellow-500" />
+                  <SelectTrigger className="bg-gray-50">
+                    <SelectValue>
+                      {field.value === "0051" && (
+                        <div className="flex items-center gap-2">
+                          <CalendarIcon className="h-4 w-4 text-yellow-500" />
                           <span>PENDING</span>
-                        </div>
-                      ) : field.value === "0052" ? (
-                        <div className="flex items-center space-x-2">
-                          <CircleIcon className="size-5 text-green-500" />
-                          <span>DITERIMA</span>
-                        </div>
-                      ) : field.value === "0053" ? (
-                        <div className="flex items-center space-x-2">
-                          <CircleIcon className="size-5 text-red-500" />
-                          <span>DITOLAK</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center space-x-2">
-                          <CircleIcon className="size-5 text-red-500" />
-                          <span>Pilih Status</span>
                         </div>
                       )}
                     </SelectValue>
@@ -149,24 +144,9 @@ export function RequesterRevisionForm({
                   <SelectItem value="0052">TERIMA</SelectItem>
                 </SelectContent>
               </Select>
-              {field.value === "0051" ? (
-                <FormDescription>
-                  Status pengajuan kembali ke supervisor untuk di revisi
-                </FormDescription>
-              ) : field.value === "0052" ? (
-                <FormDescription>
-                  Status pengajuan diterima dan status materi akan berubah
-                  menjadi DITERIMA dan materi akan ditampilkan di halaman Materi
-                </FormDescription>
-              ) : field.value === "0053" ? (
-                <FormDescription>
-                  Status pengajuan ditolak dan status materi akan berubah
-                  menjadi DITOLAK dan akan dikembalikan kembali ke pengaju untuk
-                  direvisi
-                </FormDescription>
-              ) : (
-                <span></span>
-              )}
+              <FormDescription className="ml-6 text-sm text-blue-600">
+                Status akan kembali ke PENDING untuk ditinjau ulang
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -178,11 +158,14 @@ export function RequesterRevisionForm({
           disabled={isPending}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Catatan</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <FileTextIcon className="h-4 w-4 text-purple-500" />
+                Catatan Revisi
+              </FormLabel>
               <Textarea
                 {...field}
-                placeholder="Tulis komentar"
-                className="h-24"
+                placeholder="Tuliskan revisi berdasarkan feedback..."
+                className="min-h-[150px] rounded-lg border-gray-200 bg-gray-50 placeholder:text-gray-400 focus:border-purple-500 focus:ring-purple-500"
               />
               <FormMessage />
             </FormItem>
@@ -191,14 +174,20 @@ export function RequesterRevisionForm({
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button type="button" className="w-fit" disabled={isPending}>
-              Kirim
+            <Button
+              type="button"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-600 to-purple-500 px-8 py-3 text-white transition-all hover:from-purple-700 hover:to-purple-600"
+              disabled={isPending}
+            >
+              <UpdateIcon className="h-4 w-4" />
+              Submit Revisi
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent className="rounded-lg">
             <AlertDialogHeader>
-              <AlertDialogTitle>
-                Yakin untuk melakukan revisi ?
+              <AlertDialogTitle className="flex items-center gap-2 text-xl font-semibold">
+                <CheckCircledIcon className="h-5 w-5 text-green-500" />
+                Konfirmasi Revisi
               </AlertDialogTitle>
               <AlertDialogDescription>
                 Pengajuan akan direvisi dan dikirim kembali ke pengaju pastikan
@@ -206,16 +195,22 @@ export function RequesterRevisionForm({
                 dari supervisor
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogFooter className="gap-3">
+              <AlertDialogCancel className="flex items-center gap-2">
+                <CrossCircledIcon className="h-4 w-4" />
+                Batal
+              </AlertDialogCancel>
               <Button
                 onClick={form.handleSubmit(onSubmit)}
                 disabled={isPending}
+                className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700"
               >
-                {isPending && (
-                  <Icons.spinner className="mr-2 size-4 animate-spin" />
+                {isPending ? (
+                  <Icons.spinner className="h-4 w-4 animate-spin" />
+                ) : (
+                  <CheckCircledIcon className="h-4 w-4" />
                 )}
-                Kirim
+                Ya, Submit
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

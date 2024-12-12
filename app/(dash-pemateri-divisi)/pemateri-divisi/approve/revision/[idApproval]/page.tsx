@@ -1,6 +1,16 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
+import {
+  CalendarIcon,
+  CheckCircledIcon,
+  CrossCircledIcon,
+  FileTextIcon,
+  LightningBoltIcon,
+  PersonIcon,
+  UpdateIcon,
+} from "@radix-ui/react-icons"
+import { BookOpenIcon } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { ApprovalStatus } from "@/lib/enums/status"
@@ -76,105 +86,183 @@ export default async function ApproveKnowledgeRevisionPage({
         ]}
       />
 
-      <div className="lg:flex lg:items-start lg:space-x-10">
-        <Card className="border-2 hover:border-primary lg:w-1/2">
-          <CardHeader>
-            <CardTitle>Preview Materi</CardTitle>
-            <CardDescription>
-              Ini adalah pengajuan materi yang akan di approve
-            </CardDescription>
-          </CardHeader>
-          <Separator />
-          <CardContent className="space-y-8 py-5">
-            <div className="space-y-2">
-              <Label className="font-bold">Judul Materi</Label>
-              <div>
-                <Link
-                  href={`/pemateri-divisi/knowledge/detail/${approvalRequest.data.id_knowledge}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  {approvalRequest.data.knowledge_title}
-                </Link>
+      <div className="container mx-auto space-y-8 p-6">
+        <div className="grid gap-8 lg:grid-cols-2">
+          <Card className="overflow-hidden border-0 shadow-lg transition-all hover:shadow-xl">
+            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-400 text-white">
+              <div className="flex items-center gap-3">
+                <FileTextIcon className="h-6 w-6" />
+                <div>
+                  <CardTitle className="text-2xl font-bold">
+                    Detail Pengajuan
+                  </CardTitle>
+                  <CardDescription className="text-blue-100">
+                    Informasi lengkap pengajuan materi
+                  </CardDescription>
+                </div>
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label className="font-bold">Nama Pengaju</Label>
-              <div id="bookDescriptionPreview">
-                {approvalRequest.data.requester_name}
-              </div>
-            </div>
+            </CardHeader>
 
-            <div className="space-y-2">
-              <Label className="font-bold">Tanggal Pengajuan</Label>
-              <div id="bookDescriptionPreview">
-                {convertDatetoString(
-                  approvalRequest.data.created_at.toString()
-                )}
+            <CardContent className="divide-y divide-gray-100 p-6">
+              <div className="space-y-6 pb-6">
+                <PreviewItem
+                  icon={<BookOpenIcon className="h-4 w-4 text-blue-500" />}
+                  label="Judul Materi"
+                  value={
+                    <Link
+                      href={`/pemateri-divisi/knowledge/detail/${approvalRequest.data.id_knowledge}`}
+                      className="text-blue-600 hover:text-blue-700 hover:underline"
+                    >
+                      {approvalRequest.data.knowledge_title}
+                    </Link>
+                  }
+                />
+                <PreviewItem
+                  icon={<UpdateIcon className="h-4 w-4 text-blue-500" />}
+                  label="Status Pengajuan"
+                  value={
+                    <Badge
+                      className={cn("px-4 py-1", {
+                        "bg-green-100 text-green-700":
+                          approvalRequest.data.status ===
+                          ApprovalStatus.APPROVED,
+                        "bg-yellow-100 text-yellow-700":
+                          approvalRequest.data.status ===
+                          ApprovalStatus.PENDING,
+                        "bg-red-100 text-red-700":
+                          approvalRequest.data.status ===
+                          ApprovalStatus.REJECTED,
+                      })}
+                    >
+                      {approvalRequest.data.status_text}
+                    </Badge>
+                  }
+                />
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label className="font-bold">Tanggal Aksi</Label>
-              <div id="bookDescriptionPreview">
-                {convertDatetoString(
-                  approvalRequest.data.approved_at.toString()
-                )}
+              <div className="space-y-6 py-6">
+                <PreviewItem
+                  icon={<PersonIcon className="h-4 w-4 text-blue-500" />}
+                  label="Nama Pengaju"
+                  value={approvalRequest.data.requester_name}
+                />
+                <PreviewItem
+                  icon={<CalendarIcon className="h-4 w-4 text-blue-500" />}
+                  label="Tanggal Pengajuan"
+                  value={convertDatetoString(
+                    approvalRequest.data.created_at.toString()
+                  )}
+                />
+                <PreviewItem
+                  icon={<CalendarIcon className="h-4 w-4 text-blue-500" />}
+                  label="Tanggal Aksi"
+                  value={convertDatetoString(
+                    approvalRequest.data.approved_at.toString()
+                  )}
+                />
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label className="font-bold">Status</Label>
-              <div id="bookDescriptionPreview">
-                <Badge
-                  className={cn({
-                    "bg-green-500":
-                      approvalRequest.data.status === ApprovalStatus.APPROVED,
-                    "bg-yellow-500":
-                      approvalRequest.data.status === ApprovalStatus.PENDING,
-                    "bg-red-500":
-                      approvalRequest.data.status === ApprovalStatus.REJECTED,
-                  })}
-                >
-                  {approvalRequest.data.status_text}
-                </Badge>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="font-bold">Catatan</Label>
-              <div
-                id="bookDescriptionPreview"
-                className="min-h-[200px] w-full rounded-2xl border-2 border-black bg-amber-100 dark:border-white dark:bg-gray-800"
-              >
-                <p className="p-6 font-heading dark:text-white">
+              <div className="pt-6">
+                <Label className="flex items-center gap-2 font-bold">
+                  <FileTextIcon className="h-4 w-4 text-blue-500" />
+                  Catatan
+                </Label>
+                <div className="mt-3 rounded-lg bg-amber-50 p-4 font-medium text-amber-900">
                   {approvalRequest.data.comment}
-                </p>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        <Card
-          className={cn({
-            "border-2 hover:border-primary lg:w-1/2": isApprovalStatusRejected,
-            hidden: !isApprovalStatusRejected,
-          })}
-        >
-          <CardHeader>
-            <CardTitle>Revisi Pengajuan</CardTitle>
-            <CardDescription>
-              Form revisi pengajuan akan aktif jika pengajuan ditolak
-            </CardDescription>
-          </CardHeader>
-          <Separator />
-
-          <CardContent className="space-y-4 py-5">
-            <RequesterRevisionForm
-              idApproval={approvalRequest.data.id_approval.toString()}
-            />
-          </CardContent>
-        </Card>
+          {isApprovalStatusRejected ? (
+            <Card className="overflow-hidden border-0 shadow-lg transition-all hover:shadow-xl">
+              <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-400 text-white">
+                <CardTitle className="text-2xl font-bold">
+                  Form Revisi
+                </CardTitle>
+                <CardDescription className="text-purple-100">
+                  Silakan submit revisi pengajuan Anda
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RequesterRevisionForm
+                  idApproval={approvalRequest.data.id_approval.toString()}
+                />
+              </CardContent>
+            </Card>
+          ) : (
+            <Card className="overflow-hidden border-0 shadow-lg transition-all hover:shadow-xl">
+              <CardHeader className="bg-gradient-to-r from-gray-600 to-gray-400 text-white">
+                <div className="flex items-center gap-3">
+                  <LightningBoltIcon className="h-6 w-6" />
+                  <div>
+                    <CardTitle className="text-2xl font-bold">
+                      Status Pengajuan
+                    </CardTitle>
+                    <CardDescription className="text-gray-100">
+                      Informasi status terkini
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="flex flex-col items-center justify-center p-12">
+                {approvalRequest.data.status === ApprovalStatus.APPROVED ? (
+                  <div className="text-center">
+                    <CheckCircledIcon className="mx-auto h-16 w-16 text-green-500" />
+                    <h3 className="mt-4 text-xl font-semibold text-green-700">
+                      Pengajuan Diterima
+                    </h3>
+                    <p className="mt-2 text-gray-600">
+                      Pengajuan Anda telah disetujui dan dapat dilanjutkan
+                    </p>
+                  </div>
+                ) : approvalRequest.data.status === ApprovalStatus.PENDING ? (
+                  <div className="text-center">
+                    <UpdateIcon className="mx-auto h-16 w-16 animate-spin text-yellow-500" />
+                    <h3 className="mt-4 text-xl font-semibold text-yellow-700">
+                      Menunggu Review
+                    </h3>
+                    <p className="mt-2 text-gray-600">
+                      Pengajuan Anda sedang dalam proses review
+                    </p>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <CrossCircledIcon className="mx-auto h-16 w-16 text-red-500" />
+                    <h3 className="mt-4 text-xl font-semibold text-red-700">
+                      Pengajuan Ditolak
+                    </h3>
+                    <p className="mt-2 text-gray-600">
+                      Silakan cek catatan revisi dan lakukan perbaikan
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+        </div>
       </div>
     </DashboardShell>
+  )
+}
+
+// Helper component for consistent preview items
+function PreviewItem({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode
+  label: string
+  value: React.ReactNode
+}) {
+  return (
+    <div className="space-y-1.5">
+      <Label className="flex items-center gap-2 text-sm font-semibold text-gray-600">
+        {icon}
+        {label}
+      </Label>
+      <div className="ml-6 text-gray-900">{value}</div>
+    </div>
   )
 }

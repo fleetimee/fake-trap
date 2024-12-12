@@ -1,8 +1,10 @@
 import Link from "next/link"
+import { ArrowRightIcon, Book, X } from "lucide-react"
 
 import { Icons } from "@/components/icons"
 import { Badge } from "@/components/ui/badge"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
 enum Status {
@@ -24,81 +26,118 @@ interface PengajuanCardProps {
 
 export function PengajuanCard({ ...props }: PengajuanCardProps) {
   return (
-    <div className="flex max-h-full min-h-[400px] w-full max-w-2xl flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-md transition-all hover:border-primary dark:bg-gray-800">
-      <div>
-        <div className="flex items-center justify-between px-6 py-4">
-          <div className="flex space-x-4">
-            <div>
-              <Icons.send className="h-12 w-12 text-gray-500 dark:text-gray-200" />
+    <Card className="group relative mb-4 overflow-hidden border-blue-100/50 bg-gradient-to-br from-white to-blue-50/30 shadow-lg transition-all hover:border-blue-200/50 hover:shadow-blue-100/50 dark:border-blue-900/50 dark:from-gray-900 dark:to-blue-900/10">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+
+      <CardHeader className="space-y-2 border-b border-blue-100/50 bg-blue-50/50 dark:border-blue-900/50 dark:bg-blue-950/10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="rounded-full bg-blue-100/80 p-2 dark:bg-blue-900/50">
+              <Icons.send className="size-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <div className="text-lg font-bold dark:text-white">
-                TO: {props.approverName}
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-200">
-                {props.approverHandle}
-              </div>
+              <h3 className="font-heading text-sm font-medium">
+                Kepada: {props.approverName}
+              </h3>
             </div>
           </div>
+          {getBadge(props.status as Status)}
         </div>
-        <Separator />
-      </div>
-      <div className="grid grid-cols-1 gap-2 p-6">
-        <InfoItem label="Judul:" value={props.knowledgeTitle} />
-        <InfoItem label="Tgl Pengajuan:" value={props.date} />
-        <InfoItem label="Status:" value={props.status} badgeAble />
-        <InfoItem label="Pengirim:" value={props.sender} />
-      </div>
+      </CardHeader>
 
-      <div className="flex flex-col items-end justify-between space-x-4 border-t border-gray-200 p-4 dark:border-gray-700">
-        <div className="flex items-end justify-end space-x-4">
-          <Link
-            href={props.baseeUrl ? `${props.baseeUrl}` : "/"}
-            className={buttonVariants({
-              variant: "outline",
-              className: "rounded-md px-4 py-2 text-sm font-medium",
-            })}
+      <CardContent className="space-y-4 p-6">
+        <div className="flex flex-col space-y-3 md:flex-row md:items-center md:justify-between md:space-x-4 md:space-y-0">
+          <div className="space-y-3 md:flex-1">
+            <InfoItem
+              icon={<Book className="size-4 text-blue-500" />}
+              label="Judul"
+              value={props.knowledgeTitle}
+            />
+            <div className="flex flex-wrap gap-4">
+              <InfoItem
+                icon={<Icons.calendar className="size-4 text-blue-500" />}
+                label="Tanggal"
+                value={props.date}
+              />
+              <InfoItem
+                icon={<Icons.user className="size-4 text-blue-500" />}
+                label="Pengirim"
+                value={props.sender}
+              />
+            </div>
+          </div>
+
+          <Button
+            asChild
+            variant="outline"
+            className="border-blue-200 bg-white hover:bg-blue-50 hover:text-blue-600 dark:border-blue-800 dark:bg-gray-900 dark:hover:bg-blue-950"
           >
-            Lihat Detail
-          </Link>
+            <Link href={props.baseeUrl}>
+              Lihat Detail
+              <ArrowRightIcon className="ml-2 size-4" />
+            </Link>
+          </Button>
         </div>
-      </div>
-    </div>
+      </CardContent>
+
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+    </Card>
   )
 }
 
 function getBadge(status: Status) {
   switch (status) {
     case Status.Pending:
-      return <Badge className="bg-yellow-500">{status}</Badge>
+      return (
+        <Badge
+          variant="outline"
+          className="border-yellow-500 bg-yellow-50 text-yellow-600 dark:border-yellow-600/50 dark:bg-yellow-950/50"
+        >
+          <Icons.clock className="mr-1 size-3" />
+          {status}
+        </Badge>
+      )
     case Status.Approved:
-      return <Badge className="bg-green-600">{status}</Badge>
+      return (
+        <Badge
+          variant="outline"
+          className="border-green-500 bg-green-50 text-green-600 dark:border-green-600/50 dark:bg-green-950/50"
+        >
+          <Icons.check className="mr-1 size-3" />
+          {status}
+        </Badge>
+      )
     case Status.Rejected:
-      return <Badge variant="destructive">{status}</Badge>
+      return (
+        <Badge
+          variant="outline"
+          className="border-red-500 bg-red-50 text-red-600 dark:border-red-600/50 dark:bg-red-950/50"
+        >
+          <X className="mr-1 size-3" />
+          {status}
+        </Badge>
+      )
     default:
-      return <Badge variant="default">{status}</Badge>
+      return <Badge variant="outline">{status}</Badge>
   }
 }
 
 function InfoItem({
+  icon,
   label,
   value,
-  badgeAble = false,
 }: {
+  icon: React.ReactNode
   label: string
   value: string
-  badgeAble?: boolean
 }) {
   return (
-    <div className="grid grid-cols-2 items-start justify-between">
-      <div className="text-sm font-semibold">{label}</div>
-      {badgeAble ? (
-        <div className="flex justify-end text-sm font-semibold">
-          {getBadge(value as Status)}
-        </div>
-      ) : (
-        <div className="flex justify-end text-right text-sm  ">{value}</div>
-      )}
+    <div className="flex items-center space-x-2">
+      {icon}
+      <span className="text-sm font-medium text-muted-foreground">
+        {label}:
+      </span>
+      <span className="flex-1 text-sm">{value}</span>
     </div>
   )
 }

@@ -102,7 +102,7 @@ export default async function OperatorLMSDashboard() {
           </span>
         </AlertTitle>
         <AlertDescription>
-          Have a Nice{" "}
+          Selamat beraktifitas, hari ini hari{" "}
           <span className="font-heading uppercase">{getDayWithText}</span> !
         </AlertDescription>
       </Alert>
