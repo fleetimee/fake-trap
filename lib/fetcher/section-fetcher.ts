@@ -114,3 +114,30 @@ export async function deleteSection({ token, idSection }: DeleteSectionProps) {
 
   return true
 }
+
+interface DeleteSectionCourseKnowledgeProps {
+  token: string | undefined
+  idCourse: number
+  idKnowledge: number
+}
+
+export async function deleteSectionCourseKnowledge({
+  token,
+  idCourse,
+  idKnowledge,
+}: DeleteSectionCourseKnowledgeProps) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}/secure/section/course/${idCourse}/knowledge/${idKnowledge}`
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!res.ok) {
+    return false
+  }
+
+  return true
+}

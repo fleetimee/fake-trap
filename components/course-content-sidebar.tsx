@@ -34,6 +34,11 @@ import {
 } from "@/components/ui/context-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 import { Icons } from "./icons"
 import { LottieClient } from "./lottie-anim"
@@ -92,31 +97,12 @@ export function CourseContentSidebar({
                         <ContextMenuTrigger className="text-left">{`${section.knowledge_title}`}</ContextMenuTrigger>
                         {canCreateContent ? (
                           <ContextMenuContent className="w-64">
-                            <ContextMenuItem inset disabled>
-                              Section
-                              <ContextMenuShortcut>
-                                Ctrl + S
-                              </ContextMenuShortcut>
-                            </ContextMenuItem>
-
-                            <ContextMenuSeparator />
-
-                            {/* Update Section */}
-                            <ContextMenuItem inset>
-                              <Link
-                                href={`${baseUrl}/section/update/${section.id_knowledge}`}
-                                className="flex w-full cursor-pointer items-center justify-between"
-                              >
-                                Update
-                                <ContextMenuShortcut>
-                                  Ctrl + U
-                                </ContextMenuShortcut>
-                              </Link>
-                            </ContextMenuItem>
-
                             {/* Delete Section */}
                             <DeleteSection
                               idSection={section.id_knowledge.toString()}
+                              isCourseKnowledge={true}
+                              idCourse={course.data.id_course}
+                              idKnowledge={section.id_knowledge}
                             />
 
                             {/* Section Name */}
@@ -136,7 +122,7 @@ export function CourseContentSidebar({
                             <div className="flex items-center justify-between space-x-4 border-b bg-card  p-4">
                               <CollapsibleTrigger className="" asChild>
                                 <div className="flex w-full items-center justify-between">
-                                  <h4 className="font-semibold hover:cursor-pointer hover:text-blue-600 hover:underline">
+                                  <h4 className="font-semibold text-black hover:cursor-pointer hover:text-blue-600 hover:underline dark:text-white">
                                     {section.section_title}
                                   </h4>
                                   <Button
@@ -156,38 +142,46 @@ export function CourseContentSidebar({
                                 section.content.map((content) => (
                                   <Link
                                     href={`${baseUrl}/section/${section.id_section}/content/${content.id_content}`}
-                                    className="flex w-full cursor-pointer items-center justify-between "
+                                    className="flex w-full cursor-pointer items-center justify-between"
                                   >
-                                    <Button
-                                      className={cn(
-                                        "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-none text-left font-heading transition-all hover:bg-primary hover:text-background md:rounded-md md:py-2",
-                                        {
-                                          "bg-background text-primary md:border md:border-primary":
-                                            pathname !==
-                                            `${baseUrl}/section/${section.id_section}/content/${content.id_content}`,
-                                        }
-                                      )}
-                                    >
-                                      {content.content_type ===
-                                      ContentType.LOCAL_FILE ? (
-                                        <Icons.video className="mr-2 size-4 text-orange-500" />
-                                      ) : content.content_type ===
-                                        ContentType.VIDEO ? (
-                                        <Icons.youtube className="mr-2 size-4 text-red-500" />
-                                      ) : content.content_type ===
-                                        ContentType.ARTICLE ? (
-                                        <Icons.post className="mr-2 size-4 text-green-500" />
-                                      ) : (
-                                        <Icons.paperClip className="mr-2 size-4 text-blue-500" />
-                                      )}
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <Button
+                                          className={cn(
+                                            "grid h-14 w-full grid-cols-[auto,1fr] items-center justify-start gap-4 overflow-visible whitespace-normal rounded-lg border text-left font-heading transition-all",
+                                            pathname ===
+                                              `${baseUrl}/section/${section.id_section}/content/${content.id_content}`
+                                              ? "border-2 border-primary bg-primary/5 text-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-none"
+                                              : "border-border/50 bg-card hover:border-primary/50 hover:bg-accent/50 hover:text-accent-foreground"
+                                          )}
+                                        >
+                                          {content.content_type ===
+                                          ContentType.LOCAL_FILE ? (
+                                            <Icons.video className="size-5 text-orange-500" />
+                                          ) : content.content_type ===
+                                            ContentType.VIDEO ? (
+                                            <Icons.youtube className="size-5 text-red-500" />
+                                          ) : content.content_type ===
+                                            ContentType.ARTICLE ? (
+                                            <Icons.post className="size-5 text-green-500" />
+                                          ) : (
+                                            <Icons.paperClip className="size-5 text-blue-500" />
+                                          )}
 
-                                      <div>
-                                        <p className="line-clamp-1 ">
+                                          <p className="line-clamp-1 text-base text-black dark:text-white">
+                                            {content.content_title}
+                                          </p>
+                                        </Button>
+                                      </TooltipTrigger>
+                                      <TooltipContent
+                                        side="right"
+                                        className="max-w-[300px]"
+                                      >
+                                        <span className="text-sm">
                                           {content.content_title}
-                                        </p>
-                                        <p className="text-xs ">1 min</p>
-                                      </div>
-                                    </Button>
+                                        </span>
+                                      </TooltipContent>
+                                    </Tooltip>
                                   </Link>
                                 ))
                               ) : (
@@ -260,13 +254,6 @@ export function CourseContentSidebar({
 
                         {canCreateContent ? (
                           <ContextMenuContent className="w-64">
-                            <ContextMenuItem inset disabled>
-                              Section
-                              <ContextMenuShortcut>
-                                Ctrl + S
-                              </ContextMenuShortcut>
-                            </ContextMenuItem>
-
                             <ContextMenuSeparator />
 
                             {/* Update Section */}
@@ -302,44 +289,53 @@ export function CourseContentSidebar({
                         {section.quiz.map((quiz) => (
                           <AccordionContent
                             key={quiz.id_quiz.toString()}
-                            className="py-0 md:p-1 "
+                            className="py-0 md:p-1"
                           >
                             <Link
-                              // href={`${pathname}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
                               href={`${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`}
                             >
-                              <Button
-                                className={cn(
-                                  "grid h-16 w-full grid-cols-[auto,1fr] items-center justify-start overflow-visible whitespace-normal rounded-none text-left font-heading transition-all hover:bg-primary hover:text-background md:rounded-md md:py-2",
-                                  {
-                                    "bg-background text-primary md:border md:border-primary":
-                                      pathname !==
-                                      `${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`,
-                                  }
-                                )}
-                              >
-                                {quiz.quiz_type === QuizType.PRETEST ? (
-                                  <Icons.postTest className="mr-2 size-4 text-blue-300 dark:text-white" />
-                                ) : quiz.quiz_type === QuizType.POSTTEST ? (
-                                  <Icons.preTest className="mr-2 size-4 text-blue-300 dark:text-white" />
-                                ) : (
-                                  <Icons.quiz className="mr-2 size-4 text-green-500" />
-                                )}
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    className={cn(
+                                      "grid h-14 w-full grid-cols-[auto,1fr] items-center justify-start gap-4 overflow-visible whitespace-normal rounded-lg border text-left font-heading transition-all",
+                                      pathname ===
+                                        `${baseUrl}/section/${section.id_section}/quiz/${quiz.id_quiz}`
+                                        ? "border-2 border-primary bg-primary/5 text-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-none"
+                                        : "border-border/50 bg-card hover:border-primary/50 hover:bg-accent/50 hover:text-accent-foreground"
+                                    )}
+                                  >
+                                    {quiz.quiz_type === QuizType.PRETEST ? (
+                                      <Icons.postTest className="size-5 text-blue-300 dark:text-white" />
+                                    ) : quiz.quiz_type === QuizType.POSTTEST ? (
+                                      <Icons.preTest className="size-5 text-blue-300 dark:text-white" />
+                                    ) : (
+                                      <Icons.quiz className="size-5 text-green-500" />
+                                    )}
 
-                                <div>
-                                  <p className="line-clamp-1">
+                                    <div className="flex flex-col gap-1">
+                                      <p className="line-clamp-1 text-base text-black dark:text-white">
+                                        {quiz.quiz_title}
+                                      </p>
+                                      <p className="text-xs text-muted-foreground">
+                                        {quiz.quiz_type === QuizType.PRETEST
+                                          ? "PRE-TEST"
+                                          : quiz.quiz_type === QuizType.POSTTEST
+                                            ? "POST-TEST"
+                                            : "Ujian"}
+                                      </p>
+                                    </div>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent
+                                  side="right"
+                                  className="max-w-[300px]"
+                                >
+                                  <span className="text-sm">
                                     {quiz.quiz_title}
-                                  </p>
-
-                                  <p className="text-xs">
-                                    {quiz.quiz_type === QuizType.PRETEST
-                                      ? "PRE-TEST"
-                                      : quiz.quiz_type === QuizType.POSTTEST
-                                        ? "POST-TEST"
-                                        : "Ujian"}
-                                  </p>
-                                </div>
-                              </Button>
+                                  </span>
+                                </TooltipContent>
+                              </Tooltip>
                             </Link>
                           </AccordionContent>
                         ))}
