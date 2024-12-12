@@ -114,6 +114,7 @@ export default async function CourseThreadPage({
           data={threads.data}
           pageCount={threads.totalPage}
           idCourse={params.idCourse}
+          link="/peserta"
         />
       )}
     </div>

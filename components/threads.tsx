@@ -36,9 +36,10 @@ interface ThreadsProps {
   data: ThreadListResData[]
   pageCount: number
   idCourse: string
+  link: string
 }
 
-export function Threads({ data, pageCount, idCourse }: ThreadsProps) {
+export function Threads({ data, pageCount, idCourse, link }: ThreadsProps) {
   const id = React.useId()
   const router = useRouter()
   const pathname = usePathname()
@@ -208,7 +209,7 @@ export function Threads({ data, pageCount, idCourse }: ThreadsProps) {
             createdAt={thread.created_at.toString()}
             numberOfPosts={thread.number_of_posts}
             numberOfUsers={thread.number_of_users}
-            linkString={`/peserta/course/detail/${idCourse}/threads/${thread.id_threads}`}
+            linkString={`${link}/course/detail/${idCourse}/threads/${thread.id_threads}`}
             name={thread.name}
             username={thread.username}
             profile_picture={thread.profile_picture}
