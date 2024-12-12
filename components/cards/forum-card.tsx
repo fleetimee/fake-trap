@@ -74,7 +74,7 @@ export function ForumCard({
 
   return (
     <>
-      <Card className="group relative border-2 border-black bg-white transition-all hover:-rotate-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:hover:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
+      <Card className="relative border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
         <div className="absolute right-0 top-0 h-8 w-8 rotate-12 bg-blue-500/20" />
         <CardTitle className="relative p-4 pb-0">
           <div className="flex items-start justify-between gap-4">
@@ -143,7 +143,7 @@ export function ForumCard({
                   <Button
                     variant="outline"
                     size="default"
-                    className="border-2 border-black bg-white font-medium transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-blue-900"
+                    className="border-2 border-black bg-white font-medium dark:border-slate-800 dark:bg-slate-900"
                   >
                     <MessagesSquare className="aspect-square w-5" />
                     <span>{numberOfPosts}</span>
@@ -158,7 +158,7 @@ export function ForumCard({
                 <Button
                   variant="outline"
                   size="default"
-                  className="border-2 border-black bg-white font-medium transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-blue-900"
+                  className="border-2 border-black bg-white font-medium dark:border-slate-800 dark:bg-slate-900"
                 >
                   <Icons.user className="aspect-square w-5" />
                   <span>{numberOfUsers}</span>

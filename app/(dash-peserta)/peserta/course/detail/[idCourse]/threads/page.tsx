@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { MessageCircle } from "lucide-react"
+import { MessageCircle, Plus } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getThreadList } from "@/lib/fetcher/threads-fetcher"
@@ -53,14 +53,29 @@ export default async function CourseThreadPage({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 p-6 dark:from-blue-950/50 dark:to-blue-900/50">
-        <h3 className="text-lg font-medium text-blue-700 dark:text-blue-300">
-          Forum Diskusi
-        </h3>
-        <p className="text-sm text-blue-600/80 dark:text-blue-400/80">
-          Buat thread baru atau lihat thread yang sudah ada dan berkomunikasi
-          dengan peserta lainnya dalam pembelajaran ini.
-        </p>
+      <div className="flex items-center justify-between rounded-lg bg-gradient-to-r from-blue-50 to-blue-100 p-6 dark:from-blue-950/50 dark:to-blue-900/50">
+        <div>
+          <h3 className="text-lg font-medium text-blue-700 dark:text-blue-300">
+            Forum Diskusi
+          </h3>
+          <p className="text-sm text-blue-600/80 dark:text-blue-400/80">
+            Buat thread baru atau lihat thread yang sudah ada dan berkomunikasi
+            dengan peserta lainnya dalam pembelajaran ini.
+          </p>
+        </div>
+        {threads.data.length > 0 && (
+          <Button
+            asChild
+            className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800"
+          >
+            <Link
+              href={`/peserta/course/detail/${params.idCourse}/threads/new`}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Thread Baru
+            </Link>
+          </Button>
+        )}
       </div>
       <Separator className="bg-blue-100 dark:bg-blue-900/50" />
 

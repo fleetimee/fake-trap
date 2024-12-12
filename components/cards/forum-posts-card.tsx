@@ -8,7 +8,6 @@ import Blocks, { RenderFn } from "editorjs-blocks-react-renderer"
 import { generateFromString } from "generate-avatar"
 import { Download, File } from "lucide-react"
 import { useSession } from "next-auth/react"
-import Balancer from "react-wrap-balancer"
 import { toast as sonnerToast } from "sonner"
 
 import { PostsListResData } from "@/types/posts/res"
@@ -124,7 +123,7 @@ export function ForumPost({ post }: ForumPost) {
 
   return (
     <>
-      <Card className="group relative border-2 border-black bg-white transition-all hover:-rotate-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:hover:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
+      <Card className="relative border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
         <div className="absolute right-0 top-0 h-8 w-8 -rotate-12 bg-blue-500/20" />
         <CardTitle className="relative p-4 pb-0">
           <div className="flex items-start justify-between gap-4">
@@ -145,10 +144,8 @@ export function ForumPost({ post }: ForumPost) {
                 />
               </div>
               <div className="space-y-1">
-                <h2 className={`${"text-sm group-hover:underline"}`}>
-                  {post.name}
-                </h2>
-                <p className={`text-sm text-foreground/60`}>{post.username}</p>
+                <h2 className="text-sm">{post.name}</h2>
+                <p className="text-sm text-foreground/60">@{post.username}</p>
               </div>
             </div>
 
@@ -159,7 +156,7 @@ export function ForumPost({ post }: ForumPost) {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="border-2 border-black bg-white transition-all hover:-translate-y-0.5 hover:bg-red-100 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-red-900"
+                      className="border-2 border-black bg-white dark:border-slate-800 dark:bg-slate-900"
                       onClick={() => setOpenDeletePostAlert(true)}
                     >
                       <Icons.trash className="aspect-square w-4 text-red-500" />
@@ -178,7 +175,7 @@ export function ForumPost({ post }: ForumPost) {
                       <Button
                         variant="outline"
                         size="icon"
-                        className="space-x-2 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-400"
+                        className="space-x-2 border-2 border-black bg-white dark:border-slate-800 dark:bg-slate-900"
                       >
                         <Icons.edit className="aspect-square w-4" />
                       </Button>
@@ -196,17 +193,15 @@ export function ForumPost({ post }: ForumPost) {
               Dibuat saat {getMetaData(post.created_at)}
             </small>
           </div>
-          <div className="flex w-full justify-center">
-            <div className="cst-wrap-text whatever-you-want mt-1 rounded-lg border-2 border-black bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+          <div className="w-full">
+            <div className="cst-wrap-text whatever-you-want mt-1 w-full rounded-lg border-2 border-black bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
               {contentParsed ? (
-                <Balancer>
-                  <Blocks
-                    data={contentParsed}
-                    renderers={{
-                      attaches: FileAttachment,
-                    }}
-                  />
-                </Balancer>
+                <Blocks
+                  data={contentParsed}
+                  renderers={{
+                    attaches: FileAttachment,
+                  }}
+                />
               ) : (
                 <p>{post.content}</p>
               )}

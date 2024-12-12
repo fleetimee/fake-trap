@@ -12,4 +12,7 @@ export type ThreadOneResData = {
   threads_title: string
   created_at: Date
   updated_at: Date
+  name: string
+  username: string
+  profile_picture: string
 }

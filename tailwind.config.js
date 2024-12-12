@@ -165,6 +165,8 @@ module.exports = {
 
     require("@tailwindcss/typography")({
       className: "whatever-you-want",
+      target: 'legacy',
+      defaultStyle: false, // This will remove the default styles
     }),
 
     addVariablesForColors,
