@@ -201,6 +201,7 @@ export function Threads({ data, pageCount, idCourse }: ThreadsProps) {
       ) : (
         data.map((thread) => (
           <ForumCard
+            key={thread.id_threads}
             idCourse={idCourse}
             idThreads={thread.id_threads.toString()}
             title={thread.threads_title}
@@ -208,6 +209,9 @@ export function Threads({ data, pageCount, idCourse }: ThreadsProps) {
             numberOfPosts={thread.number_of_posts}
             numberOfUsers={thread.number_of_users}
             linkString={`/peserta/course/detail/${idCourse}/threads/${thread.id_threads}`}
+            name={thread.name}
+            username={thread.username}
+            profile_picture={thread.profile_picture}
           />
         ))
       )}

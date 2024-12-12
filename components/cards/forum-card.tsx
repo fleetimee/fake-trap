@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { AlertDialogTitle } from "@radix-ui/react-alert-dialog"
@@ -40,9 +41,23 @@ interface ForumCardProps {
   numberOfUsers: number
   numberOfPosts: number
   linkString: string
+  name: string
+  username: string
+  profile_picture: string
 }
 
-export function ForumCard({ ...props }: ForumCardProps) {
+export function ForumCard({
+  idCourse,
+  idThreads,
+  title,
+  createdAt,
+  numberOfPosts,
+  numberOfUsers,
+  linkString,
+  name,
+  username,
+  profile_picture,
+}: ForumCardProps) {
   const { data: session } = useSession()
 
   const router = useRouter()
@@ -55,23 +70,35 @@ export function ForumCard({ ...props }: ForumCardProps) {
     (role) => role.role_name === "Admin" || role.role_name === "Operator LMS"
   )
 
+  const profilePictureLink = `${process.env.NEXT_PUBLIC_BASE_URL}${profile_picture}`
+
   return (
     <>
-      <Card>
-        <CardTitle className={`$ group p-4 pb-0`}>
+      <Card className="group relative border-2 border-black bg-white transition-all hover:-rotate-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:hover:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
+        <div className="absolute right-0 top-0 h-8 w-8 rotate-12 bg-blue-500/20" />
+        <CardTitle className="relative p-4 pb-0">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage
-                  src={`data:image/svg+xml;utf8,${generateFromString(props.idThreads)}`}
+              <div className="relative size-12 overflow-hidden rounded-full bg-white">
+                <Image
+                  src={
+                    profilePictureLink
+                      ? profilePictureLink
+                      : `data:image/svg+xml;utf8,${generateFromString(
+                          username ? username : "Nama"
+                        )}`
+                  }
+                  alt={username || "User"}
+                  width={100}
+                  height={100}
+                  className="object-cover object-top"
                 />
-                <AvatarFallback className="rounded-md">{"A"}</AvatarFallback>
-              </Avatar>
+              </div>
 
               <div className="space-y-1 text-sm">
-                <h2 className={`group-hover:underline"}`}>ANONIM</h2>
+                <h2 className={`group-hover:underline"}`}>{name}</h2>
 
-                <p className="text-foreground/60">anonim</p>
+                <p className="text-foreground/60">@{username}</p>
               </div>
             </div>
 
@@ -95,31 +122,31 @@ export function ForumCard({ ...props }: ForumCardProps) {
           </div>
         </CardTitle>
 
-        <CardContent className="p-4 pt-2">
-          <div>
-            <small className="text-sm text-foreground/60">
-              Dibuat saat {getMetaData(props.createdAt)}
+        <CardContent className="relative p-4 pt-2">
+          <div className="mb-2">
+            <small className="inline-block rounded-lg border-2 border-black bg-yellow-100 px-3 py-1 text-sm font-medium dark:border-slate-800 dark:bg-yellow-100/20">
+              Dibuat saat {getMetaData(createdAt)}
             </small>
           </div>
-          <p className="cst-wrap-text mt-1">
-            <Balancer>{props.title}</Balancer>
+          <p className="cst-wrap-text mt-1 text-lg font-medium">
+            <Balancer>{title}</Balancer>
           </p>
         </CardContent>
 
-        <CardFooter className="flex-col items-start p-0 pb-2">
+        <CardFooter className="relative flex-col items-start border-t-2 border-black bg-blue-50 p-0 pb-2 dark:border-slate-800 dark:bg-blue-950/20">
           <Separator className="mb-2" />
 
           <div className="space-x-2 px-4 py-2">
-            <Link href={props.linkString}>
+            <Link href={linkString}>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
                     variant="outline"
                     size="default"
-                    className="space-x-2"
+                    className="border-2 border-black bg-white font-medium transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-blue-900"
                   >
                     <MessagesSquare className="aspect-square w-5" />
-                    <span>{props.numberOfPosts}</span>
+                    <span>{numberOfPosts}</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Jumlah balasan yang diberikan</TooltipContent>
@@ -128,9 +155,13 @@ export function ForumCard({ ...props }: ForumCardProps) {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="default" className="space-x-2">
+                <Button
+                  variant="outline"
+                  size="default"
+                  className="border-2 border-black bg-white font-medium transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-blue-900"
+                >
                   <Icons.user className="aspect-square w-5" />
-                  <span>{props.numberOfUsers}</span>
+                  <span>{numberOfUsers}</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Jumlah user yang terlibat</TooltipContent>
@@ -163,7 +194,7 @@ export function ForumCard({ ...props }: ForumCardProps) {
 
                 const deleted = await deleteThread({
                   token: session?.user.token,
-                  idThreads: props.idThreads,
+                  idThreads: idThreads,
                 })
 
                 if (deleted) {

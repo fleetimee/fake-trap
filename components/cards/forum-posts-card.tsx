@@ -124,8 +124,9 @@ export function ForumPost({ post }: ForumPost) {
 
   return (
     <>
-      <Card>
-        <CardTitle className={`group p-4 pb-0`}>
+      <Card className="group relative border-2 border-black bg-white transition-all hover:-rotate-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:hover:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
+        <div className="absolute right-0 top-0 h-8 w-8 -rotate-12 bg-blue-500/20" />
+        <CardTitle className="relative p-4 pb-0">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
               <div className="relative size-12 overflow-hidden rounded-full bg-white">
@@ -140,6 +141,7 @@ export function ForumPost({ post }: ForumPost) {
                   alt="User name"
                   width={100}
                   height={100}
+                  className="object-cover object-top"
                 />
               </div>
               <div className="space-y-1">
@@ -157,7 +159,7 @@ export function ForumPost({ post }: ForumPost) {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="space-x-2"
+                      className="border-2 border-black bg-white transition-all hover:-translate-y-0.5 hover:bg-red-100 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-red-900"
                       onClick={() => setOpenDeletePostAlert(true)}
                     >
                       <Icons.trash className="aspect-square w-4 text-red-500" />
@@ -176,7 +178,7 @@ export function ForumPost({ post }: ForumPost) {
                       <Button
                         variant="outline"
                         size="icon"
-                        className="space-x-2"
+                        className="space-x-2 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-400"
                       >
                         <Icons.edit className="aspect-square w-4" />
                       </Button>
@@ -188,14 +190,14 @@ export function ForumPost({ post }: ForumPost) {
             </div>
           </div>
         </CardTitle>
-        <CardContent className="p-4 pt-2">
-          <div>
-            <small className="text-sm text-foreground/60">
+        <CardContent className="relative p-4 pt-2">
+          <div className="mb-4">
+            <small className="inline-block rounded-lg border-2 border-black bg-yellow-100 px-3 py-1 text-sm font-medium dark:border-slate-800 dark:bg-yellow-100/20">
               Dibuat saat {getMetaData(post.created_at)}
             </small>
           </div>
           <div className="flex w-full justify-center">
-            <div className="cst-wrap-text whatever-you-want mt-1">
+            <div className="cst-wrap-text whatever-you-want mt-1 rounded-lg border-2 border-black bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
               {contentParsed ? (
                 <Balancer>
                   <Blocks

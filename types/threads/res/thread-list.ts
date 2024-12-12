@@ -15,4 +15,9 @@ export type ThreadListResData = {
   threads_title: string
   created_at: Date
   updated_at: Date
+  user_uuid: string
+  name: string
+  email: string
+  username: string
+  profile_picture: string
 }
