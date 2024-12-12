@@ -36,10 +36,17 @@ interface ThreadsProps {
   data: ThreadListResData[]
   pageCount: number
   idCourse: string
+  idApproval?: string
   link: string
 }
 
-export function Threads({ data, pageCount, idCourse, link }: ThreadsProps) {
+export function Threads({
+  data,
+  pageCount,
+  idCourse,
+  link,
+  idApproval,
+}: ThreadsProps) {
   const id = React.useId()
   const router = useRouter()
   const pathname = usePathname()
@@ -54,6 +61,8 @@ export function Threads({ data, pageCount, idCourse, link }: ThreadsProps) {
   const search = searchParams?.get("search") ?? ""
 
   const per_page = searchParams?.get("per_page") ?? "10"
+
+  const isLinkSupervisorLms = link.includes("supervisor-lms")
 
   const createQueryString = React.useCallback(
     (params: Record<string, string | number | null>) => {
@@ -209,7 +218,12 @@ export function Threads({ data, pageCount, idCourse, link }: ThreadsProps) {
             createdAt={thread.created_at.toString()}
             numberOfPosts={thread.number_of_posts}
             numberOfUsers={thread.number_of_users}
-            linkString={`${link}/course/detail/${idCourse}/threads/${thread.id_threads}`}
+            // linkString={`${link}/course/detail/${idCourse}/threads/${thread.id_threads}`}
+            linkString={
+              isLinkSupervisorLms
+                ? `${link}/approval/detail/${idApproval}/course/${idCourse}/threads/${thread.id_threads}`
+                : `${link}/course/detail/${idCourse}/threads/${thread.id_threads}`
+            }
             name={thread.name}
             username={thread.username}
             profile_picture={thread.profile_picture}
