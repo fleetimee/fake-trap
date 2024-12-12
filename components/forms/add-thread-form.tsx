@@ -14,6 +14,7 @@ import { addThreadSchema } from "@/lib/validations/thread"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
+import { CustomTextarea } from "../ui/custom-textarea"
 import {
   Form,
   FormControl,
@@ -23,7 +24,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { Textarea } from "../ui/textarea"
 
 type Inputs = z.infer<typeof addThreadSchema>
 
@@ -33,9 +33,7 @@ interface AddThreadFormProps {
 
 export function AddThreadForm({ idCourse }: AddThreadFormProps) {
   const { data: session } = useSession()
-
   const router = useRouter()
-
   const [isPending, startTransaction] = useTransition()
 
   const form = useForm<Inputs>({
@@ -87,27 +85,48 @@ export function AddThreadForm({ idCourse }: AddThreadFormProps) {
           control={form.control}
           name="threads_title"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Ajukan Pertanyaan</FormLabel>
+            <FormItem className="space-y-3">
+              <FormLabel className="text-base font-medium text-blue-700">
+                Mulai Diskusi
+              </FormLabel>
               <FormControl>
-                <Textarea
+                <CustomTextarea
                   {...field}
-                  placeholder="Tulis pertanyaanmu disini"
-                  rows={4}
-                  className="w-full"
+                  placeholder="Bagikan pemikiran, pengalaman, atau pertanyaan Anda tentang topik ini. Contoh: Menurut pengalaman saya dalam menerapkan konsep ini..."
+                  className="min-h-[160px] shadow-sm"
                 />
               </FormControl>
-              <FormDescription>
-                <span className="text-red-500">*</span> Wajib diisi
+              <FormDescription className="flex items-center gap-2 text-blue-600/80">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="h-4 w-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Sampaikan dengan jelas untuk diskusi yang lebih bermakna
+                <span className="text-red-500">*</span>
               </FormDescription>
-              <FormMessage />
+              <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-fit" disabled={isPending}>
-          {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Tambah
+        <Button
+          type="submit"
+          className="flex w-fit items-center gap-2 rounded-xl 
+                     bg-gradient-to-r from-blue-600 to-blue-500 px-6
+                     py-2.5 text-white shadow-sm transition-all duration-200 hover:from-blue-700 hover:to-blue-600
+                     hover:shadow-md"
+          disabled={isPending}
+        >
+          {isPending && <Icons.spinner className="h-4 w-4 animate-spin" />}
+          {isPending ? "Memulai Diskusi..." : "Mulai Diskusi Baru"}
         </Button>
       </form>
     </Form>
