@@ -79,7 +79,7 @@ export function KnowledgeOperations({
             <>
               {/* Catatan Novian Fix */}
               <DropdownMenuItem
-                disabled={!(isStatusCodeIn(["0053", ""]) && !isAdmin)}
+                disabled={!(isStatusCodeIn(["0053", "0054", ""]) && !isAdmin)}
               >
                 <Link
                   href={

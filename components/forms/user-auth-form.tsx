@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
@@ -29,6 +29,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const [isBlocked, setIsBlocked] = useState(false)
 
   const [isPending, startTransition] = useTransition()
 
@@ -46,7 +47,55 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
 
   const router = useRouter()
 
+  const getCookie = (name: string) => {
+    const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"))
+    return match ? match[2] : "0"
+  }
+
+  const setCookie = (name: string, value: string) => {
+    const date = new Date()
+    date.setTime(date.getTime() + 24 * 60 * 60 * 1000) // 1 day
+    document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/`
+  }
+
+  const deleteCookie = (name: string) => {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`
+  }
+
+  const checkIfBlocked = () => {
+    const attempts = parseInt(getCookie("failed_attempts"))
+    return attempts >= 3
+  }
+
+  useEffect(() => {
+    setIsBlocked(checkIfBlocked())
+  }, [])
+
+  const handleFailedAttempt = () => {
+    const attempts = parseInt(getCookie("failed_attempts")) + 1
+    setCookie("failed_attempts", attempts.toString())
+
+    if (attempts >= 3) {
+      setIsBlocked(true)
+      deleteCookie("failed_attempts")
+      router.push("/login/forgot-password")
+      sonnerToast.error("Terlalu Banyak Percobaan", {
+        description: "Anda telah mencoba 3 kali. Silakan reset password Anda.",
+      })
+      return false
+    }
+    return true
+  }
+
   async function onSubmit(data: Inputs) {
+    if (isBlocked) {
+      sonnerToast.error("Akun Diblokir", {
+        description: "Silakan reset password Anda terlebih dahulu.",
+      })
+      router.push("/login/forgot-password")
+      return
+    }
+
     startTransition(async () => {
       setIsLoading(true)
 
@@ -59,11 +108,16 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
         if (!res?.ok) {
           setIsLoading(false)
 
+          if (!handleFailedAttempt()) {
+            return
+          }
+
           sonnerToast.error("Perhatian", {
             description: `${res?.error}`,
           })
         } else {
           setIsLoading(false)
+          deleteCookie("failed_attempts") // Reset attempts on successful login
 
           const loginTime = new Date().getTime()
           localStorage.setItem("_loginTime", loginTime.toString())
@@ -86,6 +140,12 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
         className="grid gap-4"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
+        {isBlocked && (
+          <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+            Akun Anda diblokir. Silakan reset password untuk melanjutkan.
+          </div>
+        )}
+
         <FormField
           control={form.control}
           name="email"
@@ -151,7 +211,10 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
           onExpired={() => setCaptchaVerified(false)}
         />
 
-        <Button type="submit" disabled={isLoading || !isCaptchaVerified}>
+        <Button
+          type="submit"
+          disabled={isLoading || !isCaptchaVerified || isBlocked}
+        >
           {isLoading && (
             <Icons.spinner
               className="mr-2 size-4 animate-spin"
