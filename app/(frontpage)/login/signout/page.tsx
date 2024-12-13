@@ -27,24 +27,16 @@ export default async function SignOutPage() {
 
   return (
     <Shell className="max-w-md">
-      <div className="flex items-center justify-center rounded-md bg-white">
-        <Card className="w-full border-4 border-blue-950 bg-blue-50 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] md:min-w-[30rem]">
+      <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900  md:min-w-[30rem]">
+        <Card className=" md:min-w-[30rem]">
           <CardHeader className="space-y-1">
             <PageHeader
               id="sign-out-page-header"
               aria-labelledby="sign-out-page-header-heading"
               className="text-center"
             >
-              <PageHeaderHeading
-                size="sm"
-                className="text-3xl font-black text-blue-950"
-              >
-                Keluar ?
-              </PageHeaderHeading>
-              <PageHeaderDescription
-                size="sm"
-                className="font-medium text-blue-800"
-              >
+              <PageHeaderHeading size="sm">Keluar ?</PageHeaderHeading>
+              <PageHeaderDescription size="sm">
                 Apakah anda yakin ingin keluar?
               </PageHeaderDescription>
             </PageHeader>
@@ -53,7 +45,7 @@ export default async function SignOutPage() {
             <LogOutButtons />
           </CardContent>
         </Card>
-      </div>
+      </BackgroundGradient>
     </Shell>
   )
 }

@@ -103,22 +103,20 @@ export function ForgotPasswordForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold text-blue-950">
-                Alamat Email
-              </FormLabel>
+              <FormLabel>Alamat Email</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="email"
                   placeholder="Masukkan email Anda"
                   disabled={isPending || cooldown > 0}
-                  className="border-2 border-blue-950 bg-white p-6 text-lg font-medium placeholder:text-blue-400 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
                 />
               </FormControl>
-              <FormDescription className="font-medium text-blue-700">
+              <FormDescription>
                 Email yang terdaftar untuk akun Anda
               </FormDescription>
-              <FormMessage className="font-medium text-red-700" />
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -157,7 +155,6 @@ export function ForgotPasswordForm() {
         <Button
           type="submit"
           disabled={isPending || !isCaptchaVerified || cooldown > 0}
-          className="border-2 border-blue-950 bg-blue-600 p-6 text-lg font-bold text-white shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] disabled:opacity-50"
         >
           {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
           {cooldown > 0 ? `Tunggu ${cooldown} detik` : "Kirim"}
