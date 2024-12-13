@@ -69,6 +69,7 @@ export default async function CoursePeoplePage({
           pageCount={users.totalPage}
           linkString={`/operator-lms/course/detail/${params.idCourse}/people/new`}
           idCourse={params.idCourse}
+          totalCount={users.count}
         />
       </React.Suspense>
     </div>

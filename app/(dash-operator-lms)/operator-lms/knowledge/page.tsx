@@ -121,6 +121,7 @@ export default async function OperatorLMSKnowledgePage({
           referenceResp={referenceResp}
           pageCount={knowledgeResp.totalPage}
           canCreate={false}
+          totalCount={knowledgeResp.count}
         />
       </Suspense>
     </DashboardShell>

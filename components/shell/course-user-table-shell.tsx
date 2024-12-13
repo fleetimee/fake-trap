@@ -16,6 +16,7 @@ interface CourseUserTableShellProps {
   linkString?: string
   idCourse?: string
   shouldExportable?: boolean
+  totalCount?: number
 }
 
 export function CourseUserTableShell({
@@ -24,6 +25,7 @@ export function CourseUserTableShell({
   linkString = "",
   idCourse,
   shouldExportable = true,
+  totalCount,
 }: CourseUserTableShellProps) {
   const exportUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/course/${idCourse}/users/export`
 
@@ -87,6 +89,7 @@ export function CourseUserTableShell({
       newRowLink={linkString === "" ? undefined : linkString}
       isExportable={shouldExportable}
       exportAction={exportUrl}
+      totalCount={totalCount}
     />
   )
 }

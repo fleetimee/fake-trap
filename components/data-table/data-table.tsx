@@ -91,6 +91,8 @@ interface DataTableProps<TData, TValue> {
    * @type boolean
    */
   hasActiveParams?: boolean
+
+  totalCount?: number
 }
 
 export function DataTable<TData, TValue>({
@@ -104,6 +106,7 @@ export function DataTable<TData, TValue>({
   deleteRowsAction,
   canCreate = true,
   hasActiveParams = true,
+  totalCount,
 }: DataTableProps<TData, TValue>) {
   const [isMouseDown, setIsMouseDown] = React.useState(false)
   const [startX, setStartX] = React.useState(0)
@@ -207,7 +210,7 @@ export function DataTable<TData, TValue>({
         </ScrollArea>
       </div>
       <div className="space-y-2.5">
-        <DataTablePagination table={dataTable} />
+        <DataTablePagination table={dataTable} totalCount={totalCount} />
       </div>
     </div>
   )

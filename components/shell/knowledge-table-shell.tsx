@@ -24,6 +24,7 @@ interface KnowledgeTableShellProps {
   referenceResp: ReferenceListRes
   pageCount: number
   canCreate?: boolean
+  totalCount?: number
 }
 
 export function KnowledgeTableShell({
@@ -32,6 +33,7 @@ export function KnowledgeTableShell({
   referenceResp,
   pageCount,
   canCreate,
+  totalCount,
 }: KnowledgeTableShellProps) {
   const { data: session } = useSession()
 
@@ -352,6 +354,7 @@ export function KnowledgeTableShell({
       exportAction={exportUrl}
       isExportable
       canCreate={canCreate}
+      totalCount={totalCount}
     />
   )
 }

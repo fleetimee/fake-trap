@@ -83,6 +83,7 @@ export default async function CoursePeoplePage({
           data={users.data}
           pageCount={users.totalPage}
           shouldExportable={false}
+          totalCount={users.count}
         />
       </React.Suspense>
     </div>
