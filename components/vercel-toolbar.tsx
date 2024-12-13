@@ -27,8 +27,8 @@ export function VercelToolbar({ ...props }: VercelToolbarProps) {
   const router = useRouter()
   usePathname()
   return (
-    <div className="flex max-w-max items-center justify-between rounded-xl border-2 border-black bg-white p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:border-white dark:bg-zinc-900 dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
-      <div className="mr-2 flex space-x-2 border-r-2 border-black pr-4 dark:border-white">
+    <div className="flex max-w-max items-center justify-between rounded-full bg-zinc-800 p-2">
+      <div className="flex space-x-2 border-r border-zinc-600 pr-1">
         <TooltipButton
           tooltipText="Back"
           onClick={() => {
@@ -62,7 +62,7 @@ export function VercelToolbar({ ...props }: VercelToolbarProps) {
           <span className="sr-only">Edit</span>
         </TooltipButton>
       </div>
-      <div className="flex space-x-2 pl-2">
+      <div className="flex space-x-2  border-zinc-600 px-3">
         <TooltipButton
           tooltipText="Materi"
           onClick={() => {
@@ -120,13 +120,7 @@ function TooltipButton({ tooltipText, onClick, children }: TooltipButtonProps) {
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          className="rounded-lg border-2 border-black bg-[#4D9DE0] text-white
-                     shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
-                     transition-all duration-200
-                     hover:translate-x-[-2px] hover:translate-y-[-2px]
-                     hover:bg-[#3D8DD0] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
-                     dark:border-white dark:bg-[#60A5FA] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]
-                     dark:hover:bg-[#3B82F6] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
+          className="rounded-full text-zinc-100 hover:bg-gray-600 hover:text-zinc-100"
           size="icon"
           variant="ghost"
           onClick={onClick}
@@ -134,7 +128,7 @@ function TooltipButton({ tooltipText, onClick, children }: TooltipButtonProps) {
           {children}
         </Button>
       </TooltipTrigger>
-      <TooltipContent className="border-2 border-black bg-white font-bold text-black dark:border-white dark:bg-zinc-900 dark:text-white">
+      <TooltipContent>
         <span>{tooltipText}</span>
       </TooltipContent>
     </Tooltip>

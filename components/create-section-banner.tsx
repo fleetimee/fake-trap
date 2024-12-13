@@ -9,25 +9,25 @@ export function SectionBanner({ className, ...props }: SectionBannerProps) {
   return (
     <div className="px-2">
       <section
-        className="relative aspect-[21/9] max-h-[400px] min-h-[300px] w-full overflow-hidden rounded-none border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+        className="relative aspect-[21/9] max-h-[400px] min-h-[300px] w-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
         style={{
           background: props.image
-            ? `url(${process.env.NEXT_PUBLIC_BASE_URL}${props.image})`
-            : "#ffffff",
+            ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(${process.env.NEXT_PUBLIC_BASE_URL}${props.image})`
+            : "linear-gradient(to right, var(--background), var(--muted))",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           objectFit: "cover",
         }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent" />
 
         <div className="relative flex h-full w-full items-center justify-between gap-x-12 px-6 py-16 md:px-8">
-          <div className="max-w-xl rotate-[-1deg] rounded-none border-4 border-black bg-blue-100 p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 hover:rotate-0">
-            <h3 className="font-mono text-3xl font-black leading-tight tracking-normal text-black sm:text-4xl md:tracking-tight lg:text-[2.75rem]">
+          <div className="max-w-xl rounded-lg border border-blue-200/20 bg-blue-50/95 p-8 backdrop-blur-sm transition-all duration-300 hover:bg-blue-100/95 supports-[backdrop-filter]:bg-blue-50/80">
+            <h3 className="text-3xl font-semibold leading-tight tracking-normal text-blue-900 sm:text-4xl md:tracking-tight lg:text-[2.75rem]">
               {props.title}
             </h3>
-            <p className="mt-6 font-mono text-base font-medium leading-7 text-black/80 [text-wrap:pretty] md:text-lg">
+            <p className="mt-6 text-base font-normal leading-7 text-blue-700/90 [text-wrap:pretty] md:text-lg">
               {props.description}
             </p>
           </div>
