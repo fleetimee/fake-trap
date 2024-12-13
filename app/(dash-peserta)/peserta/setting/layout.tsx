@@ -1,5 +1,6 @@
 import React from "react"
 import { redirect } from "next/navigation"
+import { KeyRound, UserCircle } from "lucide-react"
 
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -14,14 +15,12 @@ const sidebarNavItem = [
   {
     title: "Profil",
     href: "/peserta/setting",
+    icon: <UserCircle className="mr-2 h-4 w-4" />,
   },
   {
-    title: "Akun",
-    href: "/peserta/setting/account",
-  },
-  {
-    title: "Keamanan",
+    title: "Ganti Password",
     href: "/peserta/setting/security",
+    icon: <KeyRound className="mr-2 h-4 w-4" />,
   },
 ]
 
@@ -65,13 +64,15 @@ export default async function PemateriDivisiSettingLayouy({
         </MotionDiv>
       </div>
 
-      <Separator />
+      <Separator className="bg-blue-100" />
 
       <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className=" lg:w-1/5">
+        <aside className="lg:w-1/4">
           <SidebarNav items={sidebarNavItem} />
         </aside>
-        <div className="flex-1 lg:max-w-2xl">{children}</div>
+        <div className="flex-1 rounded-lg bg-white p-6 shadow-sm lg:max-w-2xl">
+          {children}
+        </div>
       </div>
     </DashboardShell>
   )

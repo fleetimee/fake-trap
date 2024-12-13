@@ -35,6 +35,7 @@ import {
 import { DashboardHeader } from "@/components/header"
 import { Icons } from "@/components/icons"
 import { BreadCrumbs } from "@/components/pagers/breadcrumb"
+import { PasswordChangeDialog } from "@/components/password-change-dialog"
 import { DashboardShell } from "@/components/shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -45,6 +46,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+// Add these imports at the top with other UI components
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -118,6 +120,8 @@ export default async function PesertaPage() {
 
   return (
     <DashboardShell>
+      <PasswordChangeDialog />
+
       <BreadCrumbs
         segments={[
           {

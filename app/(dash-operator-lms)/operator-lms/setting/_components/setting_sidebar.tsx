@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation"
 
 import { RoleListResData } from "@/types/role/res"
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
     href: string
     title: string
+    icon?: React.ReactNode
   }[]
 }
 
@@ -20,7 +20,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   return (
     <nav
       className={cn(
-        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
+        "flex space-x-2 rounded-lg border border-blue-100 bg-gradient-to-b from-blue-50 to-white p-2 lg:flex-col lg:space-x-0 lg:space-y-1",
         className
       )}
       {...props}
@@ -30,13 +30,14 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
           key={item.href}
           href={item.href}
           className={cn(
-            buttonVariants({ variant: "ghost" }),
+            "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-all duration-150",
             pathname === item.href
-              ? "bg-muted hover:bg-muted"
-              : "hover:bg-transparent hover:underline",
+              ? "bg-blue-600 text-white shadow-md"
+              : "text-blue-600 hover:bg-blue-100 hover:text-blue-700 hover:shadow-sm",
             "justify-start"
           )}
         >
+          {item.icon}
           {item.title}
         </Link>
       ))}
@@ -52,7 +53,7 @@ export function SidebarNavRole({ items }: SidebarNavRoleProps) {
   const pathname = usePathname()
 
   return (
-    <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
+    <nav className="rounded-lg border border-blue-100 bg-blue-50/50 p-2 lg:space-y-1">
       {items.map((item) => {
         const formattedRoleName = item.role_name
           .toLowerCase()
@@ -62,10 +63,10 @@ export function SidebarNavRole({ items }: SidebarNavRoleProps) {
             key={item.id_role}
             href={`/operator-lms/roles/${formattedRoleName}`}
             className={cn(
-              buttonVariants({ variant: "ghost" }),
+              "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors",
               pathname === `/operator-lms/roles/${formattedRoleName}`
-                ? "bg-muted hover:bg-muted"
-                : "hover:bg-transparent hover:underline",
+                ? "bg-blue-600 text-white shadow-sm"
+                : "text-blue-600 hover:bg-blue-100 hover:text-blue-700",
               "justify-start"
             )}
           >

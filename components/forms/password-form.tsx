@@ -3,7 +3,14 @@
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CheckIcon, XIcon } from "lucide-react"
+import {
+  AlertCircle,
+  CheckIcon,
+  KeyRound,
+  Lock,
+  Shield,
+  XIcon,
+} from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast as sonnerToast } from "sonner"
@@ -14,6 +21,16 @@ import { changePasswordSchema } from "@/lib/validations/change-password"
 
 import { Icons } from "../icons"
 import { PasswordInput } from "../password-input"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../ui/alert-dialog"
 import { Button } from "../ui/button"
 import {
   Form,
@@ -65,13 +82,24 @@ export function ChangePasswordForm() {
     },
   })
 
-  async function onSubmit(data: Inputs) {
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+  const [formData, setFormData] = useState<Inputs | null>(null)
+
+  const handleSubmit = (data: Inputs) => {
+    setFormData(data)
+    setIsConfirmOpen(true)
+  }
+
+  const handleConfirm = async () => {
+    if (!formData) return
+    setIsConfirmOpen(false)
+
     startTransition(async () => {
       try {
         const response = await changePassword({
           token: session?.user.token,
           uuid: session?.expires.id,
-          body: JSON.stringify(data),
+          body: JSON.stringify(formData),
         })
 
         if (response.ok) {
@@ -98,30 +126,29 @@ export function ChangePasswordForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="max-w-2xl space-y-8 rounded-lg border border-blue-100 bg-gradient-to-b from-blue-50/50 to-white/50 p-6 shadow-sm backdrop-blur-sm"
+      >
         <FormField
           control={form.control}
           name="old_password"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password Lama</FormLabel>
+            <FormItem className="rounded-md border border-blue-50 bg-white/80 p-4">
+              <FormLabel className="flex items-center gap-2">
+                <KeyRound className="h-4 w-4 text-blue-600" />
+                <span>Password Lama</span>
+              </FormLabel>
               <FormControl>
-                {/* <Input
-                  placeholder=""
-                  {...field}
-                  disabled={isPending}
-                  type="password"
-                /> */}
-
                 <PasswordInput
                   {...field}
                   disabled={isPending}
-                  placeholder="*********"
+                  placeholder="Masukkan password lama"
+                  className="border-blue-100 focus-visible:ring-blue-400"
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-blue-600/80">
                 Masukkan password lama anda untuk memvalidasi perubahan
-                password.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -132,16 +159,12 @@ export function ChangePasswordForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password Baru</FormLabel>
+            <FormItem className="rounded-md border border-blue-50 bg-white/80 p-4">
+              <FormLabel className="flex items-center gap-2">
+                <Lock className="h-4 w-4 text-blue-600" />
+                <span>Password Baru</span>
+              </FormLabel>
               <FormControl>
-                {/* <Input
-                  placeholder=""
-                  {...field}
-                  disabled={isPending}
-                  type="password"
-                /> */}
-
                 <PasswordInput
                   {...field}
                   disabled={isPending}
@@ -149,11 +172,14 @@ export function ChangePasswordForm() {
                     field.onChange(e)
                     checkPasswordStrength(e.target.value)
                   }}
-                  placeholder="*********"
+                  placeholder="Masukkan password baru"
+                  className="border-blue-100 focus-visible:ring-blue-400"
                 />
               </FormControl>
-              <FormDescription>Masukkan password baru anda.</FormDescription>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <FormDescription className="text-blue-600/80">
+                Password baru harus memenuhi kriteria berikut
+              </FormDescription>
+              <div className="mt-2 space-y-2 rounded-md bg-blue-50/50 p-3 text-sm">
                 <div className="flex items-center gap-2">
                   {passwordStrength.length ? (
                     <CheckIcon className="h-4 w-4 text-green-500" />
@@ -209,17 +235,21 @@ export function ChangePasswordForm() {
               "Konfirmasi password tidak cocok",
           }}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Konfirmasi Password Baru</FormLabel>
+            <FormItem className="rounded-md border border-blue-50 bg-white/80 p-4">
+              <FormLabel className="flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 text-blue-600" />
+                <span>Konfirmasi Password Baru</span>
+              </FormLabel>
               <FormControl>
                 <PasswordInput
                   {...field}
                   disabled={isPending}
-                  placeholder="*********"
+                  placeholder="Konfirmasi password baru"
+                  className="border-blue-100 focus-visible:ring-blue-400"
                 />
               </FormControl>
-              <FormDescription>
-                Masukkan password baru anda sekali lagi untuk konfirmasi.
+              <FormDescription className="text-blue-600/80">
+                Pastikan password yang dimasukkan sama
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -239,16 +269,49 @@ export function ChangePasswordForm() {
               !form.formState.errors.password_confirmation
             )
           }
-          className="w-fit"
+          className="flex w-fit items-center gap-2 bg-blue-600 text-white transition-colors hover:bg-blue-700"
         >
           {isPending && (
             <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
+              className="h-4 w-4 animate-spin"
               aria-hidden="true"
             />
           )}
-          Update
+          <Shield className="h-4 w-4" />
+          Perbarui Password
         </Button>
+
+        <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+          <AlertDialogContent className="font-sans">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-blue-900">
+                Konfirmasi Perubahan Password
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-blue-600/80">
+                Apakah Anda yakin ingin mengubah password? Setelah password
+                diubah, Anda akan perlu menggunakan password baru untuk login.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="border-blue-100">
+                Batal
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleConfirm}
+                className="bg-blue-600 text-white hover:bg-blue-700"
+              >
+                {isPending ? (
+                  <>
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    <span>Memproses...</span>
+                  </>
+                ) : (
+                  <span>Ya, Ubah Password</span>
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </form>
     </Form>
   )
