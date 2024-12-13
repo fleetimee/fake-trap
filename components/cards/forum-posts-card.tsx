@@ -123,12 +123,12 @@ export function ForumPost({ post }: ForumPost) {
 
   return (
     <>
-      <Card className="relative border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
-        <div className="absolute right-0 top-0 h-8 w-8 -rotate-12 bg-blue-500/20" />
+      <Card>
+        <div className="absolute right-0 top-0 h-8 w-8 -rotate-12 bg-blue-500/10" />
         <CardTitle className="relative p-4 pb-0">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="relative size-12 overflow-hidden rounded-full bg-white">
+              <div className="relative size-12 overflow-hidden rounded-full">
                 <Image
                   src={
                     profilePictureLink
@@ -145,7 +145,9 @@ export function ForumPost({ post }: ForumPost) {
               </div>
               <div className="space-y-1">
                 <h2 className="text-sm">{post.name}</h2>
-                <p className="text-sm text-foreground/60">@{post.username}</p>
+                <p className="text-sm text-muted-foreground">
+                  @{post.username}
+                </p>
               </div>
             </div>
 
@@ -153,12 +155,7 @@ export function ForumPost({ post }: ForumPost) {
               {isAdminOrAuthor && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="border-2 border-black bg-white dark:border-slate-800 dark:bg-slate-900"
-                      onClick={() => setOpenDeletePostAlert(true)}
-                    >
+                    <Button variant="outline" size="icon">
                       <Icons.trash className="aspect-square w-4 text-red-500" />
                     </Button>
                   </TooltipTrigger>
@@ -172,11 +169,7 @@ export function ForumPost({ post }: ForumPost) {
                     <Link
                       href={`/editor/${post.id_threads}/?editedPostId=${post.id_post}`}
                     >
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="space-x-2 border-2 border-black bg-white dark:border-slate-800 dark:bg-slate-900"
-                      >
+                      <Button variant="outline" size="icon">
                         <Icons.edit className="aspect-square w-4" />
                       </Button>
                     </Link>
@@ -189,12 +182,12 @@ export function ForumPost({ post }: ForumPost) {
         </CardTitle>
         <CardContent className="relative p-4 pt-2">
           <div className="mb-4">
-            <small className="inline-block rounded-lg border-2 border-black bg-yellow-100 px-3 py-1 text-sm font-medium dark:border-slate-800 dark:bg-yellow-100/20">
+            <small className="inline-block rounded-md bg-muted px-3 py-1 text-sm font-medium">
               Dibuat saat {getMetaData(post.created_at)}
             </small>
           </div>
           <div className="w-full">
-            <div className="cst-wrap-text whatever-you-want mt-1 w-full rounded-lg border-2 border-black bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <div className="mt-1 w-full rounded-md bg-background p-4">
               {contentParsed ? (
                 <Blocks
                   data={contentParsed}

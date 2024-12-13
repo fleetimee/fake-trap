@@ -74,12 +74,12 @@ export function ForumCard({
 
   return (
     <>
-      <Card className="relative border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:border-slate-800 dark:bg-slate-950 dark:shadow-[4px_4px_0px_0px_rgba(148,163,184)]">
-        <div className="absolute right-0 top-0 h-8 w-8 rotate-12 bg-blue-500/20" />
+      <Card>
+        <div className="absolute right-0 top-0 h-8 w-8 rotate-12 bg-blue-500/10" />
         <CardTitle className="relative p-4 pb-0">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="relative size-12 overflow-hidden rounded-full bg-white">
+              <div className="relative size-12 overflow-hidden rounded-full">
                 <Image
                   src={
                     profilePictureLink
@@ -95,10 +95,9 @@ export function ForumCard({
                 />
               </div>
 
-              <div className="space-y-1 text-sm">
-                <h2 className={`group-hover:underline"}`}>{name}</h2>
-
-                <p className="text-foreground/60">@{username}</p>
+              <div className="space-y-1">
+                <h2 className="text-sm">{name}</h2>
+                <p className="text-sm text-muted-foreground">@{username}</p>
               </div>
             </div>
 
@@ -106,12 +105,7 @@ export function ForumCard({
               {isAdmin && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="space-x-2"
-                      onClick={() => setOpenDeleteThreadAlert(true)}
-                    >
+                    <Button variant="outline" size="icon">
                       <Icons.trash className="aspect-square w-4 text-red-500" />
                     </Button>
                   </TooltipTrigger>
@@ -123,28 +117,26 @@ export function ForumCard({
         </CardTitle>
 
         <CardContent className="relative p-4 pt-2">
-          <div className="mb-2">
-            <small className="inline-block rounded-lg border-2 border-black bg-yellow-100 px-3 py-1 text-sm font-medium dark:border-slate-800 dark:bg-yellow-100/20">
+          <div className="mb-4">
+            <small className="inline-block rounded-md bg-muted px-3 py-1 text-sm font-medium">
               Dibuat saat {getMetaData(createdAt)}
             </small>
           </div>
-          <p className="cst-wrap-text mt-1 text-lg font-medium">
-            <Balancer>{title}</Balancer>
-          </p>
+          <div className="w-full">
+            <div className="mt-1 w-full rounded-md bg-background p-4">
+              <p className="text-lg font-medium">
+                <Balancer>{title}</Balancer>
+              </p>
+            </div>
+          </div>
         </CardContent>
 
-        <CardFooter className="relative flex-col items-start border-t-2 border-black bg-blue-50 p-0 pb-2 dark:border-slate-800 dark:bg-blue-950/20">
-          <Separator className="mb-2" />
-
+        <CardFooter className="relative flex-col items-start border-t p-0 pb-2">
           <div className="space-x-2 px-4 py-2">
             <Link href={linkString}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="default"
-                    className="border-2 border-black bg-white font-medium dark:border-slate-800 dark:bg-slate-900"
-                  >
+                  <Button variant="outline" size="default">
                     <MessagesSquare className="aspect-square w-5" />
                     <span>{numberOfPosts}</span>
                   </Button>
@@ -155,11 +147,7 @@ export function ForumCard({
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="border-2 border-black bg-white font-medium dark:border-slate-800 dark:bg-slate-900"
-                >
+                <Button variant="outline" size="default">
                   <Icons.user className="aspect-square w-5" />
                   <span>{numberOfUsers}</span>
                 </Button>
