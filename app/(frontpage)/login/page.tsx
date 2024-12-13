@@ -24,19 +24,20 @@ export default async function LoginPage() {
   return (
     <BlurFade delay={0.25 * 2} inView>
       <Shell className="max-w-lg">
-        <div className="flex items-center justify-center rounded-md bg-white"></div>
-        <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900  md:min-w-[30rem]">
-          <Card className=" md:min-w-[30rem]">
+        <div className="flex items-center justify-center rounded-md bg-white">
+          <Card className="w-full border-4 border-blue-950 bg-blue-50 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] md:min-w-[30rem]">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl">👋 B - LIVE | Log in</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-3xl font-black text-blue-950">
+                👋 B - LIVE | Log in
+              </CardTitle>
+              <CardDescription className="font-medium text-blue-800">
                 Masukkan kredential Anda untuk melanjutkan
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
               <Suspense
                 fallback={
-                  <div className="flex h-32 items-center justify-center">
+                  <div className="flex h-32 items-center justify-center font-bold text-blue-800">
                     Loading...
                   </div>
                 }
@@ -48,13 +49,13 @@ export default async function LoginPage() {
               <Link
                 aria-label="Reset password"
                 href="/login/forgot-password"
-                className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
+                className="text-sm font-semibold text-blue-700 underline-offset-4 transition-colors hover:text-blue-950 hover:underline"
               >
                 Reset password
               </Link>
             </CardFooter>
           </Card>
-        </BackgroundGradient>
+        </div>
       </Shell>
     </BlurFade>
   )

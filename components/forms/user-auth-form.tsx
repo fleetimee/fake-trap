@@ -137,11 +137,11 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
   return (
     <Form {...form}>
       <form
-        className="grid gap-4"
+        className="grid gap-6"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
         {isBlocked && (
-          <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+          <div className="border-2 border-red-950 bg-red-50 p-4 text-sm font-bold text-red-950 shadow-[4px_4px_0px_0px_rgba(127,29,29,1)]">
             Akun Anda diblokir. Silakan reset password untuk melanjutkan.
           </div>
         )}
@@ -152,16 +152,17 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
           disabled={isLoading}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="font-bold text-blue-950">Email</FormLabel>
               <FormControl>
                 <Input
                   type="text"
                   placeholder="Tuliskan email"
+                  className="border-2 border-blue-950 bg-white p-6 text-lg font-medium placeholder:text-blue-400 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
                   {...field}
                   onChange={(e) => field.onChange(e.target.value.toLowerCase())}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="font-medium text-red-700" />
             </FormItem>
           )}
         />
@@ -172,11 +173,17 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
           disabled={isLoading}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className="font-bold text-blue-950">
+                Password
+              </FormLabel>
               <FormControl>
-                <PasswordInput placeholder="**********" {...field} />
+                <PasswordInput
+                  placeholder="**********"
+                  className="border-2 border-blue-950 bg-white p-6 text-lg font-medium placeholder:text-blue-400 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+                  {...field}
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="font-medium text-red-700" />
             </FormItem>
           )}
         />
@@ -214,6 +221,7 @@ export function UserAuthForm({ className }: UserAuthFormProps) {
         <Button
           type="submit"
           disabled={isLoading || !isCaptchaVerified || isBlocked}
+          className="border-2 border-blue-950 bg-blue-600 p-6 text-lg font-bold text-white shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] disabled:opacity-50"
         >
           {isLoading && (
             <Icons.spinner

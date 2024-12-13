@@ -22,34 +22,42 @@ export const metadata: Metadata = {
 export default async function LoginPage() {
   return (
     <Shell className="max-w-lg">
-      <BackgroundGradient className="rounded-[22px] bg-white p-1 dark:bg-zinc-900 sm:p-1 md:min-w-40">
-        <Card className="md:min-w-[30rem]">
+      <div className="flex items-center justify-center rounded-md bg-white">
+        <Card className="w-full border-4 border-blue-950 bg-blue-50 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] md:min-w-[30rem]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">🤔 Atur Ulang Password</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-3xl font-black text-blue-950">
+              🤔 Atur Ulang Password
+            </CardTitle>
+            <CardDescription className="font-medium text-blue-800">
               Masukkan alamat email Anda dan kami akan mengirimkan kode
               verifikasi
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="flex h-32 items-center justify-center font-bold text-blue-800">
+                  Loading...
+                </div>
+              }
+            >
               <ForgotPasswordForm />
             </Suspense>
           </CardContent>
           <CardFooter className="flex flex-wrap items-center justify-end gap-2">
-            <div className="flex-1 text-sm text-muted-foreground">
+            <div className="flex-1 text-sm font-medium text-blue-800">
               <span id="cooldown-text"></span>
             </div>
             <Link
               aria-label="Reset password"
               href="/login"
-              className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
+              className="text-sm font-semibold text-blue-700 underline-offset-4 transition-colors hover:text-blue-950 hover:underline"
             >
               Kembali
             </Link>
           </CardFooter>
         </Card>
-      </BackgroundGradient>
+      </div>
     </Shell>
   )
 }
