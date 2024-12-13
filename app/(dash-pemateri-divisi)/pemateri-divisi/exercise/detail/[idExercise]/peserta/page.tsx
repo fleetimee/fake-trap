@@ -73,6 +73,7 @@ export default async function ExerciseDetailPesertaPage({
           data={exerciseMember.data}
           pageCount={exerciseMember.totalPage}
           idExercise={params.idExercise}
+          totalCount={exerciseMember.count}
         />
       </Suspense>
     </DashboardShell>

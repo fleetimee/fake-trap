@@ -61,6 +61,7 @@ export default async function LazyQuizMemberPage({
         data={lazyUsers?.data}
         idExercise={params.idExercise}
         pageCount={lazyUsers.totalPage}
+        totalCount={lazyUsers.count}
       />
     </DashboardShell>
   )

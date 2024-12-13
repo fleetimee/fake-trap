@@ -14,12 +14,14 @@ interface UjianPesertaTableShellProps {
   data: UjianPesertaListResData[]
   pageCount: number
   idExercise: string
+  totalCount?: number
 }
 
 export function UjianPesertaTableShell({
   data,
   pageCount,
   idExercise,
+  totalCount,
 }: UjianPesertaTableShellProps) {
   // const [isPending, startTransition] = React.useTransition()
   // const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([])
@@ -88,6 +90,7 @@ export function UjianPesertaTableShell({
       columns={columns}
       isExportable
       exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/quizzes/${idExercise}/members/export`}
+      totalCount={totalCount}
     />
   )
 }

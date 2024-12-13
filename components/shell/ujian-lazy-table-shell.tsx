@@ -14,12 +14,14 @@ interface UjianLazyTableShellProps {
   data: QuizLazyUserListResData[]
   pageCount: number
   idExercise: string
+  totalCount?: number
 }
 
 export function UjianLazyTableShell({
   data,
   pageCount,
   idExercise,
+  totalCount,
 }: UjianLazyTableShellProps) {
   const columns = React.useMemo<ColumnDef<QuizLazyUserListResData, unknown>[]>(
     () => [
@@ -72,6 +74,7 @@ export function UjianLazyTableShell({
       columns={columns}
       isExportable
       exportAction={`${process.env.NEXT_PUBLIC_BASE_URL}/quizzes/${idExercise}/lazyuser/export`}
+      totalCount={totalCount}
     />
   )
 }
