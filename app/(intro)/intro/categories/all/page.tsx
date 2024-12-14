@@ -54,11 +54,13 @@ export default async function AllPublicCategories({
         ]}
       />
 
-      <PublicCategories
-        isWhiteText
-        categories={publicCategoryResp.data}
-        pageCount={publicCategoryResp.totalPage}
-      />
+      <div className="rounded-lg bg-white p-6 shadow-sm">
+        <PublicCategories
+          isWhiteText={false}
+          categories={publicCategoryResp.data}
+          pageCount={publicCategoryResp.totalPage}
+        />
+      </div>
     </Shell>
   )
 }

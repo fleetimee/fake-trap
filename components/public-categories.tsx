@@ -114,7 +114,7 @@ export function PublicCategories({
     debouncedQuery !== "" || sort !== "created_at.desc" || page !== "1"
 
   return (
-    <>
+    <div className="flex flex-col gap-8">
       <div className="flex items-center space-x-2">
         <Sheet>
           <SheetTrigger asChild>
@@ -265,15 +265,17 @@ export function PublicCategories({
       </div>
 
       {categories && categories.length ? (
-        <PaginationButton
-          pageCount={pageCount}
-          page={page}
-          sort={sort}
-          per_page={per_page}
-          search={search}
-          createQueryString={createQueryString}
-        />
+        <div className="pt-2">
+          <PaginationButton
+            pageCount={pageCount}
+            page={page}
+            sort={sort}
+            per_page={per_page}
+            search={search}
+            createQueryString={createQueryString}
+          />
+        </div>
       ) : null}
-    </>
+    </div>
   )
 }
