@@ -61,6 +61,7 @@ export default async function OperatorLMSLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
         profilePicture={userLogged.data.profile_picture}
+        userOrg={userOrg.data}
       />
       <div className="grow bg-background py-4">
         <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">

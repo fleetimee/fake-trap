@@ -1,56 +1,60 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function DashboardShellSkeleton() {
+export default function CourseDetailLoading() {
   return (
-    <div>
-      {/* Breadcrumbs */}
-      <div className="hidden sm:block">
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-4 w-16" />
-          <span>/</span>
-          <Skeleton className="h-4 w-24" />
-          <span>/</span>
-          <Skeleton className="h-4 w-32" />
+    <div className="flex min-h-screen flex-col space-y-6">
+      {/* Breadcrumbs skeleton */}
+      <div className="hidden items-center space-x-2 sm:flex">
+        <Skeleton className="h-5 w-20" />
+        <Skeleton className="h-5 w-5" />
+        <Skeleton className="h-5 w-24" />
+        <Skeleton className="h-5 w-5" />
+        <Skeleton className="h-5 w-32" />
+      </div>
+
+      {/* Alert skeletons */}
+      <div className="space-y-4">
+        <Skeleton className="h-20 w-full rounded-lg" />
+        <Skeleton className="h-16 w-full rounded-lg" />
+      </div>
+
+      {/* Banner skeleton */}
+      <div className="relative hidden sm:block">
+        <Skeleton className="aspect-video w-full rounded-lg" />
+        <div className="absolute right-4 top-4">
+          <Skeleton className="h-10 w-32 rounded-lg" />
         </div>
       </div>
 
-      {/* Alert Section */}
-      <div className="mt-4 md:px-2">
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-4 w-4" />
-          <Skeleton className="h-6 w-20" />
-        </div>
-        <Skeleton className="mt-2 h-4 w-full" />
-        <Skeleton className="mt-2 h-4 w-40" />
+      {/* Toolbar skeleton */}
+      <div className="flex justify-end">
+        <Skeleton className="h-10 w-48 rounded-lg" />
       </div>
 
-      {/* Section Banner & Countdown Timer */}
-      <div className="relative mt-4 hidden sm:block">
-        <Skeleton className="h-40 w-full rounded-lg" />
-        <div className="absolute right-4 top-4 rounded-lg bg-gray-200 px-2 py-1">
-          <Skeleton className="h-6 w-16" />
-        </div>
-      </div>
+      {/* Course alert skeleton */}
+      <Skeleton className="h-16 w-full rounded-lg" />
 
-      {/* Toolbar */}
-      <div className="mt-4 flex items-center justify-end">
-        <Skeleton className="h-8 w-32 rounded-lg" />
-      </div>
-
-      {/* Course Alert */}
-      <div className="mt-4">
-        <Skeleton className="h-10 w-full" />
-      </div>
-
-      {/* Content and Sidebar */}
-      <div className="mt-4 flex h-auto flex-col gap-4 md:px-2 lg:flex-row">
-        <div className="flex-1">
-          <Skeleton className="mb-2 h-6 w-48" />
-          <Skeleton className="h-40 w-full" />
+      {/* Main content and sidebar layout */}
+      <div className="flex flex-col gap-6 lg:flex-row">
+        {/* Main content area */}
+        <div className="flex-1 space-y-4">
+          <Skeleton className="h-8 w-48" />
+          <div className="space-y-4 rounded-lg border p-6">
+            <Skeleton className="h-48 w-full rounded-lg" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-[90%]" />
+              <Skeleton className="h-4 w-[80%]" />
+            </div>
+          </div>
         </div>
 
-        <div className="hidden lg:block">
-          <Skeleton className="h-40 w-64" />
+        {/* Sidebar */}
+        <div className="hidden w-[300px] shrink-0 lg:block">
+          <div className="space-y-4 rounded-lg border p-4">
+            <Skeleton className="h-10 w-full rounded-lg" />
+            <Skeleton className="h-[600px] w-full rounded-lg" />
+          </div>
         </div>
       </div>
     </div>

@@ -48,6 +48,7 @@ export default async function AdministratorLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav?.data}
         profilePicture={userLogged.data.profile_picture}
+        userOrg={userOrg.data}
       />
 
       <div className="grow bg-background py-4">

@@ -35,7 +35,7 @@ function getRandomMessage() {
 }
 
 export function Content({ title, children, className, ...rest }: ContentProps) {
-  const isMobile = useMediaQuery({ query: "(max-width: 640px)" })
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" })
 
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
 
@@ -78,7 +78,11 @@ export function Content({ title, children, className, ...rest }: ContentProps) {
   }
 
   if (isMobile) {
-    return <div className="h-full max-h-max  sm:w-screen">{children}</div>
+    return (
+      <div className="mx-auto h-full max-h-max w-full space-y-6 px-4 py-6">
+        {children}
+      </div>
+    )
   } else {
     return (
       <div

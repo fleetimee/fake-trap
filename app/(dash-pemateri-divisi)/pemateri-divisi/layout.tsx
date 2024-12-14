@@ -49,6 +49,7 @@ export default async function PemateriDivisiLayout({
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
         profilePicture={userLogged.data.profile_picture}
+        userOrg={userOrg.data}
       />
 
       {/* <div className="bg-background bg-cover bg-top bg-no-repeat  dark:bg-none md:bg-left md:py-4 lg:min-h-[100svh]">

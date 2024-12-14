@@ -64,10 +64,7 @@ interface IndexLayoutProps {
 export default async function IndexLayout({ children }: IndexLayoutProps) {
   const user = await getCurrentUser()
 
-  console.log("user", user)
   const isLoggedOn = user !== undefined
-
-  console.log("isLoggedOn", isLoggedOn)
 
   const categoryNav = await getNavbar()
 
@@ -98,8 +95,6 @@ export default async function IndexLayout({ children }: IndexLayoutProps) {
     token: user?.token,
     uuid: tokenExtracted.id,
   })
-
-  console.log("loggedOnUser", loggedOnUser)
 
   const isMoreThanOneRole = tokenExtracted
     ? tokenExtracted.role.length > 1

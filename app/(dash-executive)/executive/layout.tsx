@@ -47,6 +47,7 @@ export default async function ExecutiveLayout({
         isMoreThanOneRole={isUserHasMoreThanOneRole}
         sidebarNavItems={menu?.data}
         topNavItems={categoryNav.data}
+        userOrg={userOrg.data}
       />
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
         <aside className="hidden w-[200px] flex-col border-r md:flex">
