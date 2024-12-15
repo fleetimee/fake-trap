@@ -47,11 +47,27 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
+// Add these interfaces before the UserSubmittedAnswerFormProps
+interface QuizCompletionResponse {
+  code: number
+  message: string
+  data: {
+    score: number
+    time_elapsed: string
+    completed_at: string
+  }
+}
+
 interface UserSubmittedAnswerFormProps {
   question: QuizOneResQuestion[]
   quiz: QuizOneRes
   baseUrl: string
   isPreviewOnly?: boolean
+  params: {
+    idCourse: string
+    idSection: string
+    idQuiz: string
+  }
 }
 
 type Inputs = z.infer<typeof userSubmittedAnswerSchema>
@@ -61,6 +77,7 @@ export function UserSubmittedAnswerForm({
   quiz,
   baseUrl,
   isPreviewOnly = false,
+  params,
 }: UserSubmittedAnswerFormProps) {
   const { data: session } = useSession()
   const [key, setKey] = useState(0)
@@ -147,6 +164,15 @@ export function UserSubmittedAnswerForm({
     exclude: ["baz"],
   })
 
+  // Add this state for completion dialog
+  const [showCompletionDialog, setShowCompletionDialog] = useState(false)
+  const [completionData, setCompletionData] = useState<
+    QuizCompletionResponse["data"] | null
+  >(null)
+
+  // Add this state to prevent recreation of localStorage items after submission
+  const [isSubmissionComplete, setIsSubmissionComplete] = useState(false)
+
   const onSubmit = useCallback(
     async (values: Inputs) => {
       // Set a default value for time_elapsed
@@ -177,32 +203,38 @@ export function UserSubmittedAnswerForm({
           })
 
           if (res.ok) {
+            // Set submission complete flag
+            setIsSubmissionComplete(true)
+
             // Disable persistence before clearing storage
             setShouldPersist(false)
 
-            sonnerToast.success("Berhasil", {
-              description: "Jawaban berhasil disimpan",
-            })
+            // Clear all quiz-related localStorage items
+            const quizKeys = Object.keys(localStorage).filter(
+              (key) =>
+                key.includes(quiz.data.id_quiz.toString()) ||
+                key.includes("startTime") ||
+                key.includes("timeRemaining")
+            )
 
-            // Clear the saved start time and remaining time from the local storage
-            localStorage.removeItem(`startTime`)
-            localStorage.removeItem(`startTime-${quiz.data.id_quiz}`)
-            localStorage.removeItem(`timeRemaining-${quiz.data.id_quiz}`)
+            quizKeys.forEach((key) => localStorage.removeItem(key))
 
-            // Clear the quizStorage
-
-            // Reset the form fields to their initial values
+            // Reset form
             form.reset()
 
-            localStorage.removeItem(`quizStorage-${quiz.data.id_quiz}`)
+            // Navigate back with the completion data in searchParams
+            const data: QuizCompletionResponse = await res.json()
+            const searchParams = new URLSearchParams()
+            searchParams.set("score", data.data.score.toString())
+            searchParams.set("timeElapsed", data.data.time_elapsed)
+            searchParams.set("completedAt", data.data.completed_at)
 
-            router.back()
+            router.push(
+              `/peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}?${searchParams.toString()}`
+            )
             router.refresh()
-
-            setIsSubmitted(false)
           } else {
             const errorResponse: ErrorResponse = await res.json()
-
             sonnerToast.error("Gagal", {
               description: errorResponse?.error,
             })
@@ -214,17 +246,14 @@ export function UserSubmittedAnswerForm({
         }
       })
     },
-    [
-      startTime,
-      session?.user?.token,
-      quiz.data.id_quiz,
-      form,
-      router,
-      setShouldPersist,
-    ]
+    [startTime, session?.user?.token, quiz.data.id_quiz, form, router, params]
   )
 
+  // Modify the useEffect for timer initialization to respect submission status
   useEffect(() => {
+    // Don't recreate localStorage items if submission is complete
+    if (isSubmissionComplete) return
+
     const savedStartTime = localStorage.getItem(
       `startTime-${quiz.data.id_quiz}`
     )
@@ -248,16 +277,19 @@ export function UserSubmittedAnswerForm({
       setStartTime(newStartTime)
       setTimeRemaining(quiz.data.time_limit)
 
-      localStorage.setItem(
-        `startTime-${quiz.data.id_quiz}`,
-        newStartTime.toISOString()
-      )
-      localStorage.setItem(
-        `timeRemaining-${quiz.data.id_quiz}`,
-        quiz.data.time_limit.toString()
-      )
+      // Only set localStorage if not submitted
+      if (!isSubmissionComplete) {
+        localStorage.setItem(
+          `startTime-${quiz.data.id_quiz}`,
+          newStartTime.toISOString()
+        )
+        localStorage.setItem(
+          `timeRemaining-${quiz.data.id_quiz}`,
+          quiz.data.time_limit.toString()
+        )
+      }
     }
-  }, [quiz.data.id_quiz, quiz.data.time_limit])
+  }, [quiz.data.id_quiz, quiz.data.time_limit, isSubmissionComplete])
 
   // Modify the timer effect to have better checks
   useEffect(() => {
@@ -301,6 +333,7 @@ export function UserSubmittedAnswerForm({
     isAutoSubmitting,
     form,
     onSubmit,
+    isSubmissionComplete,
   ])
 
   useEffect(() => {
