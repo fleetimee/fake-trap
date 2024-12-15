@@ -68,6 +68,7 @@ export default async function CourseQuizStartPage({
         question={quiz?.data?.questions}
         quiz={quiz}
         baseUrl="/peserta/"
+        params={params}
       />
     </>
   )
