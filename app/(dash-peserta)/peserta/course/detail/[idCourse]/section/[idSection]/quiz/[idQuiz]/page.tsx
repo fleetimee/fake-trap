@@ -16,7 +16,6 @@ import {
   Info,
   List,
   Play,
-  PrinterIcon,
   Type,
   Users,
   X,
@@ -35,7 +34,6 @@ import { getUserLeaderboard } from "@/lib/fetcher/users-fetcher"
 import { getCurrentUser } from "@/lib/session"
 import {
   cn,
-  convertDateToShortString,
   convertDatetoString,
   convertDateToStringSimplified,
   convertDatetoStringWithTime,
@@ -45,7 +43,7 @@ import {
 import { Icons } from "@/components/icons"
 import { LottieClient } from "@/components/lottie-anim"
 import NumberTicker from "@/components/number-ticker"
-import { PrintButton } from "@/components/print-button"
+import { CompletionDialog } from "@/components/quiz/completion-dialog"
 import SparklesText from "@/components/sparkle-text"
 import {
   AlertDialog,
@@ -58,7 +56,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -81,14 +79,6 @@ import {
 } from "@/components/ui/hover-card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { PrintButtonNilai } from "./PrintButton"
@@ -123,6 +113,11 @@ interface CourseQuizPageProps {
     idCourse: string
     idSection: string
     idQuiz: string
+  }
+  searchParams?: {
+    score?: string
+    timeElapsed?: string
+    completedAt?: string
   }
 }
 
@@ -186,7 +181,14 @@ const getStatusConfig = (
   }
 }
 
-export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
+export default async function CourseQuizPage({
+  params,
+  searchParams,
+}: CourseQuizPageProps) {
+  const score = searchParams?.score || null
+  const timeElapsed = searchParams?.timeElapsed || null
+  const completedAt = searchParams?.completedAt || null
+
   const user = await getCurrentUser()
 
   const tokenExtracted = extractToken(user?.token)
@@ -281,228 +283,218 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
   }
 
   return (
-    <Card className="w-full rounded-none border-none border-background shadow-none">
-      <CardHeader>
-        <CardTitle>{quiz.data.quiz_title}</CardTitle>
-        <CardDescription>{quiz.data.quiz_desc}</CardDescription>
-      </CardHeader>
+    <>
+      <CompletionDialog
+        score={score}
+        timeElapsed={timeElapsed}
+        completedAt={completedAt}
+      />
+      <Card className="w-full rounded-none border-none border-background shadow-none">
+        <CardHeader>
+          <CardTitle>{quiz.data.quiz_title}</CardTitle>
+          <CardDescription>{quiz.data.quiz_desc}</CardDescription>
+        </CardHeader>
 
-      <Separator />
+        <Separator />
 
-      <CardContent className="space-y-8 py-6">
-        <Tabs defaultValue="announcement" className="w-full">
-          <TabsList className="mb-4 grid w-full grid-cols-3 gap-4 rounded-lg bg-blue-50 p-2 dark:bg-blue-950">
-            <TabsTrigger
+        <CardContent className="space-y-8 py-6">
+          <Tabs defaultValue="announcement" className="w-full">
+            <TabsList className="mb-4 grid w-full grid-cols-3 gap-4 rounded-lg bg-blue-50 p-2 dark:bg-blue-950">
+              <TabsTrigger
+                value="announcement"
+                className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
+              >
+                <div className="flex items-center space-x-2">
+                  <Info className="size-4" />
+                  <span>Informasi</span>
+                </div>
+              </TabsTrigger>
+              <TabsTrigger
+                value="nilai"
+                className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
+              >
+                <div className="flex items-center space-x-2">
+                  <Activity className="size-4" />
+                  <span>Riwayat Nilai</span>
+                </div>
+              </TabsTrigger>
+              <TabsTrigger
+                value="placement"
+                className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
+              >
+                <div className="flex items-center space-x-2">
+                  <Icons.crown className="size-4" />
+                  <span>Peringkat</span>
+                </div>
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent
               value="announcement"
-              className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
+              className="rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
             >
-              <div className="flex items-center space-x-2">
-                <Info className="size-4" />
-                <span>Informasi</span>
-              </div>
-            </TabsTrigger>
-            <TabsTrigger
-              value="nilai"
-              className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
-            >
-              <div className="flex items-center space-x-2">
-                <Activity className="size-4" />
-                <span>Riwayat Nilai</span>
-              </div>
-            </TabsTrigger>
-            <TabsTrigger
-              value="placement"
-              className="rounded-lg data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-100"
-            >
-              <div className="flex items-center space-x-2">
-                <Icons.crown className="size-4" />
-                <span>Peringkat</span>
-              </div>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent
-            value="announcement"
-            className="rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
-          >
-            <div className="flex flex-col space-y-1.5 text-center">
-              <h3 className="font-heading text-3xl font-semibold tracking-tight">
-                {quizType?.value_ref1}
-              </h3>
-            </div>
-
-            <div className="flex items-center justify-center py-8">
-              <div className="relative flex flex-col items-center justify-center">
-                <div className="mb-4">
-                  <LottieClient
-                    animationData={
-                      isQuizOpen
-                        ? isPretestExceded || isPosttestExceded
-                          ? Learn
-                          : QuizEnabled
-                        : Lock
-                    }
-                    className="size-72"
-                  />
-                </div>
-                {(() => {
-                  const status = getStatusConfig(
-                    isQuizOpen,
-                    isPretestExceded,
-                    isPosttestExceded,
-                    isQuestionEmpty
-                  )
-                  return (
-                    <div className="absolute bottom-0 flex flex-col items-center gap-2 text-center">
-                      <span
-                        className={`inline-flex items-center rounded-full ${status.color} ${status.textColor} px-6 py-2.5 text-sm font-semibold`}
-                      >
-                        {status.icon}
-                        {status.message}
-                      </span>
-                      <p className={`text-xs italic ${status.textColor}`}>
-                        {status.remark}
-                      </p>
-                    </div>
-                  )
-                })()}
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <h2 className="mb-4 font-heading text-xl font-semibold">
-                  Informasi Penting
-                </h2>
-                <div className="space-y-6">
-                  <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
-                    <h3 className="mb-2 font-semibold">Ketentuan Waktu</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-center">
-                        <List className="mr-2 size-4" />
-                        Jumlah Soal: {questionLength} Soal
-                      </li>
-                      <li className="flex items-center">
-                        <Icons.clock className="mr-2 size-4" />
-                        Durasi ujian: {quiz.data.time_limit / 60} menit
-                      </li>
-                      <li className="flex items-center">
-                        <Icons.calendar className="mr-2 size-4" />
-                        Jam Buka:{" "}
-                        {convertDateToStringSimplified(
-                          quiz.data.jam_buka.toString()
-                        )}
-                      </li>
-                      <li className="flex items-center">
-                        <Icons.calendar className="mr-2 size-4" />
-                        Jam Tutup:{" "}
-                        {convertDateToStringSimplified(
-                          quiz.data.jam_tutup.toString()
-                        )}
-                      </li>
-                      <li className="flex items-center">
-                        <Icons.calendar className="mr-2 size-4" />
-                        Dibuat Pada: {formattedDate}
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
-                    <h3 className="mb-2 font-semibold">Ketentuan Pengerjaan</h3>
-                    <ul className="list-inside list-disc space-y-2 text-sm">
-                      <li className="flex items-center">
-                        <Info className="mr-2 size-4" />
-                        Ujian Pre-Test hanya dapat dikerjakan satu kali
-                      </li>
-                      <li className="flex items-center">
-                        <Info className="mr-2 size-4" />
-                        Ujian Post-Test dapat dikerjakan maksimal tiga kali
-                      </li>
-                      <li className="flex items-center">
-                        <Info className="mr-2 size-4" />
-                        Nilai tertinggi akan diambil sebagai nilai akhir
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
-                    <h3 className="mb-2 font-semibold">Status Pengerjaan</h3>
-                    <div className="space-y-2 text-sm">
-                      <p className="flex items-center">
-                        <Type className="mr-2 size-4" />
-                        Tipe Ujian:{" "}
-                        <span className="ml-1 font-semibold">
-                          {quizType?.value_ref1}
-                        </span>
-                      </p>
-                      <p className="flex items-center">
-                        <Icons.check className="mr-2 size-4" />
-                        Kesempatan Tersisa:{" "}
-                        <span className="ml-1 font-semibold">
-                          {isPretest
-                            ? 1 - userQuiz.data.length
-                            : 3 - userQuiz.data.length}{" "}
-                          kali
-                        </span>
-                      </p>
-                      <p className="flex items-center">
-                        <Activity className="mr-2 size-4" />
-                        Sudah Dikerjakan:{" "}
-                        <span className="ml-1 font-semibold">
-                          {userQuiz.data ? userQuiz.data.length : 0} kali
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex flex-col space-y-1.5 text-center">
+                <h3 className="font-heading text-3xl font-semibold tracking-tight">
+                  {quizType?.value_ref1}
+                </h3>
               </div>
 
-              <div className="text-center">
-                <h1 className="mb-4 text-2xl font-bold">
-                  {!isQuizOpen ? (
-                    <span className="inline-flex items-center rounded-lg bg-yellow-100 px-6 py-3 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100">
-                      <Icons.lock className="mr-2 size-5" />
-                      BELUM SAATNYA MEMULAI UJIAN
-                    </span>
-                  ) : isQuestionEmpty ? (
-                    <span className="inline-flex items-center rounded-lg bg-red-100 px-6 py-3 text-red-800 dark:bg-red-900 dark:text-red-100">
-                      <AlertTriangle className="mr-2 size-5" />
-                      SOAL UJIAN BELUM TERSEDIA
-                    </span>
-                  ) : isPretestExceded || isPosttestExceded ? (
-                    <span className="inline-flex items-center rounded-lg bg-red-100 px-6 py-3 text-red-800 dark:bg-red-900 dark:text-red-100">
-                      <AlertTriangle className="mr-2 size-5" />
-                      ANDA SUDAH MELEBIHI LIMIT KESEMPATAN
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center rounded-lg bg-green-100 px-6 py-3 text-green-800 dark:bg-green-900 dark:text-green-100">
-                      <Icons.check className="mr-2 size-5" />
-                      ANDA DAPAT MEMULAI UJIAN
-                    </span>
-                  )}
-                </h1>
-
-                <AlertDialog>
-                  <AlertDialogTrigger
-                    className="w-full max-w-md"
-                    disabled={
-                      !isQuizOpen ||
-                      isPretestExceded ||
-                      isPosttestExceded ||
-                      isQuestionEmpty
-                    }
-                  >
-                    <Button
-                      className="w-full"
-                      size="lg"
-                      variant={
-                        !isQuizOpen ||
-                        isPretestExceded ||
-                        isPosttestExceded ||
-                        isQuestionEmpty
-                          ? "destructive"
-                          : "default"
+              <div className="flex items-center justify-center py-8">
+                <div className="relative flex flex-col items-center justify-center">
+                  <div className="mb-4">
+                    <LottieClient
+                      animationData={
+                        isQuizOpen
+                          ? isPretestExceded || isPosttestExceded
+                            ? Learn
+                            : QuizEnabled
+                          : Lock
                       }
+                      className="size-72"
+                    />
+                  </div>
+                  {(() => {
+                    const status = getStatusConfig(
+                      isQuizOpen,
+                      isPretestExceded,
+                      isPosttestExceded,
+                      isQuestionEmpty
+                    )
+                    return (
+                      <div className="absolute bottom-0 flex flex-col items-center gap-2 text-center">
+                        <span
+                          className={`inline-flex items-center rounded-full ${status.color} ${status.textColor} px-6 py-2.5 text-sm font-semibold`}
+                        >
+                          {status.icon}
+                          {status.message}
+                        </span>
+                        <p className={`text-xs italic ${status.textColor}`}>
+                          {status.remark}
+                        </p>
+                      </div>
+                    )
+                  })()}
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h2 className="mb-4 font-heading text-xl font-semibold">
+                    Informasi Penting
+                  </h2>
+                  <div className="space-y-6">
+                    <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
+                      <h3 className="mb-2 font-semibold">Ketentuan Waktu</h3>
+                      <ul className="space-y-2 text-sm">
+                        <li className="flex items-center">
+                          <List className="mr-2 size-4" />
+                          Jumlah Soal: {questionLength} Soal
+                        </li>
+                        <li className="flex items-center">
+                          <Icons.clock className="mr-2 size-4" />
+                          Durasi ujian: {quiz.data.time_limit / 60} menit
+                        </li>
+                        <li className="flex items-center">
+                          <Icons.calendar className="mr-2 size-4" />
+                          Jam Buka:{" "}
+                          {convertDateToStringSimplified(
+                            quiz.data.jam_buka.toString()
+                          )}
+                        </li>
+                        <li className="flex items-center">
+                          <Icons.calendar className="mr-2 size-4" />
+                          Jam Tutup:{" "}
+                          {convertDateToStringSimplified(
+                            quiz.data.jam_tutup.toString()
+                          )}
+                        </li>
+                        <li className="flex items-center">
+                          <Icons.calendar className="mr-2 size-4" />
+                          Dibuat Pada: {formattedDate}
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
+                      <h3 className="mb-2 font-semibold">
+                        Ketentuan Pengerjaan
+                      </h3>
+                      <ul className="list-inside list-disc space-y-2 text-sm">
+                        <li className="flex items-center">
+                          <Info className="mr-2 size-4" />
+                          Ujian Pre-Test hanya dapat dikerjakan satu kali
+                        </li>
+                        <li className="flex items-center">
+                          <Info className="mr-2 size-4" />
+                          Ujian Post-Test dapat dikerjakan maksimal tiga kali
+                        </li>
+                        <li className="flex items-center">
+                          <Info className="mr-2 size-4" />
+                          Nilai tertinggi akan diambil sebagai nilai akhir
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="rounded-lg bg-blue-50/50 p-4 dark:bg-blue-950/50">
+                      <h3 className="mb-2 font-semibold">Status Pengerjaan</h3>
+                      <div className="space-y-2 text-sm">
+                        <p className="flex items-center">
+                          <Type className="mr-2 size-4" />
+                          Tipe Ujian:{" "}
+                          <span className="ml-1 font-semibold">
+                            {quizType?.value_ref1}
+                          </span>
+                        </p>
+                        <p className="flex items-center">
+                          <Icons.check className="mr-2 size-4" />
+                          Kesempatan Tersisa:{" "}
+                          <span className="ml-1 font-semibold">
+                            {isPretest
+                              ? 1 - userQuiz.data.length
+                              : 3 - userQuiz.data.length}{" "}
+                            kali
+                          </span>
+                        </p>
+                        <p className="flex items-center">
+                          <Activity className="mr-2 size-4" />
+                          Sudah Dikerjakan:{" "}
+                          <span className="ml-1 font-semibold">
+                            {userQuiz.data ? userQuiz.data.length : 0} kali
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <h1 className="mb-4 text-2xl font-bold">
+                    {!isQuizOpen ? (
+                      <span className="inline-flex items-center rounded-lg bg-yellow-100 px-6 py-3 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100">
+                        <Icons.lock className="mr-2 size-5" />
+                        BELUM SAATNYA MEMULAI UJIAN
+                      </span>
+                    ) : isQuestionEmpty ? (
+                      <span className="inline-flex items-center rounded-lg bg-red-100 px-6 py-3 text-red-800 dark:bg-red-900 dark:text-red-100">
+                        <AlertTriangle className="mr-2 size-5" />
+                        SOAL UJIAN BELUM TERSEDIA
+                      </span>
+                    ) : isPretestExceded || isPosttestExceded ? (
+                      <span className="inline-flex items-center rounded-lg bg-red-100 px-6 py-3 text-red-800 dark:bg-red-900 dark:text-red-100">
+                        <AlertTriangle className="mr-2 size-5" />
+                        ANDA SUDAH MELEBIHI LIMIT KESEMPATAN
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center rounded-lg bg-green-100 px-6 py-3 text-green-800 dark:bg-green-900 dark:text-green-100">
+                        <Icons.check className="mr-2 size-5" />
+                        ANDA DAPAT MEMULAI UJIAN
+                      </span>
+                    )}
+                  </h1>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger
+                      className="w-full max-w-md"
                       disabled={
                         !isQuizOpen ||
                         isPretestExceded ||
@@ -510,314 +502,509 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                         isQuestionEmpty
                       }
                     >
-                      {!isQuizOpen ? (
-                        <Icons.lock className="mr-2 size-4" />
-                      ) : isQuestionEmpty ? (
-                        <AlertTriangle className="mr-2 size-4" />
-                      ) : isPretestExceded || isPosttestExceded ? (
-                        <X className="mr-2 size-4" />
-                      ) : (
-                        <Play className="mr-2 size-4" />
-                      )}
-                      Mulai Ujian
-                    </Button>
-                  </AlertDialogTrigger>
+                      <Button
+                        className="w-full"
+                        size="lg"
+                        variant={
+                          !isQuizOpen ||
+                          isPretestExceded ||
+                          isPosttestExceded ||
+                          isQuestionEmpty
+                            ? "destructive"
+                            : "default"
+                        }
+                        disabled={
+                          !isQuizOpen ||
+                          isPretestExceded ||
+                          isPosttestExceded ||
+                          isQuestionEmpty
+                        }
+                      >
+                        {!isQuizOpen ? (
+                          <Icons.lock className="mr-2 size-4" />
+                        ) : isQuestionEmpty ? (
+                          <AlertTriangle className="mr-2 size-4" />
+                        ) : isPretestExceded || isPosttestExceded ? (
+                          <X className="mr-2 size-4" />
+                        ) : (
+                          <Play className="mr-2 size-4" />
+                        )}
+                        Mulai Ujian
+                      </Button>
+                    </AlertDialogTrigger>
 
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Siap Memulai Ujian?</AlertDialogTitle>
-                      <AlertDialogDescription className="space-y-2">
-                        <p>Beberapa hal yang perlu diperhatikan:</p>
-                        <ul className="list-disc pl-6 text-sm">
-                          <li>
-                            Anda dapat menghentikan ujian sementara jika waktu
-                            masih tersedia
-                          </li>
-                          <li>Jawaban Anda akan tersimpan secara otomatis</li>
-                          <li>
-                            Anda dapat melanjutkan ujian selama waktu masih
-                            tersedia
-                          </li>
-                          <li>
-                            Jika waktu habis, jawaban akan otomatis dikumpulkan
-                          </li>
-                        </ul>
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Batal</AlertDialogCancel>
-                      <AlertDialogAction asChild>
-                        <Link
-                          href={`
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Siap Memulai Ujian?</AlertDialogTitle>
+                        <AlertDialogDescription className="space-y-2">
+                          <p>Beberapa hal yang perlu diperhatikan:</p>
+                          <ul className="list-disc space-y-1.5 pl-6 text-left text-sm">
+                            <li className="text-muted-foreground">
+                              Anda dapat menghentikan ujian sementara jika waktu
+                              masih tersedia
+                            </li>
+                            <li className="text-muted-foreground">
+                              Jawaban Anda akan tersimpan secara otomatis
+                            </li>
+                            <li className="text-muted-foreground">
+                              Anda dapat melanjutkan ujian selama waktu masih
+                              tersedia
+                            </li>
+                            <li className="text-muted-foreground">
+                              Jika waktu habis, jawaban akan otomatis
+                              dikumpulkan
+                            </li>
+                          </ul>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Batal</AlertDialogCancel>
+                        <AlertDialogAction asChild>
+                          <Link
+                            href={`
                       /peserta/course/detail/${params.idCourse}/section/${params.idSection}/quiz/${params.idQuiz}/start
                     `}
-                          scroll={false}
-                        >
-                          Mulai
-                        </Link>
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                            scroll={true}
+                          >
+                            Mulai
+                          </Link>
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </div>
-            </div>
-          </TabsContent>
+            </TabsContent>
 
-          <TabsContent
-            value="nilai"
-            className="rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
-          >
-            {userQuiz.data.length > 0 ? (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-xl font-semibold">Riwayat Nilai</h2>
-                    <p className="text-sm text-muted-foreground">
-                      Berikut adalah riwayat nilai dari ujian yang telah Anda
-                      kerjakan
-                    </p>
+            <TabsContent
+              value="nilai"
+              className="rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
+            >
+              {userQuiz.data.length > 0 ? (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-xl font-semibold">Riwayat Nilai</h2>
+                      <p className="text-sm text-muted-foreground">
+                        Berikut adalah riwayat nilai dari ujian yang telah Anda
+                        kerjakan
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4">
+                    {userQuiz.data.map((result, index) => (
+                      <div
+                        key={result.id_attempt}
+                        className="group relative rounded-lg border p-4 transition-all hover:border-blue-200 hover:shadow-md dark:hover:border-blue-800"
+                      >
+                        <div className="absolute right-4 top-4">
+                          <PrintButtonNilai
+                            url={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${tokenExtracted.id}/${result.id_attempt}`}
+                            quizTitle={quiz.data.quiz_title}
+                            attemptNumber={userQuiz.data.length - index}
+                          />
+                        </div>
+
+                        <div className="flex items-start space-x-4">
+                          <div className="flex size-12 items-center justify-center rounded-full bg-blue-100 font-semibold dark:bg-blue-900">
+                            #{userQuiz.data.length - index}
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <p className="text-sm text-muted-foreground">
+                              Percobaan ke-{userQuiz.data.length - index}
+                            </p>
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-2xl font-bold">
+                                {result.score}
+                                <span className="ml-1 text-sm font-normal text-muted-foreground">
+                                  / 100
+                                </span>
+                              </h3>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <CalendarDays className="size-4" />
+                              {convertDatetoStringWithTime(
+                                result.created_at.toString()
+                              )}
+                            </div>
+
+                            {/* Score bar visualization */}
+                            <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-blue-100 dark:bg-blue-900">
+                              <div
+                                className="h-full bg-blue-500 transition-all"
+                                style={{ width: `${result.score}%` }}
+                              />
+                            </div>
+
+                            <div className="mt-2 flex gap-2">
+                              {result.score >= 80 ? (
+                                <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-100">
+                                  <Icons.check className="mr-1 size-3" />
+                                  Sangat Baik
+                                </span>
+                              ) : result.score >= 60 ? (
+                                <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100">
+                                  <Info className="mr-1 size-3" />
+                                  Cukup Baik
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-100">
+                                  <AlertTriangle className="mr-1 size-3" />
+                                  Perlu Perbaikan
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center space-y-4 overflow-auto rounded-lg border border-gray-200 py-4 dark:border-gray-800">
+                  <h1 className="flex max-w-md items-center py-2 text-center font-heading ">
+                    Nilai anda belum tersedia, kerjakan soal terlebih dahulu
+                  </h1>
 
-                <div className="grid gap-4">
-                  {userQuiz.data.map((result, index) => (
-                    <div
-                      key={result.id_attempt}
-                      className="group relative rounded-lg border p-4 transition-all hover:border-blue-200 hover:shadow-md dark:hover:border-blue-800"
-                    >
-                      <div className="absolute right-4 top-4">
-                        <PrintButtonNilai
-                          url={`${process.env.NEXT_PUBLIC_BASE_URL}/export/test/${tokenExtracted.id}/${result.id_attempt}`}
-                          quizTitle={quiz.data.quiz_title}
-                          attemptNumber={index + 1}
-                        />
-                      </div>
-
-                      <div className="flex items-start space-x-4">
-                        <div className="flex size-12 items-center justify-center rounded-full bg-blue-100 font-semibold dark:bg-blue-900">
-                          #{index + 1}
-                        </div>
-                        <div className="flex-1 space-y-1">
-                          <p className="text-sm text-muted-foreground">
-                            Percobaan ke-{index + 1}
-                          </p>
-                          <div className="flex items-center gap-2">
-                            <h3 className="text-2xl font-bold">
-                              {result.score}
-                              <span className="ml-1 text-sm font-normal text-muted-foreground">
-                                / 100
-                              </span>
-                            </h3>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <CalendarDays className="size-4" />
-                            {convertDatetoStringWithTime(
-                              result.created_at.toString()
-                            )}
-                          </div>
-
-                          {/* Score bar visualization */}
-                          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-blue-100 dark:bg-blue-900">
-                            <div
-                              className="h-full bg-blue-500 transition-all"
-                              style={{ width: `${result.score}%` }}
-                            />
-                          </div>
-
-                          <div className="mt-2 flex gap-2">
-                            {result.score >= 80 ? (
-                              <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-100">
-                                <Icons.check className="mr-1 size-3" />
-                                Sangat Baik
-                              </span>
-                            ) : result.score >= 60 ? (
-                              <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100">
-                                <Info className="mr-1 size-3" />
-                                Cukup Baik
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-100">
-                                <AlertTriangle className="mr-1 size-3" />
-                                Perlu Perbaikan
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center space-y-4 overflow-auto rounded-lg border border-gray-200 py-4 dark:border-gray-800">
-                <h1 className="flex max-w-md items-center py-2 text-center font-heading ">
-                  Nilai anda belum tersedia, kerjakan soal terlebih dahulu
-                </h1>
-
-                <div className="flex items-center justify-center py-0">
-                  <LottieClient
-                    animationData={TrophyLess}
-                    className="size-1/2"
-                  />
-                </div>
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent
-            value="placement"
-            className="space-y-6 rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
-          >
-            {/* Placement Card */}
-            <Card className="relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white dark:from-blue-950 dark:to-background"></div>
-              <CardHeader className="relative pb-0">
-                <CardTitle className="text-xl">Posisi Anda</CardTitle>
-                <CardDescription>
-                  Ini adalah ranking anda di leaderboard
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative py-6">
-                {getCurrentUserPlacement.data > 0 ? (
-                  <div className="space-y-6">
-                    <div className="text-center">
-                      <h1 className="text-xl text-muted-foreground">
-                        Kamu berada di posisi
-                      </h1>
-                      <div className="mt-4 flex items-center justify-center space-x-2">
-                        <span className="text-6xl font-bold">#</span>
-                        <NumberTicker
-                          value={getCurrentUserPlacement.data}
-                          className="text-6xl font-bold"
-                        />
-                        <span className="text-3xl font-medium text-muted-foreground">
-                          {getOrdinalIndicator(getCurrentUserPlacement.data)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <SparklesText
-                      text={
-                        getCurrentUserPlacement.data <= 3
-                          ? winnerQuote
-                          : loserQuote
-                      }
-                      className="mx-auto max-w-lg rounded-lg bg-white/50 px-6 py-3 text-center font-serif text-sm italic shadow-sm backdrop-blur-sm dark:bg-background/50"
+                  <div className="flex items-center justify-center py-0">
+                    <LottieClient
+                      animationData={TrophyLess}
+                      className="size-1/2"
                     />
-
-                    <div className="flex items-center justify-center">
-                      {getCurrentUserPlacement.data === 1 && (
-                        <Image
-                          src={GoldMedal}
-                          alt="Gold Medal"
-                          width={400}
-                          height={400}
-                        />
-                      )}
-                      {getCurrentUserPlacement.data === 2 && (
-                        <Image
-                          src={SilverMedal}
-                          alt="Silver Medal"
-                          width={400}
-                          height={400}
-                        />
-                      )}
-                      {getCurrentUserPlacement.data === 3 && (
-                        <Image
-                          src={BronzeMedal}
-                          alt="Bronze Medal"
-                          width={400}
-                          height={400}
-                        />
-                      )}
-                    </div>
                   </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center space-y-4 overflow-auto rounded-lg border border-gray-200 dark:border-gray-800">
-                    <h1 className="flex max-w-md items-center py-2 text-center font-heading ">
-                      Kerjakan Soalnya terlebih dahulu, agar kamu dapat melihat
-                      posisi kamu di leaderboard
-                    </h1>
+                </div>
+              )}
+            </TabsContent>
 
-                    <div className="flex items-center justify-center py-0">
-                      <LottieClient
-                        animationData={TrophyLess}
-                        className="size-1/2"
+            <TabsContent
+              value="placement"
+              className="space-y-6 rounded-lg border border-blue-100 bg-white p-6 shadow-lg dark:border-blue-800 dark:bg-background"
+            >
+              {/* Placement Card */}
+              <Card className="relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white dark:from-blue-950 dark:to-background"></div>
+                <CardHeader className="relative pb-0">
+                  <CardTitle className="text-xl">Posisi Anda</CardTitle>
+                  <CardDescription>
+                    Ini adalah ranking anda di leaderboard
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="relative py-6">
+                  {getCurrentUserPlacement.data > 0 ? (
+                    <div className="space-y-6">
+                      <div className="text-center">
+                        <h1 className="text-xl text-muted-foreground">
+                          Kamu berada di posisi
+                        </h1>
+                        <div className="mt-4 flex items-center justify-center space-x-2">
+                          <span className="text-6xl font-bold">#</span>
+                          <NumberTicker
+                            value={getCurrentUserPlacement.data}
+                            className="text-6xl font-bold"
+                          />
+                          <span className="text-3xl font-medium text-muted-foreground">
+                            {getOrdinalIndicator(getCurrentUserPlacement.data)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <SparklesText
+                        text={
+                          getCurrentUserPlacement.data <= 3
+                            ? winnerQuote
+                            : loserQuote
+                        }
+                        className="mx-auto max-w-lg rounded-lg bg-white/50 px-6 py-3 text-center font-serif text-sm italic shadow-sm backdrop-blur-sm dark:bg-background/50"
                       />
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
 
-            {/* Leaderboard Card */}
-            <Card>
-              <CardHeader className="pb-0">
-                <div className="flex flex-col space-y-1.5 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
-                  <div className="space-y-1">
-                    <CardTitle className="text-xl">Leaderboard</CardTitle>
-                    <CardDescription className="max-w-2xl space-y-1 text-[10px] sm:text-xs">
-                      <p>Peringkat keseluruhan peserta berdasarkan:</p>
-                      <ul className="list-inside list-disc pl-1 text-muted-foreground">
-                        <li>Nilai tertinggi sebagai prioritas utama</li>
-                        <li>Waktu pengerjaan tercepat jika nilai sama</li>
-                        <li>
-                          Waktu mulai paling awal jika nilai dan waktu
-                          pengerjaan sama
-                        </li>
-                      </ul>
-                    </CardDescription>
+                      <div className="flex items-center justify-center">
+                        {getCurrentUserPlacement.data === 1 && (
+                          <Image
+                            src={GoldMedal}
+                            alt="Gold Medal"
+                            width={400}
+                            height={400}
+                          />
+                        )}
+                        {getCurrentUserPlacement.data === 2 && (
+                          <Image
+                            src={SilverMedal}
+                            alt="Silver Medal"
+                            width={400}
+                            height={400}
+                          />
+                        )}
+                        {getCurrentUserPlacement.data === 3 && (
+                          <Image
+                            src={BronzeMedal}
+                            alt="Bronze Medal"
+                            width={400}
+                            height={400}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center space-y-4 overflow-auto rounded-lg border border-gray-200 dark:border-gray-800">
+                      <h1 className="flex max-w-md items-center py-2 text-center font-heading ">
+                        Kerjakan Soalnya terlebih dahulu, agar kamu dapat
+                        melihat posisi kamu di leaderboard
+                      </h1>
+
+                      <div className="flex items-center justify-center py-0">
+                        <LottieClient
+                          animationData={TrophyLess}
+                          className="size-1/2"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Leaderboard Card */}
+              <Card>
+                <CardHeader className="pb-0">
+                  <div className="flex flex-col space-y-1.5 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
+                    <div className="space-y-1">
+                      <CardTitle className="text-xl">Leaderboard</CardTitle>
+                      <CardDescription className="max-w-2xl space-y-1 text-[10px] sm:text-xs">
+                        <p>Peringkat keseluruhan peserta berdasarkan:</p>
+                        <ul className="list-inside list-disc pl-1 text-muted-foreground">
+                          <li>Nilai tertinggi sebagai prioritas utama</li>
+                          <li>Waktu pengerjaan tercepat jika nilai sama</li>
+                          <li>
+                            Waktu mulai paling awal jika nilai dan waktu
+                            pengerjaan sama
+                          </li>
+                        </ul>
+                      </CardDescription>
+                    </div>
+                    {getLeaderboad.data.length > 10 && (
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-xs hover:bg-gray-100 dark:hover:bg-gray-800"
+                          >
+                            <Users className="mr-1 size-3.5" />
+                            {getLeaderboad.data.length}
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[725px]">
+                          <DialogHeader>
+                            <DialogTitle>Daftar Peringkat Lengkap</DialogTitle>
+                            <DialogDescription>
+                              Peringkat seluruh peserta
+                            </DialogDescription>
+                          </DialogHeader>
+                          <ScrollArea className="h-[500px] w-full rounded-md border p-4">
+                            <table className="w-full min-w-full">
+                              <tbody>
+                                {getLeaderboad.data.map((leaderboard) => (
+                                  <tr
+                                    className={cn(
+                                      "bg-gray-50 dark:bg-background",
+                                      leaderboard.user_uuid ===
+                                        tokenExtracted.id &&
+                                        "bg-blue-200 dark:bg-blue-700"
+                                    )}
+                                    key={leaderboard.position}
+                                  >
+                                    <td className="p-4 text-left">
+                                      {leaderboard.position === 1 ? (
+                                        <div className="inline-flex items-center justify-between space-x-2">
+                                          <Icons.crown className="h-6 w-6 text-gold" />
+                                          <span className="font-bold text-gold">{`${leaderboard.position}st`}</span>
+                                        </div>
+                                      ) : leaderboard.position === 2 ? (
+                                        <div className="inline-flex items-center justify-between space-x-2">
+                                          <Icons.crown className="h-6 w-6 text-silver" />
+                                          <span className="font-semibold text-silver">{`${leaderboard.position}nd`}</span>
+                                        </div>
+                                      ) : leaderboard.position === 3 ? (
+                                        <div className="inline-flex items-center justify-between space-x-2">
+                                          <Icons.crown className="h-6 w-6 text-bronze" />
+                                          <span className="font-medium text-bronze">{`${leaderboard.position}rd`}</span>
+                                        </div>
+                                      ) : (
+                                        `${leaderboard.position}th`
+                                      )}
+                                    </td>
+                                    <td className="px-1.5 py-1.5 sm:px-3 sm:py-2.5">
+                                      <HoverCard>
+                                        <HoverCardTrigger asChild>
+                                          <Button
+                                            variant="ghost"
+                                            className="h-auto w-full justify-start p-1 hover:bg-transparent sm:p-2" // Added padding for better hover area
+                                          >
+                                            <div className="flex items-center gap-1.5 sm:gap-3">
+                                              <div className="relative size-6 shrink-0 overflow-hidden rounded-full bg-white ring-1 ring-gray-100 dark:ring-gray-800 sm:size-16 sm:ring-2">
+                                                <Image
+                                                  src={
+                                                    leaderboard.profile_picture
+                                                      ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                                      : `data:image/svg+xml;utf8,${generateFromString(
+                                                          leaderboard.name
+                                                        )}`
+                                                  }
+                                                  alt={leaderboard.name}
+                                                  width={64}
+                                                  height={64}
+                                                  className="object-cover"
+                                                />
+                                              </div>
+                                              <span
+                                                className={cn(
+                                                  "max-w-[80px] truncate text-xs font-medium sm:max-w-[200px]", // Removed sm:text-lg to keep font small
+                                                  leaderboard.position === 1 &&
+                                                    "font-bold text-gold",
+                                                  leaderboard.position === 2 &&
+                                                    "font-semibold text-silver",
+                                                  leaderboard.position === 3 &&
+                                                    "font-medium text-bronze"
+                                                )}
+                                              >
+                                                {leaderboard.name}
+                                              </span>
+                                            </div>
+                                          </Button>
+                                        </HoverCardTrigger>
+                                        <HoverCardContent
+                                          className="w-80"
+                                          side="right"
+                                          align="start"
+                                          sideOffset={5}
+                                        >
+                                          <div className="flex flex-col gap-4">
+                                            <div className="flex items-center gap-4">
+                                              <div className="relative size-24 overflow-hidden rounded-full border-2 border-muted">
+                                                <Image
+                                                  src={
+                                                    leaderboard.profile_picture
+                                                      ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
+                                                      : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
+                                                  }
+                                                  alt={leaderboard.name}
+                                                  fill
+                                                  className="aspect-square scale-150 object-cover object-top"
+                                                  style={{
+                                                    objectPosition: "center 0%",
+                                                    transform:
+                                                      "scale(1.5) translateY(10%)",
+                                                  }}
+                                                />
+                                              </div>
+                                              <div className="space-y-1">
+                                                <h4 className="text-base font-semibold leading-none">
+                                                  {leaderboard.name}
+                                                </h4>
+                                                <p className="text-sm text-muted-foreground">
+                                                  Posisi #{leaderboard.position}
+                                                </p>
+                                              </div>
+                                            </div>
+                                            <div className="flex flex-col gap-2 border-t pt-4">
+                                              <div className="flex items-center gap-2">
+                                                <CalendarDays className="size-4 text-muted-foreground" />
+                                                <span className="text-sm text-muted-foreground">
+                                                  Mulai pada:
+                                                </span>
+                                              </div>
+                                              <p className="text-sm font-medium">
+                                                {convertDatetoStringWithTime(
+                                                  leaderboard.earliest_created_at
+                                                )}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </HoverCardContent>
+                                      </HoverCard>
+                                    </td>
+                                    <td className="p-4 text-right">
+                                      {leaderboard.score}
+                                    </td>
+                                    <td className="p-4 text-right">
+                                      {leaderboard.time_elapsed}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </ScrollArea>
+                        </DialogContent>
+                      </Dialog>
+                    )}
                   </div>
-                  {getLeaderboad.data.length > 10 && (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="text-xs hover:bg-gray-100 dark:hover:bg-gray-800"
-                        >
-                          <Users className="mr-1 size-3.5" />
-                          {getLeaderboad.data.length}
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[725px]">
-                        <DialogHeader>
-                          <DialogTitle>Daftar Peringkat Lengkap</DialogTitle>
-                          <DialogDescription>
-                            Peringkat seluruh peserta
-                          </DialogDescription>
-                        </DialogHeader>
-                        <ScrollArea className="h-[500px] w-full rounded-md border p-4">
-                          <table className="w-full min-w-full">
-                            <tbody>
-                              {getLeaderboad.data.map((leaderboard) => (
+                </CardHeader>
+                <CardContent className="mt-6 p-0">
+                  <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+                    <div className="overflow-x-auto">
+                      <table className="w-full divide-y divide-gray-200 dark:divide-gray-800">
+                        <thead className="bg-gray-50 dark:bg-background">
+                          <tr>
+                            <th className="w-8 px-1.5 py-2 text-left text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-20 sm:px-3 sm:py-2.5 sm:text-xs">
+                              #
+                            </th>
+                            <th className="w-[120px] px-1.5 py-2 text-left text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-[250px] sm:px-3 sm:py-2.5 sm:text-xs">
+                              Peserta
+                            </th>
+                            <th className="w-10 px-1.5 py-2 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-20 sm:px-3 sm:py-2.5 sm:text-xs">
+                              Nilai
+                            </th>
+                            <th className="w-12 px-1.5 py-2 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-24 sm:px-3 sm:py-2.5 sm:text-xs">
+                              Waktu
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-800 dark:bg-background">
+                          {getLeaderboad.data.length > 0 ? (
+                            getLeaderboad.data
+                              .slice(0, 10)
+                              .map((leaderboard) => (
                                 <tr
+                                  key={leaderboard.position}
                                   className={cn(
-                                    "bg-gray-50 dark:bg-background",
+                                    "transition-colors hover:bg-gray-50/50 dark:hover:bg-gray-800/50",
                                     leaderboard.user_uuid ===
                                       tokenExtracted.id &&
-                                      "bg-blue-200 dark:bg-blue-700"
+                                      "bg-blue-50 dark:bg-blue-900/50"
                                   )}
-                                  key={leaderboard.position}
                                 >
-                                  <td className="p-4 text-left">
-                                    {leaderboard.position === 1 ? (
-                                      <div className="inline-flex items-center justify-between space-x-2">
-                                        <Icons.crown className="h-6 w-6 text-gold" />
-                                        <span className="font-bold text-gold">{`${leaderboard.position}st`}</span>
-                                      </div>
-                                    ) : leaderboard.position === 2 ? (
-                                      <div className="inline-flex items-center justify-between space-x-2">
-                                        <Icons.crown className="h-6 w-6 text-silver" />
-                                        <span className="font-semibold text-silver">{`${leaderboard.position}nd`}</span>
-                                      </div>
-                                    ) : leaderboard.position === 3 ? (
-                                      <div className="inline-flex items-center justify-between space-x-2">
-                                        <Icons.crown className="h-6 w-6 text-bronze" />
-                                        <span className="font-medium text-bronze">{`${leaderboard.position}rd`}</span>
+                                  <td className="whitespace-nowrap px-1.5 py-1.5 sm:px-3 sm:py-2.5">
+                                    {leaderboard.position <= 3 ? (
+                                      <div className="flex items-center gap-0.5 sm:gap-1">
+                                        <Icons.crown
+                                          className={cn(
+                                            "size-3 sm:size-4",
+                                            leaderboard.position === 1 &&
+                                              "text-gold",
+                                            leaderboard.position === 2 &&
+                                              "text-silver",
+                                            leaderboard.position === 3 &&
+                                              "text-bronze"
+                                          )}
+                                        />
+                                        <span
+                                          className={cn(
+                                            "text-xs font-semibold sm:text-sm",
+                                            leaderboard.position === 1 &&
+                                              "text-gold",
+                                            leaderboard.position === 2 &&
+                                              "text-silver",
+                                            leaderboard.position === 3 &&
+                                              "text-bronze"
+                                          )}
+                                        >
+                                          {leaderboard.position}
+                                        </span>
                                       </div>
                                     ) : (
-                                      `${leaderboard.position}th`
+                                      <span className="text-xs text-muted-foreground sm:text-sm">
+                                        {leaderboard.position}
+                                      </span>
                                     )}
                                   </td>
                                   <td className="px-1.5 py-1.5 sm:px-3 sm:py-2.5">
@@ -910,204 +1097,34 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                                       </HoverCardContent>
                                     </HoverCard>
                                   </td>
-                                  <td className="p-4 text-right">
+                                  <td className="whitespace-nowrap px-1.5 py-1.5 text-right text-xs font-medium sm:px-3 sm:py-2.5 sm:text-sm">
                                     {leaderboard.score}
                                   </td>
-                                  <td className="p-4 text-right">
+                                  <td className="whitespace-nowrap px-1.5 py-1.5 text-right text-[10px] text-muted-foreground sm:px-3 sm:py-2.5 sm:text-sm">
                                     {leaderboard.time_elapsed}
                                   </td>
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </ScrollArea>
-                      </DialogContent>
-                    </Dialog>
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent className="mt-6 p-0">
-                <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
-                  <div className="overflow-x-auto">
-                    <table className="w-full divide-y divide-gray-200 dark:divide-gray-800">
-                      <thead className="bg-gray-50 dark:bg-background">
-                        <tr>
-                          <th className="w-8 px-1.5 py-2 text-left text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-20 sm:px-3 sm:py-2.5 sm:text-xs">
-                            #
-                          </th>
-                          <th className="w-[120px] px-1.5 py-2 text-left text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-[250px] sm:px-3 sm:py-2.5 sm:text-xs">
-                            Peserta
-                          </th>
-                          <th className="w-10 px-1.5 py-2 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-20 sm:px-3 sm:py-2.5 sm:text-xs">
-                            Nilai
-                          </th>
-                          <th className="w-12 px-1.5 py-2 text-right text-[10px] font-semibold text-gray-500 dark:text-gray-400 sm:w-24 sm:px-3 sm:py-2.5 sm:text-xs">
-                            Waktu
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-800 dark:bg-background">
-                        {getLeaderboad.data.length > 0 ? (
-                          getLeaderboad.data.slice(0, 10).map((leaderboard) => (
-                            <tr
-                              key={leaderboard.position}
-                              className={cn(
-                                "transition-colors hover:bg-gray-50/50 dark:hover:bg-gray-800/50",
-                                leaderboard.user_uuid === tokenExtracted.id &&
-                                  "bg-blue-50 dark:bg-blue-900/50"
-                              )}
-                            >
-                              <td className="whitespace-nowrap px-1.5 py-1.5 sm:px-3 sm:py-2.5">
-                                {leaderboard.position <= 3 ? (
-                                  <div className="flex items-center gap-0.5 sm:gap-1">
-                                    <Icons.crown
-                                      className={cn(
-                                        "size-3 sm:size-4",
-                                        leaderboard.position === 1 &&
-                                          "text-gold",
-                                        leaderboard.position === 2 &&
-                                          "text-silver",
-                                        leaderboard.position === 3 &&
-                                          "text-bronze"
-                                      )}
-                                    />
-                                    <span
-                                      className={cn(
-                                        "text-xs font-semibold sm:text-sm",
-                                        leaderboard.position === 1 &&
-                                          "text-gold",
-                                        leaderboard.position === 2 &&
-                                          "text-silver",
-                                        leaderboard.position === 3 &&
-                                          "text-bronze"
-                                      )}
-                                    >
-                                      {leaderboard.position}
-                                    </span>
-                                  </div>
-                                ) : (
-                                  <span className="text-xs text-muted-foreground sm:text-sm">
-                                    {leaderboard.position}
-                                  </span>
-                                )}
-                              </td>
-                              <td className="px-1.5 py-1.5 sm:px-3 sm:py-2.5">
-                                <HoverCard>
-                                  <HoverCardTrigger asChild>
-                                    <Button
-                                      variant="ghost"
-                                      className="h-auto w-full justify-start p-1 hover:bg-transparent sm:p-2" // Added padding for better hover area
-                                    >
-                                      <div className="flex items-center gap-1.5 sm:gap-3">
-                                        <div className="relative size-6 shrink-0 overflow-hidden rounded-full bg-white ring-1 ring-gray-100 dark:ring-gray-800 sm:size-16 sm:ring-2">
-                                          <Image
-                                            src={
-                                              leaderboard.profile_picture
-                                                ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
-                                                : `data:image/svg+xml;utf8,${generateFromString(
-                                                    leaderboard.name
-                                                  )}`
-                                            }
-                                            alt={leaderboard.name}
-                                            width={64}
-                                            height={64}
-                                            className="object-cover"
-                                          />
-                                        </div>
-                                        <span
-                                          className={cn(
-                                            "max-w-[80px] truncate text-xs font-medium sm:max-w-[200px]", // Removed sm:text-lg to keep font small
-                                            leaderboard.position === 1 &&
-                                              "font-bold text-gold",
-                                            leaderboard.position === 2 &&
-                                              "font-semibold text-silver",
-                                            leaderboard.position === 3 &&
-                                              "font-medium text-bronze"
-                                          )}
-                                        >
-                                          {leaderboard.name}
-                                        </span>
-                                      </div>
-                                    </Button>
-                                  </HoverCardTrigger>
-                                  <HoverCardContent
-                                    className="w-80"
-                                    side="right"
-                                    align="start"
-                                    sideOffset={5}
-                                  >
-                                    <div className="flex flex-col gap-4">
-                                      <div className="flex items-center gap-4">
-                                        <div className="relative size-24 overflow-hidden rounded-full border-2 border-muted">
-                                          <Image
-                                            src={
-                                              leaderboard.profile_picture
-                                                ? `${process.env.NEXT_PUBLIC_BASE_URL}${leaderboard.profile_picture}`
-                                                : `data:image/svg+xml;utf8,${generateFromString(leaderboard.name)}`
-                                            }
-                                            alt={leaderboard.name}
-                                            fill
-                                            className="aspect-square scale-150 object-cover object-top"
-                                            style={{
-                                              objectPosition: "center 0%",
-                                              transform:
-                                                "scale(1.5) translateY(10%)",
-                                            }}
-                                          />
-                                        </div>
-                                        <div className="space-y-1">
-                                          <h4 className="text-base font-semibold leading-none">
-                                            {leaderboard.name}
-                                          </h4>
-                                          <p className="text-sm text-muted-foreground">
-                                            Posisi #{leaderboard.position}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div className="flex flex-col gap-2 border-t pt-4">
-                                        <div className="flex items-center gap-2">
-                                          <CalendarDays className="size-4 text-muted-foreground" />
-                                          <span className="text-sm text-muted-foreground">
-                                            Mulai pada:
-                                          </span>
-                                        </div>
-                                        <p className="text-sm font-medium">
-                                          {convertDatetoStringWithTime(
-                                            leaderboard.earliest_created_at
-                                          )}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </HoverCardContent>
-                                </HoverCard>
-                              </td>
-                              <td className="whitespace-nowrap px-1.5 py-1.5 text-right text-xs font-medium sm:px-3 sm:py-2.5 sm:text-sm">
-                                {leaderboard.score}
-                              </td>
-                              <td className="whitespace-nowrap px-1.5 py-1.5 text-right text-[10px] text-muted-foreground sm:px-3 sm:py-2.5 sm:text-sm">
-                                {leaderboard.time_elapsed}
+                              ))
+                          ) : (
+                            <tr>
+                              <td
+                                colSpan={4}
+                                className="px-3 py-8 text-center text-xs text-muted-foreground sm:text-sm"
+                              >
+                                Belum ada data leaderboard
                               </td>
                             </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td
-                              colSpan={4}
-                              className="px-3 py-8 text-center text-xs text-muted-foreground sm:text-sm"
-                            >
-                              Belum ada data leaderboard
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </>
   )
 }
