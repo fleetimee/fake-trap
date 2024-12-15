@@ -317,6 +317,54 @@ export function UserSubmittedAnswerForm({
     }
   }, [])
 
+  // Add these effects for screenshot protection
+  useEffect(() => {
+    // Prevent printing
+    const handlePrint = (e: Event) => {
+      e.preventDefault()
+      sonnerToast.error("Not Allowed", {
+        description: "Printing this page is not allowed",
+      })
+    }
+
+    // Prevent screen capture on browsers that support it
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        sonnerToast.error("Warning", {
+          description: "Screen capture attempt detected",
+        })
+      }
+    }
+
+    window.addEventListener("beforeprint", handlePrint)
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+
+    // Add CSS styles to prevent screenshots
+    const style = document.createElement("style")
+    style.innerHTML = `
+      .screenshot-protected {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+      }
+      
+      @media print {
+        .screenshot-protected {
+          display: none;
+        }
+      }
+    `
+    document.head.appendChild(style)
+
+    return () => {
+      window.removeEventListener("beforeprint", handlePrint)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+      document.head.removeChild(style)
+    }
+  }, [])
+
   const [openResetDialog, setOpenResetDialog] = useState(false)
 
   const handleReset = () => {
@@ -366,7 +414,7 @@ export function UserSubmittedAnswerForm({
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 md:px-6">
+    <div className="screenshot-protected mx-auto max-w-4xl space-y-6 px-4 md:px-6">
       <Alert className="bg-blue-50 dark:bg-blue-950">
         <Info className="h-4 w-4" />
         <AlertTitle>Informasi Penting</AlertTitle>
@@ -401,7 +449,7 @@ export function UserSubmittedAnswerForm({
                       ${
                         isQuestionAnswered(q.id_question)
                           ? "bg-blue-500 text-white hover:bg-blue-600"
-                          : "bg-white text-blue-900 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
+                          : "bg-white text-blue-900 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 dark:hover:bg-blue-950/50"
                       }
                       ${
                         activeQuestion === index
