@@ -114,10 +114,6 @@ export default async function PesertaPage() {
     return <Sun className="size-6 text-yellow-500" />
   }
 
-  console.log("weather", weather)
-
-  console.log("quote", quote)
-
   return (
     <DashboardShell>
       <PasswordChangeDialog />

@@ -1,5 +1,7 @@
 import React from "react"
+import { redirect } from "next/navigation"
 
+import { authOptions } from "@/lib/auth"
 import { getLoggedOnUser } from "@/lib/fetcher/auth-fetcher"
 import { getMenu } from "@/lib/fetcher/menu-fetcher"
 import { getNavbar } from "@/lib/fetcher/navbar-fetcher"
@@ -34,6 +36,10 @@ export default async function PesertaLayout({
     token: user?.token,
     uuid: tokenExtracted.id,
   })
+
+  if (!userLogged.data) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
 
   const userOrg = await getUserOrg({
     token: user?.token,
