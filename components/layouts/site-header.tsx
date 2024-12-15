@@ -305,7 +305,22 @@ export function SiteHeader({
                       signOut({
                         callbackUrl: `${window.location.origin}/login`,
                       }).then(() => {
+                        // Store the value we want to keep
+                        const passwordDialogSeen = localStorage.getItem(
+                          "passwordChangeDialogSeen"
+                        )
+
+                        // Clear localStorage
                         localStorage.clear()
+
+                        // Restore the value we want to keep
+                        if (passwordDialogSeen) {
+                          localStorage.setItem(
+                            "passwordChangeDialogSeen",
+                            passwordDialogSeen
+                          )
+                        }
+
                         sessionStorage.clear()
 
                         if (typeof window !== "undefined") {

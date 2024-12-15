@@ -118,6 +118,20 @@ export function AutoLogoutProvider({
         if (debug) {
           console.error("User has expired", expiry, now)
         }
+
+        // Store the value we want to keep
+        const passwordDialogSeen = localStorage.getItem(
+          "passwordChangeDialogSeen"
+        )
+
+        // Clear localStorage
+        localStorage.clear()
+
+        // Restore the value we want to keep
+        if (passwordDialogSeen) {
+          localStorage.setItem("passwordChangeDialogSeen", passwordDialogSeen)
+        }
+
         signOut({
           callbackUrl: "/?logoutPopout=true",
         })

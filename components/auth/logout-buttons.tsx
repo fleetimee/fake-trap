@@ -20,7 +20,22 @@ export function LogOutButtons() {
           signOut({
             callbackUrl: "/",
           }).then(() => {
+            // Store the value we want to keep
+            const passwordDialogSeen = localStorage.getItem(
+              "passwordChangeDialogSeen"
+            )
+
+            // Clear localStorage
             localStorage.clear()
+
+            // Restore the value we want to keep
+            if (passwordDialogSeen) {
+              localStorage.setItem(
+                "passwordChangeDialogSeen",
+                passwordDialogSeen
+              )
+            }
+
             sessionStorage.clear()
 
             document.cookie.split(";").forEach((c) => {
