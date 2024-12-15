@@ -3,7 +3,13 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ClipboardCheck, Medal, Menu, PenTool } from "lucide-react"
+import {
+  ClipboardCheck,
+  GraduationCap,
+  Medal,
+  Menu,
+  PenTool,
+} from "lucide-react"
 import { useMediaQuery } from "react-responsive"
 
 import { CourseOneResSection } from "@/types/course/res"
@@ -49,9 +55,17 @@ export function CourseContentSidebarPretest({
 
   const sidebarContent = (
     <Tabs defaultValue="course" className="w-full">
-      <TabsList className="w-full">
-        <TabsTrigger value="course" className="w-full font-semibold">
-          Pembelajaran
+      <TabsList className="grid w-full grid-cols-1 gap-4 rounded-none border-b p-0">
+        <TabsTrigger
+          value="course"
+          className="relative rounded-none border-b-2 border-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground transition-none data-[state=active]:border-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+        >
+          <div className="flex items-center gap-2">
+            <GraduationCap className="size-4" />
+            <span className="text-xs" style={{ textTransform: "capitalize" }}>
+              Pembelajaran
+            </span>
+          </div>
         </TabsTrigger>
       </TabsList>
 

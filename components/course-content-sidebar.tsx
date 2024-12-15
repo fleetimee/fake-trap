@@ -6,8 +6,10 @@ import { usePathname } from "next/navigation"
 import Empty from "@/public/lottie/empty.json"
 import Empty2 from "@/public/lottie/empty2.json"
 import {
+  BookOpen,
   ChevronsUpDown,
   ClipboardCheck,
+  GraduationCap,
   Medal,
   Menu,
   PenTool,
@@ -82,12 +84,28 @@ export function CourseContentSidebar({
 
   const sidebarContent = (
     <Tabs defaultValue="knowledge" className="w-full">
-      <TabsList className="w-full">
-        <TabsTrigger value="knowledge" className="w-full font-semibold">
-          Materi
+      <TabsList className="grid w-full grid-cols-2 gap-4 rounded-none border-b p-0">
+        <TabsTrigger
+          value="knowledge"
+          className="relative rounded-none border-b-2 border-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground transition-none data-[state=active]:border-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+        >
+          <div className="flex items-center gap-2">
+            <BookOpen className="size-4" />
+            <span className="text-xs" style={{ textTransform: "capitalize" }}>
+              Materi
+            </span>
+          </div>
         </TabsTrigger>
-        <TabsTrigger value="course" className="w-full font-semibold">
-          Pembelajaran
+        <TabsTrigger
+          value="course"
+          className="relative rounded-none border-b-2 border-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground transition-none data-[state=active]:border-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+        >
+          <div className="flex items-center gap-2">
+            <GraduationCap className="size-4" />
+            <span className="text-xs" style={{ textTransform: "capitalize" }}>
+              Pembelajaran
+            </span>
+          </div>
         </TabsTrigger>
       </TabsList>
 
