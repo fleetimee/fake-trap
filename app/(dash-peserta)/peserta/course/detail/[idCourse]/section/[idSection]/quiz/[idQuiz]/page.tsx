@@ -439,7 +439,10 @@ export default async function CourseQuizPage({ params }: CourseQuizPageProps) {
                         <Icons.check className="mr-2 size-4" />
                         Kesempatan Tersisa:{" "}
                         <span className="ml-1 font-semibold">
-                          {isPretest ? 1 : 3} kali
+                          {isPretest
+                            ? 1 - userQuiz.data.length
+                            : 3 - userQuiz.data.length}{" "}
+                          kali
                         </span>
                       </p>
                       <p className="flex items-center">
