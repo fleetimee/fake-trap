@@ -35,6 +35,7 @@ export default async function CourseQuizStartPage({
       quiz={quiz}
       baseUrl="/operator-lms/"
       isPreviewOnly
+      params={params}
     />
   )
 }

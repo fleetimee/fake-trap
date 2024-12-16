@@ -33,6 +33,7 @@ export default async function CourseQuizStartPage({
       quiz={quiz}
       baseUrl="/supervisor-lms/"
       isPreviewOnly
+      params={params}
     />
   )
 }
