@@ -155,7 +155,11 @@ export function ForumPost({ post }: ForumPost) {
               {isAdminOrAuthor && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => setOpenDeletePostAlert(true)}
+                    >
                       <Icons.trash className="aspect-square w-4 text-red-500" />
                     </Button>
                   </TooltipTrigger>

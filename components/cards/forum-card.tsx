@@ -105,7 +105,11 @@ export function ForumCard({
               {isAdmin && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => setOpenDeleteThreadAlert(true)}
+                    >
                       <Icons.trash className="aspect-square w-4 text-red-500" />
                     </Button>
                   </TooltipTrigger>
