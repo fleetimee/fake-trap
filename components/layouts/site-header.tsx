@@ -48,6 +48,10 @@ interface SiteHeaderProps {
   titleNav?: string
   profilePicture?: string
   userOrg?: UserOrgOneResData
+  pesertaCourseTrackerCount?: number
+  supervisorDivisiTrackerCount?: number
+  operatorLmsTrackerCount?: number
+  supervisorLmsTrackerCount?: number
 }
 
 export function SiteHeader({
@@ -60,6 +64,10 @@ export function SiteHeader({
   titleNav,
   profilePicture,
   userOrg,
+  pesertaCourseTrackerCount,
+  supervisorDivisiTrackerCount,
+  operatorLmsTrackerCount,
+  supervisorLmsTrackerCount,
 }: SiteHeaderProps) {
   const [time, setTime] = React.useState<Date>(new Date())
 
@@ -108,6 +116,10 @@ export function SiteHeader({
             sidebarNavItems={sidebarNavItems}
             userOrg={userOrg}
             profilePicture={profilePicture}
+            pesertaCourseTrackerCount={pesertaCourseTrackerCount}
+            supervisorDivisiTrackerCount={supervisorDivisiTrackerCount}
+            operatorLmsTrackerCount={operatorLmsTrackerCount}
+            supervisorLmsTrackerCount={supervisorLmsTrackerCount}
           />
 
           {/* The title is now next to the MobileNav component. */}
@@ -254,6 +266,10 @@ export function SiteHeader({
             sidebarNavItems={sidebarNavItems}
             userOrg={userOrg}
             profilePicture={profilePicture}
+            pesertaCourseTrackerCount={pesertaCourseTrackerCount}
+            supervisorDivisiTrackerCount={supervisorDivisiTrackerCount}
+            operatorLmsTrackerCount={operatorLmsTrackerCount}
+            supervisorLmsTrackerCount={supervisorLmsTrackerCount}
           />
           {titleNav ? (
             <h1 className="ml-2 text-center  font-bold md:hidden">

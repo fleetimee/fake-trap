@@ -37,6 +37,10 @@ interface MobileNavProps {
   children?: React.ReactNode
   userOrg?: UserOrgOneResData
   profilePicture?: string
+  pesertaCourseTrackerCount?: number
+  supervisorDivisiTrackerCount?: number
+  operatorLmsTrackerCount?: number
+  supervisorLmsTrackerCount?: number
 }
 
 export function MobileNav({
@@ -45,11 +49,30 @@ export function MobileNav({
   children,
   userOrg,
   profilePicture,
+  pesertaCourseTrackerCount,
+  supervisorDivisiTrackerCount,
+  operatorLmsTrackerCount,
+  supervisorLmsTrackerCount,
 }: MobileNavProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
   const { data: session } = useSession()
   const isLoggedOn = session !== null
+
+  const getNotificationCount = (menuId: number) => {
+    switch (menuId) {
+      case 50:
+        return pesertaCourseTrackerCount
+      case 39:
+        return supervisorDivisiTrackerCount
+      case 57:
+        return operatorLmsTrackerCount
+      case 43:
+        return supervisorLmsTrackerCount
+      default:
+        return null
+    }
+  }
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -113,14 +136,23 @@ export function MobileNav({
                       <div className="flex flex-col space-y-2">
                         {sidebarNavItems?.map((item, index) =>
                           item.menu_url ? (
-                            <MobileLink
+                            <div
                               key={index}
-                              href={String(item.menu_url)}
-                              pathname={pathname}
-                              setIsOpen={setIsOpen}
+                              className="flex items-center justify-between"
                             >
-                              {item.menu_name}
-                            </MobileLink>
+                              <MobileLink
+                                href={String(item.menu_url)}
+                                pathname={pathname}
+                                setIsOpen={setIsOpen}
+                              >
+                                {item.menu_name}
+                              </MobileLink>
+                              {getNotificationCount(item.id_menu) ? (
+                                <span className="ml-2 flex size-5 items-center justify-center rounded-full bg-blue-500 text-xs font-medium text-white">
+                                  {getNotificationCount(item.id_menu)}
+                                </span>
+                              ) : null}
+                            </div>
                           ) : null
                         )}
                       </div>
